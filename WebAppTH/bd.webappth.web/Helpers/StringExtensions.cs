@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 #endregion
 
-namespace bd.webappseguridad.web.Helpers
+namespace bd.webappth.web.Helpers
 {
     /// <summary>
     ///     Provides utility methods for converting string values to other data types.

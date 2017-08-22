@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace bd.webappcompartido.web
+namespace bd.webappth.web
 {
     public class Startup
     {

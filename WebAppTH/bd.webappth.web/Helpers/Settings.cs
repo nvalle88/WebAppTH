@@ -1,4 +1,4 @@
-﻿namespace bd.webappseguridad.web.Helpers
+﻿namespace bd.webappth.web.Helpers
 {
     /// <summary>
     ///     Provides access to the current application's configuration file.

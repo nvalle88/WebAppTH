@@ -11,7 +11,7 @@ using bd.webappcompartido.web;
 
 #endregion
 
-namespace bd.webappseguridad.web.Helpers
+namespace bd.webappth.web.Helpers
 {
     public static class HtmlHelperExtensions
     {

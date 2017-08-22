@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using bd.webappcompartido.web;
 
-namespace bd.webappseguridad.web
+namespace bd.webappth.web
 {
     public class Program
     {
