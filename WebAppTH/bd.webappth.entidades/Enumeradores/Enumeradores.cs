@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace bd.webappseguridad.entidades.Enumeradores
+namespace bd.webappth.entidades.Enumeradores
 {
     public enum Aplicacion
     {
-        WebAppTh
-    }
+        SwTH, webappth
+    } 
 }
