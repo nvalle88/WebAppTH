@@ -98,7 +98,7 @@ namespace bd.webappth.servicios.Servicios
                     return new Response
                     {
                         IsSuccess = true,
-                        Message = "Insertar Ok",
+                        Message = "Existe un registro con igual información",
 
                     };
 

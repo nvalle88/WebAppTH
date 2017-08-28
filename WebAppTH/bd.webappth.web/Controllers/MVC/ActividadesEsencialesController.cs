@@ -14,12 +14,13 @@ using Newtonsoft.Json;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class EstadosCivilesController : Controller
+    public class ActividadesEsencialesController : Controller
     {
+
         private readonly IApiServicio apiServicio;
 
 
-        public EstadosCivilesController(IApiServicio apiServicio)
+        public ActividadesEsencialesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -32,14 +33,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EstadoCivil estadoCivil)
+        public async Task<IActionResult> Create(ActividadesEsenciales actividadesEsenciales)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(estadoCivil,
+                response = await apiServicio.InsertarAsync(actividadesEsenciales,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/EstadosCiviles/InsertarEstadoCivil");
+                                                             "/api/ActividadesEsenciales/InsertarActividadesEsenciales");
                 if (response.IsSuccess)
                 {
 
@@ -47,18 +48,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un estado civil",
+                        Message = "Se ha creado una actividad esencial",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Estado Civil:", estadoCivil.IdEstadoCivil),
+                        EntityID = string.Format("{0} {1}", "Actividades Esenciales:", actividadesEsenciales.ActividadesEsencialesId),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(estadoCivil);
+                return View(actividadesEsenciales);
 
             }
             catch (Exception ex)
@@ -66,7 +67,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Estado Civil",
+                    Message = "Creando Actividad Esencial",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -84,10 +85,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/EstadosCiviles");
+                                                                  "/api/ActividadesEsenciales");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<EstadoCivil>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<ActividadesEsenciales>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -105,15 +106,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, EstadoCivil estadoCivil)
+        public async Task<IActionResult> Edit(string id, ActividadesEsenciales actividadesEsenciales)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, estadoCivil, new Uri(WebApp.BaseAddress),
-                                                                 "/api/EstadosCiviles");
+                    response = await apiServicio.EditarAsync(id, actividadesEsenciales, new Uri(WebApp.BaseAddress),
+                                                                 "/api/ActividadesEsenciales");
 
                     if (!response.IsSuccess)
                     {
@@ -130,7 +131,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    return View(estadoCivil);
+                    return View(actividadesEsenciales);
 
                 }
                 return BadRequest();
@@ -140,7 +141,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un estado civil",
+                    Message = "Editando una actividad esencial",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -154,11 +155,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<EstadoCivil>();
+            var lista = new List<ActividadesEsenciales>();
             try
             {
-                lista = await apiServicio.Listar<EstadoCivil>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/EstadosCiviles/ListarEstadosCiviles");
+                lista = await apiServicio.Listar<ActividadesEsenciales>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/ActividadesEsenciales/ListarActividadesEsenciales");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +183,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/EstadosCiviles");
+                                                               , "/api/ActividadesEsenciales");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -203,7 +204,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Estado Civil",
+                    Message = "Eliminar Actividad Esencial",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -213,6 +214,5 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
     }
 }
