@@ -86,22 +86,10 @@ namespace bd.webappth.servicios.Servicios
                     client.BaseAddress = baseAddress;
                     url = string.Format("{0}/{1}", url, id);
 
-                    var response = await client.PutAsync(url,content);
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        return new Response
-                        {
-                            IsSuccess = false,
-                            Message = "Error",
-                        };
-                    }
-                    return new Response
-                    {
-                        IsSuccess = true,
-                        Message = "Existe un registro con igual información",
-
-                    };
-
+                    var response = await client.PutAsync(url, content);
+                    var resultado = await response.Content.ReadAsStringAsync();
+                    var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
+                    return respuesta;
                 }
             }
             catch (Exception ex)
