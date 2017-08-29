@@ -5,7 +5,7 @@ namespace bd.webappth.entidades.Negocio
 
     public partial class FormularioCapacitacion
     {
-        [Key]
+
         public int IdFormularioCapacitacion { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
