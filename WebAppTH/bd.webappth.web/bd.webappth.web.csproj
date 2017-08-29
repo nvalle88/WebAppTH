@@ -37,6 +37,10 @@
   <ItemGroup>
     <Folder Include="Controllers\MVC\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\ActividadesEsenciales\" />
+    <Folder Include="Views\AnosExperiencia\" />
+    <Folder Include="Views\AreasConocimientos\" />
+    <Folder Include="Views\BrigadasSSO\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SalvarLogEntry\bd.guardarlog.servicios\bd.log.guardar.csproj" />
