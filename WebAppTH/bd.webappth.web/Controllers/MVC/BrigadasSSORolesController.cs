@@ -9,38 +9,38 @@ using bd.webappth.entidades.Utils;
 using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
-using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.log.guardar.Enumeradores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class ActividadesEsencialesController : Controller
+    public class BrigadasSSORolesController : Controller
     {
-
         private readonly IApiServicio apiServicio;
 
 
-        public ActividadesEsencialesController(IApiServicio apiServicio)
+        public BrigadasSSORolesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ActividadesEsenciales actividadesEsenciales)
+        public async Task<IActionResult> Create(BrigadaSSORol brigadaSSORol)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(actividadesEsenciales,
+                response = await apiServicio.InsertarAsync(brigadaSSORol,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ActividadesEsenciales/InsertarActividadesEsenciales");
+                                                             "/api/BrigadasSSORoles/InsertarBrigadaSSORol");
                 if (response.IsSuccess)
                 {
 
@@ -48,18 +48,19 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado una actividad esencial",
+                        Message = "Se ha creado un Rol de Brigada Salud y Seguridad Ocupacional",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Actividades Esenciales:", actividadesEsenciales.ActividadesEsencialesId),
+                        EntityID = string.Format("{0} {1}", "Rol de Brigada Salud y Seguridad Ocupacional:", brigadaSSORol.IdBrigadaSSORol),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(actividadesEsenciales);
+                ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+                return View(brigadaSSORol);
 
             }
             catch (Exception ex)
@@ -67,7 +68,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Actividad Esencial",
+                    Message = "Creando Rol de Brigada Salud y Seguridad Ocupacional",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,10 +86,11 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ActividadesEsenciales");
+                                                                  "/api/BrigadasSSORoles");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<ActividadesEsenciales>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<BrigadaSSORol>(respuesta.Resultado.ToString());
+                    ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -106,32 +108,33 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, ActividadesEsenciales actividadesEsenciales)
+        public async Task<IActionResult> Edit(string id, BrigadaSSORol brigadaSSORol)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, actividadesEsenciales, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ActividadesEsenciales");
+                    response = await apiServicio.EditarAsync(id, brigadaSSORol, new Uri(WebApp.BaseAddress),
+                                                                 "/api/BrigadasSSORoles");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
+                            EntityID = string.Format("{0} : {1}", "Rol de Brigada Salud y Seguridad Ocupacional", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una actividad esencial",
+                            Message = "Se ha actualizado un Rol de Brigada Salud y Seguridad Ocupacional",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    return View(actividadesEsenciales);
+                    ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+                    return View(brigadaSSORol);
 
                 }
                 return BadRequest();
@@ -141,7 +144,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una actividad esencial",
+                    Message = "Editando un Rol de Brigada Salud y Seguridad Ocupacional",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -155,11 +158,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<ActividadesEsenciales>();
+            var lista = new List<BrigadaSSORol>();
             try
             {
-                lista = await apiServicio.Listar<ActividadesEsenciales>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ActividadesEsenciales/ListarActividadesEsenciales");
+                lista = await apiServicio.Listar<BrigadaSSORol>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/BrigadasSSORoles/ListarBrigadasSSORoles");
                 return View(lista);
             }
             catch (Exception ex)
@@ -167,7 +170,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando actividades esenciales",
+                    Message = "Listando Rol de Brigada Salud y Seguridad Ocupacional",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -183,14 +186,14 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ActividadesEsenciales");
+                                                               , "/api/BrigadasSSORoles");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de actividad esencial eliminado",
+                        Message = "Registro de Rol de Brigada Salud y Seguridad Ocupacional eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -204,7 +207,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Actividad Esencial",
+                    Message = "Eliminar Brigada SSO Roles",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

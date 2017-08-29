@@ -115,7 +115,7 @@ namespace bd.webappth.web.Controllers.MVC
                     response = await apiServicio.EditarAsync(id, brigadaSSO, new Uri(WebApp.BaseAddress),
                                                                  "/api/BrigadasSSO");
 
-                    if (!response.IsSuccess)
+                    if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {

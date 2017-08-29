@@ -115,7 +115,7 @@ namespace bd.webappth.web.Controllers.MVC
                     response = await apiServicio.EditarAsync(id, anoExperiencia, new Uri(WebApp.BaseAddress),
                                                                  "/api/AnosExperiencia");
 
-                    if (!response.IsSuccess)
+                    if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {

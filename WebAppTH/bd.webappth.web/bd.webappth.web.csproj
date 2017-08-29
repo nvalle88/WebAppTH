@@ -41,6 +41,8 @@
     <Folder Include="Views\AnosExperiencia\" />
     <Folder Include="Views\AreasConocimientos\" />
     <Folder Include="Views\BrigadasSSO\" />
+    <Folder Include="Views\BrigadasSSORoles\" />
+    <Folder Include="Views\Capacitaciones\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SalvarLogEntry\bd.guardarlog.servicios\bd.log.guardar.csproj" />

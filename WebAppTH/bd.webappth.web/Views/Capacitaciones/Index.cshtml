@@ -1,10 +1,10 @@
-@model List<bd.webappth.entidades.Negocio.BrigadaSSO>
+@model List<bd.webappth.entidades.Negocio.Capacitacion>
 
 @{
     ViewData["Title"] = "Index";
 }
 <p>
-    <a asp-action="Create">Nueva Brigada de Salud y Seguridad Ocupacional</a>
+    <a asp-action="Create">Nueva Capacitación</a>
 </p>
 			<!-- MAIN CONTENT -->
 <div id="content">
@@ -32,7 +32,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Brigadas de Salud y Seguridad Ocupacional</h2>
+                        <h2>Usuarios</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -61,8 +61,8 @@
                                             </td>
                                            
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdBrigadaSSO}) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdBrigadaSSO}, new { onclick = "return confirm('Desea eliminar la Brigada de Salud y Seguridad Ocupacional... ?');" })
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCapacitacion }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCapacitacion }, new { onclick = "return confirm('Desea eliminar la capacitación... ?');" })
                                             </td>
                                         </tr>
                                     }
