@@ -46,30 +46,17 @@ namespace bd.webappth.servicios.Servicios
                 {
                     client.BaseAddress = baseAddress;
                     url = string.Format("{0}/{1}", url, id);
-
                     var response = await client.DeleteAsync(url);
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        return new Response
-                        {
-                            IsSuccess = false,
-                            Message = "Error",
-                        };
-                    }
-                    return new Response
-                    {
-                        IsSuccess = true,
-                        Message = "Insertar Ok",
-
-                    };
-
+                    var resultado = await response.Content.ReadAsStringAsync();
+                    var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
+                    return respuesta;
                 }
             }
             catch (Exception ex)
             {
                 return new Response
                 {
-                    IsSuccess = true,
+                    IsSuccess = false,
                     Message = ex.Message,
                 };
             }
