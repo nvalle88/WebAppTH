@@ -14,32 +14,54 @@ using Newtonsoft.Json;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class EstadosCivilesController : Controller
+    public class RelacionLaboralController : Controller
     {
         private readonly IApiServicio apiServicio;
 
-
-        public EstadosCivilesController(IApiServicio apiServicio)
+        public RelacionLaboralController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
-
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Index()
         {
+            var lista = new List<RelacionLaboral>();
+            try
+            {
+                lista = await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RelacionesLaborales/ListarRelacionesLaborales");
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Listando relaciones laborales",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenLaborales/ListarRegimenLaborales"), "IdRegimenLaboral", "Nombre");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EstadoCivil estadoCivil)
+        public async Task<IActionResult> Create(RelacionLaboral relacionLaboral)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(estadoCivil,
+                response = await apiServicio.InsertarAsync(relacionLaboral,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/EstadosCiviles/InsertarEstadoCivil");
+                                                             "/api/RelacionesLaborales/InsertarRelacionLaboral");
                 if (response.IsSuccess)
                 {
 
@@ -47,18 +69,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un estado civil",
+                        Message = "Se ha creado una relación laboral",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Estado Civil:", estadoCivil.IdEstadoCivil),
+                        EntityID = string.Format("{0} {1}", "Relación Laboral:", relacionLaboral.IdRelacionLaboral),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(estadoCivil);
+                return View(relacionLaboral);
 
             }
             catch (Exception ex)
@@ -66,7 +88,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Estado Civil",
+                    Message = "Creando Relación Laboral",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -84,10 +106,11 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/EstadosCiviles");
+                                                                  "/api/RelacionesLaborales");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<EstadoCivil>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<RelacionLaboral>(respuesta.Resultado.ToString());
+                    ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenLaborales/ListarRegimenLaborales"), "IdRegimenLaboral", "Nombre");
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -105,32 +128,30 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, EstadoCivil estadoCivil)
+        public async Task<IActionResult> Edit(string id, RelacionLaboral relacionLaboral)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, estadoCivil, new Uri(WebApp.BaseAddress),
-                                                                 "/api/EstadosCiviles");
+                    response = await apiServicio.EditarAsync(id, relacionLaboral, new Uri(WebApp.BaseAddress),
+                                                                 "/api/RelacionesLaborales");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
+                            EntityID = string.Format("{0} : {1}", "Relación Laboral", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un estado civil",
+                            Message = "Se ha actualizado un registro relación laboral",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
-                    ViewData["Error"] = response.Message;
-                    return View(estadoCivil);
 
                 }
                 return BadRequest();
@@ -140,7 +161,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un estado civil",
+                    Message = "Editando una relación laboral",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -151,45 +172,20 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index()
-        {
-
-            var lista = new List<EstadoCivil>();
-            try
-            {
-                lista = await apiServicio.Listar<EstadoCivil>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/EstadosCiviles/ListarEstadosCiviles");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando estados civiles",
-                    ExceptionTrace = ex,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
-            }
-        }
-
         public async Task<IActionResult> Delete(string id)
         {
 
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/EstadosCiviles");
+                                                               , "/api/RelacionesLaborales");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de estado civil eliminado",
+                        EntityID = string.Format("{0} : {1}", "Relación Laboral", id),
+                        Message = "Registro eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -203,7 +199,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Estado Civil",
+                    Message = "Eliminar Relación Laboral",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -213,6 +209,5 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
     }
 }
