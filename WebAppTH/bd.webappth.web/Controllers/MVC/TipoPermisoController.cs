@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,13 +14,12 @@ using Newtonsoft.Json;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class ActividadesEsencialesController : Controller
+    public class TipoPermisoController : Controller
     {
-
         private readonly IApiServicio apiServicio;
 
 
-        public ActividadesEsencialesController(IApiServicio apiServicio)
+        public TipoPermisoController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -33,14 +32,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ActividadesEsenciales actividadesEsenciales)
+        public async Task<IActionResult> Create(TipoPermiso tipoPermiso)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(actividadesEsenciales,
+                response = await apiServicio.InsertarAsync(tipoPermiso,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ActividadesEsenciales/InsertarActividadesEsenciales");
+                                                             "/api/TipoPermiso/InsertarTipoPermiso");
                 if (response.IsSuccess)
                 {
 
@@ -48,18 +47,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado una actividad esencial",
+                        Message = "Se ha creado un tipo de permiso",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Actividades Esenciales:", actividadesEsenciales.ActividadesEsencialesId),
+                        EntityID = string.Format("{0} {1}", "Tipo Permiso:", tipoPermiso.IdTipoPermiso),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(actividadesEsenciales);
+                return View(tipoPermiso);
 
             }
             catch (Exception ex)
@@ -67,7 +66,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Actividad Esencial",
+                    Message = "Creando Tipo de Permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,10 +84,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ActividadesEsenciales");
+                                                                  "/api/TipoPermiso");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<ActividadesEsenciales>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<TipoPermiso>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -106,15 +105,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, ActividadesEsenciales actividadesEsenciales)
+        public async Task<IActionResult> Edit(string id, TipoPermiso tipoPermiso)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, actividadesEsenciales, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ActividadesEsenciales");
+                    response = await apiServicio.EditarAsync(id, tipoPermiso, new Uri(WebApp.BaseAddress),
+                                                                 "/api/TipoPermiso");
 
                     if (response.IsSuccess)
                     {
@@ -124,14 +123,12 @@ namespace bd.webappth.web.Controllers.MVC
                             EntityID = string.Format("{0} : {1}", "Sistema", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una actividad esencial",
+                            Message = "Se ha actualizado un registro sistema",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
-                    ViewData["Error"] = response.Message;
-                    return View(actividadesEsenciales);
 
                 }
                 return BadRequest();
@@ -141,7 +138,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una actividad esencial",
+                    Message = "Editando un tipo de permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -155,11 +152,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<ActividadesEsenciales>();
+            var lista = new List<TipoPermiso>();
             try
             {
-                lista = await apiServicio.Listar<ActividadesEsenciales>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ActividadesEsenciales/ListarActividadesEsenciales");
+                lista = await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/TipoPermiso/ListarTipoPermiso");
                 return View(lista);
             }
             catch (Exception ex)
@@ -167,7 +164,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando actividades esenciales",
+                    Message = "Listando tipos de permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -183,14 +180,14 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ActividadesEsenciales");
+                                                               , "/api/TipoPermiso");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de actividad esencial eliminado",
+                        Message = "Registro eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -204,7 +201,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Actividad Esencial",
+                    Message = "Eliminar Tipo Permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -214,5 +211,6 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
     }
 }

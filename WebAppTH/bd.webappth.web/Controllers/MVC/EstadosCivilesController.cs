@@ -123,7 +123,7 @@ namespace bd.webappth.web.Controllers.MVC
                             EntityID = string.Format("{0} : {1}", "Sistema", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un registro sistema",
+                            Message = "Se ha actualizado un estado civil",
                             UserName = "Usuario 1"
                         });
 
@@ -189,7 +189,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro eliminado",
+                        Message = "Registro de estado civil eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"

@@ -14,16 +14,37 @@ using Newtonsoft.Json;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class ActividadesEsencialesController : Controller
+    public class RolPuestoController : Controller
     {
-
         private readonly IApiServicio apiServicio;
 
-
-        public ActividadesEsencialesController(IApiServicio apiServicio)
+        public RolPuestoController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
+        }
 
+        public async Task<IActionResult> Index()
+        {
+            var lista = new List<RolPuesto>();
+            try
+            {
+                lista = await apiServicio.Listar<RolPuesto>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/RolesPuesto/ListarRolesPuesto");
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Listando roles de puesto",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+                return BadRequest();
+            }
         }
 
         public IActionResult Create()
@@ -33,14 +54,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ActividadesEsenciales actividadesEsenciales)
+        public async Task<IActionResult> Create(RolPuesto rolPuesto)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(actividadesEsenciales,
+                response = await apiServicio.InsertarAsync(rolPuesto,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ActividadesEsenciales/InsertarActividadesEsenciales");
+                                                             "/api/RolesPuesto/InsertarRolPuesto");
                 if (response.IsSuccess)
                 {
 
@@ -48,18 +69,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado una actividad esencial",
+                        Message = "Se ha creado un rol de puesto",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Actividades Esenciales:", actividadesEsenciales.ActividadesEsencialesId),
+                        EntityID = string.Format("{0} {1}", "Rol de Puesto:", rolPuesto.IdRolPuesto),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(actividadesEsenciales);
+                return View(rolPuesto);
 
             }
             catch (Exception ex)
@@ -67,7 +88,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Actividad Esencial",
+                    Message = "Creando Rol de Puesto",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,10 +106,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ActividadesEsenciales");
+                                                                  "/api/RolesPuesto");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<ActividadesEsenciales>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<RolPuesto>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -106,32 +127,30 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, ActividadesEsenciales actividadesEsenciales)
+        public async Task<IActionResult> Edit(string id, RolPuesto rolPuesto)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, actividadesEsenciales, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ActividadesEsenciales");
+                    response = await apiServicio.EditarAsync(id, rolPuesto, new Uri(WebApp.BaseAddress),
+                                                                 "/api/RolesPuesto");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
+                            EntityID = string.Format("{0} : {1}", "Rol de Puesto", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una actividad esencial",
+                            Message = "Se ha actualizado un registro rol de puesto",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
-                    ViewData["Error"] = response.Message;
-                    return View(actividadesEsenciales);
 
                 }
                 return BadRequest();
@@ -141,7 +160,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una actividad esencial",
+                    Message = "Editando un rol de puesto",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -152,45 +171,20 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index()
-        {
-
-            var lista = new List<ActividadesEsenciales>();
-            try
-            {
-                lista = await apiServicio.Listar<ActividadesEsenciales>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ActividadesEsenciales/ListarActividadesEsenciales");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando actividades esenciales",
-                    ExceptionTrace = ex,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
-            }
-        }
-
         public async Task<IActionResult> Delete(string id)
         {
 
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ActividadesEsenciales");
+                                                               , "/api/RolesPuesto");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de actividad esencial eliminado",
+                        EntityID = string.Format("{0} : {1}", "Rol de Puesto", id),
+                        Message = "Registro eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -204,7 +198,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Actividad Esencial",
+                    Message = "Eliminar Rol de Puesto",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
