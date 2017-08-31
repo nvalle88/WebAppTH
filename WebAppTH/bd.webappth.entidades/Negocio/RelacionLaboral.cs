@@ -18,7 +18,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Régimen laboral:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int? IdRegimenLaboral { get; set; }
+        public int IdRegimenLaboral { get; set; }
         public virtual RegimenLaboral RegimenLaboral { get; set; }
 
         public virtual ICollection<ModalidadPartida> ModalidadPartida { get; set; }

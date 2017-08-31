@@ -1,7 +1,7 @@
-@model bd.webappth.entidades.Negocio.EstadoCivil
+@model bd.webappth.entidades.Negocio.EvaluacionInducion
 
 @{
-    ViewData["Title"] = "EstadosCiviles";
+    ViewData["Title"] = "EvaluacionesInducciones";
 }
 
 
@@ -14,13 +14,13 @@
         <!-- START ROW -->
         <div class="row">
             <!-- NEW COL START -->
-            <article class="col-sm-12 col-md-12 col-lg-4">
+            <article class="col-sm-12 col-md-12 col-lg-10">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Estados Civiles</h2>
+                        <h2>Evaluaciones Inducción</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -38,11 +38,25 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-8">
+                                        <section class="col col-4">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                                                <input maxlength="50" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
                                                 <span asp-validation-for="Nombre" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="2" asp-for="MinimoAprobar" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MinimoAprobar)" />
+                                                <span asp-validation-for="MinimoAprobar" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="2" asp-for="MaximoPuntos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MaximoPuntos)" />
+                                                <span asp-validation-for="MaximoPuntos" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>

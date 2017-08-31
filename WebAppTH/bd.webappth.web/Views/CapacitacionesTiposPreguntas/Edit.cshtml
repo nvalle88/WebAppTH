@@ -1,11 +1,11 @@
-@model bd.webappth.entidades.Negocio.EstadoCivil
+@model bd.webappth.entidades.Negocio.CapacitacionTipoPregunta
 
 @{
-    ViewData["Title"] = "EstadosCiviles";
+    ViewData["Title"] = "CapacitacionesTiposPreguntas";
 }
 
 
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
 
     <!-- widget grid -->
@@ -14,13 +14,13 @@
         <!-- START ROW -->
         <div class="row">
             <!-- NEW COL START -->
-            <article class="col-sm-12 col-md-12 col-lg-4">
+            <article class="col-sm-12 col-md-12 col-lg-5">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
-               
+
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Estados Civiles</h2>
+                        <h2>Tipos de Preguntas de Capacitación</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -28,31 +28,29 @@
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-                           
                         </div>
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                          
-                            <form  asp-action="Create" id="checkout-form"  class="smart-form" novalidate="novalidate">
+
+                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="IdCapacitacionTipoPregunta"/>
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
-                                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                                                <input maxlength="32"  asp-for="Descripcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)" />
+                                                <span asp-validation-for="Descripcion" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>
-                                    
                                 </fieldset>
-                               
                                 <footer>
-                                    @*<span class="text-danger">@ViewData["Error"]</span>*@
+                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Index"  class="btn btn-default">Cancelar</a>
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -63,13 +61,13 @@
                 <!-- end widget -->
 
             </article>
-       
+
         </div>
         <!-- END ROW -->
     </section>
     <!-- end widget grid -->
     <!-- Modal -->
-   
+
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {

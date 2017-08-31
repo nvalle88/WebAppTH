@@ -43,6 +43,21 @@
     <Folder Include="Views\BrigadasSSO\" />
     <Folder Include="Views\BrigadasSSORoles\" />
     <Folder Include="Views\Capacitaciones\" />
+    <Folder Include="Views\CapacitacionesModalidades\" />
+    <Folder Include="Views\CapacitacionesTemarios\" />
+    <Folder Include="Views\CapacitacionesAreasConocimientos\" />
+    <Folder Include="Views\CapacitacionesTiposPreguntas\" />
+    <Folder Include="Views\ConfirmacionesLecturas\" />
+    <Folder Include="Views\ConocimientosAdicionales\" />
+    <Folder Include="Views\Destrezas\" />
+    <Folder Include="Views\DocumentosInformacionInstitucional\" />
+    <Folder Include="Views\EscalasEvaluacionesTotales\" />
+    <Folder Include="Views\EscalaGrados\" />
+    <Folder Include="Views\EspecificidadesExperiencia\" />
+    <Folder Include="Views\Estados\" />
+    <Folder Include="Views\Estudios\" />
+    <Folder Include="Views\Etnias\" />
+    <Folder Include="Views\EvaluacionesInducciones\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SalvarLogEntry\bd.guardarlog.servicios\bd.log.guardar.csproj" />
