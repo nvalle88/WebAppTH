@@ -42,6 +42,7 @@
     <Folder Include="Views\BrigadasSSO\" />
     <Folder Include="Views\BrigadasSSORoles\" />
     <Folder Include="Views\Capacitaciones\" />
+    <Folder Include="Views\FormulasRMU\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SalvarLogEntry\bd.guardarlog.servicios\bd.log.guardar.csproj" />
