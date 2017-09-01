@@ -14,9 +14,13 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\API\**" />
+    <Compile Remove="Views\CapacitacionesProveedores}\**" />
     <Content Remove="Controllers\API\**" />
+    <Content Remove="Views\CapacitacionesProveedores}\**" />
     <EmbeddedResource Remove="Controllers\API\**" />
+    <EmbeddedResource Remove="Views\CapacitacionesProveedores}\**" />
     <None Remove="Controllers\API\**" />
+    <None Remove="Views\CapacitacionesProveedores}\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
@@ -43,6 +47,8 @@
     <Folder Include="Views\BrigadasSSORoles\" />
     <Folder Include="Views\Capacitaciones\" />
     <Folder Include="Views\FormulasRMU\" />
+    <Folder Include="Views\CapacitacionesProveedores\" />
+    <Folder Include="Views\DenominacionesCompetencias\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SalvarLogEntry\bd.guardarlog.servicios\bd.log.guardar.csproj" />

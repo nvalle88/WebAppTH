@@ -7,19 +7,19 @@ using bd.webappth.servicios.Interfaces;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.log.guardar.Servicios;
-using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.ObjectTranfer;
+using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 
-namespace bd.webappth.web.Views
+namespace bd.webappth.web.Controllers.MVC
 {
-    public class CapacitacionesModalidadesController : Controller
+    public class DenominacionesCompetenciasController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public CapacitacionesModalidadesController(IApiServicio apiServicio)
+        public DenominacionesCompetenciasController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -32,14 +32,14 @@ namespace bd.webappth.web.Views
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CapacitacionModalidad capacitacionModalidad)
+        public async Task<IActionResult> Create(DenominacionCompetencia denominacionCompetencia)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(capacitacionModalidad,
+                response = await apiServicio.InsertarAsync(denominacionCompetencia,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/CapacitacionesModalidades/InsertarCapacitacionModalidad");
+                                                             "/api/DenominacionesCompetencias/InsertarDenominacionCompetencia");
                 if (response.IsSuccess)
                 {
 
@@ -47,18 +47,18 @@ namespace bd.webappth.web.Views
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado una modalidad de capacitación",
+                        Message = "Se ha creado una denominación competencia",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Modalidad de Capacitación:", capacitacionModalidad.IdCapacitacionModalidad),
+                        EntityID = string.Format("{0} {1}", "Denominación Competencia:", denominacionCompetencia.IdDenominacionCompetencia),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(capacitacionModalidad);
+                return View(denominacionCompetencia);
 
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace bd.webappth.web.Views
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Modalidad de Capacitación",
+                    Message = "Creando Denominación Competencia",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -84,10 +84,10 @@ namespace bd.webappth.web.Views
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/CapacitacionesModalidades");
+                                                                  "/api/DenominacionesCompetencias");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<CapacitacionModalidad>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<DenominacionCompetencia>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -105,32 +105,32 @@ namespace bd.webappth.web.Views
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, CapacitacionModalidad capacitacionModalidad)
+        public async Task<IActionResult> Edit(string id, DenominacionCompetencia denominacionCompetencia)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, capacitacionModalidad, new Uri(WebApp.BaseAddress),
-                                                                 "/api/CapacitacionesModalidades");
+                    response = await apiServicio.EditarAsync(id, denominacionCompetencia, new Uri(WebApp.BaseAddress),
+                                                                 "/api/DenominacionesCompetencias");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Modalidad de Capacitación", id),
+                            EntityID = string.Format("{0} : {1}", "Denominación Competencia", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una modalidad de capacitación",
+                            Message = "Se ha actualizado un denominación competencia",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    return View(capacitacionModalidad);
+                    return View(denominacionCompetencia);
 
                 }
                 return BadRequest();
@@ -140,7 +140,7 @@ namespace bd.webappth.web.Views
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una modalidad de capacitación",
+                    Message = "Editando un denominación competencia",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -154,11 +154,11 @@ namespace bd.webappth.web.Views
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<CapacitacionModalidad>();
+            var lista = new List<DenominacionCompetencia>();
             try
             {
-                lista = await apiServicio.Listar<CapacitacionModalidad>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/CapacitacionesModalidades/ListarCapacitacionesModalidadess");
+                lista = await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/DenominacionesCompetencias/ListarDenominacionesCompetencias");
                 return View(lista);
             }
             catch (Exception ex)
@@ -166,7 +166,7 @@ namespace bd.webappth.web.Views
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando modalidad de capacitaciones",
+                    Message = "Listando denominaciones competencias",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -182,14 +182,14 @@ namespace bd.webappth.web.Views
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/CapacitacionesModalidades");
+                                                               , "/api/DenominacionesCompetencias");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Modalidad de Capacitación", id),
-                        Message = "Registro de modalidad de capacitación eliminado",
+                        EntityID = string.Format("{0} : {1}", "Denominación Competencia", id),
+                        Message = "Registro de denominación competencia eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -203,7 +203,7 @@ namespace bd.webappth.web.Views
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Modalidad de Capacitación",
+                    Message = "Eliminar Denominación Competencia",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
