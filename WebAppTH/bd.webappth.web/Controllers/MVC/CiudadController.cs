@@ -20,13 +20,14 @@ namespace bd.webappth.web.Controllers.MVC
 
 
         public CiudadController(IApiServicio apiServicio)
-        {
+        {            
             this.apiServicio = apiServicio;
-
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "/api/Pais/ListarPais"), "IdPais", "Nombre");
+            ViewData["IdProvincia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "/api/Provincia/ListarProvincia"), "IdProvincia", "Nombre");
             return View();
         }
 
@@ -85,11 +86,11 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
                                                                   "/api/Ciudad");
-
-
                     respuesta.Resultado = JsonConvert.DeserializeObject<Ciudad>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "/api/Pais/ListarPais"), "IdPais", "Nombre");
+                        ViewData["IdProvincia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "/api/Provincia/ListarProvincia"), "IdProvincia", "Nombre");
                         return View(respuesta.Resultado);
                     }
 
