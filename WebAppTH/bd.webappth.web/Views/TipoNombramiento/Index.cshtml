@@ -1,6 +1,6 @@
 ﻿@model List<bd.webappth.entidades.Negocio.TipoNombramiento>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "TipoNombramiento";
 }
 
 <p>
@@ -25,6 +25,10 @@
                                         <th>
                                             Nombre
                                         </th>
+                                        <th>
+                                            Relacion Laboral
+                                        </th>
+                                        
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -34,6 +38,10 @@
                                         <tr>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.RelacionLaboral.Nombre)
                                             </td>
 
                                             <td>

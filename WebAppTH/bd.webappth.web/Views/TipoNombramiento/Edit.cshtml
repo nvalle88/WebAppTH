@@ -23,6 +23,16 @@
                                 <input type="hidden" asp-for="IdTipoNombramiento" />
                                 <fieldset>
                                     <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <select asp-for="IdRelacionLaboral" class="form-control" asp-items="ViewBag.IdRelacionLaboral"></select>
+                                                <span asp-validation-for="IdRelacionLaboral" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">
                                         <section class="col col-4">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>

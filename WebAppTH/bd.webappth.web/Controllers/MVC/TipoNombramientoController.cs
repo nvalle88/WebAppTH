@@ -25,8 +25,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RelacionLaboral/ListarRelacionLaboral"), "IdRelacionLaboral", "Nombre");
             return View();
         }
 
