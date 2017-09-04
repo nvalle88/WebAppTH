@@ -1,4 +1,4 @@
-namespace bd.webappth.entidades.Negocio.Negocio
+namespace bd.webappth.entidades.Negocio
 {
     using System.ComponentModel.DataAnnotations;
 

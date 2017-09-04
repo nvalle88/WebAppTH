@@ -7,20 +7,22 @@ using bd.webappth.servicios.Interfaces;
 using bd.webappth.entidades.Utils;
 using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
-using bd.log.guardar.Enumeradores;
 using bd.webappseguridad.entidades.Enumeradores;
-using bd.webappth.entidades.Negocio;
+using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webappth.entidades.Negocio;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class ExepcionesController : Controller
+    public class ImpuestoRentaParametrosController : Controller
     {
         private readonly IApiServicio apiServicio;
 
-        public ExepcionesController(IApiServicio apiServicio)
+
+        public ImpuestoRentaParametrosController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
+
         }
 
         public IActionResult Create()
@@ -30,14 +32,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Exepciones Exepciones)
+        public async Task<IActionResult> Create(ImpuestoRentaParametros ImpuestoRentaParametros)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(Exepciones,
+                response = await apiServicio.InsertarAsync(ImpuestoRentaParametros,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Exepciones/InsertarExepciones");
+                                                             "/api/ImpuestoRentaParametros/InsertarImpuestoRentaParametros");
                 if (response.IsSuccess)
                 {
 
@@ -45,18 +47,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado una exepción",
+                        Message = "Se ha creado un impuesto renta parámetros",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Exepciones:", Exepciones.IdExepciones),
+                        EntityID = string.Format("{0} {1}", "ImpuestoRentaParametros:", ImpuestoRentaParametros.IdImpuestoRentaParametros),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(Exepciones);
+                return View(ImpuestoRentaParametros);
 
             }
             catch (Exception ex)
@@ -64,7 +66,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando una exepción",
+                    Message = "Creando impuesto renta parámetros",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -82,10 +84,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/Exepciones");
+                                                                  "api/ImpuestoRentaParametros");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<Exepciones>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<ImpuestoRentaParametros>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -103,15 +105,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, Exepciones Exepciones)
+        public async Task<IActionResult> Edit(string id, ImpuestoRentaParametros ImpuestoRentaParametros)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, Exepciones, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Exepciones");
+                    response = await apiServicio.EditarAsync(id, ImpuestoRentaParametros, new Uri(WebApp.BaseAddress),
+                                                                 "/api/ImpuestoRentaParametros");
 
                     if (response.IsSuccess)
                     {
@@ -128,7 +130,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    return View(Exepciones);
+                    return View(ImpuestoRentaParametros);
 
                 }
                 return BadRequest();
@@ -138,7 +140,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una exepción",
+                    Message = "Editando un impuesto renta parámetros",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -152,11 +154,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<Exepciones>();
+            var lista = new List<ImpuestoRentaParametros>();
             try
             {
-                lista = await apiServicio.Listar<Exepciones>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Exepciones/ListarExepciones");
+                lista = await apiServicio.Listar<ImpuestoRentaParametros>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/ImpuestoRentaParametros/ListarImpuestoRentaParametros");
                 return View(lista);
             }
             catch (Exception ex)
@@ -164,7 +166,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando una exepción",
+                    Message = "Listando ImpuestoRentaParametroses",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -180,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Exepciones");
+                                                               , "/api/ImpuestoRentaParametros");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -201,7 +203,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar una exepción",
+                    Message = "Eliminar impuesto renta parámetros",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -211,6 +213,5 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
     }
 }
