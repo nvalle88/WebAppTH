@@ -1,46 +1,45 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bd.webappth.servicios.Interfaces;
-using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webappth.entidades.Negocio;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class TipoNombramientoController : Controller
+    public class ParentescosController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public TipoNombramientoController(IApiServicio apiServicio)
+        public ParentescosController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RelacionLaboral/ListarRelacionLaboral"), "IdRelacionLaboral", "Nombre");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TipoNombramiento tipoNombramiento)
+        public async Task<IActionResult> Create(Parentesco Parentesco)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(tipoNombramiento,
+                response = await apiServicio.InsertarAsync(Parentesco,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TipoNombramiento/InsertarTipoNombramiento");
+                                                             "/api/Parentescos/InsertarParentescos");
                 if (response.IsSuccess)
                 {
 
@@ -48,18 +47,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un tipo de nombramiento",
+                        Message = "Se ha creado un Parentesco",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Tipo Nombramiento:", tipoNombramiento.IdTipoNombramiento),
+                        EntityID = string.Format("{0} {1}", "Parentesco:", Parentesco.IdParentesco),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(tipoNombramiento);
+                return View(Parentesco);
 
             }
             catch (Exception ex)
@@ -67,7 +66,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Tipo de Nombramiento",
+                    Message = "Creando Parentesco",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,10 +84,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/TipoNombramiento");
+                                                                  "api/Parentescos");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<TipoNombramiento>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<Parentesco>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -106,15 +105,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, TipoNombramiento tipoNombramiento)
+        public async Task<IActionResult> Edit(string id, Parentesco Parentesco)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, tipoNombramiento, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TipoNombramiento");
+                    response = await apiServicio.EditarAsync(id, Parentesco, new Uri(WebApp.BaseAddress),
+                                                                 "/api/Parentescos");
 
                     if (response.IsSuccess)
                     {
@@ -130,6 +129,8 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return RedirectToAction("Index");
                     }
+                    ViewData["Error"] = response.Message;
+                    return View(Parentesco);
 
                 }
                 return BadRequest();
@@ -139,7 +140,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un tipo de nombramiento",
+                    Message = "Editando un Parentesco",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -153,11 +154,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<TipoNombramiento>();
+            var lista = new List<Parentesco>();
             try
             {
-                lista = await apiServicio.Listar<TipoNombramiento>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TipoNombramiento/ListarTipoNombramiento");
+                lista = await apiServicio.Listar<Parentesco>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/Parentescos/ListarParentescos");
                 return View(lista);
             }
             catch (Exception ex)
@@ -165,7 +166,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando tipos de nombramiento",
+                    Message = "Listando Parentescos",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -181,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TipoNombramiento");
+                                                               , "/api/Parentescos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -202,7 +203,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Tipo Nombramiento",
+                    Message = "Eliminar Parentescos",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

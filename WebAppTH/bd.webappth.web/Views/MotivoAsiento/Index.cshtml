@@ -1,20 +1,21 @@
-ï»¿@model List<bd.webappth.entidades.Negocio.TipoNombramiento>
+@model List<bd.webapprm.entidades.MotivoAsiento>
+
 @{
-    ViewData["Title"] = "TipoNombramiento";
+    ViewData["Title"] = "Motivo Asiento";
 }
 
-<p>
-    <a asp-action="Create">Nuevo Tipo de Nombramiento</a>
-</p>
-
 <div id="content">
+    <p>
+        <a asp-action="Create" class="btn btn-success">Nuevo Motivo Asiento</a>
+    </p>
+
     <section id="widget-grid" class="">
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Tipo de Nombramiento</h2>
+                        <h2>Motivo Asiento</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox"></div>
@@ -23,12 +24,11 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            Nombre
+                                            Descripción
                                         </th>
                                         <th>
-                                            Relacion Laboral
-                                        </th>
-                                        
+                                            Configuracion Contabilidad
+                                        </th>                                        
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -37,16 +37,15 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.RelacionLaboral.Nombre)
+                                                @Html.DisplayFor(modelItem => item.ConfiguracionContabilidad.idConfiguracionContabilidad)
                                             </td>
-
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoNombramiento }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoNombramiento }, new { onclick = "return confirm('Desea eliminar el Tipo de Nombramiento... ?');" })
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdMotivoAsiento }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdMotivoAsiento }, new { onclick = "return confirm('Desea eliminar el Motivo Asiento... ?');" })
                                             </td>
                                         </tr>
                                     }

@@ -1,20 +1,21 @@
-ï»¿@model List<bd.webappth.entidades.Negocio.TipoNombramiento>
+@model List<bd.webapprm.entidades.FondoFinanciamiento>
+
 @{
-    ViewData["Title"] = "TipoNombramiento";
+    ViewData["Title"] = "Fondo Financiamiento";
 }
 
-<p>
-    <a asp-action="Create">Nuevo Tipo de Nombramiento</a>
-</p>
-
 <div id="content">
+    <p>
+        <a asp-action="Create" class="btn btn-success">Nuevo Artículo</a>
+    </p>
+
     <section id="widget-grid" class="">
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Tipo de Nombramiento</h2>
+                        <h2>Fondos Financiamiento</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox"></div>
@@ -25,10 +26,6 @@
                                         <th>
                                             Nombre
                                         </th>
-                                        <th>
-                                            Relacion Laboral
-                                        </th>
-                                        
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -41,12 +38,8 @@
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.RelacionLaboral.Nombre)
-                                            </td>
-
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoNombramiento }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoNombramiento }, new { onclick = "return confirm('Desea eliminar el Tipo de Nombramiento... ?');" })
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdFondoFinanciamiento }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFondoFinanciamiento }, new { onclick = "return confirm('Desea eliminar el Fondo Financiamiento... ?');" })
                                             </td>
                                         </tr>
                                     }

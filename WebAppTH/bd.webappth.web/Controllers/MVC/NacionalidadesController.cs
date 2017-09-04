@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,38 +9,36 @@ using bd.webappth.entidades.Utils;
 using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
-using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
-
+using bd.log.guardar.Enumeradores;
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class TipoNombramientoController : Controller
+    public class NacionalidadesController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public TipoNombramientoController(IApiServicio apiServicio)
+        public NacionalidadesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RelacionLaboral/ListarRelacionLaboral"), "IdRelacionLaboral", "Nombre");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TipoNombramiento tipoNombramiento)
+        public async Task<IActionResult> Create(Nacionalidad Nacionalidad)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(tipoNombramiento,
+                response = await apiServicio.InsertarAsync(Nacionalidad,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TipoNombramiento/InsertarTipoNombramiento");
+                                                             "/api/Nacionalidades/InsertarNacionalidades");
                 if (response.IsSuccess)
                 {
 
@@ -48,18 +46,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un tipo de nombramiento",
+                        Message = "Se ha creado un Nacionalidad",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Tipo Nombramiento:", tipoNombramiento.IdTipoNombramiento),
+                        EntityID = string.Format("{0} {1}", "Nacionalidad:", Nacionalidad.IdNacionalidad),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(tipoNombramiento);
+                return View(Nacionalidad);
 
             }
             catch (Exception ex)
@@ -67,7 +65,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Tipo de Nombramiento",
+                    Message = "Creando Nacionalidad",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,10 +83,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/TipoNombramiento");
+                                                                  "api/Nacionalidades");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<TipoNombramiento>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<Nacionalidad>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -106,15 +104,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, TipoNombramiento tipoNombramiento)
+        public async Task<IActionResult> Edit(string id, Nacionalidad Nacionalidad)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, tipoNombramiento, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TipoNombramiento");
+                    response = await apiServicio.EditarAsync(id, Nacionalidad, new Uri(WebApp.BaseAddress),
+                                                                 "/api/Nacionalidades");
 
                     if (response.IsSuccess)
                     {
@@ -130,6 +128,8 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return RedirectToAction("Index");
                     }
+                    ViewData["Error"] = response.Message;
+                    return View(Nacionalidad);
 
                 }
                 return BadRequest();
@@ -139,7 +139,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un tipo de nombramiento",
+                    Message = "Editando un Nacionalidad",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -153,11 +153,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<TipoNombramiento>();
+            var lista = new List<Nacionalidad>();
             try
             {
-                lista = await apiServicio.Listar<TipoNombramiento>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TipoNombramiento/ListarTipoNombramiento");
+                lista = await apiServicio.Listar<Nacionalidad>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/Nacionalidades/ListarNacionalidades");
                 return View(lista);
             }
             catch (Exception ex)
@@ -165,7 +165,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando tipos de nombramiento",
+                    Message = "Listando Nacionalidades",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -181,7 +181,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TipoNombramiento");
+                                                               , "/api/Nacionalidades");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -202,7 +202,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Tipo Nombramiento",
+                    Message = "Eliminar Nacionalidades",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

@@ -1,46 +1,45 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bd.webappth.servicios.Interfaces;
-using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webappth.entidades.Negocio;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class TipoNombramientoController : Controller
+    public class NivelesDesarrolloController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public TipoNombramientoController(IApiServicio apiServicio)
+        public NivelesDesarrolloController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RelacionLaboral/ListarRelacionLaboral"), "IdRelacionLaboral", "Nombre");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TipoNombramiento tipoNombramiento)
+        public async Task<IActionResult> Create(NivelDesarrollo NivelDesarrollo)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(tipoNombramiento,
+                response = await apiServicio.InsertarAsync(NivelDesarrollo,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TipoNombramiento/InsertarTipoNombramiento");
+                                                             "/api/NivelesDesarrollo/InsertarNivelesDesarrollo");
                 if (response.IsSuccess)
                 {
 
@@ -48,18 +47,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un tipo de nombramiento",
+                        Message = "Se ha creado un Nivel Desarrollo",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Tipo Nombramiento:", tipoNombramiento.IdTipoNombramiento),
+                        EntityID = string.Format("{0} {1}", "NivelDesarrollo:", NivelDesarrollo.IdNivelDesarrollo),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(tipoNombramiento);
+                return View(NivelDesarrollo);
 
             }
             catch (Exception ex)
@@ -67,7 +66,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Tipo de Nombramiento",
+                    Message = "Creando Nivel Desarrollo",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,10 +84,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/TipoNombramiento");
+                                                                  "api/NivelesDesarrollo");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<TipoNombramiento>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<NivelDesarrollo>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -106,15 +105,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, TipoNombramiento tipoNombramiento)
+        public async Task<IActionResult> Edit(string id, NivelDesarrollo NivelDesarrollo)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, tipoNombramiento, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TipoNombramiento");
+                    response = await apiServicio.EditarAsync(id, NivelDesarrollo, new Uri(WebApp.BaseAddress),
+                                                                 "/api/NivelesDesarrollo");
 
                     if (response.IsSuccess)
                     {
@@ -130,6 +129,8 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return RedirectToAction("Index");
                     }
+                    ViewData["Error"] = response.Message;
+                    return View(NivelDesarrollo);
 
                 }
                 return BadRequest();
@@ -139,7 +140,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un tipo de nombramiento",
+                    Message = "Editando un Nivel Desarrollo",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -153,11 +154,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<TipoNombramiento>();
+            var lista = new List<NivelDesarrollo>();
             try
             {
-                lista = await apiServicio.Listar<TipoNombramiento>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TipoNombramiento/ListarTipoNombramiento");
+                lista = await apiServicio.Listar<NivelDesarrollo>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/NivelesDesarrollo/ListarNivelesDesarrollo");
                 return View(lista);
             }
             catch (Exception ex)
@@ -165,7 +166,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando tipos de nombramiento",
+                    Message = "Listando Nivel Desarrollo",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -181,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TipoNombramiento");
+                                                               , "/api/NivelesDesarrollo");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -202,7 +203,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Tipo Nombramiento",
+                    Message = "Eliminar Nivel Desarrollo",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -212,6 +213,5 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
     }
 }

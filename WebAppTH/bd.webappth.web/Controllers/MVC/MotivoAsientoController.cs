@@ -1,73 +1,96 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using bd.webappth.servicios.Interfaces;
-using bd.webappth.entidades.Negocio;
-using bd.webappth.entidades.Utils;
+using bd.webapprm.servicios.Interfaces;
+using bd.webapprm.entidades.Utils;
 using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
-using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webapprm.entidades;
+using bbd.webapprm.servicios.Enumeradores;
 
-namespace bd.webappth.web.Controllers.MVC
+namespace bd.webapprm.web.Controllers.MVC
 {
-    public class TipoNombramientoController : Controller
+    public class MotivoAsientoController : Controller
     {
         private readonly IApiServicio apiServicio;
 
-
-        public TipoNombramientoController(IApiServicio apiServicio)
+        public MotivoAsientoController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
+        }
 
+        public async Task<IActionResult> Index()
+        {
+            var lista = new List<MotivoAsiento>();
+            try
+            {
+                lista = await apiServicio.Listar<MotivoAsiento>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/MotivoAsiento/ListarMotivoAsiento");
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppRM),
+                    Message = "Listando Motivos de Asientos",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+                return BadRequest();
+            }
         }
 
         public async Task<IActionResult> Create()
         {
-            ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RelacionLaboral/ListarRelacionLaboral"), "IdRelacionLaboral", "Nombre");
+            ViewData["IdConfiguracionContabilidad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<MotivoAsiento>(new Uri(WebApp.BaseAddress), "/api/ConfiguracionContabilidad/ListarConfiguracionContabilidad"), "IdConfiguracionContabilidad", "IdConfiguracionContabilidad");
+            
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TipoNombramiento tipoNombramiento)
+        public async Task<IActionResult> Create(MotivoAsiento motivoAsiento)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(tipoNombramiento,
+                response = await apiServicio.InsertarAsync(motivoAsiento,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TipoNombramiento/InsertarTipoNombramiento");
+                                                             "/api/MotivoAsiento/InsertarMotivoAsiento");
                 if (response.IsSuccess)
                 {
 
                     var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppRM),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un tipo de nombramiento",
+                        Message = "Se ha creado un Motivo de Asiento",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Tipo Nombramiento:", tipoNombramiento.IdTipoNombramiento),
+                        EntityID = string.Format("{0} {1}", "Motivo de Asiento:", motivoAsiento.IdMotivoAsiento),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(tipoNombramiento);
+                return View(motivoAsiento);
 
             }
             catch (Exception ex)
             {
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Tipo de Nombramiento",
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppRM),
+                    Message = "Creando Motivo de Asiento",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,10 +108,12 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/TipoNombramiento");
+                                                                  "/api/MotivoAsiento");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<TipoNombramiento>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<MotivoAsiento>(respuesta.Resultado.ToString());
+                    ViewData["IdConfiguracionContabilidad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<MotivoAsiento>(new Uri(WebApp.BaseAddress), "/api/ConfiguracionContabilidad/ListarConfiguracionContabilidad"), "IdConfiguracionContabilidad", "IdConfiguracionContabilidad");
+
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -106,25 +131,25 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, TipoNombramiento tipoNombramiento)
+        public async Task<IActionResult> Edit(string id, MotivoAsiento motivoAsiento)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, tipoNombramiento, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TipoNombramiento");
+                    response = await apiServicio.EditarAsync(id, motivoAsiento, new Uri(WebApp.BaseAddress),
+                                                                 "/api/MotivoAsiento");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
+                            ApplicationName = Convert.ToString(Aplicacion.WebAppRM),
+                            EntityID = string.Format("{0} : {1}", "Motivo de Asiento", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un registro sistema",
+                            Message = "Se ha actualizado un registro Motivo de Asiento",
                             UserName = "Usuario 1"
                         });
 
@@ -138,8 +163,8 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un tipo de nombramiento",
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppRM),
+                    Message = "Editando un Motivo de Asiento",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -150,44 +175,19 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index()
-        {
-
-            var lista = new List<TipoNombramiento>();
-            try
-            {
-                lista = await apiServicio.Listar<TipoNombramiento>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TipoNombramiento/ListarTipoNombramiento");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando tipos de nombramiento",
-                    ExceptionTrace = ex,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
-            }
-        }
-
         public async Task<IActionResult> Delete(string id)
         {
 
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TipoNombramiento");
+                                                               , "/api/MotivoAsiento");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppRM),
+                        EntityID = string.Format("{0} : {1}", "Motivo de Asiento", id),
                         Message = "Registro eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
@@ -201,8 +201,8 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Tipo Nombramiento",
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppRM),
+                    Message = "Eliminar Motivo de Asiento",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -212,6 +212,5 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
     }
 }
