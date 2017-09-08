@@ -26,8 +26,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["IdFormulaRMU"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FormulasRMU>(new Uri(WebApp.BaseAddress), "api/FormulasRMU/ListarFormulasRMU"), "IdFormulaRMU", "Formula");
             return View();
         }
 
@@ -52,13 +53,15 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "IngresoEgresoRMU:", IngresoEgresoRMU.IdIngresoEgresoRMU),
+                        EntityID = string.Format("{0} {1}", "Ingreso Egreso RMU:", IngresoEgresoRMU.IdIngresoEgresoRMU),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
+                ViewData["IdFormulaRMU"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FormulasRMU>(new Uri(WebApp.BaseAddress), "api/FormulasRMU/ListarFormulasRMU"), "IdFormulaRMU", "Formula");
+
                 return View(IngresoEgresoRMU);
 
             }
@@ -67,7 +70,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando ingreso egreso RMU",
+                    Message = "Creando Ingreso Egreso RMU",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,10 +88,13 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/IngresoEgresoRMU");
+                                                                  "/api/IngresoEgresoRMU");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<IngresoEgresoRMU>(respuesta.Resultado.ToString());
+
+                    ViewData["IdFormulaRMU"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FormulasRMU>(new Uri(WebApp.BaseAddress), "api/FormulasRMU/ListarFormulasRMU"), "IdFormulaRMU", "Formula");
+
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -121,16 +127,19 @@ namespace bd.webappth.web.Controllers.MVC
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
+                            EntityID = string.Format("{0} : {1}", "Ingreso Egreso RMU", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un registro sistema",
+                            Message = "Se ha actualizado un ingreso egreso RMU",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
+
+                    ViewData["IdFormulaRMU"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FormulasRMU>(new Uri(WebApp.BaseAddress), "api/FormulasRMU/ListarFormulasRMU"), "IdFormulaRMU", "Formula");
+
                     return View(IngresoEgresoRMU);
 
                 }
@@ -141,7 +150,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un ingreso egreso RMU",
+                    Message = "Editando una ingreso egreso RMU",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -190,7 +199,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro eliminado",
+                        Message = "Registro de ingreso egreso RMU",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -214,6 +223,5 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
     }
 }

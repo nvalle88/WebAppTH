@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 <p>
-    <a asp-action="Create">Nuevo Nacionalidad Ind&iacutegena</a>
+    <a asp-action="Create">Nueva Nacionalidad Ind&iacutegena</a>
 </p>
 			<!-- MAIN CONTENT -->
 <div id="content">
@@ -47,10 +47,10 @@
                                 <thead>
                                     <tr>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdEtnia)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Etnia.Nombre)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -59,17 +59,17 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.IdEtnia)
-                                            </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
+                                            </td>
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.Etnia.Nombre)
                                             </td>
                                            
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdNacionalidadIndigena }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdNacionalidadIndigena }, new { onclick = "return confirm('Desea eliminar el Nacionalidad Indigena... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdNacionalidadIndigena }, new { onclick = "return confirm('Desea eliminar la nacionalidad indigena... ?');" })
                                             </td>
                                         </tr>
                                     }

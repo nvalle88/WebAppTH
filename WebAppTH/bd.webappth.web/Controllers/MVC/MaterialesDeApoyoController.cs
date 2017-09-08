@@ -25,8 +25,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["IdFormularioDevengacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FormularioDevengacion>(new Uri(WebApp.BaseAddress), "api/FormulariosDevengacion/ListarFormulariosDevengacion"), "IdFormularioDevengacion", "ModoSocial");
             return View();
         }
 
@@ -47,17 +48,20 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un material de apoyo",
+                        Message = "Se ha creado un material apoyo",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "MaterialApoyo:", MaterialApoyo.IdMaterialApoyo),
+                        EntityID = string.Format("{0} {1}", "Material Apoyo:", MaterialApoyo.IdMaterialApoyo),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
+
+                ViewData["IdFormularioDevengacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FormularioDevengacion>(new Uri(WebApp.BaseAddress), "api/FormulariosDevengacion/ListarFormulariosDevengacion"), "IdFormularioDevengacion", "ModoSocial");
+
                 return View(MaterialApoyo);
 
             }
@@ -66,7 +70,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando un material de apoyo",
+                    Message = "Creando material de apoyo",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -84,10 +88,13 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/MaterialesDeApoyo");
+                                                                  "/api/MaterialesDeApoyo");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<MaterialApoyo>(respuesta.Resultado.ToString());
+
+                    ViewData["IdFormularioDevengacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FormularioDevengacion>(new Uri(WebApp.BaseAddress), "api/FormulariosDevengacion/ListarFormulariosDevengacion"), "IdFormularioDevengacion", "ModoSocial");
+
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -120,16 +127,19 @@ namespace bd.webappth.web.Controllers.MVC
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
+                            EntityID = string.Format("{0} : {1}", "Material de apoyo", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un registro sistema",
+                            Message = "Se ha actualizado un material de apoyo",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
+
+                    ViewData["IdFormularioDevengacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FormularioDevengacion>(new Uri(WebApp.BaseAddress), "api/FormulariosDevengacion/ListarFormulariosDevengacion"), "IdFormularioDevengacion", "ModoSocial");
+
                     return View(MaterialApoyo);
 
                 }
@@ -140,7 +150,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un material de apoyo",
+                    Message = "Editando una material de apoyo",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -189,7 +199,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro eliminado",
+                        Message = "Registro un material de apoyo",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"

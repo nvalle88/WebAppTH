@@ -9,12 +9,10 @@ namespace bd.webappth.entidades.Negocio
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Fracción básica:")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal FraccionBasica { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Exceso de hasta:")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal ExcesoHasta { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
@@ -22,6 +20,7 @@ namespace bd.webappth.entidades.Negocio
         public int? ImpuestoFraccionBasica { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
+        [Range(0, 100, ErrorMessage = "El porcentaje debería ser entre 0 y 100")]
         [Display(Name = "Porcentaje de impuesto de fracción excedente:")]
         public int PorcentajeImpuestoFraccionExcedente { get; set; }
     }

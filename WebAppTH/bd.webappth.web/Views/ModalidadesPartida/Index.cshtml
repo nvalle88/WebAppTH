@@ -47,9 +47,8 @@
                                 <thead>
                                     <tr>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdRelacionLaboral)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().RelacionLaboral.Nombre)
                                         </th>
-
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                                         </th>
@@ -60,13 +59,11 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.IdRelacionLaboral)
+                                                @Html.DisplayFor(modelItem => item.RelacionLaboral.Nombre)
                                             </td>
-
-
                                             <td>
+
                                                 @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
                                            

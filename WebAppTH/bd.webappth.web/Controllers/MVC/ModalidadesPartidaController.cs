@@ -26,8 +26,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaborales"), "IdRelacionLaboral", "Nombre");
             return View();
         }
 
@@ -52,13 +53,15 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "ModalidadPartida:", ModalidadPartida.IdModalidadPartida),
+                        EntityID = string.Format("{0} {1}", "Modalidad Partida:", ModalidadPartida.IdModalidadPartida),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
+                ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaborales"), "IdRelacionLaboral", "Nombre");
+
                 return View(ModalidadPartida);
 
             }
@@ -67,7 +70,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando una modalidad partida",
+                    Message = "Creando modalidad partida",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,10 +88,13 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/ModalidadesPartida");
+                                                                  "/api/ModalidadesPartida");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<ModalidadPartida>(respuesta.Resultado.ToString());
+
+                    ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaborales"), "IdRelacionLaboral", "Nombre");
+
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -121,16 +127,19 @@ namespace bd.webappth.web.Controllers.MVC
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
+                            EntityID = string.Format("{0} : {1}", "Modalidad Partida", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un registro sistema",
+                            Message = "Se ha actualizado una modalidad partida",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
+
+                    ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaborales"), "IdRelacionLaboral", "Nombre");
+
                     return View(ModalidadPartida);
 
                 }
@@ -190,7 +199,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro eliminado",
+                        Message = "Registro de modalidad partida",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -214,6 +223,5 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
     }
 }
