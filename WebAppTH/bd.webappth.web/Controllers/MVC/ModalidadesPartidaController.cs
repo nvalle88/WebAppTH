@@ -5,21 +5,22 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bd.webappth.servicios.Interfaces;
 using bd.webappth.entidades.Utils;
-using bd.webappth.entidades.Negocio;
 using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webappth.entidades.Negocio;
+
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class NacionalidadesIndigenasController : Controller
+    public class ModalidadesPartidaController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public NacionalidadesIndigenasController(IApiServicio apiServicio)
+        public ModalidadesPartidaController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -27,20 +28,20 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            ViewData["IdEtnia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
+            ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaborales"), "IdRelacionLaboral", "Nombre");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(NacionalidadIndigena NacionalidadIndigena)
+        public async Task<IActionResult> Create(ModalidadPartida ModalidadPartida)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(NacionalidadIndigena,
+                response = await apiServicio.InsertarAsync(ModalidadPartida,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/NacionalidadesIndigenas/InsertarNacionalidadesIndigenas");
+                                                             "/api/ModalidadesPartida/InsertarModalidadesPartida");
                 if (response.IsSuccess)
                 {
 
@@ -48,20 +49,20 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado una nacionalidad indígena",
+                        Message = "Se ha creado una modalidad partida",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Nacionalidad Indígena:", NacionalidadIndigena.IdNacionalidadIndigena),
+                        EntityID = string.Format("{0} {1}", "Modalidad Partida:", ModalidadPartida.IdModalidadPartida),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                ViewData["IdEtnia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
+                ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaborales"), "IdRelacionLaboral", "Nombre");
 
-                return View(NacionalidadIndigena);
+                return View(ModalidadPartida);
 
             }
             catch (Exception ex)
@@ -69,7 +70,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando nacionalidad indígena",
+                    Message = "Creando modalidad partida",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -87,12 +88,12 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/NacionalidadesIndigenas");
+                                                                  "/api/ModalidadesPartida");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<NacionalidadIndigena>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<ModalidadPartida>(respuesta.Resultado.ToString());
 
-                    ViewData["IdEtnia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
+                    ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaborales"), "IdRelacionLaboral", "Nombre");
 
                     if (respuesta.IsSuccess)
                     {
@@ -111,25 +112,25 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, NacionalidadIndigena NacionalidadIndigena)
+        public async Task<IActionResult> Edit(string id, ModalidadPartida ModalidadPartida)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, NacionalidadIndigena, new Uri(WebApp.BaseAddress),
-                                                                 "/api/NacionalidadesIndigenas");
+                    response = await apiServicio.EditarAsync(id, ModalidadPartida, new Uri(WebApp.BaseAddress),
+                                                                 "/api/ModalidadesPartida");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Nacionalidad Indígena", id),
+                            EntityID = string.Format("{0} : {1}", "Modalidad Partida", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una nacionalidad indígena",
+                            Message = "Se ha actualizado una modalidad partida",
                             UserName = "Usuario 1"
                         });
 
@@ -137,9 +138,9 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                     ViewData["Error"] = response.Message;
 
-                    ViewData["IdEtnia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
+                    ViewData["IdRelacionLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaborales"), "IdRelacionLaboral", "Nombre");
 
-                    return View(NacionalidadIndigena);
+                    return View(ModalidadPartida);
 
                 }
                 return BadRequest();
@@ -149,7 +150,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una nacionalidad indígena",
+                    Message = "Editando una modalidad partida",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -163,11 +164,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<NacionalidadIndigena>();
+            var lista = new List<ModalidadPartida>();
             try
             {
-                lista = await apiServicio.Listar<NacionalidadIndigena>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/NacionalidadesIndigenas/ListarNacionalidadesIndigenas");
+                lista = await apiServicio.Listar<ModalidadPartida>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/ModalidadesPartida/ListarModalidadesPartida");
                 return View(lista);
             }
             catch (Exception ex)
@@ -175,7 +176,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando una nacionalidad indígena",
+                    Message = "Listando una modalidad partida",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -191,14 +192,14 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/NacionalidadesIndigenas");
+                                                               , "/api/ModalidadesPartida");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de nacionalidad indígena",
+                        Message = "Registro de modalidad partida",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -212,7 +213,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar una nacionalidad indígena",
+                    Message = "Eliminar una modalidad partida",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

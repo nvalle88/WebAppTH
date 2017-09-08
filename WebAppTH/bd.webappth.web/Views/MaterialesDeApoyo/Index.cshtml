@@ -1,10 +1,10 @@
-@model List<bd.webappth.entidades.Negocio.NacionalidadIndigena>
+@model List<bd.webappth.entidades.Negocio.MaterialApoyo>
 
 @{
     ViewData["Title"] = "Index";
 }
 <p>
-    <a asp-action="Create">Nueva Nacionalidad Ind&iacutegena</a>
+    <a asp-action="Create">Nuevo Material de Apoyo</a>
 </p>
 			<!-- MAIN CONTENT -->
 <div id="content">
@@ -32,7 +32,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Nacionalidad Ind&iacutegena</h2>
+                        <h2>Material de Apoyo</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -47,10 +47,14 @@
                                 <thead>
                                     <tr>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreDocumento)
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Ubicacion)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Etnia.Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FormularioDevengacion.ModoSocial)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -60,16 +64,20 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                                @Html.DisplayFor(modelItem => item.NombreDocumento)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Ubicacion)
                                             </td>
                                             <td>
 
-                                                @Html.DisplayFor(modelItem => item.Etnia.Nombre)
+                                                @Html.DisplayFor(modelItem => item.FormularioDevengacion.ModoSocial)
                                             </td>
                                            
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdNacionalidadIndigena }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdNacionalidadIndigena }, new { onclick = "return confirm('Desea eliminar la nacionalidad indigena... ?');" })
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdMaterialApoyo }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdMaterialApoyo }, new { onclick = "return confirm('Desea eliminar el material de apoyo... ?');" })
                                             </td>
                                         </tr>
                                     }

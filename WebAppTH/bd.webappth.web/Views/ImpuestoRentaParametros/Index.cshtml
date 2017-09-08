@@ -1,10 +1,10 @@
-@model List<bd.webappth.entidades.Negocio.NacionalidadIndigena>
+@model List<bd.webappth.entidades.Negocio.ImpuestoRentaParametros>
 
 @{
     ViewData["Title"] = "Index";
 }
 <p>
-    <a asp-action="Create">Nueva Nacionalidad Ind&iacutegena</a>
+    <a asp-action="Create">Nuevo Impuesto Renta Par&aacutemetros</a>
 </p>
 			<!-- MAIN CONTENT -->
 <div id="content">
@@ -32,7 +32,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Nacionalidad Ind&iacutegena</h2>
+                        <h2>Impuesto Renta Par&aacutemetros</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -47,10 +47,16 @@
                                 <thead>
                                     <tr>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FraccionBasica)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Etnia.Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ExcesoHasta)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ImpuestoFraccionBasica)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().PorcentajeImpuestoFraccionExcedente)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -60,16 +66,23 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                                @Html.DisplayFor(modelItem => item.FraccionBasica)
                                             </td>
-                                            <td>
 
-                                                @Html.DisplayFor(modelItem => item.Etnia.Nombre)
-                                            </td>
-                                           
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdNacionalidadIndigena }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdNacionalidadIndigena }, new { onclick = "return confirm('Desea eliminar la nacionalidad indigena... ?');" })
+                                                @Html.DisplayFor(modelItem => item.ExcesoHasta)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ImpuestoFraccionBasica)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PorcentajeImpuestoFraccionExcedente)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdImpuestoRentaParametros }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdImpuestoRentaParametros }, new { onclick = "return confirm('Desea eliminar el impuesto renta parametros... ?');" })
                                             </td>
                                         </tr>
                                     }

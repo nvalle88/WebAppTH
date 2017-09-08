@@ -103,7 +103,7 @@ namespace bd.webappth.servicios.Servicios
                 }
             }
 
-            catch (Exception )
+            catch (Exception ex)
             {
                 return new List<T>();
             }

@@ -1,7 +1,7 @@
-@model bd.webappth.entidades.Negocio.NacionalidadIndigena
+@model bd.webappth.entidades.Negocio.IngresoEgresoRMU
 
 @{
-    ViewData["Title"] = "Nacionalidad Ind&iacutegena";
+    ViewData["Title"] = "Ingreso Egreso RMU"; 
 }
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
@@ -21,7 +21,7 @@
                
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Nacionalidad Ind&iacutegena</h2>
+                        <h2>Ingreso Egreso RMU</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -41,10 +41,10 @@
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">
-                                                <select asp-for="IdEtnia" class="form-control" asp-items="ViewBag.IdEtnia">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model=>model.IdEtnia)></option>
+                                                <select asp-for="IdFormulaRMU" class="form-control" asp-items="ViewBag.IdFormulaRMU">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model=>model.IdFormulaRMU)></option>
                                                 </select>
-                                                <span asp-validation-for="IdEtnia" class="text-danger"></span>
+                                                <span asp-validation-for="IdFormulaRMU" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>
@@ -53,12 +53,22 @@
                                         <section class="col col-8">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="20" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
-                                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                                                <input maxlength="20" asp-for="Descripcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)" />
+                                                <span asp-validation-for="Descripcion" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>
-                                    
+                                
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="10" asp-for="CuentaContable" class="form-control" onKeyPress="return checkIt(event)" placeholder="@Html.DisplayNameFor(model=>model.CuentaContable)" />
+                                                <span asp-validation-for="CuentaContable" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
                                 </fieldset>
                                
                                 <footer>
@@ -93,6 +103,18 @@
             $(document).ready(function () {
                 Init_Select2();
     });
+</script>
 
+<script type="text/javascript">
+        function checkIt(evt) {
+                evt = (evt) ? evt : window.event
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                status = "This field accepts numbers only."
+                return false
+            }
+            status = ""
+            return true
+        }
 </script>
 }

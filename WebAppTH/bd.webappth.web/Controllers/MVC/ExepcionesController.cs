@@ -18,11 +18,9 @@ namespace bd.webappth.web.Controllers.MVC
     {
         private readonly IApiServicio apiServicio;
 
-
         public ExepcionesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
-
         }
 
         public IActionResult Create()
@@ -51,7 +49,7 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Exepción:", Exepciones.IdExepciones),
+                        EntityID = string.Format("{0} {1}", "Exepciones:", Exepciones.IdExepciones),
                     });
 
                     return RedirectToAction("Index");
@@ -66,7 +64,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Exepción",
+                    Message = "Creando una exepción",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -84,7 +82,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/Exepciones");
+                                                                  "api/Exepciones");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<Exepciones>(respuesta.Resultado.ToString());
@@ -115,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                     response = await apiServicio.EditarAsync(id, Exepciones, new Uri(WebApp.BaseAddress),
                                                                  "/api/Exepciones");
 
-                    if (!response.IsSuccess)
+                    if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
@@ -140,7 +138,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una excepción",
+                    Message = "Editando una exepción",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -166,7 +164,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando excepciones",
+                    Message = "Listando una exepción",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -203,7 +201,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Exepción",
+                    Message = "Eliminar una exepción",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

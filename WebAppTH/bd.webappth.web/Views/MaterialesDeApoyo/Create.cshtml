@@ -1,7 +1,7 @@
-@model bd.webappth.entidades.Negocio.NacionalidadIndigena
+@model bd.webappth.entidades.Negocio.MaterialApoyo
 
 @{
-    ViewData["Title"] = "Nacionalidad Ind&iacutegena";
+    ViewData["Title"] = "Material de Apoyo";
 }
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
@@ -21,7 +21,7 @@
                
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Nacionalidad Ind&iacutegena</h2>
+                        <h2>Material de Apoyo</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -38,13 +38,13 @@
                             <form  asp-action="Create" id="checkout-form"  class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <fieldset>
+                                   
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">
-                                                <select asp-for="IdEtnia" class="form-control" asp-items="ViewBag.IdEtnia">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model=>model.IdEtnia)></option>
-                                                </select>
-                                                <span asp-validation-for="IdEtnia" class="text-danger"></span>
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="20" asp-for="NombreDocumento" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.NombreDocumento)" />
+                                                <span asp-validation-for="NombreDocumento" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>
@@ -53,12 +53,24 @@
                                         <section class="col col-8">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="20" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
-                                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                                                <input maxlength="20" asp-for="Ubicacion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Ubicacion)" />
+                                                <span asp-validation-for="Ubicacion" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>
                                     
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <select asp-for="IdFormularioDevengacion" class="form-control" asp-items="ViewBag.IdFormularioDevengacions">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model=>model.IdFormularioDevengacion)></option>
+                                                </select>
+                                                <span asp-validation-for="IdFormularioDevengacion" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+                                                                       
                                 </fieldset>
                                
                                 <footer>

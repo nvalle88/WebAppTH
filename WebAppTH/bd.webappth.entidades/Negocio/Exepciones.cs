@@ -16,7 +16,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Validacion Inmediato Superior:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int ValidacionJefeId { get; set; }
+        public int IdValidacionJefe { get; set; }
         public virtual ValidacionInmediatoSuperior ValidacionInmediatoSuperior { get; set; }
     }
 }
