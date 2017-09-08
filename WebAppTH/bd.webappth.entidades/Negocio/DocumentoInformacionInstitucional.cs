@@ -1,5 +1,6 @@
 namespace bd.webappth.entidades.Negocio
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public partial class DocumentoInformacionInstitucional
@@ -14,5 +15,6 @@ namespace bd.webappth.entidades.Negocio
 
         [DataType(DataType.Url)]
         public string Url { get; set; }
+
     }
 }
