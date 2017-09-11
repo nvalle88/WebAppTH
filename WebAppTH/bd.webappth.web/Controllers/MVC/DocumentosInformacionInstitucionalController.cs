@@ -1,16 +1,22 @@
+using bd.log.guardar.Enumeradores;
+using bd.log.guardar.ObjectTranfer;
+using bd.log.guardar.Servicios;
+using bd.webappseguridad.entidades.Enumeradores;
+using bd.webappth.entidades.Negocio;
+using bd.webappth.entidades.ObjectTransfer;
+using bd.webappth.entidades.Utils;
+using bd.webappth.entidades.ViewModels;
+using bd.webappth.servicios.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using bd.webappth.servicios.Interfaces;
-using bd.webappth.entidades.Negocio;
-using bd.webappth.entidades.Utils;
-using bd.log.guardar.Servicios;
-using bd.log.guardar.ObjectTranfer;
-using bd.webappseguridad.entidades.Enumeradores;
-using bd.log.guardar.Enumeradores;
-using Newtonsoft.Json;
+
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -32,14 +38,42 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(DocumentoInformacionInstitucional documentoInformacionInstitucional)
+        public async Task<ActionResult> Create( ViewModelDocumentoInstitucional view,List<IFormFile> files)
+        {
+
+
+
+            if (files.Count >0)
+                {
+                byte[] data;
+                using (var br = new BinaryReader(files[0].OpenReadStream()))
+                    data = br.ReadBytes((int)files[0].OpenReadStream().Length);
+
+                var documenttransfer = new DocumentoInstitucionalTransfer
+                {
+                    Nombre = view.Nombre,
+                    Fichero = data,
+                };
+
+               await CreateFichero(documenttransfer);
+                return RedirectToAction("Index");
+            }
+
+            return BadRequest();
+
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<StatusCodeResult> CreateFichero(DocumentoInstitucionalTransfer file)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(documentoInformacionInstitucional,
+                response = await apiServicio.InsertarAsync(file,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/DocumentosInformacionInstitucional/InsertarDocumentoInformacionInstitucional");
+                                                             "/api/DocumentosInformacionInstitucional/UploadFiles");
                 if (response.IsSuccess)
                 {
 
@@ -47,18 +81,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un documento de información institucional",
+                        Message = "Se ha subido un archivo",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Documento de Información Institucional:", documentoInformacionInstitucional.IdDocumentoInformacionInstitucional),
+                        EntityID = string.Format("{0} {1}", "Documento Información Institucional:", file.Nombre),
                     });
 
-                    return RedirectToAction("Index");
+             
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(documentoInformacionInstitucional);
+                return BadRequest();
 
             }
             catch (Exception ex)
@@ -66,7 +100,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Documento de Información Institucional",
+                    Message = "Subiendo archivo",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -76,6 +110,9 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+
+
 
         public async Task<IActionResult> Edit(string id)
         {

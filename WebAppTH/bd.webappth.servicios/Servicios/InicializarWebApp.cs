@@ -23,7 +23,7 @@ namespace bd.webappth.servicios.Servicios
                     //var resultado = await respuesta.Content.ReadAsStringAsync();
                     //var response = JsonConvert.DeserializeObject<Response>(resultado);
                     //var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
-                    WebApp.BaseAddress = "http://localhost:51805";
+                    WebApp.BaseAddress = "http://localhost:50900/";
                    
                 }
                

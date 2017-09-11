@@ -22,7 +22,6 @@ namespace bd.webappth.web.Controllers.MVC
         public EstadosCivilesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
-
         }
 
         public IActionResult Create()
