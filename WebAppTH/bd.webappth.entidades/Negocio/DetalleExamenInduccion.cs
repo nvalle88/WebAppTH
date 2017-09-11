@@ -14,17 +14,17 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Examen de inducción:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int RealizaExamenInduccionId { get; set; }
+        public int IdRealizaExamenInduccion { get; set; }
         public virtual RealizaExamenInduccion RealizaExamenInduccion { get; set; }
 
         [Display(Name = "Pregunta:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int? PreguntaId { get; set; }
+        public int? IdPregunta { get; set; }
         public virtual Pregunta Pregunta { get; set; }
 
         [Display(Name = "Respuesta:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int RespuestaId { get; set; }
+        public int IdRespuesta { get; set; }
         public virtual Respuesta Respuesta { get; set; }
         
 

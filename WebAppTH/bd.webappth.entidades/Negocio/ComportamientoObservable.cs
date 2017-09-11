@@ -7,7 +7,7 @@ namespace bd.webappth.entidades.Negocio
     public partial class ComportamientoObservable
     {
         [Key]
-        public int ComportamientoObservableId { get; set; }
+        public int IdComportamientoObservable { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Comportamiento observable:")]
@@ -19,12 +19,12 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Nivel")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int NivelId { get; set; }
+        public int IdNivel { get; set; }
         public virtual Nivel Nivel { get; set; }
 
         [Display(Name = "Denominación de la competencia:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int DenominacionCompetenciaId { get; set; }
+        public int IdDenominacionCompetencia { get; set; }
         public virtual DenominacionCompetencia DenominacionCompetencia { get; set; }
 
 
