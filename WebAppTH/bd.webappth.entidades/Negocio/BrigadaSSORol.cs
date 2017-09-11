@@ -13,10 +13,10 @@ namespace bd.webappth.entidades.Negocio
         public string Nombre { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
-
+        [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Brigada SSO:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdBrigadaSSO { get; set; }
+        public int? IdBrigadaSSO { get; set; }
         public virtual BrigadaSSO BrigadaSSO { get; set; }
     }
 }

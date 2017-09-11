@@ -1,7 +1,7 @@
- @model bd.webappth.entidades.Negocio.EvaluacionInducion
+@model bd.webappth.entidades.Negocio.ConfiguracionViatico
 
 @{
-    ViewData["Title"] = "EvaluacionesInducciones";
+    ViewData["Title"] = "ConfiguracionesViaticos";
 }
 
 
@@ -14,13 +14,13 @@
         <!-- START ROW -->
         <div class="row">
             <!-- NEW COL START -->
-            <article class="col-sm-12 col-md-12 col-lg-10">
+            <article class="col-sm-12 col-md-12 col-lg-4">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Evaluación Inducción</h2>
+                        <h2>Configuraciones Viáticos</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -35,31 +35,34 @@
 
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdEvaluacionInduccion"/>
+                                <input type="hidden" asp-for="IdConfiguracionViatico"/>
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-4">
+                                        <section class="col col-6">
                                             <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="50"  asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
-                                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                                                <select asp-for="IdDependencia" class="form-control" asp-items="ViewBag.IdDependencia">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdDependencia)></option>
+                                                </select>
+                                                <span asp-validation-for="IdDependencia" class="text-danger"></span>
                                             </label>
                                         </section>
-                                        <section class="col col-4">
+                                        <section class="col col-3">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input asp-for="MinimoAprobar" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MinimoAprobar)" />
-                                                <span asp-validation-for="MinimoAprobar" class="text-danger"></span>
+                                                <input maxlength="3" asp-for="PorCientoAJustificar" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.PorCientoAJustificar)" />
+                                                <span asp-validation-for="PorCientoAJustificar" class="text-danger"></span>
                                             </label>
                                         </section>
-                                        <section class="col col-4">
+
+                                        <section class="col col-3">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input asp-for="MaximoPuntos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MaximoPuntos)" />
-                                                <span asp-validation-for="MaximoPuntos" class="text-danger"></span>
+                                                <input asp-for="ValorEntregadoPorDia" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.ValorEntregadoPorDia)" />
+                                                <span asp-validation-for="ValorEntregadoPorDia" class="text-danger"></span>
                                             </label>
-                                        </section>  
+                                        </section>
                                     </div>
+
                                 </fieldset>
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
@@ -85,8 +88,14 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
+   <script src='~/lib/select2/dist/js/select2.min.js'></script>
+<script src='~/lib/select2/dist/js/i18n/es.js'></script>
+<script src='~/js/site.js'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Init_Select2();
+    });
 
+</script>
 
-    </script>
 }

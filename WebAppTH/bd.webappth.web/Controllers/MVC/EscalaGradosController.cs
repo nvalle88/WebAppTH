@@ -27,7 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            //ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
+            ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 ViewData["Error"] = response.Message;
-                //ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
+                ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
                 return View(escalaGrados);
 
             }
@@ -90,7 +90,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<EscalaGrados>(respuesta.Resultado.ToString());
-                    //ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
+                    ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -133,7 +133,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    //ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
+                    ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
                     return View(escalaGrados);
 
                 }
