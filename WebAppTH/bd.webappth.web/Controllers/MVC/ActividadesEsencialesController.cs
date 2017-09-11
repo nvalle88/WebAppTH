@@ -52,7 +52,7 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Actividades Esenciales:", actividadesEsenciales.ActividadesEsencialesId),
+                        EntityID = string.Format("{0} {1}", "Actividades Esenciales:", actividadesEsenciales.IdActividadesEsenciales),
                     });
 
                     return RedirectToAction("Index");

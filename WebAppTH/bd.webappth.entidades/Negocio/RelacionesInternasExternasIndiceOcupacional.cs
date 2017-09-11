@@ -13,7 +13,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Relaciones internas externas:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int RelacionesInternasExternasId { get; set; }
+        public int IdRelacionesInternasExternas { get; set; }
         public virtual RelacionesInternasExternas RelacionesInternasExternas { get; set; }
 
         [Display(Name = "Índice ocupacional:")]

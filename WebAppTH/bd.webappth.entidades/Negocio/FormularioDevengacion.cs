@@ -22,7 +22,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Modo socialización:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int ModosScializacionId { get; set; }
+        public int IdModosScializacion { get; set; }
         public virtual ModosScializacion ModosScializacion { get; set; }
 
         [Display(Name = "Empleado:")]
