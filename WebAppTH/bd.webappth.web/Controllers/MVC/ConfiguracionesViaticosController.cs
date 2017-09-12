@@ -14,33 +14,32 @@ using Newtonsoft.Json;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class EscalaGradosController : Controller
+    public class ConfiguracionesViaticosController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public EscalaGradosController(IApiServicio apiServicio)
+        public ConfiguracionesViaticosController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
-
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
+            //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "/api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EscalaGrados escalaGrados)
+        public async Task<IActionResult> Create(ConfiguracionViatico configuracionViatico)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(escalaGrados,
+                response = await apiServicio.InsertarAsync(configuracionViatico,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/EscalasGrados/InsertarEscalaGrados");
+                                                             "/api/ConfiguracionesViaticos/InsertarConfiguracionViatico");
                 if (response.IsSuccess)
                 {
 
@@ -48,19 +47,19 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado una escala grado",
+                        Message = "Se ha creado una configuración de viático",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Escala Grados:", escalaGrados.IdEscalaGrados),
+                        EntityID = string.Format("{0} {1}", "Configuración Viático:", configuracionViatico.IdConfiguracionViatico),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
-                return View(escalaGrados);
+                //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "/api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
+                return View(configuracionViatico);
 
             }
             catch (Exception ex)
@@ -68,7 +67,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Escala Grados",
+                    Message = "Creando Configuración Viático",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -86,11 +85,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/EscalasGrados");
+                                                                  "/api/ConfiguracionesViaticos");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<EscalaGrados>(respuesta.Resultado.ToString());
-                    ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
+                    respuesta.Resultado = JsonConvert.DeserializeObject<ConfiguracionViatico>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -108,33 +106,33 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, EscalaGrados escalaGrados)
+        public async Task<IActionResult> Edit(string id, ConfiguracionViatico configuracionViatico)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, escalaGrados, new Uri(WebApp.BaseAddress),
-                                                                 "/api/EscalasGrados");
+                    response = await apiServicio.EditarAsync(id, configuracionViatico, new Uri(WebApp.BaseAddress),
+                                                                 "/api/ConfiguracionesViaticos");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Escala Grados", id),
+                            EntityID = string.Format("{0} : {1}", "Configuración Viático", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una escala grado",
+                            Message = "Se ha actualizado una configuración de viático",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
-                    return View(escalaGrados);
+                    //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "/api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
+                    return View(configuracionViatico);
 
                 }
                 return BadRequest();
@@ -144,7 +142,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una escala grado",
+                    Message = "Editando una configuración de viático",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -158,11 +156,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<EscalaGrados>();
+            var lista = new List<ConfiguracionViatico>();
             try
             {
-                lista = await apiServicio.Listar<EscalaGrados>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/EscalasGrados/ListarEscalasGrados");
+                lista = await apiServicio.Listar<ConfiguracionViatico>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/ConfiguracionesViaticos/ListarConfiguracionesViaticos");
                 return View(lista);
             }
             catch (Exception ex)
@@ -170,7 +168,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando escalas grados",
+                    Message = "Listando configuraciones viáticos",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -186,14 +184,14 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/EscalaGrados");
+                                                               , "/api/ConfiguracionesViaticos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Escala Grados", id),
-                        Message = "Registro de escala grado eliminado",
+                        EntityID = string.Format("{0} : {1}", "Configuración Viático", id),
+                        Message = "Registro de configuración viático eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -207,7 +205,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Escala Grados",
+                    Message = "Eliminar Configuración Viático",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -217,5 +215,6 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
     }
 }

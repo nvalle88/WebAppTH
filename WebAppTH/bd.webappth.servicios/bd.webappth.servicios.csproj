@@ -48,7 +48,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SalvarLogEntry\bd.guardarlog.servicios\bd.log.guardar.csproj" />
     <ProjectReference Include="..\bd.sw.externos\bd.sw.externos.csproj" />
     <ProjectReference Include="..\bd.webappth.entidades\bd.webappth.entidades.csproj" />
   </ItemGroup>
