@@ -40,9 +40,18 @@
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
+                                                <i class="icon-append fa fa-comment"></i>
                                                 <input maxlength="32"  asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
                                                 <span asp-validation-for="Nombre" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="32" asp-for="SPI" class="form-control" onKeyPress="return checkIt(event)"  placeholder="@Html.DisplayNameFor(model=>model.SPI)" />
+                                                <span asp-validation-for="SPI" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>
@@ -73,6 +82,15 @@
 @section Scripts {
     <script type="text/javascript">
 
-
+        function checkIt(evt) {
+            evt = (evt) ? evt : window.event
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                status = "This field accepts numbers only."
+                return false
+            }
+            status = ""
+            return true
+        }
     </script>
 }

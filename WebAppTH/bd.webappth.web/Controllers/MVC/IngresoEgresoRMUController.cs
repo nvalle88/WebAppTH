@@ -15,12 +15,12 @@ using bd.webappth.entidades.Negocio;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class IngresoEgresoRMUsController : Controller
+    public class IngresoEgresoRMUController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public IngresoEgresoRMUsController(IApiServicio apiServicio)
+        public IngresoEgresoRMUController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
