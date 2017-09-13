@@ -49,6 +49,10 @@
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                                         </th>
+
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SPI)
+                                        </th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -59,7 +63,9 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
-                                           
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SPI)
+                                            </td>
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdInstitucionFinanciera }) |
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdInstitucionFinanciera }, new { onclick = "return confirm('Desea eliminar la Institucion Financiera... ?');" })
