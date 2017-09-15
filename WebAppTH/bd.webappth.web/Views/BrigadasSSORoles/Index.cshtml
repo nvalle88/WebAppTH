@@ -3,12 +3,20 @@
 @{
     ViewData["Title"] = "Index";
 }
-<p>
-    <a asp-action="Create">Nuevos Roles de Brigada de Salud y Seguridad Ocupacional</a>
-</p>
 			<!-- MAIN CONTENT -->
 <div id="content">
-   
+
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo Rol de Brigada de Salud y Seguridad Ocupacional
+
+        </button>
+    </a>
+    <p> </p>
+
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -56,7 +64,7 @@
                                         </th>
                                         <th>
                                             <i class="icon-prepend fa fa-cog"></i>
-                                        Opciones
+                                            Opciones
                                         </th>
                                     </tr>
                                 </thead>
@@ -70,7 +78,7 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.BrigadaSSO.Nombre)
                                             </td>
-                                           
+
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdBrigadaSSORol }) |
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdBrigadaSSORol }, new { onclick = "return confirm('Desea eliminar el Rol de Brigada Salud y Seguridad Ocupacional... ?');" })
@@ -84,7 +92,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>

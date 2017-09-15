@@ -21,7 +21,6 @@ namespace bd.webappth.entidades.Negocio
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Grupo ocupacional:")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int? IdGrupoOcupacional { get; set; }
         public virtual GrupoOcupacional GrupoOcupacional { get; set; }
 

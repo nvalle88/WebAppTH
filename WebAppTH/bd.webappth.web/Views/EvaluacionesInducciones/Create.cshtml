@@ -20,7 +20,7 @@
                
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Evaluaciones Inducción</h2>
+                        <h2>Evaluaciones Inducci&oacute;n</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -48,14 +48,14 @@
                                         <section class="col col-4">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="2" asp-for="MinimoAprobar" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MinimoAprobar)" />
+                                                <input maxlength="2" onkeypress="return checkIt(event)" asp-for="MinimoAprobar" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MinimoAprobar)" />
                                                 <span asp-validation-for="MinimoAprobar" class="text-danger"></span>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="2" asp-for="MaximoPuntos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MaximoPuntos)" />
+                                                <input maxlength="2" onkeypress="return checkIt(event)" asp-for="MaximoPuntos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MaximoPuntos)" />
                                                 <span asp-validation-for="MaximoPuntos" class="text-danger"></span>
                                             </label>
                                         </section>
@@ -87,8 +87,19 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
+ <script type="text/javascript">
 
+     function checkIt(evt) {
+         evt = (evt) ? evt : window.event
+         var charCode = (evt.which) ? evt.which : evt.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+             status = "This field accepts numbers only."
+             return false
+         }
+         status = ""
+         return true
+     }
 
-    </script>
+</script>
+
 }

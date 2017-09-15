@@ -16,7 +16,7 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "% a justificar:")]
         [Range(0, 100, ErrorMessage = "El {0} de estar entre {2} y {1} ")]
-        public int PorCientoAJustificar { get; set; }
+        public decimal PorCientoAJustificar { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 

@@ -3,12 +3,20 @@
 @{
     ViewData["Title"] = "Index";
 }
-<p>
-    <a asp-action="Create">Nueva Escala de Evaluación Total</a>
-</p>
 			<!-- MAIN CONTENT -->
 <div id="content">
-   
+
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Escala de Evaluaci&oacute;n Total
+
+        </button>
+    </a>
+    <p> </p>
+
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -32,7 +40,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Escala de Evaluación Total</h2>
+                        <h2>Escala de Evaluaci&oacute;n Total</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -77,7 +85,7 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.PorcientoHasta)
                                             </td>
-                                           
+
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdEscalaEvaluacionTotal }) |
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEscalaEvaluacionTotal }, new { onclick = "return confirm('Desea eliminar la Escala de Evaluación Total... ?');" })
@@ -91,7 +99,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>
