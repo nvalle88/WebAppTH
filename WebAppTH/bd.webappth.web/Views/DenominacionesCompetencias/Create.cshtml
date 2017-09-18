@@ -14,7 +14,7 @@
         <!-- START ROW -->
         <div class="row">
             <!-- NEW COL START -->
-            <article class="col-sm-12 col-md-12 col-lg-10">
+            <article class="col-sm-12 col-md-12 col-lg-7">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                
@@ -38,14 +38,7 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="32" asp-for="Definicion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Definicion)" />
-                                                <span asp-validation-for="Definicion" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
+                                        <section class="col col-8">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-comment"></i>
                                                 <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
@@ -61,11 +54,17 @@
                                             </label>
                                         </section>
                                     </div>
-                                        
+                                    <section>
+                                        <label class="label"></label>
+                                        <label class="textarea">
+                                            <i class="icon-append fa fa-comment"></i>
+                                            <textarea maxlength="1000" asp-for="Definicion" rows="5" placeholder="@Html.DisplayNameFor(model=>model.Definicion)"></textarea>
+                                            <span asp-validation-for="Definicion" class="text-danger"></span>
+                                        </label>
+                                    </section>
+                                    <span class="text-danger">@ViewData["Error"]</span>    
                                 </fieldset>
-                               
-                                <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
+                                <footer>         
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index"  class="btn btn-default">Cancelar</a>
                                 </footer>
