@@ -1,7 +1,7 @@
-@model bd.webappth.entidades.Negocio.NacionalidadIndigena
+@model bd.webappth.entidades.Negocio.TipoNombramiento
 
 @{
-    ViewData["Title"] = "Nacionalidad Ind&iacutegena";
+    ViewData["Title"] = "Tipos de Nombramiento";
 }
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
@@ -21,7 +21,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Nacionalidad Ind&iacutegena</h2>
+                        <h2>Tipos de Nombramiento</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -36,15 +36,15 @@
 
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdNacionalidadIndigena"/>
+                                <input type="hidden" asp-for="IdTipoNombramiento"/>
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">
-                                                <select asp-for="IdEtnia" class="form-control" asp-items="ViewBag.IdEtnia">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdEtnia)></option>
+                                                <select asp-for="IdRelacionLaboral" class="form-control" asp-items="ViewBag.IdRelacionLaboral">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdRelacionLaboral)></option>
                                                 </select>
-                                                <span asp-validation-for="IdEtnia" class="text-danger"></span>
+                                                <span asp-validation-for="IdRelacionLaboral" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>

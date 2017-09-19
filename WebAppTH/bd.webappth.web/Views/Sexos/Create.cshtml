@@ -1,7 +1,7 @@
-﻿@model bd.webappth.entidades.Negocio.ActividadesEsenciales
+@model bd.webappth.entidades.Negocio.Sexo
 
 @{
-    ViewData["Title"] = "Actividades Esenciales";
+    ViewData["Title"] = "Sexo";
 }
 
 
@@ -14,13 +14,13 @@
         <!-- START ROW -->
         <div class="row">
             <!-- NEW COL START -->
-            <article class="col-sm-12 col-md-12 col-lg-5">
+            <article class="col-sm-12 col-md-12 col-lg-4">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Actividades Esenciales</h2>
+                        <h2>Sexo</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -37,17 +37,20 @@
                             <form  asp-action="Create" id="checkout-form"  class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <fieldset>
-                                        <section>
-                                            <label class="label"></label>
-                                            <label class="textarea">
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
                                                 <i class="icon-append fa fa-comment"></i>
-                                                <textarea maxlength="50" asp-for="Descripcion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
-                                                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                                                <input  asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                                                <span asp-validation-for="Nombre" class="text-danger"></span>
                                             </label>
                                         </section>
-                                    <span class="text-danger">@ViewData["Error"]</span>
+                                    </div>
+                                    
                                 </fieldset>
-                                <footer>           
+                               
+                                <footer>
+                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index"  class="btn btn-default">Cancelar</a>
                                 </footer>
@@ -70,8 +73,5 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
 
-
-    </script>
 }

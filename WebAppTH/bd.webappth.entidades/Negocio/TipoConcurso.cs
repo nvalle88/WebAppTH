@@ -6,7 +6,7 @@ namespace bd.webappth.entidades.Negocio
      
     public partial class TipoConcurso
     {
-        [Key]
+
         public int IdTipoConcurso { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
@@ -16,12 +16,12 @@ namespace bd.webappth.entidades.Negocio
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Descripción:")]
-        [DataType(DataType.MultilineText)]
-        [StringLength(500, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        [StringLength(250, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Descripcion { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 
         public virtual ICollection<FaseConcurso> FaseConcurso { get; set; }
+
     }
 }
