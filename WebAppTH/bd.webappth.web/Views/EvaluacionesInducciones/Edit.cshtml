@@ -48,21 +48,21 @@
                                         <section class="col col-4">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input asp-for="MinimoAprobar" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MinimoAprobar)" />
+                                                <input asp-for="MinimoAprobar"  maxlength="2" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MinimoAprobar)" />
                                                 <span asp-validation-for="MinimoAprobar" class="text-danger"></span>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input asp-for="MaximoPuntos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MaximoPuntos)" />
+                                                <input asp-for="MaximoPuntos"  maxlength="3" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MaximoPuntos)" />
                                                 <span asp-validation-for="MaximoPuntos" class="text-danger"></span>
                                             </label>
                                         </section>  
                                     </div>
-                                </fieldset>
-                                <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
+                                </fieldset>
+                                <footer> 
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
