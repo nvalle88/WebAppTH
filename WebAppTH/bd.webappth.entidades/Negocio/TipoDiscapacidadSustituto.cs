@@ -6,7 +6,7 @@ namespace bd.webappth.entidades.Negocio
      
     public partial class TipoDiscapacidadSustituto
     {
-        [Key]
+        
         public int IdTipoDiscapacidadSustituto { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]

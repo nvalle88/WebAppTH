@@ -1,10 +1,9 @@
-@model bd.webappth.entidades.Negocio.NacionalidadIndigena
+@model bd.webappth.entidades.Negocio.Respuesta
 
 @{
-    ViewData["Title"] = "Nacionalidad Ind&iacutegena";
+    ViewData["Title"] = "Respuestas";
 }
 
-<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -15,13 +14,13 @@
         <!-- START ROW -->
         <div class="row">
             <!-- NEW COL START -->
-            <article class="col-sm-12 col-md-12 col-lg-6">
+            <article class="col-sm-12 col-md-12 col-lg-4">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Nacionalidad Ind&iacutegena</h2>
+                        <h2>Respuesta</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -36,24 +35,13 @@
 
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdNacionalidadIndigena"/>
+                                <input type="hidden" asp-for="IdRespuesta" />
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">
-                                                <select asp-for="IdEtnia" class="form-control" asp-items="ViewBag.IdEtnia">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdEtnia)></option>
-                                                </select>
-                                                <span asp-validation-for="IdEtnia" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
                                                 <i class="icon-append fa fa-comment"></i>
-                                                <input maxlength="20" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                                                <input maxlength="32" asp-for="Nombre"  class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
                                                 <span asp-validation-for="Nombre" class="text-danger"></span>
                                             </label>
                                         </section>
@@ -83,14 +71,7 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
-        <script src='~/lib/select2/dist/js/select2.min.js'></script>
-<script src='~/lib/select2/dist/js/i18n/es.js'></script>
-<script src='~/js/site.js'></script>
-<script type="text/javascript">
-            $(document).ready(function () {
-                Init_Select2();
-    });
+    
 
-</script>
+    
 }
