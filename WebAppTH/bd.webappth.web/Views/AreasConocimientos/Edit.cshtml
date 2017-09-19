@@ -20,7 +20,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Areas de Conocimientos</h2>
+                        <h2>&Aacute;reas de Conocimientos</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -45,9 +45,9 @@
                                             <span asp-validation-for="Descripcion" class="text-danger"></span>
                                         </label>
                                     </section>
+                                    <span class="text-danger">@ViewData["Error"]</span>
                                 </fieldset>
                                 <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>

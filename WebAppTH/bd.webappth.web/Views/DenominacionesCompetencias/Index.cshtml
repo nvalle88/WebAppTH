@@ -3,12 +3,20 @@
 @{
     ViewData["Title"] = "Index";
 }
-<p>
-    <a asp-action="Create">Nueva Denominación de Competencia</a>
-</p>
 			<!-- MAIN CONTENT -->
 <div id="content">
-   
+
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Denominaci&oacute;n de Competencia
+
+        </button>
+    </a>
+    <p> </p>
+
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -61,7 +69,7 @@
                                         <th>
                                             <i class="fa fa-cog "></i>
                                             Opciones
-                                            
+
                                         </th>
                                     </tr>
                                 </thead>
@@ -78,7 +86,7 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.CompetenciaTecnica)
                                             </td>
-                                           
+
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdDenominacionCompetencia }) |
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdDenominacionCompetencia }, new { onclick = "return confirm('Desea eliminar la Denominación de Competencia... ?');" })
@@ -92,7 +100,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>

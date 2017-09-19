@@ -44,11 +44,10 @@
                                             <textarea maxlength="20" asp-for="Descripcion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
                                             <span asp-validation-for="Descripcion" class="text-danger"></span>
                                         </label>
-                                    </section>                                   
-                                </fieldset>
-                               
-                                <footer>
+                                    </section>   
                                     <span class="text-danger">@ViewData["Error"]</span>
+                                </fieldset>
+                                <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index"  class="btn btn-default">Cancelar</a>
                                 </footer>

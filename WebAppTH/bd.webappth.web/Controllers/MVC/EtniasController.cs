@@ -196,7 +196,7 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {

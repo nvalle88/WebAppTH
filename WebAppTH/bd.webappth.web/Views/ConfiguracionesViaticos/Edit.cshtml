@@ -20,7 +20,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Configuraciones Viáticos</h2>
+                        <h2>Configuraciones Vi&aacute;ticos</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -49,7 +49,7 @@
                                         <section class="col col-3">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="3" asp-for="PorCientoAJustificar" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.PorCientoAJustificar)" />
+                                                <input asp-for="PorCientoAJustificar"  onkeypress="return NumCheck(event, this)"  onchange="handleChange(this);" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.PorCientoAJustificar)" />
                                                 <span asp-validation-for="PorCientoAJustificar" class="text-danger"></span>
                                             </label>
                                         </section>
@@ -57,15 +57,14 @@
                                         <section class="col col-3">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input asp-for="ValorEntregadoPorDia" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.ValorEntregadoPorDia)" />
+                                                <input asp-for="ValorEntregadoPorDia"  onkeypress="return NumCheck(event, this)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.ValorEntregadoPorDia)" />
                                                 <span asp-validation-for="ValorEntregadoPorDia" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>
-
+                                    <span class="text-danger">@ViewData["Error"]</span>
                                 </fieldset>
                                 <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>

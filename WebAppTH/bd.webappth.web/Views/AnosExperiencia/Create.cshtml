@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="ISO-8859-1" ?>
 @model bd.webappth.entidades.Negocio.AnoExperiencia
 
 @{
@@ -20,7 +21,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>A�os Experiencia</h2>
+                        <h2 >Años Experiencia</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -45,9 +46,9 @@
                                             <span asp-validation-for="Descripcion" class="text-danger"></span>
                                         </label>
                                     </section>
-                                </fieldset>
-                                <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
+                                </fieldset>
+                                <footer>              
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>

@@ -41,14 +41,14 @@
                                         <section class="col col-4">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="2" asp-for="Grado" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Grado)" />
+                                                <input maxlength="2" onkeypress="return checkIt(event)" asp-for="Grado" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Grado)" />
                                                 <span asp-validation-for="Grado" class="text-danger"></span>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="2" asp-for="Remuneracion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Remuneracion)" />
+                                                <input asp-for="Remuneracion"  onkeypress="return NumCheck(event,this)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Remuneracion)" />
                                                 <span asp-validation-for="Remuneracion" class="text-danger"></span>
                                             </label>
                                         </section>
@@ -88,14 +88,55 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-   <script type="text/javascript">
-           <script src='~/lib/select2/dist/js/select2.min.js'></script>
+
+<script src='~/lib/select2/dist/js/select2.min.js'></script>
 <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 <script src='~/js/site.js'></script>
 <script type="text/javascript">
-               $(document).ready(function () {
-                   Init_Select2();
+
+
+    function checkIt(evt) {
+        evt = (evt) ? evt : window.event
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            status = "This field accepts numbers only."
+            return false
+        }
+        status = ""
+        return true
+    }
+    function NumCheck(e, field) {
+        key = e.keyCode ? e.keyCode : e.which
+        // backspace
+        if (key == 8) return true
+        // 0-9
+        if (key > 47 && key < 58) {
+            if (field.value == "") return true
+            regexp = /.[0-9]{10}$/
+            return !(regexp.test(field.value))
+        }
+        // .
+        if (key == 44) {
+            if (field.value == "") return false
+            regexp = /^[0-9]+$/
+            return regexp.test(field.value)
+        }
+        // other key
+        return false
+
+    }
+
+    function handleChange(input) {
+        if (input.value < 0) input.value = 0;
+        if (input.value > 100) input.value = 100;
+    }
+
+    $(document).ready(function () {
+        Init_Select2();
     });
+
+
+       
 
 </script>
 }

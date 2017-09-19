@@ -3,12 +3,20 @@
 @{
     ViewData["Title"] = "Index";
 }
-<p>
-    <a asp-action="Create">Nueva Brigada de Salud y Seguridad Ocupacional</a>
-</p>
 			<!-- MAIN CONTENT -->
 <div id="content">
-   
+
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Brigada de Salud y Seguridad Ocupacional
+
+        </button>
+    </a>
+    <p> </p>
+
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -46,10 +54,14 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
-                                        <th data-hide="phone">
+                                        <th data-class="expand">
+                                            <i class="icon-append fa fa-comment"></i>
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                                         </th>
-                                        <th>Opciones</th>
+                                        <th>
+                                            <i class="icon-append fa fa-cog"></i>
+                                            Opciones
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,10 +71,10 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
-                                           
+
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdBrigadaSSO}) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdBrigadaSSO}, new { onclick = "return confirm('Desea eliminar la Brigada de Salud y Seguridad Ocupacional... ?');" })
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdBrigadaSSO }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdBrigadaSSO }, new { onclick = "return confirm('Desea eliminar la Brigada de Salud y Seguridad Ocupacional... ?');" })
                                             </td>
                                         </tr>
                                     }
@@ -73,7 +85,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>

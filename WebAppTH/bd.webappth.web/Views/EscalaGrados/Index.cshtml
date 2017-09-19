@@ -3,12 +3,20 @@
 @{
     ViewData["Title"] = "Index";
 }
-<p>
-    <a asp-action="Create">Nueva Escala Grados</a>
-</p>
 			<!-- MAIN CONTENT -->
 <div id="content">
-   
+
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Escala Grados
+
+        </button>
+    </a>
+    <p> </p>
+
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -71,7 +79,7 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.GrupoOcupacional.Nombre)
                                             </td>
-                                           
+
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdEscalaGrados }) |
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEscalaGrados }, new { onclick = "return confirm('Desea eliminar la Escala Grado... ?');" })
@@ -85,7 +93,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>
