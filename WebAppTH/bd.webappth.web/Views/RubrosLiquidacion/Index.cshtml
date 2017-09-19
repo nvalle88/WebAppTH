@@ -4,9 +4,17 @@
 }
 
 <div id="content">
-    <p>
-        <a asp-action="Create" class="btn btn-success">Nuevo Rubro de Liquidación</a>
-    </p>
+ 
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo Rubro de Liquidaci&oacuten
+
+        </button>
+    </a>
+    <p> </p>
 
     <section id="widget-grid" class="">
         <div class="row">
@@ -14,7 +22,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Rubros de Liquidación</h2>
+                        <h2>Rubros de Liquidaci&oacuten</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox"></div>
@@ -38,7 +46,7 @@
 
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdRubroLiquidacion }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRubroLiquidacion }, new { onclick = "return confirm('Desea eliminar el Rubro de Liquidación... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRubroLiquidacion }, new { onclick = "return confirm('Desea eliminar el rubro de liquidacion... ?');" })
                                             </td>
                                         </tr>
                                     }
@@ -52,7 +60,7 @@
     </section>
 </div>
 @section Scripts {
-    <script type="text/javascript">
+    <script type="text/javascript"
         $(document).ready(function () {
             var responsiveHelper_dt_basic = undefined;
             var responsiveHelper_datatable_fixed_column = undefined;

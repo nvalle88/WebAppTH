@@ -7,6 +7,16 @@
     <p>
         <a asp-action="Create" class="btn btn-success">Nueva Relevancia</a>
     </p>
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Relevancia
+
+        </button>
+    </a>
+    <p> </p>
 
     <section id="widget-grid" class="">
         <div class="row">
@@ -45,7 +55,7 @@
 
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdRelevancia }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRelevancia }, new { onclick = "return confirm('Desea eliminar la Relevancia... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRelevancia }, new { onclick = "return confirm('Desea eliminar la relevancia... ?');" })
                                             </td>
                                         </tr>
                                     }

@@ -3,10 +3,16 @@
     ViewData["Title"] = "Index";
 }
 
-<p>
-    <a asp-action="Create">Nuevo Tipo de RMU</a>
-</p>
+<p></p>
+<a asp-action="Create">
+    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Nuevo Tipo de  RMU
 
+    </button>
+</a>
+<p> </p>
 <div id="content">
     <section id="widget-grid" class="">
         <div class="row">
@@ -23,7 +29,7 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            Descripcion
+                                            Descripci&oacuten
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -38,7 +44,7 @@
 
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoRMU }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoRMU }, new { onclick = "return confirm('Desea eliminar el Tipo de RMU... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoRMU }, new { onclick = "return confirm('Desea eliminar el tipo de RMU... ?');" })
                                             </td>
                                         </tr>
                                     }

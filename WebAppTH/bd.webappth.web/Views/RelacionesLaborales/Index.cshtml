@@ -1,11 +1,18 @@
 @model List<bd.webappth.entidades.Negocio.RelacionLaboral>
 @{
-    ViewData["Title"] = "Relación Laboral";
+    ViewData["Title"] = "Relaci&oacuten Laboral";
 }
 <div id="content">
-    <p>
-        <a asp-action="Create" class="btn btn-success">Nueva Relación Laboral</a>
-    </p>
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Relaci&oacuten Laboral
+
+        </button>
+    </a>
+    <p> </p>
 
     <section id="widget-grid" class="">
         <div class="row">
@@ -13,7 +20,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Relaciones Laborales</h2>
+                        <h2>Relaci&oacutenesLaborales</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox"></div>

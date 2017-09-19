@@ -4,9 +4,16 @@
 }
 
 <div id="content">
-    <p>
-        <a asp-action="Create" class="btn btn-success">Nuevo Rol de Puesto</a>
-    </p>
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo Rol Puesto
+
+        </button>
+    </a>
+    <p> </p>
 
     <section id="widget-grid" class="">
         <div class="row">

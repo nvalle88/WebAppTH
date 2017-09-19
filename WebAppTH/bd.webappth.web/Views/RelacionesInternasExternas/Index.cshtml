@@ -1,12 +1,20 @@
 @model List<bd.webappth.entidades.Negocio.RelacionesInternasExternas>
 @{
-    ViewData["Title"] = "Relaciones Internas y Externas";
+    ViewData["Title"] = "Relaci&oacuten Interna y Externa";
 }
 
 <div id="content">
-    <p>
-        <a asp-action="Create" class="btn btn-success">Nueva Relación Interna y Externa</a>
-    </p>
+    
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Relaci&ioacuten Interna y Externa
+
+        </button>
+    </a>
+    <p> </p>
 
     <section id="widget-grid" class="">
         <div class="row">
@@ -14,7 +22,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Relaciones Internas y Externas</h2>
+                        <h2>Relaci&oacutenes Internas y Externas</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox"></div>
@@ -38,7 +46,7 @@
 
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdRelacionesInternasExternas }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRelacionesInternasExternas }, new { onclick = "return confirm('Desea eliminar la Relación Interna y Externa... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRelacionesInternasExternas }, new { onclick = "return confirm('Desea eliminar la relación interna y externa... ?');" })
                                             </td>
                                         </tr>
                                     }

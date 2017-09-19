@@ -5,10 +5,17 @@
     }
 
     <div id="content">
-    <p>
-        <a asp-action="Create" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Tipo de Enfermedad</a>
-    </p>
+   
+        <p></p>
+        <a asp-action="Create">
+            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nuevo Tipo de Enfermedad
 
+            </button>
+        </a>
+        <p> </p>
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -67,7 +74,7 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoEnfermedad }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoEnfermedad }, new { onclick = "return confirm('Desea eliminar este Tipo de Enfermedad?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoEnfermedad }, new { onclick = "return confirm('Desea eliminar este tipo de enfermedad?');" })
                                             </td>
                                         </tr>
                                     }

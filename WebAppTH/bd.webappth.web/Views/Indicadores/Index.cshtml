@@ -3,9 +3,16 @@
 @{
     ViewData["Title"] = "Index";
 }
-<p>
-    <a asp-action="Create">Nuevo Indicador</a>
-</p>
+<p></p>
+<a asp-action="Create">
+    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Nuevo Indicador
+
+    </button>
+</a>
+<p> </p>
 			<!-- MAIN CONTENT -->
 <div id="content">
    
@@ -62,7 +69,7 @@
                                            
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdIndicador }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdIndicador }, new { onclick = "return confirm('Desea eliminar el Indicador... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdIndicador }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })
                                             </td>
                                         </tr>
                                     }

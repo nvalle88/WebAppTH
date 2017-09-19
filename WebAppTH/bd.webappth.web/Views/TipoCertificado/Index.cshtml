@@ -7,10 +7,17 @@
     
 
 <div id="content">
-    <p>
-        <a asp-action="Create" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Certificado</a>
-    </p>
+  
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo Tipo Certificado
 
+        </button>
+    </a>
+    <p> </p>
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -74,7 +81,7 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new {  id = item.IdTipoCertificado  }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoCertificado }, new { onclick = "return confirm('Desea eliminar el Tipo de Certificado seleccionado?')" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoCertificado }, new { onclick = "return confirm('Desea eliminar el tipo de certificado seleccionado?')" })
                                             </td>
                                         </tr>
 }

@@ -3,9 +3,18 @@
 @{
     ViewData["Title"] = "Index";
 }
-<p>
-    <a asp-action="Create">Nuevo F&oacutermulas RMU</a>
-</p>
+
+
+<p></p>
+<a asp-action="Create">
+    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Nuevo F&oacutermulas RMU
+
+    </button>
+</a>
+<p> </p>
 			<!-- MAIN CONTENT -->
 <div id="content">
    
@@ -62,7 +71,7 @@
                                            
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdFormulaRMU }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFormulaRMU }, new { onclick = "return confirm('Desea eliminar el Formula RMU... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFormulaRMU }, new { onclick = "return confirm('Desea eliminar el formula RMU... ?');" })
                                             </td>
                                         </tr>
                                     }
