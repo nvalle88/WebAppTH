@@ -48,7 +48,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenLaborales/ListarRegimenLaborales"), "IdRegimenLaboral", "Nombre");
+            ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
+          
+
             return View();
         }
 
@@ -88,7 +90,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Relación Laboral",
+                    Message = "Creando relación laboral",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -110,7 +112,11 @@ namespace bd.webappth.web.Controllers.MVC
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<RelacionLaboral>(respuesta.Resultado.ToString());
-                    ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenLaborales/ListarRegimenLaborales"), "IdRegimenLaboral", "Nombre");
+
+                    ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
+
+
+
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -199,7 +205,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Relación Laboral",
+                    Message = "Eliminar relación laboral",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

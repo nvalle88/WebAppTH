@@ -18,33 +18,11 @@ namespace bd.webappth.web.Controllers.MVC
     {
         private readonly IApiServicio apiServicio;
 
+
         public RelacionesInternasExternasController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
-        }
 
-        public async Task<IActionResult> Index()
-        {
-            var lista = new List<RelacionesInternasExternas>();
-            try
-            {
-                lista = await apiServicio.Listar<RelacionesInternasExternas>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/RelacionesInternasExternas/ListarRelacionesInternasExternas");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando relaciones internas y externas",
-                    ExceptionTrace = ex,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
-            }
         }
 
         public IActionResult Create()
@@ -54,12 +32,12 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(RelacionesInternasExternas relacionesInternasExternas)
+        public async Task<IActionResult> Create(RelacionesInternasExternas RelacionesInternasExternas)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(relacionesInternasExternas,
+                response = await apiServicio.InsertarAsync(RelacionesInternasExternas,
                                                              new Uri(WebApp.BaseAddress),
                                                              "/api/RelacionesInternasExternas/InsertarRelacionesInternasExternas");
                 if (response.IsSuccess)
@@ -69,18 +47,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado una relación interna y externa",
+                        Message = "Se ha creado una relación interna externa",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Relación Interna y Externa:", relacionesInternasExternas.IdRelacionesInternasExternas),
+                        EntityID = string.Format("{0} {1}", "RelacionInternaExterna:", RelacionesInternasExternas.IdRelacionesInternasExternas),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(relacionesInternasExternas);
+                return View(RelacionesInternasExternas);
 
             }
             catch (Exception ex)
@@ -88,7 +66,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Relación Interna y Externa",
+                    Message = "Creando una relación interna externa",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -106,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/RelacionesInternasExternas");
+                                                                  "api/RelacionesInternasExternas");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<RelacionesInternasExternas>(respuesta.Resultado.ToString());
@@ -127,14 +105,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, RelacionesInternasExternas relacionesInternasExternas)
+        public async Task<IActionResult> Edit(string id, RelacionesInternasExternas RelacionesInternasExternas)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, relacionesInternasExternas, new Uri(WebApp.BaseAddress),
+                    response = await apiServicio.EditarAsync(id, RelacionesInternasExternas, new Uri(WebApp.BaseAddress),
                                                                  "/api/RelacionesInternasExternas");
 
                     if (response.IsSuccess)
@@ -142,15 +120,17 @@ namespace bd.webappth.web.Controllers.MVC
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Relación Interna y Externa", id),
+                            EntityID = string.Format("{0} : {1}", "Sistema", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un registro Relación Interna y Externa",
+                            Message = "Se ha actualizado un registro sistema",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
+                    ViewData["Error"] = response.Message;
+                    return View(RelacionesInternasExternas);
 
                 }
                 return BadRequest();
@@ -160,13 +140,38 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una relación interna y externa",
+                    Message = "Editando una relación interna externa",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
                 });
 
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> Index()
+        {
+
+            var lista = new List<RelacionesInternasExternas>();
+            try
+            {
+                lista = await apiServicio.Listar<RelacionesInternasExternas>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/RelacionesInternasExternas/ListarRelacionesInternasExternas");
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Listando una una relación interna externa",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
                 return BadRequest();
             }
         }
@@ -183,7 +188,7 @@ namespace bd.webappth.web.Controllers.MVC
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Relación Interna y Externa", id),
+                        EntityID = string.Format("{0} : {1}", "Sistema", id),
                         Message = "Registro eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
@@ -198,7 +203,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Relación Interna y Externa",
+                    Message = "Eliminar una una relación interna externa",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -208,5 +213,6 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
     }
 }

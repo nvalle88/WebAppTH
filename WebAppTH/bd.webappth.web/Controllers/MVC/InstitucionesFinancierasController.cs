@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(InstitucionFinanciera,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/InstitucionesFinancieras/InsertarInstitucionesFinancieras");
+                                                             "/api/InstitucionesFinancieras/InsertarInstitucionFinanciera");
                 if (response.IsSuccess)
                 {
 

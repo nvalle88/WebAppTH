@@ -10,7 +10,7 @@
         <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nueva Relaci&ioacuten Interna y Externa
+            </span>Nueva Relaci&oacuten Interna y Externa
 
         </button>
     </a>
@@ -22,7 +22,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Relaci&oacutenes Internas y Externas</h2>
+                        <h2>Relaciones Internas y Externas</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox"></div>
@@ -31,7 +31,7 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            Descripción
+                                            Descripci&oacuten 
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -46,10 +46,10 @@
 
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdRelacionesInternasExternas }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRelacionesInternasExternas }, new { onclick = "return confirm('Desea eliminar la relación interna y externa... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRelacionesInternasExternas }, new { onclick = "return confirm('Desea eliminar la relacion interna y externa... ?');" })
                                             </td>
                                         </tr>
-                                    }
+                                    }  
                                 </tbody>
                             </table>
                         </div>

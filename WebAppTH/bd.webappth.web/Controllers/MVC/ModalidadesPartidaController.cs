@@ -41,7 +41,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(ModalidadPartida,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ModalidadesPartida/InsertarModalidadesPartida");
+                                                             "/api/ModalidadesPartida/InsertarModalidadPartida");
                 if (response.IsSuccess)
                 {
 
