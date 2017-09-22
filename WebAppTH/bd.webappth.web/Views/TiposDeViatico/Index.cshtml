@@ -4,11 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<p>
-    <a asp-action="Create">Nuevo Tipo Viático</a>
-</p>
+<p></p>
+<a asp-action="Create">
+    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Nuevo Tipo Vi&aacutetico
 
-<!-- MAIN CONTENT -->
+    </button>
+</a>
+<p></p><!-- MAIN CONTENT -->
 <div id="content">
 
     <!-- widget grid -->
@@ -34,7 +39,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Tipos viáticos</h2>
+                        <h2>Tipo de Vi&aacutetico</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -49,7 +54,7 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            Descripción
+                                            Descripci&oacuten
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -63,7 +68,7 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoViatico }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoViatico }, new { onclick = "return confirm('Desea eliminar el Tipo Viático... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoViatico }, new { onclick = "return confirm('Desea eliminar el tipo viatico... ?');" })
                                             </td>
                                         </tr>
                                     }

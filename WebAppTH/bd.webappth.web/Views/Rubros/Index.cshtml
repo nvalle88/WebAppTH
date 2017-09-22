@@ -4,9 +4,16 @@
 }
 
 <div id="content">
-    <p>
-        <a asp-action="Create" class="btn btn-success">Nuevo Rubro</a>
-    </p>
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo Rubro
+
+        </button>
+    </a>
+    <p> </p>
 
     <section id="widget-grid" class="">
         <div class="row">
@@ -26,7 +33,7 @@
                                             Nombre
                                         </th>
                                         <th>
-                                            Tasa Porcentual Máxima
+                                            Tasa Porcentual M&aacutexima
                                         </th>
                                         <th>Opciones</th>
                                     </tr>

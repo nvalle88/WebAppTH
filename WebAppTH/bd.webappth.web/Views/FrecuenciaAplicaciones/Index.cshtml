@@ -3,9 +3,19 @@
 @{
     ViewData["Title"] = "Index";
 }
-<p>
-    <a asp-action="Create">Nuevo  Frecuencia Aplicaci&oacuten</a>
-</p>
+
+
+<p></p>
+<a asp-action="Create">
+    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Nuevo  Frecuencia Aplicaci&oacuten
+
+    </button>
+</a>
+<p> </p>
+
 <!-- MAIN CONTENT -->
 <div id="content">
 
@@ -62,7 +72,7 @@
 
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdFrecuenciaAplicacion }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFrecuenciaAplicacion }, new { onclick = "return confirm('Desea eliminar el Frecuencia Aplicacion... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFrecuenciaAplicacion }, new { onclick = "return confirm('Desea eliminar el frecuencia aplicacion... ?');" })
                                             </td>
                                         </tr>
                                     }

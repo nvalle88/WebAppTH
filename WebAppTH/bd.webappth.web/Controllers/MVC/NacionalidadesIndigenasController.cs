@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(NacionalidadIndigena,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/NacionalidadesIndigenas/InsertarNacionalidadesIndigenas");
+                                                             "/api/NacionalidadesIndigenas/InsertarNacionalidadIndigena");
                 if (response.IsSuccess)
                 {
 

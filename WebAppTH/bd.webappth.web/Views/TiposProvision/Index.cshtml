@@ -3,9 +3,17 @@
     ViewData["Title"] = "Index";
 }
 
-<p>
-    <a asp-action="Create">Nuevo Tipo de Provision</a>
-</p>
+
+<p></p>
+<a asp-action="Create">
+    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Nuevo Tipo de  Provisi&oacuten
+
+    </button>
+</a>
+<p> </p>
 
 <div id="content">
     <section id="widget-grid" class="">
@@ -14,7 +22,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Tipo de Provision</h2>
+                        <h2>Tipo de Provisi&oacuten</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox"></div>
@@ -23,7 +31,7 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            Descripcion
+                                            Descripci&oacuten 
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -38,7 +46,7 @@
 
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoProvision }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoProvision }, new { onclick = "return confirm('Desea eliminar el Tipo de Provision... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoProvision }, new { onclick = "return confirm('Desea eliminar el tipo de provision... ?');" })
                                             </td>
                                         </tr>
                                     }

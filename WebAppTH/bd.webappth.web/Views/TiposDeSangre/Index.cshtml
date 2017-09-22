@@ -3,9 +3,17 @@
     ViewData["Title"] = "Index";
 }
 
-<p>
-    <a asp-action="Create">Nuevo Tipo de Sangre</a>
-</p>
+
+<p></p>
+<a asp-action="Create">
+    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Nuevo Tipo de Sangre
+
+    </button>
+</a>
+<p> </p>
 
 <div id="content">
     <section id="widget-grid" class="">
@@ -38,7 +46,7 @@
 
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoSangre }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoSangre }, new { onclick = "return confirm('Desea eliminar el Tipo de Sangre... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoSangre }, new { onclick = "return confirm('Desea eliminar el tipo de sangre... ?');" })
                                             </td>
                                         </tr>
                                     }
