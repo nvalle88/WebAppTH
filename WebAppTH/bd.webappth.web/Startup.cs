@@ -2,8 +2,10 @@
 using bd.webappth.servicios.Servicios;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace bd.webappth.web
@@ -29,6 +31,8 @@ namespace bd.webappth.web
             // Add framework services.
             services.AddMvc();
             services.AddSingleton<IApiServicio, ApiServicio>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+           
             await InicializarWebApp.Inicializar("WebAppTH");
            
 

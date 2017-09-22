@@ -7,15 +7,23 @@ using bd.webappth.entidades.ObjectTransfer;
 using bd.webappth.entidades.Utils;
 using bd.webappth.entidades.ViewModels;
 using bd.webappth.servicios.Interfaces;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+
+//using iTextSharp.text;
+//using iTextSharp.text.pdf;
 
 
 namespace bd.webappth.web.Controllers.MVC
@@ -23,11 +31,13 @@ namespace bd.webappth.web.Controllers.MVC
     public class DocumentosInformacionInstitucionalController : Controller
     {
         private readonly IApiServicio apiServicio;
+        private IHostingEnvironment _hostingEnvironment;
 
 
-        public DocumentosInformacionInstitucionalController(IApiServicio apiServicio)
+        public DocumentosInformacionInstitucionalController(IApiServicio apiServicio, IHostingEnvironment _hostingEnvironment)
         {
             this.apiServicio = apiServicio;
+            this._hostingEnvironment = _hostingEnvironment;
 
         }
 
@@ -38,13 +48,13 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create( ViewModelDocumentoInstitucional view,List<IFormFile> files)
+        public async Task<ActionResult> Create(ViewModelDocumentoInstitucional view, List<IFormFile> files)
         {
 
 
 
-            if (files.Count >0)
-                {
+            if (files.Count > 0)
+            {
                 byte[] data;
                 using (var br = new BinaryReader(files[0].OpenReadStream()))
                     data = br.ReadBytes((int)files[0].OpenReadStream().Length);
@@ -55,8 +65,22 @@ namespace bd.webappth.web.Controllers.MVC
                     Fichero = data,
                 };
 
-               await CreateFichero(documenttransfer);
-                return RedirectToAction("Index");
+                var respuesta = await CreateFichero(documenttransfer);
+                if (respuesta.IsSuccess)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewData["Error"] = respuesta.Message;
+
+                    var documento = new DocumentoInformacionInstitucional
+                    {
+                        Nombre=view.Nombre,
+                    };
+                    return View(documento);
+                }
+
             }
 
             return BadRequest();
@@ -66,7 +90,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<StatusCodeResult> CreateFichero(DocumentoInstitucionalTransfer file)
+        public async Task<Response> CreateFichero(DocumentoInstitucionalTransfer file)
         {
             Response response = new Response();
             try
@@ -88,11 +112,20 @@ namespace bd.webappth.web.Controllers.MVC
                         EntityID = string.Format("{0} {1}", "Documento Información Institucional:", file.Nombre),
                     });
 
-             
+                    return new Response
+                    {
+                        IsSuccess = true,
+                        Message = response.Message,
+                    };
+
                 }
 
                 ViewData["Error"] = response.Message;
-                return BadRequest();
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
 
             }
             catch (Exception ex)
@@ -107,7 +140,11 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP WebAppTh"
                 });
 
-                return BadRequest();
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
             }
         }
 
@@ -138,6 +175,13 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 return BadRequest();
             }
+        }
+
+        public async Task<IActionResult> GetFile(string id)
+        {
+
+            return BadRequest();
+
         }
 
         [HttpPost]
@@ -250,5 +294,24 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+
+
+      public async Task<FileResult> Download(string id)
+        {
+            var d = new DocumentoInformacionInstitucional
+            {
+                IdDocumentoInformacionInstitucional = Convert.ToInt32(id),
+            };
+
+           var response = await apiServicio.ObtenerElementoAsync(d,
+                                                            new Uri(WebApp.BaseAddress),
+                                                            "/api/DocumentosInformacionInstitucional/GetFile");
+            var m = JsonConvert.DeserializeObject<DocumentoInstitucionalTransfer>(response.Resultado.ToString());
+            var fileName = $"{ response.Message}.pdf";
+
+            return File(m.Fichero, "application/pdf",fileName);
+        }
+
     }
 }
