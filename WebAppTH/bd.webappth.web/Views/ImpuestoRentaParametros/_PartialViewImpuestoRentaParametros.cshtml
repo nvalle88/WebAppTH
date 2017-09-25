@@ -1,0 +1,41 @@
+@model bd.webappth.entidades.Negocio.ImpuestoRentaParametros
+<fieldset>
+
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="12" asp-for="FraccionBasica" onkeypress="return NumCheck(event, this)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.FraccionBasica)" />
+                <span asp-validation-for="FraccionBasica" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="12" asp-for="ExcesoHasta" onkeypress="return NumCheck(event, this)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.ExcesoHasta)" />
+                <span asp-validation-for="ExcesoHasta" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="12" onKeyPress="return checkIt(event)" asp-for="ImpuestoFraccionBasica" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.ImpuestoFraccionBasica)" />
+                <span asp-validation-for="ImpuestoFraccionBasica" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="3" onKeyPress="return checkIt(event)" onchange="handleChange(this);" asp-for="PorcentajeImpuestoFraccionExcedente" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.PorcentajeImpuestoFraccionExcedente)" />
+                <span asp-validation-for="PorcentajeImpuestoFraccionExcedente" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+</fieldset>

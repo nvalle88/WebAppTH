@@ -36,17 +36,7 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdFactor"/>
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <i class="icon-append fa fa-comment"></i>
-                                                <input maxlength="32"  asp-for="Porciento" onkeypress="return NumCheck(event, this)" onchange="handleChange(this);" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Porciento)" />
-                                                <span asp-validation-for="Porciento" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-                                </fieldset>
+                                @{await Html.RenderPartialAsync("_PartialViewFactores");}
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
