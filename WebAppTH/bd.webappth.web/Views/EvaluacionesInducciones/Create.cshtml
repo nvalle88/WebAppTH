@@ -36,32 +36,7 @@
                           
                             <form  asp-action="Create" id="checkout-form"  class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="50" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
-                                                <span asp-validation-for="Nombre" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="2" onkeypress="return checkIt(event)" asp-for="MinimoAprobar" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MinimoAprobar)" />
-                                                <span asp-validation-for="MinimoAprobar" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="3" onkeypress="return checkIt(event)" asp-for="MaximoPuntos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MaximoPuntos)" />
-                                                <span asp-validation-for="MaximoPuntos" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-                                    <span class="text-danger">@ViewData["Error"]</span>
-                                </fieldset>                              
+                                @{await Html.RenderPartialAsync("_PartialViewEvaluacionesInducciones", Model);}                             
                                 <footer>                          
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index"  class="btn btn-default">Cancelar</a>

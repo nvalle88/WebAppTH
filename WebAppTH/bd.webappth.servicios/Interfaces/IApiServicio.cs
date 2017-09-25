@@ -8,6 +8,7 @@ namespace bd.webappth.servicios.Interfaces
     public interface IApiServicio
     {
         Task<Response> InsertarAsync<T>(T model,Uri baseAddress, string url );
+        Task<Response> ObtenerElementoAsync<T>(T model, Uri baseAddress, string url) where T : class;
         Task<Response> EliminarAsync(string id, Uri baseAddress, string url);
         Task<Response> EditarAsync<T>(string id, T model, Uri baseAddress, string url);
         Task<T> SeleccionarAsync<T>(string id, Uri baseAddress, string url) where T : class;
