@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bd.sw.externos", "bd.sw.externos\bd.sw.externos.csproj", "{3C0E2E0B-A060-4994-A4A3-CFBE530F003E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bd.log.guardar", "..\..\SalvarLogEntry\bd.guardarlog.servicios\bd.log.guardar.csproj", "{6BB64559-F2F5-482C-BC21-D2D0ADDBBCD4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bd.webappth.web", "bd.webappth.web\bd.webappth.web.csproj", "{120D4DED-EC48-4D1C-A3DA-7EE2A2BBF902}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bd.webappth.servicios", "bd.webappth.servicios\bd.webappth.servicios.csproj", "{82CF038C-014C-4257-A7BA-779D1D974A49}"
@@ -19,14 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3C0E2E0B-A060-4994-A4A3-CFBE530F003E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C0E2E0B-A060-4994-A4A3-CFBE530F003E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C0E2E0B-A060-4994-A4A3-CFBE530F003E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C0E2E0B-A060-4994-A4A3-CFBE530F003E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BB64559-F2F5-482C-BC21-D2D0ADDBBCD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BB64559-F2F5-482C-BC21-D2D0ADDBBCD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BB64559-F2F5-482C-BC21-D2D0ADDBBCD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BB64559-F2F5-482C-BC21-D2D0ADDBBCD4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{120D4DED-EC48-4D1C-A3DA-7EE2A2BBF902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{120D4DED-EC48-4D1C-A3DA-7EE2A2BBF902}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{120D4DED-EC48-4D1C-A3DA-7EE2A2BBF902}.Release|Any CPU.ActiveCfg = Release|Any CPU
