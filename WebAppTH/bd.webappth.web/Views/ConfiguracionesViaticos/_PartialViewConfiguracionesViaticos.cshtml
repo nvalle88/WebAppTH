@@ -1,0 +1,29 @@
+@model bd.webappth.entidades.Negocio.ConfiguracionViatico
+<fieldset>
+    <div class="row">
+        <section class="col col-6">
+            <label class="input">
+                <select asp-for="IdDependencia" class="form-control" asp-items="ViewBag.IdDependencia">
+                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdDependencia)></option>
+                </select>
+                <span asp-validation-for="IdDependencia" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-3">
+            <label class="input">
+                <i class="icon-prepend fa fa-user"></i>
+                <input asp-for="PorCientoAJustificar" onkeypress="return NumCheck(event, this)" onchange="handleChange(this);" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.PorCientoAJustificar)" />
+                <span asp-validation-for="PorCientoAJustificar" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-3">
+            <label class="input">
+                <i class="icon-prepend fa fa-user"></i>
+                <input asp-for="ValorEntregadoPorDia" onkeypress="return NumCheck(event, this)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.ValorEntregadoPorDia)" />
+                <span asp-validation-for="ValorEntregadoPorDia" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <span class="text-danger">@ViewData["Error"]</span>
+</fieldset> 

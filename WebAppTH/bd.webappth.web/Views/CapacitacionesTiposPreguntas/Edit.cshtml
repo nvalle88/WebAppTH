@@ -20,7 +20,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Tipos de Preguntas de Capacitación</h2>
+                        <h2>Tipos de Preguntas de Capacitaci&oacute;n</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -36,19 +36,8 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdCapacitacionTipoPregunta"/>
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="32"  asp-for="Descripcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)" />
-                                                <span asp-validation-for="Descripcion" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-                                </fieldset>
+                                @{await Html.RenderPartialAsync("_PartialViewCapacitacionesTiposPreguntas");}
                                 <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>

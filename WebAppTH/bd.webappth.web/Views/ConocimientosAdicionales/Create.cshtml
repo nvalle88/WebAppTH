@@ -36,19 +36,9 @@
                           
                             <form  asp-action="Create" id="checkout-form"  class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <fieldset>
-                                    <section>
-                                        <label class="label"></label>
-                                        <label class="textarea">
-                                            <i class="icon-append fa fa-comment"></i>
-                                            <textarea maxlength="250" asp-for="Descripcion" rows="4" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
-                                            <span asp-validation-for="Descripcion" class="text-danger"></span>
-                                        </label>
-                                    </section>
-                                </fieldset>
-                               
+                                @{await Html.RenderPartialAsync("_PartialViewConocimientosAdicionales", Model);}                         
                                 <footer>
-                                    @*<span class="text-danger">@ViewData["Error"]</span>*@
+                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index"  class="btn btn-default">Cancelar</a>
                                 </footer>

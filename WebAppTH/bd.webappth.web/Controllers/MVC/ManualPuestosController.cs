@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(ManualPuesto,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ManualPuestos/InsertarManualPuestos");
+                                                             "/api/ManualPuestos/InsertarManualPuesto");
                 if (response.IsSuccess)
                 {
 

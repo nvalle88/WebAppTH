@@ -36,34 +36,8 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdEscalaGrados"/>
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="2"  asp-for="Grado" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Grado)" />
-                                                <span asp-validation-for="Grado" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="2" asp-for="Remuneracion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Remuneracion)" />
-                                                <span asp-validation-for="Remuneracion" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <select asp-for="IdGrupoOcupacional" class="form-control" asp-items="ViewBag.IdGrupoOcupacional">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdGrupoOcupacional)></option>
-                                                </select>
-                                                <span asp-validation-for="IdGrupoOcupacional" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-                                </fieldset>
-                                <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
+                                @{await Html.RenderPartialAsync("_PartialViewEscalasGrados");}
+                                <footer>                  
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
@@ -86,14 +60,54 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-<script type="text/javascript">
+
         <script src='~/lib/select2/dist/js/select2.min.js'></script>
 <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 <script src='~/js/site.js'></script>
 <script type="text/javascript">
+
+
+
+    function checkIt(evt) {
+        evt = (evt) ? evt : window.event
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            status = "This field accepts numbers only."
+            return false
+        }
+        status = ""
+        return true
+    }
+    function NumCheck(e, field) {
+        key = e.keyCode ? e.keyCode : e.which
+        // backspace
+        if (key == 8) return true
+        // 0-9
+        if (key > 47 && key < 58) {
+            if (field.value == "") return true
+            regexp = /.[0-9]{10}$/
+            return !(regexp.test(field.value))
+        }
+        // .
+        if (key == 44) {
+            if (field.value == "") return false
+            regexp = /^[0-9]+$/
+            return regexp.test(field.value)
+        }
+        // other key
+        return false
+
+    }
+
+    function handleChange(input) {
+        if (input.value < 0) input.value = 0;
+        if (input.value > 100) input.value = 100;
+    }
             $(document).ready(function () {
                 Init_Select2();
     });
+
+
 
 </script>
 }

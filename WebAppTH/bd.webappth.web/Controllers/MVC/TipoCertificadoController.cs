@@ -51,7 +51,7 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Estado Civil:", tipoCertificado.IdTipoCertificado),
+                        EntityID = string.Format("{0} {1}", "tipo certificado:", tipoCertificado.IdTipoCertificado),
                     });
 
                     return RedirectToAction("Index");
@@ -115,7 +115,7 @@ namespace bd.webappth.web.Controllers.MVC
                     response = await apiServicio.EditarAsync(id, tipoCertificado, new Uri(WebApp.BaseAddress),
                                                                  "/api/TipoCertificado");
 
-                    if (!response.IsSuccess)
+                    if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {

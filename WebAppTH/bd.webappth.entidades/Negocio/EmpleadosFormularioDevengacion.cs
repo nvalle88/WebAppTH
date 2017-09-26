@@ -15,7 +15,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Formulario de devengación:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int FormularioDevengacionId { get; set; }
+        public int IdFormularioDevengacion { get; set; }
         public virtual FormularioDevengacion FormularioDevengacion { get; set; }
     }
 }

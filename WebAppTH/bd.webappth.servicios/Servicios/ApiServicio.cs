@@ -38,6 +38,34 @@ namespace bd.webappth.servicios.Servicios
                 };
             }
         }
+
+        public async Task<Response> ObtenerElementoAsync<T>(T model, Uri baseAddress, string url) where T :class
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var request = JsonConvert.SerializeObject(model);
+                    var content = new StringContent(request, Encoding.UTF8, "application/json");
+
+                    client.BaseAddress = baseAddress;
+
+                    var response = await client.PostAsync(url, content);
+
+                    var resultado = await response.Content.ReadAsStringAsync();
+                    var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
+                    return respuesta;
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = true,
+                    Message = ex.Message,
+                };
+            }
+        }
         public async Task<Response> EliminarAsync(string id, Uri baseAddress, string url)
         {
             try
@@ -99,13 +127,13 @@ namespace bd.webappth.servicios.Servicios
 
                     var resultado = await respuesta.Content.ReadAsStringAsync();
                     var response = JsonConvert.DeserializeObject<List<T>>(resultado);
-                    return response;
+                    return response ?? new List<T>();
                 }
             }
 
-            catch (Exception )
+            catch (Exception ex)
             {
-                return null;
+                return new List<T>();
             }
                            
         }

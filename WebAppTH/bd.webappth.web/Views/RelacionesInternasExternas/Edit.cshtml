@@ -1,7 +1,7 @@
 @model bd.webappth.entidades.Negocio.RelacionesInternasExternas
 
 @{
-    ViewData["Title"] = "Relación Interna y Externa";
+    ViewData["Title"] = "Relaci&oacuten Interna y Externa";
 }
 
 <div id="content">
@@ -11,7 +11,7 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Relaciones Internas y Externas</h2>
+                        <h2>Relaci&ioacuten Interna y Externa</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox"></div>
@@ -19,17 +19,7 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdRelacionesInternasExternas" />
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="50" asp-for="Descripcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)" />
-                                                <span asp-validation-for="Descripcion" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-                                </fieldset>
+                                @{await Html.RenderPartialAsync("_PartialViewRelacionesInternasExternas");}
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />

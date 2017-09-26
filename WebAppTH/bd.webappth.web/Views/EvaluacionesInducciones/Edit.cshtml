@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.Negocio.EvaluacionInducion
+ @model bd.webappth.entidades.Negocio.EvaluacionInducion
 
 @{
     ViewData["Title"] = "EvaluacionesInducciones";
@@ -20,7 +20,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Evaluación Inducción</h2>
+                        <h2>Evaluación Inducci&oacute;n</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -36,33 +36,8 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdEvaluacionInduccion"/>
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="50"  asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
-                                                <span asp-validation-for="Nombre" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input asp-for="MinimoAprobar" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MinimoAprobar)" />
-                                                <span asp-validation-for="MinimoAprobar" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input asp-for="MaximoPuntos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.MaximoPuntos)" />
-                                                <span asp-validation-for="MaximoPuntos" class="text-danger"></span>
-                                            </label>
-                                        </section>  
-                                    </div>
-                                </fieldset>
-                                <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
+                                @{await Html.RenderPartialAsync("_PartialViewEvaluacionesInducciones");}
+                                <footer> 
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>

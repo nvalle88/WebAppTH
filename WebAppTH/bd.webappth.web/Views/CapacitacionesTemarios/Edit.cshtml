@@ -21,7 +21,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Temarios de Capacitación</h2>
+                        <h2>Temarios de Capacitaci&oacute;n</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -37,30 +37,8 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdCapacitacionTemario"/>
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <select asp-for="IdCapacitacionAreaConocimiento" class="form-control" asp-items="ViewBag.IdCapacitacionAreaConocimiento">
-                                                    <option value="0"><Seleccione una @Html.DisplayNameFor(model => model.IdCapacitacionAreaConocimiento)></option>
-                                                </select>
-                                                <span asp-validation-for="IdCapacitacionAreaConocimiento" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="20" asp-for="Tema" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Tema)" />
-                                                <span asp-validation-for="Tema" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-                                </fieldset>
+                                @{await Html.RenderPartialAsync("_PartialViewCapacitacionesTemarios");}
                                 <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>

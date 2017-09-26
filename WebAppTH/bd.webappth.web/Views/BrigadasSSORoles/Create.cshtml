@@ -37,32 +37,8 @@
                           
                             <form  asp-action="Create" id="checkout-form"  class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <select asp-for="IdBrigadaSSO" class="form-control" asp-items="ViewBag.IdBrigadaSSO">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model=>model.IdBrigadaSSO)></option>
-                                                </select>
-                                                <span asp-validation-for="Nombre" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="20" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
-                                                <span asp-validation-for="Nombre" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-                                    
-                                </fieldset>
-                               
-                                <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
+                                @{await Html.RenderPartialAsync("_PartialViewBrigadasSSORoles", Model);}                             
+                                <footer>                     
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index"  class="btn btn-default">Cancelar</a>
                                 </footer>
@@ -85,8 +61,7 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
-        <script src='~/lib/select2/dist/js/select2.min.js'></script>
+  <script src='~/lib/select2/dist/js/select2.min.js'></script>
 <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 <script src='~/js/site.js'></script>
 <script type="text/javascript">

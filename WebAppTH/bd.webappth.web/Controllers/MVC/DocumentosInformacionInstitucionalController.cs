@@ -1,27 +1,43 @@
+using bd.log.guardar.Enumeradores;
+using bd.log.guardar.ObjectTranfer;
+using bd.log.guardar.Servicios;
+using bd.webappseguridad.entidades.Enumeradores;
+using bd.webappth.entidades.Negocio;
+using bd.webappth.entidades.ObjectTransfer;
+using bd.webappth.entidades.Utils;
+using bd.webappth.entidades.ViewModels;
+using bd.webappth.servicios.Interfaces;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
+using System.IO;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using bd.webappth.servicios.Interfaces;
-using bd.webappth.entidades.Negocio;
-using bd.webappth.entidades.Utils;
-using bd.log.guardar.Servicios;
-using bd.log.guardar.ObjectTranfer;
-using bd.webappseguridad.entidades.Enumeradores;
-using bd.log.guardar.Enumeradores;
-using Newtonsoft.Json;
+
+//using iTextSharp.text;
+//using iTextSharp.text.pdf;
+
 
 namespace bd.webappth.web.Controllers.MVC
 {
     public class DocumentosInformacionInstitucionalController : Controller
     {
         private readonly IApiServicio apiServicio;
+        private IHostingEnvironment _hostingEnvironment;
 
 
-        public DocumentosInformacionInstitucionalController(IApiServicio apiServicio)
+        public DocumentosInformacionInstitucionalController(IApiServicio apiServicio, IHostingEnvironment _hostingEnvironment)
         {
             this.apiServicio = apiServicio;
+            this._hostingEnvironment = _hostingEnvironment;
 
         }
 
@@ -32,14 +48,56 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(DocumentoInformacionInstitucional documentoInformacionInstitucional)
+        public async Task<ActionResult> Create(ViewModelDocumentoInstitucional view, List<IFormFile> files)
+        {
+
+
+
+            if (files.Count > 0)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(files[0].OpenReadStream()))
+                    data = br.ReadBytes((int)files[0].OpenReadStream().Length);
+
+                var documenttransfer = new DocumentoInstitucionalTransfer
+                {
+                    Nombre = view.Nombre,
+                    Fichero = data,
+                };
+
+                var respuesta = await CreateFichero(documenttransfer);
+                if (respuesta.IsSuccess)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewData["Error"] = respuesta.Message;
+
+                    var documento = new DocumentoInformacionInstitucional
+                    {
+                        Nombre=view.Nombre,
+                    };
+                    return View(documento);
+                }
+
+            }
+
+            return BadRequest();
+
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<Response> CreateFichero(DocumentoInstitucionalTransfer file)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(documentoInformacionInstitucional,
+                response = await apiServicio.InsertarAsync(file,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/DocumentosInformacionInstitucional/InsertarDocumentoInformacionInstitucional");
+                                                             "/api/DocumentosInformacionInstitucional/UploadFiles");
                 if (response.IsSuccess)
                 {
 
@@ -47,18 +105,27 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un documento de información institucional",
+                        Message = "Se ha subido un archivo",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Documento de Información Institucional:", documentoInformacionInstitucional.IdDocumentoInformacionInstitucional),
+                        EntityID = string.Format("{0} {1}", "Documento Información Institucional:", file.Nombre),
                     });
 
-                    return RedirectToAction("Index");
+                    return new Response
+                    {
+                        IsSuccess = true,
+                        Message = response.Message,
+                    };
+
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(documentoInformacionInstitucional);
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
 
             }
             catch (Exception ex)
@@ -66,16 +133,23 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Documento de Información Institucional",
+                    Message = "Subiendo archivo",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP WebAppTh"
                 });
 
-                return BadRequest();
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
             }
         }
+
+
+
 
         public async Task<IActionResult> Edit(string id)
         {
@@ -101,6 +175,13 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 return BadRequest();
             }
+        }
+
+        public async Task<IActionResult> GetFile(string id)
+        {
+
+            return BadRequest();
+
         }
 
         [HttpPost]
@@ -213,5 +294,24 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+
+
+      public async Task<FileResult> Download(string id)
+        {
+            var d = new DocumentoInformacionInstitucional
+            {
+                IdDocumentoInformacionInstitucional = Convert.ToInt32(id),
+            };
+
+           var response = await apiServicio.ObtenerElementoAsync(d,
+                                                            new Uri(WebApp.BaseAddress),
+                                                            "/api/DocumentosInformacionInstitucional/GetFile");
+            var m = JsonConvert.DeserializeObject<DocumentoInstitucionalTransfer>(response.Resultado.ToString());
+            var fileName = $"{ response.Message}.pdf";
+
+            return File(m.Fichero, "application/pdf",fileName);
+        }
+
     }
 }

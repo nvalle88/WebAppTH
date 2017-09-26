@@ -4,9 +4,6 @@ namespace bd.webappth.entidades.Negocio
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
      
-     
-
-   
     public partial class MaterialApoyo
     {
         [Key]
@@ -16,7 +13,7 @@ namespace bd.webappth.entidades.Negocio
 
         public string Ubicacion { get; set; }
 
-        public int FormularioDevengacionId { get; set; }
+        public int IdFormularioDevengacion { get; set; }
 
         public virtual FormularioDevengacion FormularioDevengacion { get; set; }
     }

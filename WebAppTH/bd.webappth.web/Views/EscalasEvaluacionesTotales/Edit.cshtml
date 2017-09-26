@@ -20,7 +20,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Escalas Evaluacion Total</h2>
+                        <h2>Escalas Evaluaciones Totales</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -36,42 +36,8 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdEscalaEvaluacionTotal"/>
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
-                                                <span asp-validation-for="Nombre" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input onkeypress="return NumCheck(event, this)" asp-for="PorcientoDesde" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.PorcientoDesde)" />
-                                                <span asp-validation-for="PorcientoDesde" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
-                                                <input onkeypress="return NumCheck(event, this)" asp-for="PorcientoHasta" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.PorcientoHasta)" />
-                                                <span asp-validation-for="PorcientoHasta" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-                                    <section>
-                                        <label class="label"></label>
-                                        <label class="textarea">
-                                            <i class="icon-append fa fa-comment"></i>
-                                            <textarea maxlength="250" asp-for="Descripcion" rows="4" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
-                                            <span asp-validation-for="Descripcion" class="text-danger"></span>
-                                        </label>
-                                    </section>
-
-                                </fieldset>
+                                @{await Html.RenderPartialAsync("_PartialViewEscalasEvaluacionesTotales", Model);}
                                 <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
