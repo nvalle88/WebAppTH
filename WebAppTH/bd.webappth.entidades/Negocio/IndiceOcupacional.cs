@@ -12,23 +12,25 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Dependencia:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int? IdDependencia { get; set; }
+        public int IdDependencia { get; set; }
         public virtual Dependencia Dependencia { get; set; }
 
         [Display(Name = "Manual del puesto:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int? IdManualPuesto { get; set; }
+        public int IdManualPuesto { get; set; }
         public virtual ManualPuesto ManualPuesto { get; set; }
 
         [Display(Name = "Rol del puesto:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int? IdRolPuesto { get; set; }
+        public int IdRolPuesto { get; set; }
         public virtual RolPuesto RolPuesto { get; set; }
 
         [Display(Name = "Escala de grados:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int? IdEscalaGrados { get; set; }
+        public int IdEscalaGrados { get; set; }
         public virtual EscalaGrados EscalaGrados { get; set; }
+
+
 
         public virtual ICollection<IndiceOcupacionalModalidadPartida> IndiceOcupacionalModalidadPartida { get; set; }
 

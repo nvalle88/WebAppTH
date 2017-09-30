@@ -1,0 +1,486 @@
+@model bd.webappth.entidades.ViewModels.IndiceOcupacionalDetalle
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            
+            <div class="btn-group">
+                <button class="btn btn-primary">
+                   Acciones
+                </button>
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a asp-action="Index" asp-controller="Sucursal">Sucursal</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);">Another action</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);">Something else here</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a asp-action="Index"><i class="fa fa-arrow-left"></i>  Regresar</a>
+                    </li>
+                </ul>
+            </div>
+            <p></p>
+        <!-- end col -->
+    </div>
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="alert alert-danger hidden-lg hidden-md hidden-sm">
+                    <b>Nota:</b>
+                    Este pugin no es responsive
+                </div>
+                <div class="jarviswidget" id="wid-id-0" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" role="widget" style="">
+                    <header role="heading">
+
+                        <ul class="nav nav-tabs pull-right in" id="myTab">
+                            
+                            <li class="active">
+                                <a data-toggle="tab" href="#s1"><i class="fa fa-crop text-success"></i> <span class="hidden-mobile hidden-tablet">API</span></a>
+                            </li>
+                        </ul>
+                        <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div>
+                            <article class="col-sm-12 col-md-5 col-lg-12">
+                                <fieldset>
+                                      <legend class=""> <strong> Descripci&oacute;n y Perfil del puesto</strong></legend>
+                                </fieldset>
+                            </article>
+                        </div>
+                        <article class="col-sm-12 col-md-12 col-lg-12">
+                            <article class="col-sm-12 col-md-12 col-lg-6">
+                                <fieldset>
+                                    <legend>Datos de identificaci&oacute;n del puesto</legend>
+                                    <div>
+                                        <label><strong>Rol:</strong></label>
+                                        <label>@Model.IndiceOcupacional.RolPuesto.Nombre</label>
+                                        <br />
+                                        <label><strong>Denominaci&oacute;n del puesto:</strong></label>
+                                        <label>@Model.IndiceOcupacional.ManualPuesto.Nombre</label>
+                                        <br />
+                                        <label><strong>Grupo ocupacional:</strong></label>
+                                        <label>@Model.IndiceOcupacional.ManualPuesto.Nombre</label>
+                                        <br />
+                                        <label><strong>Grado:</strong></label>
+                                        <label>@Model.IndiceOcupacional.EscalaGrados.Grado</label>
+                                        <br />
+                                        
+                                        <label><strong>Unidad aministrativa:</strong></label>
+                                        <label>Secretar&iacute;a general</label>
+                                    </div>
+
+                                </fieldset>
+                            </article>
+                            <article class="col-sm-12 col-md-12 col-lg-6">
+                                <fieldset>
+                                    <legend>Misi&oacute;n</legend>
+                                    
+                                      @if (Model.ListaMisiones.Count != 0)
+                                      {<p class="text-justify text-">
+                                            @Model.ListaMisiones.FirstOrDefault().Descripcion
+                                       </p>
+                                      }
+                                      else
+                                      { 
+                                        <p>No se ha establecido la misi&oacute;n</p>
+                                      }
+
+                                </fieldset>
+                            </article>
+                        </article>
+
+                        <article class="col-lg-6">
+                            <legend>Instrucci&oacute; Formal Requerida </legend>
+                            <article class="col-sm-12 col-md-12 col-lg-6">
+                                <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                    <header>
+                                        <span class="widget-icon"> <i class="fa fa-graduation-cap"></i> </span>
+                                        <h2>Nivel de instrucci&oacute;n </h2>
+                                    </header>
+                                    <fieldset>
+                                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ListaEstudios.Count != 0)
+                                                {
+                                                    @foreach (var item in Model.ListaEstudios)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el nivel de estudio... ?');" })
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <p>No existen resultados</p>
+                                                       </td>
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                </div>
+                            </article>
+                            <article class="col-sm-12 col-md-12 col-lg-6">
+                                <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                    <header>
+                                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                        <h2>&Aacute;rea de conocimiento </h2>
+                                    </header>
+                                    <fieldset>
+
+                                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ListaAreaConocimientos.Count != 0)
+                                                {
+                                                    @foreach (var item in Model.ListaAreaConocimientos)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el área de conocimiento... ?');" })
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <p>No existen resultados</p>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                              
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                </div>
+                            </article>
+                        </article>
+
+
+                        <article class="col-sm-12 col-md-12 col-lg-6">
+                            <fieldset>
+                               
+                                <legend>Relaciones Internas y Externas</legend>
+                                @if (Model.ListaRelacionesInternasExternas.Count != 0)
+                                {<p>
+                                    @Model.ListaRelacionesInternasExternas.FirstOrDefault().Descripcion
+                                </p>
+                                }
+                                else
+                                {
+                                    <p>No se ha establecido la misi&oacute;n</p>
+                                }
+                               
+                            </fieldset>
+                        </article>
+
+                        <article class="col-lg-12">
+                            <article class="col-sm-12 col-md-12 col-lg-6">
+                                <legend>Experiencia Laboral Requerida </legend>
+                                <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                    <header>
+                                        <span class="widget-icon"> <i class="fa fa-clock-o"></i> </span>
+                                        <h2>Experiencia laboral requerida </h2>
+                                    </header>
+                                    <fieldset>
+
+                                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                
+                                                <tr>
+                                                    @if(Model.ListaExperienciaLaboralRequeridas.Count != 0)
+                                                    {
+                                                    <th data- class="expand"><i class="fa fa-fw fa-clock-o text-muted hidden-md hidden-sm hidden-xs"></i> Nivel instrucci&oacute;n</th>
+                                                    <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Años de experiencia</th>
+                                                    <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Especidad de la experiencia</th>
+                                                    <th></th>
+                                                    }
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                               @if (Model.ListaExperienciaLaboralRequeridas.Count != 0)
+                                               {
+                                                @foreach (var item in Model.ListaExperienciaLaboralRequeridas)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Estudio.Nombre)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.AnoExperiencia.Descripcion)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.EspecificidadExperiencia.Descripcion)
+                                                        </td>
+                                                        
+
+                                                        <td>
+                                                            @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la capacitación... ?');" })
+                                                        </td>
+                                                    </tr>
+                                                }
+                                               }
+                                               else
+                                               {
+                                                <tr>
+                                                    <td>
+                                                        <p>No existen resultados</p>
+                                                    </td>
+                                                </tr>
+                                               }
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                </div>
+                            </article>
+                            <article class="col-sm-12 col-md-12 col-lg-6">
+                                <legend>Capacitaci&oacute;n Requerida para el puesto </legend>
+                                <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                    <header>
+                                        <span class="widget-icon"> <i class="fa fa-list-alt"></i> </span>
+                                        <h2>Capacitaci&oacute;n requerida</h2>
+                                    </header>
+                                    <fieldset>
+
+                                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ListaCapacitaciones.Count != 0)
+                                                {
+                                                    @foreach (var item in Model.ListaCapacitaciones)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la capacitación... ?');" })
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <p>No existen resultados</p>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                </div>
+                            </article>
+                        </article>
+                      
+                        <article class="col-lg-12">
+
+                            <article class="col-sm-12 col-md-12 col-lg-6">
+                                <legend>Actividades esenciales </legend>
+                                <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                    <header>
+                                        <span class="widget-icon"> <i class="fa fa-hospital-o"></i> </span>
+                                        <h2>Actividades esenciales </h2>
+                                    </header>
+                                    <fieldset>
+
+                                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ListaActividadesEsenciales.Count != 0)
+                                                {
+                                                    @foreach (var item in Model.ListaActividadesEsenciales)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la actividad esencial... ?');" })
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <p>No existen resultados</p>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                </div>
+                            </article>
+                            <article class="col-sm-12 col-md-12 col-lg-6">
+                                <legend> Conocimientos adicionales </legend>
+                                <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                    <header>
+                                        <span class="widget-icon"> <i class="fa fa-plus-square"></i> </span>
+                                        <h2>Conocimientos adicionales</h2>
+                                    </header>
+                                    <fieldset>
+
+                                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ListaConocimientosAdicionales.Count != 0)
+                                                {
+                                                    @foreach (var item in Model.ListaConocimientosAdicionales)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el área de conocimiento... ?');" })
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <p>No existen resultados</p>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                </div>
+                            </article>
+                        </article>
+
+                        <article class="col-lg-12">
+
+                            <article class="col-sm-12 col-md-12 col-lg-12">
+                                <legend>Competencias t&eacute;cnicas </legend>
+                                <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                    <header>
+                                        <span class="widget-icon"> <i class="fa fa-adjust"></i> </span>
+                                        <h2>Nivel de instrucci&oacute;n </h2>
+                                    </header>
+                                    <fieldset>
+
+                                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    @if (Model.ListaComportamientoObservables.Count != 0)
+                                                    {
+                                                        <th data-class="expand"><i class="fa fa-fw fa-clock-o text-muted hidden-md hidden-sm hidden-xs"></i> Denominaci&oacute;n</th>
+                                                        <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Nivel</th>
+                                                        <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Comportamiento observable</th>
+                                                        <th data-hide="phone">Opciones</th>
+                                                    }
+                                                   
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.ListaComportamientoObservables.Count != 0)
+                                                {
+                                                    @foreach (var item in Model.ListaComportamientoObservables)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.DenominacionCompetencia.Nombre)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Nivel.Nombre)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el registro... ?');" })
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td><p>No existen resultados</p></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                </div>
+                            </article>
+
+                        </article>
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+
+
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    <script src="~/js/plugin/jcrop/jquery.Jcrop.min.js"></script>
+    <script src="~/js/plugin/jcrop/jquery.color.min.js"></script>
+    <script type="text/javascript">
+
+
+
+    </script>
+}
