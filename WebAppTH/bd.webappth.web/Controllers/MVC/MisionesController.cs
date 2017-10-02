@@ -78,6 +78,53 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+
+        public async Task<IActionResult> EliminarIndiceOcupacionalMisiones(int idMision, int idIndiceOcupacional)
+        {
+
+            try
+            {
+
+                var misionIndiceOcupacional = new MisionIndiceOcupacional
+                {
+                    IdMision = idMision,
+                    IdIndiceOcupacional = idIndiceOcupacional
+                };
+                var response = await apiServicio.EliminarAsync(misionIndiceOcupacional, new Uri(WebApp.BaseAddress)
+                                                               , "/api/Misiones/EliminarIndiceOcupacionalMisiones");
+                if (response.IsSuccess)
+                {
+                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    {
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        EntityID = string.Format("{0} : {1} {2} {3}", "Misión ",
+                                                                                        misionIndiceOcupacional.IdMision, "Índice Ocupacional", misionIndiceOcupacional.IdIndiceOcupacional),
+                        Message = Mensaje.Satisfactorio,
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        UserName = "Usuario APP webappth"
+                    });
+                    return RedirectToAction("Detalles", "IndicesOcupacionales", new { id = misionIndiceOcupacional.IdIndiceOcupacional });
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Eliminar Area de Conocimiento",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
         public async Task<IActionResult> Edit(string id)
         {
             try

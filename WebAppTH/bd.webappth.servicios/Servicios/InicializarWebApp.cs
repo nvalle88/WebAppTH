@@ -24,10 +24,9 @@ namespace bd.webappth.servicios.Servicios
                 //    var resultado = await respuesta.Content.ReadAsStringAsync();
                 //    var response = JsonConvert.DeserializeObject<Response>(resultado);
                 //    var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
-                    //WebApp.BaseAddress = sistema.AdstHost;
-                    WebApp.BaseAddress = "http://localhost:50900";
-
+                //    WebApp.BaseAddress = sistema.AdstHost;
                 //}
+                WebApp.BaseAddress = "http://localhost:55998";
 
 
             }
@@ -54,6 +53,8 @@ namespace bd.webappth.servicios.Servicios
                     var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
                     AppGuardarLog.BaseAddress = sistema.AdstHost;
                 }
+
+
             }
             catch (Exception ex)
             {

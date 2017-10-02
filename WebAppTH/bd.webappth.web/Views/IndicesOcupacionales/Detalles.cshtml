@@ -7,6 +7,7 @@
 <script src='~/js/site.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 
+
 <div id="content">
     <!-- row -->
     <div class="row">
@@ -22,12 +23,11 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        @Html.ActionLink("Adicionar Área de conocimiento", "AdicionarAreaConocimiento", "IndicesOcupacionales", new { idIndiceOcupacional=Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window1" })
+                        @Html.ActionLink("Adicionar Área de conocimiento", "AdicionarAreaConocimiento", "IndicesOcupacionales", new { idIndiceOcupacional=Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
                         
                     </li>
                     <li>
-                       @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
-
+                       @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "ejemplomostrar" })
                     </li>
                     <li>
                        @Html.ActionLink("Adicionar Capacitaciones", "AdicionarCapacitaciones", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window2" })
@@ -104,7 +104,9 @@
                                     <legend>Misi&oacute;n</legend>
                                     
                                       @if (Model.ListaMisiones.Count != 0)
-                                      {<p class="text-justify text-">
+                                      {
+                                          @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalMisiones", "Misiones", new { idMision = Model.ListaMisiones.FirstOrDefault().IdMision, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                          <p class="text-justify text-">
                                             @Model.ListaMisiones.FirstOrDefault().Descripcion
                                        </p>
                                       }
@@ -141,7 +143,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el nivel de estudio... ?');" })
+                                                               @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalEstudios", "Estudios", new { idEstudio = item.IdEstudio, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -183,7 +185,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el área de conocimiento... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalAreaConocimiento", "AreasConocimientos",new { idAreaConocimiento=item.IdAreaConocimiento, idIndiceOcupacional=Model.IndiceOcupacional.IdIndiceOcupacional } ,new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -210,7 +212,9 @@
                                
                                 <legend>Relaciones Internas y Externas</legend>
                                 @if (Model.ListaRelacionesInternasExternas.Count != 0)
-                                {<p>
+                                {
+                                    @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalRelacionesInternasExternas", "RelacionesInternasExternas", new { IdRelacionesInternasExternas = Model.ListaRelacionesInternasExternas.FirstOrDefault().IdRelacionesInternasExternas, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                    <p>
                                     @Model.ListaRelacionesInternasExternas.FirstOrDefault().Descripcion
                                 </p>
                                 }
@@ -264,7 +268,7 @@
                                                         
 
                                                         <td>
-                                                            @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la capacitación... ?');" })
+                                                           @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalExperienciaLaboralRequerida", "ExperienciaLaboralRequerida", new { idExperienciaLaboralRequerida = item.IdExperienciaLaboralRequerida, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                         </td>
                                                     </tr>
                                                 }
@@ -306,7 +310,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la capacitación... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalCapacitaciones", "Capacitaciones", new { idCapacitacion = item.IdCapacitacion, idIndiceOcupacional=Model.IndiceOcupacional.IdIndiceOcupacional },new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -352,7 +356,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la actividad esencial... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalActividadesEsenciales", "ActividadesEsenciales", new { IdActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })                                                            
                                                             </td>
                                                         </tr>
                                                     }
@@ -394,7 +398,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el área de conocimiento... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalConocimientosAdicionales", "ConocimientosAdicionales", new { idConocimientosAdicionales = item.IdConocimientosAdicionales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -458,7 +462,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el registro... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalComportamiemtoObservable", "ComportamientosObservables", new { idComportamientoObservable = item.IdComportamientoObservable, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -520,19 +524,6 @@
 </div>
 
 
-<div class="modal fade" id="AdicionarCapacitaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
-        </div>
-    </div>
-</div>
-
-
 
 
 @section Scripts {
@@ -550,7 +541,7 @@
 
          $(document).ready(function () {
 
-             $("body").on("click", "a.dialog-window", null, function (e) {
+             $("body").on("click", "a.ejemplomostrar", null, function (e) {
                  mostrarLoadingPanel("content", "Cargando...")
                  e.preventDefault();
                  var $link = $(this);
@@ -576,66 +567,33 @@
 </script>
 
 
-<script type="text/javascript">
 
-         $(document).ready(function () {
+    <script type="text/javascript">
 
-             $("body").on("click", "a.dialog-window1", null, function (e) {
-                 mostrarLoadingPanel("content", "Cargando...")
-                 e.preventDefault();
-                 var $link = $(this);
-                 var title = $link.text();
-                 $('#AdicionarAreaConocimiento.modal-title').html(title);
-                 var url = $(this).attr('href');
-                 if (url.indexOf('#') == 0) {
-                     $('#AdicionarAreaConocimiento').modal('show');
-                     $("#AdicionarAreaConocimiento").waitMe("hide");
-                 }
-                 else {
-                     $.get(url, function (data) {
-                         $('#AdicionarAreaConocimiento .te').html(data);
-                         $('#AdicionarAreaConocimiento').modal();
-                         $("#content").waitMe("hide");
-                     }).success(function () { $('input:text:visible:first').focus(); });
-
-                 }
-             });
-         });
-
-
-</script>
+        $(document).ready(function () {
+           
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                mostrarLoadingPanel("content", "Cargando...")
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#AdicionarAreaConocimiento.modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#AdicionarAreaConocimiento').modal('show');
+                    $("#AdicionarAreaConocimiento").waitMe("hide");
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#AdicionarAreaConocimiento .te').html(data);
+                        $('#AdicionarAreaConocimiento').modal();
+                        $("#content").waitMe("hide");
+                    }).success(function () { $('input:text:visible:first').focus(); });
+                   
+                }
+            });
+        });
 
 
-
-<script type="text/javascript">
-
-         $(document).ready(function () {
-
-             $("body").on("click", "a.dialog-window2", null, function (e) {
-                 mostrarLoadingPanel("content", "Cargando...")
-                 e.preventDefault();
-                 var $link = $(this);
-                 var title = $link.text();
-                 $('#AdicionarCapacitaciones.modal-title').html(title);
-                 var url = $(this).attr('href');
-                 if (url.indexOf('#') == 0) {
-                     $('#AdicionarCapacitaciones').modal('show');
-                     $("#AdicionarCapacitaciones").waitMe("hide");
-                 }
-                 else {
-                     $.get(url, function (data) {
-                         $('#AdicionarCapacitaciones .te').html(data);
-                         $('#AdicionarCapacitaciones').modal();
-                         $("#content").waitMe("hide");
-                     }).success(function () { $('input:text:visible:first').focus(); });
-
-                 }
-             });
-         });
-
-
-</script>
-
-
-
+    </script>
 }
