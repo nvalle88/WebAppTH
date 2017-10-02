@@ -32,6 +32,54 @@ namespace bd.webappth.web.Controllers.MVC
             return View();
         }
 
+        public async Task<IActionResult> EliminarIndiceOcupacionalComportamiemtoObservable(int idComportamientoObservable, int idIndiceOcupacional)
+        {
+
+            try
+            {
+
+                var indiceOcupacionalComportamientoObservable = new IndiceOcupacionalComportamientoObservable
+                {
+                    IdComportamientoObservable = idComportamientoObservable,
+                    IdIndiceOcupacional = idIndiceOcupacional
+                };
+                var response = await apiServicio.EliminarAsync(indiceOcupacionalComportamientoObservable, new Uri(WebApp.BaseAddress)
+                                                               , "/api/ComportamientosObservables/EliminarIndiceOcupacionalComportamiemtoObservable");
+                if (response.IsSuccess)
+                {
+                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    {
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        EntityID = string.Format("{0} : {1} {2} {3}", "Compostamiento Observable ",
+                                                                                        indiceOcupacionalComportamientoObservable.IdComportamientoObservable, "Índice Ocupacional", indiceOcupacionalComportamientoObservable.IdIndiceOcupacional),
+                        Message = Mensaje.Satisfactorio,
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        UserName = "Usuario APP webappth"
+                    });
+                    return RedirectToAction("Detalles", "IndicesOcupacionales", new { id = indiceOcupacionalComportamientoObservable.IdIndiceOcupacional });
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Eliminar Area de Conocimiento",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ComportamientoObservable comportamientoObservable)

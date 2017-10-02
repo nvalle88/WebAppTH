@@ -31,6 +31,7 @@ namespace bd.webappth.entidades.Negocio
         public virtual EscalaGrados EscalaGrados { get; set; }
 
 
+        public virtual ICollection<IndiceOcupacionalExperienciaLaboralRequerida> IndiceOcupacionalExperienciaLaboralRequerida { get; set; }
 
         public virtual ICollection<IndiceOcupacionalModalidadPartida> IndiceOcupacionalModalidadPartida { get; set; }
 

@@ -99,7 +99,9 @@
                                     <legend>Misi&oacute;n</legend>
                                     
                                       @if (Model.ListaMisiones.Count != 0)
-                                      {<p class="text-justify text-">
+                                      {
+                                          @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalMisiones", "Misiones", new { idMision = Model.ListaMisiones.FirstOrDefault().IdMision, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                          <p class="text-justify text-">
                                             @Model.ListaMisiones.FirstOrDefault().Descripcion
                                        </p>
                                       }
@@ -205,7 +207,9 @@
                                
                                 <legend>Relaciones Internas y Externas</legend>
                                 @if (Model.ListaRelacionesInternasExternas.Count != 0)
-                                {<p>
+                                {
+                                    @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalRelacionesInternasExternas", "RelacionesInternasExternas", new { IdRelacionesInternasExternas = Model.ListaRelacionesInternasExternas.FirstOrDefault().IdRelacionesInternasExternas, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                    <p>
                                     @Model.ListaRelacionesInternasExternas.FirstOrDefault().Descripcion
                                 </p>
                                 }
@@ -259,7 +263,7 @@
                                                         
 
                                                         <td>
-                                                            @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la capacitación... ?');" })
+                                                           @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalExperienciaLaboralRequerida", "ExperienciaLaboralRequerida", new { idExperienciaLaboralRequerida = item.IdExperienciaLaboralRequerida, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                         </td>
                                                     </tr>
                                                 }
@@ -347,7 +351,8 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalActividadesEsenciales", "ActividadesEsenciales", new { IdActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })                                                            </td>
+                                                                @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalActividadesEsenciales", "ActividadesEsenciales", new { IdActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })                                                            
+                                                            </td>
                                                         </tr>
                                                     }
                                                 }
@@ -388,7 +393,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el área de conocimiento... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalConocimientosAdicionales", "ConocimientosAdicionales", new { idConocimientosAdicionales = item.IdConocimientosAdicionales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -452,7 +457,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el registro... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalComportamiemtoObservable", "ComportamientosObservables", new { idComportamientoObservable = item.IdComportamientoObservable, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                             </td>
                                                         </tr>
                                                     }
