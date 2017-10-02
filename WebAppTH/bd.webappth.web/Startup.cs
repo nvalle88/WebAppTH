@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace bd.webappth.web
 {
@@ -32,9 +33,11 @@ namespace bd.webappth.web
             services.AddMvc();
             services.AddSingleton<IApiServicio, ApiServicio>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-           
-            await InicializarWebApp.Inicializar("WebAppTH");
-           
+
+            await InicializarWebApp.InicializarWeb("SwTalentoHumano", new Uri("http://localhost:4000"));
+            await InicializarWebApp.InicializarLogEntry("LogWebService", new Uri("http://localhost:4000"));
+
+
 
         }
 

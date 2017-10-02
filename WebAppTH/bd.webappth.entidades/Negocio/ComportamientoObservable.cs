@@ -19,12 +19,12 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Nivel")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdNivel { get; set; }
+        public int? IdNivel { get; set; }
         public virtual Nivel Nivel { get; set; }
 
         [Display(Name = "Denominación de la competencia:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdDenominacionCompetencia { get; set; }
+        public int? IdDenominacionCompetencia { get; set; }
         public virtual DenominacionCompetencia DenominacionCompetencia { get; set; }
 
 

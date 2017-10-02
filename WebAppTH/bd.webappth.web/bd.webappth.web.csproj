@@ -50,6 +50,7 @@
     <Folder Include="Views\CapacitacionesProveedores\" />
     <Folder Include="Views\DenominacionesCompetencias\" />
     <Folder Include="Views\ConfiguracionesViaticos\" />
+    <Folder Include="Views\Dependencias\" />
     <Folder Include="wwwroot\js\datatables\" />
   </ItemGroup>
   <ItemGroup>
