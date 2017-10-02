@@ -85,8 +85,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-
-        public async Task<IActionResult> CargarCapacitaciones(string id)
+        public async Task<IActionResult> AdicionarCapacitaciones(string id)
         {
 
             var lista = new List<Capacitacion>();
@@ -110,7 +109,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional=Convert.ToInt32(id),
                 };
 
-                return PartialView("..//Indicadores//Createejemplo", Indice);
+                return PartialView("..//IndicesOcupacionales//AdicionarCapacitaciones", Indice);
             }
             catch (Exception)
             {
