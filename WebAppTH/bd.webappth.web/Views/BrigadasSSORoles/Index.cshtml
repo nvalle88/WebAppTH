@@ -2,8 +2,12 @@
 
 @{
     ViewData["Title"] = "Index";
+
+
 }
 			<!-- MAIN CONTENT -->
+
+
 <div id="content">
 
     <p></p>
@@ -16,6 +20,43 @@
         </button>
     </a>
     <p> </p>
+
+    @*<div class="row">
+
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                 Button trigger modal
+                <a data-toggle="modal" href="#myModal" class="btn btn-success btn-lg pull-right header-btn hidden-mobile"><i class="fa fa-circle-arrow-up fa-lg"></i> Launch form modal</a>
+            </div>
+        </div>*@
+
+    @Html.ActionLink("Cargar", "CargarCapacitaciones", "IndiceOcupacionalCapacitaciones", new { id = 5 }, new { @class = "dialog-window btn btn-info" })
+
+    @*@{await Html.RenderPartialAsync("_PartialViewIndiceOcupacionalCapacitaciones", new bd.webappth.entidades.Negocio.IndiceOcupacionalCapacitaciones());}*@
+
+    @*@Html.ActionLink("CargarIndiceOcupacionalComportamientosObservables", "CargarComportamientosObservables", "IndiceOcupacionalComportamientosObservables", new { id = 5 }, new { @class = "dialog-window btn btn-info" })*@
+
+    @*@{await Html.RenderPartialAsync("_PartialViewIndiceOcupacionalComportamientosObservables", new bd.webappth.entidades.Negocio.IndiceOcupacionalComportamientoObservable());}*@
+
+    <div class="modal fade" id="CargarCapacitaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title"></h2>
+                </div>
+                <div class="modal-body">
+                    <div class="te">
+                        Please wait...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
 
     <!-- widget grid -->
     <section id="widget-grid" class="">
@@ -42,6 +83,8 @@
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Roles de Brigadas de Salud y Seguridad Ocupacional</h2>
                     </header>
+
+
                     <!-- widget div-->
                     <div>
                         <!-- widget edit box -->
@@ -70,7 +113,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
-                                    {
+    {
                                         <tr>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
@@ -104,6 +147,50 @@
 <!-- END MAIN CONTENT -->
 
  @section Scripts {
-    <script src='~/js/datatables/init.js'></script>
+    <script src='~/js/datatables/init.js'> </script>
+
+     <script >
+         $(document).ready(function () {
+             $("body").on("click", "a.dialog-window", null, function (e) {
+                 e.preventDefault();
+                 var $link = $(this);
+                 var title = $link.text();
+                 $('#CargarCapacitaciones .modal-title').html(title);
+                 var url = $(this).attr('href');
+                 if (url.indexOf('#') == 0) {
+                     $('#CargarCapacitaciones').modal('show');
+                 }
+                 else {
+                     $.get(url, function (data) {
+                         $('#CargarCapacitaciones .te').html(data);
+                         $('#CargarCapacitaciones').modal();
+                     }).success(function () { $('input:text:visible:first').focus(); });
+
+                 }
+             });
+         });
+
+
+     </script>
+
+
+@*<script>
+    $(function () {
+        $.ajaxSetup({ cache: false });
+        $("a[data-modal]").on("click", function (e) {
+            $('#myModalContent').load("/IndiceOcupacionalCapacitacionesController/CargarCapacitaciones", function () {
+                $('#myModal').modal({
+                    keyboard: true
+                }, 'show');
+            });
+            return false;
+        });
+    });
+</script>*@
+
+
+
+
+
 }
 

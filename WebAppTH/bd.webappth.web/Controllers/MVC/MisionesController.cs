@@ -27,6 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public IActionResult Create()
         {
+
             return View();
         }
 

@@ -163,6 +163,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<BrigadaSSORol>(new Uri(WebApp.BaseAddress)
                                                                     , "/api/BrigadasSSORoles/ListarBrigadasSSORoles");
+
                 return View(lista);
             }
             catch (Exception ex)

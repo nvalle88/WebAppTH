@@ -1,0 +1,77 @@
+@model bd.webappth.entidades.Negocio.IndiceOcupacionalEstudio
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<p></p>
+
+
+<div id="content">
+
+   @Html.ActionLink("Indice Ocupacional de Estudio", "Create", "IndicesOcupacionalesDeEstudio", new { id = 1 }, new { @class = "dialog-window btn btn-info" })
+  
+   <span class="text-danger">@ViewData["Error"]</span>
+                                   
+
+
+    <div class="modal fade" id="Create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title"></h2>
+                  
+                   
+
+                    </div>
+                    <div class="modal-body">
+
+                    <div class="te">
+                        Please wait...
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <p> </p>
+                <!-- MAIN CONTENT -->
+    <!-- END MAIN CONTENT -->
+
+     @section Scripts {
+
+        <script>
+            $(document).ready(function () {
+                $("body").on("click", "a.dialog-window", null, function (e) {
+                    e.preventDefault();
+                    var $link = $(this);
+                    var title = $link.text();
+                    $('#Create .modal-title').html(title);
+                    var url = $(this).attr('href');
+                    if (url.indexOf('#') == 0) {
+                        $('#Create').modal('show');
+                    }
+                    else {
+                        $.get(url, function (data) {
+                            $('#Create .te').html(data);
+                            $('#Create').modal();
+                        }).success(function () { $('input:text:visible:first').focus(); });
+
+                    }
+                });
+            });
+        </script>
+
+    
+
+    }
+

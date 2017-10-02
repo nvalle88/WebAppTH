@@ -1,0 +1,13 @@
+@model bd.webappth.entidades.Negocio.RelacionesInternasExternasIndiceOcupacional
+<fieldset>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <select asp-for="IdRelacionesInternasExternas" class="form-control" asp-items="ViewBag.IdRelacionesInternasExternas">
+                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdRelacionesInternasExternas)></option>
+                </select>
+                <span asp-validation-for="IdRelacionesInternasExternas" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+</fieldset>
