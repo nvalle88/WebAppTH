@@ -9,17 +9,18 @@ using bd.webappth.entidades.Utils;
 using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
-using Newtonsoft.Json;
 using bd.log.guardar.Enumeradores;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class BrigadasSSORolesController : Controller
+    public class IndiceOcupacionalCapacitacionesController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public BrigadasSSORolesController(IApiServicio apiServicio)
+        public IndiceOcupacionalCapacitacionesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -27,20 +28,22 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+            //ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "/api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "Nombre");
+            ViewData["IdCapacitacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Capacitacion>(new Uri(WebApp.BaseAddress), "/api/Capacitaciones/ListarCapacitaciones"), "IdCapacitacion", "Nombre");
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(BrigadaSSORol brigadaSSORol)
+        public async Task<IActionResult> InsertarIndiceOcupacionalCapacitaciones(IndiceOcupacionalCapacitaciones indiceOcupacionalCapacitaciones)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(brigadaSSORol,
+                response = await apiServicio.InsertarAsync(indiceOcupacionalCapacitaciones,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/BrigadasSSORoles/InsertarBrigadaSSORol");
+                                                             "/api/IndiceOcupacionalCapacitaciones/InsertarIndiceOcupacionalCapacitacion");
                 if (response.IsSuccess)
                 {
 
@@ -52,15 +55,15 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Rol de Brigada Salud y Seguridad Ocupacional:", brigadaSSORol.IdBrigadaSSORol),
+                        EntityID = string.Format("{0} {1}", "Rol de Brigada Salud y Seguridad Ocupacional:", indiceOcupacionalCapacitaciones.IdIndiceOcupacionalCapacitaciones),
                     });
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Detalles", new { id= indiceOcupacionalCapacitaciones.IdIndiceOcupacional});
                 }
 
-                ViewData["Error"] = response.Message;
-                ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
-                return View(brigadaSSORol);
+                //ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "/api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "Nombre");
+                ViewData["IdCapacitacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Capacitacion>(new Uri(WebApp.BaseAddress), "/api/Capacitaciones/ListarCapacitaciones"), "IdCapacitacion", "Nombre");
+                return View(indiceOcupacionalCapacitaciones);
 
             }
             catch (Exception ex)
@@ -79,26 +82,35 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Edit(string id)
+
+
+
+
+        public async Task<IActionResult> CargarCapacitaciones(string id)
         {
+
+            var lista = new List<Capacitacion>();
+
             try
             {
-                if (!string.IsNullOrEmpty(id))
+                var indiceOcupacional = new IndiceOcupacional
                 {
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/BrigadasSSORoles");
+                    IdIndiceOcupacional= Convert.ToInt32(id),
+                };
+                lista = await apiServicio.Listar<Capacitacion>(indiceOcupacional,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "/api/IndiceOcupacionalCapacitaciones/ListaFiltradaCapacitaciones");
+                ViewData["IdCapacitacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(lista, "IdCapacitacion", "Nombre");
+
+                //ViewBag.listacap = new SelectList(lista, "IdCapacitacion", "Nombre");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<BrigadaSSORol>(respuesta.Resultado.ToString());
-                    ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
-                    if (respuesta.IsSuccess)
-                    {
-                        return View(respuesta.Resultado);
-                    }
+                var Indice = new IndiceOcupacionalCapacitaciones
+                {
+                    IdIndiceOcupacional=Convert.ToInt32(id),
+                };
 
-                }
-
-                return BadRequest();
+                return PartialView("..//Indicadores//Createejemplo", Indice);
             }
             catch (Exception)
             {
@@ -106,64 +118,15 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, BrigadaSSORol brigadaSSORol)
-        {
-            Response response = new Response();
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    response = await apiServicio.EditarAsync(id, brigadaSSORol, new Uri(WebApp.BaseAddress),
-                                                                 "/api/BrigadasSSORoles");
-
-                    if (response.IsSuccess)
-                    {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Rol de Brigada Salud y Seguridad Ocupacional", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un Rol de Brigada Salud y Seguridad Ocupacional",
-                            UserName = "Usuario 1"
-                        });
-
-                        return RedirectToAction("Index");
-                    }
-                    ViewData["Error"] = response.Message;
-                    ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
-                    return View(brigadaSSORol);
-
-                }
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un Rol de Brigada Salud y Seguridad Ocupacional",
-                    ExceptionTrace = ex,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
-                return BadRequest();
-            }
-        }
 
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<BrigadaSSORol>();
+            var lista = new List<IndiceOcupacionalCapacitaciones>();
             try
             {
-                lista = await apiServicio.Listar<BrigadaSSORol>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/BrigadasSSORoles/ListarBrigadasSSORoles");
-
+                lista = await apiServicio.Listar<IndiceOcupacionalCapacitaciones>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/IndiceOcupacionalCapacitaciones/ListarIndiceOcupacionalCapacitaciones");
                 return View(lista);
             }
             catch (Exception ex)
@@ -187,7 +150,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/BrigadasSSORoles");
+                                                               , "/api/IndiceOcupacionalCapacitaciones");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

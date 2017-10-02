@@ -38,7 +38,6 @@ namespace bd.webappth.servicios.Servicios
                 };
             }
         }
-
         public async Task<Response> ObtenerElementoAsync<T>(T model, Uri baseAddress, string url) where T :class
         {
             try
@@ -151,6 +150,33 @@ namespace bd.webappth.servicios.Servicios
                     var response = JsonConvert.DeserializeObject<T>(resultado);
                     return response;
                 }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+        public async Task<List<T>> Listar<T>(object model, Uri baseAddress, string url) where T : class
+        {
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var request = JsonConvert.SerializeObject(model);
+                    var content = new StringContent(request, Encoding.UTF8, "application/json");
+
+                    client.BaseAddress = baseAddress;
+
+                    var response = await client.PostAsync(url, content);
+
+                    var resultado = await response.Content.ReadAsStringAsync();
+                    var respuesta = JsonConvert.DeserializeObject<List<T>>(resultado);
+                    return respuesta;
+
+                }
+
             }
             catch (Exception)
             {

@@ -1,21 +1,22 @@
-@model List<bd.webappth.entidades.Negocio.Nacionalidad>
+@model List<bd.webappth.entidades.Negocio.ComportamientoObservable>
 
 @{
     ViewData["Title"] = "Index";
 }
-<p></p>
-<a asp-action="Create">
-    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-        <span class="btn-label">
-            <i class="glyphicon glyphicon-plus"></i>
-        </span>Nueva Nacionalidad
-
-    </button>
-</a>
-<p> </p>
 			<!-- MAIN CONTENT -->
 <div id="content">
-   
+
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo Comportamiento Observable
+
+        </button>
+    </a>
+    <p> </p>
+
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -39,7 +40,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Nacionalidad</h2>
+                        <h2>Comportamientos Observables</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -54,7 +55,13 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nivel.Nombre)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().DenominacionCompetencia.Nombre)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -64,12 +71,18 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                                @Html.DisplayFor(modelItem => item.Nivel.Nombre)
                                             </td>
-                                           
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdNacionalidad }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdNacionalidad }, new { onclick = "return confirm('Desea eliminar la nacionalidad... ?');" })
+                                                @Html.DisplayFor(modelItem => item.DenominacionCompetencia.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            </td>
+
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdComportamientoObservable }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdComportamientoObservable }, new { onclick = "return confirm('Desea eliminar el Comportamiento Observable... ?');" })
                                             </td>
                                         </tr>
                                     }
@@ -80,7 +93,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>

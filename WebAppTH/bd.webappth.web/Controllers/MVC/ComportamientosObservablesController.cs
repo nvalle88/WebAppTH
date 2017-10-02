@@ -14,12 +14,12 @@ using bd.log.guardar.Enumeradores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class BrigadasSSORolesController : Controller
+    public class ComportamientosObservablesController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public BrigadasSSORolesController(IApiServicio apiServicio)
+        public ComportamientosObservablesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -27,20 +27,21 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+            ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "/api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
+            ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "/api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(BrigadaSSORol brigadaSSORol)
+        public async Task<IActionResult> Create(ComportamientoObservable comportamientoObservable)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(brigadaSSORol,
+                response = await apiServicio.InsertarAsync(comportamientoObservable,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/BrigadasSSORoles/InsertarBrigadaSSORol");
+                                                             "/api/ComportamientosObservables/InsertarComportamientoObservable");
                 if (response.IsSuccess)
                 {
 
@@ -48,19 +49,20 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un Rol de Brigada Salud y Seguridad Ocupacional",
+                        Message = "Se ha creado un Comportamiento Observable",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Rol de Brigada Salud y Seguridad Ocupacional:", brigadaSSORol.IdBrigadaSSORol),
+                        EntityID = string.Format("{0} {1}", "Comportaminto Observable:", comportamientoObservable.IdComportamientoObservable),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
-                return View(brigadaSSORol);
+                ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "/api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
+                ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "/api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
+                return View(comportamientoObservable);
 
             }
             catch (Exception ex)
@@ -68,7 +70,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Rol de Brigada Salud y Seguridad Ocupacional",
+                    Message = "Creando Comportaminto Observable",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -86,11 +88,12 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/BrigadasSSORoles");
+                                                                  "/api/ComportamientosObservables");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<BrigadaSSORol>(respuesta.Resultado.ToString());
-                    ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+                    respuesta.Resultado = JsonConvert.DeserializeObject<ComportamientoObservable>(respuesta.Resultado.ToString());
+                    ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "/api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
+                    ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "/api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -108,33 +111,34 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, BrigadaSSORol brigadaSSORol)
+        public async Task<IActionResult> Edit(string id, ComportamientoObservable comportamientoObservable)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, brigadaSSORol, new Uri(WebApp.BaseAddress),
-                                                                 "/api/BrigadasSSORoles");
+                    response = await apiServicio.EditarAsync(id, comportamientoObservable, new Uri(WebApp.BaseAddress),
+                                                                 "/api/ComportamientosObservables");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Rol de Brigada Salud y Seguridad Ocupacional", id),
+                            EntityID = string.Format("{0} : {1}", "Comportaminto Observable", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un Rol de Brigada Salud y Seguridad Ocupacional",
+                            Message = "Se ha actualizado un Comportamiento Observable",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
-                    return View(brigadaSSORol);
+                    ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "/api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
+                    ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "/api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
+                    return View(comportamientoObservable);
 
                 }
                 return BadRequest();
@@ -144,7 +148,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un Rol de Brigada Salud y Seguridad Ocupacional",
+                    Message = "Editando un Comportamiento Observable",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -158,12 +162,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<BrigadaSSORol>();
+            var lista = new List<ComportamientoObservable>();
             try
             {
-                lista = await apiServicio.Listar<BrigadaSSORol>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/BrigadasSSORoles/ListarBrigadasSSORoles");
-
+                lista = await apiServicio.Listar<ComportamientoObservable>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/ComportamientosObservables/ListarComportamientosObservables");
                 return View(lista);
             }
             catch (Exception ex)
@@ -171,7 +174,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando Rol de Brigada Salud y Seguridad Ocupacional",
+                    Message = "Listando Comportaminto Observable",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -187,14 +190,14 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/BrigadasSSORoles");
+                                                               , "/api/ComportamientosObservables");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de Rol de Brigada Salud y Seguridad Ocupacional eliminado",
+                        Message = "Registro de Comportaminto Observable eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -208,7 +211,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Brigada SSO Roles",
+                    Message = "Eliminar Comportamiento Observable",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
