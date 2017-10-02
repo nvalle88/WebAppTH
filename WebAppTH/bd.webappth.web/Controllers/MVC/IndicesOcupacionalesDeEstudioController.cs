@@ -5,42 +5,51 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bd.webappth.servicios.Interfaces;
 using bd.webappth.entidades.Utils;
-using bd.log.guardar.Servicios;
 using bd.webappth.entidades.Negocio;
-using bd.webappseguridad.entidades.Enumeradores;
+using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
+using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class MisionesController : Controller
+    public class IndicesOcupacionalesDeEstudioController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public MisionesController(IApiServicio apiServicio)
+        public IndicesOcupacionalesDeEstudioController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int id)
         {
+            ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
 
-            return View();
+
+            var indiceOcupacionalEstudio = new IndiceOcupacionalEstudio
+            {
+                IdIndiceOcupacional = id,
+            };
+
+            return PartialView("..//Indicadores//Createejemplo",indiceOcupacionalEstudio);
         }
+
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Mision Mision)
+        public async Task<IActionResult> Create(IndiceOcupacionalEstudio IndiceOcupacionalEstudio)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(Mision,
+                response = await apiServicio.InsertarAsync(IndiceOcupacionalEstudio,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Misiones/InsertarMisiones");
+                                                             "/api/IndicesOcupacionalesDeEstudio/InsertarIndiceOcupacionalEstudio");
                 if (response.IsSuccess)
                 {
 
@@ -48,18 +57,21 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un Manual Puesto",
+                        Message = "Se ha creado un índice ocupacional de estudio",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Mision:", Mision.IdMision),
+                        EntityID = string.Format("{0} {1}", "Índice Ocupacional de Estudio:", IndiceOcupacionalEstudio.IdIndiceOcupacionalEstudio),
                     });
-
+                    ViewData["Error"] = response.Message;
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(Mision);
+                ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+
+                return PartialView("..//Indicadores//Createejemplo", IndiceOcupacionalEstudio);
+              //  return View(IndiceOcupacionalEstudio);
 
             }
             catch (Exception ex)
@@ -67,7 +79,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Manual Puesto",
+                    Message = "Creando índice ocupacional de estudio",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,10 +97,13 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/Misiones");
+                                                                  "/api/IndicesOcupacionalesDeEstudio");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<Mision>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<IndiceOcupacionalEstudio>(respuesta.Resultado.ToString());
+
+                    ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -106,32 +121,35 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, Mision Mision)
+        public async Task<IActionResult> Edit(string id, IndiceOcupacionalEstudio IndiceOcupacionalEstudio)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, Mision, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Misiones");
+                    response = await apiServicio.EditarAsync(id, IndiceOcupacionalEstudio, new Uri(WebApp.BaseAddress),
+                                                                 "/api/IndicesOcupacionalesDeEstudio");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
+                            EntityID = string.Format("{0} : {1}", "Índice Ocupacional de Estudio", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un registro sistema",
+                            Message = "Se ha actualizado un índice ocupacional de estudio",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    return View(Mision);
+
+                    ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+
+                    return View(IndiceOcupacionalEstudio);
 
                 }
                 return BadRequest();
@@ -141,7 +159,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un Manual Puesto",
+                    Message = "Editando un índice ocupacional de estudio",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -155,27 +173,17 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<Mision>();
-            try
-            {
-                lista = await apiServicio.Listar<Mision>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Misiones/ListarMisiones");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando Manual Puestoes",
-                    ExceptionTrace = ex,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
-            }
+            return View();
         }
+
+
+        public ActionResult PartialViewModalIndicesOcupacionalesDeEstudio()
+        {
+           
+            return PartialView();
+        }
+
+
 
         public async Task<IActionResult> Delete(string id)
         {
@@ -183,14 +191,14 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Misiones");
+                                                               , "/api/IndicesOcupacionalesDeEstudio");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro eliminado",
+                        Message = "Registro de índice ocupacional de estudio",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -204,7 +212,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Manual Puestos",
+                    Message = "Eliminar un índice ocupacional de estudio",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -214,6 +222,5 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
     }
 }

@@ -1,14 +1,15 @@
-@model List<bd.webappth.entidades.Negocio.Mision>
+@model List<bd.webappth.entidades.Negocio.RelacionesInternasExternasIndiceOcupacional>
 
 @{
     ViewData["Title"] = "Index";
 }
+
 <p></p>
 <a asp-action="Create">
     <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
         <span class="btn-label">
             <i class="glyphicon glyphicon-plus"></i>
-        </span>Nueva Misi&oacuten
+        </span>Relaciones Internas Externas &Iacutendice Ocupacional
 
     </button>
 </a>
@@ -39,7 +40,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Misi&oacuten</h2>
+                        <h2>Relaciones Internas Externas &Iacutendice Ocupacional</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -54,11 +55,10 @@
                                 <thead>
                                     <tr>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdIndiceOcupacional)
                                         </th>
-
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().RelacionesInternasExternas.Descripcion)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -68,15 +68,16 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                                @Html.DisplayFor(modelItem => item.IdIndiceOcupacional)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
+
+                                                @Html.DisplayFor(modelItem => item.RelacionesInternasExternas.Descripcion)
                                             </td>
                                            
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdMision }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdMision }, new { onclick = "return confirm('Desea eliminar la mision... ?');" })
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdRelacionesInternasExternasIndiceOcupacional }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRelacionesInternasExternasIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar la relaciones internas externas del índice ocupacional... ?');" })
                                             </td>
                                         </tr>
                                     }
@@ -99,6 +100,6 @@
 <!-- END MAIN CONTENT -->
 
  @section Scripts {
-   <script src='~/js/datatables/init.js'></script>
+    <script src='~/js/datatables/init.js'></script>
 }
 
