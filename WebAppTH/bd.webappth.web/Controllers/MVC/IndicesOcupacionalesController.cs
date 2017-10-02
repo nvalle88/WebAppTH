@@ -26,6 +26,156 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        private async Task<bool> CargarComboActividedesEsenciales(IndiceOcupacional indiceOcupacional)
+        {
+            var listaActividadesEsenciales = await apiServicio.Listar<ActividadesEsenciales>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/ActividadesEsenciales/ListarActividedesEsencialesNoAsignadasIndiceOcupacional");
+
+            var resultado = false;
+            if (listaActividadesEsenciales.Count != 0)
+            {
+                ViewData["IdActividadesEsenciales"] = new SelectList(listaActividadesEsenciales, "IdActividadesEsenciales", "Descripcion");
+                resultado = true;
+            }
+
+            return resultado;
+
+
+
+        }
+
+
+
+        private async Task<bool> CargarComboAreaConocimiento(IndiceOcupacional indiceOcupacional)
+        {
+            var listaAreasConocimientos = await apiServicio.Listar<AreaConocimiento>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientosNoAsignadasIndiceOcupacional");
+            var resultado = false;
+            if (listaAreasConocimientos.Count!=0)
+            {
+                ViewData["IdAreaConocimiento"] = new SelectList(listaAreasConocimientos, "IdAreaConocimiento", "Descripcion");
+                resultado = true;
+            }
+
+            return resultado;
+
+            
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdicionarActividesEsenciales(IndiceOcupacionalActividadesEsenciales indiceOcupacionalActividadesEsenciales)
+        {
+            Response response = new Response();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    response = await apiServicio.InsertarAsync(indiceOcupacionalActividadesEsenciales,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "/api/IndicesOcupacionales/InsertarActividadesEsenciales");
+                    if (response.IsSuccess)
+                    {
+
+                        var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                        {
+                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                            ExceptionTrace = null,
+                            Message = "Se ha creado un indice ocupacional",
+                            UserName = "Usuario 1",
+                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                            EntityID = string.Format("{0} {1} {2} {3}", "Índice ocupacional:", indiceOcupacionalActividadesEsenciales.IdIndiceOcupacional, "Área de conocimiento:", indiceOcupacionalActividadesEsenciales.IdActividadesEsenciales),
+                        });
+
+                        return RedirectToAction("Detalles", new { id = indiceOcupacionalActividadesEsenciales.IdIndiceOcupacional });
+                    }
+                }
+
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdIndiceOcupacional = indiceOcupacionalActividadesEsenciales.IdIndiceOcupacional,
+                };
+
+                await CargarComboActividedesEsenciales(indiceOcupacional);
+                InicializarMensaje(response.Message);
+                return PartialView("AdicionarActividesEsenciales", indiceOcupacionalActividadesEsenciales);
+
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Creando un Indice ocupacional ",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP Seguridad"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
+
+        public async Task<ActionResult> AdicionarActividesEsenciales(string idIndiceOcupacional, string mensaje)
+
+        {
+            var indideactividedesEsenciales = new IndiceOcupacionalActividadesEsenciales
+            {
+
+                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+            };
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+            };
+
+
+            var resultado = await CargarComboActividedesEsenciales(indiceOcupacional);
+
+            if (resultado)
+            {
+                InicializarMensaje(mensaje);
+                return PartialView(indideactividedesEsenciales);
+            }
+
+            ViewData["Mensaje"] = Mensaje.NoExistenRegistrosPorAsignar;
+            return PartialView("NoExisteElemento");
+
+        }
+
+
+        public async Task<ActionResult> AdicionarAreaConocimiento(string idIndiceOcupacional,string mensaje)
+
+        {
+            var indideAreaConocimiento = new IndiceOcupacionalAreaConocimiento
+            {
+
+                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+            };
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+            };
+
+
+           var resultado= await CargarComboAreaConocimiento(indiceOcupacional);
+
+            if (resultado)
+            {
+                InicializarMensaje(mensaje);
+                return PartialView(indideAreaConocimiento);
+            }
+            ViewData["Mensaje"] =Mensaje.NoExistenRegistrosPorAsignar;
+            return PartialView("NoExisteElemento");
+            
+        }
+
+
         private async Task CargarListaCombox()
         {
 
@@ -53,6 +203,64 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Error"] = mensaje;
         }
 
+        
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdicionarAreaConocimiento(IndiceOcupacionalAreaConocimiento indiceOcupacionalAreaConocimiento)
+        {
+            Response response = new Response();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    response = await apiServicio.InsertarAsync(indiceOcupacionalAreaConocimiento,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "/api/IndicesOcupacionales/InsertarAreaConocimiento");
+                    if (response.IsSuccess)
+                    {
+
+                        var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                        {
+                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                            ExceptionTrace = null,
+                            Message = "Se ha creado un indice ocupacional",
+                            UserName = "Usuario 1",
+                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                            EntityID = string.Format("{0} {1} {2} {3}", "Índice ocupacional:", indiceOcupacionalAreaConocimiento.IdIndiceOcupacional,"Área de conocimiento:",indiceOcupacionalAreaConocimiento.IdAreaConocimiento),
+                        });
+
+                        return RedirectToAction("Detalles",new {id=indiceOcupacionalAreaConocimiento.IdIndiceOcupacional});
+                    }
+                }
+
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdIndiceOcupacional=indiceOcupacionalAreaConocimiento.IdIndiceOcupacional,
+                };
+
+                await CargarComboAreaConocimiento(indiceOcupacional);
+                InicializarMensaje(response.Message);
+                return PartialView("AdicionarAreaConocimiento", indiceOcupacionalAreaConocimiento);
+
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Creando un Indice ocupacional ",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP Seguridad"
+                });
+
+                return BadRequest();
+            }
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

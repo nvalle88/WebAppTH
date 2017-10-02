@@ -1,4 +1,12 @@
 @model bd.webappth.entidades.ViewModels.IndiceOcupacionalDetalle
+
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/js/site.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+
 <div id="content">
     <!-- row -->
     <div class="row">
@@ -14,10 +22,12 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a asp-action="Index" asp-controller="Sucursal">Sucursal</a>
+                        @Html.ActionLink("Adicionar Área de conocimiento", "AdicionarAreaConocimiento", "IndicesOcupacionales", new { idIndiceOcupacional=Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
+                        
                     </li>
                     <li>
-                        <a href="javascript:void(0);">Another action</a>
+                       @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window1" })
+
                     </li>
                     <li>
                         <a href="javascript:void(0);">Something else here</a>
@@ -473,13 +483,107 @@
         <!-- end row -->
     </section>
     <!-- end widget grid -->
+ </div>
 </div>
 <!-- END MAIN CONTENT -->
+
+
+
+
+    <div class="modal fade" id="AdicionarAreaConocimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title"></h2>
+                </div>
+                <div class="modal-body"><div class="te">Please wait...</div></div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="AdicionarActividesEsenciales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+
+
+
 @section Scripts {
-    <script src="~/js/plugin/jcrop/jquery.Jcrop.min.js"></script>
-    <script src="~/js/plugin/jcrop/jquery.color.min.js"></script>
+<script src='~/lib/select2/dist/js/select2.min.js'></script>
+<script src='~/lib/select2/dist/js/i18n/es.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+<script src='~/js/site.js'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Init_Select2();
+    });
+</script>
+
+<script type="text/javascript">
+
+         $(document).ready(function () {
+
+             $("body").on("click", "a.dialog-window1", null, function (e) {
+                 mostrarLoadingPanel("content", "Cargando...")
+                 e.preventDefault();
+                 var $link = $(this);
+                 var title = $link.text();
+                 $('#AdicionarActividesEsenciales.modal-title').html(title);
+                 var url = $(this).attr('href');
+                 if (url.indexOf('#') == 0) {
+                     $('#AdicionarActividesEsenciales').modal('show');
+                     $("#AdicionarActividesEsenciales").waitMe("hide");
+                 }
+                 else {
+                     $.get(url, function (data) {
+                         $('#AdicionarActividesEsenciales .te').html(data);
+                         $('#AdicionarActividesEsenciales').modal();
+                         $("#content").waitMe("hide");
+                     }).success(function () { $('input:text:visible:first').focus(); });
+
+                 }
+             });
+         });
+
+
+</script>
+
+
+
     <script type="text/javascript">
 
+        $(document).ready(function () {
+           
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                mostrarLoadingPanel("content", "Cargando...")
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#AdicionarAreaConocimiento.modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#AdicionarAreaConocimiento').modal('show');
+                    $("#AdicionarAreaConocimiento").waitMe("hide");
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#AdicionarAreaConocimiento .te').html(data);
+                        $('#AdicionarAreaConocimiento').modal();
+                        $("#content").waitMe("hide");
+                    }).success(function () { $('input:text:visible:first').focus(); });
+                   
+                }
+            });
+        });
 
 
     </script>
