@@ -1,0 +1,36 @@
+@model bd.webappth.entidades.Negocio.MaterialApoyo
+<fieldset>
+
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="20" asp-for="NombreDocumento" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.NombreDocumento)" />
+                <span asp-validation-for="NombreDocumento" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="20" asp-for="Ubicacion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Ubicacion)" />
+                <span asp-validation-for="Ubicacion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <select asp-for="IdFormularioDevengacion" class="form-control" asp-items="ViewBag.IdFormularioDevengacions">
+                    <option id="0"><Seleccione una @Html.DisplayNameFor(model=>model.IdFormularioDevengacion)></option>
+                </select>
+                <span asp-validation-for="IdFormularioDevengacion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+
+</fieldset>

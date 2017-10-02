@@ -37,39 +37,9 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdIngresoEgresoRMU"/>
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <select asp-for="IdFormulaRMU" class="form-control" asp-items="ViewBag.IdFormulaRMU">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdFormulaRMU)></option>
-                                                </select>
-                                                <span asp-validation-for="IdFormulaRMU" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
+                                
+                                @{await Html.RenderPartialAsync("_PartialViewIngresoEgresoRMU");}
 
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <i class="icon-append fa fa-comment"></i>
-                                                <input maxlength="20" asp-for="Descripcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)" />
-                                                <span asp-validation-for="Descripcion" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <i class="icon-append fa fa-comment"></i>
-                                                <input maxlength="10" asp-for="CuentaContable" onKeyPress="return checkIt(event)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.CuentaContable)" />
-                                                <span asp-validation-for="CuentaContable" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-                                </fieldset>
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />

@@ -45,11 +45,12 @@
     <Folder Include="Views\ActividadesEsenciales\" />
     <Folder Include="Views\AnosExperiencia\" />
     <Folder Include="Views\BrigadasSSO\" />
+    <Folder Include="Views\BrigadasSSORoles\" />
     <Folder Include="Views\FormulasRMU\" />
     <Folder Include="Views\CapacitacionesProveedores\" />
     <Folder Include="Views\DenominacionesCompetencias\" />
     <Folder Include="Views\ConfiguracionesViaticos\" />
-    <Folder Include="Views\IndiceOcupacionalCapacitaciones\" />
+    <Folder Include="Views\Dependencias\" />
     <Folder Include="wwwroot\js\datatables\" />
   </ItemGroup>
   <ItemGroup>

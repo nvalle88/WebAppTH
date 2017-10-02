@@ -1,0 +1,21 @@
+@model bd.webappth.entidades.Negocio.ManualPuesto
+<fieldset>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="50" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="100" asp-for="Descripcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+</fieldset>
