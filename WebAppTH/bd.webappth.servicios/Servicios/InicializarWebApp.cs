@@ -15,18 +15,18 @@ namespace bd.webappth.servicios.Servicios
         {
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    client.BaseAddress = baseAddreess;
-                    var url = string.Format("{0}/{1}", "/api/Adscsists", id);
-                    var respuesta = await client.GetAsync(url);
+                //using (HttpClient client = new HttpClient())
+                //{
+                //    client.BaseAddress = baseAddreess;
+                //    var url = string.Format("{0}/{1}", "/api/Adscsists", id);
+                //    var respuesta = await client.GetAsync(url);
 
-                    var resultado = await respuesta.Content.ReadAsStringAsync();
-                    var response = JsonConvert.DeserializeObject<Response>(resultado);
-                    var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
-                    WebApp.BaseAddress = sistema.AdstHost;
-                }
-                //WebApp.BaseAddress = "http://localhost:55998";
+                //    var resultado = await respuesta.Content.ReadAsStringAsync();
+                //    var response = JsonConvert.DeserializeObject<Response>(resultado);
+                //    var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
+                //    WebApp.BaseAddress = sistema.AdstHost;
+                //}
+                WebApp.BaseAddress = "http://localhost:55998";
 
 
             }
@@ -53,6 +53,8 @@ namespace bd.webappth.servicios.Servicios
                     var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
                     AppGuardarLog.BaseAddress = sistema.AdstHost;
                 }
+
+
             }
             catch (Exception ex)
             {

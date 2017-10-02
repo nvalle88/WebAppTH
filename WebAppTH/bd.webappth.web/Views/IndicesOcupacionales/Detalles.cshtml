@@ -7,6 +7,7 @@
 <script src='~/js/site.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 
+
 <div id="content">
     <!-- row -->
     <div class="row">
@@ -26,8 +27,7 @@
                         
                     </li>
                     <li>
-                       @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window1" })
-
+                       @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "ejemplomostrar" })
                     </li>
                     <li>
                         <a href="javascript:void(0);">Something else here</a>
@@ -136,7 +136,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el nivel de estudio... ?');" })
+                                                               @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalEstudios", "Estudios", new { idEstudio = item.IdEstudio, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -178,7 +178,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el área de conocimiento... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalAreaConocimiento", "AreasConocimientos",new { idAreaConocimiento=item.IdAreaConocimiento, idIndiceOcupacional=Model.IndiceOcupacional.IdIndiceOcupacional } ,new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -301,7 +301,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la capacitación... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalCapacitaciones", "Capacitaciones", new { idCapacitacion = item.IdCapacitacion, idIndiceOcupacional=Model.IndiceOcupacional.IdIndiceOcupacional },new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -347,8 +347,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la actividad esencial... ?');" })
-                                                            </td>
+                                                                @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalActividadesEsenciales", "ActividadesEsenciales", new { IdActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })                                                            </td>
                                                         </tr>
                                                     }
                                                 }
@@ -532,7 +531,7 @@
 
          $(document).ready(function () {
 
-             $("body").on("click", "a.dialog-window1", null, function (e) {
+             $("body").on("click", "a.ejemplomostrar", null, function (e) {
                  mostrarLoadingPanel("content", "Cargando...")
                  e.preventDefault();
                  var $link = $(this);
