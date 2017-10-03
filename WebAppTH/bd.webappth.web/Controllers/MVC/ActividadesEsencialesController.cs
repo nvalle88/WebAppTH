@@ -44,7 +44,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional = idIndiceOcupacional
                 };
                 var response = await apiServicio.EliminarAsync(IndiceOcupacionalAreaConocimiento, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ActividadesEsenciales/EliminarIncideOcupacionalActividadesEsenciales");
+                                                               , "/api/ActividadesEsenciales/EliminarIndiceOcupacionalActividadesEsenciales");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

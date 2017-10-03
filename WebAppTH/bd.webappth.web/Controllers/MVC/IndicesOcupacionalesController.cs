@@ -74,13 +74,29 @@ namespace bd.webappth.web.Controllers.MVC
 
         private async Task<bool> CargarComboComportamientosObservables(IndiceOcupacional indiceOcupacional)
         {
-            var listaComportamientosObservables = await apiServicio.Listar<Capacitacion>(indiceOcupacional,
+            var listaComportamientosObservables = await apiServicio.Listar<ComportamientoObservable>(indiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Capacitaciones/ListarComportamientosObservablesNoAsignadasIndiceOcupacional");
+                                                             "/api/ComportamientosObservables/ListarComportamientosObservablesNoAsignadasIndiceOcupacional");
             var resultado = false;
             if (listaComportamientosObservables.Count != 0)
             {
-                ViewData["IdComportamientoObservable"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(listaComportamientosObservables, "IdComportamientoObservable", "Nombre");
+                ViewData["IdComportamientoObservable"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(listaComportamientosObservables, "IdComportamientoObservable", "Descripcion");
+                resultado = true;
+            }
+
+            return resultado;
+
+        }
+
+        private async Task<bool> CargarComboConocimientosAdicionales(IndiceOcupacional indiceOcupacional)
+        {
+            var listaConocimientosAdicionales = await apiServicio.Listar<ConocimientosAdicionales>(indiceOcupacional,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "/api/ConocimientosAdicionales/ListarConocimientosAdicionalesNoAsignadasIndiceOcupacional");
+            var resultado = false;
+            if (listaConocimientosAdicionales.Count != 0)
+            {
+                ViewData["IdConocimientosAdicionales"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(listaConocimientosAdicionales, "IdConocimientosAdicionales", "Descripcion");
                 resultado = true;
             }
 
@@ -91,7 +107,7 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<ActionResult> AdicionarCapacitaciones(string idIndiceOcupacional, string mensaje)
 
         {
-            var indicecomportamientosob = new IndiceOcupacionalCapacitaciones
+            var indiceconocimientoad = new IndiceOcupacionalCapacitaciones
             {
 
                 IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
@@ -108,7 +124,7 @@ namespace bd.webappth.web.Controllers.MVC
             if (resultado)
             {
                 InicializarMensaje(mensaje);
-                return PartialView(indicecomportamientosob);
+                return PartialView(indiceconocimientoad);
             }
 
             ViewData["Mensaje"] = Mensaje.NoExistenRegistrosPorAsignar;
@@ -119,7 +135,7 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<ActionResult> AdicionarComportamientosObservables(string idIndiceOcupacional, string mensaje)
 
         {
-            var indicecomportamientosob = new IndiceOcupacionalCapacitaciones
+            var indiceconocimientoad = new IndiceOcupacionalComportamientoObservable
             {
 
                 IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
@@ -131,12 +147,40 @@ namespace bd.webappth.web.Controllers.MVC
             };
 
 
-            var resultado = await CargarComboCapacitaciones(indiceOcupacional);
+            var resultado = await CargarComboComportamientosObservables(indiceOcupacional);
 
             if (resultado)
             {
                 InicializarMensaje(mensaje);
-                return PartialView(indicecomportamientosob);
+                return PartialView(indiceconocimientoad);
+            }
+
+            ViewData["Mensaje"] = Mensaje.NoExistenRegistrosPorAsignar;
+            return PartialView("NoExisteElemento");
+
+        }
+
+        public async Task<ActionResult> AdicionarConocimientosAdicionales(string idIndiceOcupacional, string mensaje)
+
+        {
+            var indiceconocimientoad = new IndiceOcupacionalConocimientosAdicionales
+            {
+
+                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+            };
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+            };
+
+
+            var resultado = await CargarComboConocimientosAdicionales(indiceOcupacional);
+
+            if (resultado)
+            {
+                InicializarMensaje(mensaje);
+                return PartialView(indiceconocimientoad);
             }
 
             ViewData["Mensaje"] = Mensaje.NoExistenRegistrosPorAsignar;
@@ -200,6 +244,62 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdicionarConocimientoAdicional(IndiceOcupacionalConocimientosAdicionales indiceOcupacionalConocimientosAdicionales)
+        {
+            Response response = new Response();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    response = await apiServicio.InsertarAsync(indiceOcupacionalConocimientosAdicionales,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "/api/IndicesOcupacionales/InsertarConocimientoAdicional");
+                    if (response.IsSuccess)
+                    {
+
+                        var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                        {
+                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                            ExceptionTrace = null,
+                            Message = "Se ha creado un indice ocupacional",
+                            UserName = "Usuario 1",
+                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                            EntityID = string.Format("{0} {1} {2} {3}", "Índice ocupacional:", indiceOcupacionalConocimientosAdicionales.IdIndiceOcupacional, "Conocimiento Adicional:", indiceOcupacionalConocimientosAdicionales.IdConocimientosAdicionales),
+                        });
+
+                        return RedirectToAction("Detalles", new { id = indiceOcupacionalConocimientosAdicionales.IdIndiceOcupacional });
+                    }
+                }
+
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdIndiceOcupacional = indiceOcupacionalConocimientosAdicionales.IdIndiceOcupacional,
+                };
+
+                await CargarComboConocimientosAdicionales(indiceOcupacional);
+                InicializarMensaje(response.Message);
+                return PartialView("AdicionarConocimientosAdicionales", indiceOcupacionalConocimientosAdicionales);
+
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Creando un Indice ocupacional ",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP Seguridad"
+                });
+
+                return BadRequest();
+            }
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -236,9 +336,9 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional = indiceOcupacionalComportamientoObservable.IdIndiceOcupacional,
                 };
 
-                await CargarComboCapacitaciones(indiceOcupacional);
+                await CargarComboComportamientosObservables(indiceOcupacional);
                 InicializarMensaje(response.Message);
-                return PartialView("AdicionarCapacitaciones", indiceOcupacionalComportamientoObservable);
+                return PartialView("AdicionarComportamientosObservables", indiceOcupacionalComportamientoObservable);
 
             }
             catch (Exception ex)

@@ -30,9 +30,13 @@
                        @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "ejemplomostrar" })
                     </li>
                     <li>
-                       @Html.ActionLink("Adicionar Capacitaciones", "AdicionarCapacitaciones", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window2" })
-
-
+                       @Html.ActionLink("Adicionar Capacitaciones", "AdicionarCapacitaciones", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window1p" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Adicionar Comportamientos Observables", "AdicionarComportamientosObservables", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window2p" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Adicionar Conocimientos Adicionales", "AdicionarConocimientosAdicionales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window3p" })
                     </li>
                     <li>
                         <a href="javascript:void(0);">Something else here</a>
@@ -523,6 +527,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="AdicionarCapacitaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AdicionarComportamientosObservables" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AdicionarConocimientosAdicionales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -596,4 +635,92 @@
 
 
     </script>
+
+<script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("body").on("click", "a.dialog-window1p", null, function (e) {
+                mostrarLoadingPanel("content", "Cargando...")
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#AdicionarCapacitaciones.modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#AdicionarCapacitaciones').modal('show');
+                    $("#AdicionarCapacitaciones").waitMe("hide");
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#AdicionarCapacitaciones .te').html(data);
+                        $('#AdicionarCapacitaciones').modal();
+                        $("#content").waitMe("hide");
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+
+
+</script>
+
+<script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("body").on("click", "a.dialog-window2p", null, function (e) {
+                mostrarLoadingPanel("content", "Cargando...")
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#AdicionarComportamientosObservables.modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#AdicionarComportamientosObservables').modal('show');
+                    $("#AdicionarComportamientosObservables").waitMe("hide");
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#AdicionarComportamientosObservables .te').html(data);
+                        $('#AdicionarComportamientosObservables').modal();
+                        $("#content").waitMe("hide");
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+
+
+</script>
+
+<script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("body").on("click", "a.dialog-window3p", null, function (e) {
+                mostrarLoadingPanel("content", "Cargando...")
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#AdicionarConocimientosAdicionales.modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#AdicionarConocimientosAdicionales').modal('show');
+                    $("#AdicionarConocimientosAdicionales").waitMe("hide");
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#AdicionarConocimientosAdicionales .te').html(data);
+                        $('#AdicionarConocimientosAdicionales').modal();
+                        $("#content").waitMe("hide");
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+            });
+        });
+
+
+</script>
+
 }
