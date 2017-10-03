@@ -47,7 +47,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional = idIndiceOcupacional
                 };
                 var response = await apiServicio.EliminarAsync(experienciaLaboralRequerida, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ConocimientosAdicionales/EliminarIndiceOcupacionalConocimientosAdicionales");
+                                                               , "/api/ExperienciaLaboralRequeridas/EliminarIncideOcupacionalExperienciaLaboralRequeridas");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
