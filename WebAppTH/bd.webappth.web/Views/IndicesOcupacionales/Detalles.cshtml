@@ -91,7 +91,7 @@
                                         <label>@Model.IndiceOcupacional.ManualPuesto.Nombre</label>
                                         <br />
                                         <label><strong>Grupo ocupacional:</strong></label>
-                                        <label>@Model.IndiceOcupacional.ManualPuesto.Nombre</label>
+                                        <label>@Model.IndiceOcupacional.EscalaGrados.GrupoOcupacional.Nombre</label>
                                         <br />
                                         <label><strong>Grado:</strong></label>
                                         <label>@Model.IndiceOcupacional.EscalaGrados.Grado</label>
@@ -217,7 +217,7 @@
                                 <legend>Relaciones Internas y Externas</legend>
                                 @if (Model.ListaRelacionesInternasExternas.Count != 0)
                                 {
-                                    @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalRelacionesInternasExternas", "RelacionesInternasExternas", new { IdRelacionesInternasExternas = Model.ListaRelacionesInternasExternas.FirstOrDefault().IdRelacionesInternasExternas, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                    @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalRelacionesInternasExternas", "RelacionesInternasExternas", new { idRelacionesInternasExternas = Model.ListaRelacionesInternasExternas.FirstOrDefault().IdRelacionesInternasExternas, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                     <p>
                                     @Model.ListaRelacionesInternasExternas.FirstOrDefault().Descripcion
                                 </p>

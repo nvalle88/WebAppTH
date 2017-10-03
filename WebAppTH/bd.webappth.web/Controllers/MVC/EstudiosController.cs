@@ -81,7 +81,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> EliminarIndiceOcupacionalEstudios(int idEstudio, int idIndiceOcupacional)
         {
-
             try
             {
 
@@ -91,7 +90,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional = idIndiceOcupacional
                 };
                 var response = await apiServicio.EliminarAsync(indiceOcupacionalEstudio, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Estudios/EliminarIndiceOcupacionalEstudios");
+                                                               , "/api/Estudios/EliminarIncideOcupacionalEstudio");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

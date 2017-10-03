@@ -34,7 +34,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> EliminarIndiceOcupacionalComportamiemtoObservable(int idComportamientoObservable, int idIndiceOcupacional)
         {
-
             try
             {
 
@@ -76,9 +75,6 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

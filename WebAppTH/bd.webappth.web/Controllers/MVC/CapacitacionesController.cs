@@ -104,6 +104,9 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
+
+
+
         public async Task<IActionResult> EliminarIndiceOcupacionalCapacitaciones(int idCapacitacion, int idIndiceOcupacional)
         {
 

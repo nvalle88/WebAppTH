@@ -91,7 +91,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional = idIndiceOcupacional
                 };
                 var response = await apiServicio.EliminarAsync(misionIndiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Misiones/EliminarIndiceOcupacionalMisiones");
+                                                               , "/api/Misiones/EliminarIncideOcupacionalMision");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
