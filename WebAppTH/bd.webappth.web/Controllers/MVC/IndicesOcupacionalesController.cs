@@ -560,14 +560,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IndiceOcupacional indiceOcupacional)
+        public async Task<IActionResult> Create(IndiceOcupacionalDetalle indiceOcupacionalDetalle)
         {
             Response response = new Response();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    response = await apiServicio.InsertarAsync(indiceOcupacional,
+                    response = await apiServicio.InsertarAsync(indiceOcupacionalDetalle,
                                                                  new Uri(WebApp.BaseAddress),
                                                                  "/api/IndicesOcupacionales/InsertarIndiceOcupacional");
                     if (response.IsSuccess)
@@ -581,7 +581,7 @@ namespace bd.webappth.web.Controllers.MVC
                             UserName = "Usuario 1",
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            EntityID = string.Format("{0} {1}", "Indice Ocupacional:", indiceOcupacional.IdIndiceOcupacional),
+                            EntityID = string.Format("{0} {1}", "Indice Ocupacional:", indiceOcupacionalDetalle.IndiceOcupacional.IdIndiceOcupacional),
                         });
 
                         return RedirectToAction("Index");
@@ -589,7 +589,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
                 await CargarListaCombox();
                 InicializarMensaje(response.Message);
-                return View(indiceOcupacional);
+                return View(indiceOcupacionalDetalle);
 
             }
             catch (Exception ex)
@@ -614,7 +614,8 @@ namespace bd.webappth.web.Controllers.MVC
 
            await CargarListaCombox();
             InicializarMensaje(mensaje);
-            return View();
+            var a = new IndiceOcupacionalDetalle();
+            return View(a);
         }
 
         public async Task<IActionResult> Index()

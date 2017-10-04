@@ -13,7 +13,6 @@
     <div class="row">
         <!-- col -->
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            
             <div class="btn-group">
                 <button class="btn btn-primary">
                    Acciones
@@ -429,7 +428,7 @@
                                 <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-adjust"></i> </span>
-                                        <h2>Nivel de instrucci&oacute;n </h2>
+                                        <h2>Competencias t&eacute;cnicas</h2>
                                     </header>
                                     <fieldset>
 
@@ -441,10 +440,9 @@
                                                         <th data-class="expand"><i class="fa fa-fw fa-clock-o text-muted hidden-md hidden-sm hidden-xs"></i> Denominaci&oacute;n</th>
                                                         <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Nivel</th>
                                                         <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Comportamiento observable</th>
+                                                        <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> ¿Es competencia t&eacute;cnica?</th>
                                                         <th data-hide="phone">Opciones</th>
                                                     }
-                                                   
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -463,6 +461,9 @@
 
                                                             <td>
                                                                 @Html.DisplayFor(modelItem => item.Descripcion)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.DenominacionCompetencia.CompetenciaTecnica)
                                                             </td>
 
                                                             <td>
