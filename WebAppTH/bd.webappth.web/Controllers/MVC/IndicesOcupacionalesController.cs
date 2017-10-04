@@ -80,7 +80,7 @@ namespace bd.webappth.web.Controllers.MVC
             var resultado = false;
             if (listaComportamientosObservables.Count != 0)
             {
-                ViewData["IdComportamientoObservable"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(listaComportamientosObservables, "IdComportamientoObservable", "Descripcion");
+                ViewData["IdComportamientoObservable"] =new SelectList(listaComportamientosObservables);
                 resultado = true;
             }
 
@@ -132,24 +132,24 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        [HttpGet]
         public async Task<ActionResult> AdicionarComportamientosObservables(string idIndiceOcupacional, string mensaje)
 
         {
-            var indiceconocimientoad = new IndiceOcupacionalComportamientoObservable
-            {
-
-                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
-            };
 
             var indiceOcupacional = new IndiceOcupacional
             {
                 IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
             };
+            var indiceconocimientoad = new IndiceOcupacionalComportamientoObservableView
+            {
+                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+                ComportamientoObservables= await apiServicio.Listar<ComportamientoObservable>(indiceOcupacional,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "/api/ComportamientosObservables/ListarComportamientosObservablesNoAsignadasIndiceOcupacional"),
+            };
 
-
-            var resultado = await CargarComboComportamientosObservables(indiceOcupacional);
-
-            if (resultado)
+            if (indiceconocimientoad.ComportamientoObservables.Count!=0)
             {
                 InicializarMensaje(mensaje);
                 return PartialView(indiceconocimientoad);
@@ -303,13 +303,16 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AdicionarComportamientoObservable(IndiceOcupacionalComportamientoObservable indiceOcupacionalComportamientoObservable)
+        public async Task<IActionResult> AdicionarComportamientosObservables(int idIndiceOcupacional,int idComportamientoObservable)
         {
             Response response = new Response();
             try
             {
-                if (ModelState.IsValid)
-                {
+                var indiceOcupacionalComportamientoObservable =new  bd.webappth.entidades.Negocio.IndiceOcupacionalComportamientoObservable();
+
+                    indiceOcupacionalComportamientoObservable.IdComportamientoObservable=Convert.ToInt32(idComportamientoObservable);
+                    indiceOcupacionalComportamientoObservable.IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional);
+
                     response = await apiServicio.InsertarAsync(indiceOcupacionalComportamientoObservable,
                                                                  new Uri(WebApp.BaseAddress),
                                                                  "/api/IndicesOcupacionales/InsertarComportamientoObservable");
@@ -329,7 +332,6 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return RedirectToAction("Detalles", new { id = indiceOcupacionalComportamientoObservable.IdIndiceOcupacional });
                     }
-                }
 
                 var indiceOcupacional = new IndiceOcupacional
                 {
@@ -338,7 +340,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                 await CargarComboComportamientosObservables(indiceOcupacional);
                 InicializarMensaje(response.Message);
+                //return PartialView("AdicionarComportamientosObservables", indiceOcupacionalComportamientoObservable);
                 return PartialView("AdicionarComportamientosObservables", indiceOcupacionalComportamientoObservable);
+
 
             }
             catch (Exception ex)

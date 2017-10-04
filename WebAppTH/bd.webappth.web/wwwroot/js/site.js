@@ -7,6 +7,7 @@
     });
 }
 
+
 function mostrarLoadingPanel(idElemento, texto) {
     $('#' + idElemento).waitMe({
         effect: 'roundBounce',
