@@ -27,16 +27,16 @@
                         
                     </li>
                     <li>
-                       @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "ejemplomostrar" })
+                       @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
                     </li>
                     <li>
-                       @Html.ActionLink("Adicionar Capacitaciones", "AdicionarCapacitaciones", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window1p" })
+                       @Html.ActionLink("Adicionar Capacitaciones", "AdicionarCapacitaciones", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
                     </li>
                     <li>
-                        @Html.ActionLink("Adicionar Comportamientos Observables", "AdicionarComportamientosObservables", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window2p" })
+                        @Html.ActionLink("Adicionar Comportamientos Observables", "AdicionarComportamientosObservables", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
                     </li>
                     <li>
-                        @Html.ActionLink("Adicionar Conocimientos Adicionales", "AdicionarConocimientosAdicionales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window3p" })
+                        @Html.ActionLink("Adicionar Conocimientos Adicionales", "AdicionarConocimientosAdicionales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
                     </li>
                     <li>
                         <a href="javascript:void(0);">Something else here</a>
@@ -499,70 +499,11 @@
  </div>
 </div>
 <!-- END MAIN CONTENT -->
-
-
-
-
-    <div class="modal fade" id="AdicionarAreaConocimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h2 class="modal-title"></h2>
-                </div>
-                <div class="modal-body"><div class="te">Please wait...</div></div>
-            </div>
-        </div>
-    </div>
-
-<div class="modal fade" id="AdicionarActividesEsenciales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="AdicionarCapacitaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="AdicionarComportamientosObservables" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="AdicionarConocimientosAdicionales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
-        </div>
-    </div>
-</div>
-
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalActividadesEsenciales());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalAreaConocimiento());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalCapacitaciones());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalComportamientoObservableView());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalConocimientosAdicionales());}
 
 
 @section Scripts {
@@ -570,157 +511,13 @@
 <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 <script src='~/js/site.js'></script>
+<script src='~/js/vistasmodales/modal.js'></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         Init_Select2();
     });
 </script>
 
-<script type="text/javascript">
-
-         $(document).ready(function () {
-
-             $("body").on("click", "a.ejemplomostrar", null, function (e) {
-                 mostrarLoadingPanel("content", "Cargando...")
-                 e.preventDefault();
-                 var $link = $(this);
-                 var title = $link.text();
-                 $('#AdicionarActividesEsenciales.modal-title').html(title);
-                 var url = $(this).attr('href');
-                 if (url.indexOf('#') == 0) {
-                     $('#AdicionarActividesEsenciales').modal('show');
-                     $("#AdicionarActividesEsenciales").waitMe("hide");
-                 }
-                 else {
-                     $.get(url, function (data) {
-                         $('#AdicionarActividesEsenciales .te').html(data);
-                         $('#AdicionarActividesEsenciales').modal();
-                         $("#content").waitMe("hide");
-                     }).success(function () { $('input:text:visible:first').focus(); });
-
-                 }
-             });
-         });
-
-
-</script>
-
-
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-           
-            $("body").on("click", "a.dialog-window", null, function (e) {
-                mostrarLoadingPanel("content", "Cargando...")
-                e.preventDefault();
-                var $link = $(this);
-                var title = $link.text();
-                $('#AdicionarAreaConocimiento.modal-title').html(title);
-                var url = $(this).attr('href');
-                if (url.indexOf('#') == 0) {
-                    $('#AdicionarAreaConocimiento').modal('show');
-                    $("#AdicionarAreaConocimiento").waitMe("hide");
-                }
-                else {
-                    $.get(url, function (data) {
-                        $('#AdicionarAreaConocimiento .te').html(data);
-                        $('#AdicionarAreaConocimiento').modal();
-                        $("#content").waitMe("hide");
-                    }).success(function () { $('input:text:visible:first').focus(); });
-                   
-                }
-            });
-        });
-
-
-    </script>
-
-<script type="text/javascript">
-
-        $(document).ready(function () {
-
-            $("body").on("click", "a.dialog-window1p", null, function (e) {
-                mostrarLoadingPanel("content", "Cargando...")
-                e.preventDefault();
-                var $link = $(this);
-                var title = $link.text();
-                $('#AdicionarCapacitaciones.modal-title').html(title);
-                var url = $(this).attr('href');
-                if (url.indexOf('#') == 0) {
-                    $('#AdicionarCapacitaciones').modal('show');
-                    $("#AdicionarCapacitaciones").waitMe("hide");
-                }
-                else {
-                    $.get(url, function (data) {
-                        $('#AdicionarCapacitaciones .te').html(data);
-                        $('#AdicionarCapacitaciones').modal();
-                        $("#content").waitMe("hide");
-                    }).success(function () { $('input:text:visible:first').focus(); });
-
-                }
-            });
-        });
-
-
-</script>
-
-<script type="text/javascript">
-
-        $(document).ready(function () {
-
-            $("body").on("click", "a.dialog-window2p", null, function (e) {
-                mostrarLoadingPanel("content", "Cargando...")
-                e.preventDefault();
-                var $link = $(this);
-                var title = $link.text();
-                $('#AdicionarComportamientosObservables.modal-title').html(title);
-                var url = $(this).attr('href');
-                if (url.indexOf('#') == 0) {
-                    $('#AdicionarComportamientosObservables').modal('show');
-                    $("#AdicionarComportamientosObservables").waitMe("hide");
-                }
-                else {
-                    $.get(url, function (data) {
-                        $('#AdicionarComportamientosObservables .te').html(data);
-                        $('#AdicionarComportamientosObservables').modal();
-                        $("#content").waitMe("hide");
-                    }).success(function () { $('input:text:visible:first').focus(); });
-
-                }
-            });
-        });
-
-
-</script>
-
-<script type="text/javascript">
-
-        $(document).ready(function () {
-
-            $("body").on("click", "a.dialog-window3p", null, function (e) {
-                mostrarLoadingPanel("content", "Cargando...")
-                e.preventDefault();
-                var $link = $(this);
-                var title = $link.text();
-                $('#AdicionarConocimientosAdicionales.modal-title').html(title);
-                var url = $(this).attr('href');
-                if (url.indexOf('#') == 0) {
-                    $('#AdicionarConocimientosAdicionales').modal('show');
-                    $("#AdicionarConocimientosAdicionales").waitMe("hide");
-                }
-                else {
-                    $.get(url, function (data) {
-                        $('#AdicionarConocimientosAdicionales .te').html(data);
-                        $('#AdicionarConocimientosAdicionales').modal();
-                        $("#content").waitMe("hide");
-                    }).success(function () { $('input:text:visible:first').focus(); });
-
-                }
-            });
-        });
-
-
-</script>
 
 }
