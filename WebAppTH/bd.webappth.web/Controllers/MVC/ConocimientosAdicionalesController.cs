@@ -77,6 +77,55 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+
+        public async Task<IActionResult> EliminarIndiceOcupacionalConocimientosAdicionales(int idConocimientosAdicionales, int idIndiceOcupacional)
+        {
+
+            try
+            {
+
+                var indiceOcupacionalConocimientosAdicionales = new IndiceOcupacionalConocimientosAdicionales
+                {
+                    IdConocimientosAdicionales = idConocimientosAdicionales,
+                    IdIndiceOcupacional = idIndiceOcupacional
+                };
+                var response = await apiServicio.EliminarAsync(indiceOcupacionalConocimientosAdicionales, new Uri(WebApp.BaseAddress)
+                                                               , "/api/ConocimientosAdicionales/EliminarIncideOcupacionalConocimientosAdicionales");
+                if (response.IsSuccess)
+                {
+                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    {
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        EntityID = string.Format("{0} : {1} {2} {3}", "Conocimientos adicionales ",
+                                                                                        indiceOcupacionalConocimientosAdicionales.IdConocimientosAdicionales, "Índice Ocupacional", indiceOcupacionalConocimientosAdicionales.IdIndiceOcupacional),
+                        Message = Mensaje.Satisfactorio,
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        UserName = "Usuario APP webappth"
+                    });
+                    return RedirectToAction("Detalles", "IndicesOcupacionales", new { id = indiceOcupacionalConocimientosAdicionales.IdIndiceOcupacional });
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Eliminar Area de Conocimiento",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
+
+
         public async Task<IActionResult> Edit(string id)
         {
             try

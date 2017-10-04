@@ -1,4 +1,13 @@
+@model bd.webappth.entidades.Negocio.ConocimientosAdicionales
 
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+<fieldset>
+    <section>
+        <label class="label"></label>
+        <label class="textarea">
+            <i class="icon-append fa fa-comment"></i>
+            <textarea maxlength="100" asp-for="Descripcion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
+        </label>
+    </section>
+    <span class="text-danger">@ViewData["Error"]</span>
+</fieldset>

@@ -1,5 +1,6 @@
 namespace bd.webappth.entidades.Negocio
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public partial class ExperienciaLaboralRequerida
@@ -28,6 +29,9 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdEstudio { get; set; }
         public virtual Estudio Estudio { get; set; }
+
+
+        public virtual ICollection<IndiceOcupacionalExperienciaLaboralRequerida> IndiceOcupacionalExperienciaLaboralRequerida { get; set; }
 
     }
 }

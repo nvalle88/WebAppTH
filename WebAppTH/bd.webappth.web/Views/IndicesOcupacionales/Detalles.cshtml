@@ -7,12 +7,12 @@
 <script src='~/js/site.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 
+
 <div id="content">
     <!-- row -->
     <div class="row">
         <!-- col -->
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            
             <div class="btn-group">
                 <button class="btn btn-primary">
                    Acciones
@@ -26,8 +26,16 @@
                         
                     </li>
                     <li>
-                       @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window1" })
-
+                       @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
+                    </li>
+                    <li>
+                       @Html.ActionLink("Adicionar Capacitaciones", "AdicionarCapacitaciones", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Adicionar Comportamientos Observables", "AdicionarComportamientosObservables", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Adicionar Conocimientos Adicionales", "AdicionarConocimientosAdicionales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
                     </li>
                     <li>
                         @Html.ActionLink("Adicionar Estudio", "AdicionarEstudio", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-windowestudio" })
@@ -93,7 +101,7 @@
                                         <label>@Model.IndiceOcupacional.ManualPuesto.Nombre</label>
                                         <br />
                                         <label><strong>Grupo ocupacional:</strong></label>
-                                        <label>@Model.IndiceOcupacional.ManualPuesto.Nombre</label>
+                                        <label>@Model.IndiceOcupacional.EscalaGrados.GrupoOcupacional.Nombre</label>
                                         <br />
                                         <label><strong>Grado:</strong></label>
                                         <label>@Model.IndiceOcupacional.EscalaGrados.Grado</label>
@@ -110,7 +118,9 @@
                                     <legend>Misi&oacute;n</legend>
                                     
                                       @if (Model.ListaMisiones.Count != 0)
-                                      {<p class="text-justify text-">
+                                      {
+                                          @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalMisiones", "Misiones", new { idMision = Model.ListaMisiones.FirstOrDefault().IdMision, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                          <p class="text-justify text-">
                                             @Model.ListaMisiones.FirstOrDefault().Descripcion
                                        </p>
                                       }
@@ -147,7 +157,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el nivel de estudio... ?');" })
+                                                               @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalEstudios", "Estudios", new { idEstudio = item.IdEstudio, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -189,7 +199,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el área de conocimiento... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalAreaConocimiento", "AreasConocimientos",new { idAreaConocimiento=item.IdAreaConocimiento, idIndiceOcupacional=Model.IndiceOcupacional.IdIndiceOcupacional } ,new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -216,7 +226,9 @@
                                
                                 <legend>Relaciones Internas y Externas</legend>
                                 @if (Model.ListaRelacionesInternasExternas.Count != 0)
-                                {<p>
+                                {
+                                    @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalRelacionesInternasExternas", "RelacionesInternasExternas", new { idRelacionesInternasExternas = Model.ListaRelacionesInternasExternas.FirstOrDefault().IdRelacionesInternasExternas, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                    <p>
                                     @Model.ListaRelacionesInternasExternas.FirstOrDefault().Descripcion
                                 </p>
                                 }
@@ -270,7 +282,7 @@
                                                         
 
                                                         <td>
-                                                            @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la capacitación... ?');" })
+                                                           @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalExperienciaLaboralRequerida", "ExperienciaLaboralRequerida", new { idExperienciaLaboralRequerida = item.IdExperienciaLaboralRequerida, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                         </td>
                                                     </tr>
                                                 }
@@ -312,7 +324,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la capacitación... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalCapacitaciones", "Capacitaciones", new { idCapacitacion = item.IdCapacitacion, idIndiceOcupacional=Model.IndiceOcupacional.IdIndiceOcupacional },new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -358,7 +370,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar la actividad esencial... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalActividadesEsenciales", "ActividadesEsenciales", new { IdActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })                                                            
                                                             </td>
                                                         </tr>
                                                     }
@@ -400,7 +412,7 @@
                                                             </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el área de conocimiento... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalConocimientosAdicionales", "ConocimientosAdicionales", new { idConocimientosAdicionales = item.IdConocimientosAdicionales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -427,7 +439,7 @@
                                 <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-adjust"></i> </span>
-                                        <h2>Nivel de instrucci&oacute;n </h2>
+                                        <h2>Competencias t&eacute;cnicas</h2>
                                     </header>
                                     <fieldset>
 
@@ -439,10 +451,9 @@
                                                         <th data-class="expand"><i class="fa fa-fw fa-clock-o text-muted hidden-md hidden-sm hidden-xs"></i> Denominaci&oacute;n</th>
                                                         <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Nivel</th>
                                                         <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Comportamiento observable</th>
+                                                        <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> ¿Es competencia t&eacute;cnica?</th>
                                                         <th data-hide="phone">Opciones</th>
                                                     }
-                                                   
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -462,9 +473,12 @@
                                                             <td>
                                                                 @Html.DisplayFor(modelItem => item.Descripcion)
                                                             </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.DenominacionCompetencia.CompetenciaTecnica)
+                                                            </td>
 
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "Delete", new { onclick = "return confirm('Desea eliminar el registro... ?');" })
+                                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalComportamiemtoObservable", "ComportamientosObservables", new { idComportamientoObservable = item.IdComportamientoObservable, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                             </td>
                                                         </tr>
                                                     }
@@ -497,75 +511,11 @@
  </div>
 </div>
 <!-- END MAIN CONTENT -->
-
-
-
-
-    <div class="modal fade" id="AdicionarAreaConocimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h2 class="modal-title"></h2>
-                </div>
-                <div class="modal-body"><div class="te">Please wait...</div></div>
-            </div>
-        </div>
-    </div>
-
-<div class="modal fade" id="AdicionarActividesEsenciales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="AdicionarEstudio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="AdicionarMision" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="modal fade" id="AdicionarRIE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
-        </div>
-    </div>
-</div>
-
-
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalActividadesEsenciales());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalAreaConocimiento());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalCapacitaciones());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalComportamientoObservableView());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalConocimientosAdicionales());}
 
 
 @section Scripts {
@@ -573,160 +523,12 @@
 <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 <script src='~/js/site.js'></script>
+<script src='~/js/vistasmodales/modal.js'></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         Init_Select2();
     });
-</script>
-
-<script type="text/javascript">
-
-         $(document).ready(function () {
-
-             $("body").on("click", "a.dialog-window1", null, function (e) {
-                 mostrarLoadingPanel("content", "Cargando...")
-                 e.preventDefault();
-                 var $link = $(this);
-                 var title = $link.text();
-                 $('#AdicionarActividesEsenciales.modal-title').html(title);
-                 var url = $(this).attr('href');
-                 if (url.indexOf('#') == 0) {
-                     $('#AdicionarActividesEsenciales').modal('show');
-                     $("#AdicionarActividesEsenciales").waitMe("hide");
-                 }
-                 else {
-                     $.get(url, function (data) {
-                         $('#AdicionarActividesEsenciales .te').html(data);
-                         $('#AdicionarActividesEsenciales').modal();
-                         $("#content").waitMe("hide");
-                     }).success(function () { $('input:text:visible:first').focus(); });
-
-                 }
-             });
-         });
-
-
-</script>
-
-
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-           
-            $("body").on("click", "a.dialog-window", null, function (e) {
-                mostrarLoadingPanel("content", "Cargando...")
-                e.preventDefault();
-                var $link = $(this);
-                var title = $link.text();
-                $('#AdicionarAreaConocimiento.modal-title').html(title);
-                var url = $(this).attr('href');
-                if (url.indexOf('#') == 0) {
-                    $('#AdicionarAreaConocimiento').modal('show');
-                    $("#AdicionarAreaConocimiento").waitMe("hide");
-                }
-                else {
-                    $.get(url, function (data) {
-                        $('#AdicionarAreaConocimiento .te').html(data);
-                        $('#AdicionarAreaConocimiento').modal();
-                        $("#content").waitMe("hide");
-                    }).success(function () { $('input:text:visible:first').focus(); });
-                   
-                }
-            });
-        });
-
-
-    </script>
-
-<script type="text/javascript">
-
-           $(document).ready(function () {
-
-               $("body").on("click", "a.dialog-windowestudio", null, function (e) {
-                   mostrarLoadingPanel("content", "Cargando...")
-                   e.preventDefault();
-                   var $link = $(this);
-                   var title = $link.text();
-                   $('#AdicionarEstudio.modal-title').html(title);
-                   var url = $(this).attr('href');
-                   if (url.indexOf('#') == 0) {
-                       $('#AdicionarEstudio').modal('show');
-                       $("#AdicionarEstudio").waitMe("hide");
-                   }
-                   else {
-                       $.get(url, function (data) {
-                           $('#AdicionarEstudio .te').html(data);
-                           $('#AdicionarEstudio').modal();
-                           $("#content").waitMe("hide");
-                       }).success(function () { $('input:text:visible:first').focus(); });
-
-                   }
-               });
-           });
-
-
-</script>
-
-
-<script type="text/javascript">
-
-           $(document).ready(function () {
-
-               $("body").on("click", "a.dialog-windowmision", null, function (e) {
-                   mostrarLoadingPanel("content", "Cargando...")
-                   e.preventDefault();
-                   var $link = $(this);
-                   var title = $link.text();
-                   $('#AdicionarMision.modal-title').html(title);
-                   var url = $(this).attr('href');
-                   if (url.indexOf('#') == 0) {
-                       $('#AdicionarMision').modal('show');
-                       $("#AdicionarMision").waitMe("hide");
-                   }
-                   else {
-                       $.get(url, function (data) {
-                           $('#AdicionarMision .te').html(data);
-                           $('#AdicionarMision').modal();
-                           $("#content").waitMe("hide");
-                       }).success(function () { $('input:text:visible:first').focus(); });
-
-                   }
-               });
-           });
-
-
-</script>
-
-
-
-<script type="text/javascript">
-
-           $(document).ready(function () {
-
-               $("body").on("click", "a.dialog-windowrie", null, function (e) {
-                   mostrarLoadingPanel("content", "Cargando...")
-                   e.preventDefault();
-                   var $link = $(this);
-                   var title = $link.text();
-                   $('#AdicionarRIE.modal-title').html(title);
-                   var url = $(this).attr('href');
-                   if (url.indexOf('#') == 0) {
-                       $('#AdicionarRIE').modal('show');
-                       $("#AdicionarRIE").waitMe("hide");
-                   }
-                   else {
-                       $.get(url, function (data) {
-                           $('#AdicionarRIE .te').html(data);
-                           $('#AdicionarRIE').modal();
-                           $("#content").waitMe("hide");
-                       }).success(function () { $('input:text:visible:first').focus(); });
-
-                   }
-               });
-           });
-
-
 </script>
 
 

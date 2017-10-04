@@ -31,6 +31,53 @@ namespace bd.webappth.web.Controllers.MVC
             return View();
         }
 
+
+        public async Task<IActionResult> EliminarIncideOcupacionalActividadesEsenciales(int IdActividadesEsenciales, int idIndiceOcupacional)
+        {
+
+            try
+            {
+
+                var IndiceOcupacionalAreaConocimiento = new IndiceOcupacionalActividadesEsenciales
+                {
+                    IdActividadesEsenciales = IdActividadesEsenciales,
+                    IdIndiceOcupacional = idIndiceOcupacional
+                };
+                var response = await apiServicio.EliminarAsync(IndiceOcupacionalAreaConocimiento, new Uri(WebApp.BaseAddress)
+                                                               , "/api/ActividadesEsenciales/EliminarIndiceOcupacionalActividadesEsenciales");
+                if (response.IsSuccess)
+                {
+                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    {
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        EntityID = string.Format("{0} : {1} {2} {3}", "Actividad esencial",
+                                                                                        IndiceOcupacionalAreaConocimiento.IdActividadesEsenciales, "Índice Ocupacional", IndiceOcupacionalAreaConocimiento.IdIndiceOcupacional),
+                        Message = "Registro deActividades esenciales",
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        UserName = "Usuario APP webappth"
+                    });
+                    return RedirectToAction("Detalles", "IndicesOcupacionales", new { id = IndiceOcupacionalAreaConocimiento.IdIndiceOcupacional });
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Eliminar Area de Conocimiento",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ActividadesEsenciales actividadesEsenciales)

@@ -1,6 +1,4 @@
-﻿
-
-using bd.log.guardar.Inicializar;
+﻿using bd.log.guardar.Inicializar;
 using bd.webappth.entidades.Utils;
 using Newtonsoft.Json;
 using System;
@@ -28,7 +26,7 @@ namespace bd.webappth.servicios.Servicios
                 //    var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
                 //    WebApp.BaseAddress = sistema.AdstHost;
                 //}
-                WebApp.BaseAddress = "http://localhost:5000";
+                WebApp.BaseAddress = "http://localhost:55998";
 
 
             }
@@ -55,6 +53,8 @@ namespace bd.webappth.servicios.Servicios
                     var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
                     AppGuardarLog.BaseAddress = sistema.AdstHost;
                 }
+
+
             }
             catch (Exception ex)
             {
