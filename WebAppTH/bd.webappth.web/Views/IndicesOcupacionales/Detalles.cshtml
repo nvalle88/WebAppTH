@@ -30,6 +30,17 @@
 
                     </li>
                     <li>
+                        @Html.ActionLink("Adicionar Estudio", "AdicionarEstudio", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-windowestudio" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Adicionar Mision", "AdicionarMision", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-windowmision" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Adicionar Relaciones Internas Externas", "AdicionarRIE", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-windowrie" })
+
+
+                    </li>
+                    <li>
                         <a href="javascript:void(0);">Something else here</a>
                     </li>
                     <li class="divider"></li>
@@ -515,6 +526,46 @@
 </div>
 
 
+<div class="modal fade" id="AdicionarEstudio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="AdicionarMision" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="AdicionarRIE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+        </div>
+    </div>
+</div>
+
+
 
 
 @section Scripts {
@@ -587,4 +638,96 @@
 
 
     </script>
+
+<script type="text/javascript">
+
+           $(document).ready(function () {
+
+               $("body").on("click", "a.dialog-windowestudio", null, function (e) {
+                   mostrarLoadingPanel("content", "Cargando...")
+                   e.preventDefault();
+                   var $link = $(this);
+                   var title = $link.text();
+                   $('#AdicionarEstudio.modal-title').html(title);
+                   var url = $(this).attr('href');
+                   if (url.indexOf('#') == 0) {
+                       $('#AdicionarEstudio').modal('show');
+                       $("#AdicionarEstudio").waitMe("hide");
+                   }
+                   else {
+                       $.get(url, function (data) {
+                           $('#AdicionarEstudio .te').html(data);
+                           $('#AdicionarEstudio').modal();
+                           $("#content").waitMe("hide");
+                       }).success(function () { $('input:text:visible:first').focus(); });
+
+                   }
+               });
+           });
+
+
+</script>
+
+
+<script type="text/javascript">
+
+           $(document).ready(function () {
+
+               $("body").on("click", "a.dialog-windowmision", null, function (e) {
+                   mostrarLoadingPanel("content", "Cargando...")
+                   e.preventDefault();
+                   var $link = $(this);
+                   var title = $link.text();
+                   $('#AdicionarMision.modal-title').html(title);
+                   var url = $(this).attr('href');
+                   if (url.indexOf('#') == 0) {
+                       $('#AdicionarMision').modal('show');
+                       $("#AdicionarMision").waitMe("hide");
+                   }
+                   else {
+                       $.get(url, function (data) {
+                           $('#AdicionarMision .te').html(data);
+                           $('#AdicionarMision').modal();
+                           $("#content").waitMe("hide");
+                       }).success(function () { $('input:text:visible:first').focus(); });
+
+                   }
+               });
+           });
+
+
+</script>
+
+
+
+<script type="text/javascript">
+
+           $(document).ready(function () {
+
+               $("body").on("click", "a.dialog-windowrie", null, function (e) {
+                   mostrarLoadingPanel("content", "Cargando...")
+                   e.preventDefault();
+                   var $link = $(this);
+                   var title = $link.text();
+                   $('#AdicionarRIE.modal-title').html(title);
+                   var url = $(this).attr('href');
+                   if (url.indexOf('#') == 0) {
+                       $('#AdicionarRIE').modal('show');
+                       $("#AdicionarRIE").waitMe("hide");
+                   }
+                   else {
+                       $.get(url, function (data) {
+                           $('#AdicionarRIE .te').html(data);
+                           $('#AdicionarRIE').modal();
+                           $("#content").waitMe("hide");
+                       }).success(function () { $('input:text:visible:first').focus(); });
+
+                   }
+               });
+           });
+
+
+</script>
+
+
 }
