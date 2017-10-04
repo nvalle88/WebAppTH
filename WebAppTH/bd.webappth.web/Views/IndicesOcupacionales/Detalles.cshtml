@@ -38,13 +38,13 @@
                         @Html.ActionLink("Adicionar Conocimientos Adicionales", "AdicionarConocimientosAdicionales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
                     </li>
                     <li>
-                        @Html.ActionLink("Adicionar Estudio", "AdicionarEstudio", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-windowestudio" })
+                        @Html.ActionLink("Adicionar Estudio", "AdicionarEstudio", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
                     </li>
                     <li>
-                        @Html.ActionLink("Adicionar Mision", "AdicionarMision", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-windowmision" })
+                        @Html.ActionLink("Adicionar Mision", "AdicionarMision", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
                     </li>
                     <li>
-                        @Html.ActionLink("Adicionar Relaciones Internas Externas", "AdicionarRIE", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-windowrie" })
+                        @Html.ActionLink("Adicionar Relaciones Internas Externas", "AdicionarRIE", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
 
 
                     </li>
@@ -516,6 +516,10 @@
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalCapacitaciones());}
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalComportamientoObservableView());}
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalConocimientosAdicionales());}
+
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalEstudio());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalMisionView());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalRIEView());}
 
 
 @section Scripts {
