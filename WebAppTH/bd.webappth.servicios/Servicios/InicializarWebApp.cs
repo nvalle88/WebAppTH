@@ -26,7 +26,7 @@ namespace bd.webappth.servicios.Servicios
                 //    var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
                 //    WebApp.BaseAddress = sistema.AdstHost;
                 //}
-                WebApp.BaseAddress = "http://localhost:5000/";
+                WebApp.BaseAddress = "http://localhost:49494";
 
 
             }

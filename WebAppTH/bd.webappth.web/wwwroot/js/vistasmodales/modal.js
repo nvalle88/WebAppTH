@@ -9,9 +9,11 @@
 // La acción del Action.Link debe retornar un PartialView en el Controlador que será los datos a mostrar
 
 
-$(document).ready(function () {
 
-    $("body").on("click", "a.dialog-window", null, function (e) {
+
+
+$(document).ready(function () {
+    $('body').on('click', 'a.dialog-window', function (e) {
         mostrarLoadingPanel("content", "Cargando...")
         e.preventDefault();
         var $link = $(this);
@@ -19,16 +21,20 @@ $(document).ready(function () {
         $('#myModal.modal-title').html(title);
         var url = $(this).attr('href');
         if (url.indexOf('#') == 0) {
-            $('#myModal').modal('show');
+            $('#myModal').modal('show');         
             $("#myModal").waitMe("hide");
         }
         else {
-            $.get(url, function (data) {
+            $.get(url, function (data) {              
                 $('#myModal .te').html(data);
                 $('#myModal').modal();
+                $('#selectC').select2();
                 $("#content").waitMe("hide");
             }).success(function () { $('input:text:visible:first').focus(); });
 
         }
     });
 });
+
+
+
