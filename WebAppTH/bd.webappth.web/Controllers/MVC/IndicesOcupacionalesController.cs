@@ -375,8 +375,19 @@ namespace bd.webappth.web.Controllers.MVC
             return resultado;
         }
 
-      
-       
+        private async Task<bool> CargarComboExperienciaLaboralRequerida(IndiceOcupacional indiceOcupacional)
+        {
+            var listaExperienciaLaboralRequerida = await apiServicio.Listar<ExperienciaLaboralRequerida>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/ExperienciaLaboralRequeridas/ListarExperienciaLaboralRequeridaNoAsignadasIndiceOcupacional");
+            var resultado = false;
+            if (listaExperienciaLaboralRequerida.Count != 0)
+            {
+               
+                resultado = true;
+            }
+
+            return resultado;
+        }
+
 
         private async Task<bool> CargarComboMision(IndiceOcupacional indiceOcupacional)
         {
@@ -669,9 +680,14 @@ namespace bd.webappth.web.Controllers.MVC
                                                                 , "/api/ExperienciaLaboralRequeridas/ListarExperienciaLaboralRequeridaNoAsignadasIndiceOcupacional")
                 };
 
-                InicializarMensaje(mensaje);
-                return PartialView(indiceExperienciaLaboralRequerida);
-            
+                var resultado = await CargarComboExperienciaLaboralRequerida(indiceOcupacional);
+
+                if (resultado)
+                {
+                    InicializarMensaje(mensaje);
+                    return PartialView(indiceExperienciaLaboralRequerida);
+                }
+
 
             ViewData["Mensaje"] = Mensaje.NoExistenRegistrosPorAsignar;
             return PartialView("NoExisteElemento");
