@@ -375,6 +375,9 @@ namespace bd.webappth.web.Controllers.MVC
             return resultado;
         }
 
+      
+       
+
         private async Task<bool> CargarComboMision(IndiceOcupacional indiceOcupacional)
         {
             var listaMision = await apiServicio.Listar<Mision>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Misiones/ListarMisionNoAsignadasIndiceOcupacional");
@@ -586,7 +589,99 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdicionarExperienciaLaboralRequerida(int idExperienciaLaboralRequerida, int IdIndiceOcupacional)
+        {
+            Response response = new Response();
+            try
+            {
+                var experienciaLaboralRequeridaIndiceOcupacional = new IndiceOcupacionalExperienciaLaboralRequerida
+                {
+                    IdExperienciaLaboralRequerida = idExperienciaLaboralRequerida,
+                    IdIndiceOcupacional = IdIndiceOcupacional,
+                };
+
+
+                response = await apiServicio.InsertarAsync(experienciaLaboralRequeridaIndiceOcupacional,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "/api/IndicesOcupacionales/InsertarExperienciaLaboralRequerida");
+                if (response.IsSuccess)
+                {
+
+                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    {
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        ExceptionTrace = null,
+                        Message = "Se ha creado un indice ocupacional experiencia laboral requerida",
+                        UserName = "Usuario 1",
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        EntityID = string.Format("{0} {1} {2} {3}", "Índice ocupacional experiencia laboral requerida:", experienciaLaboralRequeridaIndiceOcupacional.IdIndiceOcupacional, "Experiencia Laboral Requerida:", experienciaLaboralRequeridaIndiceOcupacional.IdExperienciaLaboralRequerida),
+                    });
+
+                    return RedirectToAction("Detalles", new { id = experienciaLaboralRequeridaIndiceOcupacional.IdIndiceOcupacional });
+                }
+
+
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdIndiceOcupacional = experienciaLaboralRequeridaIndiceOcupacional.IdIndiceOcupacional,
+                };
+
+               
+                InicializarMensaje(response.Message);
+                return PartialView("AdicionarExperienciaLaboralRequerida", experienciaLaboralRequeridaIndiceOcupacional);
+
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Creando un Indice ocupacional ",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP Seguridad"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
+
+        public async Task<ActionResult> AdicionarExperienciaLaboralRequerida(string idIndiceOcupacional, string mensaje)
+        {
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+            };
+
+           
+
+                var indiceExperienciaLaboralRequerida = new IndiceOcupacionalExperienciaLaboralRequeridaView
+                {
+                    IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+                    ListaExperienciaLaboralRequerida = await apiServicio.Listar<ExperienciaLaboralRequerida>(indiceOcupacional, new Uri(WebApp.BaseAddress)
+                                                                , "/api/ExperienciaLaboralRequeridas/ListarExperienciaLaboralRequeridaNoAsignadasIndiceOcupacional")
+                };
+
+                InicializarMensaje(mensaje);
+                return PartialView(indiceExperienciaLaboralRequerida);
+            
+
+            ViewData["Mensaje"] = Mensaje.NoExistenRegistrosPorAsignar;
+            return PartialView("NoExisteElemento");
+
+        }
+
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdicionarMision(int idMision, int IdIndiceOcupacional)
