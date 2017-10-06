@@ -1,5 +1,4 @@
 @model bd.webappth.entidades.ViewModels.IndiceOcupacionalDetalle
-
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
@@ -507,12 +506,16 @@
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalConocimientosAdicionales());}
 
 
+
 @section Scripts {
 <script src='~/lib/select2/dist/js/select2.min.js'></script>
 <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 <script src='~/js/site.js'></script>
 <script src='~/js/vistasmodales/modal.js'></script>
+
+
+
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -522,3 +525,4 @@
 
 
 }
+
