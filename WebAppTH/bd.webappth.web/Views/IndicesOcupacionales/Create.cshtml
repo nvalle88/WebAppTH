@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/js/site.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
 
 
 <!-- MAIN CONTENT -->
@@ -162,10 +165,10 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a asp-action="Index"><i class="fa fa-graduation-cap"></i>  Insertar nivel de instrucci&oacute;n</a>
+                                                    <a asp-action="AdicionarAreaConocimientoLocal"  asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar área de conocimiento</a>
                                                 </li>
                                                 <li>
-                                                    <a asp-action="Index"><i class="fa fa-table"></i>  Insertar &aacute;rea de conocimiento</a>
+                                                    <a asp-action="AdicionarActividesEsenciales" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar actividades esenciales</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -224,7 +227,7 @@
                                                 </header>
                                                 <fieldset>
 
-                                                    <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <table id="dt_basic" data-toggle="modal" data-placement="top" title="Ejemplo" class="table table-striped table-bordered table-hover" width="100%">
                                                         <thead>
 
                                                         </thead>
@@ -235,11 +238,11 @@
                                                                     {
                                                                     <tr>
                                                                         <td>
-                                                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                                                            @Html.DisplayFor(modelItem => item.IdAreaConocimiento)
                                                                         </td>
 
                                                                         <td>
-                                                                            @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalAreaConocimiento", "AreasConocimientos", new { idAreaConocimiento = item.IdAreaConocimiento, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
+                                                                            @Html.ActionLink("Eliminar", "Accion",new {idAreaConocimiento = item.IdAreaConocimiento }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                                         </td>
                                                                     </tr>
                                                                     }
@@ -259,7 +262,6 @@
                                             </div>
                                         </article>
                                     </article>
-
                                 </div>
                                 <div class="step-pane" id="step3">
                                     <h3></h3>
@@ -273,7 +275,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a asp-action="Index"><i class="fa fa-graduation-cap"></i>  Insertar misi&oacute;n</a>
+                                                    <a asp-action="AdicionarMision" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar misi&oacute;n</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -311,13 +313,13 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a asp-action="Index"><i class="fa fa-graduation-cap"></i>  Insertar relaciones internas externas</a>
+                                                    <a asp-action="AdicionarRIE" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar relaciones insternas externas</a>
                                                 </li>
                                             </ul>
                                         </div>
                                         <p></p>
                                     </div>
-                                    <article class="col-sm-12 col-md-12 col-lg-6">
+                                    <article class="col-sm-12 col-md-12 col-lg-12">
                                         <fieldset>
 
                                             <legend>Relaciones Internas y Externas</legend>
@@ -337,6 +339,7 @@
                                     </article>
 
                                 </div>
+                                @*Experiencia Laboral*@
                                 <div class="step-pane" id="step5">
                                     <h3></h3>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -349,7 +352,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a asp-action="Index"><i class="fa fa-graduation-cap"></i>  Insertar experiencia laboral requeridas</a>
+                                                    <a asp-action="AdicionarRIE" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar relaciones insternas externas</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -429,7 +432,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a asp-action="Index"><i class="fa fa-graduation-cap"></i>  Insertar capacitaci&oacute;n requeridas </a>
+                                                    <a asp-action="AdicionarCapacitaciones" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar capacitaciones requeridas</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -493,7 +496,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a asp-action="Index"><i class="fa fa-graduation-cap"></i>  Insertar actividedes esenciales </a>
+                                                    <a asp-action="AdicionarActividesEsenciales" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar actividades esenciales</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -556,7 +559,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a asp-action="Index"><i class="fa fa-graduation-cap"></i>  Insertar conocimientos adicionales</a>
+                                                    <a asp-action="AdicionarConocimientosAdicionales" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar conocimientos adicionales</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -618,7 +621,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a asp-action="Index"><i class="fa fa-graduation-cap"></i>  Insertar competencias t&eacute;cnicas</a>
+                                                    <a asp-action="AdicionarComportamientosObservables" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar competencias t&eacute;cnicas </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -703,11 +706,35 @@
 </div>
 <!-- END MAIN CONTENT -->
 
+
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalActividadesEsenciales());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalAreaConocimiento());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalCapacitaciones());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalComportamientoObservableView());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalConocimientosAdicionales());}
+
+
+
 @section Scripts {
     <!-- PAGE RELATED PLUGIN(S) -->
+
+<script src='~/lib/select2/dist/js/select2.min.js'></script>
+<script src='~/lib/select2/dist/js/i18n/es.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+<script src='~/js/site.js'></script>
+<script src='~/js/vistasmodales/modal.js'></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        Init_Select2();
+    });
+
+
+
     <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
     <script type="text/javascript">
+
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
 

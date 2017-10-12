@@ -41,6 +41,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                            
                                     @foreach (var item in Model)
                                     {
                                         <tr>
@@ -53,7 +54,7 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.RolPuesto.Nombre)
                                             </td>
-                                            <td>
+                                            <td data-toggle="toggle" data-placement="right" title="@item.EscalaGrados.Grado  @item.EscalaGrados.Remuneracion @item.ManualPuesto.Nombre">
                                                 @Html.DisplayFor(modelItem => item.EscalaGrados.Grado)  /  @Html.DisplayFor(modelItem => item.EscalaGrados.Remuneracion)
                                             </td>
 
@@ -75,5 +76,6 @@
 </div>
 @section Scripts {
     <script src='~/js/datatables/init.js'></script>
+
 }
 
