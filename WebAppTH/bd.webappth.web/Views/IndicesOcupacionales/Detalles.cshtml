@@ -1,5 +1,4 @@
 @model bd.webappth.entidades.ViewModels.IndiceOcupacionalDetalle
-
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
@@ -45,8 +44,9 @@
                     </li>
                     <li>
                         @Html.ActionLink("Adicionar Relaciones Internas Externas", "AdicionarRIE", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
-
-
+                    </li>
+                    <li>
+                        @Html.ActionLink("Adicionar Experiencia Laboral Requerida", "AdicionarExperienciaLaboralRequerida", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
                     </li>
                     <li>
                         <a href="javascript:void(0);">Something else here</a>
@@ -85,7 +85,7 @@
                         <div>
                             <article class="col-sm-12 col-md-5 col-lg-12">
                                 <fieldset>
-                                      <legend class=""> <strong> Descripci&oacute;n y Perfil del puesto</strong></legend>
+                                      <legend class=""> <strong> Descripci&oacute;n y Perfil del Puesto</strong></legend>
                                 </fieldset>
                             </article>
                         </div>
@@ -139,7 +139,7 @@
                                 <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-graduation-cap"></i> </span>
-                                        <h2>Nivel de instrucci&oacute;n </h2>
+                                        <h2>Nivel de Instrucci&oacute;n </h2>
                                     </header>
                                     <fieldset>
                                         <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
@@ -180,7 +180,7 @@
                                 <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                                        <h2>&Aacute;rea de conocimiento </h2>
+                                        <h2>&Aacute;rea de Conocimiento </h2>
                                     </header>
                                     <fieldset>
 
@@ -246,7 +246,7 @@
                                 <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-clock-o"></i> </span>
-                                        <h2>Experiencia laboral requerida </h2>
+                                        <h2>Experiencia Laboral Requerida </h2>
                                     </header>
                                     <fieldset>
 
@@ -256,9 +256,9 @@
                                                 <tr>
                                                     @if(Model.ListaExperienciaLaboralRequeridas.Count != 0)
                                                     {
-                                                    <th data- class="expand"><i class="fa fa-fw fa-clock-o text-muted hidden-md hidden-sm hidden-xs"></i> Nivel instrucci&oacute;n</th>
-                                                    <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Años de experiencia</th>
-                                                    <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Especidad de la experiencia</th>
+                                                    <th data- class="expand"><i class="fa fa-fw fa-clock-o text-muted hidden-md hidden-sm hidden-xs"></i> Nivel de Instrucci&oacute;n</th>
+                                                    <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> A&ntilde;os de Experiencia</th>
+                                                    <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Especificidad de la Experiencia</th>
                                                     <th></th>
                                                     }
                                                 </tr>
@@ -282,7 +282,7 @@
                                                         
 
                                                         <td>
-                                                           @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalExperienciaLaboralRequerida", "ExperienciaLaboralRequerida", new { idExperienciaLaboralRequerida = item.IdExperienciaLaboralRequerida, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                           @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalExperienciaLaboralRequerida", "ExperienciaLaboralRequeridas", new { idExperienciaLaboralRequerida = item.IdExperienciaLaboralRequerida, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                         </td>
                                                     </tr>
                                                 }
@@ -305,7 +305,7 @@
                                 <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-list-alt"></i> </span>
-                                        <h2>Capacitaci&oacute;n requerida</h2>
+                                        <h2>Capacitaci&oacute;n Requerida</h2>
                                     </header>
                                     <fieldset>
 
@@ -347,11 +347,11 @@
                         <article class="col-lg-12">
 
                             <article class="col-sm-12 col-md-12 col-lg-6">
-                                <legend>Actividades esenciales </legend>
+                                <legend>Actividades Esenciales </legend>
                                 <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-hospital-o"></i> </span>
-                                        <h2>Actividades esenciales </h2>
+                                        <h2>Actividades Esenciales </h2>
                                     </header>
                                     <fieldset>
 
@@ -389,11 +389,11 @@
                                 </div>
                             </article>
                             <article class="col-sm-12 col-md-12 col-lg-6">
-                                <legend> Conocimientos adicionales </legend>
+                                <legend> Conocimientos Adicionales </legend>
                                 <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-plus-square"></i> </span>
-                                        <h2>Conocimientos adicionales</h2>
+                                        <h2>Conocimientos Adicionales</h2>
                                     </header>
                                     <fieldset>
 
@@ -435,11 +435,11 @@
                         <article class="col-lg-12">
 
                             <article class="col-sm-12 col-md-12 col-lg-12">
-                                <legend>Competencias t&eacute;cnicas </legend>
+                                <legend>Competencias T&eacute;cnicas </legend>
                                 <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-adjust"></i> </span>
-                                        <h2>Competencias t&eacute;cnicas</h2>
+                                        <h2>Competencias T&eacute;cnicas</h2>
                                     </header>
                                     <fieldset>
 
@@ -450,8 +450,8 @@
                                                     {
                                                         <th data-class="expand"><i class="fa fa-fw fa-clock-o text-muted hidden-md hidden-sm hidden-xs"></i> Denominaci&oacute;n</th>
                                                         <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Nivel</th>
-                                                        <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Comportamiento observable</th>
-                                                        <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> ¿Es competencia t&eacute;cnica?</th>
+                                                        <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Comportamiento Observable</th>
+                                                        <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Es competencia t&eacute;cnica?</th>
                                                         <th data-hide="phone">Opciones</th>
                                                     }
                                                 </tr>
@@ -516,10 +516,11 @@
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalCapacitaciones());}
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalComportamientoObservableView());}
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalConocimientosAdicionales());}
-
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalEstudio());}
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalMisionView());}
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalRIEView());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalExperienciaLaboralRequeridaView());}
+
 
 
 @section Scripts {
@@ -529,6 +530,9 @@
 <script src='~/js/site.js'></script>
 <script src='~/js/vistasmodales/modal.js'></script>
 
+
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         Init_Select2();
@@ -537,3 +541,4 @@
 
 
 }
+

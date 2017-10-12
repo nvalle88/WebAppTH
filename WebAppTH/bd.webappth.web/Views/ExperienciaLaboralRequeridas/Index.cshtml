@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.RelacionesInternasExternasIndiceOcupacional>
+@model List<bd.webappth.entidades.Negocio.ExperienciaLaboralRequerida>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,7 +9,7 @@
     <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
         <span class="btn-label">
             <i class="glyphicon glyphicon-plus"></i>
-        </span>Relaciones Internas Externas &Iacutendice Ocupacional
+        </span>Nueva Experiencia Laboral Requerida
 
     </button>
 </a>
@@ -40,7 +40,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Relaciones Internas Externas &Iacutendice Ocupacional</h2>
+                        <h2>Experiencia Laboral Requerida</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -54,11 +54,14 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdIndiceOcupacional)
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EspecificidadExperiencia.Descripcion)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().RelacionesInternasExternas.Descripcion)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().AnoExperiencia.Descripcion)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estudio.Nombre)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -68,16 +71,19 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.IdIndiceOcupacional)
+                                                @Html.DisplayFor(modelItem => item.EspecificidadExperiencia.Descripcion)
                                             </td>
                                             <td>
 
-                                                @Html.DisplayFor(modelItem => item.RelacionesInternasExternas.Descripcion)
+                                                @Html.DisplayFor(modelItem => item.AnoExperiencia.Descripcion)
                                             </td>
-                                           
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdRelacionesInternasExternasIndiceOcupacional }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdRelacionesInternasExternasIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar la relaciones internas externas del índice ocupacional... ?');" })
+
+                                                @Html.DisplayFor(modelItem => item.Estudio.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdExperienciaLaboralRequerida }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdExperienciaLaboralRequerida }, new { onclick = "return confirm('Desea eliminar la experiencia laboral requerida... ?');" })
                                             </td>
                                         </tr>
                                     }

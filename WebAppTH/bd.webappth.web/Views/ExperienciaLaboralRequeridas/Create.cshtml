@@ -1,7 +1,7 @@
-@model bd.webappth.entidades.Negocio.RelacionesInternasExternasIndiceOcupacional
+@model bd.webappth.entidades.Negocio.ExperienciaLaboralRequerida
 
 @{
-    ViewData["Title"] = "Relaciones Internas Externas &Iacutendice Ocupacional";
+    ViewData["Title"] = "Experiencia Laboral Requerida";
 }
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
@@ -21,7 +21,7 @@
                
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Relaciones Internas Externas &Iacutendice Ocupacional</h2>
+                        <h2>Experiencia Laboral Requerida</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -37,7 +37,7 @@
                           
                             <form  asp-action="Create" id="checkout-form"  class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                @{await Html.RenderPartialAsync("_PartialViewRelacionesInternasExternasDeIndiceOcupacional", Model);}
+                                @{await Html.RenderPartialAsync("_PartialViewExperienciaLaboralRequeridas", Model);}
                                                                
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
