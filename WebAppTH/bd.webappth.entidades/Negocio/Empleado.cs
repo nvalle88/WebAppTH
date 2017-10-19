@@ -25,7 +25,13 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "¿Trabajó en la Superintendencia de InstitucionesFinancieras?")]
         public bool TrabajoSuperintendenciaBanco { get; set; }
-        
+
+
+        public bool FondosReservas { get; set; }
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Nepotismo:")]
+        public bool Nepotismo { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "¿Declaración jurada?")]

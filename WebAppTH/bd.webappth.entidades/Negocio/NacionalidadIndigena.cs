@@ -22,5 +22,7 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdEtnia { get; set; }
         public virtual Etnia Etnia { get; set; }
+
+        public virtual ICollection<Persona> Persona { get; set; }
     }
 }

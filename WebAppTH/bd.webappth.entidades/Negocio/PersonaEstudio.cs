@@ -20,6 +20,8 @@ namespace bd.webappth.entidades.Negocio
         [StringLength(500, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Observaciones { get; set; }
 
+        public string NoSenescyt { get; set; }
+
         //Propiedades Virtuales Referencias a otras clases
 
         [Display(Name = "Título:")]

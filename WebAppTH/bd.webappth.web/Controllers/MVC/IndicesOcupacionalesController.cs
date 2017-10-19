@@ -15,15 +15,37 @@ using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
+    public class Singleton
+    {
+        private static IndiceOcupacionalDetalle instance;
+
+        private Singleton() { }
+
+        public static IndiceOcupacionalDetalle Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new IndiceOcupacionalDetalle();
+                    instance.ListaAreaConocimientos = new List<AreaConocimiento>();
+                }
+                return instance;
+            }
+        }
+    }
+
     public class IndicesOcupacionalesController : Controller
     {
         private readonly IApiServicio apiServicio;
+        
 
         public IndicesOcupacionalesController(IApiServicio apiServicio)
         {
-
+            
             this.apiServicio = apiServicio;
-
+            
+            
         }
 
         private async Task<bool> CargarComboActividedesEsenciales(IndiceOcupacional indiceOcupacional)
@@ -889,7 +911,32 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        public async Task<ActionResult> AdicionarAreaConocimientoLocal(string idIndiceOcupacional, string mensaje)
 
+        {
+            var indideAreaConocimiento = new IndiceOcupacionalAreaConocimiento
+            {
+
+                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+            };
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
+            };
+
+
+            var resultado = await CargarComboAreaConocimiento(indiceOcupacional);
+
+            if (resultado)
+            {
+                InicializarMensaje(mensaje);
+                return PartialView(indideAreaConocimiento);
+            }
+            ViewData["Mensaje"] = Mensaje.NoExistenRegistrosPorAsignar;
+            return PartialView("NoExisteElemento");
+
+        }
 
 
         public async Task<ActionResult> AdicionarAreaConocimiento(string idIndiceOcupacional,string mensaje)
@@ -947,7 +994,29 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Error"] = mensaje;
         }
 
-        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdicionarAreaConocimientoLocal(IndiceOcupacionalAreaConocimiento indiceOcupacionalAreaConocimiento)
+        {
+            Response response = new Response();
+            try
+            {
+                    var areaConocimiento = new AreaConocimiento
+                    {
+                        IdAreaConocimiento=indiceOcupacionalAreaConocimiento.IdAreaConocimiento,
+                    };
+                    Singleton.Instance.ListaAreaConocimientos.Add(areaConocimiento);
+
+               return  await Create("");
+                
+
+            }
+            catch (Exception ex)
+            {
+              return  BadRequest();
+            }
+        }
+
 
 
         [HttpPost]
@@ -1062,8 +1131,8 @@ namespace bd.webappth.web.Controllers.MVC
 
            await CargarListaCombox();
             InicializarMensaje(mensaje);
-            var a = new IndiceOcupacionalDetalle();
-            return View(a);
+            
+            return View("Create",Singleton.Instance);
         }
 
         public async Task<IActionResult> Index()
