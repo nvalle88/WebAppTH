@@ -26,7 +26,7 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Candidato")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdCanditato { get; set; }
-        public virtual Canditato Canditato { get; set; }
+        public virtual Candidato Candidato { get; set; }
 
 
         [Display(Name = "Fase Partida:")]

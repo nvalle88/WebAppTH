@@ -24,12 +24,12 @@ namespace bd.webappth.entidades.Negocio
         public DateTime FechaFin { get; set; }
 
 
-        [Display(Name = "Plan de gestión del cambio")]
+        [Display(Name = "Indicador:")]
         [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int Indicador { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Prociento:")]
+        [Display(Name = "Porciento:")]
         public bool Porciento { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
