@@ -20,7 +20,7 @@
                         </div>
                         <div class="widget-body">
                             <div class="row">
-                                <form id="wizard-1" asp-action="Create" novalidate="novalidate">
+                                <form id="wizard-1" asp-action="Create"  novalidate="novalidate">
                                     <div id="bootstrap-wizard-1" class="col-sm-12">
                                         <div class="form-bootstrapWizard">
                                             <ul class="bootstrapWizard form-wizard">
@@ -44,6 +44,78 @@
                                             <div class="tab-pane active" id="tab1">
                                                 <br>
                                                 <div class="row">
+                                                    <article class="col-lg-12">
+                                                        <legend>Tipo de nombramiento</legend>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <label>R&eacute;gimen laboral:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <select  id="IdRegimenLaboral" class="form-control input " asp-items="ViewBag.IdRegimenLaboral">
+                                                                            <option value="-1"  >Seleccione</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label>Relaci&oacute;n Laboral:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <select id="IdRelacionLaboral"  class="form-control input "></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label>Tipo de nombramiento:</label>
+                                                                <div class="form-group">
+                                                                    <div  class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <select  id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control input " ></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label>Tipo de nombramiento:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <select id="IdModalidadPartida" asp-for="IndiceOcupacionalModalidadPartida.IdModalidadPartida" class="form-control input "></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <label>Fondo de financiamiento:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <select asp-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="form-control input " asp-items="ViewBag.IdFondoFinanciamiento"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>Salario real:</label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " placeholder="N&uacute;mero de cuenta" type="text" name="fnumeroCuenta" id="fnumeroCuenta">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>Fecha:</label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" class="form-control input " placeholder="N&uacute;mero de cuenta" type="text" name="fnumeroCuenta" id="fnumeroCuenta">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </article>
                                                     <article class="col-lg-12">
                                                         <legend>Datos personales</legend>
                                                         <div class="row">
@@ -1055,7 +1127,7 @@
                     data: { pais: $("#paisLugarNacimiento").val() },
                     success: function (data) {
                         $.each(data, function (i, data) {
-                            $("#ciudadLugarNacimiento").append('<option value="'
+                            $("#ciudadLugarNacimiento").append('<option value="0">Seleccione</option>'+'<option value="'
                                 + data.idciudad + '">'
                                 + data.nombre + '</option>');
 
@@ -1069,7 +1141,89 @@
                     }
                 });
                 return false;
-            })
+        })
+
+
+        $("#IdRegimenLaboral").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdRelacionLaboral").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarRelacionesLaboralesPorRegimen")',
+                    dataType: 'json',
+                    data: { regimen: $("#IdRegimenLaboral").val() },
+                    success: function (data) {
+                        $("#IdRelacionLaboral").append('<option value="0" disabled>Seleccione</option>');
+                        $.each(data, function (i, data) {
+
+                            $("#IdRelacionLaboral").append('<option value="'
+                                + data.idRelacionLaboral + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
+
+
+        $("#IdRelacionLaboral").change(function () {
+            mostrarLoadingPanel("content","Cargando modalidad de partidas...")
+            $("#IdModalidadPartida").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarModalidadPartidaRelacion")',
+                    dataType: 'json',
+                    data: { relacion: $("#IdRelacionLaboral").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#IdModalidadPartida").append('<option value="'
+                                + data.idModalidadPartida + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
+
+        $("#IdRelacionLaboral").change(function () {
+            mostrarLoadingPanel("content","Cargando tipos de nombramiento...")
+            $("#IdTipoNombramiento").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarTipoNombramientoRelacion")',
+                    dataType: 'json',
+                    data: { relacion: $("#IdRelacionLaboral").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#IdTipoNombramiento").append('<option value="'
+                                + data.idTipoNombramiento + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
 
                 $("#paisLugarSufragio").change(function () {
             mostrarLoadingPanel("content","Cargando...")

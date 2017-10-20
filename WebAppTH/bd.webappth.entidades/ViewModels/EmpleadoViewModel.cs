@@ -12,6 +12,7 @@ namespace bd.webappth.entidades.ViewModels
         //List<EmpleadoFamiliar> Empleadofamiliar { get; set; }
         public Empleado Empleado { get; set; }
         public DatosBancarios DatosBancarios { get; set; }
+        public TrayectoriaLaboral TrayectoriaLaboral { get; set; }
 
 
 
@@ -26,7 +27,7 @@ namespace bd.webappth.entidades.ViewModels
         //                   Identificacion
         //               }
         //            }
-            
+
         //    )
         //}
     }
