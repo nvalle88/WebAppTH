@@ -5,10 +5,31 @@ using System.Text;
 
 namespace bd.webappth.entidades.ViewModels
 {
-   public class EmpleadoViewModel
+    public class EmpleadoViewModel
     {
         public Persona Persona { get; set; }
+        public List<EmpleadoFamiliar> EmpleadoFamiliar { get; set; }
+        //List<EmpleadoFamiliar> Empleadofamiliar { get; set; }
         public Empleado Empleado { get; set; }
-        public IndiceOcupacionalModalidadPartida IndiceOcupacionalModalidadPartida { get; set; }
+        public DatosBancarios DatosBancarios { get; set; }
+
+
+
+        //public void ejemplo(AccionPersonal, bd,char )
+        //{
+
+        //    Empleadofamiliar.Add(new 
+        //        EmpleadoFamiliar
+        //            {
+        //               Persona= new Persona
+        //               {
+        //                   Identificacion
+        //               }
+        //            }
+            
+        //    )
+        //}
     }
+
+    
 }

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Interfaces\ISeguridadServicio.cs" />
+    <Compile Remove="Enumeradores\Interfaces\ISeguridadServicio.cs" />
     <Compile Remove="Servicios\AreaConocimientoServicio.cs" />
     <Compile Remove="Servicios\CiudadServicio.cs" />
     <Compile Remove="Servicios\EstudioServicio.cs" />
@@ -55,7 +55,7 @@
 
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="Interfaces\" />
+    <Folder Include="Enumeradores\Interfaces\" />
   </ItemGroup>
 
 </Project>
