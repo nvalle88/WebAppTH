@@ -63,13 +63,9 @@ namespace bd.webappth.web.Controllers.MVC
 
             ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "/api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera","Nombre");
             ViewData["IdParentesco"] = new SelectList(await apiServicio.Listar<Parentesco>(new Uri(WebApp.BaseAddress), "/api/Parentescos/ListarParentescos"), "IdParentesco", "Nombre");
-
+            
             ViewData["IdRegimenLaboral"] = new SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
-        }
-        public class ejemeplo
-        {
-            public int id { get; set; }
-            public string FullName { get; set; }
+            ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
         }
 
         [HttpPost]
@@ -82,7 +78,7 @@ namespace bd.webappth.web.Controllers.MVC
             ins.Persona = empleadoViewModel.Persona;
             ins.DatosBancarios = empleadoViewModel.DatosBancarios;
 
-           var response= await apiServicio.InsertarAsync(ins,new Uri( WebApp.BaseAddress), "/api/empleados/insertar");
+           var response= await apiServicio.InsertarAsync(ins,new Uri( WebApp.BaseAddress), "/api/Empleados/InsertarEmpleado");
 
             if (response.IsSuccess)
             {
@@ -282,6 +278,64 @@ namespace bd.webappth.web.Controllers.MVC
                 return Json(Mensaje.Error);
             }
             
+        }
+
+
+
+
+        public async Task<JsonResult> ListarRelacionesLaboralesPorRegimen(int regimen)
+        {
+            try
+            {
+                var regimenLaboral = new RegimenLaboral
+                {
+                    IdRegimenLaboral=regimen,
+                };
+                var listarelacionesLaborales =await apiServicio.Listar<RelacionLaboral>(regimenLaboral,new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaboralesPorRegimen"); 
+                return Json(listarelacionesLaborales);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+        
+
+        public async Task<JsonResult> ListarModalidadPartidaRelacion(int relacion)
+        {
+            try
+            {
+                var relacionLaboral = new RelacionLaboral
+                {
+                    IdRelacionLaboral = relacion,
+                };
+                var listaremodalidadPartida = await apiServicio.Listar<ModalidadPartida>(relacionLaboral, new Uri(WebApp.BaseAddress), "api/ModalidadesPartida/ListarModalidadesPartidaPorRelacionLaboral");
+                return Json(listaremodalidadPartida);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+
+        public async Task<JsonResult> ListarTipoNombramientoRelacion(int relacion)
+        {
+            try
+            {
+                var relacionLaboral = new RelacionLaboral
+                {
+                    IdRelacionLaboral = relacion,
+                };
+                var listarelacionesLaborales = await apiServicio.Listar<TipoNombramiento>(relacionLaboral, new Uri(WebApp.BaseAddress), "api/TiposDeNombramiento/ListarTiposDeNombramientoPorRelacion");
+                return Json(listarelacionesLaborales);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
         }
     }
 }

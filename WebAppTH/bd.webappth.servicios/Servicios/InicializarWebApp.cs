@@ -31,8 +31,8 @@ namespace bd.webappth.servicios.Servicios
             try
             {
                 var sistema= await ObtenerHostSistema(id, baseAddreess);
-                WebApp.BaseAddress = sistema.AdstHost;
-                //WebApp.BaseAddress = "http://localhost:6000";
+                //WebApp.BaseAddress = sistema.AdstHost;
+                WebApp.BaseAddress = "http://localhost:55998";
                 //WebApp.BaseAddressRM = "http://localhost:9000";
 
             }
