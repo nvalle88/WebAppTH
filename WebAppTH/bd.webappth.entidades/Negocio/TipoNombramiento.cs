@@ -3,7 +3,8 @@ namespace bd.webappth.entidades.Negocio
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-     
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class TipoNombramiento
     {
         [Key]
@@ -15,6 +16,8 @@ namespace bd.webappth.entidades.Negocio
         public string Nombre { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
+
+       
 
         [Display(Name = "Relación laboral:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
