@@ -3,8 +3,7 @@ namespace bd.webappth.entidades.Negocio
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-     
-     
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class ModalidadPartida
     {
@@ -15,6 +14,9 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Modalidad de la partida:")]
         [StringLength(20, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Nombre { get; set; }
+
+        [NotMapped]
+        public string FullName { get { return RelacionLaboral.Nombre +"/ " +Nombre ; } set {; } }
 
         //Propiedades Virtuales Referencias a otras clases
 

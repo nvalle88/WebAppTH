@@ -9,5 +9,6 @@ namespace bd.webappth.entidades.ViewModels
     {
         public Persona Persona { get; set; }
         public Empleado Empleado { get; set; }
+        public IndiceOcupacionalModalidadPartida IndiceOcupacionalModalidadPartida { get; set; }
     }
 }

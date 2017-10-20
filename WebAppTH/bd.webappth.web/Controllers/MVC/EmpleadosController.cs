@@ -4,6 +4,7 @@ using bd.webappth.servicios.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace bd.webappth.web.Controllers.MVC
@@ -38,6 +39,12 @@ namespace bd.webappth.web.Controllers.MVC
 
             ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "/api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera","Nombre");
 
+            ViewData["IdRegimenLaboral"] = new SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
+        }
+        public class ejemeplo
+        {
+            public int id { get; set; }
+            public string FullName { get; set; }
         }
 
         public async Task<IActionResult> Create()
@@ -75,6 +82,28 @@ namespace bd.webappth.web.Controllers.MVC
                 IdPais = Convert.ToInt32(pais),
             };
             var listaProvincias = await apiServicio.Listar<Provincia>(Pais, new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvinciaPorPais");
+            return Json(listaProvincias);
+        }
+
+
+        public async Task<JsonResult> ListarRelacionesLaboralesPorRegimen(string regimen)
+        {
+            var Regimen = new RegimenLaboral
+            {
+                IdRegimenLaboral = Convert.ToInt32(regimen),
+            };
+            var listaProvincias = await apiServicio.Listar<RelacionLaboral>(Regimen, new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaboralesPorRegimen");
+            return Json(listaProvincias);
+        }
+
+
+        public async Task<JsonResult> ListarTipoNombramientoRelacion(string relacion)
+        {
+            var Relacion = new RelacionLaboral
+            {
+                IdRelacionLaboral = Convert.ToInt32(relacion),
+            };
+            var listaProvincias = await apiServicio.Listar<TipoNombramiento>(Relacion, new Uri(WebApp.BaseAddress), "api/TiposDeNombramiento/ListarTiposDeNombramientoPorRelacion");
             return Json(listaProvincias);
         }
     }

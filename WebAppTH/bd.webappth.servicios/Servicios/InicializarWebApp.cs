@@ -11,23 +11,46 @@ namespace bd.webappth.servicios.Servicios
     {
         #region Methods
 
+        private static async Task<Adscsist> ObtenerHostSistema(string id, Uri baseAddreess)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = baseAddreess;
+                var url = string.Format("{0}/{1}", "/api/Adscsists", id);
+                var respuesta = await client.GetAsync(url);
+
+                var resultado = await respuesta.Content.ReadAsStringAsync();
+                var response = JsonConvert.DeserializeObject<Response>(resultado);
+                var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
+                return sistema;
+            }
+        }
+
         public static async Task InicializarWeb(string id, Uri baseAddreess)
         {
             try
             {
-                //using (HttpClient client = new HttpClient())
-                //{
-                //    client.BaseAddress = baseAddreess;
-                //    var url = string.Format("{0}/{1}", "/api/Adscsists", id);
-                //    var respuesta = await client.GetAsync(url);
+                var sistema= await ObtenerHostSistema(id, baseAddreess);
+                WebApp.BaseAddress = sistema.AdstHost;
+                //WebApp.BaseAddress = "http://localhost:6000";
+                //WebApp.BaseAddressRM = "http://localhost:9000";
 
-                //    var resultado = await respuesta.Content.ReadAsStringAsync();
-                //    var response = JsonConvert.DeserializeObject<Response>(resultado);
-                //    var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
-                //    WebApp.BaseAddress = sistema.AdstHost;
-                //}
-                WebApp.BaseAddress = "http://localhost:55998";
+            }
+            catch (Exception ex)
+            {
 
+            }
+
+        }
+
+        public static async Task InicializarWebRecursosMateriales(string id, Uri baseAddreess)
+        {
+            try
+            {
+                var sistema = await ObtenerHostSistema(id, baseAddreess);
+                WebApp.BaseAddressRM = sistema.AdstHost;
+                //WebApp.BaseAddress = "http://localhost:6000";
+                //WebApp.BaseAddressRM = "http://localhost:9000";
 
             }
             catch (Exception ex)
@@ -42,18 +65,8 @@ namespace bd.webappth.servicios.Servicios
         {
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    client.BaseAddress = baseAddress;
-                    var url = string.Format("{0}/{1}", "/api/Adscsists", id);
-                    var respuesta = await client.GetAsync(url);
-
-                    var resultado = await respuesta.Content.ReadAsStringAsync();
-                    var response = JsonConvert.DeserializeObject<Response>(resultado);
-                    var sistema = JsonConvert.DeserializeObject<Adscsist>(response.Resultado.ToString());
-                    AppGuardarLog.BaseAddress = sistema.AdstHost;
-                }
-
+                var sistema = await ObtenerHostSistema(id, baseAddress);
+                AppGuardarLog.BaseAddress = sistema.AdstHost;
 
             }
             catch (Exception ex)
