@@ -13,6 +13,7 @@ namespace bd.webappth.entidades.ViewModels
         public Empleado Empleado { get; set; }
         public DatosBancarios DatosBancarios { get; set; }
         public TrayectoriaLaboral TrayectoriaLaboral { get; set; }
+        public IndiceOcupacionalModalidadPartida IndiceOcupacionalModalidadPartida { get; set; }
 
 
 
