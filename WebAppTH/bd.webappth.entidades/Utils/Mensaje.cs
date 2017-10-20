@@ -13,6 +13,5 @@ namespace bd.webappth.entidades.Utils
         public static string RegistroNoEncontrado { get { return "El registro solicitado no se ha encontrado"; } }
         public static string ModeloInvalido { get { return "El Módelo es inválido"; } }
         public static string BorradoNoSatisfactorio { get { return "No es posible eliminar el registro, existen relaciones que dependen de él"; } }
-        public static string NoExistenRegistrosPorAsignar { get { return "No existen Registros por agregar"; } }
-    }
+        public static string NoExistenRegistrosPorAsignar { get { return "No existen Registros por agregar"; } }    }
 }
