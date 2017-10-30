@@ -20,7 +20,7 @@
                         </div>
                         <div class="widget-body">
                             <div class="row">
-                                <form id="wizard-1" asp-action="Create"  novalidate="novalidate">
+                                <form id="wizard-1" action=""  novalidate="novalidate">
                                     <div id="bootstrap-wizard-1" class="col-sm-12">
                                         <div class="form-bootstrapWizard">
                                             <ul class="bootstrapWizard form-wizard">
@@ -52,8 +52,9 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                        <select  id="IdRegimenLaboral" class="form-control input " asp-items="ViewBag.IdRegimenLaboral">
-                                                                            <option value="-1"  >Seleccione</option>
+                                                                        <select  id="IdRegimenLaboral" class="form-control input " asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true' >
+                                                                            <option value="0" selected=""disabled="">Seleccione</option>
+
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -63,7 +64,9 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                        <select id="IdRelacionLaboral"  class="form-control input "></select>
+                                                                        <select id="IdRelacionLaboral"  class="form-control input "  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                            <option value="0" selected="" disabled=""></option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -77,7 +80,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
-                                                                <label>Tipo de nombramiento:</label>
+                                                                <label>Modalidad de la Partida:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
@@ -92,7 +95,9 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                        <select asp-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="form-control input " asp-items="ViewBag.IdFondoFinanciamiento"></select>
+                                                                        <select asp-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdFondoFinanciamiento">
+                                                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -101,7 +106,7 @@
                                                                     <label>Salario real:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " placeholder="N&uacute;mero de cuenta" type="text" name="fnumeroCuenta" id="fnumeroCuenta">
+                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="N&uacute;mero de cuenta" type="text">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -110,7 +115,7 @@
                                                                     <label>Fecha:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" class="form-control input " placeholder="N&uacute;mero de cuenta" type="text" name="fnumeroCuenta" id="fnumeroCuenta">
+                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" class="form-control input " placeholder="N&uacute;mero de cuenta" type="text" >
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -124,7 +129,9 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                        <select asp-for="Persona.IdTipoIdentificacion" class="form-control" asp-items="ViewBag.IdTipoIdentificacion"></select>
+                                                                        <select asp-for="Persona.IdTipoIdentificacion" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdTipoIdentificacion">
+                                                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -224,28 +231,19 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
-                                                                <label>Carreo privado:</label>
+                                                                <label>Correo privado:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
-                                                                        <input asp-for="Persona.CorreoPrivado" class="form-control input " placeholder="Correo privado" type="text" name="email" id="email">
+                                                                        <input  class="form-control input " placeholder="Correo privado" data-msg-required='El campo es requerido' data-rule-required='true' data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            @*<div class="col-sm-3">
-                                                                <div class="form-group">
-                                                                    <label>Fecha de nacimiento:</label>
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="Persona.FechaNacimiento" class="form-control input " placeholder="Identificación" type="text" name="fname" id="fname">
-                                                                    </div>
-                                                                </div>
-                                                            </div>*@
-
+                                           
                                                             <div class="col-sm-3">
-                                                                <div class="form-group">
+                                                                <div class="form-group">    
                                                                     <label>Fecha de nacimiento:</label>
                                                                     <label class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -413,7 +411,7 @@
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.TelefonoPrivado" class="form-control input " data-mask="99-9999-9999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text" name="hphone" id="hphone">
+                                                                                <input asp-for="Persona.TelefonoPrivado" class="form-control input " data-mask="99-9999-9999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -422,7 +420,7 @@
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.TelefonoCasa" class="form-control input " data-mask="02-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text" name="wphone" id="wphone">
+                                                                                <input asp-for="Persona.TelefonoCasa" class="form-control input " data-mask="02-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text" data-msg-required='The input field is required.' data-rule-required='true'>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -462,6 +460,63 @@
                                                                     </label>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                    </article>
+                                                    <article class="col-lg-12">
+                                                        <legend>Contacto en caso de emergencia</legend>
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <label>Apellidos:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.Apellidos" class="form-control input " placeholder="Apellidos" type="text">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <label>Nombres:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.Nombres" class="form-control input " placeholder="Nombres" type="text">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="form-group">
+                                                                    <label>Tel&eacute;fono Domicilio:</label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.TelefonoCasa" class="form-control input " placeholder="Tel&eacute;fono Domicilio" type="text" >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+      
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <label>Tel&eacute;fono Celular:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.TelefonoPrivado" class="form-control input " placeholder="Tel&eacute;fono Celular" type="text">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label>Parentesco:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <select asp-for="EmpleadoContactoEmergencia.IdParentesco" class="form-control input " asp-items="ViewBag.IdParentesco">
+                                                                            <option value="-1">Seleccione</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+
                                                         </div>
                                                     </article>
                                                     <article class="col-lg-12">
@@ -547,7 +602,6 @@
                                                     </article>
                                                 </div>
                                             </div>
-
                                             <div class="tab-pane" id="tab2">
                                                @* Familar Nepotismo, Conctacto emergencia *@
                                                 <div class="tab-pane active" id="tab2">
@@ -660,11 +714,11 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3">
-                                                                    <label>Carreo privado:</label>
+                                                                    <label>Correo privado:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
-                                                                            <input id="CorreoPrivado" class="form-control input " placeholder="Correo privado" type="text" name="email" id="email">
+                                                                            <input id="CorreoPrivado" class="form-control input " placeholder="Correo privado" type="text">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -675,17 +729,26 @@
                                                                         <label>Fecha de nacimiento:</label>
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input id="FechaNacimiento" class="form-control input " placeholder="Identificación" type="text" name="fname" id="fname">
+                                                                            <input id="FechaNacimiento" class="form-control input " placeholder="Identificación" type="text" name="fname" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-3">
                                                                     <div class="form-group">
                                                                         <label>Lugar de trabajo:</label>
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                                             <input id="LugarTrabajo" class="form-control input " placeholder="Lugar de trabajo" type="text" name="fname" id="fname">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group">
+                                                                        <label>Ocupaci&oacute;n:</label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <input id="Ocupacion" class="form-control input " placeholder="Ocupacion" type="text" name="fname" id="fname">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -866,22 +929,22 @@
                                                                                         <thead>
                                                                                             <tr>
                                                                                                 <th data-class="expand">
-                                                                                                    @Html.DisplayNameFor(model => model.Persona.Identificacion)
+                                                                                                    Apellidos y Nombres Completos:
                                                                                                 </th>
                                                                                                 <th>
-                                                                                                    @Html.DisplayNameFor(model => model.Persona.Nombres)
+                                                                                                    C&eacute;dula de Ciudadania
                                                                                                 </th>
                                                                                                 <th>
-                                                                                                    @Html.DisplayNameFor(model => model.Persona.Apellidos)
+                                                                                                    Sexo
                                                                                                 </th>
                                                                                                 <th>
-                                                                                                    @Html.DisplayNameFor(model => model.Persona.TelefonoPrivado)
+                                                                                                   Fecha de Nacimiento:
                                                                                                 </th>
                                                                                                 <th>
-                                                                                                    Parentesco:
+                                                                                                    Ocupaci&oacute;n:
                                                                                                 </th>
                                                                                                 <th>
-                                                                                                    Parentesco:
+                                                                                                    Opciones:
                                                                                                 </th>
                                                                                             </tr>
                                                                                         </thead>
@@ -908,34 +971,878 @@
                                                 </div>
                                             </div>
                                             <div class="tab-pane" id="tab3">
-                                             @* Estudio, trayectoria laboral *@
-                                            </div>
-                                            <div class="tab-pane" id="tab4">
-                                              @* Discapacidades *@  
-                                            </div>
-                                            <div class="form-actions">
+                                                @* Estudio, trayectoria laboral *@
+                                                <br>
+                                                <div class="row">
+                                                    <article class="col-lg-12">
+                                                        <legend>Formaci&oacute;n Acad&eacute;mica</legend>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <label>Nivel de Estudio:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                        <select id="IdEstudio" class="form-control" asp-items="ViewBag.IdEstudio"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label>&Aacute;rea  de Conocimiento:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                        <select id="IdAreaConocimiento" class="form-control" asp-items="ViewBag.IdAreaConocimiento"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <label>T&iacute;tulo:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                        <select id="IdTitulo" class="form-control" asp-items="ViewBag.IdTitulo"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group">
+                                                                    <label>Fecha graduado:</label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                        <input id="FechaGraduado" type="text" class="form-control input datepicker " placeholder="Seleccione fecha graduado" data-dateformat='dd/mm/yy'>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                                <div class="row">                                    
+                                                        <div class="col-sm-3">
+                                                            <label>No Senescyt:</label>
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                    <input id="NoSenescyt" class="form-control input " placeholder="No Senescyt" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                </div>
+                                                            </div>
+                                                        </div>   
+                                                    <div class="col-sm-9">
+                                                        <label>Observaciones:</label>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                <input id="Observaciones" class="form-control input " placeholder="Observaciones" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                            </div>
+                                                        </div>
+                                                    </div>  
+                                                </div>                                                                                
+                                                <br>
+
+                                                <footer>
+                                                    <button id="agregarFormacionAcademica" type="submit" class="btn btn-primary">
+                                                        Insertar Formaci&oacute;n Acad&eacute;mica
+                                                    </button>
+
+                                                    <legend>Detalle Formaci&oacute;n Acad&eacute;mica</legend>
+                                                    <div id="content">
+
+                                                        <!-- widget grid -->
+                                                        <section id="widget-grid" class="">
+                                                            <!-- row -->
+                                                            <div class="row">
+                                                                <!-- NEW WIDGET START -->
+                                                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                    <!-- Widget ID (each widget will need unique ID)-->
+                                                                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-collapsed="false" data-widget-colorbutton="false"
+                                                                         data-widget-togglebutton="false"
+                                                                         data-widget-deletebutton="false"
+                                                                         data-widget-fullscreenbutton="false"
+                                                                         data-widget-custombutton="false"
+                                                                         data-widget-sortable="false">
+                                                                        <!-- widget options:
+                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                                data-widget-colorbutton="false"
+                                data-widget-editbutton="false"
+                                data-widget-togglebutton="false"
+                                data-widget-deletebutton="false"
+                                data-widget-fullscreenbutton="false"
+                                data-widget-custombutton="false"
+                                data-widget-collapsed="true"
+                                data-widget-sortable="false"
+
+                                -->
+                                                                        <header>
+                                                                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                                            <h2>Formaci&oacute;n Acad&eacute;mica</h2>
+                                                                        </header>
+                                                                        <!-- widget div-->
+                                                                        <div>
+                                                                            <!-- widget edit box -->
+                                                                            <div class="jarviswidget-editbox">
+                                                                                <!-- This area used as dropdown edit box -->
+                                                                            </div>
+                                                                            <!-- end widget edit box -->
+                                                                            <!-- widget content -->
+                                                                            <div class="widget-body no-padding">
+                                                                                <table id="dt_basic3" class="table table-striped table-bordered table-hover" width="100%">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th data-class="expand">
+                                                                                                Estudio
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                &Aacute;rea de Conocimiento
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                T&iacute;tulo 
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Fecha Graduado
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Opciones
+                                                                                            </th>
+
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody id="tbody3"></tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- end widget div -->
+                                                                    </div>
+
+                                                                </article>
+                                                                <!-- WIDGET END -->
+                                                            </div>
+                                                            <!-- end row -->
+                                                            <!-- end row -->
+                                                        </section>
+                                                        <!-- end widget grid -->
+                                                    </div>
+                                                    <!-- END MAIN CONTENT -->
+
+                                                </footer>
+                                                <div class="row">
+                                                    <article class="col-lg-12">
+                                                        <legend>Trayectoria Laboral</legend>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group">
+                                                                    <label>Fecha inicio:</label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                        <input id="FechaInicio" type="text" class="form-control input datepicker " placeholder="Seleccione fecha inicio" data-dateformat='dd/mm/yy'>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group">
+                                                                    <label>Fecha fin:</label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                        <input id="FechaFin" type="text" class="form-control input datepicker " placeholder="Seleccione fecha fin" data-dateformat='dd/mm/yy'>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <label>Empresa:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                        <input id="Empresa" class="form-control input " placeholder="Empresa" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <label>Puesto de Trabajo:</label>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                        <input id="PuestoTrabajo" class="form-control input " placeholder="PuestoTrabajo" type="text" name="freferencia" id="freferencia">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </article>
+
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-sm-12">
-                                                        <ul class="pager wizard no-margin">
-                                                            <!--<li class="previous first disabled">
-                                                            <a href="javascript:void(0);" class="btn btn  btn-default"> First </a>
-                                                            </li>-->
-                                                            <li class="previous disabled">
-                                                                <a href="javascript:void(0);" class="btn btn  btn-default"> Previous </a>
-                                                            </li>
-                                                            <!--<li class="next last">
-                                                            <a href="javascript:void(0);" class="btn btn  btn-primary"> Last </a>
-                                                            </li>-->
-                                                            <li class="next">
-                                                                <a href="javascript:void(0);" class="btn btn  txt-color-darken"> Next </a>
-                                                            </li>
-                                                        </ul>
+                                                        <label>Descripci&oacute;n:</label>
+                                                        <label class="textarea form-group"></label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-comment"></i></span>
+                                                            <textarea id="DescripcionFunciones" maxlength="1000" class="form-control input" rows="2"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <br>
+
+                                                <footer>
+                                                    <button id="agregarTrayectoriaLaboral" type="submit" class="btn btn-primary">
+                                                        Insertar Trayectoria Laboral
+                                                    </button>
+
+                                                    <legend>Detalle Trayectoria Laboral</legend>
+                                                    <div id="content">
+
+                                                        <!-- widget grid -->
+                                                        <section id="widget-grid" class="">
+                                                            <!-- row -->
+                                                            <div class="row">
+                                                                <!-- NEW WIDGET START -->
+                                                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                    <!-- Widget ID (each widget will need unique ID)-->
+                                                                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-collapsed="false" data-widget-colorbutton="false"
+                                                                         data-widget-togglebutton="false"
+                                                                         data-widget-deletebutton="false"
+                                                                         data-widget-fullscreenbutton="false"
+                                                                         data-widget-custombutton="false"
+                                                                         data-widget-sortable="false">
+                                                                        <!-- widget options:
+                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                                data-widget-colorbutton="false"
+                                data-widget-editbutton="false"
+                                data-widget-togglebutton="false"
+                                data-widget-deletebutton="false"
+                                data-widget-fullscreenbutton="false"
+                                data-widget-custombutton="false"
+                                data-widget-collapsed="true"
+                                data-widget-sortable="false"
+
+                                -->
+                                                                        <header>
+                                                                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                                            <h2>Trayectoria Laboral</h2>
+                                                                        </header>
+                                                                        <!-- widget div-->
+                                                                        <div>
+                                                                            <!-- widget edit box -->
+                                                                            <div class="jarviswidget-editbox">
+                                                                                <!-- This area used as dropdown edit box -->
+                                                                            </div>
+                                                                            <!-- end widget edit box -->
+                                                                            <!-- widget content -->
+                                                                            <div class="widget-body no-padding">
+                                                                                <table id="dt_basic2" class="table table-striped table-bordered table-hover" width="100%">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th data-class="expand">
+                                                                                                @Html.DisplayNameFor(model => model.TrayectoriaLaboral.FirstOrDefault().FechaInicio)
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                @Html.DisplayNameFor(model => model.TrayectoriaLaboral.FirstOrDefault().FechaFin)
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                @Html.DisplayNameFor(model => model.TrayectoriaLaboral.FirstOrDefault().Empresa)
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                @Html.DisplayNameFor(model => model.TrayectoriaLaboral.FirstOrDefault().PuestoTrabajo)
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                @Html.DisplayNameFor(model => model.TrayectoriaLaboral.FirstOrDefault().DescripcionFunciones)
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Opciones
+                                                                                            </th>
+
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody id="tbody2"></tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- end widget div -->
+                                                                    </div>
+
+                                                                </article>
+                                                                <!-- WIDGET END -->
+                                                            </div>
+                                                            <!-- end row -->
+                                                            <!-- end row -->
+                                                        </section>
+                                                        <!-- end widget grid -->
+                                                    </div>
+                                                    <!-- END MAIN CONTENT -->
+
+                                                </footer>
+                                            </div>
+                                            <div class="tab-pane" id="tab4">
+                                                    @* Discapacidades *@
+                                                    <br>
+                                                    <div class="row">
+                                                        <article class="col-lg-12">
+                                                            <legend>Discapacidades</legend>
+                                                            <div class="row">
+                                                                <div class="col-sm-4">
+                                                                    <label>Tipo de Discapacidad:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                            <select id="IdTipoDiscapacidad" class="form-control" asp-items="ViewBag.IdTipoDiscapacidad"></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <label>N&uacute;mero de Carnet:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <input id="NumeroCarnet" class="form-control input " placeholder="N&uacute;mero de Carnet" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <label>Porciento:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <input id="Porciento" class="form-control input " placeholder="Porciento" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+                                                    <br>
+
+                                                    <footer>
+                                                        <button id="agregarDiscapacidad" type="submit" class="btn btn-primary">
+                                                            Insertar Discapacidad
+                                                        </button>
+
+                                                        <div id="content">
+
+                                                            <!-- widget grid -->
+                                                            <section id="widget-grid" class="">
+                                                                <!-- row -->
+                                                                <div class="row">
+                                                                    <!-- NEW WIDGET START -->
+                                                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                        <!-- Widget ID (each widget will need unique ID)-->
+                                                                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-collapsed="false" data-widget-colorbutton="false"
+                                                                             data-widget-togglebutton="false"
+                                                                             data-widget-deletebutton="false"
+                                                                             data-widget-fullscreenbutton="false"
+                                                                             data-widget-custombutton="false"
+                                                                             data-widget-sortable="false">
+                                                                            <!-- widget options:
+                            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                            data-widget-colorbutton="false"
+                            data-widget-editbutton="false"
+                            data-widget-togglebutton="false"
+                            data-widget-deletebutton="false"
+                            data-widget-fullscreenbutton="false"
+                            data-widget-custombutton="false"
+                            data-widget-collapsed="true"
+                            data-widget-sortable="false"
+
+                            -->
+                                                                            <header>
+                                                                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                                                <h2>Detalle Discapacidades</h2>
+                                                                            </header>
+                                                                            <!-- widget div-->
+                                                                            <div>
+                                                                                <!-- widget edit box -->
+                                                                                <div class="jarviswidget-editbox">
+                                                                                    <!-- This area used as dropdown edit box -->
+                                                                                </div>
+                                                                                <!-- end widget edit box -->
+                                                                                <!-- widget content -->
+                                                                                <div class="widget-body no-padding">
+                                                                                    <table id="dt_basic4" class="table table-striped table-bordered table-hover" width="100%">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th data-class="expand">
+                                                                                                  Tipo de Discapacidad
+                                                                                                </th>
+                                                                                                <th>
+                                                                                                   N&uacute;mero de Carnet
+                                                                                                </th>
+                                                                                                <th>
+                                                                                                   Porciento
+                                                                                                </th>                           
+                                                                                                <th>
+                                                                                                    Opciones
+                                                                                                </th>
+
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody id="tbody4"></tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- end widget div -->
+                                                                        </div>
+
+                                                                    </article>
+                                                                    <!-- WIDGET END -->
+                                                                </div>
+                                                                <!-- end row -->
+                                                                <!-- end row -->
+                                                            </section>
+                                                            <!-- end widget grid -->
+                                                        </div>
+                                                        <!-- END MAIN CONTENT -->
+
+                                                    </footer>
+                                                    <div class="row">
+                                                        <article class="col-lg-12">
+                                                            <legend>Enfermedades</legend>
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <label>Tipo de Enfermedad:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                            <select id="IdTipoEnfermedad" class="form-control" asp-items="ViewBag.IdTipoEnfermedad"></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <label>Instituci&oacute;n que Emite:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <input id="InstitucionEmite" class="form-control input " placeholder="Instituci&oacute;n que Emite" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                         
+                                                            </div>
+                                                        </article>
+                                                    </div>
+                                                    <br>
+
+                                                    <footer>
+                                                        <button id="agregarEnfermedad" type="submit" class="btn btn-primary">
+                                                            Insertar Enfermedad
+                                                        </button>
+
+                                                        <div id="content">
+
+                                                            <!-- widget grid -->
+                                                            <section id="widget-grid" class="">
+                                                                <!-- row -->
+                                                                <div class="row">
+                                                                    <!-- NEW WIDGET START -->
+                                                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                        <!-- Widget ID (each widget will need unique ID)-->
+                                                                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-collapsed="false" data-widget-colorbutton="false"
+                                                                             data-widget-togglebutton="false"
+                                                                             data-widget-deletebutton="false"
+                                                                             data-widget-fullscreenbutton="false"
+                                                                             data-widget-custombutton="false"
+                                                                             data-widget-sortable="false">
+                                                                            <!-- widget options:
+                            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                            data-widget-colorbutton="false"
+                            data-widget-editbutton="false"
+                            data-widget-togglebutton="false"
+                            data-widget-deletebutton="false"
+                            data-widget-fullscreenbutton="false"
+                            data-widget-custombutton="false"
+                            data-widget-collapsed="true"
+                            data-widget-sortable="false"
+
+                            -->
+                                                                            <header>
+                                                                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                                                <h2>Detalle Enfermedades</h2>
+                                                                            </header>
+                                                                            <!-- widget div-->
+                                                                            <div>
+                                                                                <!-- widget edit box -->
+                                                                                <div class="jarviswidget-editbox">
+                                                                                    <!-- This area used as dropdown edit box -->
+                                                                                </div>
+                                                                                <!-- end widget edit box -->
+                                                                                <!-- widget content -->
+                                                                                <div class="widget-body no-padding">
+                                                                                    <table id="dt_basic5" class="table table-striped table-bordered table-hover" width="100%">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th data-class="expand">
+                                                                                                    Tipo de Enfermedad
+                                                                                                </th>
+                                                                                                <th>
+                                                                                                    Instituci&oacute;n que Emite
+                                                                                                </th>                                    
+                                                                                                <th>
+                                                                                                    Opciones
+                                                                                                </th>
+
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody id="tbody5"></tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- end widget div -->
+                                                                        </div>
+
+                                                                    </article>
+                                                                    <!-- WIDGET END -->
+                                                                </div>
+                                                                <!-- end row -->
+                                                                <!-- end row -->
+                                                            </section>
+                                                            <!-- end widget grid -->
+                                                        </div>
+                                                        <!-- END MAIN CONTENT -->
+
+                                                    </footer>
+
+                                                    <br>
+
+                                                    @* Empleado Sustituto *@
+                                                     <div class="row">
+                                                         <article class="col-lg-12">
+                                                             <legend>Empleado Sustituto </legend>
+                                                             <div class="row">
+                                                                 <div class="col-sm-3">
+                                                                     <label>Tipo de identificaci&oacute;n:</label>
+                                                                     <div class="form-group">
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                             <select asp-for="PersonaSustituto.PersonaDiscapacidad.IdTipoIdentificacion" class="form-control" asp-items="ViewBag.IdTipoIdentificacion"></select>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                 <div class="col-sm-3">                                                                     
+                                                                     <div class="form-group">
+                                                                         <label>CI o pasaporte:</label>
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.Identificacion" class="form-control input " placeholder="Identificaci&oacute;n" type="text">
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                 <div class="col-sm-3">
+                                                                     <div class="form-group">
+                                                                         <label>Nombres:</label>
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.Nombres" class="form-control input " placeholder="Nombres" type="text" name="fname" id="fname">
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                 <div class="col-sm-3">
+                                                                     <div class="form-group">
+                                                                         <label>Apellidos:</label>
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.Apellidos" class="form-control input " placeholder="Apellidos" type="text" name="fname" id="fname">
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                          
+                                                             <div class="row">
+                                                                 <div class="col-sm-3">
+                                                                     <label>Nacionalidad:</label>
+                                                                     <div class="form-group">
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                             <select asp-for="PersonaSustituto.PersonaDiscapacidad.IdNacionalidad" class="form-control input " asp-items="ViewBag.IdNacionalidad"></select>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+
+                                                                 <div class="col-sm-3">
+                                                                     <div class="form-group">
+                                                                         <label>Fecha de nacimiento:</label>
+                                                                         <label class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.FechaNacimiento" type="text" class="form-control input datepicker " placeholder="Seleccione fecha inicio" data-dateformat='dd/mm/yy'>
+                                                                         </label>
+                                                                     </div>
+                                                                 </div>
+                                     
+                                                                 <div class="col-sm-3">
+                                                                     <label>Tel&eacute;fono Convencional:</label>
+                                                                     <div class="form-group">
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
+                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.TelefonoCasa" class="form-control input " placeholder="Tel&eacute;fono Convencional" name="email">
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                 <div class="col-sm-3">
+                                                                     <label>Parentesco:</label>
+                                                                     <div class="form-group">
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                             <select asp-for="PersonaSustituto.IdParentesco" class="form-control" asp-items="ViewBag.IdParentesco"></select>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                
+                                                             </div>
+                                     
+                                                             <div class="row">
+                                                                 <article class="col-lg-6">
+                                                                     <legend>Discapacidades</legend>
+                                                                     <div class="row">
+                                                                         <div class="col-sm-4">
+                                                                             <label>Discapacidad:</label>
+                                                                             <div class="form-group">
+                                                                                 <div class="input-group">
+                                                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                                     <select id="IdTipoDiscapacidadSustituto" class="form-control input " asp-items="ViewBag.IdTipoDiscapacidad"></select>
+                                                                                 </div>
+                                                                             </div>
+                                                                         </div>
+                                                                         <div class="col-sm-4">
+                                                                             <div class="form-group">
+                                                                                 <label>% Discapacidad:</label>
+                                                                                 <div class="input-group">
+                                                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                                     <input id="PorcentajeDiscapacidadSustituto" class="form-control input " placeholder="Porcentaje" type="text" name="fname" id="fname">
+                                                                                 </div>
+                                                                             </div>
+                                                                         </div>
+                                                                         <div class="col-sm-4">
+                                                                             <div class="form-group">
+                                                                                 <label>N&uacute;mero de Carnet:</label>
+                                                                                 <div class="input-group">
+                                                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                                     <input id="NumeroCarnetSustituto" class="form-control input " placeholder="# de Carnet" type="text" name="fname" id="fname">
+                                                                                 </div>
+                                                                             </div>
+                                                                         </div>
+                                                                       
+                                                                     </div>
+                                                                     
+                                                                         <footer>
+                                                                             <button id="agregarDiscapacidadSustituto" type="submit" class="btn btn-primary">
+                                                                                 Insertar Discapacidad
+                                                                             </button>
+                                                                             <p></p>
+                                                                             <div id="content">
+
+                                                                                 <!-- widget grid -->
+                                                                                 <section id="widget-grid" class="">
+                                                                                     <!-- row -->
+                                                                                     <div class="row">
+                                                                                         <!-- NEW WIDGET START -->
+                                                                                         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                                             <!-- Widget ID (each widget will need unique ID)-->
+                                                                                             <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-collapsed="false" data-widget-colorbutton="false"
+                                                                                                  data-widget-togglebutton="false"
+                                                                                                  data-widget-deletebutton="false"
+                                                                                                  data-widget-fullscreenbutton="false"
+                                                                                                  data-widget-custombutton="false"
+                                                                                                  data-widget-sortable="false">
+                                                                                                 <!-- widget options:
+                             usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                            data-widget-colorbutton="false"
+                            data-widget-editbutton="false"
+                            data-widget-togglebutton="false"
+                            data-widget-deletebutton="false"
+                            data-widget-fullscreenbutton="false"
+                            data-widget-custombutton="false"
+                            data-widget-collapsed="true"
+                            data-widget-sortable="false"
+
+                            -->
+                                                                                                 <header>
+                                                                                                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                                                                     <h2>Detalle Discapacidades</h2>
+                                                                                                 </header>
+                                                                                                 <!-- widget div-->
+                                                                                                 <div>
+                                                                                                     <!-- widget edit box -->
+                                                                                                     <div class="jarviswidget-editbox">
+                                                                                                         <!-- This area used as dropdown edit box -->
+                                                                                                     </div>
+                                                                                                     <!-- end widget edit box -->
+                                                                                                     <!-- widget content -->
+                                                                                                     <div class="widget-body no-padding">
+                                                                                                         <table id="dt_basic6" class="table table-striped table-bordered table-hover" width="100%">
+                                                                                                             <thead>
+                                                                                                                 <tr>
+                                                                                                                     <th data-class="expand">
+                                                                                                                         Tipo de Discapacidad
+                                                                                                                     </th>
+                                                                                                                     <th>
+                                                                                                                         % Discapacidad
+                                                                                                                     </th>
+                                                                                                                     <th>
+                                                                                                                         # de Carnet
+                                                                                                                     </th>
+                                                                                                                     <th>
+                                                                                                                         Opciones
+                                                                                                                     </th>
+
+                                                                                                                 </tr>
+                                                                                                             </thead>
+                                                                                                             <tbody id="tbody6"></tbody>
+                                                                                                         </table>
+                                                                                                     </div>
+                                                                                                 </div>
+                                                                                                 <!-- end widget div -->
+                                                                                             </div>
+
+                                                                                         </article>
+                                                                                         <!-- WIDGET END -->
+                                                                                     </div>
+                                                                                     <!-- end row -->
+                                                                                     <!-- end row -->
+                                                                                 </section>
+                                                                                 <!-- end widget grid -->
+                                                                             </div>
+                                                                             <!-- END MAIN CONTENT -->
+
+                                                                         </footer>
+                                                                     
+                                                                 </article>
+                                                                 <article class="col-lg-6">
+                                                                     <legend>Enfermedades</legend>
+                                                                     <div class="row">
+                                                                         <div class="col-sm-4">
+                                                                             <label>Enfermedad:</label>
+                                                                             <div class="form-group">
+                                                                                 <div class="input-group">
+                                                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                                     <select id="IdTipoEnfermedadSustituto" class="form-control input " asp-items="ViewBag.IdTipoEnfermedad"></select>
+                                                                                 </div>
+                                                                             </div>
+                                                                         </div>
+                                                                         <div class="col-sm-8">
+                                                                             <div class="form-group">
+                                                                                 <label>Instituci&oacute;n que emite certificado:</label>
+                                                                                 <div class="input-group">
+                                                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                                     <input id="InstitucionEmiteSustituto" class="form-control input " placeholder="Instituci&oacute;n que emite certificado" type="text" name="fname" id="fname">
+                                                                                 </div>
+                                                                             </div>
+                                                                         </div>
+                                                                     </div>
+
+                                                                     <footer>
+                                                                         <button id="agregarEnfermedadSustituto" type="submit" class="btn btn-primary">
+                                                                             Insertar Enfermedad
+                                                                         </button>
+                                                                         <p></p>
+                                                                         <div id="content">
+
+                                                                             <!-- widget grid -->
+                                                                             <section id="widget-grid" class="">
+                                                                                 <!-- row -->
+                                                                                 <div class="row">
+                                                                                     <!-- NEW WIDGET START -->
+                                                                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                                         <!-- Widget ID (each widget will need unique ID)-->
+                                                                                         <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-collapsed="false" data-widget-colorbutton="false"
+                                                                                              data-widget-togglebutton="false"
+                                                                                              data-widget-deletebutton="false"
+                                                                                              data-widget-fullscreenbutton="false"
+                                                                                              data-widget-custombutton="false"
+                                                                                              data-widget-sortable="false">
+                                                                                             <!-- widget options:
+                             usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                            data-widget-colorbutton="false"
+                            data-widget-editbutton="false"
+                            data-widget-togglebutton="false"
+                            data-widget-deletebutton="false"
+                            data-widget-fullscreenbutton="false"
+                            data-widget-custombutton="false"
+                            data-widget-collapsed="true"
+                            data-widget-sortable="false"
+
+                            -->
+                                                                                             <header>
+                                                                                                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                                                                 <h2>Detalle Enfermedades</h2>
+                                                                                             </header>
+                                                                                             <!-- widget div-->
+                                                                                             <div>
+                                                                                                 <!-- widget edit box -->
+                                                                                                 <div class="jarviswidget-editbox">
+                                                                                                     <!-- This area used as dropdown edit box -->
+                                                                                                 </div>
+                                                                                                 <!-- end widget edit box -->
+                                                                                                 <!-- widget content -->
+                                                                                                 <div class="widget-body no-padding">
+                                                                                                     <table id="dt_basic7" class="table table-striped table-bordered table-hover" width="100%">
+                                                                                                         <thead>
+                                                                                                             <tr>
+                                                                                                                 <th data-class="expand">
+                                                                                                                     Tipo de Enfermedad
+                                                                                                                 </th>
+                                                                                                                 <th>
+                                                                                                                     Instituci&oacute;n que Emite
+                                                                                                                 </th>
+                                                                                                                 <th>
+                                                                                                                     Opciones
+                                                                                                                 </th>
+
+                                                                                                             </tr>
+                                                                                                         </thead>
+                                                                                                         <tbody id="tbody7"></tbody>
+                                                                                                     </table>
+                                                                                                 </div>
+                                                                                             </div>
+                                                                                             <!-- end widget div -->
+                                                                                         </div>
+
+                                                                                     </article>
+                                                                                     <!-- WIDGET END -->
+                                                                                 </div>
+                                                                                 <!-- end row -->
+                                                                                 <!-- end row -->
+                                                                             </section>
+                                                                             <!-- end widget grid -->
+                                                                         </div>
+                                                                         <!-- END MAIN CONTENT -->
+
+                                                                     </footer>
+                                                                 </article>
+                     
+
+                                                             </div>
+                                                         </article>
+
+                                                     </div>
+
+
+                                                </div>
+                                                <div class="form-actions">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <ul class="pager wizard no-margin">
+                                                                <!--<li class="previous first disabled">
+                        <a href="javascript:void(0);" class="btn btn  btn-default"> First </a>
+                        </li>-->
+                                                                <li class="previous disabled">
+                                                                    <a href="javascript:void(0);" class="btn btn  btn-default"> Previous </a>
+                                                                </li>
+                                                                <!--<li class="next last">
+                        <a href="javascript:void(0);" class="btn btn  btn-primary"> Last </a>
+                        </li>-->
+                                                                <li class="next">
+                                                                    <a href="javascript:void(0);" class="btn btn  txt-color-darken"> Next </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <input type="submit" id="GuardarForm" value="Guardar" class="btn btn-primary" />
 
                                 </form>
                             </div>
@@ -964,45 +1871,35 @@
 
             var $validator = $("#wizard-1").validate({
 
-                rules: {
-                    email: {
-                        required: true,
-                        email: "Your email address must be in the format of name@domain.com"
-                    },
-                    Identificacion: {
-                        required: true
-                    },
-                    lname: {
-                        required: true
-                    },
-                    country: {
-                        required: true
-                    },
-                    city: {
-                        required: true
-                    },
-                    postal: {
-                        required: true,
-                        minlength: 4
-                    },
-                    wphone: {
-                        required: true,
-                        minlength: 10
-                    },
-                    hphone: {
-                        required: true,
-                        minlength: 10
-                    }
-                },
+                submitHandler: function (form) {
+                    //var Persona =
+                    //    {
+                    //        Nombres: $("#Nombres").val(),
+                    //        Apellidos: $("#Apellidos").val(),
+ 
+                    //        CorreoPrivado: $("#CorreoPrivado").val(),
+                    //    };
 
-                messages: {
-                    Identificacion: "Please specify your First name",
-                    lname: "Please specify your Last name",
-                    email: {
-                        required: "We need your email address to contact you",
-                        email: "Your email address must be in the format of name@domain.com"
-                    }
-                },
+
+                    $.ajax({
+                         url: '@Url.Action("Create")',
+                         type: "POST",
+                         data: $(form).serialize(),
+                         //data: JSON.stringify({ model }),
+                         dataType: 'json',
+                         //contentType: 'application/json',
+                         success: function (data) {
+                                // Inserting html into the result div on success
+                                $('#results').html(data);
+                            },
+                            error: function (jqXHR, text, error) {
+                                // Displaying if there are any errors
+                                $('#result').html(error);
+                            }
+                        });
+                        return false;
+            },
+
 
                 highlight: function (element) {
                     $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -1020,6 +1917,8 @@
                     }
                 }
             });
+
+
 
             $('#bootstrap-wizard-1').bootstrapWizard({
                 'tabClass': 'form-wizard',
@@ -1066,6 +1965,8 @@
     $(document).ready(function () {
 
         $("#etniaE").change(function () {
+           
+
             mostrarLoadingPanel("content", "Cargando...")
             $("#nacionalidadIndigenaE").empty();
             $.ajax({
@@ -1147,13 +2048,15 @@
         $("#IdRegimenLaboral").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#IdRelacionLaboral").empty();
+            $("#IdModalidadPartida").empty();
+            $("#IdTipoNombramiento").empty();
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarRelacionesLaboralesPorRegimen")',
                     dataType: 'json',
                     data: { regimen: $("#IdRegimenLaboral").val() },
                     success: function (data) {
-                        $("#IdRelacionLaboral").append('<option value="0" disabled>Seleccione</option>');
+                        $("#IdRelacionLaboral").append('<option value="0" selected="" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
 
                             $("#IdRelacionLaboral").append('<option value="'
@@ -1213,7 +2116,8 @@
                                 + data.idTipoNombramiento + '">'
                                 + data.nombre + '</option>');
 
-                        });
+                        })
+                            ;
                     }, complete: function (data) {
                         $("#content").waitMe("hide");
                     },
@@ -1332,6 +2236,64 @@
                    })
 
 
+                   $("#IdEstudio").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdAreaConocimiento").empty();
+            $("#IdTitulo").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarAreasConocimientosporEstudio")',
+                    dataType: 'json',
+                    data: { idEstudio: $("#IdEstudio").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#IdAreaConocimiento").append('<option value="'
+                                + data.idAreaConocimiento + '">'
+                                + data.descripcion + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+
+                   $("#IdAreaConocimiento").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdTitulo").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarTitulosporAreaConocimiento")',
+                    dataType: 'json',
+                    data: {
+                        idAreaConocimiento: $("#IdAreaConocimiento").val(),
+                        idEstudio: $("#IdEstudio").val()
+                          },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#IdTitulo").append('<option value="'
+                                + data.idTitulo + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+
           $("#agregarfamiliar").click(function () {
             mostrarLoadingPanel("content","Cargando...")
             $.ajax({
@@ -1361,7 +2323,8 @@
                         parroquiaLugarFamiliar: $("#parroquiaLugarFamiliar").val(),
                         TelefonoPrivado: $("#TelefonoPrivado").val(),
                         TelefonoCasa: $("#TelefonoCasa").val(),
-                        Parentesco: $("#Parentesco").val()
+                        Parentesco: $("#Parentesco").val(),
+                        Ocupacion: $("#Ocupacion").val(),
                     },
                 success: function (data) {
                         if (data == true) {
@@ -1370,11 +2333,11 @@
                             text = text.replace("jsvar", $("#Identificacion").val());
                             $('#dt_basic').find('#tbody').append([
                                 '<tr>',
+                                '<td  class="ApellidoNombre">' + $("#Apellidos").val() + ' ' + $("#Nombres").val() + '</td>',
                                 '<td  class="Identificacion">' + $("#Identificacion").val() +'</td>',
-                                '<td  class="Nombres">' + $("#Nombres").val() +'</td>',
-                                '<td  class="Apellidos">' + $("#Apellidos").val() +'</td>',
-                                '<td  class="TelefonoPrivado">' + $("#TelefonoPrivado").val() + '</td>',
-                                '<td  class="Parentesco">' + $("#Parentesco option:selected").text() + '</td>',
+                                '<td  class="Sexo">' + $("#IdSexo option:selected").text() +'</td>',
+                                '<td  class="FechaNacimiento">' + $("#FechaNacimiento").val() + '</td>',
+                                '<td  class="Ocupacion">' + $("#Ocupacion").val() + '</td>',
                                 @*'<td>' + '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new {cedula = ""  }, new { onclick = "return confirm('Desea eliminar el Familiar... ?');" })' + '</td>',*@
                                 '<td>' + text + '</td>',
                                 '</tr>'
@@ -1409,8 +2372,382 @@
                 return false;
                    })
 
+                  $("#agregarTrayectoriaLaboral").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarTrayectoriaLaboral")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    FechaInicio: $("#FechaInicio").val(),
+                    FechaFin: $("#FechaFin").val(),
+                    Empresa: $("#Empresa").val(),
+                    PuestoTrabajo: $("#PuestoTrabajo").val(),
+                    DescripcionFunciones: $("#DescripcionFunciones").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete2" empresa="jsvar1" fechainicio="jsvar2" fechafin="jsvar3" puestotrabajo="jsvar4" href="#">Delete</a>';
+                            text = text.replace("jsvar1", $("#Empresa").val());
+                            text = text.replace("jsvar2", $("#FechaInicio").val());
+                            text = text.replace("jsvar3", $("#FechaFin").val());
+                            text = text.replace("jsvar4", $("#PuestoTrabajo").val());
+
+                            $('#dt_basic2').find('#tbody2').append([
+                                '<tr>',
+                                '<td  class="FechaInicio">' + $("#FechaInicio").val() +'</td>',
+                                '<td  class="FechaFin">' + $("#FechaFin").val() +'</td>',
+                                '<td  class="Empresa">' + $("#Empresa").val() +'</td>',
+                                '<td  class="PuestoTrabajo">' + $("#PuestoTrabajo").val() + '</td>',
+                                '<td  class="DescripcionFunciones">' + $("#DescripcionFunciones").val() + '</td>',
+                                @*'<td>' + '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new {cedula = ""  }, new { onclick = "return confirm('Desea eliminar el Familiar... ?');" })' + '</td>',*@
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete2').click(function () {
+                   var empresa = $(this).attr("empresa");
+                   var fechainicio = $(this).attr("fechainicio");
+                   var fechafin = $(this).attr("fechafin");
+                   var puestotrabajo = $(this).attr("puestotrabajo");
+              $.ajax({
+                  url: '@Url.Action("EliminarTrayectoriaLaboral")', type: "POST", dataType: "text",
+                  data: {
+                      empresa: empresa,
+                      fechainicio: fechainicio,
+                      fechafin: fechafin,
+                      puestotrabajo: puestotrabajo,
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic2 tr:contains("' + empresa + '")'
+                              && 'tr:contains("' + fechainicio + '")'
+                              && 'tr:contains("' + fechafin + '")'
+                              && 'tr:contains("' + puestotrabajo + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                        }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
 
 
+
+                  $("#agregarFormacionAcademica").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarFormacionAcademica")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    IdTitulo: $("#IdTitulo").val(),
+                    Observaciones: $("#Observaciones").val(),
+                    FechaGraduado: $("#FechaGraduado").val(),
+                    NoSenescyt: $("#NoSenescyt").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete3" idtitulo="jsvar1" titulo="jsvar2" href="#">Delete</a>';
+                            text = text.replace("jsvar1", $("#IdTitulo").val());
+                            text = text.replace("jsvar2", $("#IdTitulo option:selected").text());
+
+                            $('#dt_basic3').find('#tbody3').append([
+                                '<tr>',
+                                '<td  class="IdEstudio">' + $("#IdEstudio option:selected").text() +'</td>',
+                                '<td  class="IdAreaConocimiento">' + $("#IdAreaConocimiento option:selected").text() +'</td>',
+                                '<td  class="IdTitulo">' + $("#IdTitulo option:selected").text() +'</td>',
+                                '<td  class="FechaGraduado">' + $("#FechaGraduado").val() + '</td>',
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete3').click(function () {
+                   var idTitulo = $(this).attr("idtitulo");
+                   var Titulo = $(this).attr("titulo");
+              $.ajax({
+                  url: '@Url.Action("EliminarFormacionAcademica")', type: "POST", dataType: "text",
+                  data: {
+                      idTitulo: idTitulo
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic3 tr:contains("' + Titulo + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                        }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+                          $("#agregarDiscapacidad").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarDiscapacidad")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    IdTipoDiscapacidad: $("#IdTipoDiscapacidad").val(),
+                    NumeroCarnet: $("#NumeroCarnet").val(),
+                    Porciento: $("#Porciento").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete4" idtipodiscapacidad="jsvar1" tipodiscapacidad="jsvar2" href="#">Delete</a>';
+                            text = text.replace("jsvar1", $("#IdTipoDiscapacidad").val());
+                            text = text.replace("jsvar2", $("#IdTipoDiscapacidad option:selected").text());
+
+                            $('#dt_basic4').find('#tbody4').append([
+                                '<tr>',
+                                '<td  class="IdTipoDiscapacidad">' + $("#IdTipoDiscapacidad option:selected").text() + '</td>',
+                                '<td  class="NumeroCarnet">' + $("#NumeroCarnet").val() + '</td>',
+                                '<td  class="Porciento">' + $("#Porciento").val() +'</td>',
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete4').click(function () {
+                   var idTipoDiscapacidad = $(this).attr("idtipodiscapacidad");
+                   var TipoDiscapacidad = $(this).attr("tipodiscapacidad");
+
+              $.ajax({
+                  url: '@Url.Action("EliminarDiscapacidad")', type: "POST", dataType: "text",
+                  data: {
+                      idTipoDiscapacidad: idTipoDiscapacidad
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic4 tr:contains("' + TipoDiscapacidad + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                        }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                  })
+
+          $("#agregarEnfermedad").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarEnfermedad")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    IdTipoEnfermedad: $("#IdTipoEnfermedad").val(),
+                    InstitucionEmite: $("#InstitucionEmite").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete5" idtipoenfermedad="jsvar1" tipoenfermedad="jsvar2" href="#">Eliminar</a>';
+                            text = text.replace("jsvar1", $("#IdTipoEnfermedad").val());
+                            text = text.replace("jsvar2", $("#IdTipoEnfermedad option:selected").text());
+
+                            $('#dt_basic5').find('#tbody5').append([
+                                '<tr>',
+                                '<td  class="IdTipoEnfermedad">' + $("#IdTipoEnfermedad option:selected").text() + '</td>',
+                                '<td  class="InstitucionEmite">' + $("#InstitucionEmite").val() + '</td>',
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete5').click(function () {
+                   var idTipoEnfermedad = $(this).attr("idtipoenfermedad");
+                   var TipoEnfermedad = $(this).attr("tipoenfermedad");
+              $.ajax({
+                  url: '@Url.Action("EliminarEnfermedad")', type: "POST", dataType: "text",
+                  data: {
+                      idTipoEnfermedad: idTipoEnfermedad
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic5 tr:contains("' + TipoEnfermedad + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                        }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                          })
+
+          $("#agregarDiscapacidadSustituto").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarDiscapacidadSustituto")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    IdTipoDiscapacidadSustituto: $("#IdTipoDiscapacidadSustituto").val(),
+                    NumeroCarnetSustituto: $("#NumeroCarnetSustituto").val(),
+                    PorcientoSustituto: $("#PorcentajeDiscapacidadSustituto").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete6" idtipodiscapacidadsustituto="jsvar1" tipodiscapacidadsustituto="jsvar2" href="#">Eliminar</a>';
+                            text = text.replace("jsvar1", $("#IdTipoDiscapacidadSustituto").val());
+                            text = text.replace("jsvar2", $("#IdTipoDiscapacidadSustituto option:selected").text());
+
+                            $('#dt_basic6').find('#tbody6').append([
+                                '<tr>',
+                                '<td  class="IdTipoDiscapacidadSustituto">' + $("#IdTipoDiscapacidadSustituto option:selected").text() + '</td>',
+                                '<td  class="NumeroCarnetSustituto">' + $("#NumeroCarnetSustituto").val() + '</td>',
+                                '<td  class="PorcentajeDiscapacidadSustituto">' + $("#PorcentajeDiscapacidadSustituto").val() +'</td>',
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete6').click(function () {
+                   var idTipoDiscapacidadSustituto = $(this).attr("idtipodiscapacidadsustituto");
+                   var TipoDiscapacidadSustituto = $(this).attr("tipodiscapacidadsustituto");
+
+              $.ajax({
+                  url: '@Url.Action("EliminarDiscapacidadSustituto")', type: "POST", dataType: "text",
+                  data: {
+                      idTipoDiscapacidadSustituto: idTipoDiscapacidadSustituto
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic6 tr:contains("' + TipoDiscapacidadSustituto + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                        }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                  })
+
+          $("#agregarEnfermedadSustituto").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarEnfermedadSustituto")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    IdTipoEnfermedadSustituto: $("#IdTipoEnfermedadSustituto").val(),
+                    InstitucionEmiteSustituto: $("#InstitucionEmiteSustituto").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete7" idtipoenfermedadsustituto="jsvar1" tipoenfermedadsustituto="jsvar2" href="#">Eliminar</a>';
+                            text = text.replace("jsvar1", $("#IdTipoEnfermedadSustituto").val());
+                            text = text.replace("jsvar2", $("#IdTipoEnfermedadSustituto option:selected").text());
+
+                            $('#dt_basic7').find('#tbody7').append([
+                                '<tr>',
+                                '<td  class="IdTipoEnfermedadSustituto">' + $("#IdTipoEnfermedadSustituto option:selected").text() + '</td>',
+                                '<td  class="InstitucionEmiteSustituto">' + $("#InstitucionEmiteSustituto").val() + '</td>',
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete7').click(function () {
+                   var idTipoEnfermedadSustituto = $(this).attr("idtipoenfermedadsustituto");
+                   var TipoEnfermedadSustituto = $(this).attr("tipoenfermedadsustituto");
+              $.ajax({
+                  url: '@Url.Action("EliminarEnfermedadSustituto")', type: "POST", dataType: "text",
+                  data: {
+                      idTipoEnfermedadSustituto: idTipoEnfermedadSustituto
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic7 tr:contains("' + TipoEnfermedadSustituto + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                        }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
 
 
         });
