@@ -1,0 +1,30 @@
+@model bd.webappth.entidades.Negocio.Titulo
+
+<fieldset>
+    <div class="row">
+        <section class="col col-4">
+            <label class="input">
+                <select asp-for="IdEstudio" class="form-control" asp-items="ViewBag.IdEstudio">
+                    <option value="0"><Seleccione una @Html.DisplayNameFor(model => model.IdEstudio)></option>
+                </select>
+                <span asp-validation-for="IdEstudio" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label class="input">
+                <select asp-for="IdAreaConocimiento" class="form-control" asp-items="ViewBag.IdAreaConocimiento">
+                    <option value="0"><Seleccione una @Html.DisplayNameFor(model => model.IdAreaConocimiento)></option>
+                </select>
+                <span asp-validation-for="IdAreaConocimiento" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label class="input">
+                <i class="icon-prepend fa fa-user"></i>
+                <input maxlength="50" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <span class="text-danger">@ViewData["Error"]</span>
+</fieldset>

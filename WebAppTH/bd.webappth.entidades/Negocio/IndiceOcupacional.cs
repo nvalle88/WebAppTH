@@ -30,6 +30,8 @@ namespace bd.webappth.entidades.Negocio
         public int IdEscalaGrados { get; set; }
         public virtual EscalaGrados EscalaGrados { get; set; }
 
+        //public string FullName { get {return Dependencia.Nombre +"/ "+ ManualPuesto.Nombre +"/ "+ManualPuesto.Nombre +"/ "+ RolPuesto.Nombre+"/"+ "("+ EscalaGrados.Grado+")" + EscalaGrados.Remuneracion; } set {; } }
+
 
         public virtual ICollection<IndiceOcupacionalExperienciaLaboralRequerida> IndiceOcupacionalExperienciaLaboralRequerida { get; set; }
 
