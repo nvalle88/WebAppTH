@@ -1,18 +1,17 @@
-@model List<bd.webappth.entidades.Negocio.AvanceGestionCambio>
+@model bd.webappth.entidades.ViewModels.AvanceGestionCambioViewModel
 
 @{
     ViewData["Title"] = "Index";
+
 }
 
 <p></p>
-<a asp-action="Create">
-    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-        <span class="btn-label">
-            <i class="glyphicon glyphicon-plus"></i>
-        </span>Nueva Avance de Gesti&oacuten de Cambio
 
-    </button>
-</a>
+@Html.ActionLink("Nuevo Avance de Gestion de Cambio", "Create", "AvancesGestionCambio", new { IdActividadesGestionCambio = Model.IdActividadesGestionCambio }, new { @class = "btn btn-primary" })
+
+@Html.ActionLink("Regresar a Actividad de Gestion de Cambio", "Index", "ActividadesGestionCambio", new { IdActividadesGestionCambio = Model.IdActividadesGestionCambio }, new { @class = "btn btn-primary" })
+
+
 <p> </p>
 			<!-- MAIN CONTENT -->
 <div id="content">
@@ -21,6 +20,7 @@
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
+
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
@@ -44,6 +44,7 @@
                     </header>
                     <!-- widget div-->
                     <div>
+                        
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
@@ -55,29 +56,30 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Fecha)
+                                            @Html.DisplayNameFor(model => model.ListaAvancesGestionCambio.FirstOrDefault().Fecha)
                                         </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Indicadorreal)
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.ListaAvancesGestionCambio.FirstOrDefault().Indicadorreal)
                                         </th>
+                                        
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.ListaAvancesGestionCambio)
                                     {
                                         <tr>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Fecha)
                                             </td>
+                                           
                                             <td>
-
                                                 @Html.DisplayFor(modelItem => item.Indicadorreal)
                                             </td>
                                            
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdAvanceGestionCambio }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdAvanceGestionCambio }, new { onclick = "return confirm('Desea eliminar el avance gestión de cambio... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { IdAvanceGestionCambio = item.IdAvanceGestionCambio, IdActividadesGestionCambio =  item.IdActividadesGestionCambio }, new { onclick = "return confirm('Desea eliminar el avance de gestion de cambio... ?');" })
                                             </td>
                                         </tr>
                                     }

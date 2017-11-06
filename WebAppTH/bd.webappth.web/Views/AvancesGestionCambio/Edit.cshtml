@@ -36,7 +36,8 @@
 
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdNacionalidadIndigena"/>
+                                <input type="hidden" asp-for="IdAvanceGestionCambio"/>
+                                <input type="hidden" asp-for="IdActividadesGestionCambio" />
                                 @{await Html.RenderPartialAsync("_PartialViewAvancesGestionCambio");}
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
@@ -62,6 +63,7 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
+ 
 <script src='~/lib/select2/dist/js/select2.min.js'></script>
 <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 <script src='~/js/site.js'></script>
@@ -83,4 +85,5 @@
         return true
     }
 </script>
+
 }

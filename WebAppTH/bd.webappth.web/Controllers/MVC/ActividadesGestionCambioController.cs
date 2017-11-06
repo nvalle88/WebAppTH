@@ -11,7 +11,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
-
+using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -26,9 +26,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int IdPlanGestionCambio)
         {
-            return View();
+            var actividadesGestionCambio = new ActividadesGestionCambio
+            {
+                IdPlanGestionCambio = IdPlanGestionCambio,
+                FechaInicio = DateTime.Now,
+                FechaFin = DateTime.Now,
+            };
+            return View(actividadesGestionCambio);
         }
 
         [HttpPost]
@@ -38,6 +44,8 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
+                
+              
                 response = await apiServicio.InsertarAsync(ActividadesGestionCambio,
                                                              new Uri(WebApp.BaseAddress),
                                                              "/api/ActividadesGestionCambio/InsertarActividadesGestionCambio");
@@ -54,13 +62,15 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         EntityID = string.Format("{0} {1}", "Actividad gestión de cambio:", ActividadesGestionCambio.IdActividadesGestionCambio),
                     });
-
-                    return RedirectToAction("Index");
+                    
+                    return RedirectToAction("Index", new { IdPlanGestionCambio = ActividadesGestionCambio.IdPlanGestionCambio });
                 }
 
                 ViewData["Error"] = response.Message;
             
                 return View(ActividadesGestionCambio);
+
+
 
             }
             catch (Exception ex)
@@ -130,7 +140,7 @@ namespace bd.webappth.web.Controllers.MVC
                             UserName = "Usuario 1"
                         });
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", new { IdPlanGestionCambio = ActividadesGestionCambio.IdPlanGestionCambio });
                     }
                     ViewData["Error"] = response.Message;
                     
@@ -155,21 +165,66 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index(int IdPlanGestionCambio)
+        public async Task<IActionResult> Index(int IdPlanGestionCambio, int IdActividadesGestionCambio)
         {
 
-            var lista = new List<ActividadesGestionCambio>();
             try
             {
-                var actividadesGestionCambio = new ActividadesGestionCambio
-                {
-                    IdPlanGestionCambio = Convert.ToInt32(IdPlanGestionCambio),
-                };
+                    if (IdPlanGestionCambio != 0 && IdActividadesGestionCambio == 0)
+                    {
 
-                lista = await apiServicio.Listar<ActividadesGestionCambio>(actividadesGestionCambio, new Uri(WebApp.BaseAddress), "/api/ActividadesGestionCambio/ListarActividadesGestionCambioconIdPlan");
-                
-                return View(lista);
-            }
+                        var actividadesGestionCambio = new ActividadesGestionCambioViewModel
+                        {
+                            IdPlanGestionCambio = Convert.ToInt32(IdPlanGestionCambio),
+
+                        };
+
+                        var viewModelActividadesGestionCambio = new ActividadesGestionCambioViewModel
+                        {
+                            IdPlanGestionCambio = Convert.ToInt32(IdPlanGestionCambio),
+                            ListaActividadesGestionCambio = await apiServicio.Listar<ActividadesGestionCambioIndex>(actividadesGestionCambio, new Uri(WebApp.BaseAddress), "/api/ActividadesGestionCambio/ListarActividadesGestionCambioconIdPlan")
+                        };
+
+                        return View(viewModelActividadesGestionCambio);
+                    }
+
+                    if (IdPlanGestionCambio == 0 && IdActividadesGestionCambio != 0)
+                    {
+                        var actividadesGestionCambio = new ActividadesGestionCambio
+                        {
+                            IdActividadesGestionCambio = Convert.ToInt32(IdActividadesGestionCambio),
+                        };
+
+
+                        var respuesta = await apiServicio.ObtenerElementoAsync<ActividadesGestionCambio>(actividadesGestionCambio, new Uri(WebApp.BaseAddress),
+                                                                         "/api/ActividadesGestionCambio/ActividadesGestionCambioconIdActividad");
+
+                        var actividades = JsonConvert.DeserializeObject<ActividadesGestionCambio>(respuesta.Resultado.ToString());
+
+                        var actividadesGestionCambioViewModel = new ActividadesGestionCambioViewModel
+                        {
+                            IdPlanGestionCambio = Convert.ToInt32(actividades.IdPlanGestionCambio),
+
+                        };
+
+
+                        var viewModelActividadesGestionCambio = new ActividadesGestionCambioViewModel
+                        {
+                            IdPlanGestionCambio = Convert.ToInt32(actividades.IdPlanGestionCambio),
+                            ListaActividadesGestionCambio = await apiServicio.Listar<ActividadesGestionCambioIndex>(actividadesGestionCambioViewModel, new Uri(WebApp.BaseAddress), "/api/ActividadesGestionCambio/ListarActividadesGestionCambioconIdPlan")
+                        };
+
+
+                        return View(viewModelActividadesGestionCambio);
+
+                    }
+
+
+                        ViewData["Mensaje"] = "Ir a la página de Plan Gestión Cambio";
+                        return View("NoExisteElemento");
+                    
+
+                }
             catch (Exception ex)
             {
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -185,27 +240,33 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Delete(string id)
+        
+
+        public async Task<IActionResult> Delete(string IdActividadesGestionCambio, string IdPlanGestionCambio)
         {
 
             try
             {
-                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
+                var response = await apiServicio.EliminarAsync(IdActividadesGestionCambio, new Uri(WebApp.BaseAddress)
                                                                , "/api/ActividadesGestionCambio");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
+                        EntityID = string.Format("{0} : {1}", "Sistema", IdActividadesGestionCambio),
                         Message = "Registro de actividad de gestión de cambio",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { IdPlanGestionCambio = IdPlanGestionCambio });
                 }
-                return BadRequest();
+                else
+                {
+                    ViewData["Mensaje"] = Mensaje.Error;
+                    return View("NoExisteElemento");
+                }
             }
             catch (Exception ex)
             {
