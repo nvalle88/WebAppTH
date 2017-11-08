@@ -317,7 +317,7 @@
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
                                                                                 <select id="ciudadLugarNacimiento" class="form-control input" asp-for="Empleado.IdCiudadLugarNacimiento" asp-items="ViewBag.IdCiudadLugarNacimiento" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                    <option value="0" selected="" disabled=""></option>
+                                                                                    
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -401,7 +401,7 @@
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                <select id="paisLugarFamiliar" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <select id="paisLugarPersona" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                     <option value="0" selected="" disabled="">Seleccione</option>
                                                                                 </select>
                                                                             </div>
@@ -413,7 +413,7 @@
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw" ></i></span>
-                                                                                <select id="provinciaLugarFamiliar" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <select id="provinciaLugarPersona" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                     <option value="0" selected="" disabled=""></option>
                                                                                 </select>
                                                                             </div>
@@ -424,7 +424,7 @@
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                                <select id="idciudadLugarFamiliar" class="form-control input ">
+                                                                                <select id="idciudadLugarPersona" class="form-control input ">
                                                                                     <option value="0"><Seleccione></option> 
                                                                                 </select>
                                                                             </div>
@@ -437,7 +437,7 @@
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                <select id="parroquiaLugarFamiliar" class="form-control input">
+                                                                                <select asp-for="Persona.IdParroquia" id="parroquiaLugarPersona" class="form-control input">
                                                                                     <option value="0"><Seleccione></option>     
                                                                                 </select>
                                                                             </div>
@@ -2033,7 +2033,7 @@
     $(document).ready(function () {
 
         $("#etniaE").change(function () {
-           
+
 
             mostrarLoadingPanel("content", "Cargando...")
             $("#nacionalidadIndigenaE").empty();
@@ -2097,7 +2097,7 @@
                     success: function (data) {
                         $.each(data, function (i, data) {
                             $("#ciudadLugarNacimiento").append('<option value="'
-                                + data.idciudad + '">'
+                                + data.idCiudad + '">'
                                 + data.nombre + '</option>');
 
                         });
@@ -2277,7 +2277,7 @@
                 })
 
 
-                   $("#idciudadLugarFamiliar").change(function () {
+           $("#idciudadLugarFamiliar").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#parroquiaLugarFamiliar").empty();
                 $.ajax({
@@ -2303,6 +2303,87 @@
                 return false;
                    })
 
+        
+           $("#paisLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#provinciaLugarPersona").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarProvinciaPorPais")',
+                    dataType: 'json',
+                    data: { pais: $("#paisLugarPersona").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#provinciaLugarPersona").append('<option value="'
+                                + data.idProvincia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+                   $("#provinciaLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#idciudadLugarPersona").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarCiudadPorProvincia")',
+                    dataType: 'json',
+                    data: { provincia: $("#provinciaLugarPersona").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#idciudadLugarPersona").append('<option value="'
+                                + data.idCiudad + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+
+           $("#idciudadLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#parroquiaLugarPersona").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarParroquiaPorCiudad")',
+                    dataType: 'json',
+                    data: { idCiudad: $("#idciudadLugarPersona").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#parroquiaLugarPersona").append('<option value="'
+                                + data.idParroquia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+        
 
                    $("#IdEstudio").change(function () {
             mostrarLoadingPanel("content","Cargando...")

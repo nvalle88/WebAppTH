@@ -32,7 +32,7 @@ namespace bd.webappth.servicios.Servicios
             {
                 //var sistema= await ObtenerHostSistema(id, baseAddreess);
                 //WebApp.BaseAddress = sistema.AdstHost;
-                WebApp.BaseAddress = "http://localhost:49494";
+                WebApp.BaseAddress = "http://localhost:5000";
                 //WebApp.BaseAddressRM = "http://localhost:9000";
 
             }
