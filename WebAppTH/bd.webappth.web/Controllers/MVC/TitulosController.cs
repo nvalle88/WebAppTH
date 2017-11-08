@@ -9,17 +9,17 @@ using bd.webappth.entidades.Negocio;
 using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
-using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.log.guardar.Enumeradores;
 
-namespace bd.webappth.web.Controllers
+namespace bd.webappth.web.Controllers.MVC
 {
-    public class PlanesGestionCambioController : Controller
+    public class TitulosController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public PlanesGestionCambioController(IApiServicio apiServicio)
+        public TitulosController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -27,24 +27,22 @@ namespace bd.webappth.web.Controllers
 
         public async Task<IActionResult> Create()
         {
-            
+            ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "/api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+            ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PlanGestionCambio PlanGestionCambio)
+        public async Task<IActionResult> Create(Titulo titulo)
         {
             Response response = new Response();
             try
             {
-
-                PlanGestionCambio.AprobadoPor = 1;
-                PlanGestionCambio.RealizadoPor = 2;
-
-                response = await apiServicio.InsertarAsync(PlanGestionCambio,
+                response = await apiServicio.InsertarAsync(titulo,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/PlanesGestionCambio/InsertarPlanGestionCambio");
+                                                             "/api/Titulos/InsertarTitulo");
                 if (response.IsSuccess)
                 {
 
@@ -52,19 +50,20 @@ namespace bd.webappth.web.Controllers
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un plan gestión cambio",
+                        Message = "Se ha creado un título",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Plan Gestión Cambio:", PlanGestionCambio.IdPlanGestionCambio),
+                        EntityID = string.Format("{0} {1}", "Titulos:", titulo.IdTitulo),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-               
-                return View(PlanGestionCambio);
+                ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "/api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+                ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
+                return View(titulo);
 
             }
             catch (Exception ex)
@@ -72,7 +71,7 @@ namespace bd.webappth.web.Controllers
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando el plan gestión cambio",
+                    Message = "Creando Area de Conocimiento",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -89,12 +88,13 @@ namespace bd.webappth.web.Controllers
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    Response respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/PlanesGestionCambio");
-                    
+                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
+                                                                  "/api/Titulos");
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<PlanGestionCambio>(respuesta.Resultado.ToString());
-                    
+
+                    respuesta.Resultado = JsonConvert.DeserializeObject<Titulo>(respuesta.Resultado.ToString());
+                    ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "/api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+                    ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -112,34 +112,34 @@ namespace bd.webappth.web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, PlanGestionCambio PlanGestionCambio)
+        public async Task<IActionResult> Edit(string id, Titulo titulo)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    
-                    response = await apiServicio.EditarAsync(id, PlanGestionCambio, new Uri(WebApp.BaseAddress),
-                                                                 "/api/PlanesGestionCambio");
+                    response = await apiServicio.EditarAsync(id, titulo, new Uri(WebApp.BaseAddress),
+                                                                 "/api/Titulos");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Plan gestión cambio", id),
+                            EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un plan gestión el cambio",
+                            Message = "Se ha actualizado un título",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-
-                    return View(PlanGestionCambio);
+                    ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "/api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+                    ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
+                    return View(titulo);
 
                 }
                 return BadRequest();
@@ -149,7 +149,7 @@ namespace bd.webappth.web.Controllers
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un plan gestión cambio",
+                    Message = "Editando un título",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -163,19 +163,19 @@ namespace bd.webappth.web.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<PlanGestionCambio>();
+            var lista = new List<Titulo>();
             try
-            {               
-                    lista = await apiServicio.Listar<PlanGestionCambio>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/PlanesGestionCambio/ListarPlanesGestionCambio");
-                    return View(lista);              
+            {
+                lista = await apiServicio.Listar<Titulo>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/Titulos/ListarTitulos");
+                return View(lista);
             }
             catch (Exception ex)
             {
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando un plan gestión cambio",
+                    Message = "Listando áreas de conocimientos",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -185,40 +185,35 @@ namespace bd.webappth.web.Controllers
             }
         }
 
+
         public async Task<IActionResult> Delete(string id)
         {
 
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/PlanesGestionCambio");
+                                                               , "/api/Titulos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro el plan gestión cambio",
+                        EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
+                        Message = "Registro de título eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
                     return RedirectToAction("Index");
                 }
-                else
-                {
-                    
-                    ViewData["Mensaje"] = Mensaje.Error;
-                    return View("NoExisteElemento");
-                }
-                
+                return BadRequest();
             }
             catch (Exception ex)
             {
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar un plan gestión cambio",
+                    Message = "Eliminar Area de Conocimiento",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

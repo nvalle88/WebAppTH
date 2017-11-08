@@ -29,9 +29,16 @@ namespace bd.webappth.web.Controllers.MVC
                         instance = new EmpleadoViewModel();
                         instance.Empleado = new Empleado();
                         instance.EmpleadoFamiliar = new List<EmpleadoFamiliar>();
+                        instance.PersonaEstudio = new List<PersonaEstudio>();
+                        instance.PersonaDiscapacidad = new List<PersonaDiscapacidad>();
+                        instance.PersonaEnfermedad = new List<PersonaEnfermedad>();
+                        instance.EnfermedadSustituto = new List<EnfermedadSustituto>();
+                        instance.DiscapacidadSustituto = new List<DiscapacidadSustituto>();
+                        instance.TrayectoriaLaboral = new List<TrayectoriaLaboral>();
                     }
                     return instance;
                 }
+                
             }
         }
 
@@ -67,23 +74,30 @@ namespace bd.webappth.web.Controllers.MVC
             
             ViewData["IdRegimenLaboral"] = new SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
             ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
+            ViewData["IdEstudio"] = new SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "/api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+            ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "/api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
+            ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "/api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
+
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(EmpleadoViewModel empleadoViewModel)
-        {
+        { 
 
           var ins=  ObtenerInstancia.Instance;
 
             ins.Empleado = empleadoViewModel.Empleado;
             ins.Persona = empleadoViewModel.Persona;
             ins.DatosBancarios = empleadoViewModel.DatosBancarios;
-           
+            ins.EmpleadoContactoEmergencia = empleadoViewModel.EmpleadoContactoEmergencia;
+            ins.PersonaSustituto = empleadoViewModel.PersonaSustituto;
+
            var response= await apiServicio.InsertarAsync(ins,new Uri( WebApp.BaseAddress), "/api/Empleados/InsertarEmpleado");
 
             if (response.IsSuccess)
             {
-
+                
             }
 
             return RedirectToAction("Index");
@@ -147,6 +161,27 @@ namespace bd.webappth.web.Controllers.MVC
             return Json(listaParroquias);
         }
 
+        public async Task<JsonResult> ListarAreasConocimientosporEstudio(int idEstudio)
+        {
+            var Estudio = new Estudio
+            {
+                IdEstudio = Convert.ToInt32(idEstudio),
+            };
+            var listaAreasConocimientos = await apiServicio.Listar<AreaConocimiento>(Estudio, new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientosporEstudio");
+            return Json(listaAreasConocimientos);
+        }
+
+        public async Task<JsonResult> ListarTitulosporAreaConocimiento(int idAreaConocimiento, int idEstudio)
+        {
+            var Titulo = new Titulo
+            {
+                IdAreaConocimiento = idAreaConocimiento,
+                IdEstudio = idEstudio
+            };
+            var listaTitulos = await apiServicio.Listar<Titulo>(Titulo, new Uri(WebApp.BaseAddress), "api/Titulos/ListarTitulosporAreaConocimiento");
+            return Json(listaTitulos);
+        }
+
         public async Task<JsonResult> InsertarEmpleadoPersona(int idTipoIdentificacion, string Identificacion, string Nombres, string Apellidos, int idSexo, int idGenero, int idEstadoCivil, int idTipoSangre, int idNacionalidad, int etniaF, int nacionalidadIndigenaF, string CorreoPrivado, string FechaNacimiento, string LugarTrabajo, string CallePrincipal, string CalleSecundaria, string Referencia, string Numero, int parroquiaLugarFamiliar, string TelefonoPrivado, string TelefonoCasa, int Parentesco)
         {
             try
@@ -198,7 +233,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<JsonResult> InsertarFamiliar(int idTipoIdentificacion, string Identificacion, string Nombres, string Apellidos, int idSexo, int idGenero, int idEstadoCivil, int idTipoSangre, int idNacionalidad, int etniaF, int nacionalidadIndigenaF, string CorreoPrivado, string FechaNacimiento, string LugarTrabajo, string CallePrincipal, string CalleSecundaria, string Referencia, string Numero, int parroquiaLugarFamiliar, string TelefonoPrivado, string TelefonoCasa, int Parentesco)
+        
+
+        public async Task<JsonResult> InsertarFamiliar(int idTipoIdentificacion, string Identificacion, string Nombres, string Apellidos, int idSexo, int idGenero, int idEstadoCivil, int idTipoSangre, int idNacionalidad, int etniaF, int nacionalidadIndigenaF, string CorreoPrivado, string FechaNacimiento, string LugarTrabajo, string CallePrincipal, string CalleSecundaria, string Referencia, string Numero, int parroquiaLugarFamiliar, string TelefonoPrivado, string TelefonoCasa, int Parentesco, string Ocupacion)
         {
             try
             {
@@ -229,7 +266,8 @@ namespace bd.webappth.web.Controllers.MVC
                         Numero = Numero,
                         IdParroquia = parroquiaLugarFamiliar,
                         TelefonoPrivado = TelefonoPrivado,
-                        TelefonoCasa = TelefonoCasa
+                        TelefonoCasa = TelefonoCasa,
+                        Ocupacion = Ocupacion
                     }
                     
                 }
@@ -279,6 +317,275 @@ namespace bd.webappth.web.Controllers.MVC
                 return Json(Mensaje.Error);
             }
             
+        }
+
+        public async Task<JsonResult> InsertarFormacionAcademica(int IdTitulo, string Observaciones, DateTime FechaGraduado, string NoSenescyt)
+        {
+            try
+            {
+                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+
+                empleadoviewmodel.PersonaEstudio.Add(new PersonaEstudio
+                {
+                    FechaGraduado = FechaGraduado.Date,
+                    Observaciones = Observaciones,
+                    IdTitulo = IdTitulo,
+                    NoSenescyt = NoSenescyt
+                }
+
+                );
+
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(false);
+            }
+
+
+        }
+
+
+        public async Task<JsonResult> EliminarFormacionAcademica(int idTitulo)
+        {
+            try
+            {
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+                var elemento = empleadoviewmodel.PersonaEstudio.Find(c => c.IdTitulo == idTitulo);
+                empleadoviewmodel.PersonaEstudio.Remove(elemento);
+                return Json(true);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+
+        public async Task<JsonResult> InsertarTrayectoriaLaboral(DateTime FechaInicio, DateTime FechaFin, string Empresa, string PuestoTrabajo, string DescripcionFunciones)
+        {
+            try
+            {
+                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+
+                empleadoviewmodel.TrayectoriaLaboral.Add(new TrayectoriaLaboral
+                {
+                    FechaInicio = FechaInicio.Date,
+                    FechaFin = FechaFin.Date,
+                    Empresa = Empresa,
+                    PuestoTrabajo = PuestoTrabajo,
+                    DescripcionFunciones = DescripcionFunciones
+
+                }
+
+                );
+
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(false);
+            }
+
+
+        }
+
+
+        public async Task<JsonResult> EliminarTrayectoriaLaboral(string empresa, DateTime fechainicio, DateTime fechafin, string puestotrabajo)
+        {
+            try
+            {
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+                var elemento = empleadoviewmodel.TrayectoriaLaboral.Find(c => c.Empresa == empresa && c.FechaInicio == fechainicio.Date && c.FechaFin == fechafin.Date && c.PuestoTrabajo == puestotrabajo);
+                empleadoviewmodel.TrayectoriaLaboral.Remove(elemento);
+                return Json(true);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+
+
+        public async Task<JsonResult> InsertarDiscapacidad(int IdTipoDiscapacidad, string NumeroCarnet, int Porciento)
+        {
+            try
+            {
+                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+
+                empleadoviewmodel.PersonaDiscapacidad.Add(new PersonaDiscapacidad
+                {
+                    IdTipoDiscapacidad = IdTipoDiscapacidad,
+                    NumeroCarnet = NumeroCarnet,
+                    Porciento = Porciento,
+
+                }
+
+                );
+
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(false);
+            }
+
+
+        }
+
+
+        public async Task<JsonResult> EliminarDiscapacidad(int idTipoDiscapacidad)
+        {
+            try
+            {
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+                var elemento = empleadoviewmodel.PersonaDiscapacidad.Find(c => c.IdTipoDiscapacidad == idTipoDiscapacidad);
+                empleadoviewmodel.PersonaDiscapacidad.Remove(elemento);
+                return Json(true);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+
+
+        public async Task<JsonResult> InsertarEnfermedad(int IdTipoEnfermedad, string InstitucionEmite)
+        {
+            try
+            {
+                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+
+                empleadoviewmodel.PersonaEnfermedad.Add(new PersonaEnfermedad
+                {
+                    IdTipoEnfermedad = IdTipoEnfermedad,
+                    InstitucionEmite = InstitucionEmite,
+                }
+                );
+
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(false);
+            }
+
+
+        }
+
+
+        public async Task<JsonResult> EliminarEnfermedad(int idTipoEnfermedad)
+        {
+            try
+            {
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+                var elemento = empleadoviewmodel.PersonaEnfermedad.Find(c => c.IdTipoEnfermedad == idTipoEnfermedad);
+                empleadoviewmodel.PersonaEnfermedad.Remove(elemento);
+                return Json(true);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+
+        public async Task<JsonResult> InsertarDiscapacidadSustituto(int IdTipoDiscapacidadSustituto, string NumeroCarnetSustituto, int PorcientoSustituto)
+        {
+            try
+            {
+                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+
+                empleadoviewmodel.DiscapacidadSustituto.Add(new DiscapacidadSustituto
+                {
+                    IdTipoDiscapacidad = IdTipoDiscapacidadSustituto,
+                    NumeroCarnet = NumeroCarnetSustituto,
+                    PorcentajeDiscapacidad = PorcientoSustituto,
+
+                }
+
+                );
+
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(false);
+            }
+
+
+        }
+
+
+        public async Task<JsonResult> EliminarDiscapacidadSustituto(int idTipoDiscapacidadSustituto)
+        {
+            try
+            {
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+                var elemento = empleadoviewmodel.DiscapacidadSustituto.Find(c => c.IdTipoDiscapacidad == idTipoDiscapacidadSustituto);
+                empleadoviewmodel.DiscapacidadSustituto.Remove(elemento);
+                return Json(true);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+
+
+        public async Task<JsonResult> InsertarEnfermedadSustituto(int IdTipoEnfermedadSustituto, string InstitucionEmiteSustituto)
+        {
+            try
+            {
+                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+
+                empleadoviewmodel.EnfermedadSustituto.Add(new EnfermedadSustituto
+                {
+                    IdTipoEnfermedad = IdTipoEnfermedadSustituto,
+                    InstitucionEmite = InstitucionEmiteSustituto,
+                }
+                );
+
+                return Json(true);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(false);
+            }
+
+
+        }
+
+
+        public async Task<JsonResult> EliminarEnfermedadSustituto(int idTipoEnfermedadSustituto)
+        {
+            try
+            {
+                var empleadoviewmodel = ObtenerInstancia.Instance;
+                var elemento = empleadoviewmodel.EnfermedadSustituto.Find(c => c.IdTipoEnfermedad == idTipoEnfermedadSustituto);
+                empleadoviewmodel.EnfermedadSustituto.Remove(elemento);
+                return Json(true);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
         }
 
 

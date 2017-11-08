@@ -58,6 +58,7 @@ namespace bd.webappth.entidades.Negocio
         public string CalleSecundaria { get; set; }
         public string Referencia { get; set; }
         public string Numero { get; set; }
+        public string Ocupacion { get; set; }
 
 
         //Propiedades Virtuales Referencias a otras clases

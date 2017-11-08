@@ -1,0 +1,31 @@
+
+<div class="widget-body no-padding">
+   
+        <fieldset>
+            @if (@ViewData["Mensaje"].ToString() != "")
+            {
+                <div class="col-lg-12">
+                    <div class="alert alert-block  bordered">
+                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                        <p>
+                            <span class="text-info"><strong> <bold> @ViewData["Mensaje"]</bold></strong></span>
+                        </p>
+                    </div>
+                </div>
+            }
+           
+        </fieldset>
+</div>
+
+@section Scripts {
+
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        Init_Select2();
+    });
+    </script>
+}

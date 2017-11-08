@@ -1,19 +1,22 @@
-@model List<bd.webappth.entidades.Negocio.PlanGestionCambio>
+@model List<bd.webappth.entidades.Negocio.Titulo>
 
 @{
     ViewData["Title"] = "Index";
 }
-
-
-<p>
-    <br /><br />
-    @Html.ActionLink("Nuevo Plan de Gestion de Cambio", "Create", "PlanesGestionCambio", new { }, new { @class = "btn btn-primary" })
-
-
-</p>
 			<!-- MAIN CONTENT -->
 <div id="content">
-   
+
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo T&iacute;tulo
+
+        </button>
+    </a>
+    <p> </p>
+
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -37,7 +40,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Plan de Gesti&oacuten de Cambio</h2>
+                        <h2>T&iacute;tulos</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -52,22 +55,13 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Titulo)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estudio.Nombre)
                                         </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().AreaConocimiento.Descripcion)
                                         </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaInicio)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaFin)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().RealizadoPor)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().AprobadoPor)
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -77,30 +71,19 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Titulo)
+                                                @Html.DisplayFor(modelItem => item.Estudio.Nombre)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                                @Html.DisplayFor(modelItem => item.AreaConocimiento.Descripcion)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.FechaInicio)
+                                                @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FechaFin)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EmpleadoRealizadoPor.Persona.Nombres)
-                                                @Html.DisplayFor(modelItem => item.EmpleadoRealizadoPor.Persona.Apellidos)
+                                            
 
-                                            </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EmpleadoAprobadoPor.Persona.Nombres)
-                                                @Html.DisplayFor(modelItem => item.EmpleadoAprobadoPor.Persona.Apellidos)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdPlanGestionCambio }) |
-                                                @Html.ActionLink("Detalle", "Index", "ActividadesGestionCambio", new { IdPlanGestionCambio = item.IdPlanGestionCambio })|
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdPlanGestionCambio }, new { onclick = "return confirm('Desea eliminar el plan gestion cambio... ?');" })
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdTitulo }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTitulo }, new { onclick = "return confirm('Desea eliminar el Título... ?');" })
                                             </td>
                                         </tr>
                                     }
@@ -111,7 +94,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>
