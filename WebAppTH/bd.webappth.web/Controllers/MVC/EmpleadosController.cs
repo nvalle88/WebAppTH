@@ -27,6 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
                     if (instance == null)
                     {
                         instance = new EmpleadoViewModel();
+                        instance.Empleado = new Empleado();
                         instance.EmpleadoFamiliar = new List<EmpleadoFamiliar>();
                     }
                     return instance;
@@ -77,7 +78,7 @@ namespace bd.webappth.web.Controllers.MVC
             ins.Empleado = empleadoViewModel.Empleado;
             ins.Persona = empleadoViewModel.Persona;
             ins.DatosBancarios = empleadoViewModel.DatosBancarios;
-
+           
            var response= await apiServicio.InsertarAsync(ins,new Uri( WebApp.BaseAddress), "/api/Empleados/InsertarEmpleado");
 
             if (response.IsSuccess)

@@ -10,5 +10,7 @@ namespace bd.webappth.entidades.Utils
 
         public static string BaseAddressRM { get; set; }
 
+        public static string BaseAddressSeguridad { get; set; }
+
     }
 }

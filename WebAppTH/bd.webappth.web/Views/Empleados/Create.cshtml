@@ -51,7 +51,7 @@
                                                                 <label>R&eacute;gimen laboral:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-child fa  fa-fw"></i></span>
                                                                         <select  id="IdRegimenLaboral" class="form-control input " asp-items="ViewBag.IdRegimenLaboral">
                                                                             <option value="-1"  >Seleccione</option>
                                                                         </select>
@@ -62,7 +62,7 @@
                                                                 <label>Relaci&oacute;n Laboral:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-share-alt fa  fa-fw"></i></span>
                                                                         <select id="IdRelacionLaboral"  class="form-control input "></select>
                                                                     </div>
                                                                 </div>
@@ -71,16 +71,16 @@
                                                                 <label>Tipo de nombramiento:</label>
                                                                 <div class="form-group">
                                                                     <div  class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-fire fa  fa-fw"></i></span>
                                                                         <select  id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control input " ></select>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
-                                                                <label>Tipo de nombramiento:</label>
+                                                                <label>Modalidad de la partida:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-tags fa  fa-fw"></i></span>
                                                                         <select id="IdModalidadPartida" asp-for="IndiceOcupacionalModalidadPartida.IdModalidadPartida" class="form-control input "></select>
                                                                     </div>
                                                                 </div>
@@ -91,7 +91,7 @@
                                                                 <label>Fondo de financiamiento:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa  fa-list-alt fa  fa-fw"></i></span>
                                                                         <select asp-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="form-control input " asp-items="ViewBag.IdFondoFinanciamiento"></select>
                                                                     </div>
                                                                 </div>
@@ -100,18 +100,18 @@
                                                                 <div class="form-group">
                                                                     <label>Salario real:</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " placeholder="N&uacute;mero de cuenta" type="text" name="fnumeroCuenta" id="fnumeroCuenta">
+                                                                        <span class="input-group-addon"><i class="fa fa-usd fa  fa-fw"></i></span>
+                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " placeholder="Salario real" type="text" name="IndiceOcupacionalModalidadPartida.SalarioReal" id="IndiceOcupacionalModalidadPartida.SalarioReal">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-4">
                                                                 <div class="form-group">
                                                                     <label>Fecha:</label>
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" class="form-control input " placeholder="N&uacute;mero de cuenta" type="text" name="fnumeroCuenta" id="fnumeroCuenta">
-                                                                    </div>
+                                                                    <label class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                        <input type="text" class="form-control input datepicker " asp-for="IndiceOcupacionalModalidadPartida.Fecha" placeholder="Seleccione fecha" data-dateformat='dd/mm/yy'>
+                                                                    </label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -123,7 +123,7 @@
                                                                 <label>Tipo de identificaci&oacute;n:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-bookmark fa fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdTipoIdentificacion" class="form-control" asp-items="ViewBag.IdTipoIdentificacion"></select>
                                                                     </div>
                                                                 </div>
@@ -142,7 +142,7 @@
                                                                     <label>Nombres:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="Persona.Nombres" class="form-control input " placeholder="Nombres" type="text" name="fname" id="fname">
+                                                                        <input asp-for="Persona.Nombres" class="form-control input " placeholder="Nombres" type="text" name="Persona.Nombres" id="Persona.Nombres">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -151,7 +151,7 @@
                                                                     <label>Apellidos:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="Persona.Apellidos" class="form-control input " placeholder="Apellidos" type="text" name="fname" id="fname">
+                                                                        <input asp-for="Persona.Apellidos" class="form-control input " placeholder="Apellidos" type="text" name="Persona.Apellidos" id="Persona.Apellidos">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -161,7 +161,7 @@
                                                                 <label>Sexo:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-male fa  fa-fw"></i>|<i class="fa fa-female fa  fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdSexo" class="form-control input " asp-items="ViewBag.IdSexo">
                                                                         </select>
                                                                     </div>
@@ -171,7 +171,7 @@
                                                                 <label>G&eacute;nero:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-male fa  fa-fw"></i>|<i class="fa fa-female fa  fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdGenero" class="form-control input " asp-items="ViewBag.IdGenero"></select>
                                                                     </div>
                                                                 </div>
@@ -180,7 +180,7 @@
                                                                 <label>Estado Civil:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-magic fa  fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdEstadoCivil" class="form-control input " asp-items="ViewBag.IdEstadoCivil"></select>
                                                                     </div>
                                                                 </div>
@@ -189,7 +189,7 @@
                                                                 <label>Tipo de sangre:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa  fa-heart fa  fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdTipoSangre" class="form-control input " asp-items="ViewBag.IdTipoSangre"></select>
                                                                     </div>
                                                                 </div>
@@ -200,7 +200,7 @@
                                                                 <label>Nacionalidad:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-globe fa  fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdNacionalidad" class="form-control input " asp-items="ViewBag.IdNacionalidad"></select>
                                                                     </div>
                                                                 </div>
@@ -209,7 +209,7 @@
                                                                 <label>Autoidentificaci&oacute;n &eacute;tnica:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-group fa  fa-fw"></i></span>
                                                                         <select id="etniaE"  asp-for="Persona.IdEtnia" class="form-control input " asp-items="ViewBag.IdEtnia"></select>
                                                                     </div>
                                                                 </div>
@@ -218,7 +218,7 @@
                                                                 <label>Nacionalidad ind&iacute;gena:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                                         <select id="nacionalidadIndigenaE" asp-for="Persona.IdNacionalidadIndigena" class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena"></select>
                                                                     </div>
                                                                 </div>
@@ -228,28 +228,18 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
-                                                                        <input asp-for="Persona.CorreoPrivado" class="form-control input " placeholder="Correo privado" type="text" name="email" id="email">
+                                                                        <input asp-for="Persona.CorreoPrivado" class="form-control input " placeholder="Correo privado" type="text" name="Persona.CorreoPrivado" id="Persona.CorreoPrivado">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            @*<div class="col-sm-3">
-                                                                <div class="form-group">
-                                                                    <label>Fecha de nacimiento:</label>
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="Persona.FechaNacimiento" class="form-control input " placeholder="Identificación" type="text" name="fname" id="fname">
-                                                                    </div>
-                                                                </div>
-                                                            </div>*@
-
                                                             <div class="col-sm-3">
                                                                 <div class="form-group">
                                                                     <label>Fecha de nacimiento:</label>
                                                                     <label class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                        <input type="text" class="form-control input datepicker " placeholder="Seleccione fecha inicio" data-dateformat='dd/mm/yy'>
+                                                                        <input asp-for="Persona.FechaNacimiento" type="text" class="form-control input datepicker " placeholder="Seleccione fecha inicio" data-dateformat='dd/mm/yy'>
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -258,8 +248,8 @@
                                                                     <div class="form-group">
                                                                         <label>Lugar de trabajo:</label>
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input asp-for="Persona.LugarTrabajo" class="form-control input " placeholder="Lugar de trabajo" type="text" name="fname" id="fname">
+                                                                            <span class="input-group-addon"><i class="fa fa-suitcase fa  fa-fw"></i></span>
+                                                                            <input asp-for="Persona.LugarTrabajo" class="form-control input " placeholder="Lugar de trabajo" type="text" name="Persona.LugarTrabajo" id="Persona.LugarTrabajo">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -281,8 +271,8 @@
                                                                         <label>Pa&iacute;s:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                <select id="paisLugarNacimiento" class="form-control input " asp-items="ViewBag.IdPaisLugarNacimiento"></select>
+                                                                                <span class="input-group-addon"><i class="fa fa-globe fa  fa-fw"></i></span>
+                                                                                <select id="paisLugarNacimiento"  class="form-control input " asp-items="ViewBag.IdPaisLugarNacimiento"></select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -290,8 +280,8 @@
                                                                         <label>Ciudad:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                                <select id="ciudadLugarNacimiento" asp-for="Empleado.IdCiudadLugarNacimiento" class="form-control input " asp-items="ViewBag.IdCiudadLugarNacimiento"></select>
+                                                                                <span class="input-group-addon"><i class="fa fa-globe fa  fa-fw"></i></span>
+                                                                                <select id="ciudadLugarNacimiento" asp-for="Empleado.IdCiudadLugarNacimiento" class="form-control input "></select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -304,8 +294,8 @@
                                                                         <label>Pa&iacute;s:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                <select id="paisLugarSufragio" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"></select>
+                                                                                <span class="input-group-addon"><i class="fa fa-globe fa  fa-fw"></i></span>
+                                                                                <select id="paisLugarSufragio"  asp-items="ViewBag.IdPaisLugarSufragio" class="form-control input "></select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -313,8 +303,8 @@
                                                                         <label>Provincia:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                <select id="provinciaLugarSufragio" asp-for="Empleado.IdProvinciaLugarSufragio" class="form-control input " asp-items="ViewBag.IdProvinciaLugarSufragio"></select>
+                                                                                <span class="input-group-addon"><i class="fa fa-globe fa  fa-fw"></i></span>
+                                                                                <select id="provinciaLugarSufragio" asp-for="Empleado.IdProvinciaLugarSufragio" class="form-control input " ></select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -327,8 +317,8 @@
                                                                         <label>Calle principal:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.CallePrincipal" class="form-control input " placeholder="Calle principal" type="text" name="fcallePrincipal" id="fcallePrincipal">
+                                                                                <span class="input-group-addon"><i class="fa fa-exchange fa  fa-fw"></i></span>
+                                                                                <input asp-for="Persona.CallePrincipal" class="form-control input " placeholder="Calle principal" type="text" name="Persona.CallePrincipal" id="Persona.CallePrincipal">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -337,8 +327,8 @@
                                                                         <label>Calle secundaria:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.CalleSecundaria" class="form-control input " placeholder="Calle secundaria" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                                <span class="input-group-addon"><i class="fa  fa-code-fork fa  fa-fw"></i></span>
+                                                                                <input asp-for="Persona.CalleSecundaria" class="form-control input " placeholder="Calle secundaria" type="text" name="Persona.CalleSecundaria" id="Persona.CalleSecundaria">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -347,8 +337,8 @@
                                                                         <label>Referencia:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.Referencia" class="form-control input " placeholder="Referencia" type="text" name="freferencia" id="freferencia">
+                                                                                <span class="input-group-addon"><i class="fa fa-file-text-o fa  fa-fw"></i></span>
+                                                                                <input asp-for="Persona.Referencia" class="form-control input " placeholder="Referencia" type="text" name="Persona.Referencia" id="Persona.Referencia">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -357,8 +347,8 @@
                                                                         <label>No domicilio:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.Numero" class="form-control input " placeholder="N&uacute;mero del domicilio" type="text" name="fname" id="fname">
+                                                                                <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                                <input asp-for="Persona.Numero" class="form-control input " placeholder="N&uacute;mero del domicilio" type="text" name="Persona.Numero" id="Persona.Numero">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -369,7 +359,7 @@
                                                                         <label>Pa&iacute;s:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                                <span class="input-group-addon"><i class="fa fa-globe fa  fa-fw"></i></span>
                                                                                 <select id="paisLugarFamiliar" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"></select>
                                                                             </div>
                                                                         </div>
@@ -379,7 +369,7 @@
                                                                         <label>Provincia:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                                <span class="input-group-addon"><i class="fa fa-globe fa  fa-fw"></i></span>
                                                                                 <select id="provinciaLugarFamiliar" class="form-control input "></select>
                                                                             </div>
                                                                         </div>
@@ -388,7 +378,7 @@
                                                                         <label>Ciudad:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                                <span class="input-group-addon"><i class="fa fa-globe fa fa-fw"></i></span>
                                                                                 <select id="idciudadLugarFamiliar" class="form-control input ">
                                                                                     <option value="0"><Seleccione></option> 
                                                                                 </select>
@@ -401,8 +391,8 @@
                                                                         <label>Parroquia:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                <select id="parroquiaLugarFamiliar" class="form-control input"></select>
+                                                                                <span class="input-group-addon"><i class="fa fa-globe fa  fa-fw"></i></span>
+                                                                                <select id="parroquiaLugarFamiliar" asp-for="Persona.IdParroquia" class="form-control input"></select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -413,7 +403,7 @@
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.TelefonoPrivado" class="form-control input " data-mask="99-9999-9999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text" name="hphone" id="hphone">
+                                                                                <input asp-for="Persona.TelefonoPrivado" class="form-control input " data-mask="99-9999-9999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text" name="Persona.TelefonoPrivado" id="Persona.TelefonoPrivado">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -422,7 +412,7 @@
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.TelefonoCasa" class="form-control input " data-mask="02-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text" name="wphone" id="wphone">
+                                                                                <input asp-for="Persona.TelefonoCasa" class="form-control input " data-mask="02-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text" name="Persona.TelefonoCasa" id="Persona.TelefonoCasa">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -449,7 +439,7 @@
                                                                     <label>N&uacute;mero de cuenta:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="DatosBancarios.NumeroCuenta" class="form-control input " placeholder="N&uacute;mero de cuenta" type="text" name="fnumeroCuenta" id="fnumeroCuenta">
+                                                                        <input asp-for="DatosBancarios.NumeroCuenta" class="form-control input " placeholder="N&uacute;mero de cuenta" type="text" name="DatosBancarios.NumeroCuenta" id="DatosBancarios.NumeroCuenta">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -472,7 +462,7 @@
                                                                     <label>Fecha de ingreso sector p&uacute;blico:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                        <input type="text" class="form-control input datepicker " placeholder="Seleccione fecha ingreso sector público " data-dateformat='dd/mm/yy'>                                                                    </div>
+                                                                        <input type="text" class="form-control input datepicker " asp-for="Empleado.FechaIngresoSectorPublico" placeholder="Seleccione fecha ingreso sector público " data-dateformat='dd/mm/yy'>                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
@@ -480,7 +470,7 @@
                                                                     <label>Fecha de ingreso:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                        <input type="text" class="form-control input datepicker " placeholder="Seleccione fecha ingreso" data-dateformat='dd/mm/yy'>
+                                                                        <input type="text" class="form-control input datepicker " asp-for="Empleado.FechaIngreso" placeholder="Seleccione fecha ingreso" data-dateformat='dd/mm/yy'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -488,8 +478,8 @@
                                                                 <div class="form-group">
                                                                     <label>Meses de imposici&oacute;n:</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="Empleado.MesesImposiciones" class="form-control input " placeholder="Meses de imposici&oacute;n" type="text" name="fmesesImposicion" id="fmesesImposicion">
+                                                                        <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                        <input asp-for="Empleado.MesesImposiciones" class="form-control input " placeholder="Meses de imposici&oacute;n" type="text" name="Empleado.MesesImposiciones" id="Empleado.MesesImposiciones">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -498,8 +488,8 @@
                                                                 <div class="form-group">
                                                                     <label>D&iacute;as de imposici&oacute;n:</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="Empleado.DiasImposiciones" class="form-control input " placeholder="D&iacute;as" type="text" name="fname" id="fname">
+                                                                        <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                        <input asp-for="Empleado.DiasImposiciones" class="form-control input " placeholder="D&iacute;as" type="text" name="Empleado.DiasImposiciones" id="Empleado.DiasImposiciones">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -516,7 +506,7 @@
                                                                 <div class="form-group">
                                                                     <label>Ingreso de otra actividad:</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-usd fa  fa-fw"></i></span>
                                                                         <input asp-for="Empleado.IngresosOtraActividad" class="form-control input " placeholder="Ingreso de otra actividad" type="text" name="fname" id="fname">
                                                                     </div>
                                                                 </div>
@@ -1117,7 +1107,7 @@
                 return false;
             })
 
-        $("#paisLugarNacimiento").change(function () {
+            $("#paisLugarNacimiento").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#ciudadLugarNacimiento").empty();
                 $.ajax({
@@ -1127,8 +1117,8 @@
                     data: { pais: $("#paisLugarNacimiento").val() },
                     success: function (data) {
                         $.each(data, function (i, data) {
-                            $("#ciudadLugarNacimiento").append('<option value="0">Seleccione</option>'+'<option value="'
-                                + data.idciudad + '">'
+                            $("#ciudadLugarNacimiento").append('<option value="'
+                                + data.idCiudad + '">'
                                 + data.nombre + '</option>');
 
                         });
@@ -1153,9 +1143,7 @@
                     dataType: 'json',
                     data: { regimen: $("#IdRegimenLaboral").val() },
                     success: function (data) {
-                        $("#IdRelacionLaboral").append('<option value="0" disabled>Seleccione</option>');
                         $.each(data, function (i, data) {
-
                             $("#IdRelacionLaboral").append('<option value="'
                                 + data.idRelacionLaboral + '">'
                                 + data.nombre + '</option>');

@@ -30,9 +30,9 @@ namespace bd.webappth.servicios.Servicios
         {
             try
             {
-                //var sistema= await ObtenerHostSistema(id, baseAddreess);
-                //WebApp.BaseAddress = sistema.AdstHost;
-                WebApp.BaseAddress = "http://localhost:49494";
+                var sistema= await ObtenerHostSistema(id, baseAddreess);
+                WebApp.BaseAddress = sistema.AdstHost;
+               // WebApp.BaseAddress = "http://localhost:55998";
                 //WebApp.BaseAddressRM = "http://localhost:9000";
 
             }
@@ -65,8 +65,9 @@ namespace bd.webappth.servicios.Servicios
         {
             try
             {
-                var sistema = await ObtenerHostSistema(id, baseAddress);
-                AppGuardarLog.BaseAddress = sistema.AdstHost;
+                //var sistema = await ObtenerHostSistema(id, baseAddress);
+                //AppGuardarLog.BaseAddress = sistema.AdstHost;
+                AppGuardarLog.BaseAddress = "http://localhost:53317";
 
             }
             catch (Exception ex)
