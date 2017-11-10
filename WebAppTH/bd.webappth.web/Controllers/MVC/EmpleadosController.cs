@@ -31,6 +31,7 @@ namespace bd.webappth.web.Controllers.MVC
                     if (instance == null)
                     {
                         instance = new EmpleadoViewModel();
+                        instance.Empleado = new Empleado();
                         instance.EmpleadoFamiliar = new List<EmpleadoFamiliar>();
                         instance.PersonaEstudio = new List<PersonaEstudio>();
                         instance.PersonaDiscapacidad = new List<PersonaDiscapacidad>();

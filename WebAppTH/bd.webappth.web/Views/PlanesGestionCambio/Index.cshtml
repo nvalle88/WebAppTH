@@ -4,15 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<p></p>
-<a asp-action="Create">
-    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-        <span class="btn-label">
-            <i class="glyphicon glyphicon-plus"></i>
-        </span>Nuevo Plan de Gesti&oacuten de Cambio
-    </button>
-</a>
-<p> </p>
+
+<p>
+    <br /><br />
+    @Html.ActionLink("Nuevo Plan de Gestion de Cambio", "Create", "PlanesGestionCambio", new { }, new { @class = "btn btn-primary" })
+
+
+</p>
 			<!-- MAIN CONTENT -->
 <div id="content">
    
@@ -101,7 +99,7 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdPlanGestionCambio }) |
-                                                @Html.ActionLink("Detalle", "Index", "ActividadesGestionCambio", new { idPlanGestionCambio = item.IdPlanGestionCambio })|
+                                                @Html.ActionLink("Detalle", "Index", "ActividadesGestionCambio", new { IdPlanGestionCambio = item.IdPlanGestionCambio })|
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdPlanGestionCambio }, new { onclick = "return confirm('Desea eliminar el plan gestion cambio... ?');" })
                                             </td>
                                         </tr>

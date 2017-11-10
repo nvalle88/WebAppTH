@@ -165,10 +165,10 @@ namespace bd.webappth.web.Controllers
 
             var lista = new List<PlanGestionCambio>();
             try
-            {
-                lista = await apiServicio.Listar<PlanGestionCambio>(new Uri(WebApp.BaseAddress)
+            {               
+                    lista = await apiServicio.Listar<PlanGestionCambio>(new Uri(WebApp.BaseAddress)
                                                                     , "/api/PlanesGestionCambio/ListarPlanesGestionCambio");
-                return View(lista);
+                    return View(lista);              
             }
             catch (Exception ex)
             {
@@ -205,7 +205,13 @@ namespace bd.webappth.web.Controllers
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                else
+                {
+                    
+                    ViewData["Mensaje"] = Mensaje.Error;
+                    return View("NoExisteElemento");
+                }
+                
             }
             catch (Exception ex)
             {

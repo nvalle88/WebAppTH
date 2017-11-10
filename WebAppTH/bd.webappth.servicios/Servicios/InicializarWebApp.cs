@@ -15,9 +15,9 @@ namespace bd.webappth.servicios.Servicios
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = baseAddreess;
                 var url = string.Format("{0}/{1}", "/api/Adscsists", id);
-                var respuesta = await client.GetAsync(url);
+                var uri = string.Format("{0}{1}", baseAddreess, url);
+                var respuesta = await client.GetAsync(new Uri(uri));
 
                 var resultado = await respuesta.Content.ReadAsStringAsync();
                 var response = JsonConvert.DeserializeObject<Response>(resultado);
@@ -30,9 +30,26 @@ namespace bd.webappth.servicios.Servicios
         {
             try
             {
-                //var sistema= await ObtenerHostSistema(id, baseAddreess);
-                //WebApp.BaseAddress = sistema.AdstHost;
-                WebApp.BaseAddress = "http://localhost:49494";
+                var sistema= await ObtenerHostSistema(id, baseAddreess);
+                WebApp.BaseAddress = sistema.AdstHost;
+               // WebApp.BaseAddress = "http://localhost:6000";
+                //WebApp.BaseAddressRM = "http://localhost:9000";
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+        public static async Task InicializarSeguridad(string id, Uri baseAddreess)
+        {
+            try
+            {
+                var sistema = await ObtenerHostSistema(id, baseAddreess);
+                WebApp.BaseAddressSeguridad = sistema.AdstHost;
+                // WebApp.BaseAddress = "http://localhost:6000";
                 //WebApp.BaseAddressRM = "http://localhost:9000";
 
             }
@@ -67,6 +84,7 @@ namespace bd.webappth.servicios.Servicios
             {
                 var sistema = await ObtenerHostSistema(id, baseAddress);
                 AppGuardarLog.BaseAddress = sistema.AdstHost;
+               // AppGuardarLog.BaseAddress = "http://localhost:53317";
 
             }
             catch (Exception ex)

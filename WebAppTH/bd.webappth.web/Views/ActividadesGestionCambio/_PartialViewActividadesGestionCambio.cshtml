@@ -5,7 +5,8 @@
         <section class="col col-8">
             <label class="input">
                 <i class="icon-append fa fa-calendar"></i>
-                <input maxlength="20" asp-for="FechaInicio" class="datepicker" data-dateformat='dd/mm/yy' data-mask="99/99/9999" placeholder="@Html.DisplayNameFor(model=>model.FechaInicio)" />
+                <input maxlength="20" asp-for="FechaInicio" class="datepicker" type="text" placeholder="@Html.DisplayNameFor(model=>model.FechaInicio)" data-dateformat='dd/mm/yy' />
+
                 <span asp-validation-for="FechaInicio" class="text-danger"></span>
             </label>
         </section>
@@ -14,7 +15,7 @@
         <section class="col col-8">
             <label class="input">
                 <i class="icon-append fa fa-calendar"></i>
-                <input maxlength="20" asp-for="FechaFin" class="datepicker" data-dateformat='dd/mm/yy' data-mask="99/99/9999" placeholder="@Html.DisplayNameFor(model=>model.FechaFin)" />
+                <input maxlength="20" asp-for="FechaFin" class="datepicker" type="text" placeholder="@Html.DisplayNameFor(model=>model.FechaFin)" data-dateformat='dd/mm/yy' />
                 <span asp-validation-for="FechaFin" class="text-danger"></span>
             </label>
         </section>
