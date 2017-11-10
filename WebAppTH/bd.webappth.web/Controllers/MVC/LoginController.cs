@@ -52,7 +52,7 @@ namespace bd.webappth.web.Controllers.MVC
             }        
 
            var response = await apiServicio.ObtenerElementoAsync1<Response>(login,
-                                                             new Uri(AppGuardarLog.BaseAddress),
+                                                             new Uri(WebApp.BaseAddressSeguridad),
                                                              "/api/Adscpassws/Login");
 
            
@@ -80,7 +80,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-            var salvarToken = await apiServicio.InsertarAsync<Response>(permisoUsuario,new Uri(AppGuardarLog.BaseAddress), "/api/Adscpassws/SalvarToken");
+            var salvarToken = await apiServicio.InsertarAsync<Response>(permisoUsuario,new Uri(WebApp.BaseAddressSeguridad), "/api/Adscpassws/SalvarToken");
 
 
             var claims = new[]

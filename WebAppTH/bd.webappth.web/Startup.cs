@@ -39,8 +39,8 @@ namespace bd.webappth.web
             {
                 
                 options.Cookies.ApplicationCookie.LoginPath = new PathString("/Login/Index");
-                options.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Homes/AccesoDenegado");
-                
+                options.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Login/Index");
+
                 options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromHours(2);
 
             })
@@ -50,8 +50,8 @@ namespace bd.webappth.web
             services.AddMvc(
          
             );
-           
 
+            var appSettings = Configuration.GetSection("AppSettings");
 
             services.AddSingleton<IApiServicio, ApiServicio>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -65,16 +65,18 @@ namespace bd.webappth.web
             services.AddSingleton<IAuthorizationHandler, RolesHandler>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
-            await InicializarWebApp.InicializarWeb("SwTalentoHumano", new Uri("http://localhost:4000"));
-            await InicializarWebApp.InicializarWebRecursosMateriales("SwRecursosMateriales", new Uri("http://localhost:4000"));
-            await InicializarWebApp.InicializarLogEntry("LogWebService", new Uri("http://localhost:4000"));
-            //await InicializarWebApp.InicializarLogEntry("LogWebService", new Uri("http://192.168.100.21:8081"));
-            //await InicializarWebApp.InicializarWeb("SwTalentoHumano", new Uri("http://192.168.100.21:8081"));
-            //await InicializarWebApp.InicializarWebRecursosMateriales("SwRecursosMateriales", new Uri("http://192.168.100.21:8081"));
-            await InicializarWebApp.InicializarWeb("SwTalentoHumano", new Uri("http://localhost:5000"));
-            await InicializarWebApp.InicializarWebRecursosMateriales("SwRecursosMateriales", new Uri("http://192.168.100.21:8081"));
-            await InicializarWebApp.InicializarLogEntry("LogWebService", new Uri("http://localhost:5000"));
 
+            var ServicioSeguridad = Configuration.GetSection("ServicioSeguridad").Value;
+            var ServiciosLog = Configuration.GetSection("ServiciosLog").Value;
+            var ServicioTalentoHumano = Configuration.GetSection("ServiciosTalentoHumano").Value;
+            var ServiciosRecursosMateriales = Configuration.GetSection("ServiciosRecursosMateriales").Value;
+
+            var HostSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
+
+            await InicializarWebApp.InicializarWeb(ServicioTalentoHumano, new Uri(HostSeguridad));
+            await InicializarWebApp.InicializarSeguridad(ServicioSeguridad, new Uri(HostSeguridad));
+            await InicializarWebApp.InicializarWebRecursosMateriales(ServiciosRecursosMateriales, new Uri(HostSeguridad));
+            await InicializarWebApp.InicializarLogEntry(ServiciosLog, new Uri(HostSeguridad));
 
         }
 
@@ -83,6 +85,7 @@ namespace bd.webappth.web
         {
 
             app.UseExceptionHandler("/Home/Error");
+           
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 #pragma warning disable CS0612 // El tipo o el miembro están obsoletos

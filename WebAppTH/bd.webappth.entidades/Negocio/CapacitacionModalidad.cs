@@ -5,19 +5,16 @@ namespace bd.webappth.entidades.Negocio
 
     public partial class CapacitacionModalidad
     {
-        [Key]
-        public int IdCapacitacionModalidad { get; set; }
+        public CapacitacionModalidad()
+        {
+            CapacitacionPlanificacion = new HashSet<CapacitacionPlanificacion>();
+            CapacitacionTemarioProveedor = new HashSet<CapacitacionTemarioProveedor>();
+        }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Modalidad de capacitación:")]
-        [StringLength(20, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        public int IdCapacitacionModalidad { get; set; }
         public string Descripcion { get; set; }
 
-
-        //Propiedades Virtuales Referencias a otras clases
-
-        public virtual ICollection<CapacitacionTemarioProveedor> CapacitacionTemarioProveedor { get; set; }
-
         public virtual ICollection<CapacitacionPlanificacion> CapacitacionPlanificacion { get; set; }
+        public virtual ICollection<CapacitacionTemarioProveedor> CapacitacionTemarioProveedor { get; set; }
     }
 }

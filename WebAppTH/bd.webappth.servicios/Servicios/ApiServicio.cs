@@ -20,10 +20,10 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
-                  
-                    client.BaseAddress = baseAddress;
 
-                    var response = await client.PostAsync(url, content);
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
+
+                    var response = await client.PostAsync(new Uri(uri), content);
 
                     var resultado = await response.Content.ReadAsStringAsync();
                     var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
@@ -49,9 +49,9 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    client.BaseAddress = baseAddress;
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
 
-                    var response = await client.PostAsync(url, content);
+                    var response = await client.PostAsync(new Uri(uri), content);
 
                     var resultado = await response.Content.ReadAsStringAsync();
                     var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
@@ -77,9 +77,9 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    client.BaseAddress = baseAddress;
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
 
-                    var response = await client.PostAsync(url, content);
+                    var response = await client.PostAsync(new Uri(uri), content);
 
                     var resultado = await response.Content.ReadAsStringAsync();
                     var respuesta = JsonConvert.DeserializeObject<T>(resultado);
@@ -101,9 +101,9 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    client.BaseAddress = baseAddress;
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
 
-                    var response = await client.PostAsync(url, content);
+                    var response = await client.PostAsync(new Uri(uri), content);
 
                     var resultado = await response.Content.ReadAsStringAsync();
                     var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
@@ -120,7 +120,6 @@ namespace bd.webappth.servicios.Servicios
             }
         }
 
-
         public async Task<Response> EliminarAsync(object model, Uri baseAddress, string url)
         {
             try
@@ -130,9 +129,9 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    client.BaseAddress = baseAddress;
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
 
-                    var response = await client.PostAsync(url, content);
+                    var response = await client.PostAsync(new Uri(uri), content);
 
                     var resultado = await response.Content.ReadAsStringAsync();
                     var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
@@ -155,9 +154,10 @@ namespace bd.webappth.servicios.Servicios
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = baseAddress;
+                   
                     url = string.Format("{0}/{1}", url, id);
-                    var response = await client.DeleteAsync(url);
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
+                    var response = await client.DeleteAsync(new Uri(uri));
                     var resultado = await response.Content.ReadAsStringAsync();
                     var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
                     return respuesta;
@@ -172,6 +172,7 @@ namespace bd.webappth.servicios.Servicios
                 };
             }
         }
+
         public async Task<Response> EditarAsync<T>(string id,T model, Uri baseAddress, string url)
         {
             try
@@ -181,10 +182,10 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    client.BaseAddress = baseAddress;
+                   
                     url = string.Format("{0}/{1}", url, id);
-
-                    var response = await client.PutAsync(url, content);
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
+                    var response = await client.PutAsync(new Uri(uri), content);
                     var resultado = await response.Content.ReadAsStringAsync();
                     var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
                     return respuesta;
@@ -200,7 +201,6 @@ namespace bd.webappth.servicios.Servicios
             }
         }
 
-
         public async Task<List<T>> Listar<T>(object model, Uri baseAddress, string url) where T : class
         {
 
@@ -211,9 +211,9 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    client.BaseAddress = baseAddress;
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
 
-                    var response = await client.PostAsync(url, content);
+                    var response = await client.PostAsync(new Uri(uri), content);
 
                     var resultado = await response.Content.ReadAsStringAsync();
                     var respuesta = JsonConvert.DeserializeObject<List<T>>(resultado);
@@ -235,9 +235,8 @@ namespace bd.webappth.servicios.Servicios
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = baseAddress;
-                    var respuesta = await client.GetAsync(url);
-
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
+                    var respuesta = await client.GetAsync(new Uri(uri));
                     var resultado = await respuesta.Content.ReadAsStringAsync();
                     var response = JsonConvert.DeserializeObject<List<T>>(resultado);
                     return response ?? new List<T>();
@@ -250,15 +249,18 @@ namespace bd.webappth.servicios.Servicios
             }
                            
         }
+
         public async Task<T> SeleccionarAsync<T>(string id,Uri baseAddress, string url) where T : class
         {
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = baseAddress;
+                    
                     url = string.Format("{0}/{1}", url, id);
-                    var respuesta = await client.GetAsync(url);
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
+
+                    var respuesta = await client.GetAsync(new Uri(uri));
 
                     var resultado = await respuesta.Content.ReadAsStringAsync();
                     var response = JsonConvert.DeserializeObject<T>(resultado);
