@@ -66,5 +66,10 @@
     <ProjectReference Include="..\bd.webappth.entidades\bd.webappth.entidades.csproj" />
     <ProjectReference Include="..\bd.webappth.servicios\bd.webappth.servicios.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\Empleados\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>
