@@ -43,6 +43,9 @@ namespace bd.webappth.web.Controllers.MVC
             return View();
         }
 
+
+
+
         public async Task<IActionResult> Login(Login login,string returnUrl=null)
         {
 
@@ -77,8 +80,6 @@ namespace bd.webappth.web.Controllers.MVC
                 Usuario=usuario.AdpsLogin,
                 Token= Convert.ToString(guidUsuario),
             };
-
-
 
             var salvarToken = await apiServicio.InsertarAsync<Response>(permisoUsuario,new Uri(WebApp.BaseAddressSeguridad), "/api/Adscpassws/SalvarToken");
 

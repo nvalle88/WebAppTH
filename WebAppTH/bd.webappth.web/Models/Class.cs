@@ -29,15 +29,11 @@ namespace bd.webappth.web.Models
                 //Obtención del Context
                 var recurso = context.Resource as Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext;
 
-             
-
                 var httpContext = recurso.HttpContext;
                 var request = httpContext.Request;
                 var claim = context.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
                 var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
                 var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-
 
                 var permiso = new PermisoUsuario
                 {
