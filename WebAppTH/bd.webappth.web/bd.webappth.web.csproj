@@ -51,7 +51,6 @@
     <Folder Include="Views\DenominacionesCompetencias\" />
     <Folder Include="Views\ConfiguracionesViaticos\" />
     <Folder Include="Views\Dependencias\" />
-    <Folder Include="Views\Empleados\" />
     <Folder Include="wwwroot\js\datatables\" />
   </ItemGroup>
   <ItemGroup>

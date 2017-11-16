@@ -13,7 +13,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-check"></i> </span>
-                        <h2>Crear empleado </h2>
+                        <h2>Crear Empleado </h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -25,13 +25,13 @@
                                         <div class="form-bootstrapWizard">
                                             <ul class="bootstrapWizard form-wizard">
                                                 <li class="active" data-target="#step1">
-                                                    <a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Datos personales</span> </a>
+                                                    <a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Datos Personales</span> </a>
                                                 </li>
                                                 <li data-target="#step2">
                                                     <a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Informaci&oacute;n Familiar</span> </a>
                                                 </li>
                                                 <li data-target="#step3">
-                                                    <a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">formaci&oacute;n acad&eacute;mica y Trayectora Laboral</span> </a>
+                                                    <a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Formaci&oacute;n Acad&eacute;mica y Trayectora Laboral</span> </a>
                                                 </li>
                                                 <li data-target="#step4">
                                                     <a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Discapacidades</span> </a>
@@ -45,16 +45,15 @@
                                                 <br>
                                                 <div class="row">
                                                     <article class="col-lg-12">
-                                                        <legend>Tipo de nombramiento</legend>
+                                                        <legend>Tipo de Nombramiento</legend>
                                                         <div class="row">
                                                             <div class="col-sm-3">
-                                                                <label>R&eacute;gimen laboral:</label>
+                                                                <label>R&eacute;gimen Laboral:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
                                                                         <select  id="IdRegimenLaboral" class="form-control input " asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true' >
                                                                             <option value="0" selected=""disabled="">Seleccione</option>
-
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -64,18 +63,20 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                        <select id="IdRelacionLaboral"  class="form-control input "  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <select id="IdRelacionLaboral"  class="form-control input " asp-items="ViewBag.IdRelacionLaboral"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             <option value="0" selected="" disabled=""></option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
-                                                                <label>Tipo de nombramiento:</label>
+                                                                <label>Tipo de Nombramiento:</label>
                                                                 <div class="form-group">
                                                                     <div  class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                        <select  id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control input " ></select>
+                                                                        <select  id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control input "  >
+                                                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -84,14 +85,16 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                        <select id="IdModalidadPartida" asp-for="IndiceOcupacionalModalidadPartida.IdModalidadPartida" class="form-control input "></select>
+                                                                        <select id="IdModalidadPartida" asp-for="IndiceOcupacionalModalidadPartida.IdModalidadPartida" class="form-control input "  >
+                                                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-4">
-                                                                <label>Fondo de financiamiento:</label>
+                                                                <label>Fondo de Financimiento:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
@@ -103,10 +106,10 @@
                                                             </div>
                                                             <div class="col-sm-4">
                                                                 <div class="form-group">
-                                                                    <label>Salario real:</label>
+                                                                    <label>Salario Real:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="N&uacute;mero de cuenta" type="text">
+                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="Numero de la Cuenta" type="text">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -123,13 +126,13 @@
                                                         </div>
                                                     </article>
                                                     <article class="col-lg-12">
-                                                        <legend>Datos personales</legend>
+                                                        <legend>Datos Personales</legend>
                                                         <div class="row">
                                                             <div class="col-sm-3">
-                                                                <label>Tipo de identificaci&oacute;n:</label>
+                                                                <label>Tipo de Identificaci&oacute;n:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa list-alt"></i></span>
                                                                         <select asp-for="Persona.IdTipoIdentificacion" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdTipoIdentificacion">
                                                                             <option value="0" selected="" disabled="">Seleccione</option>
                                                                         </select>
@@ -138,10 +141,10 @@
                                                             </div>
                                                             <div class="col-sm-3">
                                                                 <div class="form-group">
-                                                                    <label>CI o pasaporte:</label>
+                                                                    <label>CI o Pasaporte:</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="Persona.Identificacion" class="form-control input " placeholder="Identificaci&oacute;n" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <span class="input-group-addon"><i class="fa-list-alt"></i></span>
+                                                                        <input asp-for="Persona.Identificacion" class="form-control input " placeholder="Identificacion" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -169,7 +172,7 @@
                                                                 <label>Sexo:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdSexo" class="form-control input " asp-items="ViewBag.IdSexo" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             <option value="0" selected="" disabled="">Seleccione</option>
                                                                         </select>
@@ -180,7 +183,7 @@
                                                                 <label>G&eacute;nero:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdGenero" class="form-control input " asp-items="ViewBag.IdGenero" data-msg-required='El campo es requerido' data-rule-required='true' >
                                                                             <option value="0" selected="" disabled="">Seleccione</option>
                                                                         </select>
@@ -191,7 +194,7 @@
                                                                 <label>Estado Civil:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdEstadoCivil" class="form-control input " asp-items="ViewBag.IdEstadoCivil" data-msg-required='El campo es requerido' data-rule-required='true' >
                                                                             <option value="0" selected="" disabled="">Seleccione</option>
                                                                         </select>
@@ -199,10 +202,10 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
-                                                                <label>Tipo de sangre:</label>
+                                                                <label>Tipo de Sangre:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa-stethoscope"></i></span>
                                                                         <select asp-for="Persona.IdTipoSangre" class="form-control input " asp-items="ViewBag.IdTipoSangre" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             <option value="0" selected="" disabled="">Seleccione</option>
                                                                         </select>
@@ -215,7 +218,7 @@
                                                                 <label>Nacionalidad:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdNacionalidad" class="form-control input " asp-items="ViewBag.IdNacionalidad" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             <option value="0" selected="" disabled="">Seleccione</option>
                                                                         </select>
@@ -226,7 +229,7 @@
                                                                 <label>Autoidentificaci&oacute;n &eacute;tnica:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                                         <select id="etniaE"  asp-for="Persona.IdEtnia" class="form-control input " asp-items="ViewBag.IdEtnia" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             <option value="0" selected="" disabled="">Seleccione</option>
                                                                         </select>
@@ -234,22 +237,22 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
-                                                                <label>Nacionalidad ind&iacute;gena:</label>
+                                                                <label>Nacionalidad Ind&iacute;gena:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                        <select id="nacionalidadIndigenaE" asp-for="Persona.IdNacionalidadIndigena" class="form-control input "  asp-items="ViewBag.IdNacionalidadIndigena">
-                                                                            <option value="0" selected="" disabled=""></option>
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                        <select id="nacionalidadIndigenaE" asp-for="Persona.IdNacionalidadIndigena" class="form-control input "  asp-items="ViewBag.IdNacionalidadIndigena" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                            <option value="0" selected="" disabled="">Seleccione</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
-                                                                <label>Correo privado:</label>
+                                                                <label>Correo Privado:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
-                                                                        <input asp-for="Persona.CorreoPrivado" class="form-control input " placeholder="Correo privado" data-msg-required='El campo es requerido' data-rule-required='true' data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
+                                                                        <input asp-for="Persona.CorreoPrivado" class="form-control input " placeholder="Correo Privado" data-msg-required='El campo es requerido' data-rule-required='true' data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -258,28 +261,27 @@
                                            
                                                             <div class="col-sm-3">
                                                                 <div class="form-group">    
-                                                                    <label>Fecha de nacimiento:</label>
+                                                                    <label>Fecha de Nacimiento:</label>
                                                                     <label class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                        <input asp-for="Persona.FechaNacimiento" type="text" class="form-control input datepicker " placeholder="Seleccione fecha inicio" data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <input asp-for="Persona.FechaNacimiento" type="text" class="form-control input datepicker " placeholder="Seleccione la Fecha de Inicio" data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </label>
                                                                 </div>
                                                             </div>
 
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label>Lugar de trabajo:</label>
+                                                                        <label>Lugar de Trabajo:</label>
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input asp-for="Persona.LugarTrabajo" class="form-control input " placeholder="Lugar de trabajo" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                            <span class="input-group-addon"><i class="fa fa-institution fa  fa-fw"></i></span>
+                                                                            <input asp-for="Persona.LugarTrabajo" class="form-control input " placeholder="Lugar de Trabajo" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3">
-
                                                                     <div class="form-group">
                                                                         <label class="checkbox">
-                                                                            <label>&iquest; Acumular fondos de reserva ?</label>
+                                                                            <label>&iquest; Acumular Fondos de Reserva ?</label>
                                                                             <input type="checkbox" asp-for="Empleado.FondosReservas" class="form-control" />
                                                                         </label>
                                                                     </div>
@@ -287,24 +289,13 @@
                                                             </div>
                                                         <div class="row">
                                                             <article class="col-lg-6">
-                                                                <legend>Lugar de nacimiento</legend>
+                                                                <legend>Lugar de Nacimiento</legend>
                                                                 <div class="row">
-                                                                    @*<div class="col-sm-6">
-                                                                        <label>Pa&iacute;s:</label>
-                                                                        <div class="form-group">
-                                                                            <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                <select id="paisLugarNacimiento" class="form-control input"  asp-items="ViewBag.IdPaisLugarNacimiento">
-                                                                                    <option value="0" selected="" disabled="">Seleccione</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>*@
                                                                     <div class="col-sm-6">
                                                                         <label>Pa&iacute;s:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
                                                                                 <select id="paisLugarNacimiento" class="form-control input " asp-items="ViewBag.IdPaisLugarNacimiento" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                     <option value="0" selected="" disabled="">Seleccione</option>
                                                                                 </select>
@@ -317,7 +308,7 @@
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
                                                                                 <select id="ciudadLugarNacimiento" class="form-control input" asp-for="Empleado.IdCiudadLugarNacimiento" asp-items="ViewBag.IdCiudadLugarNacimiento" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                    
+                                                                                    <option value="0" selected="" disabled="">Seleccione</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -325,7 +316,7 @@
                                                                 </div>
                                                             </article>
                                                             <article class="col-lg-6">
-                                                                <legend>Lugar de sufragio</legend>
+                                                                <legend>Lugar de Sufragio</legend>
                                                                 <div class="row">
                                                                     <div class="col-sm-6">
                                                                         <label>Pa&iacute;s:</label>
@@ -344,7 +335,7 @@
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
                                                                                 <select id="provinciaLugarSufragio" asp-for="Empleado.IdProvinciaLugarSufragio" class="form-control input " asp-items="ViewBag.IdProvinciaLugarSufragio" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                    <option value="0" selected="" disabled=""></option>
+                                                                                    <option value="0" selected="" disabled="">Seleccione</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -352,24 +343,24 @@
                                                                 </div>
                                                             </article>
                                                             <article class="col-lg-12">
-                                                                <legend>Direcci&oacute;n domicilio permanente</legend>
+                                                                <legend>Direcci&oacute;n Domicilio Permanente</legend>
                                                                 <div class="row">
                                                                     <div class="col-sm-4">
-                                                                        <label>Calle principal:</label>
+                                                                        <label>Calle Principal:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.CallePrincipal" class="form-control input " placeholder="Calle principal" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                                <input asp-for="Persona.CallePrincipal" class="form-control input " placeholder="Calle Principal" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             </div>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-sm-3">
-                                                                        <label>Calle secundaria:</label>
+                                                                        <label>Calle Secundaria:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.CalleSecundaria" class="form-control input " placeholder="Calle secundaria" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                                <input asp-for="Persona.CalleSecundaria" class="form-control input " placeholder="Calle Secundaria" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -378,18 +369,18 @@
                                                                         <label>Referencia:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
                                                                                 <input asp-for="Persona.Referencia" class="form-control input " placeholder="Referencia" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             </div>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-sm-2">
-                                                                        <label>No domicilio:</label>
+                                                                        <label>No. de Domicilio:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
-                                                                                <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.Numero" class="form-control input " placeholder="N&uacute;mero del domicilio" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <span class="input-group-addon"><i class="fa-slack"></i></span>
+                                                                                <input asp-for="Persona.Numero" class="form-control input " placeholder="Numero del Domicilio" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -414,7 +405,7 @@
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw" ></i></span>
                                                                                 <select id="provinciaLugarPersona" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                    <option value="0" selected="" disabled=""></option>
+                                                                                    <option value="0" selected="" disabled="">Seleccione</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -424,8 +415,8 @@
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                                <select id="idciudadLugarPersona" class="form-control input ">
-                                                                                    <option value="0"><Seleccione></option> 
+                                                                                <select id="idciudadLugarPersona" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                    <option value="0" selected="" disabled="">Seleccione</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -437,8 +428,8 @@
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                <select asp-for="Persona.IdParroquia" id="parroquiaLugarPersona" class="form-control input">
-                                                                                    <option value="0"><Seleccione></option>     
+                                                                                <select asp-for="Persona.IdParroquia" id="parroquiaLugarPersona" class="form-control input" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                    <option value="0" selected="" disabled="">Seleccione</option>   
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -446,7 +437,7 @@
                                                                 </div>
                                                                 <div class="row" >
                                                                     <div class="col-sm-6">
-                                                                        <label>Tel&eacute;fono de privado:</label>
+                                                                        <label>Tel&eacute;fono de Privado:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
@@ -455,11 +446,11 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
-                                                                        <label>Tel&eacute;fono de casa:</label>
+                                                                        <label>Tel&eacute;fono de Casa:</label>
                                                                         <div class="form-group">
                                                                             <div class="input-group">
                                                                                 <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
-                                                                                <input asp-for="Persona.TelefonoCasa" class="form-control input " data-mask="02-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text" data-msg-required='The input field is required.' data-rule-required='true'>
+                                                                                <input asp-for="Persona.TelefonoCasa" class="form-control input " data-mask="02-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -470,7 +461,7 @@
                                                         </div>
                                                     </article>
                                                     <article class="col-lg-12">
-                                                        <legend>Datos bancarios para dep&oacute;sito de haberes</legend>
+                                                        <legend>Datos Bancarios para Dep&oacute;sito de Haberes</legend>
                                                         <div class="row">
                                                             <div class="col-sm-4">
                                                                 <label>Instituci&oacute;n Financiera:</label>
@@ -485,10 +476,10 @@
                                                             </div>
                                                             <div class="col-sm-4">
                                                                 <div class="form-group">
-                                                                    <label>N&uacute;mero de cuenta:</label>
+                                                                    <label>N&uacute;mero de Cuenta:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="DatosBancarios.NumeroCuenta" class="form-control input " placeholder="N&uacute;mero de cuenta" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <input asp-for="DatosBancarios.NumeroCuenta" class="form-control input " placeholder="Numero de la Cuenta" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -496,7 +487,7 @@
                                                                
                                                                 <div class="form-group">
                                                                     <label class="checkbox">
-                                                                        <label>&iquest; Es cuenta de ahorros?</label>
+                                                                        <label>&iquest; Es Cuenta de Ahorros?</label>
                                                                         <input type="checkbox" asp-for="DatosBancarios.Ahorros" class="form-control" />
                                                                     </label>
                                                                 </div>
@@ -504,7 +495,7 @@
                                                         </div>
                                                     </article>
                                                     <article class="col-lg-12">
-                                                        <legend>Contacto en caso de emergencia</legend>
+                                                        <legend>Contacto en Caso de Emergencia</legend>
                                                         <div class="row">
                                                             <div class="col-sm-4">
                                                                 <label>Apellidos:</label>
@@ -528,8 +519,8 @@
                                                                 <div class="form-group">
                                                                     <label>Tel&eacute;fono Domicilio:</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.TelefonoCasa" class="form-control input " placeholder="Tel&eacute;fono Domicilio" type="text" data-msg-required='El campo es requerido' data-rule-required='true' >
+                                                                        <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
+                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.TelefonoCasa" class="form-control input " placeholder="Telefono Domicilio" type="text" data-msg-required='El campo es requerido' data-rule-required='true' >
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -540,8 +531,8 @@
                                                                 <label>Tel&eacute;fono Celular:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.TelefonoPrivado" class="form-control input " placeholder="Tel&eacute;fono Celular" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
+                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.TelefonoPrivado" class="form-control input " placeholder="Telefono Celular" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -549,53 +540,51 @@
                                                                 <label>Parentesco:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                                         <select asp-for="EmpleadoContactoEmergencia.IdParentesco" class="form-control input " asp-items="ViewBag.IdParentesco" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                             <option value="0" selected="" disabled="">Seleccione</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
-
                                                         </div>
                                                     </article>
                                                     <article class="col-lg-12">
-                                                        <legend>Informaci&oacute;n adicional</legend>
+                                                        <legend>Informaci&oacute;n Adicional</legend>
                                                         <div class="row">
                                                             <div class="col-sm-4">
                                                                 <div class="form-group">
-                                                                    <label>Fecha de ingreso sector p&uacute;blico:</label>
+                                                                    <label>Fecha de Ingreso al Sector P&uacute;blico:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                        <input asp-for="Empleado.FechaIngresoSectorPublico" type="text" class="form-control input datepicker " placeholder="Seleccione fecha ingreso sector público " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>                                                                    </div>
+                                                                        <input asp-for="Empleado.FechaIngresoSectorPublico" type="text" class="form-control input datepicker " placeholder="Seleccione Fecha de Ingreso del Sector Público " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
                                                                 <div class="form-group">
-                                                                    <label>Fecha de ingreso:</label>
+                                                                    <label>Fecha de Ingreso:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                        <input asp-for="Empleado.FechaIngreso" type="text" class="form-control input datepicker " placeholder="Seleccione fecha ingreso" data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <input asp-for="Empleado.FechaIngreso" type="text" class="form-control input datepicker " placeholder="Seleccione Fecha de Ingreso" data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-2">
                                                                 <div class="form-group">
-                                                                    <label>Meses de imposici&oacute;n:</label>
+                                                                    <label>Meses de Imposici&oacute;n:</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="Empleado.MesesImposiciones" class="form-control input " placeholder="Meses de imposici&oacute;n" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                        <input asp-for="Empleado.MesesImposiciones" class="form-control input " placeholder="Meses de Imposicion" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-sm-2">
                                                                 <div class="form-group">
-                                                                    <label>D&iacute;as de imposici&oacute;n:</label>
+                                                                    <label>D&iacute;as de Imposici&oacute;n:</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="Empleado.DiasImposiciones" class="form-control input " placeholder="D&iacute;as" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                        <input asp-for="Empleado.DiasImposiciones" class="form-control input " placeholder="Dias" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -604,16 +593,16 @@
                                                                     <label>Dependencia:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input  class="form-control input " placeholder="Dependencia" type="text" name="fname" id="fname">
+                                                                        <input  class="form-control input " placeholder="Dependencia" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-5">
                                                                 <div class="form-group">
-                                                                    <label>Ingreso de otra actividad:</label>
+                                                                    <label>Ingreso de otra Actividad:</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input asp-for="Empleado.IngresosOtraActividad" class="form-control input " placeholder="Ingreso de otra actividad" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <span class="input-group-addon"><i class="fa fa-edit fa  fa-fw"></i></span>
+                                                                        <input asp-for="Empleado.IngresosOtraActividad" class="form-control input " placeholder="Ingreso de Otra Actividad" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -623,7 +612,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label class="checkbox">
-                                                                        <label>&iquest; Trabaj&oacute; en la superintendencia de bancos?</label>
+                                                                        <label>&iquest; Trabaj&oacute; en la Superintendencia de Bancos?</label>
                                                                         <input type="checkbox" asp-for="Empleado.TrabajoSuperintendenciaBanco" class="form-control" />
                                                                     </label>
                                                                     </div>
@@ -652,11 +641,11 @@
                                                             <legend>Informaci&oacute;n Familiar</legend>
                                                             <div class="row">
                                                                 <div class="col-sm-3">
-                                                                    <label>Tipo de identificaci&oacute;n:</label>
+                                                                    <label>Tipo de Identificaci&oacute;n:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                            <select id="IdTipoIdentificacion" name="IdTipoIdentificacion" class="form-control" asp-items="ViewBag.IdTipoIdentificacion">
+                                                                            <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
+                                                                            <select id="IdTipoIdentificacion" name="IdTipoIdentificacion" class="form-control" asp-items="ViewBag.IdTipoIdentificacion" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
                                                                             </select>
                                                                         </div>
@@ -666,8 +655,8 @@
                                                                     <div class="form-group">
                                                                         <label>CI o Pasaporte:</label>
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input id="Identificacion" name="Identificacion" class="form-control input " placeholder="Identificaci&oacute;n" type="text">
+                                                                            <span class="input-group-addon"><i class="fa fa-list-alt fa  fa-fw"></i></span>
+                                                                            <input id="Identificacion" name="Identificacion" class="form-control input " placeholder="Identificaci&oacute;n" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -676,7 +665,7 @@
                                                                         <label>Nombres:</label>
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input id="Nombres" name="Nombres" class="form-control input " placeholder="Nombres" type="text" >
+                                                                            <input id="Nombres" name="Nombres" class="form-control input " placeholder="Nombres" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -685,7 +674,7 @@
                                                                         <label>Apellidos:</label>
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input id="Apellidos" name="Apellidos" class="form-control input " placeholder="Apellidos" type="text">
+                                                                            <input id="Apellidos" name="Apellidos" class="form-control input " placeholder="Apellidos" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -695,8 +684,10 @@
                                                                     <label>Sexo:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                            <select id="IdSexo" class="form-control input " asp-items="ViewBag.IdSexo"></select>
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <select id="IdSexo" class="form-control input " asp-items="ViewBag.IdSexo" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -704,8 +695,10 @@
                                                                     <label>G&eacute;nero:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                            <select id="IdGenero" class="form-control input " asp-items="ViewBag.IdGenero"></select>
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <select id="IdGenero" class="form-control input " asp-items="ViewBag.IdGenero" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -713,17 +706,21 @@
                                                                     <label>Estado Civil:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                            <select id="IdEstadoCivil" class="form-control input " asp-items="ViewBag.IdEstadoCivil"></select>
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <select id="IdEstadoCivil" class="form-control input " asp-items="ViewBag.IdEstadoCivil"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3">
-                                                                    <label>Tipo de sangre:</label>
+                                                                    <label>Tipo de Sangre:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                            <select id="IdTipoSangre" class="form-control input " asp-items="ViewBag.IdTipoSangre"></select>
+                                                                            <span class="input-group-addon"><i class="fa fa-stethoscope fa  fa-fw"></i></span>
+                                                                            <select id="IdTipoSangre" class="form-control input " asp-items="ViewBag.IdTipoSangre" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -733,35 +730,41 @@
                                                                     <label>Nacionalidad:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                            <select id="IdNacionalidad" class="form-control input " asp-items="ViewBag.IdNacionalidad"></select>
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <select id="IdNacionalidad" class="form-control input " asp-items="ViewBag.IdNacionalidad" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3">
-                                                                    <label>Autoidentificaci&oacute;n &eacute;tnica:</label>
+                                                                    <label>Autoidentificaci&oacute;n &Eacute;tnica:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                            <select id="etniaF" class="form-control input " asp-items="ViewBag.IdEtnia"></select>
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <select id="etniaF" class="form-control input " asp-items="ViewBag.IdEtnia" >
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3">
-                                                                    <label>Nacionalidad ind&iacute;gena:</label>
+                                                                    <label>Nacionalidad Ind&iacute;gena:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                            <select id="nacionalidadIndigenaF" class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena"></select>
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <select id="nacionalidadIndigenaF" class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena">
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3">
-                                                                    <label>Correo privado:</label>
+                                                                    <label>Correo Privado:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
-                                                                            <input id="CorreoPrivado" class="form-control input " placeholder="Correo privado" type="text">
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <input id="CorreoPrivado" class="form-control input " placeholder="Correo Privado" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -769,20 +772,21 @@
                                                             <div class="row">
                                                                 <div class="col-sm-3">
                                                                     <div class="form-group">
-                                                                        <label>Fecha de nacimiento:</label>
+                                                                        <label>Fecha de Nacimiento:</label>
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                            <input id="FechaNacimiento" name="FechaNacimiento" type="text" class="form-control input datepicker " placeholder="Fecha de nacimiento: " data-dateformat='dd/mm/yy'>
+                                                                            <input id="FechaNacimiento" name="FechaNacimiento" type="text" class="form-control input datepicker " placeholder="Fecha de Nacimiento: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-sm-3">
                                                                     <div class="form-group">
-                                                                        <label>Lugar de trabajo:</label>
+                                                                        <label>Lugar de Trabajo:</label>
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input id="LugarTrabajo" class="form-control input " placeholder="Lugar de trabajo" type="text" name="fname" id="fname">
+                                                                            <span class="input-group-addon"><i class="fa fa-institution fa  fa-fw"></i></span>
+                                                                            <input id="LugarTrabajo" class="form-control input " placeholder="Lugar de Trabajo" data-msg-required='El campo es requerido' data-rule-required='true' >
+                                          
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -790,8 +794,8 @@
                                                                     <div class="form-group">
                                                                         <label>Ocupaci&oacute;n:</label>
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input id="Ocupacion" class="form-control input " placeholder="Ocupacion" type="text" name="fname" id="fname">
+                                                                            <span class="input-group-addon"><i class="fa fa-edit fa  fa-fw"></i></span>
+                                                                            <input id="Ocupacion" class="form-control input " placeholder="Ocupacion" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -799,8 +803,8 @@
                                                                     <label>Parentesco:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                            <select id="Parentesco" name="Parentesco" class="form-control input " asp-items="ViewBag.IdParentesco">
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                            <select id="Parentesco" name="Parentesco" class="form-control input " asp-items="ViewBag.IdParentesco"  data-msg-required='El campo es requerido' data-rule-required='true' >
                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
                                                                             </select>
                                                                         </div>
@@ -809,24 +813,24 @@
                                                             </div>
                                                         </article>                                                           
                                                         <article class="col-lg-12">
-                                                                    <legend>Direcci&oacute;n domicilio permanente</legend>
+                                                                    <legend>Direcci&oacute;n Domicilio Permanente</legend>
                                                                     <div class="row">
                                                                         <div class="col-sm-4">
-                                                                            <label>Calle principal:</label>
+                                                                            <label>Calle Principal:</label>
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
-                                                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                    <input id="CallePrincipal" class="form-control input " placeholder="Calle principal" type="text" name="fcallePrincipal" id="fcallePrincipal">
+                                                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                                    <input id="CallePrincipal" class="form-control input " placeholder="Calle Principal" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
 
                                                                         <div class="col-sm-3">
-                                                                            <label>Calle secundaria:</label>
+                                                                            <label>Calle Secundaria:</label>
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
-                                                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                    <input id="CalleSecundaria" class="form-control input " placeholder="Calle secundaria" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                                    <input id="CalleSecundaria" class="form-control input " placeholder="Calle Secundaria" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -835,18 +839,18 @@
                                                                             <label>Referencia:</label>
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
-                                                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                    <input id="Referencia" class="form-control input " placeholder="Referencia" type="text" name="freferencia" id="freferencia">
+                                                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                                    <input id="Referencia" class="form-control input " placeholder="Referencia" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
 
                                                                         <div class="col-sm-2">
-                                                                            <label>No domicilio:</label>
+                                                                            <label>No. de Domicilio:</label>
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
-                                                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                    <input id="Numero" class="form-control input " placeholder="N&uacute;mero del domicilio" type="text" name="fname" id="fname">
+                                                                                    <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                                    <input id="Numero" class="form-control input " placeholder="Numero del Domicilio" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -858,7 +862,9 @@
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                    <select id="paisLugarFamiliar" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"></select>
+                                                                                    <select id="paisLugarFamiliar" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"  data-msg-required='El campo es requerido' data-rule-required='true' >
+                                                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -868,7 +874,9 @@
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                    <select id="provinciaLugarFamiliar" class="form-control input "></select>
+                                                                                    <select id="provinciaLugarFamiliar" class="form-control input "  data-msg-required='El campo es requerido' data-rule-required='true' >
+                                                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -877,7 +885,9 @@
                                                                                 <div class="form-group">
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                                        <select id="idciudadLugarFamiliar" class="form-control input "></select>
+                                                                                        <select id="idciudadLugarFamiliar" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' >
+                                                                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                                                                        </select>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>             
@@ -888,27 +898,29 @@
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                    <select id="parroquiaLugarFamiliar" class="form-control input"></select>
+                                                                                    <select id="parroquiaLugarFamiliar" class="form-control input"  data-msg-required='El campo es requerido' data-rule-required='true' >
+                                                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col-sm-6">
-                                                                            <label>Tel&eacute;fono de privado:</label>
+                                                                            <label>Tel&eacute;fono de Privado:</label>
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
-                                                                                    <input id="TelefonoPrivado" class="form-control input " data-mask="99-9999-9999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text" name="hphone" id="hphone">
+                                                                                    <input id="TelefonoPrivado" class="form-control input " data-mask="99-9999-9999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-6">
-                                                                            <label>Tel&eacute;fono de casa:</label>
+                                                                            <label>Tel&eacute;fono de Casa:</label>
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
-                                                                                    <input id="TelefonoCasa" class="form-control input " data-mask="02-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text" name="wphone" id="wphone">
+                                                                                    <input id="TelefonoCasa" class="form-control input " data-mask="02-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -917,9 +929,6 @@
 
                                                     </div>
 
-                                                    
-                                                    
-                                                    @*<input id="agregarfamiliar" type="button" value="Agregar Familiar" />*@
                                                     <footer>
                                                         <button id="agregarfamiliar" type="submit" class="btn btn-primary">
                                                             Insertar Familiar
@@ -941,19 +950,7 @@
                             data-widget-fullscreenbutton="false"
                             data-widget-custombutton="false"
                             data-widget-sortable="false">
-                                                                            <!-- widget options:
-                            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                            data-widget-colorbutton="false"
-                            data-widget-editbutton="false"
-                            data-widget-togglebutton="false"
-                            data-widget-deletebutton="false"
-                            data-widget-fullscreenbutton="false"
-                            data-widget-custombutton="false"
-                            data-widget-collapsed="true"
-                            data-widget-sortable="false"
-
-                            -->
+                                                                        
                                                                             <header>
                                                                                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                                                                                 <h2>Familiares de Empleado</h2>
@@ -974,7 +971,7 @@
                                                                                                     Apellidos y Nombres Completos:
                                                                                                 </th>
                                                                                                 <th>
-                                                                                                    C&eacute;dula de Ciudadania
+                                                                                                    C&eacute;dula de Ciudadan&iacute;a
                                                                                                 </th>
                                                                                                 <th>
                                                                                                     Sexo
@@ -1023,8 +1020,10 @@
                                                                 <label>Nivel de Estudio:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                        <select id="IdEstudio" class="form-control" asp-items="ViewBag.IdEstudio"></select>
+                                                                        <span class="input-group-addon"><i class="fa fa-book fa fa-fw"></i></span>
+                                                                        <select id="IdEstudio" class="form-control" asp-items="ViewBag.IdEstudio"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1032,8 +1031,10 @@
                                                                 <label>&Aacute;rea  de Conocimiento:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                        <select id="IdAreaConocimiento" class="form-control" asp-items="ViewBag.IdAreaConocimiento"></select>
+                                                                        <span class="input-group-addon"><i class="fa fa-book fa fa-fw"></i></span>
+                                                                        <select id="IdAreaConocimiento" class="form-control" asp-items="ViewBag.IdAreaConocimiento"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1041,17 +1042,19 @@
                                                                 <label>T&iacute;tulo:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                        <select id="IdTitulo" class="form-control" asp-items="ViewBag.IdTitulo"></select>
+                                                                        <span class="input-group-addon"><i class="fa fa-graduation-cap fa fa-fw"></i></span>
+                                                                        <select id="IdTitulo" class="form-control" asp-items="ViewBag.IdTitulo"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
                                                                 <div class="form-group">
-                                                                    <label>Fecha graduado:</label>
+                                                                    <label>Fecha del Graduado:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                        <input id="FechaGraduado" type="text" class="form-control input datepicker " placeholder="Seleccione fecha graduado" data-dateformat='dd/mm/yy'>
+                                                                        <input id="FechaGraduado" type="text" class="form-control input datepicker " placeholder="Seleccione Fecha de Graduado" data-dateformat='dd/mm/yy'  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1060,11 +1063,11 @@
                                                 </div>
                                                 <div class="row">                                    
                                                         <div class="col-sm-3">
-                                                            <label>No Senescyt:</label>
+                                                            <label>No. Senescyt:</label>
                                                             <div class="form-group">
                                                                 <div class="input-group">
-                                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                    <input id="NoSenescyt" class="form-control input " placeholder="No Senescyt" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                    <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                    <input id="NoSenescyt" class="form-control input " placeholder="No. Senescyt" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                 </div>
                                                             </div>
                                                         </div>   
@@ -1073,7 +1076,7 @@
                                                         <div class="form-group">
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                <input id="Observaciones" class="form-control input " placeholder="Observaciones" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                <input id="Observaciones" class="form-control input " placeholder="Observaciones" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                             </div>
                                                         </div>
                                                     </div>  
@@ -1101,19 +1104,7 @@
                                                                          data-widget-fullscreenbutton="false"
                                                                          data-widget-custombutton="false"
                                                                          data-widget-sortable="false">
-                                                                        <!-- widget options:
-                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                                data-widget-colorbutton="false"
-                                data-widget-editbutton="false"
-                                data-widget-togglebutton="false"
-                                data-widget-deletebutton="false"
-                                data-widget-fullscreenbutton="false"
-                                data-widget-custombutton="false"
-                                data-widget-collapsed="true"
-                                data-widget-sortable="false"
-
-                                -->
+                                                                        
                                                                         <header>
                                                                             <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                                                                             <h2>Formaci&oacute;n Acad&eacute;mica</h2>
@@ -1140,7 +1131,7 @@
                                                                                                 T&iacute;tulo 
                                                                                             </th>
                                                                                             <th>
-                                                                                                Fecha Graduado
+                                                                                                Fecha del Graduado
                                                                                             </th>
                                                                                             <th>
                                                                                                 Opciones
@@ -1172,19 +1163,19 @@
                                                         <div class="row">
                                                             <div class="col-sm-3">
                                                                 <div class="form-group">
-                                                                    <label>Fecha inicio:</label>
+                                                                    <label>Fecha de Inicio:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                        <input id="FechaInicio" type="text" class="form-control input datepicker " placeholder="Seleccione fecha inicio" data-dateformat='dd/mm/yy'>
+                                                                        <input id="FechaInicio" type="text" class="form-control input datepicker " placeholder="Seleccione Fecha Inicio" data-dateformat='dd/mm/yy'  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3">
                                                                 <div class="form-group">
-                                                                    <label>Fecha fin:</label>
+                                                                    <label>Fecha Fin:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                        <input id="FechaFin" type="text" class="form-control input datepicker " placeholder="Seleccione fecha fin" data-dateformat='dd/mm/yy'>
+                                                                        <input id="FechaFin" type="text" class="form-control input datepicker " placeholder="Seleccione Fecha Fin" data-dateformat='dd/mm/yy'  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1193,8 +1184,8 @@
                                                                 <label>Empresa:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input id="Empresa" class="form-control input " placeholder="Empresa" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                        <span class="input-group-addon"><i class="fa fa-institution fa  fa-fw"></i></span>
+                                                                        <input id="Empresa" class="form-control input " placeholder="Empresa" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1204,7 +1195,7 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                        <input id="PuestoTrabajo" class="form-control input " placeholder="PuestoTrabajo" type="text" name="freferencia" id="freferencia">
+                                                                        <input id="PuestoTrabajo" class="form-control input " placeholder="PuestoTrabajo" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1219,8 +1210,8 @@
                                                         <label>Descripci&oacute;n:</label>
                                                         <label class="textarea form-group"></label>
                                                         <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-comment"></i></span>
-                                                            <textarea id="DescripcionFunciones" maxlength="1000" class="form-control input" rows="2"></textarea>
+                                                            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                                            <textarea id="DescripcionFunciones" maxlength="1000" class="form-control input" rows="2"  data-msg-required='El campo es requerido' data-rule-required='true'></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1248,19 +1239,7 @@
                                                                          data-widget-fullscreenbutton="false"
                                                                          data-widget-custombutton="false"
                                                                          data-widget-sortable="false">
-                                                                        <!-- widget options:
-                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                                data-widget-colorbutton="false"
-                                data-widget-editbutton="false"
-                                data-widget-togglebutton="false"
-                                data-widget-deletebutton="false"
-                                data-widget-fullscreenbutton="false"
-                                data-widget-custombutton="false"
-                                data-widget-collapsed="true"
-                                data-widget-sortable="false"
-
-                                -->
+                                                                       
                                                                         <header>
                                                                             <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                                                                             <h2>Trayectoria Laboral</h2>
@@ -1328,8 +1307,10 @@
                                                                     <label>Tipo de Discapacidad:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                            <select id="IdTipoDiscapacidad" class="form-control" asp-items="ViewBag.IdTipoDiscapacidad"></select>
+                                                                            <span class="input-group-addon"><i class="fa fa-user fa fa-fw"></i></span>
+                                                                            <select id="IdTipoDiscapacidad" class="form-control" asp-items="ViewBag.IdTipoDiscapacidad"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1337,8 +1318,8 @@
                                                                     <label>N&uacute;mero de Carnet:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input id="NumeroCarnet" class="form-control input " placeholder="N&uacute;mero de Carnet" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                            <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                            <input id="NumeroCarnet" class="form-control input " placeholder="Numero de Carnet" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1346,8 +1327,8 @@
                                                                     <label>Porciento:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input id="Porciento" class="form-control input " placeholder="Porciento" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                            <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                            <input id="Porciento" class="form-control input " placeholder="Porciento" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1376,19 +1357,7 @@
                                                                              data-widget-fullscreenbutton="false"
                                                                              data-widget-custombutton="false"
                                                                              data-widget-sortable="false">
-                                                                            <!-- widget options:
-                            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                            data-widget-colorbutton="false"
-                            data-widget-editbutton="false"
-                            data-widget-togglebutton="false"
-                            data-widget-deletebutton="false"
-                            data-widget-fullscreenbutton="false"
-                            data-widget-custombutton="false"
-                            data-widget-collapsed="true"
-                            data-widget-sortable="false"
-
-                            -->
+                                                                            
                                                                             <header>
                                                                                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                                                                                 <h2>Detalle Discapacidades</h2>
@@ -1446,8 +1415,10 @@
                                                                     <label>Tipo de Enfermedad:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                            <select id="IdTipoEnfermedad" class="form-control" asp-items="ViewBag.IdTipoEnfermedad"></select>
+                                                                            <span class="input-group-addon"><i class="fa fa-stethoscope fa fa-fw"></i></span>
+                                                                            <select id="IdTipoEnfermedad" class="form-control" asp-items="ViewBag.IdTipoEnfermedad" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1455,8 +1426,8 @@
                                                                     <label>Instituci&oacute;n que Emite:</label>
                                                                     <div class="form-group">
                                                                         <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <input id="InstitucionEmite" class="form-control input " placeholder="Instituci&oacute;n que Emite" type="text" name="fcalleSecundaria" id="fcalleSecundaria">
+                                                                            <span class="input-group-addon"><i class="fa fa-institution fa  fa-fw"></i></span>
+                                                                            <input id="InstitucionEmite" class="form-control input " placeholder="Institucion que Emite" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>                         
@@ -1485,19 +1456,7 @@
                                                                              data-widget-fullscreenbutton="false"
                                                                              data-widget-custombutton="false"
                                                                              data-widget-sortable="false">
-                                                                            <!-- widget options:
-                            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                            data-widget-colorbutton="false"
-                            data-widget-editbutton="false"
-                            data-widget-togglebutton="false"
-                            data-widget-deletebutton="false"
-                            data-widget-fullscreenbutton="false"
-                            data-widget-custombutton="false"
-                            data-widget-collapsed="true"
-                            data-widget-sortable="false"
-
-                            -->
+                                                                           
                                                                             <header>
                                                                                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                                                                                 <h2>Detalle Enfermedades</h2>
@@ -1553,20 +1512,22 @@
                                                              <legend>Empleado Sustituto </legend>
                                                              <div class="row">
                                                                  <div class="col-sm-3">
-                                                                     <label>Tipo de identificaci&oacute;n:</label>
+                                                                     <label>Tipo de Identificaci&oacute;n:</label>
                                                                      <div class="form-group">
                                                                          <div class="input-group">
-                                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                             <select asp-for="PersonaSustituto.PersonaDiscapacidad.IdTipoIdentificacion" class="form-control" asp-items="ViewBag.IdTipoIdentificacion"></select>
+                                                                             <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
+                                                                             <select asp-for="PersonaSustituto.PersonaDiscapacidad.IdTipoIdentificacion" class="form-control" asp-items="ViewBag.IdTipoIdentificacion" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
+                                                                             </select>
                                                                          </div>
                                                                      </div>
                                                                  </div>
                                                                  <div class="col-sm-3">                                                                     
                                                                      <div class="form-group">
-                                                                         <label>CI o pasaporte:</label>
+                                                                         <label>CI o Pasaporte:</label>
                                                                          <div class="input-group">
-                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.Identificacion" class="form-control input " placeholder="Identificaci&oacute;n" type="text">
+                                                                             <span class="input-group-addon"><i class="fa fa-list-alt fa  fa-fw"></i></span>
+                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.Identificacion" class="form-control input " placeholder="Identificacion" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                          </div>
                                                                      </div>
                                                                  </div>
@@ -1575,7 +1536,7 @@
                                                                          <label>Nombres:</label>
                                                                          <div class="input-group">
                                                                              <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.Nombres" class="form-control input " placeholder="Nombres" type="text" name="fname" id="fname">
+                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.Nombres" class="form-control input " placeholder="Nombres" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                          </div>
                                                                      </div>
                                                                  </div>
@@ -1584,7 +1545,7 @@
                                                                          <label>Apellidos:</label>
                                                                          <div class="input-group">
                                                                              <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.Apellidos" class="form-control input " placeholder="Apellidos" type="text" name="fname" id="fname">
+                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.Apellidos" class="form-control input " placeholder="Apellidos" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                          </div>
                                                                      </div>
                                                                  </div>
@@ -1595,18 +1556,20 @@
                                                                      <label>Nacionalidad:</label>
                                                                      <div class="form-group">
                                                                          <div class="input-group">
-                                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                             <select asp-for="PersonaSustituto.PersonaDiscapacidad.IdNacionalidad" class="form-control input " asp-items="ViewBag.IdNacionalidad"></select>
+                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                             <select asp-for="PersonaSustituto.PersonaDiscapacidad.IdNacionalidad" class="form-control input " asp-items="ViewBag.IdNacionalidad" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
+                                                                             </select>
                                                                          </div>
                                                                      </div>
                                                                  </div>
 
                                                                  <div class="col-sm-3">
                                                                      <div class="form-group">
-                                                                         <label>Fecha de nacimiento:</label>
+                                                                         <label>Fecha de Nacimiento:</label>
                                                                          <label class="input-group">
                                                                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.FechaNacimiento" type="text" class="form-control input datepicker " placeholder="Seleccione fecha inicio" data-dateformat='dd/mm/yy'>
+                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.FechaNacimiento" type="text" class="form-control input datepicker " placeholder="Seleccione Fecha Inicio" data-dateformat='dd/mm/yy'>
                                                                          </label>
                                                                      </div>
                                                                  </div>
@@ -1615,8 +1578,8 @@
                                                                      <label>Tel&eacute;fono Convencional:</label>
                                                                      <div class="form-group">
                                                                          <div class="input-group">
-                                                                             <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
-                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.TelefonoCasa" class="form-control input " placeholder="Tel&eacute;fono Convencional" name="email">
+                                                                             <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
+                                                                             <input asp-for="PersonaSustituto.PersonaDiscapacidad.TelefonoCasa" class="form-control input " placeholder="Tel&eacute;fono Convencional" name="email" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                          </div>
                                                                      </div>
                                                                  </div>
@@ -1624,14 +1587,80 @@
                                                                      <label>Parentesco:</label>
                                                                      <div class="form-group">
                                                                          <div class="input-group">
-                                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                             <select asp-for="PersonaSustituto.IdParentesco" class="form-control" asp-items="ViewBag.IdParentesco"></select>
+                                                                             <span class="input-group-addon"><i class="fa fa-user fa fa-fw"></i></span>
+                                                                             <select asp-for="PersonaSustituto.IdParentesco" class="form-control" asp-items="ViewBag.IdParentesco" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
+                                                                             </select>
                                                                          </div>
                                                                      </div>
                                                                  </div>
                                                                 
                                                              </div>
-                                     
+
+                                                             <div class="row">
+
+                                                                 <div class="col-sm-3">
+                                                                     <label>Sexo:</label>
+                                                                     <div class="form-group">
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                             <select asp-for="PersonaSustituto.PersonaDiscapacidad.IdSexo" class="form-control input " asp-items="ViewBag.IdSexo" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
+                                                                             </select>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                 <div class="col-sm-3">
+                                                                     <label>G&eacute;nero:</label>
+                                                                     <div class="form-group">
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                             <select asp-for="PersonaSustituto.PersonaDiscapacidad.IdGenero" class="form-control input " asp-items="ViewBag.IdGenero" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
+                                                                             </select>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                 <div class="col-sm-3">
+                                                                     <label>Estado Civil:</label>
+                                                                     <div class="form-group">
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                             <select asp-for="PersonaSustituto.PersonaDiscapacidad.IdEstadoCivil" class="form-control input " asp-items="ViewBag.IdEstadoCivil" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
+                                                                             </select>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                 <div class="col-sm-3">
+                                                                     <label>Tipo de Sangre:</label>
+                                                                     <div class="form-group">
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-stethoscope fa  fa-fw"></i></span>
+                                                                             <select asp-for="PersonaSustituto.PersonaDiscapacidad.IdTipoSangre" class="form-control input " asp-items="ViewBag.IdTipoSangre" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
+                                                                             </select>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+
+                                                             </div>
+
+                                                             <div class="row">
+                                                                 <div class="col-sm-3">
+                                                                     <label>Autoidentificaci&oacute;n &Eacute;tnica:</label>
+                                                                     <div class="form-group">
+                                                                         <div class="input-group">
+                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                             <select id="etniaE" asp-for="PersonaSustituto.PersonaDiscapacidad.IdEtnia" class="form-control input " asp-items="ViewBag.IdEtnia" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
+                                                                             </select>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+
+                                                             </div>
+
                                                              <div class="row">
                                                                  <article class="col-lg-6">
                                                                      <legend>Discapacidades</legend>
@@ -1640,8 +1669,10 @@
                                                                              <label>Discapacidad:</label>
                                                                              <div class="form-group">
                                                                                  <div class="input-group">
-                                                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                     <select id="IdTipoDiscapacidadSustituto" class="form-control input " asp-items="ViewBag.IdTipoDiscapacidad"></select>
+                                                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                                                     <select id="IdTipoDiscapacidadSustituto" class="form-control input " asp-items="ViewBag.IdTipoDiscapacidad"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                         <option value="0" selected="" disabled="">Seleccione</option>
+                                                                                     </select>
                                                                                  </div>
                                                                              </div>
                                                                          </div>
@@ -1650,7 +1681,7 @@
                                                                                  <label>% Discapacidad:</label>
                                                                                  <div class="input-group">
                                                                                      <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                     <input id="PorcentajeDiscapacidadSustituto" class="form-control input " placeholder="Porcentaje" type="text" name="fname" id="fname">
+                                                                                     <input id="PorcentajeDiscapacidadSustituto" class="form-control input " placeholder="Porcentaje" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                  </div>
                                                                              </div>
                                                                          </div>
@@ -1658,8 +1689,8 @@
                                                                              <div class="form-group">
                                                                                  <label>N&uacute;mero de Carnet:</label>
                                                                                  <div class="input-group">
-                                                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                     <input id="NumeroCarnetSustituto" class="form-control input " placeholder="# de Carnet" type="text" name="fname" id="fname">
+                                                                                     <span class="input-group-addon"><i class="fa fa-list-alt fa  fa-fw"></i></span>
+                                                                                     <input id="NumeroCarnetSustituto" class="form-control input " placeholder="# de Carnet" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                  </div>
                                                                              </div>
                                                                          </div>
@@ -1686,19 +1717,7 @@
                                                                                                   data-widget-fullscreenbutton="false"
                                                                                                   data-widget-custombutton="false"
                                                                                                   data-widget-sortable="false">
-                                                                                                 <!-- widget options:
-                             usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                            data-widget-colorbutton="false"
-                            data-widget-editbutton="false"
-                            data-widget-togglebutton="false"
-                            data-widget-deletebutton="false"
-                            data-widget-fullscreenbutton="false"
-                            data-widget-custombutton="false"
-                            data-widget-collapsed="true"
-                            data-widget-sortable="false"
-
-                            -->
+                                                                                               
                                                                                                  <header>
                                                                                                      <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                                                                                                      <h2>Detalle Discapacidades</h2>
@@ -1758,16 +1777,16 @@
                                                                              <div class="form-group">
                                                                                  <div class="input-group">
                                                                                      <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                     <select id="IdTipoEnfermedadSustituto" class="form-control input " asp-items="ViewBag.IdTipoEnfermedad"></select>
+                                                                                     <select id="IdTipoEnfermedadSustituto" class="form-control input " asp-items="ViewBag.IdTipoEnfermedad"  data-msg-required='El campo es requerido' data-rule-required='true'></select>
                                                                                  </div>
                                                                              </div>
                                                                          </div>
                                                                          <div class="col-sm-8">
                                                                              <div class="form-group">
-                                                                                 <label>Instituci&oacute;n que emite certificado:</label>
+                                                                                 <label>Instituci&oacute;n que Emite Certificado:</label>
                                                                                  <div class="input-group">
-                                                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                                     <input id="InstitucionEmiteSustituto" class="form-control input " placeholder="Instituci&oacute;n que emite certificado" type="text" name="fname" id="fname">
+                                                                                     <span class="input-group-addon"><i class="fa fa-institution fa  fa-fw"></i></span>
+                                                                                     <input id="InstitucionEmiteSustituto" class="form-control input " placeholder="Instituci&oacute;n que Emite Certificado" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                  </div>
                                                                              </div>
                                                                          </div>
@@ -1793,19 +1812,7 @@
                                                                                               data-widget-fullscreenbutton="false"
                                                                                               data-widget-custombutton="false"
                                                                                               data-widget-sortable="false">
-                                                                                             <!-- widget options:
-                             usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                            data-widget-colorbutton="false"
-                            data-widget-editbutton="false"
-                            data-widget-togglebutton="false"
-                            data-widget-deletebutton="false"
-                            data-widget-fullscreenbutton="false"
-                            data-widget-custombutton="false"
-                            data-widget-collapsed="true"
-                            data-widget-sortable="false"
-
-                            -->
+                                                                                            
                                                                                              <header>
                                                                                                  <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                                                                                                  <h2>Detalle Enfermedades</h2>
@@ -1856,6 +1863,9 @@
                      
 
                                                              </div>
+
+
+
                                                          </article>
 
                                                      </div>
@@ -1866,17 +1876,13 @@
                                                     <div class="row">
                                                         <div class="col-sm-12">
                                                             <ul class="pager wizard no-margin">
-                                                                <!--<li class="previous first disabled">
-                        <a href="javascript:void(0);" class="btn btn  btn-default"> First </a>
-                        </li>-->
+                                                                
                                                                 <li class="previous disabled">
-                                                                    <a href="javascript:void(0);" class="btn btn  btn-default"> Previous </a>
+                                                                    <a href="javascript:void(0);" class="btn btn  btn-default"> Antes </a>
                                                                 </li>
-                                                                <!--<li class="next last">
-                        <a href="javascript:void(0);" class="btn btn  btn-primary"> Last </a>
-                        </li>-->
+                                                                
                                                                 <li class="next">
-                                                                    <a href="javascript:void(0);" class="btn btn  txt-color-darken"> Next </a>
+                                                                    <a href="javascript:void(0);" class="btn btn  txt-color-darken"> Despues </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -1928,8 +1934,26 @@
                     },
                     FechaNacimiento: {
                         required: true
-                     },
+                    },
                     Parentesco: {
+                        required: true
+                    },
+                    IdRelacionLaboral: {
+                        required: true
+                    },
+                    paisLugarNacimiento: {
+                        required: true
+                    },
+                    paisLugarSufragio: {
+                        required: true
+                    },
+                    paisLugarPersona: {
+                        required: true
+                    },
+                    provinciaLugarPersona: {
+                        required: true
+                    },
+                    idciudadLugarPersona: {
                           required: true
                       }
                 },
@@ -1942,6 +1966,12 @@
                     Nombres: "El campo es requerido",
                     FechaNacimiento: "El campo es requerido",
                     Parentesco: "El campo es requerido",
+                    IdRelacionLaboral: "El campo es requerido",
+                    paisLugarNacimiento: "El campo es requerido",
+                    paisLugarSufragio: "El campo es requerido",
+                    paisLugarPersona: "El campo es requerido",
+                    provinciaLugarPersona: "El campo es requerido",
+                    idciudadLugarPersona: "El campo es requerido",
                     email: {
                         required: "We need your email address to contact you",
                         email: "Your email address must be in the format of name@domain.com"
@@ -2475,37 +2505,41 @@
                         Ocupacion: $("#Ocupacion").val(),
                     },
                 success: function (data) {
-                        if (data == true) {
-                            var text = '<a class="delete" cedula="jsvar" href="#">Eliminar</a>';
-                            text = text.replace("jsvar", $("#Identificacion").val());
-                            $('#dt_basic').find('#tbody').append([
-                                '<tr>',
-                                '<td  class="ApellidoNombre">' + $("#Apellidos").val() + ' ' + $("#Nombres").val() + '</td>',
-                                '<td  class="Identificacion">' + $("#Identificacion").val() +'</td>',
-                                '<td  class="Sexo">' + $("#IdSexo option:selected").text() +'</td>',
-                                '<td  class="FechaNacimiento">' + $("#FechaNacimiento").val() + '</td>',
-                                '<td  class="Ocupacion">' + $("#Ocupacion").val() + '</td>',
-                                '<td>' + text + '</td>',
-                                '</tr>'
-                            ].join(''));
+                    if (data == true) {
+                        var text = '<a class="delete" cedula="jsvar" href="#">Eliminar</a>';
+                        text = text.replace("jsvar", $("#Identificacion").val());
+                        $('#dt_basic').find('#tbody').append([
+                            '<tr>',
+                            '<td  class="ApellidoNombre">' + $("#Apellidos").val() + ' ' + $("#Nombres").val() + '</td>',
+                            '<td  class="Identificacion">' + $("#Identificacion").val() + '</td>',
+                            '<td  class="Sexo">' + $("#IdSexo option:selected").text() + '</td>',
+                            '<td  class="FechaNacimiento">' + $("#FechaNacimiento").val() + '</td>',
+                            '<td  class="Ocupacion">' + $("#Ocupacion").val() + '</td>',
+                            '<td>' + text + '</td>',
+                            '</tr>'
+                        ].join(''));
 
-            $('a.delete').click(function () {
-              var id = $(this).attr("cedula");
-              $.ajax({
-                  url: '@Url.Action("EliminarFamiliar")', type: "POST", dataType: "text",
-                  data: { id: id },
-                  success: function (data) {
-                      if (data == "true") {
-                          $('#dt_basic tr:contains("' + id + '")').remove();
-                      }
-                      else {
-                          alert(data);
-                      }
-                  },
+                        $('a.delete').click(function () {
+                            var id = $(this).attr("cedula");
+                            $.ajax({
+                                url: '@Url.Action("EliminarFamiliar")', type: "POST", dataType: "text",
+                                data: { id: id },
+                                success: function (data) {
+                                    if (data == "true") {
+                                        $('#dt_basic tr:contains("' + id + '")').remove();
+                                    }
+                                    else {
+                                        alert(data);
+                                    }
+                                },
 
-              });
-          });
-                        }
+                            });
+                        });
+                    }
+                    else
+                    { 
+                        alert("Ya se encuentra ese dato ingresado");
+                    }
 
                     }, complete: function (data) {
                         $("#content").waitMe("hide");
@@ -2535,7 +2569,7 @@
                 success: function (data) {
                         if (data == true) {
                             @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
-                            var text = '<a class="delete2" empresa="jsvar1" fechainicio="jsvar2" fechafin="jsvar3" puestotrabajo="jsvar4" href="#">Delete</a>';
+                            var text = '<a class="delete2" empresa="jsvar1" fechainicio="jsvar2" fechafin="jsvar3" puestotrabajo="jsvar4" href="#">Eliminar</a>';
                             text = text.replace("jsvar1", $("#Empresa").val());
                             text = text.replace("jsvar2", $("#FechaInicio").val());
                             text = text.replace("jsvar3", $("#FechaFin").val());
@@ -2611,7 +2645,7 @@
                 success: function (data) {
                         if (data == true) {
                             @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
-                            var text = '<a class="delete3" idtitulo="jsvar1" titulo="jsvar2" href="#">Delete</a>';
+                            var text = '<a class="delete3" idtitulo="jsvar1" titulo="jsvar2" href="#">Eliminar</a>';
                             text = text.replace("jsvar1", $("#IdTitulo").val());
                             text = text.replace("jsvar2", $("#IdTitulo option:selected").text());
 
@@ -2672,7 +2706,7 @@
                 success: function (data) {
                         if (data == true) {
                             @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
-                            var text = '<a class="delete4" idtipodiscapacidad="jsvar1" tipodiscapacidad="jsvar2" href="#">Delete</a>';
+                            var text = '<a class="delete4" idtipodiscapacidad="jsvar1" tipodiscapacidad="jsvar2" href="#">Eliminar</a>';
                             text = text.replace("jsvar1", $("#IdTipoDiscapacidad").val());
                             text = text.replace("jsvar2", $("#IdTipoDiscapacidad option:selected").text());
 

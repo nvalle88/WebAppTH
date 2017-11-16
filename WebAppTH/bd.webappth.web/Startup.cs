@@ -35,7 +35,7 @@ namespace bd.webappth.web
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             await InicializarWebApp.InicializarWeb("SwTalentoHumano", new Uri("http://localhost:5000"));
-            await InicializarWebApp.InicializarWebRecursosMateriales("SwRecursosMateriales", new Uri("http://192.168.100.21:8081"));
+            await InicializarWebApp.InicializarWebRecursosMateriales("SwRecursosMateriales", new Uri("http://192.168.100.21/swRecursosMateriales"));
             await InicializarWebApp.InicializarLogEntry("LogWebService", new Uri("http://localhost:5000"));
 
 

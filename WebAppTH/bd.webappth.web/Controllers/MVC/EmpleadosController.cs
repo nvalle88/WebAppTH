@@ -27,13 +27,20 @@ namespace bd.webappth.web.Controllers.MVC
                     if (instance == null)
                     {
                         instance = new EmpleadoViewModel();
-                        instance.EmpleadoFamiliar = new List<EmpleadoFamiliar>();
+                        instance.Persona = new Persona();
+                        instance.Empleado = new Empleado();
+                        instance.DatosBancarios = new DatosBancarios();
+                        instance.EmpleadoContactoEmergencia = new EmpleadoContactoEmergencia();
+                        instance.IndiceOcupacionalModalidadPartida = new IndiceOcupacionalModalidadPartida();
                         instance.PersonaEstudio = new List<PersonaEstudio>();
+                        instance.TrayectoriaLaboral = new List<TrayectoriaLaboral>();
                         instance.PersonaDiscapacidad = new List<PersonaDiscapacidad>();
                         instance.PersonaEnfermedad = new List<PersonaEnfermedad>();
-                        instance.EnfermedadSustituto = new List<EnfermedadSustituto>();
+                        instance.PersonaSustituto = new PersonaSustituto();
                         instance.DiscapacidadSustituto = new List<DiscapacidadSustituto>();
-                        instance.TrayectoriaLaboral = new List<TrayectoriaLaboral>();
+                        instance.EnfermedadSustituto = new List<EnfermedadSustituto>();
+                        instance.EmpleadoFamiliar = new List<EmpleadoFamiliar>();
+                                               
                     }
                     return instance;
                 }
@@ -86,17 +93,20 @@ namespace bd.webappth.web.Controllers.MVC
 
           var ins=  ObtenerInstancia.Instance;
 
-            ins.Empleado = empleadoViewModel.Empleado;
             ins.Persona = empleadoViewModel.Persona;
+            ins.Empleado = empleadoViewModel.Empleado;
             ins.DatosBancarios = empleadoViewModel.DatosBancarios;
             ins.EmpleadoContactoEmergencia = empleadoViewModel.EmpleadoContactoEmergencia;
+            ins.IndiceOcupacionalModalidadPartida = empleadoViewModel.IndiceOcupacionalModalidadPartida;
             ins.PersonaSustituto = empleadoViewModel.PersonaSustituto;
-
-           var response= await apiServicio.InsertarAsync(ins,new Uri( WebApp.BaseAddress), "/api/Empleados/InsertarEmpleado");
+ 
+            var response = await apiServicio.InsertarAsync(ins,new Uri( WebApp.BaseAddress), "/api/Empleados/InsertarEmpleado");
 
             if (response.IsSuccess)
             {
                 
+                ViewData["Mensaje"] = Mensaje.Satisfactorio;
+                return PartialView("Resultado");
             }
 
             return RedirectToAction("Index");
@@ -234,71 +244,64 @@ namespace bd.webappth.web.Controllers.MVC
 
         
 
-        public async Task<JsonResult> InsertarFamiliar(int idTipoIdentificacion, string Identificacion, string Nombres, string Apellidos, int idSexo, int idGenero, int idEstadoCivil, int idTipoSangre, int idNacionalidad, int etniaF, int nacionalidadIndigenaF, string CorreoPrivado, string FechaNacimiento, string LugarTrabajo, string CallePrincipal, string CalleSecundaria, string Referencia, string Numero, int parroquiaLugarFamiliar, string TelefonoPrivado, string TelefonoCasa, int Parentesco, string Ocupacion)
+        public async Task<JsonResult> InsertarFamiliar(int idTipoIdentificacion, string Identificacion, string Nombres, string Apellidos, int idSexo, int idGenero, int idEstadoCivil, int idTipoSangre, int idNacionalidad, int etniaF, int nacionalidadIndigenaF, string CorreoPrivado, DateTime FechaNacimiento, string LugarTrabajo, string CallePrincipal, string CalleSecundaria, string Referencia, string Numero, int parroquiaLugarFamiliar, string TelefonoPrivado, string TelefonoCasa, int Parentesco, string Ocupacion)
         {
             try
             {
-                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
+                
                 var empleadoviewmodel = ObtenerInstancia.Instance;
 
-                empleadoviewmodel.EmpleadoFamiliar.Add(new EmpleadoFamiliar
+                bool existe = empleadoviewmodel.EmpleadoFamiliar.Exists(x => x.Persona.IdTipoIdentificacion == idTipoIdentificacion && x.Persona.Identificacion==Identificacion && x.Persona.Nombres==Nombres&&x.Persona.Apellidos==Apellidos);
+
+                if (!existe)
                 {
-                    IdParentesco = Parentesco,
-                    Persona = new Persona
+                    empleadoviewmodel.EmpleadoFamiliar.Add
+                    (new EmpleadoFamiliar
                     {
-                        IdTipoIdentificacion = idTipoIdentificacion,
-                        Identificacion = Identificacion,
-                        Nombres = Nombres,
-                        Apellidos = Apellidos,
-                        IdSexo = idSexo,
-                        IdGenero = idGenero,
-                        IdEstadoCivil = idEstadoCivil,
-                        IdTipoSangre = idTipoSangre,
-                        IdNacionalidad = idNacionalidad,
-                        IdEtnia = etniaF,
-                        IdNacionalidadIndigena = nacionalidadIndigenaF,
-                        CorreoPrivado = CorreoPrivado,
-                        LugarTrabajo = LugarTrabajo,
-                        CallePrincipal = CallePrincipal,
-                        CalleSecundaria = CalleSecundaria,
-                        Referencia = Referencia,
-                        Numero = Numero,
-                        IdParroquia = parroquiaLugarFamiliar,
-                        TelefonoPrivado = TelefonoPrivado,
-                        TelefonoCasa = TelefonoCasa,
-                        Ocupacion = Ocupacion
+                        IdParentesco = Parentesco,
+                        Persona = new Persona
+                        {
+                            IdTipoIdentificacion = idTipoIdentificacion,
+                            Identificacion = Identificacion,
+                            Nombres = Nombres,
+                            Apellidos = Apellidos,
+                            IdSexo = idSexo,
+                            IdGenero = idGenero,
+                            IdEstadoCivil = idEstadoCivil,
+                            IdTipoSangre = idTipoSangre,
+                            IdNacionalidad = idNacionalidad,
+                            IdEtnia = etniaF,
+                            IdNacionalidadIndigena = nacionalidadIndigenaF,
+                            CorreoPrivado = CorreoPrivado,
+                            FechaNacimiento = FechaNacimiento,
+                            LugarTrabajo = LugarTrabajo,
+                            CallePrincipal = CallePrincipal,
+                            CalleSecundaria = CalleSecundaria,
+                            Referencia = Referencia,
+                            Numero = Numero,
+                            IdParroquia = parroquiaLugarFamiliar,
+                            TelefonoPrivado = TelefonoPrivado,
+                            TelefonoCasa = TelefonoCasa,
+                            Ocupacion = Ocupacion
+                        }
                     }
-                    
+                    );
+
+                    return Json(true);
                 }
+                else
+                {
+                    ViewData["InsertarFamiliar"] = Mensaje.ExisteRegistro;
+                    return Json(false);
+                }
+                return Json(false);
 
-                
-
-                );
-
-                //foreach (var item in empleadoviewmodel.EmpleadoFamiliar)
-                //{
-
-                //    var persona = item.Persona;
-
-                //    var personaReturn= DB.save(persona);
-
-                //    item.IdEmpleado = variable;
-                //    item.IdPersona = personaReturn.id;
-
-                //    DBNull,save()
-
-
-
-
-                //}
-                return Json(true);
             }
             catch (Exception ex)
             {
 
                 return Json(false);
             }
-
             
         }
 
@@ -322,20 +325,28 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
                 var empleadoviewmodel = ObtenerInstancia.Instance;
 
-                empleadoviewmodel.PersonaEstudio.Add(new PersonaEstudio
+                bool existe = empleadoviewmodel.PersonaEstudio.Exists(x => x.IdTitulo == IdTitulo && x.NoSenescyt == NoSenescyt && x.FechaGraduado==FechaGraduado);
+
+                if (!existe)
                 {
-                    FechaGraduado = FechaGraduado.Date,
-                    Observaciones = Observaciones,
-                    IdTitulo = IdTitulo,
-                    NoSenescyt = NoSenescyt
+                    empleadoviewmodel.PersonaEstudio.Add(new PersonaEstudio
+                    {
+                        FechaGraduado = FechaGraduado.Date,
+                        Observaciones = Observaciones,
+                        IdTitulo = IdTitulo,
+                        NoSenescyt = NoSenescyt
+                    }
+                );
+                    return Json(true);
+                }
+                else
+                {
+                    return Json(false);
                 }
 
-                );
-
-                return Json(true);
+                
             }
             catch (Exception ex)
             {
@@ -367,22 +378,28 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
                 var empleadoviewmodel = ObtenerInstancia.Instance;
 
-                empleadoviewmodel.TrayectoriaLaboral.Add(new TrayectoriaLaboral
+                bool existe = empleadoviewmodel.TrayectoriaLaboral.Exists(x => x.Empresa== Empresa && x.PuestoTrabajo == PuestoTrabajo );
+                if (!existe)
                 {
-                    FechaInicio = FechaInicio.Date,
-                    FechaFin = FechaFin.Date,
-                    Empresa = Empresa,
-                    PuestoTrabajo = PuestoTrabajo,
-                    DescripcionFunciones = DescripcionFunciones
+                    empleadoviewmodel.TrayectoriaLaboral.Add(new TrayectoriaLaboral
+                    {
+                        FechaInicio = FechaInicio.Date,
+                        FechaFin = FechaFin.Date,
+                        Empresa = Empresa,
+                        PuestoTrabajo = PuestoTrabajo,
+                        DescripcionFunciones = DescripcionFunciones
 
+                    }
+                    );
+                    return Json(true);
+                }
+                else
+                {
+                    return Json(false);
                 }
 
-                );
-
-                return Json(true);
             }
             catch (Exception ex)
             {
@@ -390,7 +407,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return Json(false);
             }
 
-
+            return Json(false);
         }
 
 
@@ -415,28 +432,32 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
                 var empleadoviewmodel = ObtenerInstancia.Instance;
 
-                empleadoviewmodel.PersonaDiscapacidad.Add(new PersonaDiscapacidad
+                bool existe = empleadoviewmodel.PersonaDiscapacidad.Exists(x => x.IdTipoDiscapacidad == IdTipoDiscapacidad && x.NumeroCarnet == NumeroCarnet && x.Porciento == Porciento);
+
+                if (!existe)
                 {
-                    IdTipoDiscapacidad = IdTipoDiscapacidad,
-                    NumeroCarnet = NumeroCarnet,
-                    Porciento = Porciento,
+                    empleadoviewmodel.PersonaDiscapacidad.Add(new PersonaDiscapacidad
+                    {
+                        IdTipoDiscapacidad = IdTipoDiscapacidad,
+                        NumeroCarnet = NumeroCarnet,
+                        Porciento = Porciento,
+                    }
+                     );
 
+                    return Json(true);
                 }
-
-                );
-
-                return Json(true);
+                else
+                {
+                    return Json(false);
+                }
             }
             catch (Exception ex)
             {
-
                 return Json(false);
             }
-
-
+            return Json(false);
         }
 
 
@@ -461,24 +482,29 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
                 var empleadoviewmodel = ObtenerInstancia.Instance;
 
-                empleadoviewmodel.PersonaEnfermedad.Add(new PersonaEnfermedad
+                bool existe = empleadoviewmodel.PersonaEnfermedad.Exists(x => x.IdTipoEnfermedad == IdTipoEnfermedad && x.InstitucionEmite == InstitucionEmite);
+                if (!existe)
                 {
-                    IdTipoEnfermedad = IdTipoEnfermedad,
-                    InstitucionEmite = InstitucionEmite,
+                    empleadoviewmodel.PersonaEnfermedad.Add(new PersonaEnfermedad
+                    {
+                        IdTipoEnfermedad = IdTipoEnfermedad,
+                        InstitucionEmite = InstitucionEmite,
+                    }
+                   );
+                    return Json(true);
                 }
-                );
-
-                return Json(true);
+                else
+                {
+                    return Json(false);
+                }               
             }
             catch (Exception ex)
             {
-
                 return Json(false);
             }
-
+            return Json(false);
 
         }
 
@@ -503,24 +529,28 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
                 var empleadoviewmodel = ObtenerInstancia.Instance;
 
-                empleadoviewmodel.DiscapacidadSustituto.Add(new DiscapacidadSustituto
+                bool existe = empleadoviewmodel.DiscapacidadSustituto.Exists(x => x.IdTipoDiscapacidad == IdTipoDiscapacidadSustituto && x.NumeroCarnet == NumeroCarnetSustituto && x.PorcentajeDiscapacidad == PorcientoSustituto);
+
+                if (!existe)
                 {
-                    IdTipoDiscapacidad = IdTipoDiscapacidadSustituto,
-                    NumeroCarnet = NumeroCarnetSustituto,
-                    PorcentajeDiscapacidad = PorcientoSustituto,
-
+                    empleadoviewmodel.DiscapacidadSustituto.Add(new DiscapacidadSustituto
+                    {
+                        IdTipoDiscapacidad = IdTipoDiscapacidadSustituto,
+                        NumeroCarnet = NumeroCarnetSustituto,
+                        PorcentajeDiscapacidad = PorcientoSustituto,
+                    }
+                    );
+                    return Json(true);
                 }
-
-                );
-
-                return Json(true);
+                else
+                {
+                    return Json(false);
+                }
             }
             catch (Exception ex)
             {
-
                 return Json(false);
             }
 
@@ -549,24 +579,29 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
                 var empleadoviewmodel = ObtenerInstancia.Instance;
 
-                empleadoviewmodel.EnfermedadSustituto.Add(new EnfermedadSustituto
-                {
-                    IdTipoEnfermedad = IdTipoEnfermedadSustituto,
-                    InstitucionEmite = InstitucionEmiteSustituto,
-                }
-                );
+                bool existe = empleadoviewmodel.EnfermedadSustituto.Exists(x => x.IdTipoEnfermedad == IdTipoEnfermedadSustituto && x.InstitucionEmite == InstitucionEmiteSustituto);
 
-                return Json(true);
+                if (!existe)
+                {
+                    empleadoviewmodel.EnfermedadSustituto.Add(new EnfermedadSustituto
+                    {
+                        IdTipoEnfermedad = IdTipoEnfermedadSustituto,
+                        InstitucionEmite = InstitucionEmiteSustituto,
+                    }
+                    );
+                    return Json(true);
+                }
+                else
+                {
+                    return Json(false);
+                }
             }
             catch (Exception ex)
             {
-
                 return Json(false);
             }
-
 
         }
 
