@@ -1,3 +1,7 @@
+using bd.log.guardar.Enumeradores;
+using bd.log.guardar.ObjectTranfer;
+using bd.log.guardar.Servicios;
+using bd.webappseguridad.entidades.Enumeradores;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.webappth.entidades.ViewModels;
@@ -56,9 +60,28 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var lista = new List<ListaEmpleadoViewModel>();
+            try
+            {
+                lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/Empleados/ListarEmpleados");
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Listando estados civiles",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+                return BadRequest();
+            }
         }
 
         private async Task CargarCombos()
@@ -678,6 +701,46 @@ namespace bd.webappth.web.Controllers.MVC
                 return Json(Mensaje.Error);
             }
 
+        }
+
+        //public async Task<JsonResult> ListarEmpleados()
+        //{
+        //    var lista = new List<ListaEmpleadoViewModel>();
+        //    try
+        //    {
+        //        lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
+        //                                                            , "/api/Empleados/ListarEmpleados");
+        //        return Json(lista);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(Mensaje.Error);
+        //    }
+        //}
+
+        public async Task<IActionResult> ListarEmpleados()
+        {
+
+            var lista = new List<ListaEmpleadoViewModel>();
+            try
+            {
+                lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/Empleados/ListarEmpleados");
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Listando estados civiles",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+                return BadRequest();
+            }
         }
     }
 }

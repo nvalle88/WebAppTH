@@ -11,9 +11,12 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace bd.webappth.web.Controllers.MVC
 {
+    
+   
     public class BrigadasSSOController : Controller
     {
         private readonly IApiServicio apiServicio;
@@ -24,7 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
+        [Authorize(Policy = "EstaAutorizado")]
         public IActionResult Create()
         {
             return View();
@@ -32,6 +35,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Create(BrigadaSSO brigadaSSO)
         {
             Response response = new Response();
@@ -76,7 +80,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
+        [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Edit(string id)
         {
             try
@@ -105,6 +109,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Edit(string id, BrigadaSSO brigadaSSO)
         {
             Response response = new Response();
@@ -150,7 +155,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
+        [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Index()
         {
 
@@ -175,7 +180,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
+        [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Delete(string id)
         {
 

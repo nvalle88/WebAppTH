@@ -927,87 +927,98 @@
                                                                     </div>
                                                                 </article>
 
-                                                    </div>
+                                                        </div>
 
                                                     <footer>
                                                         <button id="agregarfamiliar" type="submit" class="btn btn-primary">
                                                             Insertar Familiar
                                                         </button>
 
-                                                        <legend>Familiares</legend>
-                                                        <div id="content">
+                                                            <legend>Familiares</legend>
+                                                            <div id="content">
 
-                                                            <!-- widget grid -->
-                                                            <section id="widget-grid" class="">
-                                                                <!-- row -->
-                                                                <div class="row">
-                                                                    <!-- NEW WIDGET START -->
-                                                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                        <!-- Widget ID (each widget will need unique ID)-->
-                                                                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false"  data-widget-collapsed="false"  data-widget-colorbutton="false"
-                            data-widget-togglebutton="false"
-                            data-widget-deletebutton="false"
-                            data-widget-fullscreenbutton="false"
-                            data-widget-custombutton="false"
-                            data-widget-sortable="false">
-                                                                        
-                                                                            <header>
-                                                                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                                                                                <h2>Familiares de Empleado</h2>
-                                                                            </header>
-                                                                            <!-- widget div-->
-                                                                            <div>
-                                                                                <!-- widget edit box -->
-                                                                                <div class="jarviswidget-editbox">
-                                                                                    <!-- This area used as dropdown edit box -->
+                                                                <!-- widget grid -->
+                                                                <section id="widget-grid" class="">
+                                                                    <!-- row -->
+                                                                    <div class="row">
+                                                                        <!-- NEW WIDGET START -->
+                                                                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                            <!-- Widget ID (each widget will need unique ID)-->
+                                                                            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-collapsed="false" data-widget-colorbutton="false"
+                                                                                 data-widget-togglebutton="false"
+                                                                                 data-widget-deletebutton="false"
+                                                                                 data-widget-fullscreenbutton="false"
+                                                                                 data-widget-custombutton="false"
+                                                                                 data-widget-sortable="false">
+                                                                                <!-- widget options:
+                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                                data-widget-colorbutton="false"
+                                data-widget-editbutton="false"
+                                data-widget-togglebutton="false"
+                                data-widget-deletebutton="false"
+                                data-widget-fullscreenbutton="false"
+                                data-widget-custombutton="false"
+                                data-widget-collapsed="true"
+                                data-widget-sortable="false"
+
+                                -->
+                                                                                <header>
+                                                                                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                                                    <h2>Familiares de Empleado</h2>
+                                                                                </header>
+                                                                                <!-- widget div-->
+                                                                                <div>
+                                                                                    <!-- widget edit box -->
+                                                                                    <div class="jarviswidget-editbox">
+                                                                                        <!-- This area used as dropdown edit box -->
+                                                                                    </div>
+                                                                                    <!-- end widget edit box -->
+                                                                                    <!-- widget content -->
+                                                                                    <div class="widget-body no-padding">
+                                                                                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th data-class="expand">
+                                                                                                        Apellidos y Nombres Completos:
+                                                                                                    </th>
+                                                                                                    <th>
+                                                                                                        C&eacute;dula de Ciudadania
+                                                                                                    </th>
+                                                                                                    <th>
+                                                                                                        Sexo
+                                                                                                    </th>
+                                                                                                    <th>
+                                                                                                        Fecha de Nacimiento:
+                                                                                                    </th>
+                                                                                                    <th>
+                                                                                                        Ocupaci&oacute;n:
+                                                                                                    </th>
+                                                                                                    <th>
+                                                                                                        Opciones:
+                                                                                                    </th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody id="tbody"></tbody>
+                                                                                        </table>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <!-- end widget edit box -->
-                                                                                <!-- widget content -->
-                                                                                <div class="widget-body no-padding">
-                                                                                    <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th data-class="expand">
-                                                                                                    Apellidos y Nombres Completos:
-                                                                                                </th>
-                                                                                                <th>
-                                                                                                    C&eacute;dula de Ciudadan&iacute;a
-                                                                                                </th>
-                                                                                                <th>
-                                                                                                    Sexo
-                                                                                                </th>
-                                                                                                <th>
-                                                                                                   Fecha de Nacimiento:
-                                                                                                </th>
-                                                                                                <th>
-                                                                                                    Ocupaci&oacute;n:
-                                                                                                </th>
-                                                                                                <th>
-                                                                                                    Opciones:
-                                                                                                </th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody id="tbody">
-                                                                                           
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
+                                                                                <!-- end widget div -->
                                                                             </div>
-                                                                            <!-- end widget div -->
-                                                                        </div>
 
-                                                                    </article>
-                                                                    <!-- WIDGET END -->
-                                                                </div>
-                                                                <!-- end row -->
-                                                                <!-- end row -->
-                                                            </section>
-                                                            <!-- end widget grid -->
-                                                        </div>
-                                                        <!-- END MAIN CONTENT -->
+                                                                        </article>
+                                                                        <!-- WIDGET END -->
+                                                                    </div>
+                                                                    <!-- end row -->
+                                                                    <!-- end row -->
+                                                                </section>
+                                                                <!-- end widget grid -->
+                                                            </div>
+                                                            <!-- END MAIN CONTENT -->
 
-                                                    </footer>
-                                                </div>
+                                                        </footer>
+                                                  
+</div>
                                             </div>
                                             <div class="tab-pane" id="tab3">
                                                 @* Estudio, trayectoria laboral *@
@@ -2257,6 +2268,8 @@
                 $("#paisLugarFamiliar").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#provinciaLugarFamiliar").empty();
+            $("#idciudadLugarFamiliar").empty();
+            $("#parroquiaLugarFamiliar").empty();
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarProvinciaPorPais")',
@@ -2283,6 +2296,7 @@
                    $("#provinciaLugarFamiliar").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#idciudadLugarFamiliar").empty();
+            $("#parroquiaLugarFamiliar").empty();
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarCiudadPorProvincia")',
@@ -2474,50 +2488,56 @@
 
 
                    $("#agregarfamiliar").click(function () {
-            mostrarLoadingPanel("content","Cargando...")
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("InsertarFamiliar")',
-                dataType: 'json',
-                data: {
-                        idTipoIdentificacion: $("#IdTipoIdentificacion").val(),
-                        Identificacion: $("#Identificacion").val(),
-                        Nombres: $("#Nombres").val(),
-                        Apellidos: $("#Apellidos").val(),
-                        idSexo: $("#IdSexo").val(),
-                        idGenero: $("#IdGenero").val(),
-                        idEstadoCivil: $("#IdEstadoCivil").val(),
-                        idTipoSangre: $("#IdTipoSangre").val(),
-                        idNacionalidad: $("#IdNacionalidad").val(),
-                        etniaF: $("#etniaF").val(),
-                        nacionalidadIndigenaF: $("#nacionalidadIndigenaF").val(),
-                        CorreoPrivado: $("#CorreoPrivado").val(),
-                        FechaNacimiento: $("#FechaNacimiento").val(),
-                        LugarTrabajo: $("#LugarTrabajo").val(),
-                        CallePrincipal: $("#CallePrincipal").val(),
-                        CalleSecundaria: $("#CalleSecundaria").val(),
-                        Referencia: $("#Referencia").val(),
-                        Numero: $("#Numero").val(),
-                        parroquiaLugarFamiliar: $("#parroquiaLugarFamiliar").val(),
-                        TelefonoPrivado: $("#TelefonoPrivado").val(),
-                        TelefonoCasa: $("#TelefonoCasa").val(),
-                        Parentesco: $("#Parentesco").val(),
-                        Ocupacion: $("#Ocupacion").val(),
-                    },
-                success: function (data) {
-                    if (data == true) {
-                        var text = '<a class="delete" cedula="jsvar" href="#">Eliminar</a>';
-                        text = text.replace("jsvar", $("#Identificacion").val());
-                        $('#dt_basic').find('#tbody').append([
-                            '<tr>',
-                            '<td  class="ApellidoNombre">' + $("#Apellidos").val() + ' ' + $("#Nombres").val() + '</td>',
-                            '<td  class="Identificacion">' + $("#Identificacion").val() + '</td>',
-                            '<td  class="Sexo">' + $("#IdSexo option:selected").text() + '</td>',
-                            '<td  class="FechaNacimiento">' + $("#FechaNacimiento").val() + '</td>',
-                            '<td  class="Ocupacion">' + $("#Ocupacion").val() + '</td>',
-                            '<td>' + text + '</td>',
-                            '</tr>'
-                        ].join(''));
+                       if ($("#IdTipoIdentificacion").val() != ""
+                           && $("#Identificacion").val() != ""
+                           && $("#Nombres").val() != ""
+                           && $("#Apellidos").val() != ""
+                           && $("#FechaNacimiento").val() != ""
+                           && $("#Parentesco").val() != "") {
+                           mostrarLoadingPanel("content", "Cargando...")
+                           $.ajax({
+                               type: 'POST',
+                               url: '@Url.Action("InsertarFamiliar")',
+                               dataType: 'json',
+                               data: {
+                                   idTipoIdentificacion: $("#IdTipoIdentificacion").val(),
+                                   Identificacion: $("#Identificacion").val(),
+                                   Nombres: $("#Nombres").val(),
+                                   Apellidos: $("#Apellidos").val(),
+                                   idSexo: $("#IdSexo").val(),
+                                   idGenero: $("#IdGenero").val(),
+                                   idEstadoCivil: $("#IdEstadoCivil").val(),
+                                   idTipoSangre: $("#IdTipoSangre").val(),
+                                   idNacionalidad: $("#IdNacionalidad").val(),
+                                   etniaF: $("#etniaF").val(),
+                                   nacionalidadIndigenaF: $("#nacionalidadIndigenaF").val(),
+                                   CorreoPrivado: $("#CorreoPrivado").val(),
+                                   FechaNacimiento: $("#FechaNacimiento").val(),
+                                   LugarTrabajo: $("#LugarTrabajo").val(),
+                                   CallePrincipal: $("#CallePrincipal").val(),
+                                   CalleSecundaria: $("#CalleSecundaria").val(),
+                                   Referencia: $("#Referencia").val(),
+                                   Numero: $("#Numero").val(),
+                                   parroquiaLugarFamiliar: $("#parroquiaLugarFamiliar").val(),
+                                   TelefonoPrivado: $("#TelefonoPrivado").val(),
+                                   TelefonoCasa: $("#TelefonoCasa").val(),
+                                   Parentesco: $("#Parentesco").val(),
+                                   Ocupacion: $("#Ocupacion").val(),
+                               },
+                               success: function (data) {
+                                   if (data == true) {
+                                       var text = '<a class="delete" cedula="jsvar" href="#">Eliminar</a>';
+                                       text = text.replace("jsvar", $("#Identificacion").val());
+                                       $('#dt_basic').find('#tbody').append([
+                                           '<tr>',
+                                           '<td  class="ApellidoNombre">' + $("#Apellidos").val() + ' ' + $("#Nombres").val() + '</td>',
+                                           '<td  class="Identificacion">' + $("#Identificacion").val() + '</td>',
+                                           '<td  class="Sexo">' + $("#IdSexo option:selected").text() + '</td>',
+                                           '<td  class="FechaNacimiento">' + $("#FechaNacimiento").val() + '</td>',
+                                           '<td  class="Ocupacion">' + $("#Ocupacion").val() + '</td>',
+                                           '<td>' + text + '</td>',
+                                           '</tr>'
+                                       ].join(''));
 
                         $('a.delete').click(function () {
                             var id = $(this).attr("cedula");
@@ -2541,15 +2561,19 @@
                         alert("Ya se encuentra ese dato ingresado");
                     }
 
-                    }, complete: function (data) {
-                        $("#content").waitMe("hide");
-                    },
+                               }, complete: function (data) {
+                                   $("#content").waitMe("hide");
+                               },
 
-                    error: function (ex) {
-                        alert('Failed to retrieve data.' + ex);
-                    }
-                });
-                return false;
+                               error: function (ex) {
+                                   alert('Failed to retrieve data.' + ex);
+                               }
+                           });
+                       }
+                       else { 
+                           $("#wizard-1").validate();
+                           return false;
+                       }
                    })
 
                   $("#agregarTrayectoriaLaboral").click(function () {

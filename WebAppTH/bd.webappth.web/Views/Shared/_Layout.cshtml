@@ -32,19 +32,19 @@
 </head>
 <body class="@ViewBag.PageClass @Settings.Value.CurrentTheme">
     <header id="header">
-        @{ await Html.RenderPartialAsync("_Header"); }
+        @{ await Html.RenderPartialAsync("_Header", User.Identity.IsAuthenticated); }
         <section id="top-right">
-            @(IsSectionDefined("topright") ? RenderSection("topright", false) : Html.Partial("_TopRight"))
+            @(IsSectionDefined("topright") ? RenderSection("topright", User.Identity.IsAuthenticated) : Html.Partial("_TopRight", User.Identity.IsAuthenticated))
         </section>
     </header>
-    @{ Html.RenderPartialIf("_Aside", true); }
+    @{ Html.RenderPartialIf("_Aside", User.Identity.IsAuthenticated); }
     <div id="main" role="main">
         @{ Html.RenderPartialIf("_Ribbon", User.Identity.IsAuthenticated); }
         @RenderBody()
     </div>
     @if (User.Identity.IsAuthenticated)
     {
-        await Html.RenderPartialAsync("_Footer");
+        await Html.RenderPartialAsync("_Footer", User.Identity.IsAuthenticated);
         Html.RenderPartialIf("_Tiles", Settings.Value.EnableTiles);
     }
     @{ await Html.RenderPartialAsync("_Scripts"); }

@@ -1,12 +1,18 @@
 ﻿using bd.webappth.servicios.Interfaces;
 using bd.webappth.servicios.Servicios;
+using bd.webappth.web.Models;
+using bd.webappth.web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 
 namespace bd.webappth.web
@@ -29,25 +35,77 @@ namespace bd.webappth.web
         public async void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddIdentity<ApplicationUser,IdentityRole>(options=> 
+            {
+                
+                options.Cookies.ApplicationCookie.LoginPath = new PathString("/Login/Index");
+                options.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Login/Index");
+
+                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromHours(2);
+
+            })
+           
+            .AddDefaultTokenProviders();
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(
+         
+            );
+
+            var appSettings = Configuration.GetSection("AppSettings");
+
             services.AddSingleton<IApiServicio, ApiServicio>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            await InicializarWebApp.InicializarWeb("SwTalentoHumano", new Uri("http://localhost:5000"));
-            await InicializarWebApp.InicializarWebRecursosMateriales("SwRecursosMateriales", new Uri("http://192.168.100.21/swRecursosMateriales"));
-            await InicializarWebApp.InicializarLogEntry("LogWebService", new Uri("http://localhost:5000"));
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("EstaAutorizado",
+                                  policy => policy.Requirements.Add(new RolesRequirement()));
+            });
 
+            services.AddSingleton<IAuthorizationHandler, RolesHandler>();
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
 
+            var ServicioSeguridad = Configuration.GetSection("ServicioSeguridad").Value;
+            var ServiciosLog = Configuration.GetSection("ServiciosLog").Value;
+            var ServicioTalentoHumano = Configuration.GetSection("ServiciosTalentoHumano").Value;
+            var ServiciosRecursosMateriales = Configuration.GetSection("ServiciosRecursosMateriales").Value;
+
+            var HostSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
+
+            await InicializarWebApp.InicializarWeb(ServicioTalentoHumano, new Uri(HostSeguridad));
+            await InicializarWebApp.InicializarSeguridad(ServicioSeguridad, new Uri(HostSeguridad));
+            await InicializarWebApp.InicializarWebRecursosMateriales(ServiciosRecursosMateriales, new Uri(HostSeguridad));
+            await InicializarWebApp.InicializarLogEntry(ServiciosLog, new Uri(HostSeguridad));
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
+            app.UseExceptionHandler("/Home/Error");
+           
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+#pragma warning disable CS0612 // El tipo o el miembro están obsoletos
+            app.UseApplicationInsightsRequestTelemetry();
+#pragma warning restore CS0612 // El tipo o el miembro están obsoletos
 
+            var logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .Enrich.FromLogContext()
+                .Enrich.WithProperty("Environment", env.EnvironmentName)
+                //.WriteTo.RollingFile("log-{Date}.txt")
+                .WriteTo.Seq("http://localhost:5341")
+                .CreateLogger();
+
+
+            loggerFactory.AddSerilog(logger);
+            Log.Logger = logger;
+            loggerFactory.AddSerilog();
+
+           
 
 
 
@@ -60,6 +118,7 @@ namespace bd.webappth.web
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
                 {
+                    
                     //serviceScope.ServiceProvider.GetService<LogDbContext>()
                     //         .Database.Migrate();
 
@@ -69,16 +128,20 @@ namespace bd.webappth.web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                
             }
 
+           
+
             app.UseStaticFiles();
+            app.UseCookieAuthentication();
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Homes}/{action=Index}/{id?}");
             });
         }
     }
