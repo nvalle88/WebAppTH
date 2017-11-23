@@ -83,15 +83,20 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Create(ActividadesEsenciales actividadesEsenciales)
         {
             Response response = new Response();
+            ActividadesEsenciales actividades=new ActividadesEsenciales();
+
             try
             {
                 response = await apiServicio.InsertarAsync(actividadesEsenciales,
                                                              new Uri(WebApp.BaseAddress),
                                                              "/api/ActividadesEsenciales/InsertarActividadesEsenciales");
+
+
                 if (response.IsSuccess)
                 {
 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+
+                    LogEntryTranfer logEntryTranfer = new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
@@ -99,8 +104,12 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Actividades Esenciales:", actividadesEsenciales.IdActividadesEsenciales),
-                    });
+                        EntityID = "Actividades Esenciales",
+                        ObjectPrevious = "NULL",
+                        ObjectNext = JsonConvert.SerializeObject(response.Resultado),
+                    };
+
+                    var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
 
                     return RedirectToAction("Index");
                 }
