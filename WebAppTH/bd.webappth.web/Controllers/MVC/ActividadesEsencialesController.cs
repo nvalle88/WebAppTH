@@ -167,23 +167,35 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
+                
                 if (!string.IsNullOrEmpty(id))
                 {
+
+                    var objetoAnterior = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
+                                                                  "/api/ActividadesEsenciales");
+
                     response = await apiServicio.EditarAsync(id, actividadesEsenciales, new Uri(WebApp.BaseAddress),
                                                                  "/api/ActividadesEsenciales");
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+
+                        LogEntryTranfer logEntryTranfer = new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
+                            ExceptionTrace = null,
+                            Message = "Se ha actualizado una actividad esencial",
+                            UserName = "Usuario 1",
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una actividad esencial",
-                            UserName = "Usuario 1"
-                        });
+                            EntityID = "Actividades Esenciales",
+                            ObjectPrevious = JsonConvert.SerializeObject(objetoAnterior.Resultado),
+                            ObjectNext = JsonConvert.SerializeObject(response.Resultado),
+                        };
 
+                        var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
+
+                        
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
