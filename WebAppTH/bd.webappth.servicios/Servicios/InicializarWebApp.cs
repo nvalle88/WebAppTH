@@ -32,9 +32,7 @@ namespace bd.webappth.servicios.Servicios
             {
                 //var sistema= await ObtenerHostSistema(id, baseAddreess);
                 //WebApp.BaseAddress = sistema.AdstHost;
-                WebApp.BaseAddress = "http://localhost:49494";
-                // WebApp.BaseAddress = "http://localhost:6000";
-               
+                WebApp.BaseAddress = Convert.ToString(baseAddreess);
 
             }
             catch (Exception ex)
@@ -50,10 +48,7 @@ namespace bd.webappth.servicios.Servicios
             {
                 var sistema = await ObtenerHostSistema(id, baseAddreess);
                 //WebApp.BaseAddressSeguridad = sistema.AdstHost;
-                WebApp.BaseAddress = "http://localhost:85/";
-                // WebApp.BaseAddress = "http://localhost:6000";
-                //WebApp.BaseAddressRM = "http://localhost:9000";
-
+                WebApp.BaseAddressSeguridad = Convert.ToString(baseAddreess);
             }
             catch (Exception ex)
             {
@@ -68,9 +63,6 @@ namespace bd.webappth.servicios.Servicios
             {
                 var sistema = await ObtenerHostSistema(id, baseAddreess);
                 WebApp.BaseAddressRM = sistema.AdstHost;
-                //WebApp.BaseAddress = "http://localhost:6000";
-                //WebApp.BaseAddressRM = "http://localhost:9000";
-
             }
             catch (Exception ex)
             {
@@ -79,14 +71,12 @@ namespace bd.webappth.servicios.Servicios
 
         }
 
-
         public static async Task InicializarLogEntry(string id, Uri baseAddress)
         {
             try
             {
                 var sistema = await ObtenerHostSistema(id, baseAddress);
                 AppGuardarLog.BaseAddress = sistema.AdstHost;
-               // AppGuardarLog.BaseAddress = "http://localhost:53317";
 
             }
             catch (Exception ex)

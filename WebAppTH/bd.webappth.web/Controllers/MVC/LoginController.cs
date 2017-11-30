@@ -13,6 +13,8 @@ using bd.log.guardar.Servicios;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.ObjectTranfer;
 using bd.log.guardar.Enumeradores;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -49,9 +51,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Login()
         {
-
-           
-
+          var user=  HttpContext.User;
             if (Request.Query.Count !=2)
             {
                 return Redirect(WebApp.BaseAddressWebAppLogin);
@@ -75,18 +75,25 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (adscpassw !=null)
             {
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
                 var claims = new[]
                     {
-                    new Claim(ClaimTypes.Name,adscpassw.AdpsLoginAdm),
-                    new Claim(ClaimTypes.SerialNumber,adscpassw.AdpsToken)
+                    new Claim(ClaimTypes.Name,NombreUsuario),
+                    new Claim(ClaimTypes.SerialNumber,token)
 
                 };
+              
 
 
+                var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies"));
 
-                var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+               // var esto= ClaimsPrincipal.Current.Identities;
 
-                await HttpContext.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme , principal,new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties {IsPersistent=true });
+               await HttpContext.Authentication.SignInAsync("Cookies", principal,new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties {IsPersistent=true });
 
                 var response = await EliminarTokenTemp(adscpassw);
                 if (response.IsSuccess)
@@ -118,7 +125,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!adscpassw.Equals(null))
                 {
-                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(adscpassw, new Uri("http://localhost:85/"),
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(adscpassw, new Uri(WebApp.BaseAddressSeguridad),
                                                                   "api/Adscpassws/SeleccionarMiembroLogueado");
 
 
@@ -149,7 +156,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(adscpassw.AdpsLogin))
                 {
-                    response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri("http://localhost:85/"),
+                    response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri(WebApp.BaseAddressSeguridad),
                                                                  "api/Adscpassws/EliminarTokenTemp");
 
                     if (response.IsSuccess)

@@ -5,6 +5,7 @@ using bd.webappth.web.Models;
 using bd.webappth.web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
+using System.IO;
 
 namespace bd.webappth.web
 {
@@ -39,10 +41,7 @@ namespace bd.webappth.web
             services.AddIdentity<ApplicationUser,IdentityRole>(options=> 
             {
                 
-                options.Cookies.ApplicationCookie.LoginPath = new PathString("/Login/Index");
-                options.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Login/Index");
-
-                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromHours(2);
+               
 
             })
            
@@ -133,10 +132,18 @@ namespace bd.webappth.web
                 
             }
 
-           
-
             app.UseStaticFiles();
-            app.UseCookieAuthentication();
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookies",
+                LoginPath = new PathString("/Account/Login"),
+                AccessDeniedPath = new PathString("/Home/Forbidden"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                CookieName = "ASPTest",
+                ExpireTimeSpan = new TimeSpan(1, 0, 0), //1 hour
+                DataProtectionProvider = DataProtectionProvider.Create(new DirectoryInfo(@"c:\shared-auth-ticket-keys\"))
+            });
             app.UseIdentity();
 
             app.UseMvc(routes =>
