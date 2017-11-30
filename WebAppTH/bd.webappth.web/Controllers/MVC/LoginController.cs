@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bd.webappth.servicios.Interfaces;
 using bd.webappth.entidades.Utils;
 using bd.webappth.entidades.ViewModels;
-using bd.log.guardar.Inicializar;
 using System.Security.Claims;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using bd.webappth.entidades.Negocio;
-using Microsoft.AspNetCore.Authorization;
 
 namespace bd.webappth.web.Controllers.MVC
 {
