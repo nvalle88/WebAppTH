@@ -109,7 +109,7 @@
                                                                     <label>Salario Real:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="Numero de la Cuenta" type="text">
+                                                                        <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" maxlength="12" onKeyPress="return checkIt(event)" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="Numero de la Cuenta" type="text">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -132,7 +132,7 @@
                                                                 <label>Tipo de Identificaci&oacute;n:</label>
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa list-alt"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
                                                                         <select asp-for="Persona.IdTipoIdentificacion" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdTipoIdentificacion">
                                                                             <option value="0" selected="" disabled="">Seleccione</option>
                                                                         </select>
@@ -143,7 +143,7 @@
                                                                 <div class="form-group">
                                                                     <label>CI o Pasaporte:</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-addon"><i class="fa-list-alt"></i></span>
+                                                                        <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
                                                                         <input asp-for="Persona.Identificacion" class="form-control input " placeholder="Identificacion" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
@@ -520,7 +520,7 @@
                                                                     <label>Tel&eacute;fono Domicilio:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
-                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.TelefonoCasa" class="form-control input " placeholder="Telefono Domicilio" type="text" data-msg-required='El campo es requerido' data-rule-required='true' >
+                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.TelefonoCasa" maxlength="12" onKeyPress="return checkIt(event)" class="form-control input " placeholder="Telefono Domicilio" type="text" data-msg-required='El campo es requerido' data-rule-required='true' >
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -532,7 +532,7 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
-                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.TelefonoPrivado" class="form-control input " placeholder="Telefono Celular" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <input asp-for="EmpleadoContactoEmergencia.Persona.TelefonoPrivado" class="form-control input " maxlength="12" onKeyPress="return checkIt(event)"  placeholder="Telefono Celular" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -574,7 +574,7 @@
                                                                     <label>Meses de Imposici&oacute;n:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="Empleado.MesesImposiciones" class="form-control input " placeholder="Meses de Imposicion" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <input asp-for="Empleado.MesesImposiciones" class="form-control input " maxlength="12" onKeyPress="return checkIt(event)"  placeholder="Meses de Imposicion" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -584,7 +584,7 @@
                                                                     <label>D&iacute;as de Imposici&oacute;n:</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                        <input asp-for="Empleado.DiasImposiciones" class="form-control input " placeholder="Dias" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        <input asp-for="Empleado.DiasImposiciones" class="form-control input " maxlength="12" onKeyPress="return checkIt(event)"  placeholder="Dias" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1330,7 +1330,7 @@
                                                                     <div class="form-group">
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                            <input id="NumeroCarnet" class="form-control input " placeholder="Numero de Carnet" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                            <input id="NumeroCarnet" maxlength="12" onKeyPress="return checkIt(event)"  class="form-control input " placeholder="Numero de Carnet" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1339,7 +1339,7 @@
                                                                     <div class="form-group">
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                            <input id="Porciento" class="form-control input " placeholder="Porciento" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                            <input id="Porciento" maxlength="12" onKeyPress="return checkIt(event)"  class="form-control input " placeholder="Porciento" type="text"  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1920,6 +1920,7 @@
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
     <script type="text/javascript">
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -2071,6 +2072,43 @@
 <script src='~/js/site.js'></script>
 
 <script type="text/javascript">
+
+    function checkIt(evt) {
+        evt = (evt) ? evt : window.event
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            status = "This field accepts numbers only."
+            return false
+        }
+        status = ""
+        return true
+    }
+    function NumCheck(e, field) {
+        key = e.keyCode ? e.keyCode : e.which
+        // backspace
+        if (key == 8) return true
+        // 0-9
+        if (key > 47 && key < 58) {
+            if (field.value == "") return true
+            regexp = /.[0-9]{10}$/
+            return !(regexp.test(field.value))
+        }
+        // .
+        if (key == 44) {
+            if (field.value == "") return false
+            regexp = /^[0-9]+$/
+            return regexp.test(field.value)
+        }
+        // other key
+        return false
+
+    }
+
+    function handleChange(input) {
+        if (input.value < 0) input.value = 0;
+        if (input.value > 100) input.value = 100;
+    }
+
     $(document).ready(function () {
 
         $("#etniaE").change(function () {

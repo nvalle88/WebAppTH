@@ -1,4 +1,5 @@
-﻿using bd.webappth.servicios.Interfaces;
+﻿using bd.webappth.entidades.Utils;
+using bd.webappth.servicios.Interfaces;
 using bd.webappth.servicios.Servicios;
 using bd.webappth.web.Models;
 using bd.webappth.web.Services;
@@ -72,6 +73,7 @@ namespace bd.webappth.web
             var ServiciosRecursosMateriales = Configuration.GetSection("ServiciosRecursosMateriales").Value;
 
             var HostSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
+            WebApp.BaseAddressWebAppLogin = Configuration.GetSection("HostWebAppLogin").Value;
 
             await InicializarWebApp.InicializarWeb(ServicioTalentoHumano, new Uri(HostSeguridad));
             await InicializarWebApp.InicializarSeguridad(ServicioSeguridad, new Uri(HostSeguridad));
