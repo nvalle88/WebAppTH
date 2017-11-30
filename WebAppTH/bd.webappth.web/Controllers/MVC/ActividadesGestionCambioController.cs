@@ -60,7 +60,7 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Actividad gestión de cambio:", ActividadesGestionCambio.IdActividadesGestionCambio),
+                        EntityID = string.Format("{0} {1}", "Actividad gestión de cambio:"),
                     });
                     
                     return RedirectToAction("Index", new { IdPlanGestionCambio = ActividadesGestionCambio.IdPlanGestionCambio });
