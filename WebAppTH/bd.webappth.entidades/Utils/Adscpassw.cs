@@ -20,5 +20,6 @@ namespace bd.webappth.entidades.Utils
         public string AdpsCodigoEmpleado { get; set; }
         public string AdpsPasswPoint { get; set; }
         public string AdpsToken { get; set; }
+        public string AdpsTokenTemp { get; set; }
     }
 }

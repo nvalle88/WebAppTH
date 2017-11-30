@@ -68,6 +68,34 @@ namespace bd.webappth.servicios.Servicios
             }
         }
 
+        public async Task<Response> EditarAsync<T>(object model, Uri baseAddress, string url)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var request = JsonConvert.SerializeObject(model);
+                    var content = new StringContent(request, Encoding.UTF8, "application/json");
+
+                    var uri = string.Format("{0}{1}", baseAddress, url);
+
+                    var response = await client.PostAsync(new Uri(uri), content);
+
+                    var resultado = await response.Content.ReadAsStringAsync();
+                    var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
+                    return respuesta;
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = true,
+                    Message = ex.Message,
+                };
+            }
+        }
+
         public async Task<T> ObtenerElementoAsync1<T>(object model, Uri baseAddress, string url) where T : class
         {
             try
@@ -77,7 +105,7 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    var uri = string.Format("{0}/{1}", baseAddress, url);
+                    var uri = string.Format("{0}{1}", baseAddress, url);
 
                     var response = await client.PostAsync(new Uri(uri), content);
 
@@ -184,7 +212,7 @@ namespace bd.webappth.servicios.Servicios
 
                    
                     url = string.Format("{0}/{1}", url, id);
-                    var uri = string.Format("{0}/{1}", baseAddress, url);
+                    var uri = string.Format("{0}{1}", baseAddress, url);
                     var response = await client.PutAsync(new Uri(uri), content);
                     var resultado = await response.Content.ReadAsStringAsync();
                     var respuesta = JsonConvert.DeserializeObject<Response>(resultado);
