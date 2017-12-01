@@ -38,14 +38,14 @@ namespace bd.webappth.web
         public async void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddIdentity<ApplicationUser,IdentityRole>(options=> 
-            {
+            //services.AddIdentity<ApplicationUser,IdentityRole>(options=> 
+            //{
                 
                
 
-            })
+            //})
            
-            .AddDefaultTokenProviders();
+            //.AddDefaultTokenProviders();
             // Add framework services.
             services.AddMvc(
          
@@ -136,7 +136,7 @@ namespace bd.webappth.web
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationScheme = "Cookies",
-                LoginPath = new PathString("/Account/Login"),
+                LoginPath = new PathString("/Login/Login"),
                 AccessDeniedPath = new PathString("/Home/Forbidden"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
@@ -144,13 +144,13 @@ namespace bd.webappth.web
                 ExpireTimeSpan = new TimeSpan(1, 0, 0), //1 hour
                 DataProtectionProvider = DataProtectionProvider.Create(new DirectoryInfo(@"c:\shared-auth-ticket-keys\"))
             });
-            app.UseIdentity();
+            //app.UseIdentity();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Homes}/{action=Index}/{id?}");
+                    template: "{controller=Login}/{action=Index}/{id?}");
             });
         }
     }
