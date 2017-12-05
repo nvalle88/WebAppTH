@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
 
     <p></p>
@@ -66,7 +66,10 @@
                                         <th data-class="">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().CorreoPrivado)
                                         </th>
-                                        @*<th>Opciones</th>*@
+                                        <th>
+                                            <i class="fa fa-cog "></i>
+                                            Opciones
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,10 +89,9 @@
                                                 @Html.DisplayFor(modelItem => item.CorreoPrivado)
                                             </td>
 
-                                            @*<td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEmpleado }, new { onclick = "return confirm('Desea eliminar el Estado Civil... ?');" })
-                                            </td>*@
+                                            <td>
+                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado }) 
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -110,7 +112,7 @@
 </div>
 <!-- END MAIN CONTENT -->
 
- @section Scripts {
+@section Scripts {
     <script src='~/js/datatables/init.js'></script>
 }
 

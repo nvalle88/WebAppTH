@@ -2635,8 +2635,10 @@
                         },
                   success: function (data) {
                       if (data == "true") {
-                          $('#dt_basic2 tr:contains("' + fechainicio + '")'                    
-                              && 'tr:contains("' + fechafin + '")').remove();
+                          $('#dt_basic2 tr:contains("' + empresa + '")'
+                              && 'tr:contains("' + fechainicio + '")'
+                              && 'tr:contains("' + fechafin + '")'
+                              && 'tr:contains("' + puestotrabajo + '")').remove();
                       }
                       else {
                           alert(data);
