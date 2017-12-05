@@ -157,7 +157,7 @@ namespace bd.webappth.web.Controllers.MVC
                 
                 mensaje = Mensaje.Satisfactorio;
                 
-                //ObtenerInstancia.Instance = null;
+                ObtenerInstancia.Instance = null;
                 return mensaje;
             }
             mensaje = response.Message;
@@ -183,7 +183,7 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Create()
         {
             
-            //ObtenerInstancia.Instance = null;
+            ObtenerInstancia.Instance = null;
 
             await CargarCombos();
 

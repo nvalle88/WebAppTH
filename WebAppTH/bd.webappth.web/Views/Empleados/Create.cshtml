@@ -1663,7 +1663,7 @@
                                                                     <div class="form-group">
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <select id="etniaE" asp-for="PersonaSustituto.PersonaDiscapacidad.IdEtnia" class="form-control input " asp-items="ViewBag.IdEtnia" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                            <select id="etniaES" asp-for="PersonaSustituto.PersonaDiscapacidad.IdEtnia" class="form-control input " asp-items="ViewBag.IdEtnia" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
                                                                             </select>
                                                                         </div>
@@ -1675,7 +1675,7 @@
                                                                     <div class="form-group">
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                                            <select id="nacionalidadIndigenaF" class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena">
+                                                                            <select id="nacionalidadIndigenaES" class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena">
                                                                                 <option value="0" selected="" disabled="">Seleccione</option>
                                                                             </select>
                                                                         </div>
@@ -2148,6 +2148,34 @@
                 });
                 return false;
             })
+
+
+            $("#etniaES").change(function () {
+            mostrarLoadingPanel("content", "Cargando...")
+            $("#nacionalidadIndigenaES").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListarNacionalidadIndigena")',
+                    dataType: 'json',
+                    data: { etnia: $("#etniaES").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#nacionalidadIndigenaES").append('<option value="'
+                                + data.idNacionalidadIndigena + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+            })
+
 
         $("#paisLugarNacimiento").change(function () {
             mostrarLoadingPanel("content","Cargando...")
@@ -2635,7 +2663,7 @@
                         },
                   success: function (data) {
                       if (data == "true") {
-                          $('#dt_basic2 tr:contains("' + fechainicio + '")'                    
+                          $('#dt_basic2 tr:contains("' + fechainicio + '")'
                               && 'tr:contains("' + fechafin + '")').remove();
                       }
                       else {
@@ -2992,7 +3020,7 @@
         content: "application/json; charset=utf-8",
         dataType: "json",
         // De la siguiente manera indicamos que del div tome los input.
-        data: $('#camposEmpleado input').serialize(),
+        data: $('#wizard-1').serialize(),
         success: function(d) {
             if (d == true)
                 alert('Has introducido un nuevo empleado!!');
