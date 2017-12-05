@@ -1,9 +1,11 @@
-﻿using bd.webappth.servicios.Interfaces;
+﻿using bd.webappth.entidades.Utils;
+using bd.webappth.servicios.Interfaces;
 using bd.webappth.servicios.Servicios;
 using bd.webappth.web.Models;
 using bd.webappth.web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
+using System.IO;
 
 namespace bd.webappth.web
 {
@@ -35,17 +38,14 @@ namespace bd.webappth.web
         public async void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddIdentity<ApplicationUser,IdentityRole>(options=> 
-            {
+            //services.AddIdentity<ApplicationUser,IdentityRole>(options=> 
+            //{
                 
-                options.Cookies.ApplicationCookie.LoginPath = new PathString("/Login/Index");
-                options.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Login/Index");
+               
 
-                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromHours(2);
-
-            })
+            //})
            
-            .AddDefaultTokenProviders();
+            //.AddDefaultTokenProviders();
             // Add framework services.
             services.AddMvc(
          
@@ -72,6 +72,7 @@ namespace bd.webappth.web
             var ServiciosRecursosMateriales = Configuration.GetSection("ServiciosRecursosMateriales").Value;
 
             var HostSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
+            WebApp.BaseAddressWebAppLogin = Configuration.GetSection("HostWebAppLogin").Value;
 
             await InicializarWebApp.InicializarWeb(ServicioTalentoHumano, new Uri(HostSeguridad));
             await InicializarWebApp.InicializarSeguridad(ServicioSeguridad, new Uri(HostSeguridad));
@@ -131,17 +132,25 @@ namespace bd.webappth.web
                 
             }
 
-           
-
             app.UseStaticFiles();
-            app.UseCookieAuthentication();
-            app.UseIdentity();
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookies",
+                LoginPath = new PathString("/Login/Login"),
+                AccessDeniedPath = new PathString("/Home/Forbidden"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                CookieName = "ASPTest",
+                ExpireTimeSpan = new TimeSpan(1, 0, 0), //1 hour
+                DataProtectionProvider = DataProtectionProvider.Create(new DirectoryInfo(@"c:\shared-auth-ticket-keys\"))
+            });
+            //app.UseIdentity();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Homes}/{action=Index}/{id?}");
+                    template: "{controller=Login}/{action=Index}/{id?}");
             });
         }
     }
