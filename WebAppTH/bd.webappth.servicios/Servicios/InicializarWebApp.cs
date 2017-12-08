@@ -48,7 +48,8 @@ namespace bd.webappth.servicios.Servicios
             {
                 var sistema = await ObtenerHostSistema(id, baseAddreess);
                 WebApp.BaseAddressSeguridad = sistema.AdstHost;
-               // WebApp.BaseAddressSeguridad = Convert.ToString(baseAddreess);
+               // WebApp.BaseAddressSeguridad = "http://localhost/swSeguridad";
+                // WebApp.BaseAddressSeguridad = Convert.ToString(baseAddreess);
             }
             catch (Exception ex)
             {
