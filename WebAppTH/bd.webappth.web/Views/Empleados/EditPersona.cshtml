@@ -1,25 +1,313 @@
 @model bd.webappth.entidades.ViewModels.EmpleadoViewModel
 
 @{
-    ViewData["Title"] = "EditPersona";
+    ViewData["Title"] = "Editar Persona";
 }
 
-<h2>EditPersona</h2>
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 
-<form asp-action="EditPersona">
-    <div class="form-horizontal">
-        <h4>EmpleadoViewModel</h4>
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-6">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Persona</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="EditPersona" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Persona.IdPersona" />
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <select asp-for="Persona.IdSexo" class="form-control" asp-items="ViewBag.IdSexo">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdSexo)></option>
+                                                </select>
+                                                <span asp-validation-for="Persona.IdSexo" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <select asp-for="Persona.IdTipoIdentificacion" class="form-control" asp-items="ViewBag.IdTipoIdentificacion">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdTipoIdentificacion)></option>
+                                                </select>
+                                                <span asp-validation-for="Persona.IdTipoIdentificacion" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <select asp-for="Persona.IdEstadoCivil" class="form-control" asp-items="ViewBag.IdEstadoCivil">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdEstadoCivil)></option>
+                                                </select>
+                                                <span asp-validation-for="Persona.IdEstadoCivil" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <select asp-for="Persona.IdGenero" class="form-control" asp-items="ViewBag.IdGenero">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdGenero)></option>
+                                                </select>
+                                                <span asp-validation-for="Persona.IdGenero" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <select asp-for="Persona.IdNacionalidad" class="form-control" asp-items="ViewBag.IdNacionalidad">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdNacionalidad)></option>
+                                                </select>
+                                                <span asp-validation-for="Persona.IdNacionalidad" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <select asp-for="Persona.IdTipoSangre" class="form-control" asp-items="ViewBag.IdTipoSangre">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdTipoSangre)></option>
+                                                </select>
+                                                <span asp-validation-for="Persona.IdTipoSangre" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <select asp-for="Persona.IdEtnia" class="form-control" asp-items="ViewBag.IdEtnia">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdEtnia)></option>
+                                                </select>
+                                                <span asp-validation-for="Persona.IdEtnia" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <select asp-for="Persona.IdNacionalidadIndigena" class="form-control" asp-items="ViewBag.IdNacionalidadIndigena">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdNacionalidadIndigena)></option>
+                                                </select>
+                                                <span asp-validation-for="Persona.IdNacionalidadIndigena" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <select asp-for="Persona.IdParroquia" class="form-control" asp-items="ViewBag.IdParroquia">
+                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdParroquia)></option>
+                                                </select>
+                                                <span asp-validation-for="Persona.IdParroquia" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input asp-for="Persona.FechaNacimiento" type="text" class="form-control input datepicker " placeholder="Seleccione la Fecha de Inicio" data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                <span asp-validation-for="Persona.FechaNacimiento" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.Identificacion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.Identificacion)" />
+                                                <span asp-validation-for="Persona.Identificacion" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.Nombres" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.Nombres)" />
+                                                <span asp-validation-for="Persona.Nombres" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.Apellidos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.Apellidos)" />
+                                                <span asp-validation-for="Persona.Apellidos" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.TelefonoPrivado" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.TelefonoPrivado)" />
+                                                <span asp-validation-for="Persona.TelefonoPrivado" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.TelefonoCasa" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.TelefonoCasa)" />
+                                                <span asp-validation-for="Persona.TelefonoCasa" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.CorreoPrivado" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.CorreoPrivado)" />
+                                                <span asp-validation-for="Persona.CorreoPrivado" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.LugarTrabajo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.LugarTrabajo)" />
+                                                <span asp-validation-for="Persona.LugarTrabajo" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.LugarTrabajo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.LugarTrabajo)" />
+                                                <span asp-validation-for="Persona.LugarTrabajo" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.CallePrincipal" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.CallePrincipal)" />
+                                                <span asp-validation-for="Persona.CallePrincipal" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.CalleSecundaria" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.CalleSecundaria)" />
+                                                <span asp-validation-for="Persona.CalleSecundaria" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.Referencia" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.Referencia)" />
+                                                <span asp-validation-for="Persona.Referencia" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.Numero" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.Numero)" />
+                                                <span asp-validation-for="Persona.Numero" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-comment"></i>
+                                                <input maxlength="20" asp-for="Persona.Ocupacion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Persona.Ocupacion)" />
+                                                <span asp-validation-for="Persona.Ocupacion" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                                <footer>
+                                    <span class="text-danger">@ViewData["Error"]</span>
+                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
         </div>
-    </div>
-</form>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
 
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    <script type="text/javascript">
+        <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+            $(document).ready(function () {
+                Init_Select2();
+    });
 
+    </script>
+}

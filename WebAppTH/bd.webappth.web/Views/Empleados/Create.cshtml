@@ -3022,8 +3022,8 @@
         // De la siguiente manera indicamos que del div tome los input.
         data: $('#wizard-1').serialize(),
         success: function(d) {
-            if (d == true)
-                alert('Has introducido un nuevo empleado!!');
+            if (d.result == 'Redireccionar')
+                window.location = d.url;
             else {
                 alert(d);
             }
