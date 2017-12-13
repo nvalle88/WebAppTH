@@ -36,32 +36,11 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="EditEmpleadoContactoEmergencia" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="EmpleadoContactoEmergencia.IdEmpleadoContactoEmergencia" />
                                 <fieldset>
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <select asp-for="EmpleadoContactoEmergencia.IdPersona" class="form-control" asp-items="ViewBag.IdPersona">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.EmpleadoContactoEmergencia.IdPersona)></option>
-                                                </select>
-                                                <span asp-validation-for="EmpleadoContactoEmergencia.IdPersona" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <select asp-for="EmpleadoContactoEmergencia.IdEmpleado" class="form-control" asp-items="ViewBag.IdEmpleado">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.EmpleadoContactoEmergencia.IdEmpleado)></option>
-                                                </select>
-                                                <span asp-validation-for="EmpleadoContactoEmergencia.IdEmpleado" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-
+                                   
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">

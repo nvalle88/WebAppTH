@@ -34,31 +34,11 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="EditIndiceOcupacionalModalidadPartida" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida" />
                                 <fieldset>
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <select asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional" class="form-control" asp-items="ViewBag.IndiceOcupacional">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IndiceOcupacional)></option>
-                                                </select>
-                                                <span asp-validation-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <select asp-for="IndiceOcupacionalModalidadPartida.IdEmpleado" class="form-control" asp-items="ViewBag.IdEmpleado">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IdEmpleado)></option>
-                                                </select>
-                                                <span asp-validation-for="IndiceOcupacionalModalidadPartida.IdEmpleado" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-
+                                    
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">
@@ -70,29 +50,6 @@
                                         </section>
                                     </div>
 
-
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <select asp-for="IndiceOcupacionalModalidadPartida.IdModalidadPartida" class="form-control" asp-items="ViewBag.IdModalidadPartida">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IdModalidadPartida)></option>
-                                                </select>
-                                                <span asp-validation-for="IndiceOcupacionalModalidadPartida.IdModalidadPartida" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <select asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control" asp-items="ViewBag.IdTipoNombramiento">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IdTipoNombramiento)></option>
-                                                </select>
-                                                <span asp-validation-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
 
                                     <div class="row">
                                         <section class="col col-8">
