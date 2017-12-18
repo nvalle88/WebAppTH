@@ -1,12 +1,12 @@
-@model bd.webappth.entidades.Negocio.TipoAccionPersonal
+@model bd.webappth.entidades.Negocio.FlujoAprobacion
 
 @{
-    ViewData["Title"] = "Tipo de Acci&oacuten de Personal";
+    ViewData["Title"] = "Flujo de Aprobaci&oacuten";
 }
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
 
     <!-- widget grid -->
@@ -18,10 +18,10 @@
             <article class="col-sm-12 col-md-12 col-lg-6">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
-               
+
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Tipo de Acci&oacuten de Personal</h2>
+                        <h2>Flujo de Aprobaci&oacuten</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -29,20 +29,19 @@
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-                           
                         </div>
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                          
-                            <form  asp-action="Create" id="checkout-form"  class="smart-form" novalidate="novalidate">
+
+                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                @{await Html.RenderPartialAsync("PartialViewTiposAccionesPersonales", Model);}
-                                                               
+                                <input type="hidden" asp-for="IdFlujoAprobacion"/>
+                                @{await Html.RenderPartialAsync("_PartialViewFlujosAprobacion");}
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Index"  class="btn btn-default">Cancelar</a>
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -53,13 +52,13 @@
                 <!-- end widget -->
 
             </article>
-       
+
         </div>
         <!-- END ROW -->
     </section>
     <!-- end widget grid -->
     <!-- Modal -->
-   
+
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {

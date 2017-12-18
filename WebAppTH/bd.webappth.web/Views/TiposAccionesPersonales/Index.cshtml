@@ -4,13 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-
 <p></p>
 <a asp-action="Create">
     <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
         <span class="btn-label">
             <i class="glyphicon glyphicon-plus"></i>
-        </span>Nuevo  Tipo de  Acci&oacuten de Personal
+        </span>Nueva Tipo de Acci&oacuten de Personal
 
     </button>
 </a>
@@ -41,7 +40,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Tipo de  Acci&oacuten de Personal</h2>
+                        <h2>Tipo de Acci&oacuten de Personal</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -56,7 +55,43 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NDiasMinimo)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NDiasMaximo)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NHorasMinimo)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NHorasMaximo)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().DiasHabiles)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ImputableVacaciones)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ProcesoNomina)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Matriz)
+                                        </th>
+                                        <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().GeneraAccionPersonal)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ModificaDistributivo)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EstadoTipoAccionPersonal.Nombre)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -66,12 +101,70 @@
                                     {
                                         <tr>
                                             <td>
+                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                            </td>
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.NDiasMinimo)
+                                            </td>
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.NDiasMaximo)
+                                            </td>
+
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.NHorasMinimo)
+                                            </td>
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.NHorasMaximo)
+                                            </td>
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.DiasHabiles)
+                                            </td>
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.ImputableVacaciones)
+                                            </td>
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.ProcesoNomina)
+                                            </td>
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.Matriz)
+                                            </td>
+
+                                            <td>
+
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
                                             </td>
-                                           
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.GeneraAccionPersonal)
+                                            </td>
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.ModificaDistributivo)
+                                            </td>
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.EstadoTipoAccionPersonal.Nombre)
+                                            </td>
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoAccionPersonal }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoAccionPersonal }, new { onclick = "return confirm('Desea eliminar el tipo de accion de personal... ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoAccionPersonal }, new { onclick = "return confirm('Desea eliminar el tipo de accion personal... ?');" })
                                             </td>
                                         </tr>
                                     }
@@ -94,6 +187,6 @@
 <!-- END MAIN CONTENT -->
 
  @section Scripts {
-   <script src='~/js/datatables/init.js'></script>
+    <script src='~/js/datatables/init.js'></script>
 }
 

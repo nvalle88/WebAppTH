@@ -30,10 +30,10 @@ namespace bd.webappth.servicios.Servicios
             {
             try
             {
-                //var sistema= await ObtenerHostSistema(id, baseAddreess);
+                var sistema= await ObtenerHostSistema(id, baseAddreess);
                 //WebApp.BaseAddress = sistema.AdstHost;
-                WebApp.BaseAddress = Convert.ToString(baseAddreess);
-
+             //   WebApp.BaseAddress = Convert.ToString(baseAddreess);
+                WebApp.BaseAddress = "http://localhost:53271";
             }
             catch (Exception ex)
             {
@@ -47,8 +47,9 @@ namespace bd.webappth.servicios.Servicios
             try
             {
                 var sistema = await ObtenerHostSistema(id, baseAddreess);
-                //WebApp.BaseAddressSeguridad = sistema.AdstHost;
-                WebApp.BaseAddressSeguridad = Convert.ToString(baseAddreess);
+                WebApp.BaseAddressSeguridad = sistema.AdstHost;
+               // WebApp.BaseAddressSeguridad = "http://localhost/swSeguridad";
+                // WebApp.BaseAddressSeguridad = Convert.ToString(baseAddreess);
             }
             catch (Exception ex)
             {

@@ -1,22 +1,22 @@
-@model List<bd.webappth.entidades.ViewModels.ListaEmpleadoViewModel>
+@model List<bd.webappth.entidades.Negocio.PieFirma>
 
 @{
     ViewData["Title"] = "Index";
 }
-<!-- MAIN CONTENT -->
+
+<p></p>
+<a asp-action="Create">
+    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Nuevo Pie de Firma
+
+    </button>
+</a>
+<p> </p>
+			<!-- MAIN CONTENT -->
 <div id="content">
-
-    <p></p>
-    <a asp-action="Create">
-        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo Empleado
-
-        </button>
-    </a>
-    <p> </p>
-
+   
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -40,7 +40,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Empleados</h2>
+                        <h2>Pie de Firma</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -55,21 +55,12 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreApellido)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().TipoAccionPersonal.Nombre)
                                         </th>
-                                        <th data-class="">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Identificacion)
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IndiceOcupacional.Dependencia.Nombre)
                                         </th>
-                                        <th data-class="">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().TelefonoPrivado)
-                                        </th>
-                                        <th data-class="">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().CorreoPrivado)
-                                        </th>
-                                        <th>
-                                            <i class="fa fa-cog "></i>
-                                            Opciones
-                                        </th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,25 +68,16 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreApellido)
+                                                @Html.DisplayFor(modelItem => item.TipoAccionPersonal.Nombre)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TelefonoPrivado)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CorreoPrivado)
-                                            </td>
 
+                                                @Html.DisplayFor(modelItem => item.IndiceOcupacional.Dependencia.Nombre)
+                                            </td>
+                                           
                                             <td>
-                                                    @Html.ActionLink("Editar Persona", "EditPersona", new { id = item.IdPersona }) <br />
-                                                    @Html.ActionLink("Editar Empleado", "EditEmpleado", new { id = item.IdEmpleado })<br />
-                                                    @Html.ActionLink("Editar Datos Bancarios", "EditDatosBancarios", new { id = item.IdEmpleado })<br />
-                                                    @Html.ActionLink("Editar Empleado Contacto Emergencia", "EditEmpleadoContactoEmergencia", new { id = item.IdEmpleado })<br />
-                                                    @Html.ActionLink("Editar Indice Ocupacional Modalidad Partida", "EditIndiceOcupacionalModalidadPartida", new { id = item.IdEmpleado })<br />
-                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdPersona })<br /> 
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdPieFirma }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdPieFirma }, new { onclick = "return confirm('Desea eliminar el pie de firma... ?');" })
                                             </td>
                                         </tr>
                                     }
@@ -106,7 +88,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-
+          
             </article>
             <!-- WIDGET END -->
         </div>
@@ -117,7 +99,7 @@
 </div>
 <!-- END MAIN CONTENT -->
 
-@section Scripts {
+ @section Scripts {
     <script src='~/js/datatables/init.js'></script>
 }
 

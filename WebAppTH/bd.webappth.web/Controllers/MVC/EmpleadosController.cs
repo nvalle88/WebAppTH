@@ -49,7 +49,10 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                     return instance;
                 }
-
+                set
+                {
+                    instance = null;
+                }
             }
         }
 
@@ -75,7 +78,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando estados civiles",
+                    Message = "Listando empleados",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,14 +88,18 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        
+
+
         private async Task CargarCombos()
         {
-            ViewData["IdTipoIdentificacion"] = new SelectList(await apiServicio.Listar<TipoIdentificacion>(new Uri(WebApp.BaseAddress), "/api/TiposIdentificacion/ListarTiposIdentificacion"), "IdTipoIdentificacion", "Nombre");
+            //Tabla Persona
             ViewData["IdSexo"] = new SelectList(await apiServicio.Listar<Sexo>(new Uri(WebApp.BaseAddress), "/api/Sexos/ListarSexos"), "IdSexo", "Nombre");
-            ViewData["IdGenero"] = new SelectList(await apiServicio.Listar<Genero>(new Uri(WebApp.BaseAddress), "/api/Generos/ListarGeneros"), "IdGenero", "Nombre");
+            ViewData["IdTipoIdentificacion"] = new SelectList(await apiServicio.Listar<TipoIdentificacion>(new Uri(WebApp.BaseAddress), "/api/TiposIdentificacion/ListarTiposIdentificacion"), "IdTipoIdentificacion", "Nombre");
             ViewData["IdEstadoCivil"] = new SelectList(await apiServicio.Listar<EstadoCivil>(new Uri(WebApp.BaseAddress), "/api/EstadosCiviles/ListarEstadosCiviles"), "IdEstadoCivil", "Nombre");
-            ViewData["IdTipoSangre"] = new SelectList(await apiServicio.Listar<TipoSangre>(new Uri(WebApp.BaseAddress), "/api/TiposDeSangre/ListarTiposDeSangre"), "IdTipoSangre", "Nombre");
+            ViewData["IdGenero"] = new SelectList(await apiServicio.Listar<Genero>(new Uri(WebApp.BaseAddress), "/api/Generos/ListarGeneros"), "IdGenero", "Nombre");
             ViewData["IdNacionalidad"] = new SelectList(await apiServicio.Listar<Nacionalidad>(new Uri(WebApp.BaseAddress), "/api/Nacionalidades/ListarNacionalidades"), "IdNacionalidad", "Nombre");
+            ViewData["IdTipoSangre"] = new SelectList(await apiServicio.Listar<TipoSangre>(new Uri(WebApp.BaseAddress), "/api/TiposDeSangre/ListarTiposDeSangre"), "IdTipoSangre", "Nombre");
             ViewData["IdEtnia"] = new SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "/api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
 
             ViewData["IdPaisLugarNacimiento"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "/api/Pais/ListarPais"), "IdPais", "Nombre");
@@ -108,13 +115,12 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "/api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
             ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "/api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
 
-
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(EmpleadoViewModel empleadoViewModel)
+                
+        public async Task<string> InsertarEmpleado(EmpleadoViewModel empleadoViewModel)
         {
-
+            string mensaje = string.Empty;
+          
             var ins = ObtenerInstancia.Instance;
 
             ins.Persona = empleadoViewModel.Persona;
@@ -128,7 +134,6 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (response.IsSuccess)
             {
-                
                 LogEntryTranfer logEntryTranfer = new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
@@ -141,29 +146,71 @@ namespace bd.webappth.web.Controllers.MVC
                     ObjectPrevious = "NULL",
                     ObjectNext = JsonConvert.SerializeObject(response.Resultado),
                 };
-
-
+                
                 var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
+                
+                mensaje = Mensaje.Satisfactorio;
+                
+                ObtenerInstancia.Instance = null;
+                return mensaje;
+            }
+            mensaje = response.Message;
+            return mensaje;
 
-                ViewData["Mensaje"] = Mensaje.Satisfactorio;
-                return PartialView("Resultado");
-            }
-            else
-            {
-                ViewData["Mensaje"] = Mensaje.Error;
-                return PartialView("Resultado");
-            }
-            ViewData["Error"] = response.Message;
-            return RedirectToAction("Create");
         }
+
+
+
+        public async Task<string> ActualizarEmpleado(EmpleadoViewModel empleadoViewModel)
+        {
+            string mensaje = string.Empty;
+
+           
+        
+            return mensaje;
+
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> NuevoEmpleado(EmpleadoViewModel empleadoViewModel)
+        {
+
+            string mensaje = string.Empty;
+            mensaje = InsertarEmpleado(empleadoViewModel).Result;
+
+            if (!mensaje.Equals("La acción se ha realizado satisfactoriamente"))
+                return Json(mensaje);
+            else
+                return Json(new { result = "Redireccionar", url = Url.Action("Index", "Empleados") });
+
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> EditarEmpleado(EmpleadoViewModel empleadoViewModel)
+        {
+
+            string mensaje = string.Empty;
+            mensaje = ActualizarEmpleado(empleadoViewModel).Result;
+
+            if (!mensaje.Equals("La acción se ha realizado satisfactoriamente"))
+                return Json(mensaje);
+            else
+                return Json(new { result = "Redireccionar", url = Url.Action("Index", "Empleados") });
+
+        }
+
 
         public async Task<IActionResult> Create()
         {
+            
+            ObtenerInstancia.Instance = null;
 
             await CargarCombos();
 
             return View();
         }
+
 
         public async Task<JsonResult> ListarNacionalidadIndigena(string etnia)
         {
@@ -240,7 +287,6 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                //EmpleadoViewModel empleadoviewmodel = new EmpleadoViewModel();
                 var empleadoviewmodel = ObtenerInstancia.Instance;
 
                 empleadoviewmodel.EmpleadoFamiliar.Add(new EmpleadoFamiliar
@@ -271,9 +317,7 @@ namespace bd.webappth.web.Controllers.MVC
                     }
 
                 }
-
-
-
+                
                 );
 
                 return Json(true);
@@ -283,24 +327,19 @@ namespace bd.webappth.web.Controllers.MVC
 
                 return Json(false);
             }
-
-
+            
         }
-
-
-
+        
         public async Task<JsonResult> InsertarFamiliar(int idTipoIdentificacion, string Identificacion, string Nombres, string Apellidos, int idSexo, int idGenero, int idEstadoCivil, int idTipoSangre, int idNacionalidad, int etniaF, int nacionalidadIndigenaF, string CorreoPrivado, DateTime FechaNacimiento, string LugarTrabajo, string CallePrincipal, string CalleSecundaria, string Referencia, string Numero, int parroquiaLugarFamiliar, string TelefonoPrivado, string TelefonoCasa, int Parentesco, string Ocupacion)
         {
             try
             {
 
                 if (!String.IsNullOrEmpty(idTipoIdentificacion.ToString()) && !String.IsNullOrEmpty(Identificacion) && !String.IsNullOrEmpty(Nombres) && !String.IsNullOrEmpty(Apellidos) && !String.IsNullOrEmpty(idSexo.ToString()) && !String.IsNullOrEmpty(idGenero.ToString()) && !String.IsNullOrEmpty(idEstadoCivil.ToString()) && !String.IsNullOrEmpty(idTipoSangre.ToString()) && !String.IsNullOrEmpty(idNacionalidad.ToString()) && !String.IsNullOrEmpty(etniaF.ToString()) && !String.IsNullOrEmpty(nacionalidadIndigenaF.ToString()) && !String.IsNullOrEmpty(CorreoPrivado) && !String.IsNullOrEmpty(FechaNacimiento.ToString()) && !String.IsNullOrEmpty(CallePrincipal) && !String.IsNullOrEmpty(CalleSecundaria) && !String.IsNullOrEmpty(Referencia) && !String.IsNullOrEmpty(Numero) && !String.IsNullOrEmpty(parroquiaLugarFamiliar.ToString()) && !String.IsNullOrEmpty(TelefonoPrivado) && !String.IsNullOrEmpty(TelefonoCasa) && !String.IsNullOrEmpty(Parentesco.ToString()) && !String.IsNullOrEmpty(Ocupacion))
-                {
-                    
+                {            
                     var empleadoviewmodel = ObtenerInstancia.Instance;
 
                     bool existe = empleadoviewmodel.EmpleadoFamiliar.Exists(x => x.Persona.IdTipoIdentificacion == idTipoIdentificacion && x.Persona.Identificacion == Identificacion && x.Persona.Nombres == Nombres && x.Persona.Apellidos == Apellidos);
-
                     if (!existe)
                     {
                         empleadoviewmodel.EmpleadoFamiliar.Add
@@ -348,7 +387,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-
                 return Json(false);
             }
 
@@ -432,12 +470,12 @@ namespace bd.webappth.web.Controllers.MVC
             try
                 { 
 
-                        if (!String.IsNullOrEmpty(FechaInicio.ToString()) && !String.IsNullOrEmpty(FechaFin.ToString()) && !String.IsNullOrEmpty(Empresa.ToString()) && !String.IsNullOrEmpty(PuestoTrabajo) && !String.IsNullOrEmpty(DescripcionFunciones))
+                        if (!String.IsNullOrEmpty(FechaInicio.ToString()) && !String.IsNullOrEmpty(FechaFin.ToString()))
                     {
 
                         var empleadoviewmodel = ObtenerInstancia.Instance;
 
-                        bool existe = empleadoviewmodel.TrayectoriaLaboral.Exists(x => x.Empresa == Empresa && x.PuestoTrabajo == PuestoTrabajo);
+                        bool existe = empleadoviewmodel.TrayectoriaLaboral.Exists(x => x.FechaInicio == FechaInicio && x.FechaFin == FechaFin);
                         if (!existe)
                         {
                             empleadoviewmodel.TrayectoriaLaboral.Add(new TrayectoriaLaboral
@@ -447,7 +485,6 @@ namespace bd.webappth.web.Controllers.MVC
                                 Empresa = Empresa,
                                 PuestoTrabajo = PuestoTrabajo,
                                 DescripcionFunciones = DescripcionFunciones
-
                             }
                             );
                             return Json(true);
@@ -468,12 +505,12 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task<JsonResult> EliminarTrayectoriaLaboral(string empresa, DateTime fechainicio, DateTime fechafin, string puestotrabajo)
+        public async Task<JsonResult> EliminarTrayectoriaLaboral(DateTime fechainicio, DateTime fechafin)
         {
             try
             {
                 var empleadoviewmodel = ObtenerInstancia.Instance;
-                var elemento = empleadoviewmodel.TrayectoriaLaboral.Find(c => c.Empresa == empresa && c.FechaInicio == fechainicio.Date && c.FechaFin == fechafin.Date && c.PuestoTrabajo == puestotrabajo);
+                var elemento = empleadoviewmodel.TrayectoriaLaboral.Find(c => c.FechaInicio == fechainicio.Date && c.FechaFin == fechafin.Date);
                 empleadoviewmodel.TrayectoriaLaboral.Remove(elemento);
                 return Json(true);
             }
@@ -751,21 +788,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
-
-        //public async Task<JsonResult> ListarEmpleados()
-        //{
-        //    var lista = new List<ListaEmpleadoViewModel>();
-        //    try
-        //    {
-        //        lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
-        //                                                            , "/api/Empleados/ListarEmpleados");
-        //        return Json(lista);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(Mensaje.Error);
-        //    }
-        //}
+        
 
         public async Task<IActionResult> ListarEmpleados()
         {
@@ -788,6 +811,616 @@ namespace bd.webappth.web.Controllers.MVC
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
                 });
+                return BadRequest();
+            }
+        }
+
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
+                                                                  "/api/Personas");
+
+
+                    respuesta.Resultado = JsonConvert.DeserializeObject<Persona>(respuesta.Resultado.ToString());
+
+                    var empleadoViewModel = new EmpleadoViewModel
+                    {
+                        Persona = (Persona)respuesta.Resultado,
+                    };
+
+                     //Selecciono que me devuelva pais IDPAIS pasando el id parroquia  
+
+                    ViewData["IdSexo"] = new SelectList(await apiServicio.Listar<Sexo>(new Uri(WebApp.BaseAddress), "/api/Sexos/ListarSexos"), "IdSexo", "Nombre");
+                    ViewData["IdTipoIdentificacion"] = new SelectList(await apiServicio.Listar<TipoIdentificacion>(new Uri(WebApp.BaseAddress), "/api/TiposIdentificacion/ListarTiposIdentificacion"), "IdTipoIdentificacion", "Nombre");
+                    ViewData["IdEstadoCivil"] = new SelectList(await apiServicio.Listar<EstadoCivil>(new Uri(WebApp.BaseAddress), "/api/EstadosCiviles/ListarEstadosCiviles"), "IdEstadoCivil", "Nombre");
+                    ViewData["IdGenero"] = new SelectList(await apiServicio.Listar<Genero>(new Uri(WebApp.BaseAddress), "/api/Generos/ListarGeneros"), "IdGenero", "Nombre");
+                    ViewData["IdNacionalidad"] = new SelectList(await apiServicio.Listar<Nacionalidad>(new Uri(WebApp.BaseAddress), "/api/Nacionalidades/ListarNacionalidades"), "IdNacionalidad", "Nombre");
+                    ViewData["IdTipoSangre"] = new SelectList(await apiServicio.Listar<TipoSangre>(new Uri(WebApp.BaseAddress), "/api/TiposDeSangre/ListarTiposDeSangre"), "IdTipoSangre", "Nombre");
+                    ViewData["IdEtnia"] = new SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "/api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
+                    ViewData["IdNacionalidadIndigena"] = new SelectList(await apiServicio.Listar<NacionalidadIndigena>(new Uri(WebApp.BaseAddress), "/api/NacionalidadesIndigenas/ListarNacionalidadesIndigenas"), "IdNacionalidadIndigena", "Nombre");
+                    ViewData["IdProvinciaPorPais"] = new SelectList(await apiServicio.Listar<Provincia>(empleadoViewModel.Persona.Parroquia.Ciudad.Provincia.Pais, new Uri(WebApp.BaseAddress), "/api/Provincia/ListarProvinciaPorPais"), "IdProvincia", "Nombre", empleadoViewModel.Persona.Parroquia.Ciudad.Provincia.IdProvincia);
+                    ViewData["IdCiudadPorProvincia"] = new SelectList(await apiServicio.Listar<Ciudad>(empleadoViewModel.Persona.Parroquia.Ciudad.Provincia, new Uri(WebApp.BaseAddress), "/api/Ciudad/ListarCiudadPorPais"), "IdCiudad", "Nombre", empleadoViewModel.Persona.Parroquia.Ciudad.IdCiudad);
+                    ViewData["IdPaisLugarSufragio"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "/api/Pais/ListarPais"), "IdPais", "Nombre", empleadoViewModel.Persona.Parroquia.Ciudad.Provincia.Pais.IdPais);
+                    ViewData["IdParroquia"] = new SelectList(await apiServicio.Listar<Parroquia>(new Uri(WebApp.BaseAddress), "/api/Parroquia/ListarParroquia"), "IdParroquia", "Nombre", empleadoViewModel.Persona.Parroquia.IdParroquia);
+
+                    if (respuesta.IsSuccess)
+                    {
+                        return View(empleadoViewModel);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, Persona persona)
+        {
+            Response response = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+
+                    response = await apiServicio.EditarAsync(id, persona, new Uri(WebApp.BaseAddress),
+                                                                 "/api/Personas");
+
+                    if (response.IsSuccess)
+                    {
+                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                        {
+                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                            EntityID = string.Format("{0} : {1}", "Personas", id),
+                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                            Message = "Se ha actualizado una persona",
+                            UserName = "Usuario 1"
+                        });
+
+                        return RedirectToAction("Index");
+                    }
+                    ViewData["Error"] = response.Message;
+
+                    ViewData["IdSexo"] = new SelectList(await apiServicio.Listar<Sexo>(new Uri(WebApp.BaseAddress), "/api/Sexos/ListarSexos"), "IdSexo", "Nombre");
+                    ViewData["IdTipoIdentificacion"] = new SelectList(await apiServicio.Listar<TipoIdentificacion>(new Uri(WebApp.BaseAddress), "/api/TiposIdentificacion/ListarTiposIdentificacion"), "IdTipoIdentificacion", "Nombre");
+                    ViewData["IdEstadoCivil"] = new SelectList(await apiServicio.Listar<EstadoCivil>(new Uri(WebApp.BaseAddress), "/api/EstadosCiviles/ListarEstadosCiviles"), "IdEstadoCivil", "Nombre");
+                    ViewData["IdGenero"] = new SelectList(await apiServicio.Listar<Genero>(new Uri(WebApp.BaseAddress), "/api/Generos/ListarGeneros"), "IdGenero", "Nombre");
+                    ViewData["IdNacionalidad"] = new SelectList(await apiServicio.Listar<Nacionalidad>(new Uri(WebApp.BaseAddress), "/api/Nacionalidades/ListarNacionalidades"), "IdNacionalidad", "Nombre");
+                    ViewData["IdTipoSangre"] = new SelectList(await apiServicio.Listar<TipoSangre>(new Uri(WebApp.BaseAddress), "/api/TiposDeSangre/ListarTiposDeSangre"), "IdTipoSangre", "Nombre");
+                    ViewData["IdEtnia"] = new SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "/api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
+                    ViewData["IdNacionalidadIndigena"] = new SelectList(await apiServicio.Listar<NacionalidadIndigena>(new Uri(WebApp.BaseAddress), "/api/NacionalidadesIndigenas/ListarNacionalidadesIndigenas"), "IdNacionalidadIndigena", "Nombre");
+                    ViewData["IdProvinciaPorPais"] = new SelectList(await apiServicio.Listar<Provincia>(persona.Parroquia.Ciudad.Provincia.Pais, new Uri(WebApp.BaseAddress), "/api/Provincia/ListarProvinciaPorPais"), "IdProvincia", "Nombre", persona.Parroquia.Ciudad.Provincia.IdProvincia);
+                    ViewData["IdCiudadPorProvincia"] = new SelectList(await apiServicio.Listar<Ciudad>(persona.Parroquia.Ciudad.Provincia, new Uri(WebApp.BaseAddress), "/api/Ciudad/ListarCiudadPorPais"), "IdCiudad", "Nombre", persona.Parroquia.Ciudad.IdCiudad);
+                    ViewData["IdPaisLugarSufragio"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "/api/Pais/ListarPais"), "IdPais", "Nombre", persona.Parroquia.Ciudad.Provincia.Pais.IdPais);
+                    ViewData["IdParroquia"] = new SelectList(await apiServicio.Listar<Parroquia>(new Uri(WebApp.BaseAddress), "/api/Parroquia/ListarParroquia"), "IdParroquia", "Nombre", persona.Parroquia.IdParroquia);
+
+
+                    return View(persona);
+
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Editando una persona",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
+
+        public async Task<IActionResult> EditPersona(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
+                                                                  "/api/Personas");
+
+
+                    respuesta.Resultado = JsonConvert.DeserializeObject<Persona>(respuesta.Resultado.ToString());
+
+                    var empleadoViewModel = new EmpleadoViewModel
+                    {
+                        Persona = (Persona)respuesta.Resultado,
+                    };
+
+
+
+                    ViewData["IdSexo"] = new SelectList(await apiServicio.Listar<Sexo>(new Uri(WebApp.BaseAddress), "/api/Sexos/ListarSexos"), "IdSexo", "Nombre");
+                    ViewData["IdTipoIdentificacion"] = new SelectList(await apiServicio.Listar<TipoIdentificacion>(new Uri(WebApp.BaseAddress), "/api/TiposIdentificacion/ListarTiposIdentificacion"), "IdTipoIdentificacion", "Nombre");
+                    ViewData["IdEstadoCivil"] = new SelectList(await apiServicio.Listar<EstadoCivil>(new Uri(WebApp.BaseAddress), "/api/EstadosCiviles/ListarEstadosCiviles"), "IdEstadoCivil", "Nombre");
+                    ViewData["IdGenero"] = new SelectList(await apiServicio.Listar<Genero>(new Uri(WebApp.BaseAddress), "/api/Generos/ListarGeneros"), "IdGenero", "Nombre");
+                    ViewData["IdNacionalidad"] = new SelectList(await apiServicio.Listar<Nacionalidad>(new Uri(WebApp.BaseAddress), "/api/Nacionalidades/ListarNacionalidades"), "IdNacionalidad", "Nombre");
+                    ViewData["IdTipoSangre"] = new SelectList(await apiServicio.Listar<TipoSangre>(new Uri(WebApp.BaseAddress), "/api/TiposDeSangre/ListarTiposDeSangre"), "IdTipoSangre", "Nombre");
+                    ViewData["IdEtnia"] = new SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "/api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
+                    ViewData["IdNacionalidadIndigena"] = new SelectList(await apiServicio.Listar<NacionalidadIndigena>(new Uri(WebApp.BaseAddress), "/api/NacionalidadesIndigenas/ListarNacionalidadesIndigenas"), "IdNacionalidadIndigena", "Nombre");
+                    ViewData["IdParroquia"] = new SelectList(await apiServicio.Listar<Parroquia>(new Uri(WebApp.BaseAddress), "/api/Parroquia/ListarParroquia"), "IdParroquia", "Nombre");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        return View(empleadoViewModel);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPersona(string id, Persona Persona)
+        {
+            Response response = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+ 
+                    response = await apiServicio.EditarAsync(id, Persona, new Uri(WebApp.BaseAddress),
+                                                                 "/api/Personas");
+
+                    if (response.IsSuccess)
+                    {
+                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                        {
+                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                            EntityID = string.Format("{0} : {1}", "Personas", id),
+                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                            Message = "Se ha actualizado una persona",
+                            UserName = "Usuario 1"
+                        });
+
+                        return RedirectToAction("Index");
+                    }
+                    ViewData["Error"] = response.Message;
+
+                    ViewData["IdSexo"] = new SelectList(await apiServicio.Listar<Sexo>(new Uri(WebApp.BaseAddress), "/api/Sexos/ListarSexos"), "IdSexo", "Nombre");
+                    ViewData["IdTipoIdentificacion"] = new SelectList(await apiServicio.Listar<TipoIdentificacion>(new Uri(WebApp.BaseAddress), "/api/TiposIdentificacion/ListarTiposIdentificacion"), "IdTipoIdentificacion", "Nombre");
+                    ViewData["IdEstadoCivil"] = new SelectList(await apiServicio.Listar<EstadoCivil>(new Uri(WebApp.BaseAddress), "/api/EstadosCiviles/ListarEstadosCiviles"), "IdEstadoCivil", "Nombre");
+                    ViewData["IdGenero"] = new SelectList(await apiServicio.Listar<Genero>(new Uri(WebApp.BaseAddress), "/api/Generos/ListarGeneros"), "IdGenero", "Nombre");
+                    ViewData["IdNacionalidad"] = new SelectList(await apiServicio.Listar<Nacionalidad>(new Uri(WebApp.BaseAddress), "/api/Nacionalidades/ListarNacionalidades"), "IdNacionalidad", "Nombre");
+                    ViewData["IdTipoSangre"] = new SelectList(await apiServicio.Listar<TipoSangre>(new Uri(WebApp.BaseAddress), "/api/TiposDeSangre/ListarTiposDeSangre"), "IdTipoSangre", "Nombre");
+                    ViewData["IdEtnia"] = new SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "/api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
+                    ViewData["IdNacionalidadIndigena"] = new SelectList(await apiServicio.Listar<NacionalidadIndigena>(new Uri(WebApp.BaseAddress), "/api/NacionalidadesIndigenas/ListarNacionalidadesIndigenas"), "IdNacionalidadIndigena", "Nombre");
+                    ViewData["IdParroquia"] = new SelectList(await apiServicio.Listar<Parroquia>(new Uri(WebApp.BaseAddress), "/api/Parroquia/ListarParroquia"), "IdParroquia", "Nombre");
+
+                    return View(Persona);
+
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Editando una persona",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
+        public async Task<IActionResult> EditEmpleado(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
+                                                                  "/api/Empleados");
+
+                    
+                    respuesta.Resultado = JsonConvert.DeserializeObject<Empleado>(respuesta.Resultado.ToString());
+
+                    var empleadoViewModel = new EmpleadoViewModel
+                    {
+                        Empleado = (Empleado)respuesta.Resultado,
+                    };
+                    
+                    if (respuesta.IsSuccess)
+                    {
+                        return View(empleadoViewModel);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditEmpleado(string id, Empleado empleado)
+        {
+            Response response = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    response = await apiServicio.EditarAsync(id, empleado, new Uri(WebApp.BaseAddress),
+                                                                 "/api/Empleados");
+
+                    if (response.IsSuccess)
+                    {
+                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                        {
+                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                            EntityID = string.Format("{0} : {1}", "Empleado", id),
+                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                            Message = "Se ha actualizado un empleado",
+                            UserName = "Usuario 1"
+                        });
+
+                        return RedirectToAction("Index");
+                    }
+                    ViewData["Error"] = response.Message;
+                    
+                    return View(empleado);
+
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Editando un empleado",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
+        public async Task<IActionResult> EditDatosBancarios(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    
+
+                    var datosBancarios = new DatosBancarios
+                    {
+                        IdEmpleado = Convert.ToInt32(id),
+
+                    };
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync<DatosBancarios>(datosBancarios, new Uri(WebApp.BaseAddress),
+                                                                       "/api/DatosBancarios/DatosBancariosPorIdEmpleado");
+
+                    var datoBancario = JsonConvert.DeserializeObject<DatosBancarios>(respuesta.Resultado.ToString());
+
+
+                    var empleadoViewModel = new EmpleadoViewModel
+                    {
+                        DatosBancarios = datoBancario,
+                    };
+
+                    
+                    ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "/api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera", "Nombre");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        return View(empleadoViewModel);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditDatosBancarios(string id, DatosBancarios datosBancarios)
+        {
+            Response response = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    response = await apiServicio.EditarAsync(id, datosBancarios, new Uri(WebApp.BaseAddress),
+                                                                 "/api/DatosBancarios");
+
+                    if (response.IsSuccess)
+                    {
+                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                        {
+                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                            EntityID = string.Format("{0} : {1}", "Datos Bancarios", id),
+                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                            Message = "Se ha actualizado un dato bancario",
+                            UserName = "Usuario 1"
+                        });
+
+                        return RedirectToAction("Index");
+                    }
+                    ViewData["Error"] = response.Message;
+
+                    ViewData["IdEmpleado"] = new SelectList(await apiServicio.Listar<Empleado>(new Uri(WebApp.BaseAddress), "/api/Empleados/ListarEmpleados"), "IdEmpleado", "FechaIngreso");
+                    ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "/api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera", "Nombre");
+
+                    return View(datosBancarios);
+
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Editando un dato bancario",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> EditEmpleadoContactoEmergencia(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    
+                    var empleadosContactosEmergencias = new EmpleadoContactoEmergencia
+                    {
+                        IdEmpleado = Convert.ToInt32(id),
+
+                    };
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync<EmpleadoContactoEmergencia>(empleadosContactosEmergencias, new Uri(WebApp.BaseAddress),
+                                                                       "/api/EmpleadosContactosEmergencias/EmpleadosContactosEmergenciasPorIdEmpleado");
+
+                    var empleadoContactoEmergencia = JsonConvert.DeserializeObject<EmpleadoContactoEmergencia>(respuesta.Resultado.ToString());
+                    
+                    var empleadoViewModel = new EmpleadoViewModel
+                    {
+                        EmpleadoContactoEmergencia = empleadoContactoEmergencia,
+                    };
+                    
+                    ViewData["IdParentesco"] = new SelectList(await apiServicio.Listar<Parentesco>(new Uri(WebApp.BaseAddress), "/api/Parentescos/ListarParentescos"), "IdParentesco", "Nombre");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        return View(empleadoViewModel);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditEmpleadoContactoEmergencia(string id, EmpleadoContactoEmergencia empleadoContactoEmergencia)
+        {
+            Response response = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+
+                    var empleadosContactosEmergencias = new EmpleadoContactoEmergencia
+                    {
+                        IdEmpleado = Convert.ToInt32(id),
+                        IdParentesco = empleadoContactoEmergencia.IdParentesco
+                    };
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync<EmpleadoContactoEmergencia>(empleadosContactosEmergencias, new Uri(WebApp.BaseAddress),
+                                                                       "/api/EmpleadosContactosEmergencias/EmpleadosContactosEmergenciasPorIdEmpleado");
+                  
+                    var empleadosContactosEmergencias1 = JsonConvert.DeserializeObject<EmpleadoContactoEmergencia>(respuesta.Resultado.ToString());
+
+                    empleadosContactosEmergencias1.IdParentesco=empleadoContactoEmergencia.IdParentesco;
+
+
+                   response = await apiServicio.EditarAsync(id, empleadosContactosEmergencias1, new Uri(WebApp.BaseAddress),
+                                                                 "/api/EmpleadosContactosEmergencias");
+
+                    if (response.IsSuccess)
+                    {
+                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                        {
+                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                            EntityID = string.Format("{0} : {1}", "Empleado Contacto Emergencia", id),
+                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                            Message = "Se ha actualizado un empleado contacto emergencia",
+                            UserName = "Usuario 1"
+                        });
+
+                        return RedirectToAction("Index");
+                    }
+                    ViewData["Error"] = response.Message;
+
+
+                    ViewData["IdParentesco"] = new SelectList(await apiServicio.Listar<Parentesco>(new Uri(WebApp.BaseAddress), "/api/Parentescos/ListarParentescos"), "IdParentesco", "Nombre");
+
+                    return View(empleadoContactoEmergencia);
+
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Editando un empleado contacto emergencia",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> EditIndiceOcupacionalModalidadPartida(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+
+                    var indiceOcupacionalModalidadPartida = new IndiceOcupacionalModalidadPartida
+                    {
+                        IdEmpleado = Convert.ToInt32(id),
+
+                    };
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync<IndiceOcupacionalModalidadPartida>(indiceOcupacionalModalidadPartida, new Uri(WebApp.BaseAddress),
+                                                                       "/api/IndicesOcupacionalesModalidadPartida/IndiceOcupacionalModalidadPartidaPorIdEmpleado");
+
+                    var indicesOcupacionalesModalidadPartida = JsonConvert.DeserializeObject<IndiceOcupacionalModalidadPartida>(respuesta.Resultado.ToString());
+
+                    var empleadoViewModel = new EmpleadoViewModel
+                    {
+                        IndiceOcupacionalModalidadPartida = indicesOcupacionalesModalidadPartida,
+                    };
+
+                    ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        return View(empleadoViewModel);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditIndiceOcupacionalModalidadPartida(string id, IndiceOcupacionalModalidadPartida indiceOcupacionalModalidadPartida)
+        {
+            Response response = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+
+                    var indicesOcupacionalesModalidadPartida = new IndiceOcupacionalModalidadPartida
+                    {
+                        IdEmpleado = Convert.ToInt32(id),
+                    };
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync<IndiceOcupacionalModalidadPartida>(indicesOcupacionalesModalidadPartida, new Uri(WebApp.BaseAddress),
+                                                                       "/api/IndicesOcupacionalesModalidadPartida/IndiceOcupacionalModalidadPartidaPorIdEmpleado");
+
+                    var indicesOcupacionalesModalidadPartida1 = JsonConvert.DeserializeObject<IndiceOcupacionalModalidadPartida>(respuesta.Resultado.ToString());
+
+                    indicesOcupacionalesModalidadPartida1.Fecha = indiceOcupacionalModalidadPartida.Fecha;
+                    indicesOcupacionalesModalidadPartida1.SalarioReal = indiceOcupacionalModalidadPartida.SalarioReal;
+                    indicesOcupacionalesModalidadPartida1.IdFondoFinanciamiento = indiceOcupacionalModalidadPartida.IdFondoFinanciamiento;
+
+                    response = await apiServicio.EditarAsync(id, indicesOcupacionalesModalidadPartida1, new Uri(WebApp.BaseAddress),
+                                                                  "/api/IndicesOcupacionalesModalidadPartida");
+
+                    if (response.IsSuccess)
+                    {
+                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                        {
+                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                            EntityID = string.Format("{0} : {1}", "Empleado Contacto Emergencia", id),
+                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                            Message = "Se ha actualizado un indice ocupacional modalidad partida",
+                            UserName = "Usuario 1"
+                        });
+
+                        return RedirectToAction("Index");
+                    }
+                    ViewData["Error"] = response.Message;
+
+
+                    ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
+
+                    return View(indiceOcupacionalModalidadPartida);
+
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Editando un indice ocupacional modalidad partida",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
                 return BadRequest();
             }
         }

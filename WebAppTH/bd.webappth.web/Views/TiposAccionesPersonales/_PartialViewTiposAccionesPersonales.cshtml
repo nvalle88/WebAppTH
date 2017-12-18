@@ -1,11 +1,120 @@
-@model bd.webappth.entidades.Negocio.TipoAccionPersonal
+@model bd.webappth.entidades.ViewModels.TipoAccionPersonalViewModel
 <fieldset>
+  
+
     <div class="row">
         <section class="col col-8">
             <label class="input">
                 <i class="icon-append fa fa-comment"></i>
-                <input asp-for="Descripcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)" />
+                <input maxlength="20" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.Nombre)" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="20" asp-for="NDiasMinimo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.NDiasMinimo)" />
+                <span asp-validation-for="NDiasMinimo" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="20" asp-for="NDiasMaximo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.NDiasMaximo)" />
+                <span asp-validation-for="NDiasMaximo" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="20" asp-for="NHorasMinimo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.NHorasMinimo)" />
+                <span asp-validation-for="NHorasMinimo" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <i class="icon-append fa fa-comment"></i>
+                <input maxlength="20" asp-for="NHorasMaximo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.NHorasMaximo)" />
+                <span asp-validation-for="NHorasMaximo" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+  
+    <div class="row">
+        <section class="col col-8">
+            <label class="checkbox">
+                <label>&iquest; D&iacuteas  H&aacutebiles ?</label>
+                <input type="checkbox" asp-for="TipoAccionPersonal.DiasHabiles" class="form-control" />
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="checkbox">
+                <label>&iquest; Imputable Vacaciones ?</label>
+                <input type="checkbox" asp-for="TipoAccionPersonal.ImputableVacaciones" class="form-control" />
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="checkbox">
+                <label>&iquest; Proceso  N&oacutemina ?</label>
+                <input type="checkbox" asp-for="TipoAccionPersonal.ProcesoNomina" class="form-control" />
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <select asp-for="TipoAccionPersonal.Matriz" class="form-control" asp-items="ViewBag.IdMatriz">
+                    <option id="0">< Seleccione una Matriz ></option>
+                </select>
+                <span asp-validation-for="IdMatriz" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="textarea">
+                <i class="icon-append fa fa-comment"></i>
+                <textarea maxlength="50" asp-for="TipoAccionPersonal.Descripcion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.Descripcion)"></textarea>
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+    <div class="row">
+        <section class="col col-8">
+            <label class="checkbox">
+                <label>&iquest; Genera  Acci&oacuten Personal ?</label>
+                <input type="checkbox" asp-for="TipoAccionPersonal.GeneraAccionPersonal" class="form-control" />
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="checkbox">
+                <label>&iquest; Modifica Distributivo ?</label>
+                <input type="checkbox" asp-for="TipoAccionPersonal.ModificaDistributivo" class="form-control" />
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <select asp-for="IdEstadoTipoAccionPersonal" class="form-control" asp-items="ViewBag.IdEstadoTipoAccionPersonal">
+                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.TipoAccionPersonal.IdEstadoTipoAccionPersonal)></option>
+                </select>
+                <span asp-validation-for="IdEstadoTipoAccionPersonal" class="text-danger"></span>
             </label>
         </section>
     </div>
