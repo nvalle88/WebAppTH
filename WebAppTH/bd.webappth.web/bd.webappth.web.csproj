@@ -60,6 +60,7 @@
     <Folder Include="Views\DenominacionesCompetencias\" />
     <Folder Include="Views\ConfiguracionesViaticos\" />
     <Folder Include="Views\Dependencias\" />
+    <Folder Include="Views\AccionPersonal\" />
     <Folder Include="wwwroot\js\datatables\" />
   </ItemGroup>
   <ItemGroup>
