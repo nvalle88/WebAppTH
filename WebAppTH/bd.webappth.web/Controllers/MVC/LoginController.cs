@@ -46,6 +46,9 @@ namespace bd.webappth.web.Controllers.MVC
             return View();
         }
 
+
+
+
         public async Task<IActionResult> Login()
         {
           var user=  HttpContext.User;

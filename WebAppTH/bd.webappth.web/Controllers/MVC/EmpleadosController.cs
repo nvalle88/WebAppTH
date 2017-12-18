@@ -133,7 +133,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     ExceptionTrace = null,
-                    Message =HttpContext.Request.Path,
+                    Message = "Se ha creado un empleado",
                     UserName = "Usuario 1",
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
