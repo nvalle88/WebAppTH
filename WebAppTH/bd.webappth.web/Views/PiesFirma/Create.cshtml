@@ -1,7 +1,7 @@
-@model bd.webappth.entidades.Negocio.TipoAccionPersonal
+@model bd.webappth.entidades.Negocio.PieFirma
 
 @{
-    ViewData["Title"] = "Tipo de Acci&oacuten de Personal";
+    ViewData["Title"] = "Pies de Firma";
 }
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
@@ -21,7 +21,7 @@
                
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Tipo de Acci&oacuten de Personal</h2>
+                        <h2>Pies de Firma</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -37,7 +37,7 @@
                           
                             <form  asp-action="Create" id="checkout-form"  class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                @{await Html.RenderPartialAsync("PartialViewTiposAccionesPersonales", Model);}
+                                @{await Html.RenderPartialAsync("_PartialViewPiesFirma", Model);}
                                                                
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
