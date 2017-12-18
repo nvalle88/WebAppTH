@@ -43,6 +43,10 @@ namespace bd.webappth.entidades.Negocio
         public bool ProcesoNomina { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Es Responsable TH:")]
+        public bool EsResponsableTH { get; set; }
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Matriz:")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Matriz { get; set; }
