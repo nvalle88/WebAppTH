@@ -14,12 +14,12 @@ using Newtonsoft.Json;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class EstadosTipoAccionPersonalController : Controller
+    public class EstadosTiposAccionPersonalController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public EstadosTipoAccionPersonalController(IApiServicio apiServicio)
+        public EstadosTiposAccionPersonalController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 

@@ -58,37 +58,13 @@
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NDiasMinimo)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NDiasMaximo)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NHorasMinimo)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NHorasMaximo)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().DiasHabiles)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ImputableVacaciones)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ProcesoNomina)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EsResponsableTH)
                                         </th>
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Matriz)
                                         </th>
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().GeneraAccionPersonal)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ModificaDistributivo)
                                         </th>
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().EstadoTipoAccionPersonal.Nombre)
@@ -103,40 +79,11 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.NDiasMinimo)
-                                            </td>
+                                           
 
                                             <td>
 
-                                                @Html.DisplayFor(modelItem => item.NDiasMaximo)
-                                            </td>
-
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.NHorasMinimo)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.NHorasMaximo)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.DiasHabiles)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.ImputableVacaciones)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.ProcesoNomina)
+                                                @Html.DisplayFor(modelItem => item.EsResponsableTH)
                                             </td>
 
                                             <td>
@@ -149,15 +96,6 @@
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
                                             </td>
 
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.GeneraAccionPersonal)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.ModificaDistributivo)
-                                            </td>
                                             <td>
 
                                                 @Html.DisplayFor(modelItem => item.EstadoTipoAccionPersonal.Nombre)

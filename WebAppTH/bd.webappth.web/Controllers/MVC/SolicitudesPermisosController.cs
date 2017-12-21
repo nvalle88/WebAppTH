@@ -11,15 +11,16 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class PiesFirmaController : Controller
+    public class SolicitudesPermisosController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public PiesFirmaController(IApiServicio apiServicio)
+        public SolicitudesPermisosController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -27,22 +28,22 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            ViewData["IdTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales"), "IdTipoAccionPersonal", "Nombre");
-            ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "IdDependencia");
+            ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+            ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PieFirma PieFirma)
+        public async Task<IActionResult> Create(SolicitudPermiso SolicitudPermiso)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(PieFirma,
+                response = await apiServicio.InsertarAsync(SolicitudPermiso,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/PiesFirma/InsertarPieFirma");
+                                                             "/api/SolicitudesPermisos/InsertarSolicitudPermiso");
                 if (response.IsSuccess)
                 {
 
@@ -50,21 +51,21 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un pie de firma",
+                        Message = "Se ha creado una solicitud permiso",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Pie de Firma:", PieFirma.IdPieFirma),
+                        EntityID = string.Format("{0} {1}", "Solicitud Permiso:", SolicitudPermiso.IdSolicitudPermiso),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                ViewData["IdTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales"), "IdTipoAccionPersonal", "Nombre");
-                ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/ListarIndicesOcupaciones"), "IdIndiceOcupacional", "Nombre");
+                ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+                ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
 
-                return View(PieFirma);
+                return View(SolicitudPermiso);
 
             }
             catch (Exception ex)
@@ -72,7 +73,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando un pie de firma",
+                    Message = "Creando una solicitud permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -90,13 +91,13 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/PiesFirma");
+                                                                  "/api/SolicitudesPermisos");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<PieFirma>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudPermiso>(respuesta.Resultado.ToString());
 
-                    ViewData["IdTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales"), "IdTipoAccionPersonal", "Nombre");
-                    ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/ListarIndicesOcupaciones"), "IdIndiceOcupacional", "Nombre");
+                    ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+                    ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
 
                     if (respuesta.IsSuccess)
                     {
@@ -115,25 +116,25 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, PieFirma PieFirma)
+        public async Task<IActionResult> Edit(string id, SolicitudPermiso SolicitudPermiso)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, PieFirma, new Uri(WebApp.BaseAddress),
-                                                                 "/api/PiesFirma");
+                    response = await apiServicio.EditarAsync(id, SolicitudPermiso, new Uri(WebApp.BaseAddress),
+                                                                 "/api/SolicitudesPermisos");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Pie de Firma", id),
+                            EntityID = string.Format("{0} : {1}", "Solicitud de Permiso", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un pie de firma",
+                            Message = "Se ha actualizado una solicitud de permiso",
                             UserName = "Usuario 1"
                         });
 
@@ -141,10 +142,10 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                     ViewData["Error"] = response.Message;
 
-                    ViewData["IdTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales"), "IdTipoAccionPersonal", "Nombre");
-                    ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/ListarIndicesOcupaciones"), "IdIndiceOcupacional", "Nombre");
+                    ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+                    ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
 
-                    return View(PieFirma);
+                    return View(SolicitudPermiso);
 
                 }
                 return BadRequest();
@@ -154,7 +155,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un pie de firma",
+                    Message = "Editando una solicitud de permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -168,11 +169,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<PieFirma>();
+            var lista = new List<SolicitudPermiso>();
             try
             {
-                lista = await apiServicio.Listar<PieFirma>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/PiesFirma/ListarPiesFirma");
+                lista = await apiServicio.Listar<SolicitudPermiso>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/SolicitudesPermisos/ListarSolicitudesPermisos");
                 return View(lista);
             }
             catch (Exception ex)
@@ -180,7 +181,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando un pie de firma",
+                    Message = "Listando una solicitud de permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -196,14 +197,14 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/PiesFirma");
+                                                               , "/api/SolicitudesPermisos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de pie de firma",
+                        Message = "Registro de solicitud de permiso",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -217,7 +218,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar un pie de firma",
+                    Message = "Eliminar una solicitud de permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
