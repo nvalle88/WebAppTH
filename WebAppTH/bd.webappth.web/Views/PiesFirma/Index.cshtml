@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.TipoAccionPersonal>
+@model List<bd.webappth.entidades.Negocio.PieFirma>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,7 +9,7 @@
     <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
         <span class="btn-label">
             <i class="glyphicon glyphicon-plus"></i>
-        </span>Nueva Tipo de Acci&oacuten de Personal
+        </span>Nuevo Pie de Firma
 
     </button>
 </a>
@@ -40,7 +40,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Tipo de Acci&oacuten de Personal</h2>
+                        <h2>Pie de Firma</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -55,19 +55,10 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().TipoAccionPersonal.Nombre)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EsResponsableTH)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Matriz)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EstadoTipoAccionPersonal.Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IndiceOcupacional.Dependencia.Nombre)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -77,32 +68,16 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                                @Html.DisplayFor(modelItem => item.TipoAccionPersonal.Nombre)
+                                            </td>
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.IndiceOcupacional.Dependencia.Nombre)
                                             </td>
                                            
-
                                             <td>
-
-                                                @Html.DisplayFor(modelItem => item.EsResponsableTH)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.Matriz)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.EstadoTipoAccionPersonal.Nombre)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoAccionPersonal }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoAccionPersonal }, new { onclick = "return confirm('Desea eliminar el tipo de accion personal... ?');" })
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdPieFirma }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdPieFirma }, new { onclick = "return confirm('Desea eliminar el pie de firma... ?');" })
                                             </td>
                                         </tr>
                                     }

@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using bd.webappth.servicios.Interfaces;
-using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
+using bd.webappth.entidades.Negocio;
 using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
@@ -15,12 +15,12 @@ using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class TiposAccionesPersonalesController : Controller
+    public class SolicitudesPermisosController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public TiposAccionesPersonalesController(IApiServicio apiServicio)
+        public SolicitudesPermisosController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -28,77 +28,44 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-           
-            var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
-            {
-
-                MatrizLista = new List<Matriz>
-                            {
-                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
-                                new Matriz {Id ="Regional", Nombre = "Regional"},
-                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
-                            },
-
-            };
-
-            ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
-            ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
-
+            ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+            ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TipoAccionPersonal TipoAccionPersonal)
+        public async Task<IActionResult> Create(SolicitudPermiso SolicitudPermiso)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(TipoAccionPersonal,
+                response = await apiServicio.InsertarAsync(SolicitudPermiso,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TiposAccionesPersonales/InsertarTipoAccionPersonal");
-
-                var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
-                {
-
-                    MatrizLista = new List<Matriz>
-                            {
-                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
-                                new Matriz {Id ="Regional", Nombre = "Regional"},
-                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}                            },
-
-                };
-
-
-
+                                                             "/api/SolicitudesPermisos/InsertarSolicitudPermiso");
                 if (response.IsSuccess)
                 {
 
-                    LogEntryTranfer logEntryTranfer = new LogEntryTranfer
+                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un tipo  de accion personal",
+                        Message = "Se ha creado una solicitud permiso",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = "Tipo de Accion de Personal",
-                        ObjectPrevious = "NULL",
-                        ObjectNext = JsonConvert.SerializeObject(response.Resultado),
-                    };
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
-
+                        EntityID = string.Format("{0} {1}", "Solicitud Permiso:", SolicitudPermiso.IdSolicitudPermiso),
+                    });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
-                ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
+                ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+                ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
 
-                return View(TipoAccionPersonal);
+                return View(SolicitudPermiso);
 
             }
             catch (Exception ex)
@@ -106,7 +73,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando tipo de Acción de Peronal",
+                    Message = "Creando una solicitud permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -124,32 +91,17 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/TiposAccionesPersonales");
+                                                                  "/api/SolicitudesPermisos");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<TipoAccionPersonal>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudPermiso>(respuesta.Resultado.ToString());
 
-                    var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
-                    {
-
-                        MatrizLista = new List<Matriz>
-                            {
-                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
-                                new Matriz {Id ="Regional", Nombre = "Regional"},
-                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
-                            },
-
-
-                        TipoAccionPersonal = (TipoAccionPersonal)respuesta.Resultado
-                    };
-
-                    ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
-                    ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
-
+                    ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+                    ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
 
                     if (respuesta.IsSuccess)
                     {
-                        return View(tipoAccionPersonalViewmodel);
+                        return View(respuesta.Resultado);
                     }
 
                 }
@@ -164,28 +116,25 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, TipoAccionPersonal TipoAccionPersonal)
+        public async Task<IActionResult> Edit(string id, SolicitudPermiso SolicitudPermiso)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-
-                   
-                    response = await apiServicio.EditarAsync(id, TipoAccionPersonal, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TiposAccionesPersonales");
-                    
+                    response = await apiServicio.EditarAsync(id, SolicitudPermiso, new Uri(WebApp.BaseAddress),
+                                                                 "/api/SolicitudesPermisos");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Nacionalidad Indígena", id),
+                            EntityID = string.Format("{0} : {1}", "Solicitud de Permiso", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una nacionalidad indígena",
+                            Message = "Se ha actualizado una solicitud de permiso",
                             UserName = "Usuario 1"
                         });
 
@@ -193,8 +142,10 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                     ViewData["Error"] = response.Message;
 
-                  
-                    return View(TipoAccionPersonal);
+                    ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+                    ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
+
+                    return View(SolicitudPermiso);
 
                 }
                 return BadRequest();
@@ -204,7 +155,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un tipo de acción de personal",
+                    Message = "Editando una solicitud de permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -218,11 +169,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<TipoAccionPersonal>();
+            var lista = new List<SolicitudPermiso>();
             try
             {
-                lista = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+                lista = await apiServicio.Listar<SolicitudPermiso>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/SolicitudesPermisos/ListarSolicitudesPermisos");
                 return View(lista);
             }
             catch (Exception ex)
@@ -230,7 +181,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando un tipo de acción de personal",
+                    Message = "Listando una solicitud de permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -246,14 +197,14 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TiposAccionesPersonales");
+                                                               , "/api/SolicitudesPermisos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de tipo de acción de personal",
+                        Message = "Registro de solicitud de permiso",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -267,7 +218,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar una tipo de acción de personal",
+                    Message = "Eliminar una solicitud de permiso",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

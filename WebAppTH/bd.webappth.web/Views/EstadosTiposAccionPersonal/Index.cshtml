@@ -1,22 +1,22 @@
-@model List<bd.webappth.entidades.Negocio.TipoAccionPersonal>
+@model List<bd.webappth.entidades.Negocio.EstadoTipoAccionPersonal>
 
 @{
     ViewData["Title"] = "Index";
 }
-
-<p></p>
-<a asp-action="Create">
-    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-        <span class="btn-label">
-            <i class="glyphicon glyphicon-plus"></i>
-        </span>Nueva Tipo de Acci&oacuten de Personal
-
-    </button>
-</a>
-<p> </p>
 			<!-- MAIN CONTENT -->
 <div id="content">
-   
+
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Estado Tipo Accion Personal
+
+        </button>
+    </a>
+    <p> </p>
+
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -40,7 +40,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Tipo de Acci&oacuten de Personal</h2>
+                        <h2>Estado Tipo Accion Personal</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -57,18 +57,6 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                                         </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EsResponsableTH)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Matriz)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EstadoTipoAccionPersonal.Nombre)
-                                        </th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -79,41 +67,22 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
-                                           
 
                                             <td>
-
-                                                @Html.DisplayFor(modelItem => item.EsResponsableTH)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.Matriz)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.EstadoTipoAccionPersonal.Nombre)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoAccionPersonal }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoAccionPersonal }, new { onclick = "return confirm('Desea eliminar el tipo de accion personal... ?');" })
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdEstadoTipoAccionPersonal }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEstadoTipoAccionPersonal }, new { onclick = "return confirm('Desea eliminar estado tipo de accion de personal... ?');" })
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
+                            <span class="text-danger">@ViewData["Error"]</span>
                         </div>
                         <!-- end widget content -->
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>
@@ -123,6 +92,8 @@
     <!-- end widget grid -->
 </div>
 <!-- END MAIN CONTENT -->
+
+
 
  @section Scripts {
     <script src='~/js/datatables/init.js'></script>

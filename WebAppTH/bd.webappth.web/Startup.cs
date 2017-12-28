@@ -37,16 +37,6 @@ namespace bd.webappth.web
         // This method gets called by the runtime. Use this method to add services to the container.
         public async void ConfigureServices(IServiceCollection services)
         {
-
-            //services.AddIdentity<ApplicationUser,IdentityRole>(options=> 
-            //{
-                
-               
-
-            //})
-           
-            //.AddDefaultTokenProviders();
-            // Add framework services.
             services.AddMvc(
          
             );
@@ -136,8 +126,8 @@ namespace bd.webappth.web
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationScheme = "Cookies",
-                LoginPath = new PathString("/Login/Login"),
-                AccessDeniedPath = new PathString("/Home/Forbidden"),
+                LoginPath = new PathString("/"),
+                AccessDeniedPath = new PathString("/"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 CookieName = "ASPTest",
@@ -150,7 +140,7 @@ namespace bd.webappth.web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Login}/{action=Index}/{id?}");
+                    template: "{controller=Login}/{action=Login}/{id?}");
             });
         }
     }
