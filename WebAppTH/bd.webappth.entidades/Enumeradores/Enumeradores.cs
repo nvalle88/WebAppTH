@@ -7,5 +7,5 @@ namespace bd.webappth.entidades.Enumeradores
     public enum Aplicacion
     {
         SwTH, webappth
-    } 
+    }
 }

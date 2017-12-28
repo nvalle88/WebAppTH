@@ -1,0 +1,34 @@
+@model bd.webappth.entidades.Negocio.ConfiguracionFeriados
+
+<fieldset>
+    <div class="row">
+        <section class="col col-4">
+            <label class="input">
+                <i class="icon-prepend fa fa-user"></i>
+                <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label class="input">
+                <i class="icon-append fa fa-calendar"></i>
+                <input asp-for="FechaDesde" type="text" placeholder="Seleccione fecha desde" class="datepicker" data-dateformat='dd/mm/yy'>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label class="input">
+                <i class="icon-append fa fa-calendar"></i>
+                <input asp-for="FechaHasta" type="text" placeholder="Seleccione fecha hasta" class="datepicker" data-dateformat='dd/mm/yy'>
+            </label>
+        </section>
+    </div>
+<section>
+    <label class="label"></label>
+    <label class="textarea">
+        <i class="icon-append fa fa-comment"></i>
+        <textarea maxlength="250"  asp-for="Descripcion" rows="3" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </label>
+</section>
+    <span class="text-danger">@ViewData["Error"]</span>
+</fieldset>
