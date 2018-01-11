@@ -98,7 +98,7 @@ namespace bd.webappth.web.Controllers.MVC
                 ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
                 ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
 
-                return View(TipoAccionPersonal);
+                return View(tipoAccionPersonalViewmodel);
 
             }
             catch (Exception ex)
@@ -171,8 +171,19 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
+                    
+                    var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
+                    {
 
-                   
+                        MatrizLista = new List<Matriz>
+                            {
+                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
+                                new Matriz {Id ="Regional", Nombre = "Regional"},
+                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
+                            },
+                        
+                    };
+
                     response = await apiServicio.EditarAsync(id, TipoAccionPersonal, new Uri(WebApp.BaseAddress),
                                                                  "/api/TiposAccionesPersonales");
                     
@@ -193,8 +204,12 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                     ViewData["Error"] = response.Message;
 
-                  
-                    return View(TipoAccionPersonal);
+
+                    ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
+                    ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
+
+
+                    return View(tipoAccionPersonalViewmodel);
 
                 }
                 return BadRequest();

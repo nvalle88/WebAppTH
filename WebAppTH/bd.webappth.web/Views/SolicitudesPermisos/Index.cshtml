@@ -1,22 +1,30 @@
-@model List<bd.webappth.entidades.ViewModels.ListaEmpleadoViewModel>
+@model List<bd.webappth.entidades.Negocio.SolicitudPermiso>
 
 @{
     ViewData["Title"] = "Index";
 }
-<!-- MAIN CONTENT -->
+
+<p></p>
+<a asp-action="PedirPermiso">
+    <button type="button" asp-action="PedirPermiso" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Nueva Solicitud Permiso
+
+    </button>
+</a>
+<p> </p>
+<a asp-action="RevisaPermisos">
+    <button type="button" asp-action="RevisaPermisos" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Revisar Permiso
+
+    </button>
+</a>
+			<!-- MAIN CONTENT -->
 <div id="content">
-
-    <p></p>
-    <a asp-action="Create">
-        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo Empleado
-
-        </button>
-    </a>
-    <p> </p>
-
+   
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -40,7 +48,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Empleados</h2>
+                        <h2>Solicitud Permiso</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -55,21 +63,18 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                           Nombres y Apellidos
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Empleado.Persona.Nombres)
                                         </th>
-                                        <th data-class="">
-                                           Identificaci&oacuten
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Motivo)
                                         </th>
-                                        <th data-class="">
-                                            Tel&eacutefono Privado
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().TipoPermiso.Nombre)
                                         </th>
-                                        <th data-class="">
-                                            Correo Privado
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
                                         </th>
-                                        <th>
-                                            <i class="fa fa-cog "></i>
-                                            Opciones
-                                        </th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,23 +82,36 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreApellido)
+                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Nombres)
+                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Apellidos)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TelefonoPrivado)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CorreoPrivado)
-                                            </td>
 
-                                            <td>
-                                               
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado })<br /> 
-                                               
+                                                @Html.DisplayFor(modelItem => item.Motivo)
                                             </td>
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.TipoPermiso.Nombre)
+                                            </td>
+                                            <td>
+
+                                                @if (item.Estado==0)
+                                                {
+                                                    <p>Devuelto</p>
+                                                }
+
+                                                @if (item.Estado == 1)
+                                                {
+                                                    <p>Aprobado</p>
+                                                }
+
+                                                @if (item.Estado == -1)
+                                                {
+                                                    <p>Denegado</p>
+                                                }
+                                                
+                                            </td>
+                                           
                                         </tr>
                                     }
                                 </tbody>
@@ -103,7 +121,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-
+          
             </article>
             <!-- WIDGET END -->
         </div>
@@ -114,7 +132,7 @@
 </div>
 <!-- END MAIN CONTENT -->
 
-@section Scripts {
+ @section Scripts {
     <script src='~/js/datatables/init.js'></script>
 }
 

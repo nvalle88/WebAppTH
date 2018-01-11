@@ -63,7 +63,9 @@ namespace bd.webappth.servicios.Servicios
             try
             {
                 var sistema = await ObtenerHostSistema(id, baseAddreess);
-                WebApp.BaseAddressRM = sistema.AdstHost;
+              //  WebApp.BaseAddressRM = sistema.AdstHost;
+                WebApp.BaseAddressRM = "http://localhost/swRM";
+                
             }
             catch (Exception ex)
             {
