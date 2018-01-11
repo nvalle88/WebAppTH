@@ -12,6 +12,12 @@ namespace bd.webappth.entidades.Negocio
         public int IdSolicitudVacaciones { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Fecha solicitud:")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime FechaSolicitud { get; set; }
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Fecha desde:")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
@@ -23,17 +29,21 @@ namespace bd.webappth.entidades.Negocio
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime FechaHasta { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Fecha de la solicitud:")]
+       
+        [Display(Name = "Fecha respuesta:")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
-        public DateTime FechaSolicitud { get; set; }
+        public DateTime? FechaRespuesta { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Fecha de aprobación:")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
-        public DateTime? FechaAprobada { get; set; }
+        [Display(Name = "Observaciones:")]
+        [StringLength(150, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        public string Observaciones { get; set; }
+
+        [Display(Name = "Estado:")]
+        public int Estado { get; set; }
+
+        [Display(Name = "¿Contemplado en Plan de Vacaciones?")]
+        public bool PlanAnual { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 
@@ -42,9 +52,5 @@ namespace bd.webappth.entidades.Negocio
         public int IdEmpleado { get; set; }
         public virtual Empleado Empleado { get; set; }
 
-        [Display(Name = "Estado:")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int? IdEstado { get; set; }
-        public virtual Estado Estado { get; set; }
     }
 }
