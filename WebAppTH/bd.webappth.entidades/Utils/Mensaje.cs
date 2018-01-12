@@ -7,6 +7,9 @@ namespace bd.webappth.entidades.Utils
   public static class Mensaje
     {
         public static string Excepcion { get { return "Ha ocurrido una Excepción"; } }
+        public static string Obligatorio { get { return "Debe introducir datos en el campo"; } }
+        public static string FechaRangoMenor { get { return "La fecha inicial no puede ser mayor que la fecha final "; } }
+        public static string FechaRangoMayor { get { return "La fecha final no puede ser menor que la fecha inicial "; } }
         public static string ExisteRegistro { get { return "Existe un registro de igual información"; } }
         public static string Satisfactorio { get { return "La acción se ha realizado satisfactoriamente"; } }
         public static string Error { get { return "Ha ocurrido error inesperado"; } }

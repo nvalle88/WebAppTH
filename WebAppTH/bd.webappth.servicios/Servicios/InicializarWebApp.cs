@@ -33,7 +33,7 @@ namespace bd.webappth.servicios.Servicios
                 var sistema= await ObtenerHostSistema(id, baseAddreess);
                 //WebApp.BaseAddress = sistema.AdstHost;
              //   WebApp.BaseAddress = Convert.ToString(baseAddreess);
-                WebApp.BaseAddress = "http://localhost:53271";
+                WebApp.BaseAddress = "http://localhost:55998";
             }
             catch (Exception ex)
             {
