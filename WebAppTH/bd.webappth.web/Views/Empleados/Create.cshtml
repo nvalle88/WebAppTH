@@ -3016,7 +3016,7 @@
         $('#GuardarForm').click(function(e) {
     $.ajax({
         type: "POST",
-        url: "/Empleados/NuevoEmpleado",
+        url: '@Url.Action("NuevoEmpleado")',
         content: "application/json; charset=utf-8",
         dataType: "json",
         // De la siguiente manera indicamos que del div tome los input.

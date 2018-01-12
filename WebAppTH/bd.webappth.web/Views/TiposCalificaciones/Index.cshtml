@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.EstadoTipoAccionPersonal>
+@model List<bd.webappth.entidades.Negocio.TipoCalificacion>
 
 @{
     ViewData["Title"] = "Index";
@@ -11,7 +11,7 @@
         <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nueva Estado Tipo Accion Personal
+            </span>Nuevo Tipo de Calificaci&oacuten
 
         </button>
     </a>
@@ -40,7 +40,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Estado Tipo Accion Personal</h2>
+                        <h2> Tipo de Calificaci&oacuten</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -69,8 +69,8 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdEstadoTipoAccionPersonal }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEstadoTipoAccionPersonal }, new { onclick = "return confirm('Desea eliminar estado tipo acción personal... ?');" })
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoCalificacion }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoCalificacion }, new { onclick = "return confirm('Desea eliminar un tipo de calificacion... ?');" })
                                             </td>
                                         </tr>
                                     }

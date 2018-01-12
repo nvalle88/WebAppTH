@@ -1,0 +1,97 @@
+@model bd.webappth.entidades.ViewModels.SolicitudPermisoViewModel
+
+<fieldset>
+    <legend><strong> Control de Salida de Personal en Horas de Oficina</strong></legend>
+    <div class="row">
+      @if (@ViewData["Error"].ToString() != "")
+      {
+        <div class="col-lg-9">
+            <div class="alert alert-block alert-dismissable">
+                <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                <p>
+                    <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                </p>
+            </div>
+        </div>
+      }
+        
+    </div>
+    <div class="row">
+        <label class="col-lg-2 control-label pull-left">Nombres y Apellidos : </label>
+        <div class="col-lg-8 pull-left">
+         <input asp-for="NombresApellidosEmpleado" disabled="disabled" class="form-control" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Dependencia : </label>
+        <div class="col-lg-5 pull-left">
+            <input asp-for="NombreDependencia" disabled="disabled"  class="form-control" />
+        </div>
+     </div>
+    <br />      
+    <div class="row">
+        <label class="col-lg-2 control-label">Tiempo que Solicita</label>
+    </div>
+    <br />
+    <div class="row">
+
+        <label class="col-lg-2 control-label">Fecha Desde:</label>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input asp-for="SolicitudPermiso.FechaDesde" type="text" data-dateformat='dd/mm/yy' class="form-control input datepicker " placeholder="Seleccione Fecha de Inicio " data-msg-required='El campo es requerido' data-rule-required='true'>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Hora Desde:</label>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                <input  type="time" asp-for="SolicitudPermiso.HoraDesde" data-msg-required='El campo es requerido' data-rule-required='true' min="08:00" max="17:00">
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Fecha Hasta :</label>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input asp-for="SolicitudPermiso.FechaHasta" type="text" data-dateformat='dd/mm/yy' class="form-control input datepicker " placeholder="Seleccione Fecha de Fin "  data-msg-required='El campo es requerido' data-rule-required='true' >
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Hora Hasta:</label>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                <input type="time" asp-for="SolicitudPermiso.HoraHasta" data-msg-required='El campo es requerido' data-rule-required='true' min="08:00" max="17:00">
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <label class="col-lg-2 control-label">Tipo de Permiso : </label>
+        <div class="col-lg-8 pull-left">
+            <select asp-for="SolicitudPermiso.IdTipoPermiso" class="form-control" asp-items="ViewBag.IdTipoPermiso">
+                <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.SolicitudPermiso.IdTipoPermiso)></option>
+            </select>
+            <span asp-validation-for="SolicitudPermiso.IdTipoPermiso" class="text-danger"></span>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Motivo : </label>
+        <div class="col-lg-8">
+            <input  asp-for="SolicitudPermiso.Motivo" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true'  />
+        </div>
+    </div>
+    <br />
+</fieldset>

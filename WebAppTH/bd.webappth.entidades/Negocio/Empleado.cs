@@ -29,6 +29,11 @@ namespace bd.webappth.entidades.Negocio
 
         public int DiasImposiciones { get; set; }
 
+
+        public bool Activo { get; set; }
+
+        public string NombreUsuario { get; set; }
+        public bool EsJefe { get; set; }
         //Propiedades Virtuales Referencias a otras clases
 
         public int IdPersona { get; set; }

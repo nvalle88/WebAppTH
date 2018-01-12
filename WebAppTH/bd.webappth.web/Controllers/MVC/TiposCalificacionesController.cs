@@ -14,12 +14,12 @@ using Newtonsoft.Json;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class EstadosTipoAccionPersonalController : Controller
+    public class TiposCalificacionesController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public EstadosTipoAccionPersonalController(IApiServicio apiServicio)
+        public TiposCalificacionesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -32,14 +32,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EstadoTipoAccionPersonal EstadoTipoAccionPersonal)
+        public async Task<IActionResult> Create(TipoCalificacion TipoCalificacion)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(EstadoTipoAccionPersonal,
+                response = await apiServicio.InsertarAsync(TipoCalificacion,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/EstadosTiposAccionPersonal/InsertarEstadoTipoAccionPersonal");
+                                                             "/api/TiposCalificaciones/InsertarTipoCalificacion");
                 if (response.IsSuccess)
                 {
 
@@ -47,18 +47,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un Estado Tipo de Accion Personal",
+                        Message = "Se ha creado un TipoCalificacion",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Estado Tipo Accion Personal:", EstadoTipoAccionPersonal.IdEstadoTipoAccionPersonal),
+                        EntityID = string.Format("{0} {1}", "TipoCalificacion:", TipoCalificacion.IdTipoCalificacion),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(EstadoTipoAccionPersonal);
+                return View(TipoCalificacion);
 
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Estado Tipo Accion Personal",
+                    Message = "Creando TipoCalificacion",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -84,10 +84,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/EstadosTiposAccionPersonal");
+                                                                  "/api/TiposCalificaciones");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<EstadoTipoAccionPersonal>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<TipoCalificacion>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -105,32 +105,32 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, EstadoTipoAccionPersonal EstadoTipoAccionPersonal)
+        public async Task<IActionResult> Edit(string id, TipoCalificacion TipoCalificacion)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, EstadoTipoAccionPersonal, new Uri(WebApp.BaseAddress),
-                                                                 "/api/EstadosTiposAccionPersonal");
+                    response = await apiServicio.EditarAsync(id, TipoCalificacion, new Uri(WebApp.BaseAddress),
+                                                                 "/api/TiposCalificaciones");
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Estado Tipo Accion Personal", id),
+                            EntityID = string.Format("{0} : {1}", "Tipo de Calificacion", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un Estado Tipo Accion Personal",
+                            Message = "Se ha actualizado un Tipo de Calificacion",
                             UserName = "Usuario 1"
                         });
 
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    return View(EstadoTipoAccionPersonal);
+                    return View(TipoCalificacion);
 
                 }
                 return BadRequest();
@@ -140,7 +140,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un Estado Tipo Accion Personal",
+                    Message = "Editando un Tipo de Calificacion",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -154,11 +154,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<EstadoTipoAccionPersonal>();
+            var lista = new List<TipoCalificacion>();
             try
             {
-                lista = await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal");
+                lista = await apiServicio.Listar<TipoCalificacion>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/TiposCalificaciones/ListarTiposCalificaciones");
                 return View(lista);
             }
             catch (Exception ex)
@@ -166,7 +166,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando Estado Tipo Accion Personal",
+                    Message = "Listando Tipos de calificaciòn",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -182,14 +182,14 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/EstadosTiposAccionPersonal");
+                                                               , "/api/TiposCalificaciones");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Estado Tipo Accion Personal", id),
-                        Message = "Registro de Estado Tipo Accion Personal eliminado",
+                        EntityID = string.Format("{0} : {1}", "TipoCalificacion", id),
+                        Message = "Registro de TipoCalificacion eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -203,7 +203,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Estado Tipo Accion Personal",
+                    Message = "Eliminar TipoCalificacion",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

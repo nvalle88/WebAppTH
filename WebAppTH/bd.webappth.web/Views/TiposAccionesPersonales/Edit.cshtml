@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.Negocio.TipoAccionPersonal
+@model bd.webappth.entidades.ViewModels.TipoAccionPersonalViewModel
 
 @{
     ViewData["Title"] = "Tipo de Acci&oacuten de Personal";
@@ -36,7 +36,7 @@
 
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdTipoAccionPersonal"/>
+                                <input type="hidden" asp-for="TipoAccionPersonal.IdTipoAccionPersonal"/>
                                 @{await Html.RenderPartialAsync("_PartialViewTiposAccionesPersonales");}
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
@@ -70,6 +70,47 @@
             $(document).ready(function () {
                 Init_Select2();
     });
+
+</script>
+
+
+<script type="text/javascript">
+
+            function checkIt(evt) {
+                evt = (evt) ? evt : window.event
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                status = "This field accepts numbers only."
+                return false
+            }
+            status = ""
+            return true
+        }
+        function NumCheck(e, field) {
+                key = e.keyCode ? e.keyCode : e.which
+            // backspace
+            if (key == 8) return true
+            // 0-9
+            if (key > 47 && key < 58) {
+                if (field.value == "") return true
+                regexp = /.[0-9]{10}$/
+                return !(regexp.test(field.value))
+            }
+            // .
+            if (key == 44) {
+                if (field.value == "") return false
+                regexp = /^[0-9]+$/
+                return regexp.test(field.value)
+            }
+            // other key
+            return false
+
+        }
+
+        function handleChange(input) {
+            if (input.value < 0) input.value = 0;
+            if (input.value > 100) input.value = 100;
+        }
 
 </script>
 }

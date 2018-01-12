@@ -50,7 +50,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
+    <Folder Include="Views\Services\" />
     <Folder Include="Views\ActividadesEsenciales\" />
     <Folder Include="Views\AnosExperiencia\" />
     <Folder Include="Views\BrigadasSSO\" />

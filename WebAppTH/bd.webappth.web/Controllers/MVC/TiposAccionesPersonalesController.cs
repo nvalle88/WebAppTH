@@ -34,9 +34,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                 MatrizLista = new List<Matriz>
                             {
-                                new Matriz {Id = 1, Nombre = "Matriz"},
-                                new Matriz {Id = 2, Nombre = "Regional"},
-                                new Matriz {Id = 3, Nombre = "Matriz y Regional"}
+                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
+                                new Matriz {Id ="Regional", Nombre = "Regional"},
+                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
                             },
 
             };
@@ -64,10 +64,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                     MatrizLista = new List<Matriz>
                             {
-                                new Matriz {Id = 1, Nombre = "Matriz"},
-                                new Matriz {Id = 2, Nombre = "Regional"},
-                                new Matriz {Id = 3, Nombre = "Matriz y Regional"}
-                            },
+                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
+                                new Matriz {Id ="Regional", Nombre = "Regional"},
+                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}                            },
 
                 };
 
@@ -76,16 +75,21 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    LogEntryTranfer logEntryTranfer = new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado una tipos de acción personal",
+                        Message = "Se ha creado un tipo  de accion personal",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Tipos Accion Personal:", TipoAccionPersonal.IdTipoAccionPersonal),
-                    });
+                        EntityID = "Tipo de Accion de Personal",
+                        ObjectPrevious = "NULL",
+                        ObjectNext = JsonConvert.SerializeObject(response.Resultado),
+                    };
+
+                    var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
+
 
                     return RedirectToAction("Index");
                 }
@@ -94,7 +98,7 @@ namespace bd.webappth.web.Controllers.MVC
                 ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
                 ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
 
-                return View(TipoAccionPersonal);
+                return View(tipoAccionPersonalViewmodel);
 
             }
             catch (Exception ex)
@@ -130,9 +134,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                         MatrizLista = new List<Matriz>
                             {
-                                new Matriz {Id = 1, Nombre = "Matriz"},
-                                new Matriz {Id = 2, Nombre = "Regional"},
-                                new Matriz {Id = 3, Nombre = "Matriz y Regional"}
+                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
+                                new Matriz {Id ="Regional", Nombre = "Regional"},
+                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
                             },
 
 
@@ -145,7 +149,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (respuesta.IsSuccess)
                     {
-                        return View(respuesta.Resultado);
+                        return View(tipoAccionPersonalViewmodel);
                     }
 
                 }
@@ -167,35 +171,32 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, TipoAccionPersonal, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TiposAccionesPersonales");
-
+                    
                     var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
                     {
 
                         MatrizLista = new List<Matriz>
                             {
-                                new Matriz {Id = 1, Nombre = "Matriz"},
-                                new Matriz {Id = 2, Nombre = "Regional"},
-                                new Matriz {Id = 3, Nombre = "Matriz y Regional"}
+                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
+                                new Matriz {Id ="Regional", Nombre = "Regional"},
+                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
                             },
-
-
-                        TipoAccionPersonal = (TipoAccionPersonal)response.Resultado
+                        
                     };
 
-
-
+                    response = await apiServicio.EditarAsync(id, TipoAccionPersonal, new Uri(WebApp.BaseAddress),
+                                                                 "/api/TiposAccionesPersonales");
+                    
 
                     if (response.IsSuccess)
                     {
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
                             ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Tipo Accion Personal", id),
+                            EntityID = string.Format("{0} : {1}", "Nacionalidad Indígena", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un Tipo de Accion Personal",
+                            Message = "Se ha actualizado una nacionalidad indígena",
                             UserName = "Usuario 1"
                         });
 
@@ -203,10 +204,12 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                     ViewData["Error"] = response.Message;
 
+
                     ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
                     ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
 
-                    return View(TipoAccionPersonal);
+
+                    return View(tipoAccionPersonalViewmodel);
 
                 }
                 return BadRequest();

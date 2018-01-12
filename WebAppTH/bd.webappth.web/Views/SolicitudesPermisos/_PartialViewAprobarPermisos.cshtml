@@ -1,0 +1,123 @@
+@model bd.webappth.entidades.ViewModels.SolicitudPermisoViewModel
+
+<fieldset>
+    <legend><strong> Control de Salida de Personal en Horas de Oficina</strong></legend>
+    <div class="row">
+        @if (@ViewData["Error"].ToString() != "")
+        {
+            <div class="col-lg-9">
+                <div class="alert alert-block alert-dismissable">
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                    <p>
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                    </p>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="row">
+        <label class="col-lg-2 control-label pull-left">Nombres y Apellidos : </label>
+        <div class="col-lg-9 pull-left">
+            <input value="@ViewData["NombresApellidosEmpleado"]" disabled="disabled" class="form-control" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Dependencia : </label>
+        <div class="col-lg-5 pull-left">
+            <input value="@ViewData["NombreDependencia"]"  disabled="disabled" class="form-control" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Tiempo que Solicita</label>
+    </div>
+    <br />
+    <div class="row">
+
+        <label class="col-lg-2 control-label">Fecha Desde:</label>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input value="@ViewData["SolicitudPermiso.FechaDesde"]"   disabled="disabled"  class="form-control" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Hora Desde:</label>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                <input value="@ViewData["SolicitudPermiso.HoraDesde"]"  disabled="disabled"  class="form-control" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Fecha Hasta :</label>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input value="@ViewData["SolicitudPermiso.FechaHasta"]"  disabled="disabled" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Hora Hasta:</label>
+        <div class="col-lg-5">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                <input value="@ViewData["SolicitudPermiso.HoraHasta"]"   disabled="disabled"  class="form-control" />
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <label class="col-lg-2 control-label">Tipo de Permiso : </label>
+        <div class="col-lg-8 pull-left">
+            <input value="@ViewData["SolicitudPermiso.TipoPermiso.Nombre"]"  disabled="disabled"  class="form-control" />
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <label class="col-lg-2 control-label">Motivo : </label>
+        <div class="col-lg-8">
+           <input value="@ViewData["SolicitudPermiso.Motivo"]"  disabled="disabled"  class="form-control" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <section>
+            <label class="col-lg-2 control-label">Observaci&oacute;n : </label>
+            <label class="col col-10">
+                <label class="label"></label>
+                <label class="textarea">
+                    <i class="icon-append fa fa-comments"></i>
+                    <textarea rows="8" asp-for="SolicitudPermiso.Observacion"   class="form-control" placeholder="@Html.DisplayNameFor(model=>model.SolicitudPermiso.Observacion)"></textarea>
+                    <span asp-validation-for="SolicitudPermiso.Observacion" class="text-danger"></span>
+                </label>
+            </label>
+        </section>
+    </div>
+    <br />
+    <div class="row">
+        <section>
+            <label class="col-lg-2 control-label">Estado : </label>
+            <label class="col col-10">
+                <label class="input">
+                    <select asp-for="Estado" class="form-control" asp-items="ViewBag.IdListaEstado">
+                        <option id="0">< Seleccione un estado ></option>
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </label>
+            </label>
+        </section>
+    </div>
+
+
+</fieldset>
