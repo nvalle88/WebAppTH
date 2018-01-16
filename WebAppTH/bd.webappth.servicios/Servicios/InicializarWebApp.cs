@@ -42,8 +42,8 @@ namespace bd.webappth.servicios.Servicios
 
                 //var sistema = await ObtenerHostSistema(id, baseAddreess);
                 //WebApp.BaseAddress = sistema.AdstHost;
-                //   WebApp.BaseAddress = Convert.ToString(baseAddreess);
-                WebApp.BaseAddress = "http://localhost:49494";
+                WebApp.BaseAddress = Convert.ToString(baseAddreess);
+                //WebApp.BaseAddress = "http://localhost:49494";
 
             }
             catch (Exception ex)
@@ -59,8 +59,8 @@ namespace bd.webappth.servicios.Servicios
             {
                 ////var sistema = await ObtenerHostSistema(id, baseAddreess);
                 ////WebApp.BaseAddressSeguridad = sistema.AdstHost;
-                WebApp.BaseAddressSeguridad = "http://localhost:53317";
-                // WebApp.BaseAddressSeguridad = Convert.ToString(baseAddreess);
+                //WebApp.BaseAddressSeguridad = "http://localhost:53317";
+                WebApp.BaseAddressSeguridad = Convert.ToString(baseAddreess);
             }
             catch (Exception ex)
             {

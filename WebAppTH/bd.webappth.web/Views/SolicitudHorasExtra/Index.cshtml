@@ -115,11 +115,19 @@
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.EsExtraordinaria)
                                                 </td>
-
+                                                @if (item.Estado == 0)
+                                                {
+                                                    <td>
+                                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdSolicitudHorasExtras }) |
+                                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSolicitudHorasExtras }, new { onclick = "return confirm('Desea eliminar  la solicitud de horas extra... ?');" })
+                                                       
+                                                    </td>
+                                                }
+                                                else {
                                                 <td>
-                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdSolicitudHorasExtras }) |
                                                     @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSolicitudHorasExtras }, new { onclick = "return confirm('Desea eliminar  la solicitud de horas extra... ?');" })
                                                 </td>
+                                                }
                                             </tr>
                                         }
                                     </tbody>

@@ -46,6 +46,8 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, 30, ErrorMessage = "El número de días debe estar entre {1} y {2} ")]
         public int NoDias { get; set; }
 
+        public int Estado { get; set; }
+
         //Referencias a tablas
 
         [Display(Name = "Empleado")]

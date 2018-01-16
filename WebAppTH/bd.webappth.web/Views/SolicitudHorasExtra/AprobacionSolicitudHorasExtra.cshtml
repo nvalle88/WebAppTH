@@ -45,18 +45,21 @@
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-4">
+                                            <label>Fecha:</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
                                                 <input value="@ViewData["Fecha"]" disabled="disabled" type="text" placeholder="Seleccione fecha" class="datepicker" data-dateformat='dd/mm/yy'>
                                             </label>
                                         </section>
                                         <section class="col col-4">
+                                            <label>Fecha solicitud:</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
                                                 <input value="@ViewData["FechaSolicitud"]" disabled="disabled" type="text" placeholder="Seleccione fecha solicitud" class="datepicker" data-dateformat='dd/mm/yy'>
                                             </label>
                                         </section>
                                         <section class="col col-4">
+                                            <label>Horas:</label>
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
                                                 <input maxlength="32" value="@ViewData["CantidadHoras"]" disabled="disabled" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.CantidadHoras)" />
@@ -101,6 +104,7 @@
                                     <br />
                                     <section>
                                         <label class="label"></label>
+                                        <label>Observaciones:</label>
                                         <label class="textarea">
                                             <i class="icon-append fa fa-comment"></i>
                                             <textarea maxlength="250" asp-for="Observaciones" rows="3" placeholder="@Html.DisplayNameFor(model=>model.Observaciones)"></textarea>

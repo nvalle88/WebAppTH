@@ -107,10 +107,19 @@
                                                 @Html.DisplayFor(modelItem => item.Observaciones)
                                             </td>
 
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdSolicitudPlanificacionVacaciones }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSolicitudPlanificacionVacaciones }, new { onclick = "return confirm('Desea eliminar  la solicitud de planificacion de vacaciones... ?');" })
-                                            </td>
+                                              @if (item.Estado == 0)
+                                                {
+                                                    <td>
+                                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdSolicitudPlanificacionVacaciones }) |
+                                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSolicitudPlanificacionVacaciones }, new { onclick = "return confirm('Desea eliminar  la solicitud de planificación de vacaciones... ?');" })
+                                                       
+                                                    </td>
+                                                }
+                                                else {
+                                                <td>
+                                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSolicitudPlanificacionVacaciones }, new { onclick = "return confirm('Desea eliminar la solicitud de planificación de vacaciones... ?');" })
+                                                </td>
+                                                }
                                         </tr>
                                     }
                                 </tbody>
