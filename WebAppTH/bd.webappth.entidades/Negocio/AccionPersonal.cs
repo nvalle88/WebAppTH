@@ -1,5 +1,6 @@
 namespace bd.webappth.entidades.Negocio
 {
+    using bd.webappth.entidades.Utils;
     using System;
     using System.ComponentModel.DataAnnotations;
 
@@ -8,10 +9,10 @@ namespace bd.webappth.entidades.Negocio
         [Key]
         public int IdAccionPersonal { get; set; }
 
-        [Required (ErrorMessage ="Debe introducir {0}")]
-        [Display(Name ="Fecha:")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Fecha:")]
+        [DataType(DataType.DateTime,ErrorMessage ="Debe introducir la fecha")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
@@ -29,14 +30,14 @@ namespace bd.webappth.entidades.Negocio
         [DataType(DataType.Text)]
         public string Explicacion { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir  {0}")]
-        [Display(Name = "Fecha Rige:")]
-        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Desde:")]
+        [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaRige { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Fecha rige hasta:")]
+        [Display(Name = "Hasta:")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaRigeHasta { get; set; }

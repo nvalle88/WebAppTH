@@ -1,10 +1,8 @@
-@model bd.webappth.entidades.ViewModels.EmpleadoViewModel
+@model bd.webappth.entidades.Negocio.NacionalidadIndigena
 
 @{
-    ViewData["Title"] = "Editar Empleado Contacto Emergencia";
+    ViewData["Title"] = "Nacionalidad Ind&iacutegena";
 }
-
-<h2>Editar Empleado Contacto Emergencia</h2>
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 
@@ -23,7 +21,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Empleado Contacto Emergencia</h2>
+                        <h2>Calificaciones</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -36,23 +34,10 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="EditEmpleadoContactoEmergencia" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="EmpleadoContactoEmergencia.IdEmpleadoContactoEmergencia" />
-                                <fieldset>
-                                   
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <select asp-for="EmpleadoContactoEmergencia.IdParentesco" class="form-control" asp-items="ViewBag.IdParentesco">
-                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.EmpleadoContactoEmergencia.IdParentesco)></option>
-                                                </select>
-                                                <span asp-validation-for="EmpleadoContactoEmergencia.IdParentesco" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-
-                                </fieldset>
+                                <input type="hidden" asp-for="IdNacionalidadIndigena"/>
+                                @{await Html.RenderPartialAsync("_PartialViewCalificaciones");}
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
@@ -79,12 +64,12 @@
 @section Scripts {
     <script type="text/javascript">
         <script src='~/lib/select2/dist/js/select2.min.js'></script>
-    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
-    <script src='~/js/site.js'></script>
-    <script type="text/javascript">
+<script src='~/lib/select2/dist/js/i18n/es.js'></script>
+<script src='~/js/site.js'></script>
+<script type="text/javascript">
             $(document).ready(function () {
                 Init_Select2();
     });
 
-    </script>
+</script>
 }
