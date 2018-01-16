@@ -44,6 +44,7 @@ namespace bd.webappth.web
             var appSettings = Configuration.GetSection("AppSettings");
 
             services.AddSingleton<IApiServicio, ApiServicio>();
+            services.AddScoped<IUploadFileService, UploadFileService>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAuthorization(options =>
