@@ -7,21 +7,21 @@ using bd.webappth.servicios.Interfaces;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.log.guardar.Servicios;
-using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.ObjectTranfer;
+using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class AccionesPersonalController : Controller
+    public class DeclaracionPatrimonioPersonalController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public AccionesPersonalController(IApiServicio apiServicio)
+        public DeclaracionPatrimonioPersonalController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
         }
@@ -33,14 +33,26 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AccionPersonal accionPersonal)
+        public async Task<IActionResult> Create(ViewModelDeclaracionPatrimonioPersonal viewModelDeclaracionPatrimonioPersonal)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    ModelState.AddModelError(viewModelDeclaracionPatrimonioPersonal.DeclaracionPatrimonioPersonal.FechaDeclaracion.ToString(), "Debe introducir la fecha");
+            //    return View(viewModelDeclaracionPatrimonioPersonal);
+            //}
+
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(accionPersonal,
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+                var empleadoJson = ObtenerEmpleadoLogueado(NombreUsuario);
+                viewModelDeclaracionPatrimonioPersonal.DeclaracionPatrimonioPersonal.IdEmpleado = empleadoJson.Result.IdEmpleado;
+                //viewModelDeclaracionPatrimonioPersonal.
+
+                response = await apiServicio.InsertarAsync(viewModelDeclaracionPatrimonioPersonal,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/AccionesPersonal/InsertarAccionPersonal");
+                                                             "/api/DeclaracionPatrimonioPersonal/InsertarDeclaracionPatrimonioPersonal");
                 if (response.IsSuccess)
                 {
 
@@ -48,18 +60,20 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un acción de personal",
+                        Message = "Se ha creado una declaración personal",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Acción de Personal:", accionPersonal.IdAccionPersonal),
+                        EntityID = string.Format("{0} {1}", "Declaración Personal:", viewModelDeclaracionPatrimonioPersonal.DeclaracionPatrimonioPersonal.IdDeclaracionPatrimonioPersonal),
                     });
 
-                    return RedirectToAction("Index");
+
+
+                    return RedirectToAction("Create");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(accionPersonal);
+                return View(viewModelDeclaracionPatrimonioPersonal);
 
             }
             catch (Exception ex)
@@ -67,7 +81,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Acción de Personal",
+                    Message = "Creando Declaración Personal",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -78,6 +92,24 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        public async Task<Empleado> ObtenerEmpleadoLogueado(string nombreUsuario)
+        {
+            try
+            {
+                var empleado = new Empleado
+                {
+                    NombreUsuario = nombreUsuario,
+                };
+                var usuariologueado = await apiServicio.ObtenerElementoAsync1<Empleado>(empleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerEmpleadoLogueado");
+                return usuariologueado;
+            }
+            catch (Exception)
+            {
+                return new Empleado();
+            }
+
+        }
+
         public async Task<IActionResult> Edit(string id)
         {
             try
@@ -85,27 +117,13 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/AccionesPersonal");
+                                                                  "/api/DeclaracionPatrimonioPersonal");
 
 
-                    var a = JsonConvert.DeserializeObject<AccionPersonal>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<DeclaracionPatrimonioPersonal>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
-                        var empleadoEnviar = new Empleado
-                        {
-                            IdEmpleado = a.IdEmpleado,
-                        };
-                        var empleado = await apiServicio.ObtenerElementoAsync1<EmpleadoSolicitudViewModel>(empleadoEnviar, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDatosEmpleadoSeleccionado");
-                        var respuestaAccionPersonal = await apiServicio.SeleccionarAsync<Response>(a.IdTipoAccionPersonal.ToString(), new Uri(WebApp.BaseAddress), "/api/TiposAccionesPersonales");
-                        var tipoaccionpersonal = JsonConvert.DeserializeObject<TipoAccionPersonal>(respuestaAccionPersonal.Resultado.ToString());
-                        ViewData["NombresApellidos"] = empleado.NombreApellido;
-                        ViewData["Identificacion"] = empleado.Identificacion;
-                        ViewData["TipoAccionPersonal"] = tipoaccionpersonal.Nombre;
-                        ViewData["Fecha"] = a.Fecha;
-                        ViewData["FechaRige"] = a.FechaRige;
-                        ViewData["FechaRigeHasta"] = a.FechaRigeHasta;
-                        ViewData["NoDias"] = a.NoDias;
-                        return View(a);
+                        return View(respuesta.Resultado);
                     }
 
                 }
@@ -120,15 +138,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, AccionPersonal accionPersonal)
+        public async Task<IActionResult> Edit(string id, DeclaracionPatrimonioPersonal declaracionPatrimonioPersonal)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, accionPersonal, new Uri(WebApp.BaseAddress),
-                                                                 "/api/AccionesPersonal");
+                    response = await apiServicio.EditarAsync(id, declaracionPatrimonioPersonal, new Uri(WebApp.BaseAddress),
+                                                                 "/api/DeclaracionPatrimonioPersonal");
 
                     if (response.IsSuccess)
                     {
@@ -138,14 +156,14 @@ namespace bd.webappth.web.Controllers.MVC
                             EntityID = string.Format("{0} : {1}", "Sistema", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un acción de personal",
+                            Message = "Se ha actualizado un declaración personal",
                             UserName = "Usuario 1"
                         });
 
-                        return RedirectToAction("ListarEmpleadosconAccionPersonalPendiente");
+                        return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    return View(accionPersonal);
+                    return View(declaracionPatrimonioPersonal);
 
                 }
                 return BadRequest();
@@ -155,7 +173,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un acción de personal",
+                    Message = "Editando un declaración personal",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -169,11 +187,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<AccionPersonal>();
+            var lista = new List<DeclaracionPatrimonioPersonal>();
             try
             {
-                lista = await apiServicio.Listar<AccionPersonal>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/AccionesPersonal/ListarAccionesPersonal");
+                lista = await apiServicio.Listar<DeclaracionPatrimonioPersonal>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/DeclaracionPatrimonioPersonal/ListarDeclaracionPatrimonioPersonal");
                 return View(lista);
             }
             catch (Exception ex)
@@ -191,45 +209,20 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> ListarEmpleadosconAccionPersonalPendiente()
-        {
-
-            var lista = new List<ListaEmpleadoViewModel>();
-            try
-            {
-                lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Empleados/ListarEmpleadoconAccionPersonalPendiente");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando empleados con acción personal pendiente",
-                    ExceptionTrace = ex,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
-            }
-        }
-
         public async Task<IActionResult> Delete(string id)
         {
 
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/AccionesPersonal");
+                                                               , "/api/DeclaracionPatrimonioPersonal");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de acción de personal eliminado",
+                        Message = "Registro de declaración personal eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -243,7 +236,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Acción de Personal",
+                    Message = "Eliminar Declaración Personal",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

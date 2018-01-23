@@ -1,0 +1,129 @@
+@model bd.webappth.entidades.ViewModels.SolicitudViaticoViewModel
+
+<br>
+<div class="row">
+    <article class="col-lg-12">
+        <legend>Tipos de Vi&aacute;ticos</legend>
+        @foreach (var item in Model.ListaTipoViatico)
+        {
+            <div class="col-md-6">
+                <div class="checkbox-inline">
+                    <label>
+                        <input type="checkbox"
+                               name="ViaticosSeleccionados"
+                               value="@item.IdTipoViatico" /> @item.Descripcion
+                        </label>
+                    </div>
+                </div>
+        }
+    </article>
+    <article class="col-lg-12">
+        <legend>Datos Generales</legend>
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Pa&iacute;s de comisi&oacute;n:</label>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                        <select id="paisLugarPersona" asp-for="SolicitudViatico.IdPais" class="form-control input " asp-items="ViewBag.IdPais" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <option value="0" selected="" disabled="">Seleccione</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <label>Provincia de comisi&oacute;n:</label>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                        <select id="provinciaLugarPersona" asp-for="SolicitudViatico.IdProvincia" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <option value="0" selected="" disabled="">Seleccione</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>Ciudad de comisi&oacute;n:</label>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                        <select id="idciudadLugarPersona" asp-for="SolicitudViatico.IdCiudad" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <option value="0" selected="" disabled="">Seleccione</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Fecha de salida:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input asp-for="SolicitudViatico.FechaSalida" type="text" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                        <span asp-validation-for="SolicitudViatico.FechaSalida" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Hora de salida:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                        <input type="time" asp-for="SolicitudViatico.HoraSalida" class="form-control input  " data-msg-required='El campo es requerido' data-rule-required='true'>
+                        <span asp-validation-for="SolicitudViatico.HoraSalida" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Fecha de llegada:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input asp-for="SolicitudViatico.FechaLlegada" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                        <span asp-validation-for="SolicitudViatico.FechaLlegada" class="text-danger"></span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Hora de llegada:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                        <input type="time" asp-for="SolicitudViatico.HoraLlegada" class="form-control input  " data-msg-required='El campo es requerido' data-rule-required='true'>
+                        <span asp-validation-for="SolicitudViatico.HoraLlegada" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section>
+            <label class="label"></label>
+            <div class="form-group">
+                <label>Descripci&oacute;n de las actividades a ejecutarse:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon-append fa fa-comment"></i></span>
+                    <textarea maxlength="250" class="form-control" asp-for="SolicitudViatico.Descripcion" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Descripcion)"></textarea>
+                    <span asp-validation-for="SolicitudViatico.Descripcion" class="text-danger"></span>
+                </div>
+            </div>
+        </section>
+        <section>
+            <label class="label"></label>
+            <div class="form-group">
+                <label>Observaci&oacute;n:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon-append fa fa-comment"></i></span>
+                    <textarea maxlength="250" class="form-control" asp-for="SolicitudViatico.Observacion" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Observacion)"></textarea>
+                    <span asp-validation-for="SolicitudViatico.Observacion" class="text-danger"></span>
+                </div>
+            </div>
+        </section>
+    </article>
+</div>
+<span class="text-danger">@ViewData["Error"]</span>
+
+<br />

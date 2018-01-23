@@ -1,4 +1,4 @@
-namespace bd.webappth.entidades.Negocio
+    namespace bd.webappth.entidades.Negocio
 {
     using System;
     using System.Collections.Generic;
@@ -8,54 +8,27 @@ namespace bd.webappth.entidades.Negocio
     {
         [Key]
         public int IdSolicitudViatico { get; set; }
-
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Fecha de aprobado:")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
-        public DateTime? FechaAprobado { get; set; }
-
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Fecha de solicitud:")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm}", ApplyFormatInEditMode = true)]
-        public DateTime FechaSolicitud { get; set; }
-
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Descripción:")]
-        [StringLength(20, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
-        public string Descripcion { get; set; }
-
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Valor estimado:")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal? ValorEstimado { get; set; }
-
-        //Propiedades Virtuales Referencias a otras clases
-
-        [Display(Name = "Empleado:")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdEmpleado { get; set; }
-        public virtual Empleado Empleado { get; set; }
-
-        [Display(Name = "Estado:")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int? IdEstado { get; set; }
-        public virtual Estado Estado { get; set; }
-
-        [Display(Name = "Configuración de viático:")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        public int IdPais { get; set; }
+        public int IdProvincia { get; set; }
+        public int IdCiudad { get; set; }
         public int IdConfiguracionViatico { get; set; }
-        public virtual ConfiguracionViatico ConfiguracionViatico { get; set; }
-
-        [Display(Name = "Tipo de viático:")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdTipoViatico { get; set; }
-        public virtual TipoViatico TipoViatico { get; set; }
-
-        public virtual ICollection<ItinerarioViatico> ItinerarioViatico { get; set; }
+        public DateTime FechaSolicitud { get; set; }
+        public string Descripcion { get; set; }
+        public decimal? ValorEstimado { get; set; }
+        public DateTime FechaLlegada { get; set; }
+        public DateTime FechaSalida { get; set; }
+        public string Observacion { get; set; }
+        public int Estado { get; set; }
+        public TimeSpan HoraSalida { get; set; }
+        public TimeSpan HoraLlegada { get; set; }
 
         public virtual ICollection<AprobacionViatico> AprobacionViatico { get; set; }
+        public virtual ICollection<ItinerarioViatico> ItinerarioViatico { get; set; }
+        public virtual ICollection<SolicitudTipoViatico> SolicitudTipoViatico { get; set; }
+        public virtual Ciudad Ciudad { get; set; }
+        public virtual Pais Pais { get; set; }
+        public virtual Provincia Provincia { get; set; }
 
     }
 }

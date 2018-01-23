@@ -70,9 +70,16 @@ namespace bd.webappth.web.Controllers.MVC
                     //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.ObtenerElementoAsync1<BrigadaSSO>(solicitudPlanificacionVacaciones, new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                     if (respuesta.IsSuccess)
                     {
+                        var empleadoEnviar = new Empleado
+                        {
+                            IdEmpleado = a.IdEmpleado,
+                        };
+                        var empleado = await apiServicio.ObtenerElementoAsync1<EmpleadoSolicitudViewModel>(empleadoEnviar, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDatosEmpleadoSeleccionado");
                         ViewData["FechaDesde"] = a.FechaDesde;
                         ViewData["FechaHasta"] = a.FechaHasta;
                         ViewData["FechaSolicitud"] = a.FechaSolicitud;
+                        ViewData["NombresApellidos"] = empleado.NombreApellido;
+                        ViewData["Identificacion"] = empleado.Identificacion;
                         return View(a);
                     }
 
