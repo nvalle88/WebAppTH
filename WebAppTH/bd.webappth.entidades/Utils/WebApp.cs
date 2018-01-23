@@ -14,5 +14,7 @@ namespace bd.webappth.entidades.Utils
 
         public static string BaseAddressWebAppLogin { get; set; }
 
+        public static string NombreAplicacion { get; set; }
+
     }
 }

@@ -134,7 +134,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Subiendo archivo",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP WebAppTh"
@@ -222,7 +222,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Editando un documento de información institucional",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -248,7 +248,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Listando documentos información institucional",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -285,7 +285,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Eliminar Documento de Información Institucional",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"

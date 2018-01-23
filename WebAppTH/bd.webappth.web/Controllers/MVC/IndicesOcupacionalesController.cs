@@ -256,7 +256,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP Seguridad"
@@ -312,7 +312,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP Seguridad"
@@ -373,7 +373,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP Seguridad"
@@ -493,7 +493,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP Seguridad"
@@ -582,7 +582,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP Seguridad"
@@ -674,7 +674,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP Seguridad"
@@ -771,7 +771,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP Seguridad"
@@ -867,7 +867,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP Seguridad"
@@ -1065,7 +1065,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP Seguridad"
@@ -1115,7 +1115,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP Seguridad"
@@ -1150,7 +1150,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Listando Indices ocupacionales",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"

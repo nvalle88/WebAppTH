@@ -1,4 +1,5 @@
-﻿using bd.webappth.entidades.Utils;
+﻿using bd.log.guardar.Inicializar;
+using bd.webappth.entidades.Utils;
 using bd.webappth.servicios.Interfaces;
 using bd.webappth.servicios.Servicios;
 using bd.webappth.web.Models;
@@ -7,6 +8,7 @@ using EnviarCorreo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -38,11 +40,29 @@ namespace bd.webappth.web
         // This method gets called by the runtime. Use this method to add services to the container.
         public async void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(
-         
-            );
+           
+
+
 
             var appSettings = Configuration.GetSection("AppSettings");
+
+
+            services.AddMvc();
+            services.AddDataProtection()
+           .UseCryptographicAlgorithms(
+           new AuthenticatedEncryptionSettings()
+           {
+               EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+               ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+           });
+
+            services.AddDataProtection()
+            .SetDefaultKeyLifetime
+            (TimeSpan.FromDays
+             (Convert.ToInt32
+              (Configuration.GetSection("DiasValidosClaveEncriptada").Value)
+             )
+            );
 
             services.AddSingleton<IApiServicio, ApiServicio>();
             services.AddScoped<IUploadFileService, UploadFileService>();
@@ -73,13 +93,13 @@ namespace bd.webappth.web
             ConfiguracionCorreo.Contrasenia = Configuration.GetSection("Contrasenia").Value;
             ConfiguracionCorreo.SecureSocketOptions = Convert.ToInt32(Configuration.GetSection("SecureSocketOptions").Value);
 
-            var HostSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
             WebApp.BaseAddressWebAppLogin = Configuration.GetSection("HostWebAppLogin").Value;
+            WebApp.NombreAplicacion = Configuration.GetSection("NombreAplicacion").Value;
 
-            await InicializarWebApp.InicializarWeb(ServicioTalentoHumano, new Uri(HostSeguridad));
-            await InicializarWebApp.InicializarSeguridad(ServicioSeguridad, new Uri(HostSeguridad));
-            await InicializarWebApp.InicializarWebRecursosMateriales(ServiciosRecursosMateriales, new Uri(HostSeguridad));
-            await InicializarWebApp.InicializarLogEntry(ServiciosLog, new Uri(HostSeguridad));
+            WebApp.BaseAddress = Configuration.GetSection("HostServiciosTalentoHumano").Value;
+            WebApp.BaseAddressSeguridad= Configuration.GetSection("HostServicioSeguridad").Value;
+            WebApp.BaseAddressRM= Configuration.GetSection("HostServiciosRecursosMateriales").Value;
+            AppGuardarLog.BaseAddress= Configuration.GetSection("HostServicioLog").Value;
 
         }
 

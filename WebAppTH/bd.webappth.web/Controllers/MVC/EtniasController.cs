@@ -55,8 +55,7 @@ namespace bd.webappth.web.Controllers.MVC
                         EntityID = string.Format("{0} {1}", "Etnia:", etnia.IdEtnia),
                     });
 
-                    Correo correo = new Correo();
-                    var respuestaEnviarCorreo = await correo.Enviar(1, "Esto es un cuerpo del mensaje");
+                    
 
                     return RedirectToAction("Index");
                 }
@@ -71,7 +70,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando Etnia",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP WebAppTh"
@@ -145,7 +144,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Editando un etnia",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -171,7 +170,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Listando etnias",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -208,7 +207,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Eliminar Etnia",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"

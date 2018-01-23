@@ -26,13 +26,10 @@ namespace bd.webappth.servicios.Servicios
             }
         }
 
-        public static async Task InicializarWeb(string id, Uri baseAddreess)
+        public static async Task InicializarWeb(string id, string baseAddreess)
         {
             try
             {
-                var sistema = await ObtenerHostSistema(id, baseAddreess);
-                //WebApp.BaseAddress = sistema.AdstHost;
-                //   WebApp.BaseAddress = Convert.ToString(baseAddreess);
                 WebApp.BaseAddress = "http://localhost:53271";
             }
             catch (Exception ex)
