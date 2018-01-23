@@ -1,0 +1,157 @@
+@model bd.webappth.entidades.ViewModels.ViewModelInduccion
+
+    <div id="content">
+        <!-- row -->
+        <div class="row">
+            <!-- col -->
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                <h1 class="page-title txt-color-blueDark">
+                    <!-- PAGE HEADER -->
+                    <i class="fa-fw fa fa-home"></i> Sistema de Talento Humano <span>
+                        >
+                        Material Inducci&oacute;n
+                    </span>
+                </h1>
+            </div>
+        
+            <!-- end col -->
+            <!-- right side of the page with the sparkline graphs -->
+            <!-- col -->
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+                <!-- sparks -->
+                <!-- end sparks -->
+            </div>
+            <!-- end col -->
+        </div>
+
+        <!-- end row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="well padding-12">
+                    <legend>IM&Aacute;GENES</legend>
+                    @foreach (var item in Model.Imagenes)
+                    {
+                       
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="~/@Html.DisplayFor(modelItem => item.Url)" class="img-responsive" alt="img">
+                            </div>
+                            <div class="col-md-4 padding-left-0">
+                                <h3 class="margin-top-0"><a href="javascript:void(0);">@Html.DisplayFor(modelItem => item.Titulo) </a><br><small class="font-xs"></small></h3>
+                                <p>
+                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                </p>
+                                <br />
+                          
+                                <br />
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="checkbox">
+                                        <label></label>
+                                        <input type="checkbox" class="form-control abc" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <legend></legend>
+                    }
+                    <legend>DOCUMENTOS</legend>
+                    @foreach (var item in Model.Archivos)
+                    {
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a asp-action="Download" asp-route-id="@item.IdMaterialInduccion">
+                                    @Html.DisplayFor(modelItem => item.Titulo)
+                                </a>
+                            </div>
+                            <div class="col-md-4 padding-left-0">
+                                <h3 class="margin-top-0"><a href="javascript:void(0);">@Html.DisplayFor(modelItem => item.Titulo) </a><br><small class="font-xs"></small></h3>
+                                <p>
+                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                </p>
+                                <br />
+
+                                <br />
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="checkbox" >
+                                        <label></label>
+                                        <input type="checkbox" class="form-control abc" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <legend></legend>
+                    }
+                    <legend>VIDEOS</legend>
+                    @foreach (var item in Model.Videos)
+                    {
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="margin-top-10">
+                                    <iframe width="560" height="315" src="@item.Url" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-left-0">
+                                <h3 class="margin-top-0"><a href="javascript:void(0);">@Html.DisplayFor(modelItem => item.Titulo) </a><br><small class="font-xs"></small></h3>
+                                <p>
+                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                </p>
+                                <br />
+
+                                <br />
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="checkbox">
+                                        <label></label>
+                                        <input type="checkbox" class="form-control abc" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <legend></legend>
+                    }
+                    @*<div class="col-lg-12">
+                        <div class="margin-top-10">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/KLGbrRf9NAk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+@section Scripts {
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+<script src='~/js/site.js'></script>
+
+<script type="text/javascript">
+
+
+        $("input[type='checkbox'].abc").change(function () {
+            var a = $("input[type='checkbox'].abc");
+            if (a.length == a.filter(":checked").length) {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("IngresarInduccion")',
+                    dataType: 'json',
+                    success: function (data) {
+                        alert('Ha realizado el proceso de inducción');
+                    }
+                });
+            }
+        });
+
+
+    </script>
+}

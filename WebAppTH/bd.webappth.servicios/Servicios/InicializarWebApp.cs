@@ -26,11 +26,14 @@ namespace bd.webappth.servicios.Servicios
             }
         }
 
-        public static async Task InicializarWeb(string id, string baseAddreess)
+        public static async Task InicializarWeb(string id, Uri baseAddreess)
         {
             try
             {
-                WebApp.BaseAddress = "http://localhost:53271";
+                  //var sistema = await ObtenerHostSistema(id, baseAddreess);
+                //WebApp.BaseAddress = sistema.AdstHost;
+                //   WebApp.BaseAddress = Convert.ToString(baseAddreess);
+                WebApp.BaseAddress = "http://localhost:49494";
             }
             catch (Exception ex)
             {
@@ -43,12 +46,9 @@ namespace bd.webappth.servicios.Servicios
         {
             try
             {
-           //     var sistema = await ObtenerHostSistema(id, baseAddreess);
-                //WebApp.BaseAddressSeguridad = sistema.AdstHost;
-                WebApp.BaseAddressSeguridad = "http://localhost/swSeguridad";
-              //  WebApp.BaseAddressSeguridad = "http://localhost:53316";
-
-                
+                 ////var sistema = await ObtenerHostSistema(id, baseAddreess);
+                ////WebApp.BaseAddressSeguridad = sistema.AdstHost;
+                WebApp.BaseAddressSeguridad = "http://localhost:53317";
                 // WebApp.BaseAddressSeguridad = Convert.ToString(baseAddreess);
             }
             catch (Exception ex)
@@ -62,8 +62,9 @@ namespace bd.webappth.servicios.Servicios
         {
             try
             {
-                var sistema = await ObtenerHostSistema(id, baseAddreess);
-                WebApp.BaseAddressRM = sistema.AdstHost;
+               //var sistema = await ObtenerHostSistema(id, baseAddreess);
+                //WebApp.BaseAddressRM = sistema.AdstHost;
+                WebApp.BaseAddressRM = "http://192.168.100.21/swRecursosMateriales";
             }
             catch (Exception ex)
             {

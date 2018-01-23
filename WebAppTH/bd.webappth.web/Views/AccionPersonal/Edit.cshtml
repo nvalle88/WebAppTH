@@ -1,0 +1,183 @@
+@model bd.webappth.entidades.Negocio.AccionPersonal
+
+@{
+    ViewData["Title"] = "AccionesPersonal";
+}
+
+
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Editar Acci&oacute;n de Personal</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="IdAccionPersonal" />
+                                <input type="hidden" asp-for="IdEmpleado" />
+                                <input type="hidden" asp-for="Fecha" />
+                                <input type="hidden" asp-for="FechaRige" />
+                                <input type="hidden" asp-for="FechaRigeHasta" />
+                                <input type="hidden" asp-for="IdTipoAccionPersonal" />
+                                <input type="hidden" asp-for="NoDias" />
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label>Nombre de Funcionario:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="200" value="@ViewData["NombresApellidos"]" disabled="disabled" class="form-control" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Identifaci&oacute;n:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="15" value="@ViewData["Identificacion"]" disabled="disabled" class="form-control" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Tipo de acci&oacute;n de personal:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="50" value="@ViewData["TipoAccionPersonal"]" disabled="disabled" class="form-control" />
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label>Fecha solicitud:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="50" value="@ViewData["Fecha"]" disabled="disabled" class="form-control" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Fecha desde:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="50" value="@ViewData["FechaRige"]" disabled="disabled" class="form-control" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Fecha hasta:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="50" value="@ViewData["FechaRigeHasta"]" disabled="disabled" class="form-control" />
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            @*<label class="col-md-1 control-label">Estado</label>*@
+                                            <div class="col col-8">
+                                                <label>Estado:</label>
+                                                <br />  
+                                                <div class="col-md-2">
+                                                    <label class="radio radio-inline">
+                                                        <input type="radio" name="Estado" value="-1" class="radiobox">
+                                                        <span>Negado</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="radio radio-inline">
+                                                        <input type="radio" name="Estado" value="0" class="radiobox" checked="checked">
+                                                        <span>Pendiente</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="radio radio-inline">
+                                                        <input type="radio" name="Estado" value="1" class="radiobox">
+                                                        <span>Aprobado</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <section class="col col-1">
+                                            <label>D&iacute;as:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="50" value="@ViewData["NoDias"]" disabled="disabled" class="form-control" />
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            @*<label>N&uacute;mero:</label>*@
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="50" asp-for="Numero" placeholder="@Html.DisplayNameFor(model=>model.Numero)"  class="form-control" />
+                                                <span asp-validation-for="Numero" class="text-danger"></span>
+
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            @*<label>Solicitu:</label>*@
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="50" asp-for="Solicitud" placeholder="@Html.DisplayNameFor(model=>model.Solicitud)"  class="form-control" />
+                                                <span asp-validation-for="Solicitud" class="text-danger"></span>
+
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <section>
+                                        <label class="label"></label>
+                                        <label class="textarea">
+                                            <i class="icon-append fa fa-comment"></i>
+                                            <textarea maxlength="250" asp-for="Explicacion" rows="3" placeholder="@Html.DisplayNameFor(model=>model.Explicacion)"></textarea>
+                                            <span asp-validation-for="Explicacion" class="text-danger"></span>
+                                        </label>
+                                    </section>
+                                    <span class="text-danger">@ViewData["Error"]</span>
+                                </fieldset>
+                                <footer>
+                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    <script type="text/javascript">
+
+
+    </script>
+}

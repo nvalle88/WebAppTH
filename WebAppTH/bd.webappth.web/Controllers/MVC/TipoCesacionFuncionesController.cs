@@ -7,21 +7,19 @@ using bd.webappth.servicios.Interfaces;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.log.guardar.Servicios;
-using bd.webappseguridad.entidades.Enumeradores;
-using bd.log.guardar.ObjectTranfer;
-using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
-using bd.webappth.entidades.ViewModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using bd.log.guardar.ObjectTranfer;
+using bd.webappseguridad.entidades.Enumeradores;
+using bd.log.guardar.Enumeradores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class AccionesPersonalController : Controller
+    public class TipoCesacionFuncionesController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public AccionesPersonalController(IApiServicio apiServicio)
+        public TipoCesacionFuncionesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
         }
@@ -33,14 +31,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AccionPersonal accionPersonal)
+        public async Task<IActionResult> Create(TipoCesacionFuncion tipoCesacionFuncion)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(accionPersonal,
+                response = await apiServicio.InsertarAsync(tipoCesacionFuncion,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/AccionesPersonal/InsertarAccionPersonal");
+                                                             "/api/TipoCesacionFunciones/InsertarTipoCesacionFuncion");
                 if (response.IsSuccess)
                 {
 
@@ -48,18 +46,18 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         ExceptionTrace = null,
-                        Message = "Se ha creado un acción de personal",
+                        Message = "Se ha creado un estado civil",
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Acción de Personal:", accionPersonal.IdAccionPersonal),
+                        EntityID = string.Format("{0} {1}", "Estado Civil:", tipoCesacionFuncion.IdTipoCesacionFuncion),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(accionPersonal);
+                return View(tipoCesacionFuncion);
 
             }
             catch (Exception ex)
@@ -67,7 +65,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Acción de Personal",
+                    Message = "Creando Estado Civil",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -85,27 +83,13 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/AccionesPersonal");
+                                                                  "/api/TipoCesacionFunciones");
 
 
-                    var a = JsonConvert.DeserializeObject<AccionPersonal>(respuesta.Resultado.ToString());
+                    respuesta.Resultado = JsonConvert.DeserializeObject<TipoCesacionFuncion>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
-                        var empleadoEnviar = new Empleado
-                        {
-                            IdEmpleado = a.IdEmpleado,
-                        };
-                        var empleado = await apiServicio.ObtenerElementoAsync1<EmpleadoSolicitudViewModel>(empleadoEnviar, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDatosEmpleadoSeleccionado");
-                        var respuestaAccionPersonal = await apiServicio.SeleccionarAsync<Response>(a.IdTipoAccionPersonal.ToString(), new Uri(WebApp.BaseAddress), "/api/TiposAccionesPersonales");
-                        var tipoaccionpersonal = JsonConvert.DeserializeObject<TipoAccionPersonal>(respuestaAccionPersonal.Resultado.ToString());
-                        ViewData["NombresApellidos"] = empleado.NombreApellido;
-                        ViewData["Identificacion"] = empleado.Identificacion;
-                        ViewData["TipoAccionPersonal"] = tipoaccionpersonal.Nombre;
-                        ViewData["Fecha"] = a.Fecha;
-                        ViewData["FechaRige"] = a.FechaRige;
-                        ViewData["FechaRigeHasta"] = a.FechaRigeHasta;
-                        ViewData["NoDias"] = a.NoDias;
-                        return View(a);
+                        return View(respuesta.Resultado);
                     }
 
                 }
@@ -120,15 +104,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, AccionPersonal accionPersonal)
+        public async Task<IActionResult> Edit(string id, TipoCesacionFuncion tipoCesacionFuncion)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, accionPersonal, new Uri(WebApp.BaseAddress),
-                                                                 "/api/AccionesPersonal");
+                    response = await apiServicio.EditarAsync(id, tipoCesacionFuncion, new Uri(WebApp.BaseAddress),
+                                                                 "/api/TipoCesacionFunciones");
 
                     if (response.IsSuccess)
                     {
@@ -138,14 +122,14 @@ namespace bd.webappth.web.Controllers.MVC
                             EntityID = string.Format("{0} : {1}", "Sistema", id),
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un acción de personal",
+                            Message = "Se ha actualizado un estado civil",
                             UserName = "Usuario 1"
                         });
 
-                        return RedirectToAction("ListarEmpleadosconAccionPersonalPendiente");
+                        return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    return View(accionPersonal);
+                    return View(tipoCesacionFuncion);
 
                 }
                 return BadRequest();
@@ -155,7 +139,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un acción de personal",
+                    Message = "Editando un estado civil",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
@@ -169,11 +153,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<AccionPersonal>();
+            var lista = new List<TipoCesacionFuncion>();
             try
             {
-                lista = await apiServicio.Listar<AccionPersonal>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/AccionesPersonal/ListarAccionesPersonal");
+                lista = await apiServicio.Listar<TipoCesacionFuncion>(new Uri(WebApp.BaseAddress)
+                                                                    , "/api/TipoCesacionFunciones/ListarTipoCesacionFunciones");
                 return View(lista);
             }
             catch (Exception ex)
@@ -191,45 +175,20 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> ListarEmpleadosconAccionPersonalPendiente()
-        {
-
-            var lista = new List<ListaEmpleadoViewModel>();
-            try
-            {
-                lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Empleados/ListarEmpleadoconAccionPersonalPendiente");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando empleados con acción personal pendiente",
-                    ExceptionTrace = ex,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
-            }
-        }
-
         public async Task<IActionResult> Delete(string id)
         {
 
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/AccionesPersonal");
+                                                               , "/api/TipoCesacionFunciones");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                         EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de acción de personal eliminado",
+                        Message = "Registro de estado civil eliminado",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
@@ -243,7 +202,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Acción de Personal",
+                    Message = "Eliminar Estado Civil",
                     ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),

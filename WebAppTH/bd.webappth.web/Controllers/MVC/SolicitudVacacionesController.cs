@@ -63,10 +63,17 @@ namespace bd.webappth.web.Controllers.MVC
                     //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.ObtenerElementoAsync1<BrigadaSSO>(solicitudPlanificacionVacaciones, new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                     if (respuesta.IsSuccess)
                     {
+                        var empleadoEnviar = new Empleado
+                        {
+                            IdEmpleado = a.IdEmpleado,
+                        };
+                        var empleado = await apiServicio.ObtenerElementoAsync1<EmpleadoSolicitudViewModel>(empleadoEnviar, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDatosEmpleadoSeleccionado");
                         ViewData["FechaDesde"] = a.FechaDesde;
                         ViewData["FechaHasta"] = a.FechaHasta;
                         ViewData["PlanAnual"] = a.PlanAnual;
                         ViewData["FechaSolicitud"] = a.FechaSolicitud;
+                        ViewData["NombresApellidos"] = empleado.NombreApellido;
+                        ViewData["Identificacion"] = empleado.Identificacion;
                         return View(a);
                     }
 
@@ -287,6 +294,7 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AprobarSolicitudVacaciones(string id, SolicitudVacaciones solicitudVacaciones)
         {
+            //var dias = (solicitudVacaciones.FechaHasta.Date - solicitudVacaciones.FechaDesde.Date).Days;
             Response response = new Response();
             try
             {
@@ -306,8 +314,43 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1"
                     });
 
-                 return RedirectToAction("DetalleSolicitudVacaciones", new { id = solicitudVacaciones.IdEmpleado });
+                    if (solicitudVacaciones.Estado == 1)
+                    {
 
+                        var accionPersonal = new AccionPersonal
+                        {
+                            IdEmpleado = solicitudVacaciones.IdEmpleado,
+                            IdTipoAccionPersonal = Convert.ToInt32(AccionPersonalEnum.vacaciones),
+                            Fecha = solicitudVacaciones.FechaSolicitud,
+                            Numero = null,
+                            Solicitud = null,
+                            Explicacion = null,
+                            FechaRige = solicitudVacaciones.FechaDesde,
+                            FechaRigeHasta = solicitudVacaciones.FechaHasta.Date,
+                            NoDias = (solicitudVacaciones.FechaHasta.Date - solicitudVacaciones.FechaDesde.Date).Days,
+                            Estado = 0
+                        };
+                        response = await apiServicio.InsertarAsync(accionPersonal,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "/api/AccionesPersonal/InsertarAccionPersonal");
+                        if (response.IsSuccess)
+                        {
+
+                            var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                            {
+                                ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                                ExceptionTrace = null,
+                                Message = "Se ha creado una acción de persona de vacaciones",
+                                UserName = "Usuario 1",
+                                LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                                LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                                EntityID = string.Format("{0} {1}", "Acción de personal:", accionPersonal.IdAccionPersonal),
+                            });
+                        }
+                    }
+
+
+                    return RedirectToAction("DetalleSolicitudVacaciones", new { id = solicitudVacaciones.IdEmpleado });
                 }
                 ViewData["Error"] = response.Message;
                 //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
