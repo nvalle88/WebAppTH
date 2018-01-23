@@ -167,6 +167,11 @@ namespace bd.webappth.entidades.Negocio
 
         // public virtual ICollection<PlanificacionHE> PlanificacionHE1 { get; set; }
 
+
+
+
+
+
         public virtual ICollection<Liquidacion> Liquidacion { get; set; }
 
         public virtual ICollection<Eval001> Eval001 { get; set; }
