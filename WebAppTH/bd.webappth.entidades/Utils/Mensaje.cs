@@ -6,6 +6,7 @@ namespace bd.webappth.entidades.Utils
 {
   public static class Mensaje
     {
+        public static string NoExisteModulo { get { return "No se ha encontrado el Módulo"; } }
         public static string Excepcion { get { return "Ha ocurrido una Excepción"; } }
         public static string Obligatorio { get { return "Debe introducir datos en el campo"; } }
         public static string FechaRangoMenor { get { return "La fecha inicial no puede ser mayor que la fecha final "; } }

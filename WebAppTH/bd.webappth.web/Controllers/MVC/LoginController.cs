@@ -51,75 +51,125 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Login()
         {
-          var user=  HttpContext.User;
-            if (Request.Query.Count !=2)
-            {
-                return Redirect(WebApp.BaseAddressWebAppLogin);
-            }
-
-            Adscpassw adscpassw = new Adscpassw();
-            var queryStrings = Request.Query;
-            var qsList = new List<string>();
-            foreach (var key in queryStrings.Keys)
-            {
-                qsList.Add(queryStrings[key]);
-            }
-            var adscpasswSend = new Adscpassw
-            {
-                AdpsLoginAdm = qsList[0],
-                AdpsTokenTemp = qsList[1]
-            };
-            adscpassw = await GetAdscPassws(adscpasswSend);
-
-           var a= HttpContext.Items.Count;
-
-            if (adscpassw !=null)
+            try
             {
 
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
                 var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
                 var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                var claims = new[]
-                    {
-                    new Claim(ClaimTypes.Name,NombreUsuario),
-                    new Claim(ClaimTypes.SerialNumber,token)
-
-                };
-              
-
-
-                var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies"));
-
-               // var esto= ClaimsPrincipal.Current.Identities;
-
-               await HttpContext.Authentication.SignInAsync("Cookies", principal,new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties {IsPersistent=true });
-
-                var response = await EliminarTokenTemp(adscpassw);
-                if (response.IsSuccess)
+                var permiso = new PermisoUsuario
                 {
-                    return RedirectToAction(nameof(HomesController.Index), "Homes");
-                }
-                else
+                    Contexto = HttpContext.Request.Path,
+                    Token = token,
+                    Usuario = NombreUsuario,
+                };
+
+                /// <summary>
+                /// Se valida que la información del usuario actual tenga permiso para acceder al path solicitado... 
+                /// </summary>
+                /// <returns></returns>
+                var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermiso");
+
+                if (!respuesta.Result.IsSuccess)
                 {
                     return Redirect(WebApp.BaseAddressWebAppLogin);
                 }
+
+                if (Request.Query.Count != 2)
+                {
+                    return Redirect(WebApp.BaseAddressWebAppLogin);
+                }
+
+                Adscpassw adscpassw = new Adscpassw();
+                var queryStrings = Request.Query;
+                var qsList = new List<string>();
+                foreach (var key in queryStrings.Keys)
+                {
+                    qsList.Add(queryStrings[key]);
+                }
+                var adscpasswSend = new Adscpassw
+                {
+                    AdpsLoginAdm = qsList[0],
+                    AdpsTokenTemp = qsList[1]
+                };
+                adscpassw = await GetAdscPassws(adscpasswSend);
+
+                if (adscpassw != null)
+                {
+                    var response = await EliminarTokenTemp(adscpassw);
+                    if (response.IsSuccess)
+                    {
+                        var responseLog = new EntradaLog
+                        {
+                            ExceptionTrace = null,
+                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Permission),
+                            LogLevelShortName = Convert.ToString(LogLevelParameter.INFO),
+                            ObjectPrevious = null,
+                            ObjectNext = JsonConvert.SerializeObject(response.Resultado),
+                        };
+                        await apiServicio.SalvarLog<entidades.Utils.Response>(HttpContext, responseLog);
+                        return RedirectToActionPermanent(nameof(HomesController.Index),"Homes");
+                    }
+                    else
+                    {
+                        return Redirect(WebApp.BaseAddressWebAppLogin);
+                    }
+                }
+
+                return Redirect(WebApp.BaseAddressWebAppLogin);
             }
-        
-            return Redirect(WebApp.BaseAddressWebAppLogin);
+            catch (Exception ex)
+            {
+                var responseLog = new EntradaLog
+                {
+                    ExceptionTrace = ex.Message,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Critical),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    ObjectPrevious = null,
+                    ObjectNext = null,
+                };
+                await apiServicio.SalvarLog<Response>(HttpContext, responseLog);
+                return Redirect(WebApp.BaseAddressWebAppLogin);
+            }
 
         }
 
         public async Task<IActionResult> Salir()
         {
 
-            await HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction(nameof(LoginController.Index), "Login");
+
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                var adscpasswSend = new Adscpassw
+                {
+                    AdpsLoginAdm = NombreUsuario,
+                    AdpsToken = token
+                };
+
+                Adscpassw adscpassw = new Adscpassw();
+                adscpassw = await GetAdscPassws(adscpasswSend);
+                var response = await EliminarToken(adscpassw);
+                if (response.IsSuccess)
+                {
+                    await HttpContext.Authentication.SignOutAsync("Cookies");
+                    return RedirectPermanent(WebApp.BaseAddressWebAppLogin);
+                }
+                return RedirectPermanent(WebApp.BaseAddressWebAppLogin);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(LoginController.Index), "Login");
+            }
 
 
         }
 
-        public async Task<Adscpassw> GetAdscPassws (Adscpassw adscpassw)
+        private async Task<Adscpassw> GetAdscPassws(Adscpassw adscpassw)
         {
             try
             {
@@ -127,9 +177,6 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(adscpassw, new Uri(WebApp.BaseAddressSeguridad),
                                                                   "api/Adscpassws/SeleccionarMiembroLogueado");
-
-
-
 
                     if (respuesta.IsSuccess)
                     {
@@ -147,9 +194,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<Response> EliminarTokenTemp(Adscpassw adscpassw)
+        private async Task<Response> EliminarToken(Adscpassw adscpassw)
         {
             Response response = new Response();
             try
@@ -157,7 +202,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(adscpassw.AdpsLogin))
                 {
                     response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri(WebApp.BaseAddressSeguridad),
-                                                                 "api/Adscpassws/EliminarTokenTemp");
+                                                                 "api/Adscpassws/EliminarToken");
 
                     if (response.IsSuccess)
                     {
@@ -172,7 +217,7 @@ namespace bd.webappth.web.Controllers.MVC
                         });
 
                         return response;
-                    }                
+                    }
 
                 }
                 return null;
@@ -183,7 +228,6 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Editando un estado civil",
-                    ExceptionTrace = ex,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -191,6 +235,24 @@ namespace bd.webappth.web.Controllers.MVC
 
                 return null;
             }
+        }
+
+        private async Task<Response> EliminarTokenTemp(Adscpassw adscpassw)
+        {
+            Response response = new Response();
+
+            if (!string.IsNullOrEmpty(adscpassw.AdpsLogin))
+            {
+                response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri(WebApp.BaseAddressSeguridad),
+                                                             "api/Adscpassws/EliminarTokenTemp");
+
+                if (response.IsSuccess)
+                {
+                    return response;
+                }
+            }
+            return null;
+
         }
 
 

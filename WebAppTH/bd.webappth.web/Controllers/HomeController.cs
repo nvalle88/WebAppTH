@@ -12,38 +12,18 @@ namespace bd.webappth.web.Controllers
 {
     public class HomeController : Controller
     {
-       [Authorize(ActiveAuthenticationSchemes ="Cookies")]
         public IActionResult Index()
         {
-            
             return View();
         }
 
-        
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View();
-        }
+        [AllowAnonymous]
         public IActionResult AccesoDenegado()
         {
             return View();
         }
 
-        public IActionResult Salir()
+        public IActionResult Error()
         {
             return View();
         }

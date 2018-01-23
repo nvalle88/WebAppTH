@@ -23,8 +23,8 @@
     <None Remove="Views\CapacitacionesProveedores}\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="bd.log.guardar" Version="1.0.8" />
-    <PackageReference Include="EnviarCorreo" Version="1.1.1" />
+    <PackageReference Include="bd.log.guardar" Version="1.1.1" />
+    <PackageReference Include="EnviarCorreo" Version="1.1.8" />
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.3.2" />
     <PackageReference Include="jquery" Version="3.2.1" />
     <PackageReference Include="MailKit" Version="2.0.1" />
