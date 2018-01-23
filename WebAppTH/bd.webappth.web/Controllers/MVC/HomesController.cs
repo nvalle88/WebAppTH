@@ -23,7 +23,7 @@ namespace bd.webappth.web.Controllers.MVC
         public HomesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
-
+           
         }
 
         public async Task<IActionResult> Index()
