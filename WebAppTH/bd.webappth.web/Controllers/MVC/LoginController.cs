@@ -69,7 +69,7 @@ namespace bd.webappth.web.Controllers.MVC
                 /// Se valida que la información del usuario actual tenga permiso para acceder al path solicitado... 
                 /// </summary>
                 /// <returns></returns>
-                var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddress), "api/Adscpassws/TienePermiso");
+                var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermiso");
 
                 if (!respuesta.Result.IsSuccess)
                 {
@@ -109,7 +109,7 @@ namespace bd.webappth.web.Controllers.MVC
                             ObjectNext = JsonConvert.SerializeObject(response.Resultado),
                         };
                         await apiServicio.SalvarLog<entidades.Utils.Response>(HttpContext, responseLog);
-                        return RedirectToActionPermanent(nameof(HomeController.Index), "Home");
+                        return RedirectToActionPermanent(nameof(HomesController.Index),"Homes");
                     }
                     else
                     {
@@ -175,7 +175,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!adscpassw.Equals(null))
                 {
-                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(adscpassw, new Uri(WebApp.BaseAddress),
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(adscpassw, new Uri(WebApp.BaseAddressSeguridad),
                                                                   "api/Adscpassws/SeleccionarMiembroLogueado");
 
                     if (respuesta.IsSuccess)
@@ -201,7 +201,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(adscpassw.AdpsLogin))
                 {
-                    response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri(WebApp.BaseAddress),
+                    response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri(WebApp.BaseAddressSeguridad),
                                                                  "api/Adscpassws/EliminarToken");
 
                     if (response.IsSuccess)
@@ -243,7 +243,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!string.IsNullOrEmpty(adscpassw.AdpsLogin))
             {
-                response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri(WebApp.BaseAddress),
+                response = await apiServicio.EditarAsync<Response>(adscpassw, new Uri(WebApp.BaseAddressSeguridad),
                                                              "api/Adscpassws/EliminarTokenTemp");
 
                 if (response.IsSuccess)
