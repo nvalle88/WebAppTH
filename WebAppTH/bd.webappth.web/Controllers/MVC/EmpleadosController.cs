@@ -768,7 +768,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerTrayectoriaLaboralJSON");
+                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerTrayectoriaLaboralEmpleado");
 
                 if (empleadoViewModel.TrayectoriaLaboral != null)
                 {
@@ -792,16 +792,17 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             string mensaje = "Error al añadir en la lista";
-            EmpleadoViewModel empleadoViewModel;
+           List<PersonaEstudioViewModel> personaEstudioViewModel=new List<PersonaEstudioViewModel>();
 
             try
             {
-                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerPersonaEstudioJSON");
+                personaEstudioViewModel = await apiServicio.Listar<PersonaEstudioViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerPersonaEstudioEmpleado");
 
-                if (empleadoViewModel.PersonaEstudio != null)
+                if (personaEstudioViewModel != null)
                 {
                     //Enviando la lista como json
-                    return Json(JsonConvert.SerializeObject(empleadoViewModel.PersonaEstudio));
+                    Debug.WriteLine("JsonConvert.SerializeObject(personaEstudioViewModel)=" + JsonConvert.SerializeObject(personaEstudioViewModel));
+                    return Json(JsonConvert.SerializeObject(personaEstudioViewModel));
                 }
                 else
                 {
@@ -824,7 +825,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerEmpleadoFamiliarJSON");
+                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerEmpleadoFamiliarEmpleado");
 
                 if (empleadoViewModel.EmpleadoFamiliar != null)
                 {
@@ -853,7 +854,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerPersonaDiscapacidadJSON");
+                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerPersonaDiscapacidadEmpleado");
 
                 if (empleadoViewModel.PersonaDiscapacidad != null)
                 {
@@ -881,7 +882,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerPersonaEnfermedadJSON");
+                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerPersonaEnfermedadEmpleado");
 
                 if (empleadoViewModel.PersonaEnfermedad != null)
                 {
@@ -909,7 +910,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDiscapacidadSustitutoJSON");
+                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDiscapacidadSustitutoEmpleado");
 
                 if (empleadoViewModel.DiscapacidadSustituto != null)
                 {
@@ -938,7 +939,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerEnfermedadSustitutoJSON");
+                empleadoViewModel = await apiServicio.ObtenerElementoAsync1<EmpleadoViewModel>(objetoEmpleadoViewModel.Empleado.IdEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerEnfermedadSustitutoEmpleado");
 
                 if (empleadoViewModel.EnfermedadSustituto != null)
                 {

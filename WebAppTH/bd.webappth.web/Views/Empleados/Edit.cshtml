@@ -3120,7 +3120,7 @@
                         alert('Error!!');
                     }
                 });
-                $.ajax({
+               $.ajax({
                     type: "POST",
                     url: '@Url.Action("llenarPersonaEstudioJSON")',
                     content: "application/json; charset=utf-8",
@@ -3135,11 +3135,11 @@
                         //recorrer el array json
                         for (var i = 0; i < objeto.length; i++) {
                             tr = $('<tr/>');
-                            tr.append("<td>" + objeto[i].IdEstudio + "</td>");
-                            tr.append("<td>" + objeto[i].idAreaConocimiento + "</td>");
-                            tr.append("<td>" + objeto[i].IdTitulo + "</td>");
-                            tr.append("<td>" + objeto[i].FechaGraduado + "</td>");
-                            tr.append("<td>" + text + "</td>"); 
+                            tr.append("<td>" + objeto[i].estudio + "</td>");
+                            tr.append("<td>" + objeto[i].areaConocimiento + "</td>");
+                            tr.append("<td>" + objeto[i].titulo + "</td>");
+                            tr.append("<td>" + objeto[i].fechaGraduado + "</td>");
+                            tr.append("<td>" + text + "</td>");
                             $('#dt_basic3').append(tr);
 
                         }
@@ -3168,7 +3168,7 @@
                             tr.append("<td>" + objeto[i].IdEmpleado + "</td>");
                             tr.append("<td>" + objeto[i].IdParentesco + "</td>");
                             tr.append("<td>" + text + "</td>");
-                            $('#dt_basic3').append(tr);
+                            $('#dt_basic').append(tr);
 
                         }
                     },

@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace bd.webappth.web.Controllers
 {
-    public class HomesController : Controller
+    public class HomeController : Controller
     {
        [Authorize(ActiveAuthenticationSchemes ="Cookies")]
         public IActionResult Index()
