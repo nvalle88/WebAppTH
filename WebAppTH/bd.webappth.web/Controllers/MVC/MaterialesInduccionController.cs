@@ -16,6 +16,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -44,13 +45,14 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(MaterialInduccion view, List<IFormFile> files)
         {
-            var ext = Path.GetExtension(files[0].FileName);
 
             if (files.Count > 0)
             {
                 byte[] data;
                 using (var br = new BinaryReader(files[0].OpenReadStream()))
                     data = br.ReadBytes((int)files[0].OpenReadStream().Length);
+
+                var ext = Path.GetExtension(files[0].FileName);
 
                 var documenttransfer = new DocumentoInstitucionalTransfer
                 {
@@ -84,8 +86,37 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
             }
+            else
+            {
 
-            return BadRequest();
+                var documenttransfer = new DocumentoInstitucionalTransfer
+                {
+                    Nombre = view.Titulo,
+                    Descripcion = view.Descripcion,
+                    Url = view.Url,
+                };
+
+                var respuesta = await CreateFichero(documenttransfer);
+
+                MaterialInduccion materialInduccion = JsonConvert.DeserializeObject<MaterialInduccion>(respuesta.Resultado.ToString());
+
+                if (respuesta.IsSuccess)
+                {
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewData["Error"] = respuesta.Message;
+
+                    var documento = new MaterialInduccion
+                    {
+                        Titulo = view.Titulo,
+                    };
+                    return View(view);
+                }
+
+            }
 
 
         }
@@ -151,7 +182,80 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        public async Task<IActionResult> IngresarInduccion()
+        {
+            Response response = new Response();
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+                var empleadoJson = ObtenerEmpleadoLogueado(NombreUsuario);
 
+                var induccionEmpleado = new Induccion
+                {
+                    IdEmpleado = empleadoJson.Result.IdEmpleado,
+                    Fecha = DateTime.Now.Date
+                };
+
+                response = await apiServicio.InsertarAsync(induccionEmpleado,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "/api/MaterialesInduccion/IngresarInduccionEmpleado");
+                if (response.IsSuccess)
+                {
+
+                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    {
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        ExceptionTrace = null,
+                        Message = "Se ha realido inducción de empleado",
+                        UserName = "Usuario 1",
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        EntityID = string.Format("{0} {1}", "Inducción:", empleadoJson.Result.IdEmpleado),
+                    });
+
+
+
+                    return RedirectToAction("Create");
+                }
+
+                ViewData["Error"] = response.Message;
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Creando Declaración Personal",
+                    ExceptionTrace = ex,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP WebAppTh"
+                });
+
+                return BadRequest();
+            }
+        }
+
+        public async Task<Empleado> ObtenerEmpleadoLogueado(string nombreUsuario)
+        {
+            try
+            {
+                var empleado = new Empleado
+                {
+                    NombreUsuario = nombreUsuario,
+                };
+                var usuariologueado = await apiServicio.ObtenerElementoAsync1<Empleado>(empleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerEmpleadoLogueado");
+                return usuariologueado;
+            }
+            catch (Exception)
+            {
+                return new Empleado();
+            }
+
+        }
 
 
         public async Task<IActionResult> Edit(string id)
@@ -286,6 +390,7 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                     else 
                     {
+                        item.Url=item.Url.Replace("watch?v=", "embed/");
                         videos.Add(item);
                     }
                 }
@@ -364,7 +469,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<FileResult> Download(string id)
         {
-         
+
 
             var response = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
                                                               "/api/MaterialesInduccion");
@@ -376,16 +481,27 @@ namespace bd.webappth.web.Controllers.MVC
                 Url = materialinduccion.Url
             };
 
-            var responseGetFile = await apiServicio.ObtenerElementoAsync(d,
+            var ext = Path.GetExtension(materialinduccion.Url);
+
+            if (ext != "")
+            {
+                var responseGetFile = await apiServicio.ObtenerElementoAsync(d,
                                                              new Uri(WebApp.BaseAddress),
                                                              "/api/MaterialesInduccion/GetFile");
-            var m = JsonConvert.DeserializeObject<DocumentoInstitucionalTransfer>(responseGetFile.Resultado.ToString());
+               var m = JsonConvert.DeserializeObject<DocumentoInstitucionalTransfer>(responseGetFile.Resultado.ToString());
 
             //var fileName = $"{ responseGetFile.Message}.pdf";
-            var ext = Path.GetExtension(materialinduccion.Url);
-            var fileName = string.Format("{0}{1}", $"{ responseGetFile.Message}", ext);
-            string mime = MimeKit.MimeTypes.GetMimeType(fileName);
-            return File(m.Fichero, mime, fileName);
+           
+           
+                var fileName = string.Format("{0}{1}", $"{ responseGetFile.Message}", ext);
+                string mime = MimeKit.MimeTypes.GetMimeType(fileName);
+                return File(m.Fichero, mime, fileName);
+            }
+            else
+            {
+                return File("","");
+            }
+          
         }
     }
 }
