@@ -3,6 +3,7 @@ using bd.webappth.servicios.Interfaces;
 using bd.webappth.servicios.Servicios;
 using bd.webappth.web.Models;
 using bd.webappth.web.Services;
+using EnviarCorreo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -61,6 +62,16 @@ namespace bd.webappth.web
             var ServiciosLog = Configuration.GetSection("ServiciosLog").Value;
             var ServicioTalentoHumano = Configuration.GetSection("ServiciosTalentoHumano").Value;
             var ServiciosRecursosMateriales = Configuration.GetSection("ServiciosRecursosMateriales").Value;
+
+            ConfiguracionCorreo.servicioSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
+            ConfiguracionCorreo.NombreEmisor = Configuration.GetSection("NombreEmisor").Value;
+            ConfiguracionCorreo.DeEmail = Configuration.GetSection("DeEmail").Value;
+            ConfiguracionCorreo.NombreReceptor = Configuration.GetSection("NombreReceptor").Value;
+            ConfiguracionCorreo.HostUri = Configuration.GetSection("HostUri").Value;
+            ConfiguracionCorreo.PuertoPrimario = Convert.ToInt32(Configuration.GetSection("PuertoPrimario").Value);
+            ConfiguracionCorreo.NombreUsuario = Configuration.GetSection("NombreUsuario").Value;
+            ConfiguracionCorreo.Contrasenia = Configuration.GetSection("Contrasenia").Value;
+            ConfiguracionCorreo.SecureSocketOptions = Convert.ToInt32(Configuration.GetSection("SecureSocketOptions").Value);
 
             var HostSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
             WebApp.BaseAddressWebAppLogin = Configuration.GetSection("HostWebAppLogin").Value;

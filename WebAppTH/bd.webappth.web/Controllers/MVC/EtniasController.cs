@@ -11,6 +11,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using EnviarCorreo;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -53,6 +54,9 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         EntityID = string.Format("{0} {1}", "Etnia:", etnia.IdEtnia),
                     });
+
+                    Correo correo = new Correo();
+                    var respuestaEnviarCorreo = await correo.Enviar(1, "Esto es un cuerpo del mensaje");
 
                     return RedirectToAction("Index");
                 }
