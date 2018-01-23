@@ -4,8 +4,13 @@ using System.Text;
 
 namespace bd.webappth.entidades.Enumeradores
 {
-    public enum Aplicacion
+    //public enum Aplicacion
+    //{
+    //    SwTH, webappth
+    //}
+
+    public enum AccionPersonalEnum
     {
-        SwTH, webappth
+        vacaciones = 11,
     }
 }

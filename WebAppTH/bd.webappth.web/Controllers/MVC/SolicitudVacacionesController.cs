@@ -14,6 +14,7 @@ using bd.log.guardar.Servicios;
 using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
+using bd.webappth.entidades.Enumeradores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -305,7 +306,8 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1"
                     });
 
-                    return RedirectToAction("DetalleSolicitudVacaciones", new { id = solicitudVacaciones.IdEmpleado });
+                 return RedirectToAction("DetalleSolicitudVacaciones", new { id = solicitudVacaciones.IdEmpleado });
+
                 }
                 ViewData["Error"] = response.Message;
                 //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");

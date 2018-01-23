@@ -66,20 +66,12 @@
                                         </section>
 
                                     </div>
-                                    <div class="row">
-                                        <section class="col col-4">
-                                            <label class="checkbox">
-                                                <input type="checkbox" asp-for="PlanAnual" class="form-control">
-                                                <i></i>Contemplado en Plan Anual ?
-                                                <span asp-validation-for="PlanAnual" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
+                               
                                     <div class="row">
 
                                         <div class="form-group">
                                             @*<label class="col-md-1 control-label">Estado</label>*@
-                                            <div class="col col-6">
+                                            <div class="col col-8">
                                                 <div class="col-md-2">
                                                     <label class="radio radio-inline">
                                                         <input type="radio" name="Estado" value="-1" class="radiobox">
@@ -100,6 +92,14 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <section class="col col-4">
+                                            <label class="checkbox">
+                                                <input type="checkbox" asp-for="PlanAnual" class="form-control">
+                                                <i></i>Contemplado en Plan Anual ?
+                                                <span asp-validation-for="PlanAnual" class="text-danger"></span>
+                                            </label>
+                                        </section>
                                     </div>
 
                                     <section>

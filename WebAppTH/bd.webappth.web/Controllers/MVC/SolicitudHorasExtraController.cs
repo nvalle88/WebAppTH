@@ -130,6 +130,7 @@ namespace bd.webappth.web.Controllers.MVC
                 //var empleado = JsonConvert.DeserializeObject<Empleado>(empleadoJson.ToString());
                 solicitudhorasextra.IdEmpleado = empleadoJson.Result.IdEmpleado;
                 solicitudhorasextra.FechaSolicitud = DateTime.Now;
+                solicitudhorasextra.Estado = 0;
                 var HorasExtra = new SolicitudHorasExtras
                 {
                     Fecha = solicitudhorasextra.Fecha,

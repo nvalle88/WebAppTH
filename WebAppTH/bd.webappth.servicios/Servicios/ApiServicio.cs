@@ -263,7 +263,7 @@ namespace bd.webappth.servicios.Servicios
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var uri = string.Format("{0}{1}", baseAddress, url);
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
                     var respuesta = await client.GetAsync(new Uri(uri));
                     var resultado = await respuesta.Content.ReadAsStringAsync();
                     var response = JsonConvert.DeserializeObject<List<T>>(resultado);
