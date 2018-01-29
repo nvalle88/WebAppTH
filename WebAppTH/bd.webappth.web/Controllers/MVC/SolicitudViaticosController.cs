@@ -81,6 +81,8 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["FechaSolicitud"] = DateTime.Now;
             //ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
             ViewData["IdPais"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "/api/Pais/ListarPais"), "IdPais", "Nombre");
+            ViewData["IdProvincia"] = new SelectList(await apiServicio.Listar<Provincia>(new Uri(WebApp.BaseAddress), "/api/Provincia/ListarProvincia"), "IdProvincia", "Nombre");
+            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "/api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
             ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "/api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
 
 
@@ -200,7 +202,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Listando Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -278,7 +280,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando Solicitud Viático",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP WebAppTh"
@@ -303,15 +305,24 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         await CargarCombos();
 
-                        var lista = new List<TipoViatico>();
-                        lista = await apiServicio.Listar<TipoViatico>(new Uri(WebApp.BaseAddress)
+                        var listaTiposViaticos = new List<TipoViatico>();
+                        var listaSolicitudTiposViaticos = new List<SolicitudTipoViatico>();
+                        listaTiposViaticos = await apiServicio.Listar<TipoViatico>(new Uri(WebApp.BaseAddress)
                                                                                , "/api/TiposDeViatico/ListarTiposDeViatico");
+                        var solicitudTipoViatico = new SolicitudTipoViatico
+                        {
+                            IdSolicitudViatico = Convert.ToInt32(id)
+                        };
+
+                        listaSolicitudTiposViaticos = await apiServicio.ObtenerElementoAsync1<List<SolicitudTipoViatico>>(solicitudTipoViatico,new Uri(WebApp.BaseAddress)
+                                                                              , "/api/TiposDeViatico/ListarSolicitudesTiposViaticos");
 
                         var SolicitudViaticoViewModel = new SolicitudViaticoViewModel
                         {
                             SolicitudViatico = solicitudViatico,
-                            ListaTipoViatico = lista
-                            
+                            ListaTipoViatico = listaTiposViaticos,
+                            SolicitudTipoViatico = listaSolicitudTiposViaticos
+
                         };
 
                         return View(SolicitudViaticoViewModel);
@@ -418,7 +429,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Editando un solicitud viático",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -465,7 +476,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Editando un solicitud viático",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -502,7 +513,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Listando estados civiles",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -539,7 +550,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Eliminar Solicitud Viático",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"

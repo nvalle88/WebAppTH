@@ -118,7 +118,13 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-       
+        private async Task CargarCombosDistributivo()
+        {
+          
+            ViewData["IdRegimenLaboral"] = new SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
+            ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");          
+        }
+
 
 
 
@@ -205,16 +211,23 @@ namespace bd.webappth.web.Controllers.MVC
                 return Json(new { result = "Redireccionar", url = Url.Action("Index", "Empleados") });
 
         }
-
-
        
-
         public async Task<IActionResult> Create()
         {
 
             ObtenerInstancia.Instance = null;
 
             await CargarCombos();
+
+            return View();
+        }
+
+        public async Task<IActionResult> AgregarDistributivo()
+        {
+
+            ObtenerInstancia.Instance = null;
+
+            await CargarCombosDistributivo();
 
             return View();
         }
@@ -1155,6 +1168,8 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+
 
 
 
