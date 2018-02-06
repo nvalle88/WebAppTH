@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace bd.webappth.entidades.Utils
+namespace bd.webappth.entidades.Utils.Seguridad
 {
     public class PermisoUsuario
     {

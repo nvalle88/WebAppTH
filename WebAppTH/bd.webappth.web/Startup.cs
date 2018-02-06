@@ -65,8 +65,12 @@ namespace bd.webappth.web
             );
 
             services.AddSingleton<IApiServicio, ApiServicio>();
-            services.AddScoped<IUploadFileService, UploadFileService>();
+            services.AddSingleton<IMenuServicio, MenuServicio>();
+
+            services.AddSingleton<IAuthorizationHandler, RolesHandler>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUploadFileService, UploadFileService>();
+
 
             services.AddAuthorization(options =>
             {
@@ -74,24 +78,6 @@ namespace bd.webappth.web
                                   policy => policy.Requirements.Add(new RolesRequirement()));
             });
 
-            services.AddSingleton<IAuthorizationHandler, RolesHandler>();
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
-
-            var ServicioSeguridad = Configuration.GetSection("ServicioSeguridad").Value;
-            var ServiciosLog = Configuration.GetSection("ServiciosLog").Value;
-            var ServicioTalentoHumano = Configuration.GetSection("ServiciosTalentoHumano").Value;
-            var ServiciosRecursosMateriales = Configuration.GetSection("ServiciosRecursosMateriales").Value;
-
-            ConfiguracionCorreo.servicioSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
-            ConfiguracionCorreo.NombreEmisor = Configuration.GetSection("NombreEmisor").Value;
-            ConfiguracionCorreo.DeEmail = Configuration.GetSection("DeEmail").Value;
-            ConfiguracionCorreo.NombreReceptor = Configuration.GetSection("NombreReceptor").Value;
-            ConfiguracionCorreo.HostUri = Configuration.GetSection("HostUri").Value;
-            ConfiguracionCorreo.PuertoPrimario = Convert.ToInt32(Configuration.GetSection("PuertoPrimario").Value);
-            ConfiguracionCorreo.NombreUsuario = Configuration.GetSection("NombreUsuario").Value;
-            ConfiguracionCorreo.Contrasenia = Configuration.GetSection("Contrasenia").Value;
-            ConfiguracionCorreo.SecureSocketOptions = Convert.ToInt32(Configuration.GetSection("SecureSocketOptions").Value);
 
             WebApp.BaseAddressWebAppLogin = Configuration.GetSection("HostWebAppLogin").Value;
             WebApp.NombreAplicacion = Configuration.GetSection("NombreAplicacion").Value;
@@ -111,9 +97,6 @@ namespace bd.webappth.web
            
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-#pragma warning disable CS0612 // El tipo o el miembro están obsoletos
-            app.UseApplicationInsightsRequestTelemetry();
-#pragma warning restore CS0612 // El tipo o el miembro están obsoletos
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -127,10 +110,6 @@ namespace bd.webappth.web
             loggerFactory.AddSerilog(logger);
             Log.Logger = logger;
             loggerFactory.AddSerilog();
-
-           
-
-
 
             if (env.IsDevelopment())
             {

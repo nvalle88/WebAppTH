@@ -11,7 +11,7 @@ using bd.log.guardar.ObjectTranfer;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Security.Claims;
-using bd.webappth.entidades.Utils.Negocio;
+using bd.webappth.entidades.Utils.Seguridad;
 
 namespace bd.webappth.servicios.Servicios
 {
@@ -178,7 +178,7 @@ namespace bd.webappth.servicios.Servicios
                     return respuesta;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -314,7 +314,7 @@ namespace bd.webappth.servicios.Servicios
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -335,7 +335,7 @@ namespace bd.webappth.servicios.Servicios
                 }
             }
 
-                catch (Exception ex)
+                catch (Exception )
             {
                 return new List<T>();
             }
