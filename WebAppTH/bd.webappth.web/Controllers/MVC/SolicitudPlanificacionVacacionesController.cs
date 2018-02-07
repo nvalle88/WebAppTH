@@ -70,9 +70,16 @@ namespace bd.webappth.web.Controllers.MVC
                     //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.ObtenerElementoAsync1<BrigadaSSO>(solicitudPlanificacionVacaciones, new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                     if (respuesta.IsSuccess)
                     {
+                        var empleadoEnviar = new Empleado
+                        {
+                            IdEmpleado = a.IdEmpleado,
+                        };
+                        var empleado = await apiServicio.ObtenerElementoAsync1<EmpleadoSolicitudViewModel>(empleadoEnviar, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDatosEmpleadoSeleccionado");
                         ViewData["FechaDesde"] = a.FechaDesde;
                         ViewData["FechaHasta"] = a.FechaHasta;
                         ViewData["FechaSolicitud"] = a.FechaSolicitud;
+                        ViewData["NombresApellidos"] = empleado.NombreApellido;
+                        ViewData["Identificacion"] = empleado.Identificacion;
                         return View(a);
                     }
 
@@ -221,7 +228,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Creando Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP WebAppTh"
@@ -279,7 +286,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Listando Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -309,7 +316,7 @@ namespace bd.webappth.web.Controllers.MVC
         //        {
         //            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
         //            Message = "Listando Solicitud Planificación Vacaciones",
-        //            ExceptionTrace = ex,
+        //            ExceptionTrace = ex.Message,
         //            LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
         //            LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
         //            UserName = "Usuario APP webappth"
@@ -359,7 +366,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Editando un Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -407,7 +414,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Editando un Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -455,7 +462,7 @@ namespace bd.webappth.web.Controllers.MVC
         //        {
         //            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
         //            Message = "Editando un Solicitud Planificación Vacaciones",
-        //            ExceptionTrace = ex,
+        //            ExceptionTrace = ex.Message,
         //            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
         //            LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
         //            UserName = "Usuario APP webappth"
@@ -492,7 +499,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Listando Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
@@ -529,7 +536,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Eliminar Solicitud de Planificación Vacaciones",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"

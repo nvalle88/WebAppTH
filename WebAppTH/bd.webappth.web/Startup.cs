@@ -1,4 +1,5 @@
-﻿using bd.webappth.entidades.Utils;
+﻿using bd.log.guardar.Inicializar;
+using bd.webappth.entidades.Utils;
 using bd.webappth.servicios.Interfaces;
 using bd.webappth.servicios.Servicios;
 using bd.webappth.web.Models;
@@ -7,6 +8,7 @@ using EnviarCorreo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -38,15 +40,37 @@ namespace bd.webappth.web
         // This method gets called by the runtime. Use this method to add services to the container.
         public async void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(
-         
-            );
+           
+
+
 
             var appSettings = Configuration.GetSection("AppSettings");
 
+
+            services.AddMvc();
+            services.AddDataProtection()
+           .UseCryptographicAlgorithms(
+           new AuthenticatedEncryptionSettings()
+           {
+               EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+               ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+           });
+
+            services.AddDataProtection()
+            .SetDefaultKeyLifetime
+            (TimeSpan.FromDays
+             (Convert.ToInt32
+              (Configuration.GetSection("DiasValidosClaveEncriptada").Value)
+             )
+            );
+
             services.AddSingleton<IApiServicio, ApiServicio>();
-            services.AddScoped<IUploadFileService, UploadFileService>();
+            services.AddSingleton<IMenuServicio, MenuServicio>();
+
+            services.AddSingleton<IAuthorizationHandler, RolesHandler>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUploadFileService, UploadFileService>();
+
 
             services.AddAuthorization(options =>
             {
@@ -54,32 +78,14 @@ namespace bd.webappth.web
                                   policy => policy.Requirements.Add(new RolesRequirement()));
             });
 
-            services.AddSingleton<IAuthorizationHandler, RolesHandler>();
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
 
-            var ServicioSeguridad = Configuration.GetSection("ServicioSeguridad").Value;
-            var ServiciosLog = Configuration.GetSection("ServiciosLog").Value;
-            var ServicioTalentoHumano = Configuration.GetSection("ServiciosTalentoHumano").Value;
-            var ServiciosRecursosMateriales = Configuration.GetSection("ServiciosRecursosMateriales").Value;
-
-            ConfiguracionCorreo.servicioSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
-            ConfiguracionCorreo.NombreEmisor = Configuration.GetSection("NombreEmisor").Value;
-            ConfiguracionCorreo.DeEmail = Configuration.GetSection("DeEmail").Value;
-            ConfiguracionCorreo.NombreReceptor = Configuration.GetSection("NombreReceptor").Value;
-            ConfiguracionCorreo.HostUri = Configuration.GetSection("HostUri").Value;
-            ConfiguracionCorreo.PuertoPrimario = Convert.ToInt32(Configuration.GetSection("PuertoPrimario").Value);
-            ConfiguracionCorreo.NombreUsuario = Configuration.GetSection("NombreUsuario").Value;
-            ConfiguracionCorreo.Contrasenia = Configuration.GetSection("Contrasenia").Value;
-            ConfiguracionCorreo.SecureSocketOptions = Convert.ToInt32(Configuration.GetSection("SecureSocketOptions").Value);
-
-            var HostSeguridad = Configuration.GetSection("HostServicioSeguridad").Value;
             WebApp.BaseAddressWebAppLogin = Configuration.GetSection("HostWebAppLogin").Value;
+            WebApp.NombreAplicacion = Configuration.GetSection("NombreAplicacion").Value;
 
-            await InicializarWebApp.InicializarWeb(ServicioTalentoHumano, new Uri(HostSeguridad));
-            await InicializarWebApp.InicializarSeguridad(ServicioSeguridad, new Uri(HostSeguridad));
-            await InicializarWebApp.InicializarWebRecursosMateriales(ServiciosRecursosMateriales, new Uri(HostSeguridad));
-            await InicializarWebApp.InicializarLogEntry(ServiciosLog, new Uri(HostSeguridad));
+            WebApp.BaseAddress = Configuration.GetSection("HostServiciosTalentoHumano").Value;
+            WebApp.BaseAddressSeguridad= Configuration.GetSection("HostServicioSeguridad").Value;
+            WebApp.BaseAddressRM= Configuration.GetSection("HostServiciosRecursosMateriales").Value;
+            AppGuardarLog.BaseAddress= Configuration.GetSection("HostServicioLog").Value;
 
         }
 
@@ -91,9 +97,6 @@ namespace bd.webappth.web
            
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-#pragma warning disable CS0612 // El tipo o el miembro están obsoletos
-            app.UseApplicationInsightsRequestTelemetry();
-#pragma warning restore CS0612 // El tipo o el miembro están obsoletos
 
             var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -107,10 +110,6 @@ namespace bd.webappth.web
             loggerFactory.AddSerilog(logger);
             Log.Logger = logger;
             loggerFactory.AddSerilog();
-
-           
-
-
 
             if (env.IsDevelopment())
             {

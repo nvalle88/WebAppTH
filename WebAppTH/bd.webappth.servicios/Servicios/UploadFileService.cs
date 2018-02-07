@@ -31,7 +31,7 @@ namespace bd.webappth.servicios.Servicios
             try
             {
                 var stream = new MemoryStream(file);
-                var a = string.Format("{0}/{1}.{2}", folder, fileName, extension);
+                var a = string.Format("{0}/{1}{2}", folder, fileName, extension);
                 var targetDirectory = Path.Combine(_hostingEnvironment.WebRootPath,a );
 
                 using (var fileStream = new FileStream(targetDirectory, FileMode.Create, FileAccess.Write))
@@ -53,7 +53,7 @@ namespace bd.webappth.servicios.Servicios
         {
             try
             {
-                var a = string.Format("{0}/{1}.{2}", folder, fileName, extension);
+                var a = string.Format("{0}/{1}{2}", folder, fileName, extension);
                 var targetDirectory = Path.Combine(_hostingEnvironment.WebRootPath, a);
                 if (System.IO.File.Exists(targetDirectory))
                     {
@@ -69,7 +69,7 @@ namespace bd.webappth.servicios.Servicios
 
         public NoticiaTransfer GetFile(string folder, string fileName, string extension)
         {
-            var a = string.Format("{0}/{1}.{2}", folder, fileName, extension);
+            var a = string.Format("{0}/{1}{2}", folder, fileName, extension);
             var targetDirectory = Path.Combine(_hostingEnvironment.WebRootPath, a);
 
             var file = new FileStream(targetDirectory, FileMode.Open);

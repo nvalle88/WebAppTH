@@ -1,0 +1,227 @@
+@model bd.webappth.entidades.Negocio.Sucursal
+
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/js/site.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+
+@{
+    ViewData["Title"] = "EstadosCiviles";
+}
+
+
+			<!-- MAIN CONTENT -->
+<div id="content">
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+               
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Seleccione la dependencia del empleado</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                           
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                          
+                            <form  id="checkout-form"  class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                                <label>Ciudad:</label>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                        <select id="ciudad" class="form-control input " asp-items="ViewBag.IdCiudad">
+                                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                                        </select>
+                                                    </div>
+                                                </div>                                 
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Sucursal:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                    <select id="sucursal" class="form-control input " >
+                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Dependencia:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                    <select id="dependencia" class="form-control input ">
+                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        </div>
+                                    <span class="text-danger">@ViewData["Error"]</span>
+                                </fieldset>                     
+                                <footer>    
+                                    <input type="submit" id="CargarLista"  value="Listar Empleados" class="btn btn-primary" />
+                                    @*<a asp-action="Index"  class="btn btn-default">Cancelar</a>*@
+                                </footer>
+                            </form>
+                            <div id="dvlistaempleados"></div>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+       
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+   
+</div>
+<!-- END MAIN CONTENT -->
+
+@section Scripts {
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+           $("#ciudad").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#sucursal").empty();
+            $("#dependencia").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarSucursalesPorCiudad")',
+                    dataType: 'json',
+                    data: { idciudad: $("#ciudad").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#sucursal").append('<option value="'
+                                + data.idSucursal + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+                   $("#sucursal").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#dependencia").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarDependenciasporSucursal")',
+                    dataType: 'json',
+                    data: { idsucursal: $("#sucursal").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#dependencia").append('<option value="'
+                                + data.idDependencia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+    });
+
+
+
+                   $("#CargarLista").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListarEmpleadosparaCesacion", "CeseFunciones")',
+                dataType: 'json',
+                data: {
+                        idDependencia: $("#dependencia").val(),
+                },
+                success: function (d) {
+                    if (d.result == 'Redireccionar')
+                        window.location = d.url;
+                    else {
+                        alert(d);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('Error!!');
+                }
+                });
+                   })
+
+
+                   //// Evento que envía una petición Ajax al servidor
+                   //$('#GuardarForm').click(function (e) {
+                   //    $.ajax({
+                   //        type: "POST",
+                   //        url: "/Empleados/NuevoEmpleado",
+                   //        content: "application/json; charset=utf-8",
+                   //        dataType: "json",
+                   //        // De la siguiente manera indicamos que del div tome los input.
+                   //        data: $('#wizard-1').serialize(),
+                   //        success: function (d) {
+                   //            if (d.result == 'Redireccionar')
+                   //                window.location = d.url;
+                   //            else {
+                   //                alert(d);
+                   //            }
+                   //        },
+                   //        error: function (xhr, textStatus, errorThrown) {
+                   //            alert('Error!!');
+                   //        }
+                   //    });
+                   //});
+
+
+ </script>
+
+
+
+
+}

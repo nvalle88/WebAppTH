@@ -12,14 +12,13 @@ namespace bd.webappth.entidades.Negocio
 
         public DateTime FechaIngreso { get; set; }
 
-        public DateTime? FechaIngresoSectorPublico { get; set; }
+        public DateTime FechaIngresoSectorPublico { get; set; }
 
         public bool TrabajoSuperintendenciaBanco { get; set; }
 
 
         public bool FondosReservas { get; set; }
 
-        public bool Nepotismo { get; set; }
 
         public bool DeclaracionJurada { get; set; }
 
@@ -29,17 +28,16 @@ namespace bd.webappth.entidades.Negocio
 
         public int DiasImposiciones { get; set; }
 
-
-        public bool Activo { get; set; }
-
         public string NombreUsuario { get; set; }
         public bool EsJefe { get; set; }
+        public bool Activo { get; set; }
+
         //Propiedades Virtuales Referencias a otras clases
 
         public int IdPersona { get; set; }
         public virtual Persona Persona { get; set; }
 
-        
+
         public int IdCiudadLugarNacimiento { get; set; }
         public virtual Ciudad CiudadNacimiento { get; set; }
 
@@ -48,6 +46,9 @@ namespace bd.webappth.entidades.Negocio
 
         public int IdDependencia { get; set; }
         public virtual Dependencia Dependencia { get; set; }
+
+
+
 
         public virtual ICollection<RolPagos> RolPagos { get; set; }
 
@@ -69,7 +70,7 @@ namespace bd.webappth.entidades.Negocio
 
         public virtual ICollection<DeclaracionPatrimonioPersonal> DeclaracionPatrimonioPersonal { get; set; }
 
-       
+
 
         public virtual ICollection<DocumentosParentescodos> DocumentosParentescodos { get; set; }
 
@@ -83,11 +84,11 @@ namespace bd.webappth.entidades.Negocio
 
         public virtual ICollection<SolicitudViatico> SolicitudViatico { get; set; }
 
-       
+
 
         public virtual ICollection<EmpleadoImpuestoRenta> EmpleadoImpuestoRenta { get; set; }
 
-       
+
 
         public virtual ICollection<SolicitudCertificadoPersonal> SolicitudCertificadoPersonal { get; set; }
 
@@ -103,14 +104,14 @@ namespace bd.webappth.entidades.Negocio
 
         public virtual ICollection<SolicitudLiquidacionHaberes> SolicitudLiquidacionHaberes { get; set; }
 
-       
+
         //public virtual ICollection<TransferenciaActivoFijo> TransferenciaActivoFijo1 { get; set; }
 
         //public virtual ICollection<TransferenciaActivoFijo> TransferenciaActivoFijo2 { get; set; }
 
-        public virtual ICollection<EmpleadoNepotismo> EmpleadoNepotismo { get; set; }
+        public virtual ICollection<EmpleadoNepotismo> EmpleadoNepotismoEmpleado { get; set; }
 
-        //public virtual ICollection<EmpleadoNepotismo> EmpleadoNepotismo1 { get; set; }
+        public virtual ICollection<EmpleadoNepotismo> EmpleadoNepotismoFamiliar { get; set; }
 
         public virtual ICollection<IndiceOcupacionalModalidadPartida> IndiceOcupacionalModalidadPartida { get; set; }
 
@@ -164,11 +165,22 @@ namespace bd.webappth.entidades.Negocio
 
         public virtual ICollection<Provisiones> Provisiones { get; set; }
 
-       // public virtual ICollection<PlanificacionHE> PlanificacionHE1 { get; set; }
+        // public virtual ICollection<PlanificacionHE> PlanificacionHE1 { get; set; }
+
+
+
+
+
 
         public virtual ICollection<Liquidacion> Liquidacion { get; set; }
 
         public virtual ICollection<Eval001> Eval001 { get; set; }
+
+        public virtual ICollection<CeseFuncion> CeseFuncion { get; set; }
+
+        public virtual ICollection<Induccion> Induccion { get; set; }
+
+        public virtual ICollection<DocumentosIngresoEmpleado> DocumentosIngresoEmpleado { get; set; }
 
 
     }

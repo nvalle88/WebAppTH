@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="bd.log.guardar" Version="1.0.8" />
-    <PackageReference Include="EnviarCorreo" Version="1.1.1" />
+    <PackageReference Include="bd.log.guardar" Version="1.1.1" />
+    <PackageReference Include="EnviarCorreo" Version="1.1.8" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
   </ItemGroup>
 

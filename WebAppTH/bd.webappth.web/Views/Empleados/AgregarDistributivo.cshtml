@@ -1,0 +1,489 @@
+@model bd.webappth.entidades.ViewModels.EmpleadoViewModel
+
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/js/site.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+
+<div id="content">
+    <div class="row">
+    </div>
+    <section id="widget-grid" class="">
+
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-check"></i> </span>
+                        <h2>Crear Empleado </h2>
+
+                    </header>
+
+
+                    <div>
+
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body">
+                            <div class="row">
+
+                                <form id="wizard-1" asp-action="Create" novalidate="novalidate">
+                                    <div id="bootstrap-wizard-1" class="col-sm-12">
+                                        @*<div class="form-bootstrapWizard">
+                                            <ul class="bootstrapWizard form-wizard">
+                                                <li class="active" data-target="#step1">
+                                                    <a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Datos Personales</span> </a>
+                                                </li>
+                                                <li data-target="#step2">
+                                                    <a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Informaci&oacute;n Familiar</span> </a>
+                                                </li>
+                                                <li data-target="#step3">
+                                                    <a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Formaci&oacute;n Acad&eacute;mica y Trayectora Laboral</span> </a>
+                                                </li>
+                                                <li data-target="#step4">
+                                                    <a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Discapacidades</span> </a>
+                                                </li>
+
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>*@
+                                        <div class="tab-content">
+                                            <div id="camposEmpleado">
+                                                <div class="tab-pane active" id="tab1">
+                                                    <br>
+                                                    <div class="row">
+                                                        <article class="col-lg-12">
+                                                            <legend>Tipo de Nombramiento</legend>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <label>R&eacute;gimen Laboral:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                            <select id="IdRegimenLaboral" class="form-control input " asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <label>Relaci&oacute;n Laboral:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                            <select id="IdRelacionLaboral" class="form-control input " asp-items="ViewBag.IdRelacionLaboral" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <option value="0" selected="" disabled=""></option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <label>Tipo de Nombramiento:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                            <select id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control input ">
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <label>Modalidad de la Partida:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                            <select id="IdModalidadPartida" asp-for="IndiceOcupacionalModalidadPartida.IdModalidadPartida" class="form-control input ">
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <label>Fondo de Financimiento:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                            <select asp-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdFondoFinanciamiento">
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group">
+                                                                        <label>Salario Real:</label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                                            <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="Numero de la Cuenta" onKeyPress="return checkIt(event)">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group">
+                                                                        <label>Fecha:</label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                            <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <label>Dependencia:</label>
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                                            <select asp-for="Empleado.IdDependencia" class="form-control input " asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </article>                                               
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </form>
+                            </div>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+        </div>
+        <br />
+        <input type="submit" id="GuardarForm" value="Guardar" class="btn btn-primary" />
+        <br />
+
+    </section>
+</div>
+
+@section Scripts {
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+    <script type="text/javascript">
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function () {
+
+            //Bootstrap Wizard Validations
+
+            var $validator = $("#wizard-1").validate({
+
+                rules: {
+                    IdTipoIdentificacion: {
+                        required: true
+                    },
+                    Identificacion: {
+                        required: true
+                    },
+                    Nombres: {
+                        required: true
+                    },
+                    Apellidos: {
+                        required: true
+                    },
+                    FechaNacimiento: {
+                        required: true
+                    },
+                    Parentesco: {
+                        required: true
+                    },
+                    IdRelacionLaboral: {
+                        required: true
+                    },
+                    paisLugarNacimiento: {
+                        required: true
+                    },
+                    paisLugarSufragio: {
+                        required: true
+                    },
+                    paisLugarPersona: {
+                        required: true
+                    },
+                    provinciaLugarPersona: {
+                        required: true
+                    },
+                    idciudadLugarPersona: {
+                          required: true
+                      }
+                },
+
+                messages: {
+                    IdTipoIdentificacion: "El campo es requerido",
+                    Identificacion: "El campo es requerido",
+                    Nombres: "El campo es requerido",
+                    Apellidos: "El campo es requerido",
+                    Nombres: "El campo es requerido",
+                    FechaNacimiento: "El campo es requerido",
+                    Parentesco: "El campo es requerido",
+                    IdRelacionLaboral: "El campo es requerido",
+                    paisLugarNacimiento: "El campo es requerido",
+                    paisLugarSufragio: "El campo es requerido",
+                    paisLugarPersona: "El campo es requerido",
+                    provinciaLugarPersona: "El campo es requerido",
+                    idciudadLugarPersona: "El campo es requerido",
+                    email: {
+                        required: "We need your email address to contact you",
+                        email: "Your email address must be in the format of name@domain.com"
+                    }
+                },
+
+                submitHandler: function (form) {
+
+                    $.ajax({
+                         url: '@Url.Action("Create")',
+                         type: "POST",
+                         data: $(form).serialize(),
+                         //data: JSON.stringify({ model }),
+                         dataType: 'json',
+                         //contentType: 'application/json',
+                         success: function (data) {
+                                // Inserting html into the result div on success
+                                $('#results').html(data);
+                            },
+                            error: function (jqXHR, text, error) {
+                                // Displaying if there are any errors
+                                $('#result').html(error);
+                            }
+                        });
+                        return false;
+            },
+
+
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function (error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+
+
+            $('#bootstrap-wizard-1').bootstrapWizard({
+                'tabClass': 'form-wizard',
+                'onNext': function (tab, navigation, index) {
+                    var $valid = $("#wizard-1").valid();
+                    if (!$valid) {
+                        $validator.focusInvalid();
+                        return false;
+                    } else {
+                        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                            'complete');
+                        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                            .html('<i class="fa fa-check"></i>');
+                    }
+                }
+            });
+
+
+            // fuelux wizard
+            var wizard = $('.wizard').wizard();
+
+            wizard.on('finished', function (e, data) {
+                //$("#fuelux-wizard").submit();
+                //console.log("submitted!");
+                $.smallBox({
+                    title: "Congratulations! Your form was submitted",
+                    content: "<i class='fa fa-clock-o'></i> <i>1 seconds ago...</i>",
+                    color: "#5F895F",
+                    iconSmall: "fa fa-check bounce animated",
+                    timeout: 4000
+                });
+
+            });
+
+
+        })
+
+    </script>
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $("#IdRegimenLaboral").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdRelacionLaboral").empty();
+            $("#IdModalidadPartida").empty();
+            $("#IdTipoNombramiento").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarRelacionesLaboralesPorRegimen")',
+                    dataType: 'json',
+                    data: { regimen: $("#IdRegimenLaboral").val() },
+                    success: function (data) {
+                        $("#IdRelacionLaboral").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+
+                            $("#IdRelacionLaboral").append('<option value="'
+                                + data.idRelacionLaboral + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
+
+
+        $("#IdRelacionLaboral").change(function () {
+            mostrarLoadingPanel("content","Cargando modalidad de partidas...")
+            $("#IdModalidadPartida").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarModalidadPartidaRelacion")',
+                    dataType: 'json',
+                    data: { relacion: $("#IdRelacionLaboral").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#IdModalidadPartida").append('<option value="'
+                                + data.idModalidadPartida + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
+
+        $("#IdRelacionLaboral").change(function () {
+            mostrarLoadingPanel("content","Cargando tipos de nombramiento...")
+            $("#IdTipoNombramiento").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarTipoNombramientoRelacion")',
+                    dataType: 'json',
+                    data: { relacion: $("#IdRelacionLaboral").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#IdTipoNombramiento").append('<option value="'
+                                + data.idTipoNombramiento + '">'
+                                + data.nombre + '</option>');
+
+                        })
+                            ;
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
+
+
+        });
+
+
+       // Evento que envía una petición Ajax al servidor
+        $('#GuardarForm').click(function(e) {
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("NuevoEmpleado")',
+        content: "application/json; charset=utf-8",
+        dataType: "json",
+        // De la siguiente manera indicamos que del div tome los input.
+        data: $('#wizard-1').serialize(),
+        success: function(d) {
+            if (d.result == 'Redireccionar')
+                window.location = d.url;
+            else {
+                alert(d);
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+              alert('Error!!');
+        }
+    });
+});
+
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        function checkIt(evt) {
+            evt = (evt) ? evt : window.event
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                status = "This field accepts numbers only."
+                return false
+            }
+            status = ""
+            return true
+        }
+        function NumCheck(e, field) {
+            key = e.keyCode ? e.keyCode : e.which
+            // backspace
+            if (key == 8) return true
+            // 0-9
+            if (key > 47 && key < 58) {
+                if (field.value == "") return true
+                regexp = /.[0-9]{10}$/
+                return !(regexp.test(field.value))
+            }
+            // .
+            if (key == 44) {
+                if (field.value == "") return false
+                regexp = /^[0-9]+$/
+                return regexp.test(field.values)
+            }
+            // other key
+            return false
+
+        }
+
+        function handleChange(input) {
+            if (input.value < 0) input.value = 0;
+            if (input.value > 100) input.value = 100;
+        }
+
+    </script>
+
+
+
+
+
+}
+

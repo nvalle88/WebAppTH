@@ -1,0 +1,267 @@
+@model bd.webappth.entidades.ViewModels.ViewModelDeclaracionPatrimonioPersonal
+
+@{
+    ViewData["Title"] = "ViewModelDeclaracionPatrimonioPersonal";
+}
+
+
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Declaraci&oacute;n Patrimonio Personal</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="Create" asp-controller="DeclaracionPatrimonioPersonal" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <fieldset>                                                         
+                                <legend>Declaraci&oacute;n de Patrimonio Personal</legend>    
+                                                <div class="row">
+                                                    <section class="col col-4">
+                                                        <label>Fecha de declaraci&oacute;n:</label>
+                                                        <label class="input">
+                                                            <i class="icon-append fa fa-calendar"></i>
+                                                            <input asp-for="DeclaracionPatrimonioPersonal.FechaDeclaracion" value="" type="text" class="datepicker"  data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                            <span asp-validation-for="DeclaracionPatrimonioPersonal.FechaDeclaracion" class="text-danger"></span>
+
+                                                        </label>
+                                                    </section>   
+                                                    <section class="col col-4">
+                                                        <label>Total de bienes inmuebles:</label>
+                                                        <label class="input">
+                                                            <i class="icon-prepend fa fa-user"></i>
+                                                            <input maxlength="32" asp-for="DeclaracionPatrimonioPersonal.TotalBienInmueble" class="form-control montoPatrimonio" onkeypress="return NumCheck(event, this)"  onkeyup="sumarPatrimonio();"  />
+                                                            <span asp-validation-for="DeclaracionPatrimonioPersonal.TotalBienInmueble" class="text-danger"></span>
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-4">
+                                                        <label>Total de bienes muebles:</label>
+                                                        <label class="input">
+                                                            <i class="icon-prepend fa fa-user"></i>
+                                                            <input maxlength="32" asp-for="DeclaracionPatrimonioPersonal.TotalBienMueble" class="form-control montoPatrimonio" onkeypress="return NumCheck(event, this)" onkeyup="sumarPatrimonio();"  />
+                                                            <span asp-validation-for="DeclaracionPatrimonioPersonal.TotalBienMueble" class="text-danger"></span>
+                                                        </label>
+                                                    </section>
+                                              </div>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label>Total de efectivo:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="32" asp-for="DeclaracionPatrimonioPersonal.TotalEfectivo" class="form-control montoPatrimonio" onkeyup="sumarPatrimonio();" onkeypress="return NumCheck(event, this)"   />
+                                                <span asp-validation-for="DeclaracionPatrimonioPersonal.TotalEfectivo" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Total de pasivos:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="32" asp-for="DeclaracionPatrimonioPersonal.TotalPasivo" class="form-control" onkeypress="return NumCheck(event, this)"  />
+                                                <span asp-validation-for="DeclaracionPatrimonioPersonal.TotalPasivo" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Total de patrimonio:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="32" asp-for="DeclaracionPatrimonioPersonal.TotalPatrimonio" class="form-control" ReadOnly="readonly"  id="spTotalPatrimonio"  />
+                                                <span asp-validation-for="DeclaracionPatrimonioPersonal.TotalPatrimonio"  class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+                                       
+                                    <legend>Otros Ingresos</legend>
+                                    <br />
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label>Ingresos del C&oacute;nyuge:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="32" asp-for="OtroIngreso.IngresoConyuge" class="form-control" onkeypress="return NumCheck(event, this)"  />
+                                                <span asp-validation-for="OtroIngreso.IngresoConyuge" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Ingresos de arriendos:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="32" asp-for="OtroIngreso.IngresoArriendos" class="form-control montoOtrosIngresos" onkeypress="return NumCheck(event, this)" onkeyup="sumarOtrosIngresos();"   />
+                                                <span asp-validation-for="OtroIngreso.IngresoArriendos" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Ingresos de negocio particular:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="32" asp-for="OtroIngreso.IngresoNegocioParticular" class="form-control montoOtrosIngresos" onkeypress="return NumCheck(event, this)" onkeyup="sumarOtrosIngresos();"   />
+                                                <span asp-validation-for="OtroIngreso.IngresoNegocioParticular" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label>Ingresos de rentas financieras:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="32" asp-for="OtroIngreso.IngresoRentasFinancieras" class="form-control montoOtrosIngresos" onkeypress="return NumCheck(event, this)" onkeyup="sumarOtrosIngresos();"   />
+                                                <span asp-validation-for="OtroIngreso.IngresoRentasFinancieras" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Otros ingresos:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="32" asp-for="OtroIngreso.OtrosIngresos" class="form-control montoOtrosIngresos" onkeypress="return NumCheck(event, this)" onkeyup="sumarOtrosIngresos();"   />
+                                                <span asp-validation-for="OtroIngreso.OtrosIngresos" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Total de otros ingresos:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input maxlength="32" asp-for="OtroIngreso.Total" class="form-control" ReadOnly="readonly"  id="spTotalOtrosIngresos"  />
+                                                <span asp-validation-for="OtroIngreso.Total" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <section>
+                                        <label class="label"></label>
+                                        <label>Descripci&oacute;n de otros ingresos:</label>
+                                        <label class="textarea">
+                                            <i class="icon-append fa fa-comment"></i>
+                                            <textarea maxlength="50" asp-for="OtroIngreso.DescripcionOtros" rows="3"></textarea>
+                                            <span asp-validation-for="OtroIngreso.DescripcionOtros" class="text-danger"></span>
+                                        </label>
+                                    </section>
+                                    <span class="text-danger">@ViewData["Error"]</span>
+                                </fieldset>
+                                <footer>
+                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+<script src='~/js/site.js'></script>
+
+<script type="text/javascript">
+
+    function NumCheck(e, field) {
+        key = e.keyCode ? e.keyCode : e.which
+        // backspace
+        if (key == 8) return true
+        // 0-9
+        if (key > 47 && key < 58) {
+            if (field.value == "") return true
+            regexp = /[0-9]{7}$/
+            return !(regexp.test(field.value))
+        }
+        // .
+        if (key == 44) {
+            if (field.value == "") return false
+            regexp = /^[0-9]+$/
+            return regexp.test(field.value)
+        }
+        // other key
+        return false
+
+    }
+
+    function sumarPatrimonio() {
+
+        var total = 0;
+
+        $(".montoPatrimonio").each(function () {
+
+            if (isNaN(parseFloat($(this).val()))) {
+
+                total = parseFloat((total) + 0);
+
+            } else {
+
+                total = parseFloat(total) + parseFloat($(this).val().replace(",", "."));
+
+            }
+
+        });
+        total = total.toFixed(2).toString();
+        //alert(total);
+        document.getElementById('spTotalPatrimonio').value = total.replace(".", ",");
+
+    }
+
+    function sumarOtrosIngresos() {
+
+        var total = 0;
+
+        $(".montoOtrosIngresos").each(function () {
+
+            if (isNaN(parseFloat($(this).val()))) {
+
+                total = parseFloat((total) + 0);
+
+            } else {
+
+                total = parseFloat(total) + parseFloat($(this).val().replace(",", "."));
+
+            }
+
+        });
+        total = total.toFixed(2).toString();
+        //alert(total);
+        document.getElementById('spTotalOtrosIngresos').value = total.replace(".", ",");
+
+    }
+
+
+
+
+
+
+
+
+
+</script>
+}

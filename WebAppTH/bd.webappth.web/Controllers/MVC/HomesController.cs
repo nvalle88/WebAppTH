@@ -11,7 +11,8 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
-
+using Microsoft.AspNetCore.Authorization;
+using bd.webappth.entidades.Utils.Seguridad;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -23,9 +24,10 @@ namespace bd.webappth.web.Controllers.MVC
         public HomesController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
-
+           
         }
 
+        [Authorize(Policy = PoliticasSeguridad.TienePermiso)]
         public async Task<IActionResult> Index()
         {
 
@@ -42,7 +44,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
                     Message = "Listando noticias",
-                    ExceptionTrace = ex,
+                    ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"

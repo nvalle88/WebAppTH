@@ -6,11 +6,75 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using bd.webappth.servicios.Interfaces;
 using bd.webappth.entidades.Utils;
+using bd.log.guardar.Servicios;
+using bd.log.guardar.ObjectTranfer;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
+using System.Security.Claims;
+using bd.webappth.entidades.Utils.Seguridad;
 
 namespace bd.webappth.servicios.Servicios
 {
     public class ApiServicio : IApiServicio
     {
+
+        private async Task<bool> SalvarLog(LogEntryTranfer logEntryTranfer)
+        {
+            var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
+            if (responseLog.IsSuccess)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<Response> SalvarLog<T>(HttpContext context, EntradaLog model)
+        {
+            var NombreUsuario = "";
+            try
+            {
+                var claim = context.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                var menuRespuesta = await ObtenerElementoAsync1<log.guardar.Utiles.Response>(new ModuloAplicacion { Path = context.Request.Path, NombreAplicacion = WebApp.NombreAplicacion }, new Uri(WebApp.BaseAddress), "api/Adscmenus/GetMenuPadre");
+                var menu = JsonConvert.DeserializeObject<Adscmenu>(menuRespuesta.Resultado.ToString());
+
+                var Log = new LogEntryTranfer
+                {
+                    ApplicationName = WebApp.NombreAplicacion,
+                    EntityID = menu.AdmeAplicacion,
+                    ExceptionTrace = model.ExceptionTrace,
+                    LogCategoryParametre = model.LogCategoryParametre,
+                    LogLevelShortName = model.LogLevelShortName,
+                    Message = context.Request.Path,
+                    ObjectNext = model.ObjectNext,
+                    ObjectPrevious = model.ObjectPrevious,
+                    UserName = NombreUsuario,
+                };
+                var responseLog = await GuardarLogService.SaveLogEntry(Log);
+                return new Response { IsSuccess = responseLog.IsSuccess };
+            }
+            catch (Exception ex)
+            {
+                var Log = new LogEntryTranfer
+                {
+                    ApplicationName = WebApp.NombreAplicacion,
+                    EntityID = Mensaje.NoExisteModulo,
+                    ExceptionTrace = ex.Message,
+                    LogCategoryParametre = model.LogCategoryParametre,
+                    LogLevelShortName = model.LogLevelShortName,
+                    Message = context.Request.Path,
+                    ObjectNext = model.ObjectNext,
+                    ObjectPrevious = model.ObjectPrevious,
+                    UserName = NombreUsuario,
+                };
+                var resultado = await SalvarLog(Log);
+                return new Response { IsSuccess = resultado };
+            }
+
+        }
+
         public async Task<Response> InsertarAsync<T>(T model, Uri baseAddress, string url)
         {
             try
@@ -77,7 +141,7 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    var uri = string.Format("{0}/{1}", baseAddress, url);
+                    var uri = string.Format("{0}{1}", baseAddress, url);
 
                     var response = await client.PostAsync(new Uri(uri), content);
 
@@ -105,7 +169,7 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    var uri = string.Format("{0}/{1}", baseAddress, url);
+                    var uri = string.Format("{0}{1}", baseAddress, url);
 
                     var response = await client.PostAsync(new Uri(uri), content);
 
@@ -114,7 +178,7 @@ namespace bd.webappth.servicios.Servicios
                     return respuesta;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -250,7 +314,7 @@ namespace bd.webappth.servicios.Servicios
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -263,7 +327,7 @@ namespace bd.webappth.servicios.Servicios
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var uri = string.Format("{0}/{1}", baseAddress, url);
+                    var uri = string.Format("{0}{1}", baseAddress, url);
                     var respuesta = await client.GetAsync(new Uri(uri));
                     var resultado = await respuesta.Content.ReadAsStringAsync();
                     var response = JsonConvert.DeserializeObject<List<T>>(resultado);
@@ -271,7 +335,7 @@ namespace bd.webappth.servicios.Servicios
                 }
             }
 
-                catch (Exception ex)
+                catch (Exception )
             {
                 return new List<T>();
             }
