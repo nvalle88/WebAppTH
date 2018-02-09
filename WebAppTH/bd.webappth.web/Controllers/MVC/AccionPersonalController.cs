@@ -16,12 +16,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class AccionesPersonalController : Controller
+    public class AccionPersonalController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public AccionesPersonalController(IApiServicio apiServicio)
+        public AccionPersonalController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
         }

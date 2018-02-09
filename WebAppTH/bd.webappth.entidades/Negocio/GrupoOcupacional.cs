@@ -9,9 +9,9 @@ namespace bd.webappth.entidades.Negocio
         public int IdGrupoOcupacional { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Grupo ocupacional:")]
+        [Display(Name = "Tipo de Escala:")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
-        public string Nombre { get; set; }
+        public string TipoEscala { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
         public virtual ICollection<EscalaGrados> EscalaGrados { get; set; }

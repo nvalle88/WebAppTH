@@ -4,175 +4,227 @@
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <script src='~/js/site.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
+@*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
 
+<!-- MAIN CONTENT -->
 <div id="content">
-    <div class="row">
-    </div>
+
+    <!-- widget grid -->
     <section id="widget-grid" class="">
 
+        <!-- START ROW -->
         <div class="row">
+            <!-- NEW COL START -->
             <article class="col-sm-12 col-md-12 col-lg-12">
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
                     <header>
-                        <span class="widget-icon"> <i class="fa fa-check"></i> </span>
-                        <h2>Crear Empleado </h2>
-
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2> Agregar a Distributivo</h2>
                     </header>
-
-
+                    <!-- widget div-->
                     <div>
 
+                        <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
                         </div>
-                        <div class="widget-body">
-                            <div class="row">
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
 
-                                <form id="wizard-1" asp-action="Create" novalidate="novalidate">
-                                    <div id="bootstrap-wizard-1" class="col-sm-12">
-                                        @*<div class="form-bootstrapWizard">
-                                            <ul class="bootstrapWizard form-wizard">
-                                                <li class="active" data-target="#step1">
-                                                    <a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Datos Personales</span> </a>
-                                                </li>
-                                                <li data-target="#step2">
-                                                    <a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Informaci&oacute;n Familiar</span> </a>
-                                                </li>
-                                                <li data-target="#step3">
-                                                    <a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Formaci&oacute;n Acad&eacute;mica y Trayectora Laboral</span> </a>
-                                                </li>
-                                                <li data-target="#step4">
-                                                    <a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Discapacidades</span> </a>
-                                                </li>
-
-                                            </ul>
-                                            <div class="clearfix"></div>
-                                        </div>*@
-                                        <div class="tab-content">
-                                            <div id="camposEmpleado">
-                                                <div class="tab-pane active" id="tab1">
-                                                    <br>
-                                                    <div class="row">
-                                                        <article class="col-lg-12">
-                                                            <legend>Tipo de Nombramiento</legend>
-                                                            <div class="row">
-                                                                <div class="col-sm-3">
-                                                                    <label>R&eacute;gimen Laboral:</label>
-                                                                    <div class="form-group">
-                                                                        <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                            <select id="IdRegimenLaboral" class="form-control input " asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                <option value="0" selected="" disabled="">Seleccione</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-3">
-                                                                    <label>Relaci&oacute;n Laboral:</label>
-                                                                    <div class="form-group">
-                                                                        <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                            <select id="IdRelacionLaboral" class="form-control input " asp-items="ViewBag.IdRelacionLaboral" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                <option value="0" selected="" disabled=""></option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-3">
-                                                                    <label>Tipo de Nombramiento:</label>
-                                                                    <div class="form-group">
-                                                                        <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                            <select id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control input ">
-                                                                                <option value="0" selected="" disabled="">Seleccione</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-3">
-                                                                    <label>Modalidad de la Partida:</label>
-                                                                    <div class="form-group">
-                                                                        <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                            <select id="IdModalidadPartida" asp-for="IndiceOcupacionalModalidadPartida.IdModalidadPartida" class="form-control input ">
-                                                                                <option value="0" selected="" disabled="">Seleccione</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-sm-3">
-                                                                    <label>Fondo de Financimiento:</label>
-                                                                    <div class="form-group">
-                                                                        <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                            <select asp-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdFondoFinanciamiento">
-                                                                                <option value="0" selected="" disabled="">Seleccione</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-3">
-                                                                    <div class="form-group">
-                                                                        <label>Salario Real:</label>
-                                                                        <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                                            <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="Numero de la Cuenta" onKeyPress="return checkIt(event)">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-sm-3">
-                                                                    <div class="form-group">
-                                                                        <label>Fecha:</label>
-                                                                        <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                            <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-3">
-                                                                    <label>Dependencia:</label>
-                                                                    <div class="form-group">
-                                                                        <div class="input-group">
-                                                                            <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
-                                                                            <select asp-for="Empleado.IdDependencia" class="form-control input " asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                <option value="0" selected="" disabled="">Seleccione</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </article>                                               
-                                                    </div>
+                            <form asp-action="AgregarADistributivo" asp-controller="Empleados" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <article class="col-lg-12">
+                                    <legend>Tipo de Nombramiento</legend>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>R&eacute;gimen Laboral:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                    <select id="IdRegimenLaboral" class="form-control input " asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Relaci&oacute;n Laboral:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                    <select id="IdRelacionLaboral" class="form-control input " asp-items="ViewBag.IdRelacionLaboral" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                        <option value="0" selected="" disabled=""></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Tipo de Nombramiento:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                    <select id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control input "></select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>Ciudad:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                    <select id="ciudad" class="form-control input " asp-items="ViewBag.IdCiudad">
+                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Sucursal:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                    <select id="sucursal" asp-for="Dependencia.Sucursal.IdSucursal  " class="form-control input "></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+
+                                            <div class="form-group">
+                                                <label>Dependencia:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
+                                                    <input class="form-control input" type="text" id="dependencia" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            @*@Html.ActionLink("Dependencias", "CargarDependencias", "Empleados", new { idsucursal = Model.Dependencia.Sucursal.IdSucursal }, new { @class = "dialog-window" })*@
+                                            @*<a href="#" id="export">Dependencias</a>*@
 
 
+                                            @*<div class="widget-body">
+                                                <div class="tree smart-form">
+                                                    <ul>
+                                                        <li>
+                                                            <span><i class="fa fa-lg fa-folder-open"></i> @Model.Dependencia.Nombre</span>
+                                                            @{await Html.RenderPartialAsync("_PartialViewDependenciasHijos", Model.Dependencia);}
+                                                        </li>
+                                                    </ul>
+                                                </div>
 
-                                </form>
-                            </div>
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <label>Manual Puesto:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                    <select id="manualpuesto" asp-for="IndiceOcupacional.IdManualPuesto" class="form-control input "></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label>Rol Puesto:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                    <select id="rolpuesto" asp-for="IndiceOcupacional.IdRolPuesto" class="form-control input "></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label>Escala Grados:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                    <select id="escalagrados" asp-for="IndiceOcupacional.IdEscalaGrados" class="form-control input "></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label>Modalidad Partida:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                    <select id="modalidadpartida" asp-for="IndiceOcupacional.IdModalidadPartida" asp-items="ViewBag.IdModalidadPartida" class="form-control input "></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <label>Fondo de Financimiento:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
+                                                    <select asp-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdFondoFinanciamiento">
+                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>Salario Real:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                    <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="Numero de la Cuenta" onKeyPress="return checkIt(event)">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>Fecha:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                                <footer>
+                                <input type="submit" value="Guardar" class="btn btn-primary" />
+                                <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                </footer>
+                                       
+                            </form>
                         </div>
                         <!-- end widget content -->
                     </div>
                     <!-- end widget div -->
                 </div>
                 <!-- end widget -->
-            </article>
-        </div>
-        <br />
-        <input type="submit" id="GuardarForm" value="Guardar" class="btn btn-primary" />
-        <br />
 
+            </article>
+
+        </div>
+        <!-- END ROW -->
     </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
 </div>
+<!-- END MAIN CONTENT -->
+
+@{await Html.RenderPartialAsync("Modal");}
+
+
 
 @section Scripts {
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+    <script src='~/js/vistasmodales/modal.js'></script>
+
     <script type="text/javascript">
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -180,6 +232,25 @@
         $(document).ready(function () {
 
             //Bootstrap Wizard Validations
+
+            $("#getSucursal").click(function (e) {
+                idsucursal = $("#sucursal").val()
+                });
+
+
+
+            $('.tree > ul').attr('role', 'tree').find('ul').attr('role', 'group');
+            $('.tree').find('li:has(ul)').addClass('parent_li').attr('role', 'treeitem').find(' > span').attr('title', 'Collapse this branch').on('click', function (e) {
+                var children = $(this).parent('li.parent_li').find(' > ul > li');
+                if (children.is(':visible')) {
+                    children.hide('fast');
+                    $(this).attr('title', 'Expand this branch').find(' > i').removeClass().addClass('fa fa-lg fa-plus-circle');
+                } else {
+                    children.show('fast');
+                    $(this).attr('title', 'Collapse this branch').find(' > i').removeClass().addClass('fa fa-lg fa-minus-circle');
+                }
+                e.stopPropagation();
+            });
 
             var $validator = $("#wizard-1").validate({
 
@@ -316,16 +387,179 @@
             });
 
 
+
         })
 
     </script>
 
     <script src='~/lib/waitMe/waitMe.min.js'></script>
     <script src='~/js/site.js'></script>
+@*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
+
 
     <script type="text/javascript">
-    $(document).ready(function () {
+        $(document).ready(function () {
 
+
+           $("#ciudad").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#sucursal").empty();
+            $("#dependencia").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarSucursalesPorCiudad", "CeseFunciones")',
+                    dataType: 'json',
+                    data: { idciudad: $("#ciudad").val() },
+                    success: function (data) {
+                        $("#sucursal").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#sucursal").append('<option value="'
+                                + data.idSucursal + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+           $("#sucursal").change(function (e) {
+               mostrarLoadingPanel("content", "Cargando...")
+               e.preventDefault();
+               var $link = $(this);
+               var title = $link.text();
+               $('#myModal.modal-title').html(title);
+               var url = '@Url.Action("CargarDependencias")?idsucursal='+ $('#sucursal').val() ;
+               if (url.indexOf('#') == 0) {
+                   $('#myModal').modal('show');
+                   $("#myModal").waitMe("hide");
+               }
+               else {
+                   $.get(url, function (data) {
+                       $('#myModal .te').html(data);
+                       $('#myModal').modal();
+                       $('#selectC').select2();
+                       $("#content").waitMe("hide");
+                   }).success(function () { $('input:text:visible:first').focus(); });
+
+               }
+                $("#content").waitMe("hide");
+                return false;
+           })
+
+ 
+
+
+                        $("#manualpuesto").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#rolpuesto").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarRolPuestoporManualPuesto")',
+                    dataType: 'json',
+                    data: {
+                        idmanualpuesto: $("#manualpuesto").val(),
+                        iddependencia: $("#dependencia").val(),
+                        },
+                    success: function (data) {
+                        $("#rolpuesto").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#rolpuesto").append('<option value="'
+                                + data.rolPuesto.idRolPuesto + '">'
+                                + data.rolPuesto.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                        })
+
+                         $("#rolpuesto").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#escalagrados").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListarEscalaGradosPorRolPuesto")',
+                dataType: 'json',
+                data: {
+                    idmanualpuesto: $("#manualpuesto").val(),
+                    iddependencia: $("#dependencia").val(),
+                    idrolpuesto: $("#rolpuesto").val(),
+                },
+                success: function (data) {
+                    if (data[0].idEscalaGrados !== null) {
+                            $("#escalagrados").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                            $.each(data, function (i, data) {
+
+                                $("#escalagrados").append('<option value="'
+                                    + data.escalaGrados.idEscalaGrados + '">'
+                                    + data.escalaGrados.nombre + " (Grado " + data.escalaGrados.grado + ")" + '</option>');
+
+
+
+                        });
+                        }
+                        else {
+                            $("#escalagrados").append('<option value="'
+                                + 0 + '">'
+                                + "No aplica" + '</option>');
+                        }
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+
+                         @*$("#escalagrados").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#modalidadpartida").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarModalidadesPartidaPorEscalaGrados")',
+                    dataType: 'json',
+                    data: {
+                        idmanualpuesto: $("#manualpuesto").val(),
+                        iddependencia: $("#dependencia").val(),
+                        idrolpuesto: $("#rolpuesto").val(),
+                        idescalagrados: $("#escalagrados").val(),
+                        },
+                    success: function (data) {
+                        $("#modalidadpartida").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#modalidadpartida").append('<option value="'
+                                + data.modalidadPartida.idModalidadPartida + '">'
+                                + data.modalidadPartida.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })*@
 
         $("#IdRegimenLaboral").change(function () {
             mostrarLoadingPanel("content","Cargando...")
@@ -359,32 +593,6 @@
 
 
         $("#IdRelacionLaboral").change(function () {
-            mostrarLoadingPanel("content","Cargando modalidad de partidas...")
-            $("#IdModalidadPartida").empty();
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("ListarModalidadPartidaRelacion")',
-                    dataType: 'json',
-                    data: { relacion: $("#IdRelacionLaboral").val() },
-                    success: function (data) {
-                        $.each(data, function (i, data) {
-                            $("#IdModalidadPartida").append('<option value="'
-                                + data.idModalidadPartida + '">'
-                                + data.nombre + '</option>');
-
-                        });
-                    }, complete: function (data) {
-                        $("#content").waitMe("hide");
-                    },
-
-                    error: function (ex) {
-                        alert('Failed to retrieve data.' + ex);
-                    }
-                });
-                return false;
-        })
-
-        $("#IdRelacionLaboral").change(function () {
             mostrarLoadingPanel("content","Cargando tipos de nombramiento...")
             $("#IdTipoNombramiento").empty();
                 $.ajax({
@@ -393,6 +601,7 @@
                     dataType: 'json',
                     data: { relacion: $("#IdRelacionLaboral").val() },
                     success: function (data) {
+                        $("#IdTipoNombramiento").append('<option value="0" selected="" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
                             $("#IdTipoNombramiento").append('<option value="'
                                 + data.idTipoNombramiento + '">'
@@ -411,9 +620,11 @@
                 return false;
         })
 
-
         });
 
+        function isEmpty(obj, propName) {
+            return Object.keys(obj[propName]).length == 0;
+        }
 
        // Evento que envía una petición Ajax al servidor
         $('#GuardarForm').click(function(e) {
@@ -479,7 +690,38 @@
             if (input.value > 100) input.value = 100;
         }
 
+
+                   function cargarManualesPuesto(dependencia) {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#manualpuesto").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarManualPuestoporDependencia")',
+                    dataType: 'json',
+                    data: { iddependencia: dependencia },
+                    success: function (data) {
+                        $("#manualpuesto").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#manualpuesto").append('<option value="'
+                                + data.manualPuesto.idManualPuesto + '">'
+                                + data.manualPuesto.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                }
     </script>
+
+
+    
+         
 
 
 

@@ -50,10 +50,9 @@ namespace bd.webappth.web.Controllers.MVC
 
 
         public async Task<IActionResult> Login()
-        {
+       {
             try
             {
-
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
                 var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
                 var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;

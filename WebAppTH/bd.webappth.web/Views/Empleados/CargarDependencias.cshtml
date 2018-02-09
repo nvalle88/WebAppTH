@@ -1,0 +1,53 @@
+@model bd.webappth.entidades.Negocio.Dependencia
+
+<script src='~/js/site.js'></script>
+
+<script type="text/javascript">
+
+    $('.tree > ul').attr('role', 'tree').find('ul').attr('role', 'group');
+    $('.tree').find('li:has(ul)').addClass('parent_li').attr('role', 'treeitem').find(' > span').attr('title', 'Collapse this branch').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(':visible')) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').removeClass().addClass('fa fa-lg fa-plus-circle');
+        } else {
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').removeClass().addClass('fa fa-lg fa-minus-circle');
+        }
+        e.stopPropagation();
+    });
+
+</script>
+
+<div class="widget-body">
+        <div class="tree smart-form">            
+            <ul>
+                <li>
+                    <span><i class="fa fa-lg fa-folder-open"></i> @Model.Nombre</span>
+                    @{await Html.RenderPartialAsync("_PartialViewDependenciasHijos", Model);}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+<input type="button" value="Select" onclick="SetName();" />
+
+<script type="text/javascript">
+    function SetName() {
+        var valor = $("#radio:checked").val();
+        var fields = valor.split(',');
+
+        var nombre = fields[0];
+        var id = fields[1];
+
+        $('#dependencia').val(nombre);
+        $('#myModal').modal('hide');
+        cargarManualesPuesto(id);
+
+
+
+    }
+
+
+</script>
