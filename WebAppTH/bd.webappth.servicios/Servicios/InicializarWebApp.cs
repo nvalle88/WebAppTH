@@ -1,5 +1,6 @@
 ﻿using bd.log.guardar.Inicializar;
 using bd.webappth.entidades.Utils;
+using bd.webappth.entidades.Utils.Seguridad;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;

@@ -1,4 +1,5 @@
 ﻿using bd.webappth.entidades.Utils;
+using bd.webappth.entidades.Utils.Seguridad;
 using bd.webappth.servicios.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -61,7 +62,7 @@ namespace bd.webappth.web.Models
                 /// Se valida que la información del usuario actual tenga permiso para acceder al path solicitado... 
                 /// </summary>
                 /// <returns></returns>
-                var respuesta =  apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddress), "api/Adscpassws/TienePermiso");
+                var respuesta =  apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermiso");
 
                 //respuesta.Result.IsSuccess = true;
                 if (respuesta.Result.IsSuccess)

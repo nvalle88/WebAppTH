@@ -15,6 +15,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.log.guardar.Enumeradores;
 using System.Collections.Generic;
 using System.Linq;
+using bd.webappth.entidades.Utils.Seguridad;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -89,7 +90,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
                 var adscpasswSend = new Adscpassw
                 {
-                    AdpsLoginAdm = qsList[0],
+                    AdpsLogin = qsList[0],
                     AdpsTokenTemp = qsList[1]
                 };
                 adscpassw = await GetAdscPassws(adscpasswSend);
@@ -108,7 +109,7 @@ namespace bd.webappth.web.Controllers.MVC
                             ObjectNext = JsonConvert.SerializeObject(response.Resultado),
                         };
                         await apiServicio.SalvarLog<entidades.Utils.Response>(HttpContext, responseLog);
-                        return RedirectToActionPermanent(nameof(HomesController.Index),"Homes");
+                        return RedirectToActionPermanent(nameof(HomesController.Index), "Homes");
                     }
                     else
                     {
@@ -128,7 +129,7 @@ namespace bd.webappth.web.Controllers.MVC
                     ObjectPrevious = null,
                     ObjectNext = null,
                 };
-                await apiServicio.SalvarLog<Response>(HttpContext, responseLog);
+                await apiServicio.SalvarLog<entidades.Utils.Response>(HttpContext, responseLog);
                 return Redirect(WebApp.BaseAddressWebAppLogin);
             }
 
@@ -136,7 +137,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Salir()
         {
-
 
             try
             {
@@ -146,7 +146,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 var adscpasswSend = new Adscpassw
                 {
-                    AdpsLoginAdm = NombreUsuario,
+                    AdpsLogin = NombreUsuario,
                     AdpsToken = token
                 };
 
@@ -156,6 +156,15 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
                     await HttpContext.Authentication.SignOutAsync("Cookies");
+                    var responseLog = new EntradaLog
+                    {
+                        ExceptionTrace = null,
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Permission),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.INFO),
+                        ObjectPrevious = null,
+                        ObjectNext = null,
+                    };
+                    await apiServicio.SalvarLog<entidades.Utils.Response>(HttpContext, responseLog);
                     return RedirectPermanent(WebApp.BaseAddressWebAppLogin);
                 }
                 return RedirectPermanent(WebApp.BaseAddressWebAppLogin);
@@ -164,7 +173,6 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 return RedirectToAction(nameof(LoginController.Index), "Login");
             }
-
 
         }
 

@@ -11,7 +11,8 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
-
+using Microsoft.AspNetCore.Authorization;
+using bd.webappth.entidades.Utils.Seguridad;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -26,6 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
            
         }
 
+        [Authorize(Policy = PoliticasSeguridad.TienePermiso)]
         public async Task<IActionResult> Index()
         {
 

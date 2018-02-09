@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace bd.webappth.entidades.Utils.Negocio
+namespace bd.webappth.entidades.Utils.Seguridad
 {
     public partial class Adscmenu
     {
-        
+        public Adscmenu()
+        {
+            Adscexe = new HashSet<Adscexe>();
+        }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Sistema")]
@@ -47,7 +50,6 @@ namespace bd.webappth.entidades.Utils.Negocio
         [StringLength(10, MinimumLength = 1, ErrorMessage = "El {0} no puede tener más de {1} catacter")]
         public string AdmeTipoObjeto { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "URL")]
         [StringLength(150, MinimumLength = 1, ErrorMessage = "El {0} no puede tener más de {1} catacter")]
         public string AdmeUrl { get; set; }
@@ -75,6 +77,7 @@ namespace bd.webappth.entidades.Utils.Negocio
         [StringLength(50, MinimumLength = 1, ErrorMessage = "El {0} no puede tener más de {1} catacter")]
         public string AdmeAccionControlador { get; set; }
 
+        public virtual ICollection<Adscexe> Adscexe { get; set; }
         public virtual Adscsist AdmeSistemaNavigation { get; set; }
     }
 }

@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace bd.webappth.entidades.Utils
+namespace bd.webappth.entidades.Utils.Seguridad
 {
     public partial class Adscsist
     {
+        public Adscsist()
+        {
+            Adscmenu = new HashSet<Adscmenu>();
+        }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Sistema")]
@@ -29,5 +33,8 @@ namespace bd.webappth.entidades.Utils
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Base de Datos")]
         public string AdstBdd { get; set; }
+
+        public virtual ICollection<Adscmenu> Adscmenu { get; set; }
+        public virtual Adscbdd AdstBddNavigation { get; set; }
     }
 }

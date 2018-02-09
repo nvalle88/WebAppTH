@@ -1,4 +1,4 @@
-﻿namespace bd.webappth.entidades.Utils
+﻿namespace bd.webappth.entidades.Utils.Seguridad
 {
     public class ModuloAplicacion
     {
