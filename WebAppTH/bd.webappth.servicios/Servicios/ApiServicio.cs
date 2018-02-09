@@ -141,7 +141,7 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    var uri = string.Format("{0}{1}", baseAddress, url);
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
 
                     var response = await client.PostAsync(new Uri(uri), content);
 
@@ -169,7 +169,7 @@ namespace bd.webappth.servicios.Servicios
                     var request = JsonConvert.SerializeObject(model);
                     var content = new StringContent(request, Encoding.UTF8, "application/json");
 
-                    var uri = string.Format("{0}{1}", baseAddress, url);
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
 
                     var response = await client.PostAsync(new Uri(uri), content);
 
@@ -327,7 +327,7 @@ namespace bd.webappth.servicios.Servicios
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var uri = string.Format("{0}{1}", baseAddress, url);
+                    var uri = string.Format("{0}/{1}", baseAddress, url);
                     var respuesta = await client.GetAsync(new Uri(uri));
                     var resultado = await respuesta.Content.ReadAsStringAsync();
                     var response = JsonConvert.DeserializeObject<List<T>>(resultado);

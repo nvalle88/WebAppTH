@@ -110,7 +110,7 @@ namespace bd.webappth.web.Controllers.MVC
                             ObjectNext = JsonConvert.SerializeObject(response.Resultado),
                         };
                         await apiServicio.SalvarLog<entidades.Utils.Response>(HttpContext, responseLog);
-                        return RedirectToActionPermanent(nameof(HomesController.Index), "Index");
+                        return RedirectToActionPermanent(nameof(HomesController.Index), "Homes");
                     }
                     else
                     {
