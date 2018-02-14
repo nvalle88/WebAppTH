@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(parroquia,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Parroquia/InsertarParroquia");
+                                                             "api/Parroquia/InsertarParroquia");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/Parroquia");
+                                                                  "api/Parroquia");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<Parroquia>(respuesta.Resultado.ToString());
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, parroquia, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Parroquia");
+                                                                 "api/Parroquia");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Parroquia>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Parroquia/ListarParroquia");
+                                                                    , "api/Parroquia/ListarParroquia");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Parroquia");
+                                                               , "api/Parroquia");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

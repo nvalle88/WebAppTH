@@ -38,7 +38,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(estadoCivil,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/EstadosCiviles/InsertarEstadoCivil");
+                                                             "api/EstadosCiviles/InsertarEstadoCivil");
                 if (response.IsSuccess)
                 {
 
@@ -83,7 +83,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/EstadosCiviles");
+                                                                  "api/EstadosCiviles");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<EstadoCivil>(respuesta.Resultado.ToString());
@@ -112,7 +112,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, estadoCivil, new Uri(WebApp.BaseAddress),
-                                                                 "/api/EstadosCiviles");
+                                                                 "api/EstadosCiviles");
 
                     if (response.IsSuccess)
                     {
@@ -157,7 +157,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<EstadoCivil>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/EstadosCiviles/ListarEstadosCiviles");
+                                                                    , "api/EstadosCiviles/ListarEstadosCiviles");
                 return View(lista);
             }
             catch (Exception ex)
@@ -181,7 +181,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/EstadosCiviles");
+                                                               , "api/EstadosCiviles");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

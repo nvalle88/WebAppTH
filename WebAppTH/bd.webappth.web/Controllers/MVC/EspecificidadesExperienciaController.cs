@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(especificidadExperiencia,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/EspecificidadesExperiencia/InsertarEspecificidadExperiencia");
+                                                             "api/EspecificidadesExperiencia/InsertarEspecificidadExperiencia");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/EspecificidadesExperiencia");
+                                                                  "api/EspecificidadesExperiencia");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<EspecificidadExperiencia>(respuesta.Resultado.ToString());
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, especificidadExperiencia, new Uri(WebApp.BaseAddress),
-                                                                 "/api/EspecificidadesExperiencia");
+                                                                 "api/EspecificidadesExperiencia");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<EspecificidadExperiencia>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/EspecificidadesExperiencia/ListarEspecificidadesExperiencia");
+                                                                    , "api/EspecificidadesExperiencia/ListarEspecificidadesExperiencia");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/EspecificidadesExperiencia");
+                                                               , "api/EspecificidadesExperiencia");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

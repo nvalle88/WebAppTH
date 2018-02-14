@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 response = await apiServicio.InsertarAsync(evaluacionInducion,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/EvaluacionesInducciones/InsertarEvaluacionInducion");
+                                                             "api/EvaluacionesInducciones/InsertarEvaluacionInducion");
                 if (response.IsSuccess)
                 {
 
@@ -85,7 +85,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/EvaluacionesInducciones");
+                                                                  "api/EvaluacionesInducciones");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<EvaluacionInducion>(respuesta.Resultado.ToString());
@@ -114,7 +114,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, evaluacionInducion, new Uri(WebApp.BaseAddress),
-                                                                 "/api/EvaluacionesInducciones");
+                                                                 "api/EvaluacionesInducciones");
 
                     if (response.IsSuccess)
                     {
@@ -159,7 +159,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<EvaluacionInducion>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/EvaluacionesInducciones/ListarEvaluacionesInducciones");
+                                                                    , "api/EvaluacionesInducciones/ListarEvaluacionesInducciones");
                 return View(lista);
             }
             catch (Exception ex)
@@ -183,7 +183,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/EvaluacionesInducciones");
+                                                               , "api/EvaluacionesInducciones");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

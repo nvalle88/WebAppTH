@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(MaterialApoyo,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/MaterialesDeApoyo/InsertarMaterialesDeApoyo");
+                                                             "api/MaterialesDeApoyo/InsertarMaterialesDeApoyo");
                 if (response.IsSuccess)
                 {
 
@@ -88,7 +88,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/MaterialesDeApoyo");
+                                                                  "api/MaterialesDeApoyo");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<MaterialApoyo>(respuesta.Resultado.ToString());
@@ -120,7 +120,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, MaterialApoyo, new Uri(WebApp.BaseAddress),
-                                                                 "/api/MaterialesDeApoyo");
+                                                                 "api/MaterialesDeApoyo");
 
                     if (response.IsSuccess)
                     {
@@ -168,7 +168,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<MaterialApoyo>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/MaterialesDeApoyo/ListarMaterialesDeApoyo");
+                                                                    , "api/MaterialesDeApoyo/ListarMaterialesDeApoyo");
                 return View(lista);
             }
             catch (Exception ex)
@@ -192,7 +192,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/MaterialesDeApoyo");
+                                                               , "api/MaterialesDeApoyo");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

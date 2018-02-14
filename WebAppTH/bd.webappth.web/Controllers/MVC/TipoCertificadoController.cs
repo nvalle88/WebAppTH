@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(tipoCertificado,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TipoCertificado/InsertarTipoCertificado");
+                                                             "api/TipoCertificado/InsertarTipoCertificado");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/TipoCertificado");
+                                                                  "api/TipoCertificado");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<TipoCertificado>(respuesta.Resultado.ToString());
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, tipoCertificado, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TipoCertificado");
+                                                                 "api/TipoCertificado");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<TipoCertificado>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TipoCertificado/ListarTipoCertificado");
+                                                                    , "api/TipoCertificado/ListarTipoCertificado");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TipoCertificado");
+                                                               , "api/TipoCertificado");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

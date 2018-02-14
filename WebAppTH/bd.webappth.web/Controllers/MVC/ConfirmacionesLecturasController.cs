@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(confirmacionLectura,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ConfirmacionesLecturas/InsertarConfirmacionLectura");
+                                                             "api/ConfirmacionesLecturas/InsertarConfirmacionLectura");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ConfirmacionesLecturas");
+                                                                  "api/ConfirmacionesLecturas");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<ConfirmacionLectura>(respuesta.Resultado.ToString());
@@ -110,7 +110,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ConfirmacionLectura>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ConfirmacionesLecturas/ListarConfirmacionesLecturas");
+                                                                    , "api/ConfirmacionesLecturas/ListarConfirmacionesLecturas");
                 return View(lista);
             }
             catch (Exception ex)

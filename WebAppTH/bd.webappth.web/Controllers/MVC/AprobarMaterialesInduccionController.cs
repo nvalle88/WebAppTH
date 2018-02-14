@@ -51,7 +51,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 response = await apiServicio.InsertarAsync(induccionEmpleado,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/MaterialesInduccion/IngresarInduccionEmpleado");
+                                                             "api/MaterialesInduccion/IngresarInduccionEmpleado");
                 if (response.IsSuccess)
                 {
 
@@ -119,7 +119,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<MaterialInduccion>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/MaterialesInduccion/ListarMaterialesInduccion");
+                                                                    , "api/MaterialesInduccion/ListarMaterialesInduccion");
 
                 foreach (var item in lista)
                 {
@@ -166,7 +166,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
             var response = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                              "/api/MaterialesInduccion");
+                                                              "api/MaterialesInduccion");
 
             var materialinduccion = JsonConvert.DeserializeObject<MaterialInduccion>(response.Resultado.ToString());
             var d = new MaterialInduccion
@@ -181,7 +181,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 var responseGetFile = await apiServicio.ObtenerElementoAsync(d,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/MaterialesInduccion/GetFile");
+                                                             "api/MaterialesInduccion/GetFile");
                 var m = JsonConvert.DeserializeObject<DocumentoInstitucionalTransfer>(responseGetFile.Resultado.ToString());
 
                 //var fileName = $"{ responseGetFile.Message}.pdf";

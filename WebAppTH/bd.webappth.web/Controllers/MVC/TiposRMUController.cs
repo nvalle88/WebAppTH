@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(TipoRMU,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TiposRMU/InsertarTipoRMU");
+                                                             "api/TiposRMU/InsertarTipoRMU");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, TipoRMU, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TiposRMU");
+                                                                 "api/TiposRMU");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<TipoRMU>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TiposRMU/ListarTiposRMU");
+                                                                    , "api/TiposRMU/ListarTiposRMU");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TiposRMU");
+                                                               , "api/TiposRMU");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

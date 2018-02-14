@@ -57,7 +57,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(TipoAccionPersonal,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TiposAccionesPersonales/InsertarTipoAccionPersonal");
+                                                             "api/TiposAccionesPersonales/InsertarTipoAccionPersonal");
 
                 var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
                 {
@@ -124,7 +124,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/TiposAccionesPersonales");
+                                                                  "api/TiposAccionesPersonales");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<TipoAccionPersonal>(respuesta.Resultado.ToString());
@@ -185,7 +185,7 @@ namespace bd.webappth.web.Controllers.MVC
                     };
 
                     response = await apiServicio.EditarAsync(id, TipoAccionPersonal, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TiposAccionesPersonales");
+                                                                 "api/TiposAccionesPersonales");
                     
 
                     if (response.IsSuccess)
@@ -237,7 +237,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+                                                                    , "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
                 return View(lista);
             }
             catch (Exception ex)
@@ -261,7 +261,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TiposAccionesPersonales");
+                                                               , "api/TiposAccionesPersonales");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

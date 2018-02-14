@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(Indicador,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Indicadores/InsertarIndicador");
+                                                             "api/Indicadores/InsertarIndicador");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, Indicador, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Indicadores");
+                                                                 "api/Indicadores");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Indicador>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Indicadores/ListarIndicadores");
+                                                                    , "api/Indicadores/ListarIndicadores");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Indicadores");
+                                                               , "api/Indicadores");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

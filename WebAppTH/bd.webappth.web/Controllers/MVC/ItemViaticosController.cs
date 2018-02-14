@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, ItemViatico, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ItemViaticos");
+                                                                 "api/ItemViaticos");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ItemViatico>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ItemViaticos/ListarItemViaticos");
+                                                                    , "api/ItemViaticos/ListarItemViaticos");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ItemViaticos");
+                                                               , "api/ItemViaticos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

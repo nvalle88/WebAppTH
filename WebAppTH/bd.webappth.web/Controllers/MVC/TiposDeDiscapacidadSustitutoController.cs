@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(TipoDiscapacidadSustituto,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TiposDeDiscapacidadSustituto/InsertarTipoDiscapacidadSustituto");
+                                                             "api/TiposDeDiscapacidadSustituto/InsertarTipoDiscapacidadSustituto");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, TipoDiscapacidadSustituto, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TiposDeDiscapacidadSustituto");
+                                                                 "api/TiposDeDiscapacidadSustituto");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<TipoDiscapacidadSustituto>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TiposDeDiscapacidadSustituto/ListarTiposDeDiscapacidadSustituto");
+                                                                    , "api/TiposDeDiscapacidadSustituto/ListarTiposDeDiscapacidadSustituto");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TiposDeDiscapacidadSustituto");
+                                                               , "api/TiposDeDiscapacidadSustituto");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

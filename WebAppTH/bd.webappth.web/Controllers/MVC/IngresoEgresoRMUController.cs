@@ -41,7 +41,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(IngresoEgresoRMU,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/IngresoEgresoRMU/InsertarIngresoEgresoRMU");
+                                                             "api/IngresoEgresoRMU/InsertarIngresoEgresoRMU");
                 if (response.IsSuccess)
                 {
 
@@ -88,7 +88,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/IngresoEgresoRMU");
+                                                                  "api/IngresoEgresoRMU");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<IngresoEgresoRMU>(respuesta.Resultado.ToString());
@@ -120,7 +120,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, IngresoEgresoRMU, new Uri(WebApp.BaseAddress),
-                                                                 "/api/IngresoEgresoRMU");
+                                                                 "api/IngresoEgresoRMU");
 
                     if (response.IsSuccess)
                     {
@@ -168,7 +168,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<IngresoEgresoRMU>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/IngresoEgresoRMU/ListarIngresoEgresoRMU");
+                                                                    , "api/IngresoEgresoRMU/ListarIngresoEgresoRMU");
                 return View(lista);
             }
             catch (Exception ex)
@@ -192,7 +192,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/IngresoEgresoRMU");
+                                                               , "api/IngresoEgresoRMU");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

@@ -45,7 +45,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(documentosIngreso,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/DocumentosIngreso/InsertarDocumentosIngreso");
+                                                             "api/DocumentosIngreso/InsertarDocumentosIngreso");
                 if (response.IsSuccess)
                 {
 
@@ -97,18 +97,18 @@ namespace bd.webappth.web.Controllers.MVC
                 };
 
                 listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleado, new Uri(WebApp.BaseAddress)
-                                                                  , "/api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
+                                                                  , "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
 
                 if (listaDocumentosEntregados.Count == 0)
                 {
                     response = await apiServicio.InsertarAsync(viewModelDocumentoIngresoEmpleado,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/DocumentosIngreso/InsertarDocumentosIngresoEmpleado");
+                                                             "api/DocumentosIngreso/InsertarDocumentosIngresoEmpleado");
                 }
                 else
                 {
                     response = await apiServicio.ObtenerElementoAsync1<Response>(viewModelDocumentoIngresoEmpleado, new Uri(WebApp.BaseAddress),
-                                                                                     "/api/DocumentosIngreso/EditarCheckListDocumentos");
+                                                                                     "api/DocumentosIngreso/EditarCheckListDocumentos");
                 }
                 
                 if (response.IsSuccess)
@@ -155,7 +155,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/DocumentosIngreso");
+                                                                  "api/DocumentosIngreso");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<DocumentosIngreso>(respuesta.Resultado.ToString());
@@ -184,7 +184,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, documentosIngreso, new Uri(WebApp.BaseAddress),
-                                                                 "/api/DocumentosIngreso");
+                                                                 "api/DocumentosIngreso");
 
                     if (response.IsSuccess)
                     {
@@ -229,7 +229,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<DocumentosIngreso>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/DocumentosIngreso/ListarDocumentosIngreso");
+                                                                    , "api/DocumentosIngreso/ListarDocumentosIngreso");
                 return View(lista);
             }
             catch (Exception ex)
@@ -253,7 +253,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/DocumentosIngreso");
+                                                               , "api/DocumentosIngreso");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -300,19 +300,19 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                 };
                 var emp = await apiServicio.ObtenerElementoAsync1<ListaEmpleadoViewModel>(empleado, new Uri(WebApp.BaseAddress),
-                                                              "/api/Empleados/ObtenerDatosCompletosEmpleado");
+                                                              "api/Empleados/ObtenerDatosCompletosEmpleado");
 
                 var empleadoConsulta = new Empleado
                 {
                     IdEmpleado = emp.IdEmpleado
                 };
-                //var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(empleadoConsulta, new Uri(WebApp.BaseAddress), "/api/DocumentosIngreso/GetDocumentoIngresoEmpleado");
+                //var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(empleadoConsulta, new Uri(WebApp.BaseAddress), "api/DocumentosIngreso/GetDocumentoIngresoEmpleado");
                 //if (!respuesta.IsSuccess)
                 //{
                     listaDocumentos = await apiServicio.Listar<DocumentosIngreso>(new Uri(WebApp.BaseAddress)
-                                                                                      , "/api/DocumentosIngreso/ListarDocumentosIngreso");
+                                                                                      , "api/DocumentosIngreso/ListarDocumentosIngreso");
                     listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleadoConsulta,new Uri(WebApp.BaseAddress)
-                                                                                      , "/api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
+                                                                                      , "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
 
                     var documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado
                     {
@@ -343,11 +343,11 @@ namespace bd.webappth.web.Controllers.MVC
         //        {
         //            IdEmpleado = empleado.IdEmpleado
         //        };
-        //        var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(emp, new Uri(WebApp.BaseAddress), "/api/DocumentosIngreso/GetDocumentoIngresoEmpleado");
+        //        var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(emp, new Uri(WebApp.BaseAddress), "api/DocumentosIngreso/GetDocumentoIngresoEmpleado");
         //        if (!respuesta.IsSuccess)
         //        {
         //            lista = await apiServicio.Listar<DocumentosIngreso>(new Uri(WebApp.BaseAddress)
-        //                                                                              , "/api/DocumentosIngreso/ListarDocumentosIngreso");
+        //                                                                              , "api/DocumentosIngreso/ListarDocumentosIngreso");
         //            var documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado
         //            {
         //                empleadoViewModel = empleado,

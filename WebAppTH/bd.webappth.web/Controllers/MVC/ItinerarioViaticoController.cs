@@ -28,7 +28,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create(int IdSolicitudViatico)
         {
-            ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "/api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
+            ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
             var itinerarioViatico = new ItinerarioViatico
             {
                 IdSolicitudViatico = IdSolicitudViatico
@@ -46,7 +46,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(itinerarioViatico,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ItinerarioViatico/InsertarItinerarioViatico");
+                                                             "api/ItinerarioViatico/InsertarItinerarioViatico");
                 if (response.IsSuccess)
                 {
 
@@ -56,7 +56,7 @@ namespace bd.webappth.web.Controllers.MVC
                     };
 
                     response = await apiServicio.InsertarAsync(solicitudViatico, new Uri(WebApp.BaseAddress),
-                                                                "/api/SolicitudViaticos/ActualizarValorTotalViatico");
+                                                                "api/SolicitudViaticos/ActualizarValorTotalViatico");
 
                     var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
@@ -101,13 +101,13 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ItinerarioViatico");
+                                                                  "api/ItinerarioViatico");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<ItinerarioViatico>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
-                        ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "/api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
+                        ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
                         return View(respuesta.Resultado);
                     }
 
@@ -131,7 +131,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, itinerarioViatico, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ItinerarioViatico");
+                                                                 "api/ItinerarioViatico");
 
                     if (response.IsSuccess)
                     {
@@ -141,7 +141,7 @@ namespace bd.webappth.web.Controllers.MVC
                         };
 
                         response = await apiServicio.InsertarAsync(solicitudViatico, new Uri(WebApp.BaseAddress),
-                                                                    "/api/SolicitudViaticos/ActualizarValorTotalViatico");
+                                                                    "api/SolicitudViaticos/ActualizarValorTotalViatico");
 
                         await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                         {
@@ -189,7 +189,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (IdSolicitudViatico.ToString() != null)
                 {
                     var respuestaSolicitudViatico = await apiServicio.SeleccionarAsync<Response>(IdSolicitudViatico.ToString(), new Uri(WebApp.BaseAddress),
-                                                                  "/api/SolicitudViaticos");
+                                                                  "api/SolicitudViaticos");
                     if (respuestaSolicitudViatico.IsSuccess)
                     {
                         sol = JsonConvert.DeserializeObject<SolicitudViatico>(respuestaSolicitudViatico.Resultado.ToString());
@@ -199,7 +199,7 @@ namespace bd.webappth.web.Controllers.MVC
                         };
 
                         var respuestaEmpleado = await apiServicio.SeleccionarAsync<Response>(solicitudViatico.IdEmpleado.ToString(), new Uri(WebApp.BaseAddress),
-                                                                     "/api/Empleados");
+                                                                     "api/Empleados");
 
                         if (respuestaEmpleado.IsSuccess)
                         {
@@ -218,7 +218,7 @@ namespace bd.webappth.web.Controllers.MVC
                                 IdSolicitudViatico = sol.IdSolicitudViatico
                             };
                             lista = await apiServicio.ObtenerElementoAsync1<List<ItinerarioViatico>>(itinerarioViatico, new Uri(WebApp.BaseAddress)
-                                                                     , "/api/ItinerarioViatico/ListarItinerariosViaticos");
+                                                                     , "api/ItinerarioViatico/ListarItinerariosViaticos");
 
                         }
 
@@ -232,13 +232,13 @@ namespace bd.webappth.web.Controllers.MVC
 
 
                         var respuestaPais = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdPais.ToString(), new Uri(WebApp.BaseAddress),
-                                                                 "/api/Pais");
+                                                                 "api/Pais");
                         var pais = JsonConvert.DeserializeObject<Pais>(respuestaPais.Resultado.ToString());
                         var respuestaProvincia = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdProvincia.ToString(), new Uri(WebApp.BaseAddress),
-                                                                 "/api/Provincia");
+                                                                 "api/Provincia");
                         var provincia = JsonConvert.DeserializeObject<Provincia>(respuestaProvincia.Resultado.ToString());
                         var respuestaCiudad = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdCiudad.ToString(), new Uri(WebApp.BaseAddress),
-                                                                 "/api/Ciudad");
+                                                                 "api/Ciudad");
                         var ciudad = JsonConvert.DeserializeObject<Ciudad>(respuestaCiudad.Resultado.ToString());
 
 
@@ -267,13 +267,13 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ItinerarioViatico");
+                                                                 "api/ItinerarioViatico");
 
 
                 var itinerario = JsonConvert.DeserializeObject<ItinerarioViatico>(respuesta.Resultado.ToString());
 
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ItinerarioViatico");
+                                                               , "api/ItinerarioViatico");
                 if (response.IsSuccess)
                 {
                     var solicitudViatico = new SolicitudViatico
@@ -282,7 +282,7 @@ namespace bd.webappth.web.Controllers.MVC
                     };
 
                     response = await apiServicio.InsertarAsync(solicitudViatico, new Uri(WebApp.BaseAddress),
-                                                                "/api/SolicitudViaticos/ActualizarValorTotalViatico");
+                                                                "api/SolicitudViaticos/ActualizarValorTotalViatico");
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
                         ApplicationName = Convert.ToString(Aplicacion.WebAppTh),

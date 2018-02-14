@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(parametrosGenerales,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ParametrosGenerales/InsertarParametrosGenerales");
+                                                             "api/ParametrosGenerales/InsertarParametrosGenerales");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ParametrosGenerales");
+                                                                  "api/ParametrosGenerales");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<ParametrosGenerales>(respuesta.Resultado.ToString());
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, parametrosGenerales, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ParametrosGenerales");
+                                                                 "api/ParametrosGenerales");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ParametrosGenerales>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ParametrosGenerales/ListarParametrosGenerales");
+                                                                    , "api/ParametrosGenerales/ListarParametrosGenerales");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ParametrosGenerales");
+                                                               , "api/ParametrosGenerales");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

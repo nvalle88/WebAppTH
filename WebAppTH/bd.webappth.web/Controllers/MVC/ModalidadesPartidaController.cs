@@ -41,7 +41,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(ModalidadPartida,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ModalidadesPartida/InsertarModalidadPartida");
+                                                             "api/ModalidadesPartida/InsertarModalidadPartida");
                 if (response.IsSuccess)
                 {
 
@@ -88,7 +88,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ModalidadesPartida");
+                                                                  "api/ModalidadesPartida");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<ModalidadPartida>(respuesta.Resultado.ToString());
@@ -120,7 +120,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, ModalidadPartida, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ModalidadesPartida");
+                                                                 "api/ModalidadesPartida");
 
                     if (response.IsSuccess)
                     {
@@ -168,7 +168,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ModalidadPartida>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ModalidadesPartida/ListarModalidadesPartida");
+                                                                    , "api/ModalidadesPartida/ListarModalidadesPartida");
                 return View(lista);
             }
             catch (Exception ex)
@@ -192,7 +192,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ModalidadesPartida");
+                                                               , "api/ModalidadesPartida");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

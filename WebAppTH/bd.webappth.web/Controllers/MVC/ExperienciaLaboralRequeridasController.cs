@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional = idIndiceOcupacional
                 };
                 var response = await apiServicio.EliminarAsync(experienciaLaboralRequerida, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ExperienciaLaboralRequeridas/EliminarIncideOcupacionalExperienciaLaboralRequeridas");
+                                                               , "api/ExperienciaLaboralRequeridas/EliminarIncideOcupacionalExperienciaLaboralRequeridas");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -92,7 +92,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(ExperienciaLaboralRequerida,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ExperienciaLaboralRequeridas/InsertarExperienciaLaboralRequerida");
+                                                             "api/ExperienciaLaboralRequeridas/InsertarExperienciaLaboralRequerida");
                 if (response.IsSuccess)
                 {
 
@@ -141,7 +141,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ExperienciaLaboralRequeridas");
+                                                                  "api/ExperienciaLaboralRequeridas");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<ExperienciaLaboralRequerida>(respuesta.Resultado.ToString());
@@ -175,7 +175,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, ExperienciaLaboralRequerida, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ExperienciaLaboralRequeridas");
+                                                                 "api/ExperienciaLaboralRequeridas");
 
                     if (response.IsSuccess)
                     {
@@ -225,7 +225,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ExperienciaLaboralRequerida>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ExperienciaLaboralRequeridas/ListarExperienciaLaboralRequeridas");
+                                                                    , "api/ExperienciaLaboralRequeridas/ListarExperienciaLaboralRequeridas");
                 return View(lista);
             }
             catch (Exception ex)
@@ -249,7 +249,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ExperienciaLaboralRequeridas");
+                                                               , "api/ExperienciaLaboralRequeridas");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

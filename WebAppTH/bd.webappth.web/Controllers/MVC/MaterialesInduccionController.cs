@@ -130,7 +130,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(file,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/MaterialesInduccion/UploadFiles");
+                                                             "api/MaterialesInduccion/UploadFiles");
                 if (response.IsSuccess)
                 {
 
@@ -191,7 +191,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/MaterialesInduccion");
+                                                                  "api/MaterialesInduccion");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<MaterialInduccion>(respuesta.Resultado.ToString());
@@ -227,7 +227,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, documentoInformacionInstitucional, new Uri(WebApp.BaseAddress),
-                                                                 "/api/MaterialesInduccion");
+                                                                 "api/MaterialesInduccion");
 
                     if (response.IsSuccess)
                     {
@@ -272,7 +272,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<MaterialInduccion>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/MaterialesInduccion/ListarMaterialesInduccion");
+                                                                    , "api/MaterialesInduccion/ListarMaterialesInduccion");
                 return View(lista);
             }
             catch (Exception ex)
@@ -300,14 +300,14 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var respuestaMaterial = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                             "/api/MaterialesInduccion");
+                                                             "api/MaterialesInduccion");
 
                 var materialinduccion = JsonConvert.DeserializeObject<MaterialInduccion>(respuestaMaterial.Resultado.ToString());
 
                 var ext = Path.GetExtension(materialinduccion.Url);
 
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/MaterialesInduccion");
+                                                               , "api/MaterialesInduccion");
                 if (response.IsSuccess)
                 {
                     var respuestaFile = uploadFileService.DeleteFile("MaterialInduccion", Convert.ToString(id), ext);
@@ -348,7 +348,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
             var response = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                              "/api/MaterialesInduccion");
+                                                              "api/MaterialesInduccion");
 
             var materialinduccion = JsonConvert.DeserializeObject<MaterialInduccion>(response.Resultado.ToString());
             var d = new MaterialInduccion
@@ -363,7 +363,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 var responseGetFile = await apiServicio.ObtenerElementoAsync(d,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/MaterialesInduccion/GetFile");
+                                                             "api/MaterialesInduccion/GetFile");
                var m = JsonConvert.DeserializeObject<DocumentoInstitucionalTransfer>(responseGetFile.Resultado.ToString());
 
             //var fileName = $"{ responseGetFile.Message}.pdf";

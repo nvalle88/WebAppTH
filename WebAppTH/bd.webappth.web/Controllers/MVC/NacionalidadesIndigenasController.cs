@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(NacionalidadIndigena,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/NacionalidadesIndigenas/InsertarNacionalidadIndigena");
+                                                             "api/NacionalidadesIndigenas/InsertarNacionalidadIndigena");
                 if (response.IsSuccess)
                 {
 
@@ -87,7 +87,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/NacionalidadesIndigenas");
+                                                                  "api/NacionalidadesIndigenas");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<NacionalidadIndigena>(respuesta.Resultado.ToString());
@@ -119,7 +119,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, NacionalidadIndigena, new Uri(WebApp.BaseAddress),
-                                                                 "/api/NacionalidadesIndigenas");
+                                                                 "api/NacionalidadesIndigenas");
 
                     if (response.IsSuccess)
                     {
@@ -167,7 +167,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<NacionalidadIndigena>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/NacionalidadesIndigenas/ListarNacionalidadesIndigenas");
+                                                                    , "api/NacionalidadesIndigenas/ListarNacionalidadesIndigenas");
                 return View(lista);
             }
             catch (Exception ex)
@@ -191,7 +191,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/NacionalidadesIndigenas");
+                                                               , "api/NacionalidadesIndigenas");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

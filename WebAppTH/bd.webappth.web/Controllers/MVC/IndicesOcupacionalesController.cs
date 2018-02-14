@@ -82,7 +82,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             var listaComportamientosObservables = await apiServicio.Listar<Capacitacion>(indiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Capacitaciones/ListarCapacitacionesNoAsignadasIndiceOcupacional");
+                                                             "api/Capacitaciones/ListarCapacitacionesNoAsignadasIndiceOcupacional");
             var resultado = false;
             if (listaComportamientosObservables.Count != 0)
             {
@@ -98,7 +98,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             var listaComportamientosObservables = await apiServicio.Listar<ComportamientoObservable>(indiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ComportamientosObservables/ListarComportamientosObservablesNoAsignadasIndiceOcupacional");
+                                                             "api/ComportamientosObservables/ListarComportamientosObservablesNoAsignadasIndiceOcupacional");
             var resultado = false;
             if (listaComportamientosObservables.Count != 0)
             {
@@ -114,7 +114,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             var listaConocimientosAdicionales = await apiServicio.Listar<ConocimientosAdicionales>(indiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ConocimientosAdicionales/ListarConocimientosAdicionalesNoAsignadasIndiceOcupacional");
+                                                             "api/ConocimientosAdicionales/ListarConocimientosAdicionalesNoAsignadasIndiceOcupacional");
             var resultado = false;
             if (listaConocimientosAdicionales.Count != 0)
             {
@@ -168,7 +168,7 @@ namespace bd.webappth.web.Controllers.MVC
                 IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
                 ComportamientoObservables= await apiServicio.Listar<ComportamientoObservable>(indiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ComportamientosObservables/ListarComportamientosObservablesNoAsignadasIndiceOcupacional"),
+                                                             "api/ComportamientosObservables/ListarComportamientosObservablesNoAsignadasIndiceOcupacional"),
             };
 
             if (indiceconocimientoad.ComportamientoObservables.Count!=0)
@@ -221,7 +221,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     response = await apiServicio.InsertarAsync(indiceOcupacionalCapacitaciones,
                                                                  new Uri(WebApp.BaseAddress),
-                                                                 "/api/IndicesOcupacionales/InsertarCapacitacion");
+                                                                 "api/IndicesOcupacionales/InsertarCapacitacion");
                     if (response.IsSuccess)
                     {
 
@@ -277,7 +277,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     response = await apiServicio.InsertarAsync(indiceOcupacionalConocimientosAdicionales,
                                                                  new Uri(WebApp.BaseAddress),
-                                                                 "/api/IndicesOcupacionales/InsertarConocimientoAdicional");
+                                                                 "api/IndicesOcupacionales/InsertarConocimientoAdicional");
                     if (response.IsSuccess)
                     {
 
@@ -337,7 +337,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     response = await apiServicio.InsertarAsync(indiceOcupacionalComportamientoObservable,
                                                                  new Uri(WebApp.BaseAddress),
-                                                                 "/api/IndicesOcupacionales/InsertarComportamientoObservable");
+                                                                 "api/IndicesOcupacionales/InsertarComportamientoObservable");
                     if (response.IsSuccess)
                     {
 
@@ -458,7 +458,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     response = await apiServicio.InsertarAsync(indiceOcupacionalActividadesEsenciales,
                                                                  new Uri(WebApp.BaseAddress),
-                                                                 "/api/IndicesOcupacionales/InsertarActividadesEsenciales");
+                                                                 "api/IndicesOcupacionales/InsertarActividadesEsenciales");
                     if (response.IsSuccess)
                     {
 
@@ -547,7 +547,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     response = await apiServicio.InsertarAsync(indiceOcupacionalEstudio,
                                                                  new Uri(WebApp.BaseAddress),
-                                                                 "/api/IndicesOcupacionales/InsertarEstudio");
+                                                                 "api/IndicesOcupacionales/InsertarEstudio");
                     if (response.IsSuccess)
                     {
 
@@ -639,7 +639,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 response = await apiServicio.InsertarAsync(experienciaLaboralRequeridaIndiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/IndicesOcupacionales/InsertarExperienciaLaboralRequerida");
+                                                             "api/IndicesOcupacionales/InsertarExperienciaLaboralRequerida");
                 if (response.IsSuccess)
                 {
 
@@ -699,7 +699,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
                     ListaExperienciaLaboralRequerida = await apiServicio.Listar<ExperienciaLaboralRequerida>(indiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                                , "/api/ExperienciaLaboralRequeridas/ListarExperienciaLaboralRequeridaNoAsignadasIndiceOcupacional")
+                                                                , "api/ExperienciaLaboralRequeridas/ListarExperienciaLaboralRequeridaNoAsignadasIndiceOcupacional")
                 };
 
                 var resultado = await CargarComboExperienciaLaboralRequerida(indiceOcupacional);
@@ -736,7 +736,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     response = await apiServicio.InsertarAsync(misionIndiceOcupacional,
                                                                  new Uri(WebApp.BaseAddress),
-                                                                 "/api/IndicesOcupacionales/InsertarMision");
+                                                                 "api/IndicesOcupacionales/InsertarMision");
                     if (response.IsSuccess)
                     {
 
@@ -791,7 +791,7 @@ namespace bd.webappth.web.Controllers.MVC
             };
 
             var listaElementos = await apiServicio.Listar<MisionIndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                                  , "/api/Misiones/ListarElementosMisionesIndiceOcupacional");
+                                                                  , "api/Misiones/ListarElementosMisionesIndiceOcupacional");
 
          
 
@@ -802,7 +802,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
                     ListaMisiones = await apiServicio.Listar<Mision>(indiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                                , "/api/Misiones/ListarMisionNoAsignadasIndiceOcupacional")
+                                                                , "api/Misiones/ListarMisionNoAsignadasIndiceOcupacional")
                 };
 
                 InicializarMensaje(mensaje);
@@ -832,7 +832,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 response = await apiServicio.InsertarAsync(RIEIndiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/IndicesOcupacionales/InsertarRelacionesInternasExternas");
+                                                             "api/IndicesOcupacionales/InsertarRelacionesInternasExternas");
                 if (response.IsSuccess)
                 {
 
@@ -888,7 +888,7 @@ namespace bd.webappth.web.Controllers.MVC
             };
 
             var listaElementos = await apiServicio.Listar<RelacionesInternasExternasIndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                                  , "/api/RelacionesInternasExternas/ListarElementosRIE");
+                                                                  , "api/RelacionesInternasExternas/ListarElementosRIE");
 
 
 
@@ -899,7 +899,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
                     ListaRelacionesInternasExternas = await apiServicio.Listar<RelacionesInternasExternas>(indiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                                , "/api/RelacionesInternasExternas/ListarRIENoAsignadasIndiceOcupacional")
+                                                                , "api/RelacionesInternasExternas/ListarRIENoAsignadasIndiceOcupacional")
                 };
 
                 InicializarMensaje(mensaje);
@@ -979,7 +979,7 @@ namespace bd.webappth.web.Controllers.MVC
             var listaRoles = await apiServicio.Listar<RolPuesto>(new Uri(WebApp.BaseAddress), "api/RolesPuesto/ListarRolesPuesto");
             ViewData["IdRolPuesto"] = new SelectList(listaRoles, "IdRolPuesto", "Nombre");
 
-            var listaEscalaGrados = await apiServicio.Listar<EscalaGrados>(new Uri(WebApp.BaseAddress), "/api/EscalasGrados/ListarEscalasGrados");
+            var listaEscalaGrados = await apiServicio.Listar<EscalaGrados>(new Uri(WebApp.BaseAddress), "api/EscalasGrados/ListarEscalasGrados");
             ViewData["IdEscalaGrados"] = new SelectList(listaEscalaGrados, "IdEscalaGrados", "Remuneracion");
 
           
@@ -1030,7 +1030,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     response = await apiServicio.InsertarAsync(indiceOcupacionalAreaConocimiento,
                                                                  new Uri(WebApp.BaseAddress),
-                                                                 "/api/IndicesOcupacionales/InsertarAreaConocimiento");
+                                                                 "api/IndicesOcupacionales/InsertarAreaConocimiento");
                     if (response.IsSuccess)
                     {
 
@@ -1086,7 +1086,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     response = await apiServicio.InsertarAsync(indiceOcupacionalDetalle,
                                                                  new Uri(WebApp.BaseAddress),
-                                                                 "/api/IndicesOcupacionales/InsertarIndiceOcupacional");
+                                                                 "api/IndicesOcupacionales/InsertarIndiceOcupacional");
                     if (response.IsSuccess)
                     {
 
@@ -1141,7 +1141,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/IndicesOcupacionales/ListarIndicesOcupaciones");
+                                                                    , "api/IndicesOcupacionales/ListarIndicesOcupaciones");
                 return View(lista);
             }
             catch (Exception ex)

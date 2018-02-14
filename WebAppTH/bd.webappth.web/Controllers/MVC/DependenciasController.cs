@@ -28,7 +28,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Dependencias/ListarDependencias");
+                                                                    , "api/Dependencias/ListarDependencias");
                 return View(lista);
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     response = await apiServicio.InsertarAsync(dependencia,
                                                                  new Uri(WebApp.BaseAddress),
-                                                                 "/api/Dependencias/InsertarDependencia");
+                                                                 "api/Dependencias/InsertarDependencia");
                     if (response.IsSuccess)
                     {
 

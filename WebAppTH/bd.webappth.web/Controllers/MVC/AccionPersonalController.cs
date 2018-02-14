@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(accionPersonal,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/AccionesPersonal/InsertarAccionPersonal");
+                                                             "api/AccionesPersonal/InsertarAccionPersonal");
                 if (response.IsSuccess)
                 {
 
@@ -85,7 +85,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/AccionesPersonal");
+                                                                  "api/AccionesPersonal");
 
 
                     var a = JsonConvert.DeserializeObject<AccionPersonal>(respuesta.Resultado.ToString());
@@ -96,7 +96,7 @@ namespace bd.webappth.web.Controllers.MVC
                             IdEmpleado = a.IdEmpleado,
                         };
                         var empleado = await apiServicio.ObtenerElementoAsync1<EmpleadoSolicitudViewModel>(empleadoEnviar, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDatosEmpleadoSeleccionado");
-                        var respuestaAccionPersonal = await apiServicio.SeleccionarAsync<Response>(a.IdTipoAccionPersonal.ToString(), new Uri(WebApp.BaseAddress), "/api/TiposAccionesPersonales");
+                        var respuestaAccionPersonal = await apiServicio.SeleccionarAsync<Response>(a.IdTipoAccionPersonal.ToString(), new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales");
                         var tipoaccionpersonal = JsonConvert.DeserializeObject<TipoAccionPersonal>(respuestaAccionPersonal.Resultado.ToString());
                         ViewData["NombresApellidos"] = empleado.NombreApellido;
                         ViewData["Identificacion"] = empleado.Identificacion;
@@ -128,7 +128,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, accionPersonal, new Uri(WebApp.BaseAddress),
-                                                                 "/api/AccionesPersonal");
+                                                                 "api/AccionesPersonal");
 
                     if (response.IsSuccess)
                     {
@@ -173,7 +173,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<AccionPersonal>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/AccionesPersonal/ListarAccionesPersonal");
+                                                                    , "api/AccionesPersonal/ListarAccionesPersonal");
                 return View(lista);
             }
             catch (Exception ex)
@@ -198,7 +198,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Empleados/ListarEmpleadoconAccionPersonalPendiente");
+                                                                    , "api/Empleados/ListarEmpleadoconAccionPersonalPendiente");
                 return View(lista);
             }
             catch (Exception ex)
@@ -222,7 +222,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/AccionesPersonal");
+                                                               , "api/AccionesPersonal");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

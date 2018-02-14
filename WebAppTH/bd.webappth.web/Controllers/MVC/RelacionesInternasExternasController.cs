@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(RelacionesInternasExternas,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/RelacionesInternasExternas/InsertarRelacionesInternasExternas");
+                                                             "api/RelacionesInternasExternas/InsertarRelacionesInternasExternas");
                 if (response.IsSuccess)
                 {
 
@@ -90,7 +90,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional = idIndiceOcupacional
                 };
                 var response = await apiServicio.EliminarAsync(relacionesInternasExternasIndiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                               , "/api/RelacionesInternasExternas/EliminarIncideOcupacionalRelacionesInternasExternas");
+                                                               , "api/RelacionesInternasExternas/EliminarIncideOcupacionalRelacionesInternasExternas");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -162,7 +162,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, RelacionesInternasExternas, new Uri(WebApp.BaseAddress),
-                                                                 "/api/RelacionesInternasExternas");
+                                                                 "api/RelacionesInternasExternas");
 
                     if (response.IsSuccess)
                     {
@@ -207,7 +207,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<RelacionesInternasExternas>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/RelacionesInternasExternas/ListarRelacionesInternasExternas");
+                                                                    , "api/RelacionesInternasExternas/ListarRelacionesInternasExternas");
                 return View(lista);
             }
             catch (Exception ex)
@@ -231,7 +231,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/RelacionesInternasExternas");
+                                                               , "api/RelacionesInternasExternas");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

@@ -26,7 +26,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public IActionResult Create()
         {
-            //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "/api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
+            //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
             return View();
         }
 
@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(configuracionViatico,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ConfiguracionesViaticos/InsertarConfiguracionViatico");
+                                                             "api/ConfiguracionesViaticos/InsertarConfiguracionViatico");
                 if (response.IsSuccess)
                 {
 
@@ -58,7 +58,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 ViewData["Error"] = response.Message;
-                //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "/api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
+                //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
                 return View(configuracionViatico);
 
             }
@@ -85,7 +85,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ConfiguracionesViaticos");
+                                                                  "api/ConfiguracionesViaticos");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<ConfiguracionViatico>(respuesta.Resultado.ToString());
@@ -114,7 +114,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, configuracionViatico, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ConfiguracionesViaticos");
+                                                                 "api/ConfiguracionesViaticos");
 
                     if (response.IsSuccess)
                     {
@@ -131,7 +131,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "/api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
+                    //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
                     return View(configuracionViatico);
 
                 }
@@ -160,7 +160,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ConfiguracionViatico>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ConfiguracionesViaticos/ListarConfiguracionesViaticos");
+                                                                    , "api/ConfiguracionesViaticos/ListarConfiguracionesViaticos");
                 return View(lista);
             }
             catch (Exception ex)
@@ -184,7 +184,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ConfiguracionesViaticos");
+                                                               , "api/ConfiguracionesViaticos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

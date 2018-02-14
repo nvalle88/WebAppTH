@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(RelacionesInternasExternasIndiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/RelacionesInternasExternasDeIndiceOcupacional/InsertarRelacionesInternasExternasIndiceOcupacional");
+                                                             "api/RelacionesInternasExternasDeIndiceOcupacional/InsertarRelacionesInternasExternasIndiceOcupacional");
                 if (response.IsSuccess)
                 {
 
@@ -87,7 +87,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/RelacionesInternasExternasDeIndiceOcupacional");
+                                                                  "api/RelacionesInternasExternasDeIndiceOcupacional");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<RelacionesInternasExternasIndiceOcupacional>(respuesta.Resultado.ToString());
@@ -119,7 +119,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, RelacionesInternasExternasIndiceOcupacional, new Uri(WebApp.BaseAddress),
-                                                                 "/api/RelacionesInternasExternasDeIndiceOcupacional");
+                                                                 "api/RelacionesInternasExternasDeIndiceOcupacional");
 
                     if (response.IsSuccess)
                     {
@@ -167,7 +167,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<RelacionesInternasExternasIndiceOcupacional>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/RelacionesInternasExternasDeIndiceOcupacional/ListarRelacionesInternasExternasDeIndiceOcupacional");
+                                                                    , "api/RelacionesInternasExternasDeIndiceOcupacional/ListarRelacionesInternasExternasDeIndiceOcupacional");
                 return View(lista);
             }
             catch (Exception ex)
@@ -191,7 +191,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/RelacionesInternasExternasDeIndiceOcupacional");
+                                                               , "api/RelacionesInternasExternasDeIndiceOcupacional");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

@@ -44,7 +44,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional = idIndiceOcupacional
                 };
                 var response = await apiServicio.EliminarAsync(IndiceOcupacionalAreaConocimiento, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ActividadesEsenciales/EliminarIndiceOcupacionalActividadesEsenciales");
+                                                               , "api/ActividadesEsenciales/EliminarIndiceOcupacionalActividadesEsenciales");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -89,7 +89,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(actividadesEsenciales,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ActividadesEsenciales/InsertarActividadesEsenciales");
+                                                             "api/ActividadesEsenciales/InsertarActividadesEsenciales");
 
 
                 if (response.IsSuccess)
@@ -141,7 +141,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ActividadesEsenciales");
+                                                                  "api/ActividadesEsenciales");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<ActividadesEsenciales>(respuesta.Resultado.ToString());
@@ -172,10 +172,10 @@ namespace bd.webappth.web.Controllers.MVC
                 {
 
                     var objetoAnterior = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ActividadesEsenciales");
+                                                                  "api/ActividadesEsenciales");
 
                     response = await apiServicio.EditarAsync(id, actividadesEsenciales, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ActividadesEsenciales");
+                                                                 "api/ActividadesEsenciales");
 
                     if (response.IsSuccess)
                     {
@@ -227,7 +227,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ActividadesEsenciales>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ActividadesEsenciales/ListarActividadesEsenciales");
+                                                                    , "api/ActividadesEsenciales/ListarActividadesEsenciales");
                 return View(lista);
             }
             catch (Exception ex)
@@ -251,7 +251,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ActividadesEsenciales");
+                                                               , "api/ActividadesEsenciales");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

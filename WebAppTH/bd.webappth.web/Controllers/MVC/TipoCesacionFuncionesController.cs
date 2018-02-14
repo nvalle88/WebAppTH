@@ -38,7 +38,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(tipoCesacionFuncion,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TipoCesacionFunciones/InsertarTipoCesacionFuncion");
+                                                             "api/TipoCesacionFunciones/InsertarTipoCesacionFuncion");
                 if (response.IsSuccess)
                 {
 
@@ -83,7 +83,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/TipoCesacionFunciones");
+                                                                  "api/TipoCesacionFunciones");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<TipoCesacionFuncion>(respuesta.Resultado.ToString());
@@ -112,7 +112,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, tipoCesacionFuncion, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TipoCesacionFunciones");
+                                                                 "api/TipoCesacionFunciones");
 
                     if (response.IsSuccess)
                     {
@@ -157,7 +157,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<TipoCesacionFuncion>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TipoCesacionFunciones/ListarTipoCesacionFunciones");
+                                                                    , "api/TipoCesacionFunciones/ListarTipoCesacionFunciones");
                 return View(lista);
             }
             catch (Exception ex)
@@ -181,7 +181,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TipoCesacionFunciones");
+                                                               , "api/TipoCesacionFunciones");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

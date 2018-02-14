@@ -108,7 +108,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 response = await apiServicio.InsertarAsync(SolicitudPermiso,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/SolicitudesPermisos/InsertarSolicitudPermiso");
+                                                             "api/SolicitudesPermisos/InsertarSolicitudPermiso");
                 if (response.IsSuccess)
                 {
 
@@ -165,7 +165,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
                 var respuesta = await apiServicio.SeleccionarAsync<Response>(empleado.IdEmpleado.ToString(), new Uri(WebApp.BaseAddress),
-                                                                 "/api/Empleados");
+                                                                 "api/Empleados");
 
 
                 respuesta.Resultado = JsonConvert.DeserializeObject<Empleado>(respuesta.Resultado.ToString());
@@ -276,7 +276,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 };
 
-                var response = await apiServicio.InsertarAsync(solicitudPermiso, new Uri(WebApp.BaseAddress), "/api/SolicitudesPermisos/InsertarSolicitudPermiso");
+                var response = await apiServicio.InsertarAsync(solicitudPermiso, new Uri(WebApp.BaseAddress), "api/SolicitudesPermisos/InsertarSolicitudPermiso");
 
                 if (response.IsSuccess)
                 {
@@ -331,7 +331,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/SolicitudesPermisos");
+                                                                  "api/SolicitudesPermisos");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudPermiso>(respuesta.Resultado.ToString());
@@ -364,7 +364,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, SolicitudPermiso, new Uri(WebApp.BaseAddress),
-                                                                 "/api/SolicitudesPermisos");
+                                                                 "api/SolicitudesPermisos");
 
                     if (response.IsSuccess)
                     {
@@ -445,7 +445,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     solicitudPermisoViewModel.SolicitudPermiso.Estado = 0;
                     response = await apiServicio.EditarAsync(id, solicitudPermisoViewModel.SolicitudPermiso, new Uri(WebApp.BaseAddress),
-                                                                 "/api/SolicitudesPermisos");
+                                                                 "api/SolicitudesPermisos");
 
                     if (response.IsSuccess)
                     {
@@ -530,7 +530,7 @@ namespace bd.webappth.web.Controllers.MVC
                     };
 
                     response = await apiServicio.EditarAsync(id, item.SolicitudPermiso, new Uri(WebApp.BaseAddress),
-                                                                 "/api/SolicitudesPermisos");
+                                                                 "api/SolicitudesPermisos");
 
                     if (response.IsSuccess)
                     {
@@ -587,7 +587,7 @@ namespace bd.webappth.web.Controllers.MVC
                 Empleado empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(NombreUsuario, new Uri(WebApp.BaseAddress), "api/Empleados/EmpleadoSegunNombreUsuario");
                 
                 lista = await apiServicio.Listar<SolicitudPermiso>(empleado, new Uri(WebApp.BaseAddress)
-                                                                    , "/api/SolicitudesPermisos/ListarSolicitudesPermisosEmpleado");
+                                                                    , "api/SolicitudesPermisos/ListarSolicitudesPermisosEmpleado");
                 return View(lista);
             }
             catch (Exception ex)
@@ -651,7 +651,7 @@ namespace bd.webappth.web.Controllers.MVC
                 };
 
                 lista = await apiServicio.Listar<SolicitudPermiso>(solicitudPermiso, new Uri(WebApp.BaseAddress)
-                                                                    , "/api/SolicitudesPermisos/ListarInformacionEmpleado");
+                                                                    , "api/SolicitudesPermisos/ListarInformacionEmpleado");
 
 
                 return View(lista);
@@ -677,7 +677,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/SolicitudesPermisos");
+                                                               , "api/SolicitudesPermisos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

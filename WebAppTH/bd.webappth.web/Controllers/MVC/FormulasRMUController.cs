@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(FormulasRMU,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/FormulasRMU/InsertarFormulasRMU");
+                                                             "api/FormulasRMU/InsertarFormulasRMU");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, FormulasRMU, new Uri(WebApp.BaseAddress),
-                                                                 "/api/FormulasRMU");
+                                                                 "api/FormulasRMU");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<FormulasRMU>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/FormulasRMU/ListarFormulasRMU");
+                                                                    , "api/FormulasRMU/ListarFormulasRMU");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/FormulasRMU");
+                                                               , "api/FormulasRMU");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

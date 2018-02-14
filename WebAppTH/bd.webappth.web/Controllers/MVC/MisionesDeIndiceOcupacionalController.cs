@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(MisionIndiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/MisionesDeIndiceOcupacional/InsertarMisionIndiceOcupacional");
+                                                             "api/MisionesDeIndiceOcupacional/InsertarMisionIndiceOcupacional");
                 if (response.IsSuccess)
                 {
 
@@ -87,7 +87,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/MisionesDeIndiceOcupacional");
+                                                                  "api/MisionesDeIndiceOcupacional");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<MisionIndiceOcupacional>(respuesta.Resultado.ToString());
@@ -119,7 +119,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, MisionIndiceOcupacional, new Uri(WebApp.BaseAddress),
-                                                                 "/api/MisionesDeIndiceOcupacional");
+                                                                 "api/MisionesDeIndiceOcupacional");
 
                     if (response.IsSuccess)
                     {
@@ -167,7 +167,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<MisionIndiceOcupacional>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/MisionesDeIndiceOcupacional/ListarMisionesDeIndiceOcupacional");
+                                                                    , "api/MisionesDeIndiceOcupacional/ListarMisionesDeIndiceOcupacional");
                 return View(lista);
             }
             catch (Exception ex)
@@ -191,7 +191,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/MisionesDeIndiceOcupacional");
+                                                               , "api/MisionesDeIndiceOcupacional");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

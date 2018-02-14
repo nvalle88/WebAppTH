@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(NivelDesarrollo,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/NivelesDesarrollo/InsertarNivelesDesarrollo");
+                                                             "api/NivelesDesarrollo/InsertarNivelesDesarrollo");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, NivelDesarrollo, new Uri(WebApp.BaseAddress),
-                                                                 "/api/NivelesDesarrollo");
+                                                                 "api/NivelesDesarrollo");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<NivelDesarrollo>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/NivelesDesarrollo/ListarNivelesDesarrollo");
+                                                                    , "api/NivelesDesarrollo/ListarNivelesDesarrollo");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/NivelesDesarrollo");
+                                                               , "api/NivelesDesarrollo");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

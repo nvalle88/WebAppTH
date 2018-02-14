@@ -29,7 +29,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Relevancia>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Relevancias/ListarRelevancias");
+                                                                    , "api/Relevancias/ListarRelevancias");
                 return View(lista);
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(relevancia,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Relevancias/InsertarRelevancia");
+                                                             "api/Relevancias/InsertarRelevancia");
                 if (response.IsSuccess)
                 {
 
@@ -106,7 +106,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/Relevancias");
+                                                                  "api/Relevancias");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<Relevancia>(respuesta.Resultado.ToString());
@@ -135,7 +135,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, relevancia, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Relevancias");
+                                                                 "api/Relevancias");
 
                     if (response.IsSuccess)
                     {
@@ -177,7 +177,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Relevancias");
+                                                               , "api/Relevancias");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

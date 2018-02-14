@@ -44,7 +44,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(FlujoAprobacion,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/FlujosAprobacion/InsertarFlujoAprobacion");
+                                                             "api/FlujosAprobacion/InsertarFlujoAprobacion");
                 if (response.IsSuccess)
                 {
 
@@ -93,7 +93,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/FlujosAprobacion");
+                                                                  "api/FlujosAprobacion");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<FlujoAprobacion>(respuesta.Resultado.ToString());
@@ -127,7 +127,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, FlujoAprobacion, new Uri(WebApp.BaseAddress),
-                                                                 "/api/FlujosAprobacion");
+                                                                 "api/FlujosAprobacion");
 
                     if (response.IsSuccess)
                     {
@@ -177,7 +177,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<FlujoAprobacion>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/FlujosAprobacion/ListarFlujosAprobacion");
+                                                                    , "api/FlujosAprobacion/ListarFlujosAprobacion");
                 return View(lista);
             }
             catch (Exception ex)
@@ -201,7 +201,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/FlujosAprobacion");
+                                                               , "api/FlujosAprobacion");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
