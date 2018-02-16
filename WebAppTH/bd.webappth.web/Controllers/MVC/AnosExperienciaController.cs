@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(anoExperiencia,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/AnosExperiencia/InsertarAnoExperiencia");
+                                                             "api/AnosExperiencia/InsertarAnoExperiencia");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/AnosExperiencia");
+                                                                  "api/AnosExperiencia");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<AnoExperiencia>(respuesta.Resultado.ToString());
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, anoExperiencia, new Uri(WebApp.BaseAddress),
-                                                                 "/api/AnosExperiencia");
+                                                                 "api/AnosExperiencia");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<AnoExperiencia>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/AnosExperiencia/ListarAnosExperiencia");
+                                                                    , "api/AnosExperiencia/ListarAnosExperiencia");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/AnosExperiencia");
+                                                               , "api/AnosExperiencia");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

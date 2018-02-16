@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(TrabajoEquipoIniciativaLiderazgo,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TrabajosDeEquipoIniciativaLiderazgo/InsertarTrabajoEquipoIniciativaLiderazgo");
+                                                             "api/TrabajosDeEquipoIniciativaLiderazgo/InsertarTrabajoEquipoIniciativaLiderazgo");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, TrabajoEquipoIniciativaLiderazgo, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TrabajosDeEquipoIniciativaLiderazgo");
+                                                                 "api/TrabajosDeEquipoIniciativaLiderazgo");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<TrabajoEquipoIniciativaLiderazgo>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TrabajosDeEquipoIniciativaLiderazgo/ListarTrabajosDeEquipoIniciativaLiderazgo");
+                                                                    , "api/TrabajosDeEquipoIniciativaLiderazgo/ListarTrabajosDeEquipoIniciativaLiderazgo");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TrabajosDeEquipoIniciativaLiderazgo");
+                                                               , "api/TrabajosDeEquipoIniciativaLiderazgo");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

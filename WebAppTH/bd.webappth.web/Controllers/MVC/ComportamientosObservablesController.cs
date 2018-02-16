@@ -27,8 +27,8 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "/api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
-            ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "/api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
+            ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
+            ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
             return View();
         }
 
@@ -43,7 +43,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional = idIndiceOcupacional
                 };
                 var response = await apiServicio.EliminarAsync(indiceOcupacionalComportamientoObservable, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ComportamientosObservables/EliminarIndiceOcupacionalComportamiemtoObservable");
+                                                               , "api/ComportamientosObservables/EliminarIndiceOcupacionalComportamiemtoObservable");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -85,7 +85,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(comportamientoObservable,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ComportamientosObservables/InsertarComportamientoObservable");
+                                                             "api/ComportamientosObservables/InsertarComportamientoObservable");
                 if (response.IsSuccess)
                 {
 
@@ -104,8 +104,8 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 ViewData["Error"] = response.Message;
-                ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "/api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
-                ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "/api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
+                ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
+                ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
                 return View(comportamientoObservable);
 
             }
@@ -132,12 +132,12 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ComportamientosObservables");
+                                                                  "api/ComportamientosObservables");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<ComportamientoObservable>(respuesta.Resultado.ToString());
-                    ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "/api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
-                    ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "/api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
+                    ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
+                    ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -163,7 +163,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, comportamientoObservable, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ComportamientosObservables");
+                                                                 "api/ComportamientosObservables");
 
                     if (response.IsSuccess)
                     {
@@ -180,8 +180,8 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "/api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
-                    ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "/api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
+                    ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
+                    ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
                     return View(comportamientoObservable);
 
                 }
@@ -210,7 +210,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ComportamientoObservable>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/ComportamientosObservables/ListarComportamientosObservables");
+                                                                    , "api/ComportamientosObservables/ListarComportamientosObservables");
                 return View(lista);
             }
             catch (Exception ex)
@@ -234,7 +234,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ComportamientosObservables");
+                                                               , "api/ComportamientosObservables");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

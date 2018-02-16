@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(TipoEnfermedad,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TiposEnfermedades/InsertarTipoEnfermedad");
+                                                             "api/TiposEnfermedades/InsertarTipoEnfermedad");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, TipoEnfermedad, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TiposEnfermedades");
+                                                                 "api/TiposEnfermedades");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TiposEnfermedades/ListarTiposEnfermedades");
+                                                                    , "api/TiposEnfermedades/ListarTiposEnfermedades");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TiposEnfermedades");
+                                                               , "api/TiposEnfermedades");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

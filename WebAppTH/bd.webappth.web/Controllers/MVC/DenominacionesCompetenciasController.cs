@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(denominacionCompetencia,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/DenominacionesCompetencias/InsertarDenominacionCompetencia");
+                                                             "api/DenominacionesCompetencias/InsertarDenominacionCompetencia");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/DenominacionesCompetencias");
+                                                                  "api/DenominacionesCompetencias");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<DenominacionCompetencia>(respuesta.Resultado.ToString());
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, denominacionCompetencia, new Uri(WebApp.BaseAddress),
-                                                                 "/api/DenominacionesCompetencias");
+                                                                 "api/DenominacionesCompetencias");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/DenominacionesCompetencias/ListarDenominacionesCompetencias");
+                                                                    , "api/DenominacionesCompetencias/ListarDenominacionesCompetencias");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/DenominacionesCompetencias");
+                                                               , "api/DenominacionesCompetencias");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

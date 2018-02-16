@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(InstitucionFinanciera,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/InstitucionesFinancieras/InsertarInstitucionFinanciera");
+                                                             "api/InstitucionesFinancieras/InsertarInstitucionFinanciera");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, InstitucionFinanciera, new Uri(WebApp.BaseAddress),
-                                                                 "/api/InstitucionesFinancieras");
+                                                                 "api/InstitucionesFinancieras");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/InstitucionesFinancieras/ListarInstitucionesFinancieras");
+                                                                    , "api/InstitucionesFinancieras/ListarInstitucionesFinancieras");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/InstitucionesFinancieras");
+                                                               , "api/InstitucionesFinancieras");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

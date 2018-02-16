@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(areaConocimiento,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/AreasConocimientos/InsertarAreaConocimiento");
+                                                             "api/AreasConocimientos/InsertarAreaConocimiento");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/AreasConocimientos");
+                                                                  "api/AreasConocimientos");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<AreaConocimiento>(respuesta.Resultado.ToString());
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, areaConocimiento, new Uri(WebApp.BaseAddress),
-                                                                 "/api/AreasConocimientos");
+                                                                 "api/AreasConocimientos");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/AreasConocimientos/ListarAreasConocimientos");
+                                                                    , "api/AreasConocimientos/ListarAreasConocimientos");
                 return View(lista);
             }
             catch (Exception ex)
@@ -191,7 +191,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional= idIndiceOcupacional
                 };
                 var response = await apiServicio.EliminarAsync(IndiceOcupacionalAreaConocimiento, new Uri(WebApp.BaseAddress)
-                                                               , "/api/AreasConocimientos/EliminarIncideOcupacionalAreaConocimiento");
+                                                               , "api/AreasConocimientos/EliminarIncideOcupacionalAreaConocimiento");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -230,7 +230,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/AreasConocimientos");
+                                                               , "api/AreasConocimientos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

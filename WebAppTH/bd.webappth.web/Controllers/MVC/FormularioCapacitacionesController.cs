@@ -86,7 +86,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/FormularioCapacitaciones");
+                                                                  "api/FormularioCapacitaciones");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<FormularioCapacitacion>(respuesta.Resultado.ToString());
@@ -115,7 +115,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, FormularioCapacitacion, new Uri(WebApp.BaseAddress),
-                                                                 "/api/FormularioCapacitaciones");
+                                                                 "api/FormularioCapacitaciones");
 
                     if (response.IsSuccess)
                     {
@@ -184,7 +184,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/FormularioCapacitaciones");
+                                                               , "api/FormularioCapacitaciones");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

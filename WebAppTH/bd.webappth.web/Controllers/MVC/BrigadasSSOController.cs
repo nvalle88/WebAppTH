@@ -43,7 +43,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(brigadaSSO,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/BrigadasSSO/InsertarBrigadaSSO");
+                                                             "api/BrigadasSSO/InsertarBrigadaSSO");
                 if (response.IsSuccess)
                 {
 
@@ -88,7 +88,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/BrigadasSSO");
+                                                                  "api/BrigadasSSO");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<BrigadaSSO>(respuesta.Resultado.ToString());
@@ -118,7 +118,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, brigadaSSO, new Uri(WebApp.BaseAddress),
-                                                                 "/api/BrigadasSSO");
+                                                                 "api/BrigadasSSO");
 
                     if (response.IsSuccess)
                     {
@@ -163,7 +163,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/BrigadasSSO/ListarBrigadasSSO");
+                                                                    , "api/BrigadasSSO/ListarBrigadasSSO");
                 return View(lista);
             }
             catch (Exception ex)
@@ -187,7 +187,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/BrigadasSSO");
+                                                               , "api/BrigadasSSO");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

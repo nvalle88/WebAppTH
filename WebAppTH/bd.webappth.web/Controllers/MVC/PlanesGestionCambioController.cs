@@ -44,7 +44,7 @@ namespace bd.webappth.web.Controllers
 
                 response = await apiServicio.InsertarAsync(PlanGestionCambio,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/PlanesGestionCambio/InsertarPlanGestionCambio");
+                                                             "api/PlanesGestionCambio/InsertarPlanGestionCambio");
                 if (response.IsSuccess)
                 {
 
@@ -90,7 +90,7 @@ namespace bd.webappth.web.Controllers
                 if (!string.IsNullOrEmpty(id))
                 {
                     Response respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/PlanesGestionCambio");
+                                                                  "api/PlanesGestionCambio");
                     
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<PlanGestionCambio>(respuesta.Resultado.ToString());
@@ -121,7 +121,7 @@ namespace bd.webappth.web.Controllers
                 {
                     
                     response = await apiServicio.EditarAsync(id, PlanGestionCambio, new Uri(WebApp.BaseAddress),
-                                                                 "/api/PlanesGestionCambio");
+                                                                 "api/PlanesGestionCambio");
 
                     if (response.IsSuccess)
                     {
@@ -167,7 +167,7 @@ namespace bd.webappth.web.Controllers
             try
             {               
                     lista = await apiServicio.Listar<PlanGestionCambio>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/PlanesGestionCambio/ListarPlanesGestionCambio");
+                                                                    , "api/PlanesGestionCambio/ListarPlanesGestionCambio");
                     return View(lista);              
             }
             catch (Exception ex)
@@ -191,7 +191,7 @@ namespace bd.webappth.web.Controllers
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/PlanesGestionCambio");
+                                                               , "api/PlanesGestionCambio");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

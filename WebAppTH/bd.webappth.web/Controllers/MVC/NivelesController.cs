@@ -41,7 +41,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(Nivel,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Niveles/InsertarNiveles");
+                                                             "api/Niveles/InsertarNiveles");
                 if (response.IsSuccess)
                 {
 
@@ -115,7 +115,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, Nivel, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Niveles");
+                                                                 "api/Niveles");
 
                     if (response.IsSuccess)
                     {
@@ -160,7 +160,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Niveles/ListarNiveles");
+                                                                    , "api/Niveles/ListarNiveles");
                 return View(lista);
             }
             catch (Exception ex)
@@ -184,7 +184,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Niveles");
+                                                               , "api/Niveles");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

@@ -27,7 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            ViewData["IdCapacitacionAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionAreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/CapacitacionesAreasConocimientos/ListarCapacionesAreasConocimientos"), "IdCapacitacionAreaConocimiento", "Descripcion");
+            ViewData["IdCapacitacionAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionAreaConocimiento>(new Uri(WebApp.BaseAddress), "api/CapacitacionesAreasConocimientos/ListarCapacionesAreasConocimientos"), "IdCapacitacionAreaConocimiento", "Descripcion");
             return View();
         }
 
@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(capacitacionTemario,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/CapacitacionesTemarios/InsertarCapacitacionTemario");
+                                                             "api/CapacitacionesTemarios/InsertarCapacitacionTemario");
                 if (response.IsSuccess)
                 {
 
@@ -59,7 +59,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 ViewData["Error"] = response.Message;
-                ViewData["IdCapacitacionAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionAreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/CapacitacionesAreasConocimientos/ListarCapacionesAreasConocimientos"), "IdCapacitacionAreaConocimiento", "Descripcion");
+                ViewData["IdCapacitacionAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionAreaConocimiento>(new Uri(WebApp.BaseAddress), "api/CapacitacionesAreasConocimientos/ListarCapacionesAreasConocimientos"), "IdCapacitacionAreaConocimiento", "Descripcion");
                 return View(capacitacionTemario);
 
             }
@@ -86,11 +86,11 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/CapacitacionesTemarios");
+                                                                  "api/CapacitacionesTemarios");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<CapacitacionTemario>(respuesta.Resultado.ToString());
-                    ViewData["IdCapacitacionAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionAreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/CapacitacionesAreasConocimientos/ListarCapacionesAreasConocimientos"), "IdCapacitacionAreaConocimiento", "Descripcion");
+                    ViewData["IdCapacitacionAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionAreaConocimiento>(new Uri(WebApp.BaseAddress), "api/CapacitacionesAreasConocimientos/ListarCapacionesAreasConocimientos"), "IdCapacitacionAreaConocimiento", "Descripcion");
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -116,7 +116,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, capacitacionTemario, new Uri(WebApp.BaseAddress),
-                                                                 "/api/CapacitacionesTemarios");
+                                                                 "api/CapacitacionesTemarios");
 
                     if (response.IsSuccess)
                     {
@@ -133,7 +133,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    ViewData["IdCapacitacionAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionAreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/CapacitacionesAreasConocimientos/ListarCapacionesAreasConocimientos"), "IdCapacitacionAreaConocimiento", "Descripcion");
+                    ViewData["IdCapacitacionAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionAreaConocimiento>(new Uri(WebApp.BaseAddress), "api/CapacitacionesAreasConocimientos/ListarCapacionesAreasConocimientos"), "IdCapacitacionAreaConocimiento", "Descripcion");
                     return View(capacitacionTemario);
 
                 }
@@ -162,7 +162,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<CapacitacionTemario>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/CapacitacionesTemarios/ListarCapacitacionesTemarios");
+                                                                    , "api/CapacitacionesTemarios/ListarCapacitacionesTemarios");
                 return View(lista);
             }
             catch (Exception ex)
@@ -186,7 +186,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/CapacitacionesTemarios");
+                                                               , "api/CapacitacionesTemarios");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

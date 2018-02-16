@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(Sexo,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Sexos/InsertarSexo");
+                                                             "api/Sexos/InsertarSexo");
                 if (response.IsSuccess)
                 {
 
@@ -114,7 +114,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, Sexo, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Sexos");
+                                                                 "api/Sexos");
 
                     if (response.IsSuccess)
                     {
@@ -159,7 +159,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Sexo>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Sexos/ListarSexos");
+                                                                    , "api/Sexos/ListarSexos");
                 return View(lista);
             }
             catch (Exception ex)
@@ -183,7 +183,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Sexos");
+                                                               , "api/Sexos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

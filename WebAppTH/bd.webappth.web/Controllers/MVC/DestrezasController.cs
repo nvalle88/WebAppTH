@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(destreza,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Destrezas/InsertarDestreza");
+                                                             "api/Destrezas/InsertarDestreza");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/Destrezas");
+                                                                  "api/Destrezas");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<Destreza>(respuesta.Resultado.ToString());
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, destreza, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Destrezas");
+                                                                 "api/Destrezas");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Destreza>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Destrezas/ListarDestrezas");
+                                                                    , "api/Destrezas/ListarDestrezas");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Destrezas");
+                                                               , "api/Destrezas");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

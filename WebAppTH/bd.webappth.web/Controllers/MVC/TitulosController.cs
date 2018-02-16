@@ -27,8 +27,8 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "/api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
-            ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
+            ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+            ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
 
             return View();
         }
@@ -42,7 +42,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(titulo,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Titulos/InsertarTitulo");
+                                                             "api/Titulos/InsertarTitulo");
                 if (response.IsSuccess)
                 {
 
@@ -61,8 +61,8 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 ViewData["Error"] = response.Message;
-                ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "/api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
-                ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
+                ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+                ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
                 return View(titulo);
 
             }
@@ -89,12 +89,12 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/Titulos");
+                                                                  "api/Titulos");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<Titulo>(respuesta.Resultado.ToString());
-                    ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "/api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
-                    ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
+                    ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+                    ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -120,7 +120,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, titulo, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Titulos");
+                                                                 "api/Titulos");
 
                     if (response.IsSuccess)
                     {
@@ -137,8 +137,8 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "/api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
-                    ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "/api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
+                    ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
+                    ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
                     return View(titulo);
 
                 }
@@ -167,7 +167,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Titulo>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Titulos/ListarTitulos");
+                                                                    , "api/Titulos/ListarTitulos");
                 return View(lista);
             }
             catch (Exception ex)
@@ -192,7 +192,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Titulos");
+                                                               , "api/Titulos");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

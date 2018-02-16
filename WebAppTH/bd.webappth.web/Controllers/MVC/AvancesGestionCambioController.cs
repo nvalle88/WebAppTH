@@ -52,12 +52,12 @@ namespace bd.webappth.web.Controllers.MVC
                 };
 
                 var respuestaActividades = await apiServicio.ObtenerElementoAsync<ActividadesGestionCambio>(actividadesGestionCambio, new Uri(WebApp.BaseAddress),
-                                                                       "/api/ActividadesGestionCambio/ActividadesGestionCambioconIdActividad");
+                                                                       "api/ActividadesGestionCambio/ActividadesGestionCambioconIdActividad");
 
                 var actividades = JsonConvert.DeserializeObject<ActividadesGestionCambio>(respuestaActividades.Resultado.ToString());
 
                 var respuestaSuma = await apiServicio.ObtenerElementoAsync<ActividadesGestionCambio>(actividadesGestionCambio, new Uri(WebApp.BaseAddress),
-                                                                         "/api/AvancesGestionCambio/AvanceGestionCambioSumaIndicadorReal");
+                                                                         "api/AvancesGestionCambio/AvanceGestionCambioSumaIndicadorReal");
 
                 var suma = JsonConvert.DeserializeObject<AvanceGestionCambioModel>(respuestaSuma.Resultado.ToString());
 
@@ -66,7 +66,7 @@ namespace bd.webappth.web.Controllers.MVC
                     
                     response = await apiServicio.InsertarAsync(AvanceGestionCambio,
                                                                  new Uri(WebApp.BaseAddress),
-                                                                 "/api/AvancesGestionCambio/InsertarAvanceGestionCambio");
+                                                                 "api/AvancesGestionCambio/InsertarAvanceGestionCambio");
                     if (response.IsSuccess)
                     {
 
@@ -119,7 +119,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/AvancesGestionCambio");
+                                                                  "api/AvancesGestionCambio");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<AvanceGestionCambio>(respuesta.Resultado.ToString());
@@ -149,7 +149,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, AvanceGestionCambio, new Uri(WebApp.BaseAddress),
-                                                                 "/api/AvancesGestionCambio");
+                                                                 "api/AvancesGestionCambio");
 
                     if (response.IsSuccess)
                     {
@@ -206,7 +206,7 @@ namespace bd.webappth.web.Controllers.MVC
                         var viewModelAvanceGestionCambio = new AvanceGestionCambioViewModel
                         {
                             IdActividadesGestionCambio = Convert.ToInt32(IdActividadesGestionCambio),
-                            ListaAvancesGestionCambio = await apiServicio.Listar<AvanceGestionCambio>(avancesGestionCambio, new Uri(WebApp.BaseAddress), "/api/AvancesGestionCambio/ListarAvanceGestionCambioconIdActividad")
+                            ListaAvancesGestionCambio = await apiServicio.Listar<AvanceGestionCambio>(avancesGestionCambio, new Uri(WebApp.BaseAddress), "api/AvancesGestionCambio/ListarAvanceGestionCambioconIdActividad")
                         };
 
                         return View(viewModelAvanceGestionCambio);
@@ -237,7 +237,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(IdAvanceGestionCambio, new Uri(WebApp.BaseAddress)
-                                                               , "/api/AvancesGestionCambio");
+                                                               , "api/AvancesGestionCambio");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

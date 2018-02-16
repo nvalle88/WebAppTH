@@ -44,7 +44,7 @@ namespace bd.webappth.entidades.Negocio
         public int IdProvinciaLugarSufragio { get; set; }
         public virtual Provincia ProvinciaSufragio { get; set; }
 
-        public int IdDependencia { get; set; }
+        public int? IdDependencia { get; set; }
         public virtual Dependencia Dependencia { get; set; }
 
 

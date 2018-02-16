@@ -35,7 +35,7 @@ namespace bd.webappth.web.Controllers.MVC
             var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
             var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             var listadoEmpleados = await ListarEmpleadosPertenecientesaDependenciaconHorasExtra(NombreUsuario);
-            ViewData["IdPersona"] = new SelectList(await apiServicio.Listar<Persona>(new Uri(WebApp.BaseAddress), "/api/Empleados/ListarEmpleadosdeJefe"), "IdPersona", "Nombres");
+            ViewData["IdPersona"] = new SelectList(await apiServicio.Listar<Persona>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosdeJefe"), "IdPersona", "Nombres");
             return View(listadoEmpleados);
         }
 
@@ -47,7 +47,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (id.ToString() != null)
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id.ToString(), new Uri(WebApp.BaseAddress),
-                                                                  "/api/SolicitudHorasExtras");
+                                                                  "api/SolicitudHorasExtras");
 
 
                     var a = JsonConvert.DeserializeObject<SolicitudHorasExtras>(respuesta.Resultado.ToString());
@@ -55,7 +55,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         IdEmpleado = a.IdEmpleado,
                     };
-                    //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.ObtenerElementoAsync1<BrigadaSSO>(solicitudPlanificacionVacaciones, new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+                    //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.ObtenerElementoAsync1<BrigadaSSO>(solicitudPlanificacionVacaciones, new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                     if (respuesta.IsSuccess)
                     {
                         ViewData["Fecha"] = a.Fecha;
@@ -121,7 +121,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<SolicitudHorasExtras>(empleado, new Uri(WebApp.BaseAddress)
-                                                                    , "/api/SolicitudHorasExtras/ListarSolicitudesHorasExtra");
+                                                                    , "api/SolicitudHorasExtras/ListarSolicitudesHorasExtra");
 
                 return View(lista);
             }
@@ -150,7 +150,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
 
                 response = await apiServicio.EditarAsync(solicitudhorasextras.IdEmpleado.ToString(), solicitudhorasextras, new Uri(WebApp.BaseAddress),
-                                                             "/api/SolicitudHorasExtras");
+                                                             "api/SolicitudHorasExtras");
 
                 if (response.IsSuccess)
                 {
@@ -167,7 +167,7 @@ namespace bd.webappth.web.Controllers.MVC
                     return RedirectToAction("DetalleSolicitudHorasExtra", new { id = solicitudhorasextras.IdEmpleado });
                 }
                 ViewData["Error"] = response.Message;
-                //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+                //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                 return View(solicitudhorasextras);
 
 

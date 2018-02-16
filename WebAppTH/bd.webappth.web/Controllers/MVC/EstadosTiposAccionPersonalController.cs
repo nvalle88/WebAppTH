@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(EstadoTipoAccionPersonal,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/EstadosTiposAccionPersonal/InsertarEstadoTipoAccionPersonal");
+                                                             "api/EstadosTiposAccionPersonal/InsertarEstadoTipoAccionPersonal");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/EstadosTiposAccionPersonal");
+                                                                  "api/EstadosTiposAccionPersonal");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<EstadoTipoAccionPersonal>(respuesta.Resultado.ToString());
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, EstadoTipoAccionPersonal, new Uri(WebApp.BaseAddress),
-                                                                 "/api/EstadosTiposAccionPersonal");
+                                                                 "api/EstadosTiposAccionPersonal");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal");
+                                                                    , "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/EstadosTiposAccionPersonal");
+                                                               , "api/EstadosTiposAccionPersonal");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

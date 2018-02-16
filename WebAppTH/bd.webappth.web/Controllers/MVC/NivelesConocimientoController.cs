@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(NivelConocimiento,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/NivelesConocimiento/InsertarNivelesConocimiento");
+                                                             "api/NivelesConocimiento/InsertarNivelesConocimiento");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, NivelConocimiento, new Uri(WebApp.BaseAddress),
-                                                                 "/api/NivelesConocimiento");
+                                                                 "api/NivelesConocimiento");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<NivelConocimiento>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/NivelesConocimiento/ListarNivelesConocimiento");
+                                                                    , "api/NivelesConocimiento/ListarNivelesConocimiento");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/NivelesConocimiento");
+                                                               , "api/NivelesConocimiento");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

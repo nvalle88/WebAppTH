@@ -24,7 +24,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Index()
         {
-            ViewData["ListaCapacitacionTemario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionPlanificacionViewModel>(new Uri(WebApp.BaseAddress), "/api/CapacitacionesTemarios/ListarCapacitacionesTemarios"), "IdCapacitacionTemario", "Tema");
+            ViewData["ListaCapacitacionTemario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionPlanificacionViewModel>(new Uri(WebApp.BaseAddress), "api/CapacitacionesTemarios/ListarCapacitacionesTemarios"), "IdCapacitacionTemario", "Tema");
 
             return View();
         }

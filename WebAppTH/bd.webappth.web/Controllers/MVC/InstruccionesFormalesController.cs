@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(InstruccionFormal,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/InstruccionesFormales/InsertarInstruccionesFormales");
+                                                             "api/InstruccionesFormales/InsertarInstruccionesFormales");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, InstruccionFormal, new Uri(WebApp.BaseAddress),
-                                                                 "/api/InstruccionesFormales");
+                                                                 "api/InstruccionesFormales");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<InstruccionFormal>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/InstruccionesFormales/ListarInstruccionesFormales");
+                                                                    , "api/InstruccionesFormales/ListarInstruccionesFormales");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/InstruccionesFormales");
+                                                               , "api/InstruccionesFormales");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

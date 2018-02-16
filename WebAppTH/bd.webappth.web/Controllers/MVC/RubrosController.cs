@@ -29,7 +29,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Rubro>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Rubros/ListarRubros");
+                                                                    , "api/Rubros/ListarRubros");
                 return View(lista);
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(rubro,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Rubros/InsertarRubro");
+                                                             "api/Rubros/InsertarRubro");
                 if (response.IsSuccess)
                 {
 
@@ -106,7 +106,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/Rubros");
+                                                                  "api/Rubros");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<Rubro>(respuesta.Resultado.ToString());
@@ -135,7 +135,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, rubro, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Rubros");
+                                                                 "api/Rubros");
 
                     if (response.IsSuccess)
                     {
@@ -177,7 +177,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Rubros");
+                                                               , "api/Rubros");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

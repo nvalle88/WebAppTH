@@ -40,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(Mision,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Misiones/InsertarMisiones");
+                                                             "api/Misiones/InsertarMisiones");
                 if (response.IsSuccess)
                 {
 
@@ -91,7 +91,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdIndiceOcupacional = idIndiceOcupacional
                 };
                 var response = await apiServicio.EliminarAsync(misionIndiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Misiones/EliminarIncideOcupacionalMision");
+                                                               , "api/Misiones/EliminarIncideOcupacionalMision");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -161,7 +161,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, Mision, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Misiones");
+                                                                 "api/Misiones");
 
                     if (response.IsSuccess)
                     {
@@ -206,7 +206,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Mision>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Misiones/ListarMisiones");
+                                                                    , "api/Misiones/ListarMisiones");
                 return View(lista);
             }
             catch (Exception ex)
@@ -230,7 +230,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Misiones");
+                                                               , "api/Misiones");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

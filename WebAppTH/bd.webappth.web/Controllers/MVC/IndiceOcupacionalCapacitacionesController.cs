@@ -28,8 +28,8 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            //ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "/api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "Nombre");
-            ViewData["IdCapacitacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Capacitacion>(new Uri(WebApp.BaseAddress), "/api/Capacitaciones/ListarCapacitaciones"), "IdCapacitacion", "Nombre");
+            //ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "Nombre");
+            ViewData["IdCapacitacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Capacitacion>(new Uri(WebApp.BaseAddress), "api/Capacitaciones/ListarCapacitaciones"), "IdCapacitacion", "Nombre");
 
             return View();
         }
@@ -43,7 +43,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(indiceOcupacionalCapacitaciones,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/IndiceOcupacionalCapacitaciones/InsertarIndiceOcupacionalCapacitacion");
+                                                             "api/IndiceOcupacionalCapacitaciones/InsertarIndiceOcupacionalCapacitacion");
                 if (response.IsSuccess)
                 {
 
@@ -61,8 +61,8 @@ namespace bd.webappth.web.Controllers.MVC
                     return RedirectToAction("Detalles", new { id= indiceOcupacionalCapacitaciones.IdIndiceOcupacional});
                 }
 
-                //ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "/api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "Nombre");
-                ViewData["IdCapacitacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Capacitacion>(new Uri(WebApp.BaseAddress), "/api/Capacitaciones/ListarCapacitaciones"), "IdCapacitacion", "Nombre");
+                //ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "Nombre");
+                ViewData["IdCapacitacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Capacitacion>(new Uri(WebApp.BaseAddress), "api/Capacitaciones/ListarCapacitaciones"), "IdCapacitacion", "Nombre");
                 return View(indiceOcupacionalCapacitaciones);
 
             }
@@ -98,7 +98,7 @@ namespace bd.webappth.web.Controllers.MVC
                 };
                 lista = await apiServicio.Listar<Capacitacion>(indiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/IndiceOcupacionalCapacitaciones/ListaFiltradaCapacitaciones");
+                                                             "api/IndiceOcupacionalCapacitaciones/ListaFiltradaCapacitaciones");
                 ViewData["IdCapacitacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(lista, "IdCapacitacion", "Nombre");
 
                 //ViewBag.listacap = new SelectList(lista, "IdCapacitacion", "Nombre");
@@ -125,7 +125,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<IndiceOcupacionalCapacitaciones>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/IndiceOcupacionalCapacitaciones/ListarIndiceOcupacionalCapacitaciones");
+                                                                    , "api/IndiceOcupacionalCapacitaciones/ListarIndiceOcupacionalCapacitaciones");
                 return View(lista);
             }
             catch (Exception ex)
@@ -149,7 +149,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/IndiceOcupacionalCapacitaciones");
+                                                               , "api/IndiceOcupacionalCapacitaciones");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

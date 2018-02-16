@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(capacitacionProveedor,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/CapacitacionesProveedores/InsertarCapacitacionProveedor");
+                                                             "api/CapacitacionesProveedores/InsertarCapacitacionProveedor");
                 if (response.IsSuccess)
                 {
 
@@ -84,7 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/CapacitacionesProveedores");
+                                                                  "api/CapacitacionesProveedores");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<CapacitacionProveedor>(respuesta.Resultado.ToString());
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, capacitacionProveedor, new Uri(WebApp.BaseAddress),
-                                                                 "/api/CapacitacionesProveedores");
+                                                                 "api/CapacitacionesProveedores");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<CapacitacionProveedor>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/CapacitacionesProveedores/ListarCapacitacionesProveedores");
+                                                                    , "api/CapacitacionesProveedores/ListarCapacitacionesProveedores");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/CapacitacionesProveedores");
+                                                               , "api/CapacitacionesProveedores");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

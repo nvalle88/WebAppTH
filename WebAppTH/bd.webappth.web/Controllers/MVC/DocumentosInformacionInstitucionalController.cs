@@ -97,7 +97,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(file,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/DocumentosInformacionInstitucional/UploadFiles");
+                                                             "api/DocumentosInformacionInstitucional/UploadFiles");
                 if (response.IsSuccess)
                 {
 
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/DocumentosInformacionInstitucional");
+                                                                  "api/DocumentosInformacionInstitucional");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<DocumentoInformacionInstitucional>(respuesta.Resultado.ToString());
@@ -194,7 +194,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, documentoInformacionInstitucional, new Uri(WebApp.BaseAddress),
-                                                                 "/api/DocumentosInformacionInstitucional");
+                                                                 "api/DocumentosInformacionInstitucional");
 
                     if (response.IsSuccess)
                     {
@@ -239,7 +239,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<DocumentoInformacionInstitucional>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/DocumentosInformacionInstitucional/ListarDocumentosInformacionInstitucional");
+                                                                    , "api/DocumentosInformacionInstitucional/ListarDocumentosInformacionInstitucional");
                 return View(lista);
             }
             catch (Exception ex)
@@ -263,7 +263,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/DocumentosInformacionInstitucional");
+                                                               , "api/DocumentosInformacionInstitucional");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
@@ -306,7 +306,7 @@ namespace bd.webappth.web.Controllers.MVC
 
            var response = await apiServicio.ObtenerElementoAsync(d,
                                                             new Uri(WebApp.BaseAddress),
-                                                            "/api/DocumentosInformacionInstitucional/GetFile");
+                                                            "api/DocumentosInformacionInstitucional/GetFile");
             var m = JsonConvert.DeserializeObject<DocumentoInstitucionalTransfer>(response.Resultado.ToString());
             var fileName = $"{ response.Message}.pdf";
 

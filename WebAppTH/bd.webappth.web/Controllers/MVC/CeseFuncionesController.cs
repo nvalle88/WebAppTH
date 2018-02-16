@@ -33,12 +33,12 @@ namespace bd.webappth.web.Controllers.MVC
                 if (id != 0)
                 {
                     //var respuesta = await apiServicio.SeleccionarAsync<Response>(id.ToString(), new Uri(WebApp.BaseAddress),
-                    //                                              "/api/CeseFunciones");
+                    //                                              "api/CeseFunciones");
 
                     //if (respuesta.IsSuccess && respuesta.Resultado != null)
                     //{
                     //    respuesta.Resultado = JsonConvert.DeserializeObject<CeseFuncion>(respuesta.Resultado.ToString());
-                    //    ViewData["IdTipoCesacionFuncion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoCesacionFuncion>(new Uri(WebApp.BaseAddress), "/api/TipoCesacionFunciones/ListarTipoCesacionFunciones"), "IdTipoCesacionFuncion", "Nombre");
+                    //    ViewData["IdTipoCesacionFuncion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoCesacionFuncion>(new Uri(WebApp.BaseAddress), "api/TipoCesacionFunciones/ListarTipoCesacionFunciones"), "IdTipoCesacionFuncion", "Nombre");
                     //    return View(respuesta.Resultado);
                     //}
                     //else
@@ -48,7 +48,7 @@ namespace bd.webappth.web.Controllers.MVC
                         IdEmpleado=id,
                     };
                     var empleado = await apiServicio.ObtenerElementoAsync1<EmpleadoSolicitudViewModel>(empleadoEnviar, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDatosEmpleadoSeleccionado");
-                    ViewData["IdTipoCesacionFuncion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoCesacionFuncion>(new Uri(WebApp.BaseAddress), "/api/TipoCesacionFunciones/ListarTipoCesacionFunciones"), "IdTipoCesacionFuncion", "Nombre");
+                    ViewData["IdTipoCesacionFuncion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoCesacionFuncion>(new Uri(WebApp.BaseAddress), "api/TipoCesacionFunciones/ListarTipoCesacionFunciones"), "IdTipoCesacionFuncion", "Nombre");
                     ViewData["NombresApellidos"] = empleado.NombreApellido;
                     ViewData["Identificacion"] = empleado.Identificacion;
 
@@ -81,7 +81,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         private async Task CargarCiudades()
         {
-            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "/api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
+            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
 
         }
 
@@ -134,7 +134,7 @@ namespace bd.webappth.web.Controllers.MVC
                 ceseFuncion.Fecha = DateTime.Now;
                 response = await apiServicio.InsertarAsync(ceseFuncion,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/CeseFunciones/InsertarCeseFuncion");
+                                                             "api/CeseFunciones/InsertarCeseFuncion");
                 if (response.IsSuccess)
                 {
                     var empleado = new Empleado
@@ -142,7 +142,7 @@ namespace bd.webappth.web.Controllers.MVC
                         IdEmpleado = ceseFuncion.IdEmpleado,
                     };
                     response = await apiServicio.EditarAsync(ceseFuncion.IdEmpleado.ToString(), empleado, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Empleados");
+                                                                 "api/Empleados");
 
                     var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
@@ -213,7 +213,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/CeseFunciones");
+                                                               , "api/CeseFunciones");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

@@ -38,7 +38,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(Nacionalidad,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Nacionalidades/InsertarNacionalidades");
+                                                             "api/Nacionalidades/InsertarNacionalidades");
                 if (response.IsSuccess)
                 {
 
@@ -112,7 +112,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, Nacionalidad, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Nacionalidades");
+                                                                 "api/Nacionalidades");
 
                     if (response.IsSuccess)
                     {
@@ -157,7 +157,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Nacionalidad>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Nacionalidades/ListarNacionalidades");
+                                                                    , "api/Nacionalidades/ListarNacionalidades");
                 return View(lista);
             }
             catch (Exception ex)
@@ -181,7 +181,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Nacionalidades");
+                                                               , "api/Nacionalidades");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

@@ -28,8 +28,8 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            var lista = await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "/api/Ciudad/ListarCiudad");
-            ViewData["IdCiudad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "/api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
+            var lista = await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad");
+            ViewData["IdCiudad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
 
             return View();
         }
@@ -44,7 +44,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(sucursal,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Sucursal/InsertarSucursal");
+                                                             "api/Sucursal/InsertarSucursal");
                 if (response.IsSuccess)
                 {
 
@@ -86,12 +86,12 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                ViewData["IdCiudad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "/api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
+                ViewData["IdCiudad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
 
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<entidades.Utils.Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/Sucursal");
+                                                                  "api/Sucursal");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<Sucursal>(respuesta.Resultado.ToString());
@@ -120,7 +120,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, sucursal, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Sucursal");
+                                                                 "api/Sucursal");
 
                     if (!response.IsSuccess)
                     {
@@ -165,7 +165,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Sucursal>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Sucursal/ListarSucursal");
+                                                                    , "api/Sucursal/ListarSucursal");
 
                 return View(lista);
             }
@@ -190,7 +190,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Sucursal");
+                                                               , "api/Sucursal");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

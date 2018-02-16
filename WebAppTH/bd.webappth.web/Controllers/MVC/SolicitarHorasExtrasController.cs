@@ -72,7 +72,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     Fecha = solicitudhorasextra.Fecha,
                 };
-                var resultado = await apiServicio.ObtenerElementoAsync1<Response>(HorasExtra, new Uri(WebApp.BaseAddress), "/api/SolicitudHorasExtras/EsExtraordinaria");
+                var resultado = await apiServicio.ObtenerElementoAsync1<Response>(HorasExtra, new Uri(WebApp.BaseAddress), "api/SolicitudHorasExtras/EsExtraordinaria");
 
                 solicitudhorasextra.EsExtraordinaria = false;
                 if (resultado.IsSuccess)
@@ -83,7 +83,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 response = await apiServicio.InsertarAsync(solicitudhorasextra,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/SolicitudHorasExtras/InsertarSolicitudHorasExtras");
+                                                             "api/SolicitudHorasExtras/InsertarSolicitudHorasExtras");
                 if (response.IsSuccess)
                 {
 
@@ -102,7 +102,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 ViewData["Error"] = response.Message;
-                //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+                //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                 return View(solicitudhorasextra);
 
             }
@@ -129,11 +129,11 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/SolicitudHorasExtras");
+                                                                  "api/SolicitudHorasExtras");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudHorasExtras>(respuesta.Resultado.ToString());
-                    //ViewData["FechaDesde"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+                    //ViewData["FechaDesde"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                     if (respuesta.IsSuccess)
                     {
                         return View(respuesta.Resultado);
@@ -163,7 +163,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         Fecha = solicitudhorasextra.Fecha,
                     };
-                    var resultado = await apiServicio.ObtenerElementoAsync1<Response>(HorasExtra, new Uri(WebApp.BaseAddress), "/api/SolicitudHorasExtras/EsExtraordinaria");
+                    var resultado = await apiServicio.ObtenerElementoAsync1<Response>(HorasExtra, new Uri(WebApp.BaseAddress), "api/SolicitudHorasExtras/EsExtraordinaria");
 
                     solicitudhorasextra.EsExtraordinaria = false;
                     if (resultado.IsSuccess)
@@ -172,7 +172,7 @@ namespace bd.webappth.web.Controllers.MVC
                     }
 
                     response = await apiServicio.EditarAsync(solicitudhorasextra.IdEmpleado.ToString(), solicitudhorasextra, new Uri(WebApp.BaseAddress),
-                                                                 "/api/SolicitudHorasExtras");
+                                                                 "api/SolicitudHorasExtras");
 
                     if (response.IsSuccess)
                     {
@@ -189,7 +189,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "/api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+                    //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                     return View(solicitudhorasextra);
 
                 }
@@ -228,7 +228,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<SolicitudHorasExtras>(empleado, new Uri(WebApp.BaseAddress)
-                                                                    , "/api/SolicitudHorasExtras/ListarSolicitudesHorasExtra");
+                                                                    , "api/SolicitudHorasExtras/ListarSolicitudesHorasExtra");
 
 
 
@@ -255,7 +255,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/SolicitudHorasExtras");
+                                                               , "api/SolicitudHorasExtras");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

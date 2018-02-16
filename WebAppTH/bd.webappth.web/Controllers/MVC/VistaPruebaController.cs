@@ -27,7 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
             var lista = new List<AnoExperiencia>();
 
             lista = await apiServicio.Listar<AnoExperiencia>(new Uri(WebApp.BaseAddress)
-                                                                , "/api/AnosExperiencia/ListarAnosExperiencia");
+                                                                , "api/AnosExperiencia/ListarAnosExperiencia");
             return View(lista);
 
         }
@@ -38,7 +38,7 @@ namespace bd.webappth.web.Controllers.MVC
             var lista = new List<AnoExperiencia>();
 
             lista = await apiServicio.Listar<AnoExperiencia>(new Uri(WebApp.BaseAddress)
-                                                                , "/api/AnosExperiencia/ListarAnosExperiencia");
+                                                                , "api/AnosExperiencia/ListarAnosExperiencia");
             return Json(lista);
         }
     }

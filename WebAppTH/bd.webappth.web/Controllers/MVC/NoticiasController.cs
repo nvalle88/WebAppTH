@@ -101,7 +101,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(file,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Noticias/UploadFiles");
+                                                             "api/Noticias/UploadFiles");
                 if (response.IsSuccess)
                 {
 
@@ -162,7 +162,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(file,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/Noticias/UploadFilesActualizar");
+                                                             "api/Noticias/UploadFilesActualizar");
                 if (response.IsSuccess)
                 {
 
@@ -221,7 +221,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/Noticias");
+                                                                  "api/Noticias");
                     
                     respuesta.Resultado = JsonConvert.DeserializeObject<Noticia>(respuesta.Resultado.ToString());
 
@@ -312,7 +312,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     
                     response = await apiServicio.EditarAsync(id, noticia, new Uri(WebApp.BaseAddress),
-                                                                 "/api/Noticias");
+                                                                 "api/Noticias");
 
                     if (response.IsSuccess)
                     {
@@ -357,7 +357,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Noticia>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Noticias/ListarNoticias");
+                                                                    , "api/Noticias/ListarNoticias");
                 return View(lista);
             }
             catch (Exception ex)
@@ -381,7 +381,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/Noticias");
+                                                               , "api/Noticias");
                 if (response.IsSuccess)
                 {
 

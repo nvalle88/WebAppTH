@@ -38,7 +38,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(TipoConcurso,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TiposConcurso/InsertarTipoConcurso");
+                                                             "api/TiposConcurso/InsertarTipoConcurso");
                 if (response.IsSuccess)
                 {
 
@@ -112,7 +112,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, TipoConcurso, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TiposConcurso");
+                                                                 "api/TiposConcurso");
 
                     if (response.IsSuccess)
                     {
@@ -157,7 +157,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<TipoConcurso>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/TiposConcurso/ListarTiposConcurso");
+                                                                    , "api/TiposConcurso/ListarTiposConcurso");
                 return View(lista);
             }
             catch (Exception ex)
@@ -181,7 +181,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TiposConcurso");
+                                                               , "api/TiposConcurso");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

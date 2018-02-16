@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(TipoIdentificacion,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/TiposIdentificacion/InsertarTipoIdentificacion");
+                                                             "api/TiposIdentificacion/InsertarTipoIdentificacion");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, TipoIdentificacion, new Uri(WebApp.BaseAddress),
-                                                                 "/api/TiposIdentificacion");
+                                                                 "api/TiposIdentificacion");
 
                     if (response.IsSuccess)
                     {
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/TiposIdentificacion");
+                                                               , "api/TiposIdentificacion");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

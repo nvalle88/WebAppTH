@@ -37,7 +37,7 @@ namespace bd.webappth.servicios.Servicios
                 var claim = context.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
                 NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                var menuRespuesta = await ObtenerElementoAsync1<log.guardar.Utiles.Response>(new ModuloAplicacion { Path = context.Request.Path, NombreAplicacion = WebApp.NombreAplicacion }, new Uri(WebApp.BaseAddress), "api/Adscmenus/GetMenuPadre");
+                var menuRespuesta = await ObtenerElementoAsync1<log.guardar.Utiles.Response>(new ModuloAplicacion { Path = context.Request.Path, NombreAplicacion = WebApp.NombreAplicacion }, new Uri(WebApp.BaseAddressSeguridad), "api/Adscmenus/GetMenuPadre");
                 var menu = JsonConvert.DeserializeObject<Adscmenu>(menuRespuesta.Resultado.ToString());
 
                 var Log = new LogEntryTranfer
@@ -327,7 +327,7 @@ namespace bd.webappth.servicios.Servicios
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var uri = string.Format("{0}/{1}", baseAddress, url);
+                    var uri = string.Format("{0}{1}", baseAddress, url);
                     var respuesta = await client.GetAsync(new Uri(uri));
                     var resultado = await respuesta.Content.ReadAsStringAsync();
                     var response = JsonConvert.DeserializeObject<List<T>>(resultado);
@@ -335,7 +335,7 @@ namespace bd.webappth.servicios.Servicios
                 }
             }
 
-                catch (Exception )
+                catch (Exception ex )
             {
                 return new List<T>();
             }

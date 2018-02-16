@@ -28,7 +28,7 @@ namespace bd.webappth.web.Controllers.MVC
             var lista = new List<RelacionLaboral>();
             try
             {
-                lista = await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "/api/RelacionesLaborales/ListarRelacionesLaborales");
+                lista = await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaborales");
                 return View(lista);
             }
             catch (Exception ex)
@@ -48,7 +48,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
+            ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
           
 
             return View();
@@ -63,7 +63,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(relacionLaboral,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/RelacionesLaborales/InsertarRelacionLaboral");
+                                                             "api/RelacionesLaborales/InsertarRelacionLaboral");
                 if (response.IsSuccess)
                 {
 
@@ -82,7 +82,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 ViewData["Error"] = response.Message;
-                ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
+                ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
 
                 return View(relacionLaboral);
 
@@ -110,12 +110,12 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/RelacionesLaborales");
+                                                                  "api/RelacionesLaborales");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<RelacionLaboral>(respuesta.Resultado.ToString());
 
-                    ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "/api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
+                    ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
 
 
 
@@ -144,7 +144,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, relacionLaboral, new Uri(WebApp.BaseAddress),
-                                                                 "/api/RelacionesLaborales");
+                                                                 "api/RelacionesLaborales");
 
                     if (response.IsSuccess)
                     {
@@ -186,7 +186,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/RelacionesLaborales");
+                                                               , "api/RelacionesLaborales");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

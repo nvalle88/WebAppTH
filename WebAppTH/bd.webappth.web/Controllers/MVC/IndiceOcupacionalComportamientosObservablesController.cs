@@ -27,8 +27,8 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
-            //ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "/api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "Nombre");
-            ViewData["IdComportamientoObservable"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ComportamientoObservable>(new Uri(WebApp.BaseAddress), "/api/ComportamientosObservables/ListarComportamientosObservables"), "IdComportamientoObservable", "Nombre");
+            //ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "Nombre");
+            ViewData["IdComportamientoObservable"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ComportamientoObservable>(new Uri(WebApp.BaseAddress), "api/ComportamientosObservables/ListarComportamientosObservables"), "IdComportamientoObservable", "Nombre");
 
             return View();
         }
@@ -42,7 +42,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(indiceOcupacionalComportamientoObservable,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/IndiceOcupacionalComportamientosObservables/InsertarIndiceOcupacionalComportamientoObservable");
+                                                             "api/IndiceOcupacionalComportamientosObservables/InsertarIndiceOcupacionalComportamientoObservable");
                 if (response.IsSuccess)
                 {
 
@@ -60,8 +60,8 @@ namespace bd.webappth.web.Controllers.MVC
                     return RedirectToAction("Index");
                 }
 
-                //ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "/api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "Nombre");
-                ViewData["IdComportamientoObservable"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ComportamientoObservable>(new Uri(WebApp.BaseAddress), "/api/ComportamientosObservables/ListarComportamientosObservables"), "IdComportamientoObservable", "Nombre");
+                //ViewData["IdIndiceOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/ListarIndicesOcupacionales"), "IdIndiceOcupacional", "Nombre");
+                ViewData["IdComportamientoObservable"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ComportamientoObservable>(new Uri(WebApp.BaseAddress), "api/ComportamientosObservables/ListarComportamientosObservables"), "IdComportamientoObservable", "Nombre");
                 return View(indiceOcupacionalComportamientoObservable);
 
             }
@@ -101,7 +101,7 @@ namespace bd.webappth.web.Controllers.MVC
                 };
                 lista = await apiServicio.Listar<ComportamientoObservable>(indiceOcupacional,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/IndiceOcupacionalComportamientosObservables/ListaFiltradaComportamientosObservables");
+                                                             "api/IndiceOcupacionalComportamientosObservables/ListaFiltradaComportamientosObservables");
                 //ViewData["IdComportamientoObservable"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(lista, "IdComportamientoObservable", "Nombre");
 
                 ViewBag.listacap = new SelectList(lista, "IdComportamientoObservable", "Nombre");
@@ -128,7 +128,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<IndiceOcupacionalComportamientoObservable>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/IndiceOcupacionalComportamientosObservables/ListarIndiceOcupacionalComportamientosObservables");
+                                                                    , "api/IndiceOcupacionalComportamientosObservables/ListarIndiceOcupacionalComportamientosObservables");
                 return View(lista);
             }
             catch (Exception ex)
@@ -152,7 +152,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/IndiceOcupacionalComportamientosObservables");
+                                                               , "api/IndiceOcupacionalComportamientosObservables");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

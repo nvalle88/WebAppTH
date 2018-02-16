@@ -48,7 +48,7 @@ namespace bd.webappth.web.Controllers.MVC
               
                 response = await apiServicio.InsertarAsync(ActividadesGestionCambio,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/ActividadesGestionCambio/InsertarActividadesGestionCambio");
+                                                             "api/ActividadesGestionCambio/InsertarActividadesGestionCambio");
                 if (response.IsSuccess)
                 {
 
@@ -96,7 +96,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "/api/ActividadesGestionCambio");
+                                                                  "api/ActividadesGestionCambio");
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<ActividadesGestionCambio>(respuesta.Resultado.ToString());
@@ -126,7 +126,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, ActividadesGestionCambio, new Uri(WebApp.BaseAddress),
-                                                                 "/api/ActividadesGestionCambio");
+                                                                 "api/ActividadesGestionCambio");
 
                     if (response.IsSuccess)
                     {
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
                         var viewModelActividadesGestionCambio = new ActividadesGestionCambioViewModel
                         {
                             IdPlanGestionCambio = Convert.ToInt32(IdPlanGestionCambio),
-                            ListaActividadesGestionCambio = await apiServicio.Listar<ActividadesGestionCambioIndex>(actividadesGestionCambio, new Uri(WebApp.BaseAddress), "/api/ActividadesGestionCambio/ListarActividadesGestionCambioconIdPlan")
+                            ListaActividadesGestionCambio = await apiServicio.Listar<ActividadesGestionCambioIndex>(actividadesGestionCambio, new Uri(WebApp.BaseAddress), "api/ActividadesGestionCambio/ListarActividadesGestionCambioconIdPlan")
                         };
 
                         return View(viewModelActividadesGestionCambio);
@@ -197,7 +197,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
                         var respuesta = await apiServicio.ObtenerElementoAsync<ActividadesGestionCambio>(actividadesGestionCambio, new Uri(WebApp.BaseAddress),
-                                                                         "/api/ActividadesGestionCambio/ActividadesGestionCambioconIdActividad");
+                                                                         "api/ActividadesGestionCambio/ActividadesGestionCambioconIdActividad");
 
                         var actividades = JsonConvert.DeserializeObject<ActividadesGestionCambio>(respuesta.Resultado.ToString());
 
@@ -211,7 +211,7 @@ namespace bd.webappth.web.Controllers.MVC
                         var viewModelActividadesGestionCambio = new ActividadesGestionCambioViewModel
                         {
                             IdPlanGestionCambio = Convert.ToInt32(actividades.IdPlanGestionCambio),
-                            ListaActividadesGestionCambio = await apiServicio.Listar<ActividadesGestionCambioIndex>(actividadesGestionCambioViewModel, new Uri(WebApp.BaseAddress), "/api/ActividadesGestionCambio/ListarActividadesGestionCambioconIdPlan")
+                            ListaActividadesGestionCambio = await apiServicio.Listar<ActividadesGestionCambioIndex>(actividadesGestionCambioViewModel, new Uri(WebApp.BaseAddress), "api/ActividadesGestionCambio/ListarActividadesGestionCambioconIdPlan")
                         };
 
 
@@ -248,7 +248,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(IdActividadesGestionCambio, new Uri(WebApp.BaseAddress)
-                                                               , "/api/ActividadesGestionCambio");
+                                                               , "api/ActividadesGestionCambio");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer

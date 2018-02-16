@@ -39,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 response = await apiServicio.InsertarAsync(RubroLiquidacion,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "/api/RubrosLiquidacion/InsertarRubroLiquidacion");
+                                                             "api/RubrosLiquidacion/InsertarRubroLiquidacion");
                 if (response.IsSuccess)
                 {
 
@@ -113,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, RubroLiquidacion, new Uri(WebApp.BaseAddress),
-                                                                 "/api/RubrosLiquidacion");
+                                                                 "api/RubrosLiquidacion");
 
                     if (response.IsSuccess)
                     {
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<RubroLiquidacion>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/RubrosLiquidacion/ListarRubrosLiquidacion");
+                                                                    , "api/RubrosLiquidacion/ListarRubrosLiquidacion");
                 return View(lista);
             }
             catch (Exception ex)
@@ -182,7 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "/api/RubrosLiquidacion");
+                                                               , "api/RubrosLiquidacion");
                 if (response.IsSuccess)
                 {
                     await GuardarLogService.SaveLogEntry(new LogEntryTranfer
