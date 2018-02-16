@@ -533,6 +533,7 @@
                             $("#IdParroquia").append('<option value="'
                                 + data.idParroquia + '">'
                                 + data.nombre + '</option>');
+                            Init_Select2()
                         });
                     }, complete: function (data) {
                         $("#content").waitMe("hide");

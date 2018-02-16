@@ -151,8 +151,6 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
 
-               
-
                 if (response.IsSuccess)
                 {
                     var empleado = JsonConvert.DeserializeObject<Empleado>(response.Resultado.ToString());
