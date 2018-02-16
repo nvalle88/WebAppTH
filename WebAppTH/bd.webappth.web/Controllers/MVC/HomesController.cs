@@ -35,7 +35,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<Noticia>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/Homes/ListarNoticias");
+                                                                    , "api/Homes/ListarNoticias");
                 return View(lista);
             }
             catch (Exception ex)

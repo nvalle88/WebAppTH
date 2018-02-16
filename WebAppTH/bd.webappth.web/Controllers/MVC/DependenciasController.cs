@@ -135,5 +135,36 @@ namespace bd.webappth.web.Controllers.MVC
             var listaDependencia = await apiServicio.Listar<Dependencia>(sucursal, new Uri(WebApp.BaseAddress), "api/Dependencias/ListarPadresPorSucursal");
             return Json(listaDependencia);
         }
+
+        public async Task<ActionResult> CargarDependencias(int idsucursal)
+
+        {
+            var sucursal = new Sucursal()
+            {
+                IdSucursal = idsucursal
+            };
+            var dependenciasporsucursal = await apiServicio.ObtenerElementoAsync1<Dependencia>(sucursal, new Uri(WebApp.BaseAddress)
+                                                                  , "/api/Dependencias/ListarDependenciaporSucursalPadreHijo");
+
+
+            //InicializarMensaje(mensaje);
+            return PartialView(dependenciasporsucursal);
+
+        }
+
+        public async Task<JsonResult> RedireccionarModal(int idsucursal)
+        {
+
+            try
+            {
+
+                return Json(new { result = "Redireccionar", url = Url.Action("CargarDependencias", "Empleados", new { idsucursal = idsucursal, @class = "dialog-window" }) });
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
     }
 }

@@ -272,7 +272,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<MaterialInduccion>(new Uri(WebApp.BaseAddress)
-                                                                    , "/api/MaterialesInduccion/ListarMaterialesInduccion");
+                                                                    , "api/MaterialesInduccion/ListarMaterialesInduccion");
                 return View(lista);
             }
             catch (Exception ex)

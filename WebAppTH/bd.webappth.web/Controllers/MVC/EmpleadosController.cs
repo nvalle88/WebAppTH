@@ -226,23 +226,32 @@ namespace bd.webappth.web.Controllers.MVC
             return View();
         }
 
-        public async Task<IActionResult> AgregarDistributivo()
+        public async Task<IActionResult> AgregarDistributivo(int IdEmpleado)
         {
 
-            ObtenerInstancia.Instance = null;
-
             await CargarCombosDistributivo();
-            var sucursal = new Sucursal()
+            //var sucursal = new Sucursal()
+            //{
+            //    IdSucursal= 1
+            //};
+            //var dependenciasporsucursal = await apiServicio.ObtenerElementoAsync1<Dependencia>(sucursal,new Uri(WebApp.BaseAddress)
+            //                                                      , "/api/Dependencias/ListarDependenciaporSucursalPadreHijo");
+
+            //var empleadoViewModel = new EmpleadoViewModel()
+            //{
+            //    Dependencia = dependenciasporsucursal
+            //};
+
+            var empleado = new Empleado
             {
-                IdSucursal= 1
+                IdEmpleado = IdEmpleado
             };
-            var dependenciasporsucursal = await apiServicio.ObtenerElementoAsync1<Dependencia>(sucursal,new Uri(WebApp.BaseAddress)
-                                                                  , "/api/Dependencias/ListarDependenciaporSucursalPadreHijo");
 
             var empleadoViewModel = new EmpleadoViewModel()
             {
-                Dependencia = dependenciasporsucursal
+                Empleado = empleado
             };
+
 
             return View(empleadoViewModel);
         }
@@ -323,6 +332,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
+
                 var indiceOcupacional = new IndiceOcupacional
                 {
                     IdDependencia = iddependencia,
@@ -1284,7 +1294,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdTipoNombramiento = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdTipoNombramiento,
                     Fecha = empleadoViewModel.IndiceOcupacionalModalidadPartida.Fecha,
                     SalarioReal  = empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal,
-                    IdEmpleado=3
+                    IdEmpleado=empleadoViewModel.Empleado.IdEmpleado
                 };
 
 
@@ -1449,20 +1459,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        //private async Task<bool> CargarComboAreaConocimiento(IndiceOcupacional indiceOcupacional)
-        //{
-        //    var listaAreasConocimientos = await apiServicio.Listar<AreaConocimiento>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientosNoAsignadasIndiceOcupacional");
-        //    var resultado = false;
-        //    if (listaAreasConocimientos.Count != 0)
-        //    {
-        //        ViewData["IdAreaConocimiento"] = new SelectList(listaAreasConocimientos, "IdAreaConocimiento", "Descripcion");
-        //        resultado = true;
-        //    }
-
-        //    return resultado;
-
-
-        //}
 
         private void InicializarMensaje(string mensaje)
         {

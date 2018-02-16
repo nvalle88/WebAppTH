@@ -23,7 +23,6 @@ namespace bd.webappth.entidades.ViewModels
         public IndiceOcupacionalModalidadPartida IndiceOcupacionalModalidadPartida { get; set; }
         public IndiceOcupacional IndiceOcupacional { get; set; }
         public Dependencia Dependencia { get; set; }
-
     }
 
     

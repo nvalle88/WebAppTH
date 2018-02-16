@@ -106,16 +106,36 @@
                                                                 </div>
                                                             </div>
                                                             }
+
                                                         <div class="row">
-                                                            <section class="col col-6">
+                                                            <section class="col col-4">
+                                                                <label>Ciudad:</label>
                                                                 <label class="input">
-                                                                    <select asp-for="IndiceOcupacional.IdDependencia" asp- class="form-control" asp-items="ViewBag.IdDependencia">
-                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdDependencia)</option>
+                                                                    <select id="ciudad" class="form-control input " asp-items="ViewBag.IdCiudad">
+                                                                        <option value="0" selected="" disabled="">Seleccione</option>
                                                                     </select>
-                                                                    <span asp-validation-for="IndiceOcupacional.IdDependencia" class="text-danger"></span>
                                                                 </label>
                                                             </section>
-                                                            <section class="col col-6">
+                                                            <section class="col col-4">
+                                                                <label>Sucursal:</label>
+                                                                <label class="input">
+                                                                    <select id="sucursal" class="form-control input "></select>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-4">
+                                                                <label>Dependencia:</label>
+                                                                <label class="input">
+                                                                    <input class="form-control input" type="text" id="dependencia" readonly="readonly">
+                                                                </label>
+                                                            </section>
+                                                       
+                                                            <input class="form-control input" type="hidden" id="iddependencia">
+
+                                                        </div>
+
+                                                        <div class="row">                          
+                                                            <section class="col col-4">
+                                                                <label>Manual de Puesto:</label>
                                                                 <label class="input">
                                                                     <select asp-for="IndiceOcupacional.IdManualPuesto" asp- class="form-control" asp-items="ViewBag.IdManualPuesto">
                                                                         <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdManualPuesto)</option>
@@ -123,9 +143,9 @@
                                                                     <span asp-validation-for="IndiceOcupacional.IdManualPuesto" class="text-danger"></span>
                                                                 </label>
                                                             </section>
-                                                        </div>
-                                                        <div class="row">
-                                                            <section class="col col-6">
+                                                       
+                                                            <section class="col col-4">
+                                                                <label>Rol Puesto:</label>
                                                                 <label class="input">
                                                                     <select asp-for="IndiceOcupacional.IdRolPuesto" asp- class="form-control" asp-items="ViewBag.IdRolPuesto">
                                                                         <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdRolPuesto)</option>
@@ -133,12 +153,41 @@
                                                                     <span asp-validation-for="IndiceOcupacional.IdRolPuesto" class="text-danger"></span>
                                                                 </label>
                                                             </section>
-                                                            <section class="col col-6">
+
+                                                            <section class="col col-4">
+                                                                <label>Nivel :</label>
+                                                                <label class="input">
+                                                                    <select asp- class="form-control" asp-items="ViewBag.IdNivel">
+                                                                        <option value="0" selected="" disabled=""></option>
+                                                                    </select>
+                                                                </label>
+                                                            </section>
+                                                            
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-4">
+                                                                <label>Escala Grado:</label>
                                                                 <label class="input">
                                                                     <select asp-for="IndiceOcupacional.IdEscalaGrados" asp- class="form-control" asp-items="ViewBag.IdEscalaGrados">
                                                                         <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdEscalaGrados)</option>
                                                                     </select>
                                                                     <span asp-validation-for="IndiceOcupacional.IdEscalaGrados" class="text-danger"></span>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-4">
+                                                                <label> Partida General:</label>
+                                                                <label class="input">
+                                                                    <select asp-for="IndiceOcupacional.IdPartidaGeneral" asp- class="form-control" asp-items="ViewBag.IdPartidaGeneral">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdPartidaGeneral)</option>
+                                                                    </select>
+                                                                    <span asp-validation-for="IndiceOcupacional.IdPartidaGeneral" class="text-danger"></span>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-4">
+                                                                <label>Partida Individual:</label>
+                                                                <label class="input">
+                                                                    <input asp-for="IndiceOcupacional.NumeroPartidaIndividual" class="form-control input " type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                    <span asp-validation-for="IndiceOcupacional.NumeroPartidaIndividual" class="text-danger"></span>
                                                                 </label>
                                                             </section>
                                                         </div>
