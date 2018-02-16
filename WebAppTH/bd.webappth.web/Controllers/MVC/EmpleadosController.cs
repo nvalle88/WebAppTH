@@ -190,7 +190,7 @@ namespace bd.webappth.web.Controllers.MVC
             return View();
         }
 
-        public async Task<IActionResult> AgregarDistributivo(int IdEmpleado)
+        public async Task<IActionResult> AgregarDistributivo()
         {
 
             ObtenerInstancia.Instance = null;

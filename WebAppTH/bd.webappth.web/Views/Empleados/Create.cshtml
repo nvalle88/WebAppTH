@@ -256,7 +256,7 @@
                                                     <label>Parroquia:</label>
                                                     <div class="form-group">
                                                         <div class="input">
-                                                            <select asp-for="IdParroquia" id="parroquiaLugarPersona" class="form-control input"  >
+                                                            <select asp-for="IdParroquia" class="form-control input"  >
                                                                 <option value="0" selected="" disabled="">Seleccione</option>
                                                             </select>
                                                         </div>
@@ -470,6 +470,7 @@
                     dataType: 'json',
                     data: { pais: $("#paisLugarPersona").val() },
                     success: function (data) {
+                        $("#provinciaLugarPersona").append('<option value="0" selected="" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
                             $("#provinciaLugarPersona").append('<option value="'
                                 + data.idProvincia + '">'
@@ -498,6 +499,7 @@
                     dataType: 'json',
                     data: { provincia: $("#provinciaLugarPersona").val() },
                     success: function (data) {
+                        $("#idciudadLugarPersona").append('<option value="0" selected="" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
                             $("#idciudadLugarPersona").append('<option value="'
                                 + data.idCiudad + '">'
@@ -526,6 +528,7 @@
                     dataType: 'json',
                     data: { idCiudad: $("#idciudadLugarPersona").val() },
                     success: function (data) {
+                        $("#IdParroquia").append('<option value="0" selected="" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
                             $("#IdParroquia").append('<option value="'
                                 + data.idParroquia + '">'
