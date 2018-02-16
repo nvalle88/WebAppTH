@@ -12,9 +12,11 @@ using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using EnviarCorreo;
+using Microsoft.AspNetCore.Authorization;
 
 namespace bd.webappth.web.Controllers.MVC
 {
+    
     public class EtniasController : Controller
     {
         private readonly IApiServicio apiServicio;

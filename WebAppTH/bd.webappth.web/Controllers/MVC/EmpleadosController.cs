@@ -17,6 +17,12 @@ using System.Threading.Tasks;
 namespace bd.webappth.web.Controllers.MVC
 {
 
+    public class ResultadoEmpleado
+    {
+        public bool IsSuccess { get; set; }
+        public int IdEmpleado { get; set; }
+    }
+
     public class EmpleadosController : Controller
     {
 
@@ -129,75 +135,37 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-
-
-
-        public async Task<string> InsertarEmpleado(EmpleadoViewModel empleadoViewModel)
-        {
-            string mensaje = string.Empty;
-
-            var ins = ObtenerInstancia.Instance;
-
-            ins.Persona = empleadoViewModel.Persona;
-            ins.Empleado = empleadoViewModel.Empleado;
-            ins.DatosBancarios = empleadoViewModel.DatosBancarios;
-            ins.EmpleadoContactoEmergencia = empleadoViewModel.EmpleadoContactoEmergencia;
-            ins.IndiceOcupacionalModalidadPartida = empleadoViewModel.IndiceOcupacionalModalidadPartida;
-            ins.PersonaSustituto = empleadoViewModel.PersonaSustituto;
-
-            var response = await apiServicio.InsertarAsync(ins, new Uri(WebApp.BaseAddress), "api/Empleados/InsertarEmpleado");
-
-            if (response.IsSuccess)
-            {
-                LogEntryTranfer logEntryTranfer = new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    ExceptionTrace = null,
-                    Message = "Se ha creado un empleado",
-                    UserName = "Usuario 1",
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                    EntityID = "Empleado",
-                    ObjectPrevious = "NULL",
-                    ObjectNext = JsonConvert.SerializeObject(response.Resultado),
-                };
-
-                var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
-
-                mensaje = Mensaje.Satisfactorio;
-
-                ObtenerInstancia.Instance = null;
-                return mensaje;
-            }
-            mensaje = response.Message;
-            return mensaje;
-
-        }
-
-
-
         public async Task<string> ActualizarEmpleado(EmpleadoViewModel empleadoViewModel)
         {
             string mensaje = string.Empty;
-
-
-
             return mensaje;
-
         }
 
 
         [HttpPost]
-        public async Task<JsonResult> NuevoEmpleado(EmpleadoViewModel empleadoViewModel)
+        public async Task<JsonResult> NuevoEmpleado(DatosBasicosEmpleadoViewModel datosBasicosEmpleado)
         {
 
-            string mensaje = string.Empty;
-            mensaje = InsertarEmpleado(empleadoViewModel).Result;
+            var response = await apiServicio.InsertarAsync(datosBasicosEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/InsertarEmpleado");
 
-            if (!mensaje.Equals("La acción se ha realizado satisfactoriamente"))
-                return Json(mensaje);
-            else
-                return Json(new { result = "Redireccionar", url = Url.Action("Index", "Empleados") });
+            try
+            {
+
+               
+
+                if (response.IsSuccess)
+                {
+                    var empleado = JsonConvert.DeserializeObject<Empleado>(response.Resultado.ToString());
+                    return Json(new { IsSuccess = true, IdEmpleado = empleado.IdEmpleado });
+                }
+
+                return Json(new { IsSuccess = false,mensaje=response.Message });
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
 
         }
 
@@ -218,15 +186,11 @@ namespace bd.webappth.web.Controllers.MVC
        
         public async Task<IActionResult> Create()
         {
-
-            ObtenerInstancia.Instance = null;
-
             await CargarCombos();
-
             return View();
         }
 
-        public async Task<IActionResult> AgregarDistributivo()
+        public async Task<IActionResult> AgregarDistributivo(int IdEmpleado)
         {
 
             ObtenerInstancia.Instance = null;
