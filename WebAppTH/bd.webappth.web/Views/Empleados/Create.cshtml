@@ -20,7 +20,7 @@
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            <form asp-action="Create" id="datosbasicosempleado" class="smart-form" novalidate="novalidate">
+                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <fieldset>
                                     <legend>Datos Personales</legend>
@@ -30,8 +30,9 @@
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdTipoIdentificacion" asp- class="form-control" asp-items="ViewBag.IdTipoIdentificacion">
-                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
+                                                    <span asp-validation-for="IdTipoIdentificacion" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </section>
@@ -40,8 +41,10 @@
                                                 <label>CI o Pasaporte:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
-                                                    <input asp-for="Identificacion" class="form-control input " placeholder="Identificacion" type="text"  >
+                                                    <input asp-for="Identificacion" onchange="validar()" class="form-control input " placeholder="Identificacion" type="text" >
                                                 </div>
+                                                <span asp-validation-for="Identificacion" class="text-danger"></span>
+                                                <span id="idIdentificacion" class="text-danger"></span>
                                             </div>
                                         </section>
                                         <section class="col col-3">
@@ -51,6 +54,7 @@
                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                     <input asp-for="Nombres" class="form-control input " placeholder="Nombres" type="text"  >
                                                 </div>
+                                                <span asp-validation-for="Nombres" class="text-danger"></span>
                                             </div>
                                         </section>
                                         <section class="col col-3">
@@ -60,6 +64,7 @@
                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                     <input asp-for="Apellidos" class="form-control input " placeholder="Apellidos" type="text"  >
                                                 </div>
+                                                <span asp-validation-for="Apellidos" class="text-danger"></span>
                                             </div>
                                         </section>
                                     </div>
@@ -69,8 +74,9 @@
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdSexo" asp- class="form-control input " asp-items="ViewBag.IdSexo">
-                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
+                                                    <span asp-validation-for="IdSexo" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </section>
@@ -79,8 +85,9 @@
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdGenero" asp- class="form-control input " asp-items="ViewBag.IdGenero">
-                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
+                                                    <span asp-validation-for="IdGenero" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </section>
@@ -89,8 +96,9 @@
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdEstadoCivil" asp- class="form-control input " asp-items="ViewBag.IdEstadoCivil"  >
-                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
+                                                    <span asp-validation-for="IdEstadoCivil" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </section>
@@ -99,8 +107,9 @@
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdTipoSangre" asp- class="form-control input " asp-items="ViewBag.IdTipoSangre"  >
-                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
+                                                    <span asp-validation-for="IdTipoSangre" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </section>
@@ -111,8 +120,9 @@
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdNacionalidad" asp- class="form-control input " asp-items="ViewBag.IdNacionalidad"  >
-                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
+                                                    <span asp-validation-for="IdNacionalidad" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </section>
@@ -121,8 +131,9 @@
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select  asp-for="IdEtnia" asp- class="form-control input " asp-items="ViewBag.IdEtnia">
-                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
+                                                    <span asp-validation-for="IdEtnia" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </section>
@@ -142,6 +153,7 @@
                                                     <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
                                                     <input asp-for="CorreoPrivado" class="form-control input " placeholder="Correo Privado"   data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
                                                 </div>
+                                                <span asp-validation-for="CorreoPrivado" class="text-danger"></span>
                                             </div>
                                         </section>
                                     </div>
@@ -152,8 +164,9 @@
                                                  <div class="form-group">
                                                 <label class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input asp-for="FechaNacimiento" type="text" class="form-control input datepicker " placeholder="Seleccione la Fecha de Inicio" data-dateformat='dd/mm/yy'  >
+                                                    <input asp-for="FechaNacimiento" asp- class="form-control" placeholder="Seleccione la Fecha de Inicio">
                                                 </label>
+                                                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
                                             </div>
                                         </section>
 
@@ -164,6 +177,7 @@
                                                     <span class="input-group-addon"><i class="fa fa-institution fa  fa-fw"></i></span>
                                                     <input asp-for="LugarTrabajo" class="form-control input " placeholder="Lugar de Trabajo" type="text"  >
                                                 </div>
+                                                <span asp-validation-for="LugarTrabajo" class="text-danger"></span>
                                             </div>
                                         </section>
                                         
@@ -171,15 +185,17 @@
                                     <div class="row">
                                         <article class="col col-6">
                                             <legend>Lugar de Nacimiento</legend>
+                                            <br />
                                             <section class="row">
                                                 <div class="col col-6">
                                                     <label>Pa&iacute;s:</label>
                                                     <div class="form-group">
                                                         <div class="input">
-                                                            <select id="paisLugarNacimiento" class="form-control input " asp-items="ViewBag.IdPaisLugarNacimiento"  >
-                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                            <select  asp-for="IdPaisLugarNacimiento" class="form-control input " asp-items="ViewBag.IdPaisLugarNacimiento"  >
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                         </div>
+                                                        <span asp-validation-for="IdPaisLugarNacimiento" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <section class="col col-6">
@@ -189,21 +205,24 @@
                                                             <select class="form-control input" asp-for="IdCiudadLugarNacimiento" asp-items="ViewBag.IdCiudadLugarNacimiento"  >
                                                             </select>
                                                         </div>
+                                                        <span asp-validation-for="IdCiudadLugarNacimiento" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                             </section>
                                         </article>
                                         <article class="col col-6">
                                             <legend>Lugar de Sufragio</legend>
+                                            <br />
                                             <div class="row">
                                                 <section class="col col-6">
                                                     <label>Pa&iacute;s:</label>
                                                     <div class="form-group">
                                                         <div class="input">
-                                                            <select id="paisLugarSufragio" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"  >
-                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                            <select  asp-for="IdPaisLugarSufragio" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"  >
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                         </div>
+                                                        <span asp-validation-for="IdPaisLugarSufragio" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                                 <section class="col col-6">
@@ -211,8 +230,9 @@
                                                     <div class="form-group">
                                                         <div class="input">
                                                             <select  asp-for="IdProvinciaLugarSufragio" class="form-control input " asp-items="ViewBag.IdProvinciaLugarSufragio"  >
-                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
+                                                            <span asp-validation-for="IdProvinciaLugarSufragio" class="text-danger"></span>
                                                         </div>
                                                     </div>
                                                 </section>
@@ -220,14 +240,16 @@
                                         </article>
                                         <article class="col col-12">
                                             <legend>Direcci&oacute;n Domicilio Permanente</legend>
+                                            <br />
                                             <div class="row">
                                                 <section class="col col-3">
                                                     <label>Pa&iacute;s:</label>
                                                     <div class="form">
                                                         <div class="input">
-                                                            <select id="paisLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"  >
-                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                            <select asp-for="IdPaisLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"  >
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
+                                                            <span asp-validation-for="IdPaisLugarPersona" class="text-danger"></span>
                                                         </div>
                                                     </div>
                                                 </section>
@@ -236,9 +258,10 @@
                                                     <label>Provincia:</label>
                                                     <div class="form">
                                                         <div class="input">
-                                                            <select id="provinciaLugarPersona" asp- class="form-control input "  >
-                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                            <select  asp-for="IdProvinciaLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdProvinciaLugarPersona" >
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
+                                                            <span asp-validation-for="IdProvinciaLugarPersona" class="text-danger"></span>
                                                         </div>
                                                     </div>
                                                 </section>
@@ -246,9 +269,10 @@
                                                     <label>Ciudad:</label>
                                                     <div class="form">
                                                         <div class="input">
-                                                            <select id="idciudadLugarPersona" asp- class="form-control input "  >
-                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                            <select  asp-for="IdCiudadLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdCiudadLugarPersona" >
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
+                                                            <span asp-validation-for="IdCiudadLugarPersona" class="text-danger"></span>
                                                         </div>
                                                     </div>
                                                 </section>
@@ -256,10 +280,11 @@
                                                     <label>Parroquia:</label>
                                                     <div class="form-group">
                                                         <div class="input">
-                                                            <select asp-for="IdParroquia" class="form-control input"  >
-                                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                                            <select asp-for="IdParroquia" class="form-control input" asp-items="ViewBag.IdParroquia" >
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                         </div>
+                                                        <span asp-validation-for="IdParroquia" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                             </div>
@@ -271,6 +296,7 @@
                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
                                                             <input asp-for="CallePrincipal" class="form-control input " placeholder="Calle Principal" type="text"  >
                                                         </div>
+                                                        <span asp-validation-for="CallePrincipal" class="text-danger"></span>
                                                     </div>
                                                 </section>
 
@@ -281,6 +307,7 @@
                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
                                                             <input asp-for="CalleSecundaria" class="form-control input " placeholder="Calle Secundaria" type="text"  >
                                                         </div>
+                                                        <span asp-validation-for="CalleSecundaria" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                             </div>
@@ -293,6 +320,7 @@
                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
                                                             <input asp-for="Referencia" class="form-control input " placeholder="Referencia" type="text"  >
                                                         </div>
+                                                        <span asp-validation-for="Referencia" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                                 <section class="col col-6">
@@ -302,6 +330,7 @@
                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
                                                             <input asp-for="Ocupacion" class="form-control input " placeholder="Ocupaci&oacute;n" type="text">
                                                         </div>
+                                                        <span asp-validation-for="Ocupacion" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                             </div>
@@ -313,6 +342,7 @@
                                                             <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
                                                             <input asp-for="Numero" class="form-control input " placeholder="Numero del Domicilio" onKeyPress="return checkIt(event)"  >
                                                         </div>
+                                                        <span asp-validation-for="Numero" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                                 <section class="col col-4">
@@ -322,6 +352,7 @@
                                                             <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
                                                             <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text"  >
                                                         </div>
+                                                        <span asp-validation-for="TelefonoPrivado" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                                 <section class="col col-4">
@@ -331,6 +362,7 @@
                                                             <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
                                                             <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text"  >
                                                         </div>
+                                                        <span asp-validation-for="TelefonoCasa" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                             </div>
@@ -339,7 +371,7 @@
                                     <span class="text-danger">@ViewData["Error"]</span>
                                 </fieldset>
                                 <footer>
-                                    <input type="submit" id="GuardarForm"  value="Guardar y Continuar" class="btn btn-primary" />
+                                    <input type="submit" id="GuardarForm" value="Guardar y Continuar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
@@ -369,14 +401,15 @@
 <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 <script src='~/js/site.js'></script>
-
+    
     <script src='~/lib/waitMe/waitMe.min.js'></script>
     <script src='~/js/site.js'></script>
 
     <script type="text/javascript">
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $("#IdEtnia").change(function () {
+            $("#IdEtnia").change(function () {
+            
             mostrarLoadingPanel("content", "Cargando...");
             $("#IdNacionalidadIndigena").empty();
              Init_Select2()
@@ -403,7 +436,7 @@
                 return false;
         })
 
-        $("#paisLugarNacimiento").change(function () {
+        $("#IdPaisLugarNacimiento").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#IdCiudadLugarNacimiento").empty();
             Init_Select2()
@@ -411,7 +444,7 @@
                     type: 'POST',
                     url: '@Url.Action("ListarCiudadesPorPais")',
                     dataType: 'json',
-                    data: { pais: $("#paisLugarNacimiento").val() },
+                    data: { pais: $("#IdPaisLugarNacimiento").val() },
                     success: function (data) {
                         $.each(data, function (i, data) {
                             $("#IdCiudadLugarNacimiento").append('<option value="'
@@ -430,7 +463,7 @@
                 return false;
         })
 
-        $("#paisLugarSufragio").change(function () {
+        $("#IdPaisLugarSufragio").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#IdProvinciaLugarSufragio").empty();
             Init_Select2()
@@ -438,7 +471,7 @@
                     type: 'POST',
                     url: '@Url.Action("ListarProvinciaPorPais")',
                     dataType: 'json',
-                    data: { pais: $("#paisLugarSufragio").val() },
+                    data: { pais: $("#IdPaisLugarSufragio").val() },
                     success: function (data) {
                         $.each(data, function (i, data) {
                             $("#IdProvinciaLugarSufragio").append('<option value="'
@@ -458,21 +491,21 @@
                 return false;
         })
 
-           $("#paisLugarPersona").change(function () {
+        $("#IdPaisLugarPersona").change(function () {
             mostrarLoadingPanel("content","Cargando...")
-            $("#provinciaLugarPersona").empty();
-            $("#idciudadLugarPersona").empty();
+            $("#IdProvinciaLugarPersona").empty();
+            $("#IdCiudadLugarPersona").empty();
             $("#IdParroquia").empty();
             Init_Select2()
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarProvinciaPorPais")',
                     dataType: 'json',
-                    data: { pais: $("#paisLugarPersona").val() },
+                    data: { pais: $("#IdPaisLugarPersona").val() },
                     success: function (data) {
-                        $("#provinciaLugarPersona").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $("#IdProvinciaLugarPersona").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
-                            $("#provinciaLugarPersona").append('<option value="'
+                            $("#IdProvinciaLugarPersona").append('<option value="'
                                 + data.idProvincia + '">'
                                 + data.nombre + '</option>');
 
@@ -488,20 +521,20 @@
                 return false;
                 })
 
-                   $("#provinciaLugarPersona").change(function () {
+        $("#IdProvinciaLugarPersona").change(function () {
             mostrarLoadingPanel("content","Cargando...")
-            $("#idciudadLugarPersona").empty();
+            $("#IdCiudadLugarPersona").empty();
             $("#IdParroquia").empty();
             Init_Select2()
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarCiudadPorProvincia")',
                     dataType: 'json',
-                    data: { provincia: $("#provinciaLugarPersona").val() },
+                    data: { provincia: $("#IdProvinciaLugarPersona").val() },
                     success: function (data) {
-                        $("#idciudadLugarPersona").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $("#IdCiudadLugarPersona").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
-                            $("#idciudadLugarPersona").append('<option value="'
+                            $("#IdCiudadLugarPersona").append('<option value="'
                                 + data.idCiudad + '">'
                                 + data.nombre + '</option>');
 
@@ -518,7 +551,7 @@
                 })
 
 
-           $("#idciudadLugarPersona").change(function () {
+        $("#IdCiudadLugarPersona").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#IdParroquia").empty();
             Init_Select2()
@@ -526,9 +559,9 @@
                     type: 'POST',
                     url: '@Url.Action("ListarParroquiaPorCiudad")',
                     dataType: 'json',
-                    data: { idCiudad: $("#idciudadLugarPersona").val() },
+                    data: { idCiudad: $("#IdCiudadLugarPersona").val() },
                     success: function (data) {
-                        $("#IdParroquia").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $("#IdParroquia").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
                             $("#IdParroquia").append('<option value="'
                                 + data.idParroquia + '">'
@@ -550,34 +583,14 @@
 
        // Evento que envía una petición Ajax al servidor
     $('#GuardarForm').click(function (e) {
-     mostrarLoadingPanel("content", "Cargando...")
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("NuevoEmpleado")',
-                content: "application/json; charset=utf-8",
-                dataType: "json",
-                // De la siguiente manera indicamos que del div tome los input.
-                data: $('#datosbasicosempleado').serialize(),
-                success: function (d) {
-                   
-                    if (d.isSuccess)
-                        window.location.href = '@Url.Action("AgregarDistributivo")?IdEmpleado=' + d.idEmpleado;
-                    
-                        else {
-                            alert(d.mensaje);
-                             }
-            },
-                error: function (xhr, textStatus, errorThrown) {
-                alert('Error!!');
-        }
+     mostrarLoadingPanel("content", "Guardando empleado e inicializando el manual de puesto...")
     });
-});
 
 
 
     </script>
 
-    <script type="text/javascript">
+    @*<script type="text/javascript">
 
         function checkIt(evt) {
             evt = (evt) ? evt : window.event
@@ -615,7 +628,7 @@
             if (input.value > 100) input.value = 100;
         }
 
-    </script>
+    </script>*@
 
 <script type="text/javascript">
         $(document).ready(function () {

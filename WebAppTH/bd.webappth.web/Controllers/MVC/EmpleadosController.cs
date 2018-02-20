@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace bd.webappth.web.Controllers.MVC
@@ -89,9 +90,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-
-
-
         private async Task CargarCombos()
         {
             //Tabla Persona
@@ -103,9 +101,67 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["IdTipoSangre"] = new SelectList(await apiServicio.Listar<TipoSangre>(new Uri(WebApp.BaseAddress), "api/TiposDeSangre/ListarTiposDeSangre"), "IdTipoSangre", "Nombre");
             ViewData["IdEtnia"] = new SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
 
-            ViewData["IdPaisLugarNacimiento"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
-            ViewData["IdPaisLugarSufragio"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
-            ViewData["IdPaisDireccion"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
+            //Cargar Paises
+            var listaPaises = await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais");
+            ViewData["IdPaisLugarNacimiento"] = new SelectList(listaPaises, "IdPais", "Nombre", listaPaises.FirstOrDefault());
+            ViewData["IdPaisLugarSufragio"] = new SelectList(listaPaises, "IdPais", "Nombre", listaPaises.FirstOrDefault());
+            ViewData["IdPaisDireccion"] = new SelectList(listaPaises, "IdPais", "Nombre", listaPaises.FirstOrDefault());
+
+        }
+
+
+
+        private async Task CargarCombos(DatosBasicosEmpleadoViewModel datosBasicosEmpleado)
+        {
+            //Tabla Persona
+            ViewData["IdSexo"] = new SelectList(await apiServicio.Listar<Sexo>(new Uri(WebApp.BaseAddress), "api/Sexos/ListarSexos"), "IdSexo", "Nombre");
+            ViewData["IdTipoIdentificacion"] = new SelectList(await apiServicio.Listar<TipoIdentificacion>(new Uri(WebApp.BaseAddress), "api/TiposIdentificacion/ListarTiposIdentificacion"), "IdTipoIdentificacion", "Nombre");
+            ViewData["IdEstadoCivil"] = new SelectList(await apiServicio.Listar<EstadoCivil>(new Uri(WebApp.BaseAddress), "api/EstadosCiviles/ListarEstadosCiviles"), "IdEstadoCivil", "Nombre");
+            ViewData["IdGenero"] = new SelectList(await apiServicio.Listar<Genero>(new Uri(WebApp.BaseAddress), "api/Generos/ListarGeneros"), "IdGenero", "Nombre");
+            ViewData["IdNacionalidad"] = new SelectList(await apiServicio.Listar<Nacionalidad>(new Uri(WebApp.BaseAddress), "api/Nacionalidades/ListarNacionalidades"), "IdNacionalidad", "Nombre");
+            ViewData["IdTipoSangre"] = new SelectList(await apiServicio.Listar<TipoSangre>(new Uri(WebApp.BaseAddress), "api/TiposDeSangre/ListarTiposDeSangre"), "IdTipoSangre", "Nombre");
+            ViewData["IdEtnia"] = new SelectList(await apiServicio.Listar<Etnia>(new Uri(WebApp.BaseAddress), "api/Etnias/ListarEtnias"), "IdEtnia", "Nombre");
+
+            //Nacionalidades indígenas
+            var Etnia = new Etnia { IdEtnia = datosBasicosEmpleado.IdEtnia };
+            var listaNacionalidadIndigena = await apiServicio.Listar<NacionalidadIndigena>(Etnia, new Uri(WebApp.BaseAddress), "api/NacionalidadesIndigenas/ListarNacionalidadesIndigenasPorEtnias");
+            ViewData["IdNacionalidadIndigena"] = new SelectList(listaNacionalidadIndigena, "IdNacionalidadIndigena", "Nombre");
+
+            //Cargar Paises
+            var listaPaises = await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais");
+            ViewData["IdPaisLugarNacimiento"] = new SelectList(listaPaises, "IdPais", "Nombre",datosBasicosEmpleado.IdPaisLugarNacimiento);
+            ViewData["IdPaisLugarSufragio"] = new SelectList(listaPaises, "IdPais", "Nombre", datosBasicosEmpleado.IdPaisLugarSufragio);
+            ViewData["IdPaisDireccion"] = new SelectList(listaPaises, "IdPais", "Nombre", datosBasicosEmpleado.IdPaisLugarPersona);
+
+            //Cargar Provincias por país
+
+            var paisLugarSufragio = new Pais { IdPais = datosBasicosEmpleado.IdPaisLugarSufragio };
+            var listaProvinciasLugarSufragio = await apiServicio.Listar<Provincia>(paisLugarSufragio, new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvinciaPorPais");
+            ViewData["IdProvinciaLugarSufragio"] = new SelectList(listaProvinciasLugarSufragio, "IdProvincia", "Nombre");
+
+            var paisLugarPersona = new Pais { IdPais = datosBasicosEmpleado.IdPaisLugarPersona };
+            var listaProvinciaLugarPersona = await apiServicio.Listar<Provincia>(paisLugarPersona, new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvinciaPorPais");
+            ViewData["IdProvinciaLugarPersona"] = new SelectList(listaProvinciaLugarPersona, "IdProvincia", "Nombre");
+
+            //Cargar Ciudades por Paises
+            var paisCiudadLugarNacimiento = new Pais { IdPais = datosBasicosEmpleado.IdPaisLugarNacimiento };
+            var listaCiudadLugarNacimiento = await apiServicio.Listar<Ciudad>(paisCiudadLugarNacimiento, new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudadPorPais");
+            ViewData["IdCiudadLugarNacimiento"] = new SelectList(listaCiudadLugarNacimiento, "IdCiudad", "Nombre");
+
+
+            //Cargar ciudades por provincia
+            var provinciaLugarPersona = new Provincia { IdProvincia = datosBasicosEmpleado.IdProvinciaLugarPersona };
+            var listaCiudadesLugarPersona = await apiServicio.Listar<Ciudad>(provinciaLugarPersona, new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudadPorProvincia");
+            ViewData["IdCiudadLugarPersona"] = new SelectList(listaCiudadesLugarPersona, "IdCiudad", "Nombre");
+
+            //Cargar Parroquia por ciudad
+
+            var ciudadLugarPersona = new Ciudad { IdCiudad = datosBasicosEmpleado.IdCiudadLugarPersona };
+            var listaParroquias = await apiServicio.Listar<Parroquia>(ciudadLugarPersona, new Uri(WebApp.BaseAddress), "api/Parroquia/ListarParroquiaPorCiudad");
+            ViewData["IdParroquia"] = new SelectList(listaParroquias, "IdParroquia", "Nombre");
+
+
+
 
         }
 
@@ -128,21 +184,28 @@ namespace bd.webappth.web.Controllers.MVC
 
 
         [HttpPost]
-        public async Task<JsonResult> NuevoEmpleado(DatosBasicosEmpleadoViewModel datosBasicosEmpleado)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(DatosBasicosEmpleadoViewModel datosBasicosEmpleado)
         {
 
-            var response = await apiServicio.InsertarAsync(datosBasicosEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/InsertarEmpleado");
+
+            if (!ModelState.IsValid)
+            {
+                await CargarCombos(datosBasicosEmpleado);
+                return View(datosBasicosEmpleado);
+            }
 
             try
             {
+                var response = await apiServicio.InsertarAsync(datosBasicosEmpleado, new Uri(WebApp.BaseAddress), "api/Empleados/InsertarEmpleado");
 
                 if (response.IsSuccess)
                 {
                     var empleado = JsonConvert.DeserializeObject<Empleado>(response.Resultado.ToString());
-                    return Json(new { IsSuccess = true, IdEmpleado = empleado.IdEmpleado });
+                    return RedirectToAction("AgregarDistributivo",new {IdEmpleado=empleado.IdEmpleado });
                 }
-
-                return Json(new { IsSuccess = false,mensaje=response.Message });
+                await CargarCombos(datosBasicosEmpleado);
+                return View(datosBasicosEmpleado);
             }
             catch (Exception ex)
             {
