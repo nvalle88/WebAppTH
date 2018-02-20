@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.Negocio.ManualPuesto
+@model bd.webappth.entidades.ViewModels.ViewModelManualPuesto
 
 @{
     ViewData["Title"] = "Manual Puesto";
@@ -14,7 +14,7 @@
         <!-- START ROW -->
         <div class="row">
             <!-- NEW COL START -->
-            <article class="col-sm-12 col-md-12 col-lg-4">
+            <article class="col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
 
@@ -33,9 +33,9 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="Edit" id="checkout-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdManualPuesto"/>
+                                <input type="hidden" asp-for="ManualPuesto.IdManualPuesto"/>
                                 @{await Html.RenderPartialAsync("_PartialViewManualPuestos");}
                                 <footer>
                                     <span class="text-danger">@ViewData["Error"]</span>

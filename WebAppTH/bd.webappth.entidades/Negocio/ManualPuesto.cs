@@ -18,9 +18,14 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "Debe introducir  {0}")]
         public string Descripcion { get; set; }
 
+        public string Mision { get; set; }
+        public int? IdRelacionesInternasExternas { get; set; }
+
         public virtual ICollection<IndiceOcupacional> IndiceOcupacional { get; set; }
         public virtual ICollection<InformeUATH> InformeUATH { get; set; }
 
         public virtual ICollection<InformeUATH> InformeUATH1 { get; set; }
+
+        public virtual RelacionesInternasExternas RelacionesInternasExternas { get; set; }
     }
 }

@@ -9,7 +9,6 @@ namespace bd.webappth.entidades.ViewModels
     {
         public IndiceOcupacional IndiceOcupacional { get; set; }
         public List<RelacionesInternasExternas> ListaRelacionesInternasExternas { get; set; }
-        public List<Mision> ListaMisiones { get; set; }
         public List<Estudio> ListaEstudios { get; set; }
         public List<AreaConocimiento> ListaAreaConocimientos { get; set; }
         public List<ExperienciaLaboralRequerida> ListaExperienciaLaboralRequeridas { get; set; }

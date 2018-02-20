@@ -559,9 +559,10 @@
                 // De la siguiente manera indicamos que del div tome los input.
                 data: $('#datosbasicosempleado').serialize(),
                 success: function (d) {
-                    $("#content").waitMe("hide");
+                   
                     if (d.isSuccess)
                         window.location.href = '@Url.Action("AgregarDistributivo")?IdEmpleado=' + d.idEmpleado;
+                    
                         else {
                             alert(d.mensaje);
                              }

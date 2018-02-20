@@ -410,27 +410,6 @@ namespace bd.webappth.web.Controllers.MVC
             return resultado;
         }
 
-
-        private async Task<bool> CargarComboMision(IndiceOcupacional indiceOcupacional)
-        {
-            var listaMision = await apiServicio.Listar<Mision>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Misiones/ListarMisionNoAsignadasIndiceOcupacional");
-            var resultado = false;
-            if (listaMision.Count != 0)
-            {
-                ViewData["IdMision"] = new SelectList(listaMision, "IdMision", "Nombre");
-                resultado = true;
-            }
-
-            return resultado;
-            
-        }
-
-
-        
-        
-
-
-
         private async Task<bool> CargarComboRelacionesInternasExternas(IndiceOcupacional indiceOcupacional)
         {
             var listaRelacionesInternasExternas = await apiServicio.Listar<RelacionesInternasExternas>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/RelacionesInternasExternas/ListarRelacionesInternasExternasNoAsignadasIndiceOcupacional");
@@ -717,200 +696,6 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AdicionarMision(int idMision, int IdIndiceOcupacional)
-        {
-            Response response = new Response();
-            try
-            {
-                var misionIndiceOcupacional = new MisionIndiceOcupacional
-                {
-                    IdMision=idMision,
-                    IdIndiceOcupacional=IdIndiceOcupacional,
-                };
-
-
-                    response = await apiServicio.InsertarAsync(misionIndiceOcupacional,
-                                                                 new Uri(WebApp.BaseAddress),
-                                                                 "api/IndicesOcupacionales/InsertarMision");
-                    if (response.IsSuccess)
-                    {
-
-                        var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            ExceptionTrace = null,
-                            Message = "Se ha creado un indice ocupacional misión",
-                            UserName = "Usuario 1",
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            EntityID = string.Format("{0} {1} {2} {3}", "Índice ocupacional misión:", misionIndiceOcupacional.IdIndiceOcupacional, "Misión:", misionIndiceOcupacional.IdMision),
-                        });
-
-                        return RedirectToAction("Detalles", new { id = misionIndiceOcupacional.IdIndiceOcupacional });
-                    }
-                
-
-                var indiceOcupacional = new IndiceOcupacional
-                {
-                    IdIndiceOcupacional = misionIndiceOcupacional.IdIndiceOcupacional,
-                };
-
-                await CargarComboMision(indiceOcupacional);
-                InicializarMensaje(response.Message);
-                return PartialView("AdicionarMision", misionIndiceOcupacional);
-
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP Seguridad"
-                });
-
-                return BadRequest();
-            }
-        }
-
-
-
-        public async Task<ActionResult> AdicionarMision(string idIndiceOcupacional, string mensaje)
-        {
-            var indiceOcupacional = new IndiceOcupacional
-            {
-                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
-            };
-
-            var listaElementos = await apiServicio.Listar<MisionIndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                                  , "api/Misiones/ListarElementosMisionesIndiceOcupacional");
-
-         
-
-            if (listaElementos.Count==0)
-            {
-                
-                var indiceMision = new IndiceOcupacionalMisionView
-                {
-                    IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
-                    ListaMisiones = await apiServicio.Listar<Mision>(indiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                                , "api/Misiones/ListarMisionNoAsignadasIndiceOcupacional")
-                };
-
-                InicializarMensaje(mensaje);
-                return PartialView(indiceMision);
-            }
-
-            ViewData["Mensaje"] = Mensaje.NoExistenRegistrosPorAsignar;
-            return PartialView("NoExisteElemento");
-
-        }
-
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AdicionarRIE(int idRIE, int IdIndiceOcupacional)
-        {
-            Response response = new Response();
-            try
-            {
-                var RIEIndiceOcupacional = new RelacionesInternasExternasIndiceOcupacional
-                {
-                    IdRelacionesInternasExternas = idRIE,
-                    IdIndiceOcupacional = IdIndiceOcupacional,
-                };
-
-
-                response = await apiServicio.InsertarAsync(RIEIndiceOcupacional,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/IndicesOcupacionales/InsertarRelacionesInternasExternas");
-                if (response.IsSuccess)
-                {
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un indice ocupacional relaciones internas externas",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1} {2} {3}", "Índice ocupacional relaciones internas externas:", RIEIndiceOcupacional.IdIndiceOcupacional, "Relaciones Internas Externas:", RIEIndiceOcupacional.IdRelacionesInternasExternas),
-                    });
-
-                    return RedirectToAction("Detalles", new { id = RIEIndiceOcupacional.IdIndiceOcupacional });
-                }
-
-
-                var indiceOcupacional = new IndiceOcupacional
-                {
-                    IdIndiceOcupacional = RIEIndiceOcupacional.IdIndiceOcupacional,
-                };
-
-                await CargarComboMision(indiceOcupacional);
-                InicializarMensaje(response.Message);
-                return PartialView("AdicionarRIE", RIEIndiceOcupacional);
-
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP Seguridad"
-                });
-
-                return BadRequest();
-            }
-        }
-
-
-
-
-        public async Task<ActionResult> AdicionarRIE(string idIndiceOcupacional, string mensaje)
-        {
-            var indiceOcupacional = new IndiceOcupacional
-            {
-                IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
-            };
-
-            var listaElementos = await apiServicio.Listar<RelacionesInternasExternasIndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                                  , "api/RelacionesInternasExternas/ListarElementosRIE");
-
-
-
-            if (listaElementos.Count == 0)
-            {
-
-                var indiceRIE = new IndiceOcupacionalRIEView
-                {
-                    IdIndiceOcupacional = Convert.ToInt32(idIndiceOcupacional),
-                    ListaRelacionesInternasExternas = await apiServicio.Listar<RelacionesInternasExternas>(indiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                                , "api/RelacionesInternasExternas/ListarRIENoAsignadasIndiceOcupacional")
-                };
-
-                InicializarMensaje(mensaje);
-                return PartialView(indiceRIE);
-            }
-
-            ViewData["Mensaje"] = Mensaje.NoExistenRegistrosPorAsignar;
-            return PartialView("NoExisteElemento");
-
-        }
-
         public async Task<ActionResult> AdicionarAreaConocimientoLocal(string idIndiceOcupacional, string mensaje)
 
         {
@@ -985,6 +770,11 @@ namespace bd.webappth.web.Controllers.MVC
             var listaPartidasGenerales = await apiServicio.Listar<PartidaGeneral>(new Uri(WebApp.BaseAddress), "/api/PartidasGenerales/ListarPartidasGenerales");
             ViewData["IdPartidaGeneral"] = new SelectList(listaPartidasGenerales, "IdPartidaGeneral", "NumeroPartida");
 
+            var listaCiudades = await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "/api/Ciudad/ListarCiudad");
+            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
+
+            var listaGruposOcupaciones = await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales");
+            ViewData["IdGrupoOcupacional"] = new SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "TipoEscala");
 
         }
 
@@ -1179,6 +969,23 @@ namespace bd.webappth.web.Controllers.MVC
             var indiceOcupacionalDetalle = await apiServicio.ObtenerElementoAsync1<IndiceOcupacionalDetalle>(IndiOcupacionalDetalle, new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/DetalleIndiceOcupacional");
 
             return View(indiceOcupacionalDetalle);
+        }
+
+
+        public async Task<ActionResult> CargarDependencias(int idsucursal)
+
+        {
+            var sucursal = new Sucursal()
+            {
+                IdSucursal = idsucursal
+            };
+            var dependenciasporsucursal = await apiServicio.ObtenerElementoAsync1<Dependencia>(sucursal, new Uri(WebApp.BaseAddress)
+                                                                  , "api/Dependencias/ListarDependenciaporSucursalPadreHijo");
+
+
+            //InicializarMensaje(mensaje);
+            return PartialView("~/Views/Dependencias/CargarDependencias.cshtml", dependenciasporsucursal);
+
         }
     }
 }

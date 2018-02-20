@@ -122,13 +122,20 @@
                                                                     <select id="sucursal" class="form-control input "></select>
                                                                 </label>
                                                             </section>
-                                                            <section class="col col-4">
+                                                            @*<section class="col col-4">
                                                                 <label>Dependencia:</label>
                                                                 <label class="input">
                                                                     <input class="form-control input" type="text" id="dependencia" readonly="readonly">
                                                                 </label>
+                                                            </section>*@
+                                                            <section class="col col-4">
+                                                                <label>Dependencia:</label>
+                                                                <label class="input">
+                                                                    <select id="dependencia" class="form-control input " asp-items="ViewBag.IdDependencia">
+                                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                                    </select>
+                                                                </label>
                                                             </section>
-                                                       
                                                             <input class="form-control input" type="hidden" id="iddependencia">
 
                                                         </div>
@@ -157,8 +164,8 @@
                                                             <section class="col col-4">
                                                                 <label>Nivel :</label>
                                                                 <label class="input">
-                                                                    <select asp- class="form-control" asp-items="ViewBag.IdNivel">
-                                                                        <option value="0" selected="" disabled=""></option>
+                                                                    <select id="idgrupoocupacional" class="form-control input " asp-items="ViewBag.IdGrupoOcupacional">
+                                                                        <option value="0" selected="" disabled="">Seleccione</option>
                                                                     </select>
                                                                 </label>
                                                             </section>
@@ -168,7 +175,7 @@
                                                             <section class="col col-4">
                                                                 <label>Escala Grado:</label>
                                                                 <label class="input">
-                                                                    <select asp-for="IndiceOcupacional.IdEscalaGrados" asp- class="form-control" asp-items="ViewBag.IdEscalaGrados">
+                                                                    <select asp-for="IndiceOcupacional.IdEscalaGrados" id="idescalagrados" asp- class="form-control">
                                                                         <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdEscalaGrados)</option>
                                                                     </select>
                                                                     <span asp-validation-for="IndiceOcupacional.IdEscalaGrados" class="text-danger"></span>
@@ -331,7 +338,7 @@
                                         <p></p>
                                         <!-- end col -->
                                     </div>
-                                    <article class="col-sm-12 col-md-12 col-lg-12">
+                                    @*<article class="col-sm-12 col-md-12 col-lg-12">
                                         <fieldset>
                                             <legend>Misi&oacute;n</legend>
 
@@ -348,7 +355,7 @@
                                             }
 
                                         </fieldset>
-                                    </article>
+                                    </article>*@
                                 </div>
                                 <div class="step-pane" id="step4">
                                     <h3></h3>
@@ -760,7 +767,8 @@
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalAreaConocimiento());}
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalCapacitaciones());}
 @{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalComportamientoObservableView());}
-@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalConocimientosAdicionales());}
+@{await Html.RenderPartialAsync("Modal");}
+
 
 
 
@@ -777,11 +785,12 @@
     $(document).ready(function () {
         Init_Select2();
     });
-
+</script>
 
 
     <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
     <script type="text/javascript">
 
 
@@ -789,6 +798,92 @@
 
         $(document).ready(function () {
 
+                       $("#ciudad").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#sucursal").empty();
+            $("#dependencia").val("");
+            $("#manualpuesto").empty();
+            $("#rolpuesto").empty();
+            $("#escalagrados").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarSucursalesPorCiudad", "CeseFunciones")',
+                    dataType: 'json',
+                    data: { idciudad: $("#ciudad").val() },
+                    success: function (data) {
+                        $("#sucursal").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#sucursal").append('<option value="'
+                                + data.idSucursal + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+           $("#sucursal").change(function (e) {
+               mostrarLoadingPanel("content", "Cargando...")
+               $("#dependencia").val("");
+               $("#manualpuesto").empty();
+               $("#rolpuesto").empty();
+               $("#escalagrados").empty();
+               e.preventDefault();
+               var $link = $(this);
+               var title = $link.text();
+               $('#myModal.modal-title').html(title);
+               var url = '@Url.Action("CargarDependencias")?idsucursal='+ $('#sucursal').val() ;
+               if (url.indexOf('#') == 0) {
+                   $('#myModal').modal('show');
+                   $("#myModal").waitMe("hide");
+               }
+               else {
+                   $.get(url, function (data) {
+                       $('#myModal .te').html(data);
+                       $('#myModal').modal();
+                       $('#selectC').select2();
+                       $("#content").waitMe("hide");
+                   }).success(function () { $('input:text:visible:first').focus(); });
+
+               }
+                $("#content").waitMe("hide");
+                return false;
+           })
+
+
+         $("#idgrupoocupacional").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#idescalagrados").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarEscalasGradosPorGrupoOcupacional", "EscalaGrados")',
+                    dataType: 'json',
+                    data: { idgrupoocupacional: $("#idgrupoocupacional").val() },
+                    success: function (data) {
+                        $("#idescalagrados").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#idescalagrados").append('<option value="'
+                                + data.idEscalaGrados + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
 
             $()
             // fuelux wizard
@@ -806,6 +901,7 @@
                 });
 
             });
+
 
 
         })

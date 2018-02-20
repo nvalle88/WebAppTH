@@ -11,6 +11,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -25,19 +26,34 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var listarie = await apiServicio.Listar<RelacionesInternasExternas>(new Uri(WebApp.BaseAddress)
+                                                                   , "api/RelacionesInternasExternas/ListarRelacionesInternasExternas");
+
+            var manualpuestoViewModel = new ViewModelManualPuesto
+            {
+                RelacionesInternasExternas = listarie
+            };
+
+            return View(manualpuestoViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ManualPuesto ManualPuesto)
+        public async Task<IActionResult> Create(ViewModelManualPuesto viewModelManualPuesto)
         {
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(ManualPuesto,
+                var manualPuesto = new ManualPuesto
+                {
+                    Nombre = viewModelManualPuesto.ManualPuesto.Nombre,
+                    Descripcion = viewModelManualPuesto.ManualPuesto.Descripcion,
+                    Mision = viewModelManualPuesto.ManualPuesto.Mision,
+                    IdRelacionesInternasExternas = viewModelManualPuesto.ManualPuesto.IdRelacionesInternasExternas,
+                };
+                response = await apiServicio.InsertarAsync(manualPuesto,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/ManualPuestos/InsertarManualPuesto");
                 if (response.IsSuccess)
@@ -51,14 +67,14 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario 1",
                         LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "ManualPuesto:", ManualPuesto.IdManualPuesto),
+                        EntityID = string.Format("{0} {1}", "ManualPuesto:", viewModelManualPuesto.ManualPuesto.IdManualPuesto),
                     });
 
                     return RedirectToAction("Index");
                 }
 
                 ViewData["Error"] = response.Message;
-                return View(ManualPuesto);
+                return View(viewModelManualPuesto);
 
             }
             catch (Exception ex)
@@ -87,10 +103,20 @@ namespace bd.webappth.web.Controllers.MVC
                                                                   "api/ManualPuestos");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<ManualPuesto>(respuesta.Resultado.ToString());
+                    var manualpuesto = JsonConvert.DeserializeObject<ManualPuesto>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
-                        return View(respuesta.Resultado);
+                        var listarie = await apiServicio.Listar<RelacionesInternasExternas>(new Uri(WebApp.BaseAddress)
+                                                                   , "api/RelacionesInternasExternas/ListarRelacionesInternasExternas");
+
+                        var viewmodelmanualpuesto = new ViewModelManualPuesto
+                        {
+                            ManualPuesto = manualpuesto,
+                            RelacionesInternasExternas = listarie
+
+                        };
+
+                        return View(viewmodelmanualpuesto);
                     }
 
                 }
@@ -105,14 +131,22 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, ManualPuesto ManualPuesto)
+        public async Task<IActionResult> Edit(string id, ViewModelManualPuesto viewModelManualPuesto)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, ManualPuesto, new Uri(WebApp.BaseAddress),
+                    var manualpuesto = new ManualPuesto
+                    {
+                        Nombre = viewModelManualPuesto.ManualPuesto.Nombre,
+                        Descripcion = viewModelManualPuesto.ManualPuesto.Descripcion,
+                        Mision = viewModelManualPuesto.ManualPuesto.Mision,
+                        IdRelacionesInternasExternas = viewModelManualPuesto.ManualPuesto.IdRelacionesInternasExternas,
+                        IdManualPuesto = viewModelManualPuesto.ManualPuesto.IdManualPuesto
+                    };
+                    response = await apiServicio.EditarAsync(id, manualpuesto, new Uri(WebApp.BaseAddress),
                                                                  "api/ManualPuestos");
 
                     if (response.IsSuccess)
@@ -130,7 +164,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    return View(ManualPuesto);
+                    return View(viewModelManualPuesto);
 
                 }
                 return BadRequest();

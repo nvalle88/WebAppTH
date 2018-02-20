@@ -8,7 +8,6 @@ namespace bd.webappth.entidades.ViewModels
    public class IndiceOcupacionalMisionView
     {
         public int IdIndiceOcupacional { get; set; }
-        public List<Mision> ListaMisiones { get; set; }
        
     }
 }

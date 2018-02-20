@@ -78,53 +78,6 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task<IActionResult> EliminarIncideOcupacionalRelacionesInternasExternas(int idRelacionesInternasExternas, int idIndiceOcupacional)
-        {
-
-            try
-            {
-
-                var relacionesInternasExternasIndiceOcupacional = new RelacionesInternasExternasIndiceOcupacional
-                {
-                    IdRelacionesInternasExternas = idRelacionesInternasExternas,
-                    IdIndiceOcupacional = idIndiceOcupacional
-                };
-                var response = await apiServicio.EliminarAsync(relacionesInternasExternasIndiceOcupacional, new Uri(WebApp.BaseAddress)
-                                                               , "api/RelacionesInternasExternas/EliminarIncideOcupacionalRelacionesInternasExternas");
-                if (response.IsSuccess)
-                {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1} {2} {3}", "Relaciones internas externas ",
-                                                                                        relacionesInternasExternasIndiceOcupacional.IdRelacionesInternasExternas, "Índice Ocupacional", relacionesInternasExternasIndiceOcupacional.IdIndiceOcupacional),
-                        Message = Mensaje.Satisfactorio,
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Detalles", "IndicesOcupacionales", new { id = relacionesInternasExternasIndiceOcupacional.IdIndiceOcupacional });
-                }
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Area de Conocimiento",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
-                return BadRequest();
-            }
-        }
-
-
-
 
         public async Task<IActionResult> Edit(string id)
         {

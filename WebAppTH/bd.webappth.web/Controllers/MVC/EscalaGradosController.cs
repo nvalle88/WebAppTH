@@ -217,5 +217,23 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+        public async Task<JsonResult> ListarEscalasGradosPorGrupoOcupacional(int idgrupoocupacional)
+        {
+            try
+            {
+                var grupoocupacional = new GrupoOcupacional
+                {
+                    IdGrupoOcupacional = idgrupoocupacional,
+                };
+                var listarescalasgrados = await apiServicio.Listar<EscalaGrados>(grupoocupacional, new Uri(WebApp.BaseAddress), "api/EscalasGrados/ListarEscalasGradosPorGrupoOcupacional");
+                return Json(listarescalasgrados);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
     }
 }
