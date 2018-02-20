@@ -256,7 +256,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 IdEmpleado = IdEmpleado
             };
-            var dependenciasporsucursal = await apiServicio.ObtenerElementoAsync1<Dependencia>(sucursal,new Uri(WebApp.BaseAddress)
+            var dependenciasporsucursal = await apiServicio.ObtenerElementoAsync1<Dependencia>(empleado,new Uri(WebApp.BaseAddress)
                                                                   , "/api/Dependencias/ListarDependenciaporSucursalPadreHijo");
 
             var empleadoViewModel = new EmpleadoViewModel()

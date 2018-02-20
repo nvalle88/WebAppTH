@@ -41,10 +41,10 @@
                                                 <label>CI o Pasaporte:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
-                                                    <input asp-for="Identificacion" class="form-control input " placeholder="Identificacion" type="text" >
-                                                    
+                                                    <input asp-for="Identificacion" onchange="validar()" class="form-control input " placeholder="Identificacion" type="text" >
                                                 </div>
                                                 <span asp-validation-for="Identificacion" class="text-danger"></span>
+                                                <span id="idIdentificacion" class="text-danger"></span>
                                             </div>
                                         </section>
                                         <section class="col col-3">
@@ -401,14 +401,15 @@
 <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 <script src='~/js/site.js'></script>
-
+    
     <script src='~/lib/waitMe/waitMe.min.js'></script>
     <script src='~/js/site.js'></script>
 
     <script type="text/javascript">
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $("#IdEtnia").change(function () {
+            $("#IdEtnia").change(function () {
+            
             mostrarLoadingPanel("content", "Cargando...");
             $("#IdNacionalidadIndigena").empty();
              Init_Select2()

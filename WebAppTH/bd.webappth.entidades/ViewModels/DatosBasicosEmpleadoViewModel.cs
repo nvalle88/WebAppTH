@@ -6,7 +6,7 @@ using System.Text;
 
 namespace bd.webappth.entidades.ViewModels
 {
-   public class DatosBasicosEmpleadoViewModel: IValidatableObject
+    public class DatosBasicosEmpleadoViewModel : IValidatableObject
     {
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Tipo de identificación:")]
@@ -21,7 +21,7 @@ namespace bd.webappth.entidades.ViewModels
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Nombres:")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
-        public string Nombres{ get; set; }
+        public string Nombres { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Apellidos:")]
@@ -63,7 +63,7 @@ namespace bd.webappth.entidades.ViewModels
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Correo privado:")]
         [DataType(DataType.EmailAddress)]
-        [EmailAddress(ErrorMessage ="Formato de correo no válido")]
+        [EmailAddress(ErrorMessage = "Formato de correo no válido")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string CorreoPrivado { get; set; }
 
@@ -161,6 +161,46 @@ namespace bd.webappth.entidades.ViewModels
                   new ValidationResult(errorMessage: "La persona debe tener más de 16 años",
                                        memberNames: new[] { "FechaNacimiento" });
             }
+
+
+            if (IdTipoIdentificacion == 1)
+            {
+                var cad = Identificacion.ToString();
+                var total = 0;
+                var longitud = cad.Length;
+                var longcheck = longitud - 1;
+
+                if (cad != "" && longitud == 10)
+                {
+                    for (int i = 0; i < longcheck; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            var aux = int.Parse(cad.Substring(i, 1)) * 2;
+                            if (aux > 9) { 
+                                aux -= 9;
+                            }
+                            total += aux;
+                            
+                        }
+                        else
+                        {
+                            total += int.Parse(cad.Substring(i, 1)); // parseInt o concatenará en lugar de sumar
+                        }
+                    }
+
+                    total = total % 10;
+                    total = 10 - total;
+
+                    if (int.Parse(cad.Substring(longitud-1, 1)) != total)
+                    {
+                        yield return
+                      new ValidationResult(errorMessage: "La cédula no es válida",
+                                           memberNames: new[] { "Identificacion" });
+                    }
+                }
+            }
+
         }
     }
 }
