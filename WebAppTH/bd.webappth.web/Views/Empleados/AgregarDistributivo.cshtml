@@ -22,7 +22,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2> Agregar a Distributivo</h2>
+                        <h2> Distributivo</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -38,8 +38,8 @@
 
                             <form asp-action="AgregarADistributivo" asp-controller="Empleados" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Empleado.IdEmpleado" />
                                 <article class="col-lg-12">
-                                    <legend>Tipo de Nombramiento</legend>
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <label>R&eacute;gimen Laboral:</label>
@@ -119,9 +119,11 @@
 
                                             </div>*@
                                         </div>
+                                       <input class="form-control input" type="hidden" id="iddependencia" asp-for="IndiceOcupacional.IdDependencia">
+                                           
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-4">
                                             <label>Manual Puesto:</label>
                                             <div class="form-group">
                                                 <div class="input-group">
@@ -130,7 +132,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-4">
                                             <label>Rol Puesto:</label>
                                             <div class="form-group">
                                                 <div class="input-group">
@@ -139,7 +141,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-4">
                                             <label>Escala Grados:</label>
                                             <div class="form-group">
                                                 <div class="input-group">
@@ -148,7 +150,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                                        
+                                    </div>
+                                    <div class="row"> 
+                                        <div class="col-sm-4">
                                             <label>Modalidad Partida:</label>
                                             <div class="form-group">
                                                 <div class="input-group">
@@ -156,10 +161,8 @@
                                                     <select id="modalidadpartida" asp-for="IndiceOcupacional.IdModalidadPartida" asp-items="ViewBag.IdModalidadPartida" class="form-control input "></select>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-3">
+                                        </div>  
+                                        <div class="col-sm-4">
                                             <label>Fondo de Financimiento:</label>
                                             <div class="form-group">
                                                 <div class="input-group">
@@ -170,17 +173,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label>Salario Real:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                    <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="Numero de la Cuenta" onKeyPress="return checkIt(event)">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label>Fecha:</label>
                                                 <div class="input-group">
@@ -189,12 +182,24 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>Salario Real:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                    <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="Salario real" onKeyPress="return checkIt(event)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
                                     </div>
+                                    <footer>
+                                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                                        <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                    </footer>
+                                    <br />
                                 </article>
-                                <footer>
-                                <input type="submit" value="Guardar" class="btn btn-primary" />
-                                <a asp-action="Index" class="btn btn-default">Cancelar</a>
-                                </footer>
+                               
                                        
                             </form>
                         </div>
@@ -401,11 +406,13 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-
            $("#ciudad").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#sucursal").empty();
-            $("#dependencia").empty();
+            $("#dependencia").val("");
+            $("#manualpuesto").empty();
+            $("#rolpuesto").empty();
+            $("#escalagrados").empty();
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarSucursalesPorCiudad", "CeseFunciones")',
@@ -432,6 +439,10 @@
 
            $("#sucursal").change(function (e) {
                mostrarLoadingPanel("content", "Cargando...")
+               $("#dependencia").val("");
+               $("#manualpuesto").empty();
+               $("#rolpuesto").empty();
+               $("#escalagrados").empty();
                e.preventDefault();
                var $link = $(this);
                var title = $link.text();
@@ -460,13 +471,14 @@
                         $("#manualpuesto").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#rolpuesto").empty();
+            $("#escalagrados").empty();
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarRolPuestoporManualPuesto")',
                     dataType: 'json',
                     data: {
                         idmanualpuesto: $("#manualpuesto").val(),
-                        iddependencia: $("#dependencia").val(),
+                        iddependencia: $("#iddependencia").val(),
                         },
                     success: function (data) {
                         $("#rolpuesto").append('<option value="0" selected="" disabled="">Seleccione</option>');
@@ -487,6 +499,7 @@
                 return false;
                         })
 
+
                          $("#rolpuesto").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#escalagrados").empty();
@@ -496,26 +509,24 @@
                 dataType: 'json',
                 data: {
                     idmanualpuesto: $("#manualpuesto").val(),
-                    iddependencia: $("#dependencia").val(),
+                    iddependencia: $("#iddependencia").val(),
                     idrolpuesto: $("#rolpuesto").val(),
                 },
                 success: function (data) {
-                    if (data[0].idEscalaGrados !== null) {
+                    if (data[0].escalaGrados.grado !== null) {
                             $("#escalagrados").append('<option value="0" selected="" disabled="">Seleccione</option>');
                             $.each(data, function (i, data) {
 
                                 $("#escalagrados").append('<option value="'
                                     + data.escalaGrados.idEscalaGrados + '">'
-                                    + data.escalaGrados.nombre + " (Grado " + data.escalaGrados.grado + ")" + '</option>');
-
-
-
-                        });
+                                    + data.escalaGrados.nombre + " (Grado " + data.escalaGrados.grado + ")" + " que percibe" + " $" + data.escalaGrados.remuneracion +  '</option>');
+                            });
                         }
                         else {
                             $("#escalagrados").append('<option value="'
                                 + 0 + '">'
-                                + "No aplica" + '</option>');
+                            + "No aplica" + '</option>');
+
                         }
                     }, complete: function (data) {
                         $("#content").waitMe("hide");
@@ -694,6 +705,8 @@
                    function cargarManualesPuesto(dependencia) {
             mostrarLoadingPanel("content","Cargando...")
             $("#manualpuesto").empty();
+            $("#rolpuesto").empty();
+            $("#escalagrados").empty();
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarManualPuestoporDependencia")',

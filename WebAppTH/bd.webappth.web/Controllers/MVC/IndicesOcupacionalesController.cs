@@ -982,7 +982,10 @@ namespace bd.webappth.web.Controllers.MVC
             var listaEscalaGrados = await apiServicio.Listar<EscalaGrados>(new Uri(WebApp.BaseAddress), "api/EscalasGrados/ListarEscalasGrados");
             ViewData["IdEscalaGrados"] = new SelectList(listaEscalaGrados, "IdEscalaGrados", "Remuneracion");
 
-          
+            var listaPartidasGenerales = await apiServicio.Listar<PartidaGeneral>(new Uri(WebApp.BaseAddress), "/api/PartidasGenerales/ListarPartidasGenerales");
+            ViewData["IdPartidaGeneral"] = new SelectList(listaPartidasGenerales, "IdPartidaGeneral", "NumeroPartida");
+
+
         }
 
         private void InicializarMensaje(string mensaje)
