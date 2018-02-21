@@ -37,6 +37,32 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdCiudad" />
                                 <fieldset>
+                                        <div class="row">
+                                            <section class="col col-8">
+                                                <label>Pa&iacute;s:</label>
+                                                <div class="form-group">
+                                                    <div class="input">
+                                                        <select asp-for="IdPais" asp- class="form-control" asp-items="ViewBag.IdPais">
+                                                            <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                        </select>
+                                                        <span asp-validation-for="IdPais" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label>Provincia:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdProvincia" asp- class="form-control" asp-items="ViewBag.IdProvincia">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdProvincia" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">

@@ -153,6 +153,16 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        public async Task<JsonResult> ListarProvinciaPorPais(int idPais)
+        {
+            var pais = new Pais { IdPais = idPais };
+
+            var provincias = await apiServicio.Listar<Provincia>(pais,new Uri(WebApp.BaseAddress)
+                                                                    , "api/Provincia/ListarProvinciaPorPais");
+            return Json(provincias);
+
+        }
+
         public async Task<IActionResult> Index()
         {
 
