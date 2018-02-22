@@ -117,7 +117,7 @@
                                 <fieldset>
                                     <legend>Misi&oacute;n</legend>
                                     
-                                      @if (Model.ListaMisiones.Count != 0)
+                                      @*@if (Model.ListaMisiones.Count != 0)
                                       {
                                           @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalMisiones", "Misiones", new { idMision = Model.ListaMisiones.FirstOrDefault().IdMision, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                           <p class="text-justify text-">
@@ -127,7 +127,7 @@
                                       else
                                       { 
                                         <p>No se ha establecido la misi&oacute;n</p>
-                                      }
+                                      }*@
 
                                 </fieldset>
                             </article>
@@ -222,7 +222,7 @@
 
 
                         <article class="col-sm-12 col-md-12 col-lg-6">
-                            <fieldset>
+                            @*<fieldset>
                                
                                 <legend>Relaciones Internas y Externas</legend>
                                 @if (Model.ListaRelacionesInternasExternas.Count != 0)
@@ -237,7 +237,7 @@
                                     <p>No se ha establecido la misi&oacute;n</p>
                                 }
                                
-                            </fieldset>
+                            </fieldset>*@
                         </article>
 
                         <article class="col-lg-12">

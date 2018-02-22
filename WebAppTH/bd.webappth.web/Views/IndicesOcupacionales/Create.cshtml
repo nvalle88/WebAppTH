@@ -122,21 +122,21 @@
                                                                     <select id="sucursal" class="form-control input "></select>
                                                                 </label>
                                                             </section>
-                                                            @*<section class="col col-4">
+                                                            <section class="col col-4">
                                                                 <label>Dependencia:</label>
                                                                 <label class="input">
                                                                     <input class="form-control input" type="text" id="dependencia" readonly="readonly">
                                                                 </label>
-                                                            </section>*@
-                                                            <section class="col col-4">
+                                                            </section>
+                                                            @*<section class="col col-4">
                                                                 <label>Dependencia:</label>
                                                                 <label class="input">
                                                                     <select id="dependencia" class="form-control input " asp-items="ViewBag.IdDependencia">
                                                                         <option value="0" selected="" disabled="">Seleccione</option>
                                                                     </select>
                                                                 </label>
-                                                            </section>
-                                                            <input class="form-control input" type="hidden" id="iddependencia">
+                                                            </section>*@
+                                                            <input class="form-control input" asp-for="IndiceOcupacional.IdDependencia" type="hidden" id="iddependencia">
 
                                                         </div>
 
@@ -839,7 +839,7 @@
                var $link = $(this);
                var title = $link.text();
                $('#myModal.modal-title').html(title);
-               var url = '@Url.Action("CargarDependencias")?idsucursal='+ $('#sucursal').val() ;
+               var url = '@Url.Action("CargarDependencias","Dependencias")?idsucursal='+ $('#sucursal').val() ;
                if (url.indexOf('#') == 0) {
                    $('#myModal').modal('show');
                    $("#myModal").waitMe("hide");

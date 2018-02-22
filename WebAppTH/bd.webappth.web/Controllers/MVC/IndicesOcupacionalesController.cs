@@ -870,14 +870,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IndiceOcupacionalDetalle indiceOcupacionalDetalle)
+        public async Task<IActionResult> Create(IndiceOcupacional indiceOcupacional)
         {
             Response response = new Response();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    response = await apiServicio.InsertarAsync(indiceOcupacionalDetalle,
+                    response = await apiServicio.InsertarAsync(indiceOcupacional,
                                                                  new Uri(WebApp.BaseAddress),
                                                                  "api/IndicesOcupacionales/InsertarIndiceOcupacional");
                     if (response.IsSuccess)
@@ -891,7 +891,7 @@ namespace bd.webappth.web.Controllers.MVC
                             UserName = "Usuario 1",
                             LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
                             LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            EntityID = string.Format("{0} {1}", "Indice Ocupacional:", indiceOcupacionalDetalle.IndiceOcupacional.IdIndiceOcupacional),
+                            EntityID = string.Format("{0} {1}", "Indice Ocupacional:", indiceOcupacional.IdIndiceOcupacional),
                         });
 
                         return RedirectToAction("Index");
@@ -899,7 +899,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
                 await CargarListaCombox();
                 InicializarMensaje(response.Message);
-                return View(indiceOcupacionalDetalle);
+                return View(indiceOcupacional);
 
             }
             catch (Exception ex)
@@ -972,20 +972,5 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task<ActionResult> CargarDependencias(int idsucursal)
-
-        {
-            var sucursal = new Sucursal()
-            {
-                IdSucursal = idsucursal
-            };
-            var dependenciasporsucursal = await apiServicio.ObtenerElementoAsync1<Dependencia>(sucursal, new Uri(WebApp.BaseAddress)
-                                                                  , "api/Dependencias/ListarDependenciaporSucursalPadreHijo");
-
-
-            //InicializarMensaje(mensaje);
-            return PartialView("~/Views/Dependencias/CargarDependencias.cshtml", dependenciasporsucursal);
-
-        }
     }
 }

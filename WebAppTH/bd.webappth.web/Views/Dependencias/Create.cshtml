@@ -37,29 +37,50 @@
                                         </div>
                                     }
                                     <div class="row">
-                                        <section class="col col-6">
+                                        <section class="col col-4">
+                                            <label>Ciudad</label>
                                             <label class="input">
-                                                <select asp-for="IdSucursal" asp- class="form-control" asp-items="ViewBag.IdSucursal">
+                                                <select asp- class="form-control" id="ciudad" asp-items="ViewBag.IdCiudad">
+                                                    <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.Sucursal.Ciudad.Nombre)</option>
+                                                </select>
+                                                <span asp-validation-for="Sucursal.Ciudad.Nombre" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Sucursal</label>
+                                            <label class="input">
+                                                <select asp-for="IdSucursal" id="sucursal" asp- class="form-control">
                                                     <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.Sucursal.Nombre)</option>
                                                 </select>
                                                 <span asp-validation-for="IdSucursal" class="text-danger"></span>
                                             </label>
                                         </section>
-                                        <section class="col col-6">
+                                        <section class="col col-4">
+                                            <label>Dependencia Padre</label>
                                             <label class="input">
-                                                <select asp-for="IdDependencia" asp- class="form-control" asp-items="ViewBag.IdDependenciaPadre">
+                                                <select asp-for="IdDependenciaPadre" id="dependencia" asp- class="form-control">
                                                     <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.Nombre)</option>
                                                 </select>
-                                                <span asp-validation-for="IdDependencia" class="text-danger"></span>
+                                                <span asp-validation-for="IdDependenciaPadre" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>
                                     <div class="row">
-                                        <section class="col col-8">
+                                        <section class="col col-6">
+                                            <label>Nombre</label>
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
                                                 <input maxlength="50" asp-for="Nombre" class="form-control" placeholder="Nombre" />
                                                 <span asp-validation-for="Nombre" class="text-danger"></span>
+                                            </label>
+                                        </section>                   
+                                        <section class="col col-6">
+                                            <label>Proceso</label>
+                                            <label class="input">
+                                                <select asp-for="IdProceso" asp- class="form-control" asp-items="ViewBag.IdProceso">
+                                                    <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdProceso)</option>
+                                                </select>
+                                                <span asp-validation-for="IdProceso" class="text-danger"></span>
                                             </label>
                                         </section>
                                     </div>
@@ -94,32 +115,63 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-       
-            $("#IdSucursal").change(function () {
-                mostrarLoadingPanel("ejemplo", "Cargando bases de datos...");
-                $("#IdDependencia").empty();
-                $("#IdDependencia").append('<option value="0">[Seleccione]</option>');
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("ListarPadresPorSucursal")',
+
+
+        $("#ciudad").change(function () {
+            mostrarLoadingPanel("content", "Cargando...")
+            $("#sucursal").empty();
+            $("#dependencia").val("");
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListarSucursalesPorCiudad", "CeseFunciones")',
                     dataType: 'json',
-                    data: { idSucursal: $("#IdSucursal").val() },
+                    data: { idciudad: $("#ciudad").val() },
                     success: function (data) {
+                        $("#sucursal").append('<option value="0" selected="" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
-                            $("#IdDependencia").append('<option value="'
-                                + data.idDependencia + '">'
+                            $("#sucursal").append('<option value="'
+                                + data.idSucursal + '">'
                                 + data.nombre + '</option>');
-                            Init_Select2()
+
                         });
                     }, complete: function (data) {
-                        $("#ejemplo").waitMe("hide");
+                        $("#content").waitMe("hide");
                     },
+
                     error: function (ex) {
-                        alert('No se ha podido cargar...' + ex);
+                        alert('Failed to retrieve data.' + ex);
                     }
                 });
                 return false;
             })
+
+
+            $("#sucursal").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#dependencia").val("");
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarDependenciasPorSucursal", "CeseFunciones")',
+                    dataType: 'json',
+                    data: { idsucursal: $("#sucursal").val() },
+                    success: function (data) {
+                        $("#dependencia").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#dependencia").append('<option value="'
+                                + data.idDependencia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
         });
 </script>
 
