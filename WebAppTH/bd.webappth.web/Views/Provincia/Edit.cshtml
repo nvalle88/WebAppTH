@@ -53,6 +53,13 @@
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">
+                                                @Html.DisplayNameFor(model => model.Nombre)
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-8">
+                                            <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
                                                 <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
                                                 <span asp-validation-for="Nombre" class="text-danger"></span>
@@ -84,8 +91,16 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
+    <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/js/site.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Init_Select2();
+    });
+</script>
 
-
-    </script>
 }

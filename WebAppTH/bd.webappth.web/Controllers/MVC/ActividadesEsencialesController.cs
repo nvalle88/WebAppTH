@@ -25,9 +25,25 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
+        private void InicializarMensaje(string mensaje)
 
-        public IActionResult Create()
         {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+
+        public IActionResult Create( string mensaje )
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -82,6 +98,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ActividadesEsenciales actividadesEsenciales)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(actividadesEsenciales);
+            }
             Response response = new Response();
             ActividadesEsenciales actividades=new ActividadesEsenciales();
 
@@ -147,6 +168,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<ActividadesEsenciales>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
