@@ -25,6 +25,9 @@ namespace bd.webappth.entidades.Negocio
         public int IdSucursal { get; set; }
         public virtual Sucursal Sucursal { get; set; }
 
+        public int? IdProceso { get; set; }
+        public virtual Proceso Proceso { get; set; }
+
         public virtual ICollection<ConfiguracionViatico> ConfiguracionViatico { get; set; }
 
         public virtual ICollection<Empleado> Empleado { get; set; }
@@ -41,6 +44,6 @@ namespace bd.webappth.entidades.Negocio
 
         public virtual ICollection<IndiceOcupacional> IndiceOcupacional { get; set; }
 
-        
+
     }
 }
