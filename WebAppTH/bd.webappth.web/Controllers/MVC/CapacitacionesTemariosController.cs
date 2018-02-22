@@ -18,23 +18,44 @@ namespace bd.webappth.web.Controllers.MVC
     {
         private readonly IApiServicio apiServicio;
 
-
         public CapacitacionesTemariosController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
         }
+        private void InicializarMensaje(string mensaje)
 
-        public async Task<IActionResult> Create()
         {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            
             ViewData["IdCapacitacionAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionAreaConocimiento>(new Uri(WebApp.BaseAddress), "api/CapacitacionesAreasConocimientos/ListarCapacionesAreasConocimientos"), "IdCapacitacionAreaConocimiento", "Descripcion");
+            InicializarMensaje(mensaje);
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CapacitacionTemario capacitacionTemario)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(capacitacionTemario);
+            }
+
             Response response = new Response();
             try
             {
@@ -93,6 +114,7 @@ namespace bd.webappth.web.Controllers.MVC
                     ViewData["IdCapacitacionAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<CapacitacionAreaConocimiento>(new Uri(WebApp.BaseAddress), "api/CapacitacionesAreasConocimientos/ListarCapacionesAreasConocimientos"), "IdCapacitacionAreaConocimiento", "Descripcion");
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -107,7 +129,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, CapacitacionTemario capacitacionTemario)
         {
             Response response = new Response();
