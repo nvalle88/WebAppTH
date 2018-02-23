@@ -23,9 +23,24 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
+        private void InicializarMensaje(string mensaje)
 
-        public IActionResult Create()
         {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        public IActionResult Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -33,6 +48,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ConfiguracionFeriados configuracionFeriados)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(configuracionFeriados);
+            }
             Response response = new Response();
             try
             {
@@ -89,6 +109,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<ConfiguracionFeriados>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -150,14 +171,15 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string mensaje)
         {
 
             var lista = new List<ConfiguracionFeriados>();
             try
             {
                 lista = await apiServicio.Listar<ConfiguracionFeriados>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/ConfiguracionFeriados/ListarConfiguracionesFeriados");
+                                                                   , "api/ConfiguracionFeriados/ListarConfiguracionesFeriados");
+                InicializarMensaje(mensaje);
                 return View(lista);
             }
             catch (Exception ex)
@@ -195,7 +217,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+                //return BadRequest();
             }
             catch (Exception ex)
             {
