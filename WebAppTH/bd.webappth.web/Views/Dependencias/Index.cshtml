@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.Dependencia>
+@model List<bd.webappth.entidades.ViewModels.DependenciaViewModel>
 
     @{
     ViewData["Title"] = "Index";
@@ -34,15 +34,19 @@
                                         <tr>
                                             <th data-class="expand">
                                                 <i class="icon-append fa fa-comment"></i>
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Sucursal)
+                                                Sucursal
                                             </th>
-                                            <th data-hide="phone">
+                                            <th>
                                                 <i class="icon-append fa fa-comment"></i>
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().DependenciaPadre.Nombre)
+                                                Dependencia Padre
                                             </th>
-                                            <th data-class="expand">
+                                            <th >
                                                 <i class="icon-append fa fa-comment"></i>
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                                                Dependencia
+                                            </th>
+                                            <th>
+                                                <i class="icon-append fa fa-comment"></i>
+                                                Procesos
                                             </th>
                                             <th>
                                                 <i class="fa fa-cog "></i>
@@ -55,18 +59,20 @@
                                     {
                                             <tr>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Sucursal.Nombre)
+                                                    @Html.DisplayFor(modelItem => item.NombreSucursal)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.DependenciaPadre.Nombre)
+                                                    @Html.DisplayFor(modelItem => item.NombreDependenciaPadre)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                                    @Html.DisplayFor(modelItem => item.NombreDependencia)
                                                 </td>
-
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.NombreProceso)
+                                                </td>
                                                 <td>
                                                     @Html.ActionLink("Editar", "Edit", new { id = item.IdDependencia }) |
-                                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdDependencia }, new { onclick = "return confirm('Desea eliminar Actividad Esencial... ?');" })
+                                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdDependencia }, new { onclick = "return confirm('Desea eliminar la Sucursal... ?');" })
                                                 </td>
                                             </tr>
                                     }

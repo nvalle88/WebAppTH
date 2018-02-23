@@ -10,6 +10,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -24,10 +25,10 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Index()
         {
-            var lista = new List<Dependencia>();
+            var lista = new List<DependenciaViewModel>();
             try
             {
-                lista = await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress)
+                lista = await apiServicio.Listar<DependenciaViewModel>(new Uri(WebApp.BaseAddress)
                                                                     , "api/Dependencias/ListarDependencias");
                 return View(lista);
             }
@@ -64,8 +65,6 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (ModelState.IsValid)
                 {
-                    dependencia.IdDependenciaPadre = dependencia.IdDependencia;
-                    dependencia.IdDependencia = 0;
 
                     response = await apiServicio.InsertarAsync(dependencia,
                                                                  new Uri(WebApp.BaseAddress),
@@ -120,8 +119,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         private async Task CargarListaCombox()
         {
-            var listaSucursal = await apiServicio.Listar<Sucursal>(new Uri(WebApp.BaseAddress), "api/Sucursal/ListarSucursal");
-            ViewData["IdSucursal"] = new SelectList(listaSucursal, "IdSucursal", "Nombre");
+      
+            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
+            ViewData["IdProceso"] = new SelectList(await apiServicio.Listar<Proceso>(new Uri(WebApp.BaseAddress), "api/Procesos/ListarProcesos"), "IdProceso", "Nombre");
         }
 
 
@@ -165,6 +165,44 @@ namespace bd.webappth.web.Controllers.MVC
                 return Json(Mensaje.Error);
             }
 
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+
+            try
+            {
+                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
+                                                               , "api/Dependencias");
+                if (response.IsSuccess)
+                {
+                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    {
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        EntityID = string.Format("{0} : {1}", "Sistema", id),
+                        Message = "Registro de dependencia eliminado",
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        UserName = "Usuario APP webappth"
+                    });
+                    return RedirectToAction("Index");
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Eliminar Dependencia",
+                    ExceptionTrace = ex.Message,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
         }
     }
 }

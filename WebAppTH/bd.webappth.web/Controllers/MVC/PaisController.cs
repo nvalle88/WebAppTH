@@ -24,9 +24,25 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
+        private void InicializarMensaje(string mensaje)
 
-        public async Task<IActionResult> Create()
-        {            
+        {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -34,6 +50,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Pais pais)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(pais);
+            }
             Response response = new Response();
             try
             {
@@ -81,6 +102,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
+
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
@@ -90,7 +112,10 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<Pais>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
-                        return View(respuesta.Resultado);
+                            InicializarMensaje(null);
+                            return View(respuesta.Resultado);
+                        
+                        //return View(respuesta.Resultado);
                     }
 
                 }
