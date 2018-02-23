@@ -24,9 +24,25 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
+        private void InicializarMensaje(string mensaje)
 
-        public async Task<IActionResult> Create()
         {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
             return View();
         }
@@ -35,6 +51,13 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Provincia provincia)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
+                return View(provincia);
+            }
+
             Response response = new Response();
             try
             {
@@ -57,7 +80,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     return RedirectToAction("Index");
                 }
-
+                ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
                 ViewData["Error"] = response.Message;
                 return View(provincia);
 
@@ -76,6 +99,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 return BadRequest();
             }
+            //ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
         }
 
         public async Task<IActionResult> Edit(string id)
@@ -91,6 +115,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<Provincia>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
                         return View(respuesta.Resultado);
                     }
@@ -131,8 +156,10 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return RedirectToAction("Index");
                     }
+                    ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
                     ViewData["Error"] = response.Message;
                     return View(provincia);
+                    
 
                 }
                 return BadRequest();

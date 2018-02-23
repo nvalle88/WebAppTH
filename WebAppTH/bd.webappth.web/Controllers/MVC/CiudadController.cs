@@ -23,11 +23,26 @@ namespace bd.webappth.web.Controllers.MVC
         {            
             this.apiServicio = apiServicio;
         }
+        private void InicializarMensaje(string mensaje)
 
-        public async Task<IActionResult> Create()
+        {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        public async Task<IActionResult> Create(string mensaje)
         {
             ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
             ViewData["IdProvincia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Provincia>(new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvincia"), "IdProvincia", "Nombre");
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -35,6 +50,13 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Ciudad ciudad)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
+                ViewData["IdProvincia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Provincia>(new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvincia"), "IdProvincia", "Nombre");
+                return View(ciudad);
+            }
             Response response = new Response();
             try
             {
@@ -59,6 +81,8 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 ViewData["Error"] = response.Message;
+                ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
+                ViewData["IdProvincia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Provincia>(new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvincia"), "IdProvincia", "Nombre");
                 return View(ciudad);
 
             }
@@ -86,19 +110,30 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
                                                                   "api/Ciudad");
-                    respuesta.Resultado = JsonConvert.DeserializeObject<Ciudad>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
-                        ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
-                        ViewData["IdProvincia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Provincia>(new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvincia"), "IdProvincia", "Nombre");
-                        return View(respuesta.Resultado);
+                       
+                       var respuestaCiudad = JsonConvert.DeserializeObject<Ciudad>(respuesta.Resultado.ToString());
+                        var ciuadad = new Ciudad
+                        {
+                            IdCiudad=respuestaCiudad.IdCiudad,
+                            IdProvincia=respuestaCiudad.Provincia.IdProvincia,
+                            IdPais=respuestaCiudad.Provincia.Pais.IdPais,
+                            Nombre=respuestaCiudad.Nombre,
+                        };
+
+                        ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre", respuestaCiudad.Provincia.Pais.IdPais);
+                        var pais = new Pais {IdPais=ciuadad.IdPais};
+                        ViewData["IdProvincia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Provincia>(pais,new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvinciaPorPais"), "IdProvincia", "Nombre");
+                        InicializarMensaje(null);
+                        return View(ciuadad);
                     }
 
                 }
 
                 return BadRequest();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest();
             }

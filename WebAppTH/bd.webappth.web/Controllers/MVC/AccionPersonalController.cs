@@ -25,9 +25,24 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
+        private void InicializarMensaje(string mensaje)
 
-        public IActionResult Create()
         {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        public IActionResult Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -35,6 +50,7 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AccionPersonal accionPersonal)
         {
+            
             Response response = new Response();
             try
             {
@@ -105,6 +121,7 @@ namespace bd.webappth.web.Controllers.MVC
                         ViewData["FechaRige"] = a.FechaRige;
                         ViewData["FechaRigeHasta"] = a.FechaRigeHasta;
                         ViewData["NoDias"] = a.NoDias;
+                        InicializarMensaje(null);
                         return View(a);
                     }
 

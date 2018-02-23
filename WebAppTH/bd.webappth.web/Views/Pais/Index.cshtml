@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<p>
+<p></p>
     <a asp-action="Create">
         <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
             <span class="btn-label">
@@ -14,7 +14,7 @@
         </button>
     
 </a>
-</p>
+<p></p>
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -65,7 +65,6 @@
                                     <tr>
                                         <th>
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
-                                            Nombre
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
