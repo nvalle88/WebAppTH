@@ -4,17 +4,43 @@
     ViewData["Title"] = "Parroquia";
 }
 
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+<script src='~/js/site.js'></script>
 
 <!-- MAIN CONTENT -->
 <div id="content">
+    <div class="col col-10 ">
+        @if (@ViewData["Error"].ToString() != "")
 
+        {
+
+            <div class="col-lg-7">
+
+                <div class="alert alert-block alert-dismissable">
+
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                    <p>
+
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        }
+    </div>
     <!-- widget grid -->
     <section id="widget-grid" class="">
 
         <!-- START ROW -->
         <div class="row">
             <!-- NEW COL START -->
-            <article class="col-sm-12 col-md-12 col-lg-4">
+            <article class="col-sm-12 col-md-12 col-lg-7">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
 
@@ -35,16 +61,53 @@
 
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdCiudad" />
+                                <input type="hidden" asp-for="IdParroquia" />
                                 <fieldset>
                                     <div class="row">
+
+
                                         <section class="col col-8">
-                                            <label class="input">
+                                            <label>Pa&iacute;s:</label>
+                                            <div class="form-group">
+                                                <label class="input">
+                                                    <select asp-for="IdPais" class="form-control input " asp-items="ViewBag.IdPais" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                        <option value="0" selected="" disabled=""></option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </section>
+
+                                        <section class="col col-8">
+                                            <label>Provincia:</label>
+                                            <div class="form-group">
+                                                <label class="input">
+                                                    <select asp-for="IdProvincia" class="form-control input " asp-items="ViewBag.IdProvincia" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                        <option value="0" selected="" disabled=""></option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </section>
+
+                                        <section class="col col-8">
+                                            <label>Ciudad:</label>
+                                            <div class="form-group">
+                                                <label class="input">
+                                                    <select asp-for="IdCiudad" class="form-control input " asp-items="ViewBag.IdCiudad" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                        <option value="0" selected="" disabled=""></option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </section>
+
+                                        <section class="col col-8">
+                                            <label>Parroquia</label>
+                                            <div class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
                                                 <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
                                                 <span asp-validation-for="Nombre" class="text-danger"></span>
-                                            </label>
+                                            </div>
                                         </section>
+
                                     </div>
                                 </fieldset>
                                 <footer>
@@ -71,8 +134,96 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
+
+
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+
+    <script src='~/js/site.js'></script>
+
+    <script src='~/js/site.js'></script>
+
+
+
     <script type="text/javascript">
 
+        $(document).ready(function () {
+            Init_Select2();
+        });
+
+        // Provincias por País
+
+        $("#IdPais").change(function () {
+            mostrarLoadingPanel("content", "Cargando...")
+
+            $("#IdProvincia").empty();
+            $("#IdCiudad").empty();
+            //$("#IdParroquia").empty();
+
+            Init_Select2()
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarProvinciaPorPais")',
+                    dataType: 'json',
+                    data: { pais: $("#IdPais").val() },
+                    success: function (data) {
+                        $("#IdProvincia").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdProvincia").append('<option value="'
+                                + data.idProvincia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
+
+
+        //Ciudades por Provincia
+        $("#IdProvincia").change(function () {
+            //mostrarLoadingPanel("content","Cargando...")
+            $("#IdCiudad").empty();
+            //$("#IdParroquia").empty();
+
+            Init_Select2()
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarCiudadPorProvincia")',
+                    dataType: 'json',
+                    data: { provincia: $("#IdProvincia").val() },
+                    success: function (data) {
+                        $("#IdCiudad").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdCiudad").append('<option value="'
+                                + data.idCiudad + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
 
     </script>
 }
