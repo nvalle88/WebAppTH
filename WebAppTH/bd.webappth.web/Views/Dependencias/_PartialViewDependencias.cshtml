@@ -1,0 +1,53 @@
+@model bd.webappth.entidades.ViewModels.DependenciaViewModel
+
+<fieldset>
+    <div class="row">
+        <section class="col col-4">
+            <label>Ciudad</label>
+            <label class="input">
+                <select asp-for="IdCiudad" class="form-control" id="ciudad" asp-items="ViewBag.IdCiudad">
+                    <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdCiudad)</option>
+                </select>
+                <span asp-validation-for="IdCiudad" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label>Sucursal</label>
+            <label class="input">
+                <select asp-for="IdSucursal" id="sucursal" asp- class="form-control" asp-items="ViewBag.IdSucursal">
+                    <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdSucursal)</option>
+                </select>
+                <span asp-validation-for="IdSucursal" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label>Dependencia Padre</label>
+            <label class="input">
+                <select asp-for="IdDependenciaPadre" id="dependencia" asp- class="form-control" asp-items="ViewBag.IdDependencia">
+                    <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdDependenciaPadre)</option>
+                </select>
+                <span asp-validation-for="IdDependenciaPadre" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Nombre</label>
+            <label class="input">
+                <i class="icon-prepend fa fa-user"></i>
+                <input maxlength="50" asp-for="NombreDependencia" class="form-control" placeholder="Nombre" />
+                <span asp-validation-for="NombreDependencia" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label>Proceso</label>
+            <label class="input">
+                <select asp-for="IdProceso" asp- class="form-control" asp-items="ViewBag.IdProceso">
+                    <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdProceso)</option>
+                </select>
+                <span asp-validation-for="IdProceso" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <span class="text-danger">@ViewData["Error"]</span>
+</fieldset>
