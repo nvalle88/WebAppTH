@@ -24,10 +24,24 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
+        private void InicializarMensaje(string mensaje)
 
-        public async Task<IActionResult> Create()
         {
-           
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -35,6 +49,12 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CapacitacionModalidad capacitacionModalidad)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(capacitacionModalidad);
+                  
+            }
             Response response = new Response();
             try
             {
@@ -91,6 +111,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<CapacitacionModalidad>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 

@@ -27,9 +27,25 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-        [Authorize(Policy = "EstaAutorizado")]
-        public IActionResult Create()
+        private void InicializarMensaje(string mensaje)
+
         {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        [Authorize(Policy = "EstaAutorizado")]
+        public IActionResult Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -38,6 +54,11 @@ namespace bd.webappth.web.Controllers.MVC
         [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Create(BrigadaSSO brigadaSSO)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(brigadaSSO);
+            }
             Response response = new Response();
             try
             {
@@ -94,6 +115,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<BrigadaSSO>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 

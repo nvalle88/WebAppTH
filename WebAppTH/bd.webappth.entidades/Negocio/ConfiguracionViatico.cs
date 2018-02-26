@@ -22,8 +22,8 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Dependencia:")]
         [Range(0, double.MaxValue, ErrorMessage = "El {0} de estar entre {2} y {1} ")]
-        public int IdDependencia { get; set; }
-        public virtual Dependencia Dependencia { get; set; }
+        public int IdRolPuesto { get; set; }
+        public virtual RolPuesto RolPuesto { get; set; }
 
         public virtual ICollection<SolicitudViatico> SolicitudViatico { get; set; }
 

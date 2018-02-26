@@ -3,8 +3,7 @@ namespace bd.webappth.entidades.Negocio
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-     
-     
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class Parroquia
     {
@@ -21,6 +20,18 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Ciudad:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdCiudad { get; set; }
+
+        [Display(Name = "Pais:")]
+        [NotMapped]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        public int IdPais { get; set; }
+
+        [Display(Name = "Provincia:")]
+        [NotMapped]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        public int IdProvincia { get; set; }
+
+
         public virtual Ciudad Ciudad { get; set; }
 
         public ICollection<Persona> Persona { get; set; }

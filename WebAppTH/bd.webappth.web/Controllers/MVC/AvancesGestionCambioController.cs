@@ -25,15 +25,31 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
+        private void InicializarMensaje(string mensaje)
 
-        public async Task<IActionResult> Create(int IdActividadesGestionCambio)
+        {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        public async Task<IActionResult> Create(int IdActividadesGestionCambio,string mensaje)
         {
             var AvanceGestionCambio = new AvanceGestionCambio
             {
                 IdActividadesGestionCambio = IdActividadesGestionCambio,
                 Fecha=DateTime.Now
             };
+            InicializarMensaje(mensaje);
             return View(AvanceGestionCambio);
+            
         }
 
 
@@ -43,6 +59,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AvanceGestionCambio AvanceGestionCambio)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(AvanceGestionCambio);
+            }
             Response response = new Response();
             try
             {
@@ -126,6 +147,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 

@@ -20,6 +20,9 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Estudio:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdEstudio { get; set; }
+
+        [Display(Name = "Conocimiento:")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdAreaConocimiento { get; set; }
         public virtual Estudio Estudio { get; set; }
         public virtual AreaConocimiento AreaConocimiento { get; set; }

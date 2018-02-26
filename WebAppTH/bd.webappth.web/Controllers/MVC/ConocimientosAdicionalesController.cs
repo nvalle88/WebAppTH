@@ -24,9 +24,24 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
+        private void InicializarMensaje(string mensaje)
 
-        public IActionResult Create()
         {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        public IActionResult Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -34,6 +49,12 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ConocimientosAdicionales conocimientosAdicionales)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(conocimientosAdicionales);
+
+            }
             Response response = new Response();
             try
             {
@@ -139,6 +160,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<ConocimientosAdicionales>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -200,7 +222,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string mensaje)
         {
 
             var lista = new List<ConocimientosAdicionales>();
@@ -208,6 +230,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<ConocimientosAdicionales>(new Uri(WebApp.BaseAddress)
                                                                     , "api/ConocimientosAdicionales/ListarConocimientosAdicionales");
+                InicializarMensaje(mensaje);
                 return View(lista);
             }
             catch (Exception ex)
@@ -245,7 +268,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+                //return BadRequest();
             }
             catch (Exception ex)
             {

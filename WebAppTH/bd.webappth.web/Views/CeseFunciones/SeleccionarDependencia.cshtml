@@ -77,7 +77,6 @@
                                             </div>
                                         </section>
                                         </div>
-                                    <span class="text-danger">@ViewData["Error"]</span>
                                 </fieldset>                     
                                 <footer>    
                                     <input type="submit" id="CargarLista"  value="Listar Empleados" class="btn btn-primary" />
@@ -220,6 +219,14 @@
 
 
  </script>
+<script src='~/lib/select2/dist/js/select2.min.js'></script>
+<script src='~/lib/select2/dist/js/i18n/es.js'></script>
+<script src='~/js/site.js'></script>Cargar script de la tabla
+<script type="text/javascript">
+                   $(document).ready(function () {
+                       Init_Select2();
+                   });
+</script>
 
 
 
