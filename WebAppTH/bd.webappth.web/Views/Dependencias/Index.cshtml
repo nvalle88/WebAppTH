@@ -4,87 +4,112 @@
     ViewData["Title"] = "Index";
     }
     <!-- MAIN CONTENT -->
-    <div id="content">
+<div id="content">
+    <div class="col col-10">
 
-        <p></p>
-        <a asp-action="Create">
-            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-                <span class="btn-label">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </span>Nueva Dependencia
+        @if (@ViewData["Error"].ToString() != "")
 
-            </button>
-        </a>
-        <p> </p>
+        {
 
-        <section id="widget-grid" class="">
-            <div class="row">
-                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                        <header>
-                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                            <h2>Actividades Esenciales</h2>
-                        </header>
-                        <div>
-                            <div class="jarviswidget-editbox">
-                            </div>
-                            <div class="widget-body no-padding">
-                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th data-class="expand">
-                                                <i class="icon-append fa fa-comment"></i>
-                                                Sucursal
-                                            </th>
-                                            <th>
-                                                <i class="icon-append fa fa-comment"></i>
-                                                Dependencia Padre
-                                            </th>
-                                            <th >
-                                                <i class="icon-append fa fa-comment"></i>
-                                                Dependencia
-                                            </th>
-                                            <th>
-                                                <i class="icon-append fa fa-comment"></i>
-                                                Procesos
-                                            </th>
-                                            <th>
-                                                <i class="fa fa-cog "></i>
-                                                Opciones
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
+            <div class="col-lg-12">
+
+                <div class="alert alert-block alert-dismissable">
+
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                    <p>
+
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        }
+    </div>
+    <p></p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Dependencia
+
+        </button>
+    </a>
+    <p> </p>
+
+    <section id="widget-grid" class="">
+        <div class="row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Actividades Esenciales</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-class="expand">
+                                            <i class="icon-append fa fa-comment"></i>
+                                            Sucursal
+                                        </th>
+                                        <th>
+                                            <i class="icon-append fa fa-comment"></i>
+                                            Dependencia Padre
+                                        </th>
+                                        <th>
+                                            <i class="icon-append fa fa-comment"></i>
+                                            Dependencia
+                                        </th>
+                                        <th>
+                                            <i class="icon-append fa fa-comment"></i>
+                                            Procesos
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-cog "></i>
+                                            Opciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
                                     {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.NombreSucursal)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.NombreDependenciaPadre)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.NombreDependencia)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.NombreProceso)
-                                                </td>
-                                                <td>
-                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdDependencia }) |
-                                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdDependencia }, new { onclick = "return confirm('Desea eliminar la Sucursal... ?');" })
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreSucursal)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreDependenciaPadre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreDependencia)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreProceso)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdDependencia }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdDependencia }, new { onclick = "return confirm('Desea eliminar la Sucursal... ?');" })
+                                            </td>
+                                        </tr>
                                     }
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </article>
-            </div>
-        </section>
-    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
     @section Scripts {
         <script src='~/js/datatables/init.js'></script>
     }
