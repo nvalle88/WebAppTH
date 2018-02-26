@@ -3,9 +3,17 @@
 @{
     ViewData["Title"] = "Index";
 }
-<p>
-    <a asp-action="Create">Nuevo Capacitación Proveedor</a>
-</p>
+<p></p>
+<a asp-action="Create">
+    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+        <span class="btn-label">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>Nueva Capacitaci&oacute;n Proveedor
+
+    </button>
+</a>
+<p> </p>
+
 			<!-- MAIN CONTENT -->
 <div id="content">
    
@@ -43,20 +51,36 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
-                                        <th data-class="expand">
+                                        <th class="hasinput">
+                                            <input type="text" class="form-control" placeholder="Buscar" />
+                                        </th>
+                                        <th class="hasinput">
+                                            <input type="text" class="form-control" placeholder="Buscar" />
+                                        </th>
+                                        <th class="hasinput">
+                                            <input type="text" class="form-control" placeholder="Buscar" />
+                                        </th>
+                                        <th class="hasinput">
+                                            <input type="text" class="form-control" placeholder="Buscar" />
+                                        </th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th data-class="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Pais.Nombre)
+                                        </th>
+                                        <th data-class="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                                         </th>
-                                        <th data-hide="phone">
+                                        <th data-hide="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Direccion)
                                         </th>
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Telefono)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().CapacitacionRecibida.IdCapacitacionRecibida)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -66,6 +90,9 @@
                                     {
                                         <tr>
                                             <td>
+                                                @Html.DisplayFor(modelItem => item.Pais.Nombre)
+                                            </td>
+                                            <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
                                             <td>
@@ -74,10 +101,6 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Telefono)
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CapacitacionRecibida.IdCapacitacionRecibida)
-                                            </td>
-                                           
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdCapacitacionProveedor }) |
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCapacitacionProveedor }, new { onclick = "return confirm('Desea eliminar la Capacitación de Proveedor... ?');" })

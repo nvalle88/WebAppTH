@@ -23,9 +23,25 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
+        private void InicializarMensaje(string mensaje)
 
-        public IActionResult Create()
         {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        public async Task <IActionResult> Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
+            ViewData["IdRolPuesto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RolPuesto>(new Uri(WebApp.BaseAddress), "api/RolesPuesto/ListarRolesPuesto"), "IdRolPuesto", "Nombre");
             //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
             return View();
         }
@@ -34,6 +50,13 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ConfiguracionViatico configuracionViatico)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(configuracionViatico);
+            }
+            
+            
             Response response = new Response();
             try
             {
@@ -58,6 +81,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 ViewData["Error"] = response.Message;
+                ViewData["IdRolPuesto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RolPuesto>(new Uri(WebApp.BaseAddress), "api/RolesPuesto/ListarRolesPuesto"), "IdRolPuesto", "Nombre");
                 //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
                 return View(configuracionViatico);
 
@@ -91,6 +115,8 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<ConfiguracionViatico>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        ViewData["IdRolPuesto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RolPuesto>(new Uri(WebApp.BaseAddress), "api/RolesPuesto/ListarRolesPuesto"), "IdRolPuesto", "Nombre");
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -131,6 +157,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
+                    ViewData["IdRolPuesto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RolPuesto>(new Uri(WebApp.BaseAddress), "api/RolesPuesto/ListarRolesPuesto"), "IdRolPuesto", "Nombre");
                     //ViewData["IdDependencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "api/Dependencia/ListarDependencia"), "IdDependencia", "Nombre");
                     return View(configuracionViatico);
 
@@ -153,7 +180,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index( string mensaje)
         {
 
             var lista = new List<ConfiguracionViatico>();
@@ -161,6 +188,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<ConfiguracionViatico>(new Uri(WebApp.BaseAddress)
                                                                     , "api/ConfiguracionesViaticos/ListarConfiguracionesViaticos");
+                InicializarMensaje(mensaje);
                 return View(lista);
             }
             catch (Exception ex)
@@ -198,7 +226,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+                //return BadRequest();
             }
             catch (Exception ex)
             {

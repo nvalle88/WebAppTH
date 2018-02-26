@@ -19,9 +19,10 @@
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            <form asp-action="Create" id="ejemplo" class="smart-form" novalidate="novalidate">
-                                <div asp-validation-summary="ModelOnly" class="text-danger" ></div>                              
-                                @{await Html.RenderPartialAsync("_PartialViewDependencias", Model);}                               
+                            <form asp-action="Edit" id="ejemplo" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger" ></div>
+                                <input type="hidden" asp-for="IdDependencia" />
+                              @{await Html.RenderPartialAsync("_PartialViewDependencias");}
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
@@ -34,6 +35,7 @@
         </div>
     </section>
 </div>
+
 @section Scripts {
 
    <script src='~/lib/select2/dist/js/select2.min.js'></script>
@@ -57,7 +59,7 @@
         $("#ciudad").change(function () {
             mostrarLoadingPanel("content", "Cargando...")
             $("#sucursal").empty();
-            $("#dependencia").empty();
+            $("#dependencia").val("");
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("ListarSucursalesPorCiudad", "CeseFunciones")',
@@ -85,7 +87,7 @@
 
             $("#sucursal").change(function () {
             mostrarLoadingPanel("content","Cargando...")
-            $("#dependencia").empty();
+            $("#dependencia").val("");
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarDependenciasPorSucursal", "CeseFunciones")',
