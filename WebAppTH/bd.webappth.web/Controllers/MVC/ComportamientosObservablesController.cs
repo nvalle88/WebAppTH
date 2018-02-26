@@ -24,11 +24,26 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
+        private void InicializarMensaje(string mensaje)
 
-        public async Task<IActionResult> Create()
+        {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        public async Task<IActionResult> Create( string mensaje)
         {
             ViewData["IdNivel"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Nivel>(new Uri(WebApp.BaseAddress), "api/Niveles/ListarNiveles"), "IdNivel", "Nombre");
             ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -80,6 +95,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ComportamientoObservable comportamientoObservable)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(comportamientoObservable);
+            }
             Response response = new Response();
             try
             {
@@ -140,6 +160,7 @@ namespace bd.webappth.web.Controllers.MVC
                     ViewData["IdDenominacionCompetencia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<DenominacionCompetencia>(new Uri(WebApp.BaseAddress), "api/DenominacionesCompetencias/ListarDenominacionesCompetencias"), "IdDenominacionCompetencia", "Nombre");
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -203,7 +224,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string mensaje)
         {
 
             var lista = new List<ComportamientoObservable>();
@@ -211,6 +232,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<ComportamientoObservable>(new Uri(WebApp.BaseAddress)
                                                                     , "api/ComportamientosObservables/ListarComportamientosObservables");
+                InicializarMensaje(mensaje);
                 return View(lista);
             }
             catch (Exception ex)
@@ -248,7 +270,7 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
             }
             catch (Exception ex)
             {

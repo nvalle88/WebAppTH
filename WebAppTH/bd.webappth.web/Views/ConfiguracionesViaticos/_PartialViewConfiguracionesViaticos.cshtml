@@ -1,23 +1,30 @@
 @model bd.webappth.entidades.Negocio.ConfiguracionViatico
 <fieldset>
     <div class="row">
+        
         <section class="col col-6">
+            <label>@Html.DisplayNameFor(model => model.RolPuesto.Nombre)</label>
             <label class="input">
-                <select asp-for="IdDependencia" class="form-control" asp-items="ViewBag.IdDependencia">
-                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdDependencia)></option>
+                <select asp-for="IdRolPuesto" class="form-control" asp-items="ViewBag.IdRolPuesto">
+                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdRolPuesto)></option>
                 </select>
-                <span asp-validation-for="IdDependencia" class="text-danger"></span>
+                <span asp-validation-for="IdRolPuesto" class="text-danger"></span>
             </label>
         </section>
-        <section class="col col-3">
+</div>
+<div class="row">
+        <section class="col col-6">
+            <label>@Html.DisplayNameFor(model => model.PorCientoAJustificar)</label>
             <label class="input">
                 <i class="icon-prepend fa fa-user"></i>
                 <input asp-for="PorCientoAJustificar" onkeypress="return NumCheck(event, this)" onchange="handleChange(this);" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.PorCientoAJustificar)" />
                 <span asp-validation-for="PorCientoAJustificar" class="text-danger"></span>
             </label>
         </section>
-
-        <section class="col col-3">
+</div>
+    <div class="row">
+        <section class="col col-6">
+            <label>@Html.DisplayNameFor(model => model.SolicitudViatico)</label>
             <label class="input">
                 <i class="icon-prepend fa fa-user"></i>
                 <input asp-for="ValorEntregadoPorDia" onkeypress="return NumCheck(event, this)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.ValorEntregadoPorDia)" />
@@ -25,5 +32,4 @@
             </label>
         </section>
     </div>
-    <span class="text-danger">@ViewData["Error"]</span>
 </fieldset> 

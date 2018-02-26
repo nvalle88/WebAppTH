@@ -20,7 +20,21 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
+        private void InicializarMensaje(string mensaje)
 
+        {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
 
         public async Task<IActionResult> Index()
         {

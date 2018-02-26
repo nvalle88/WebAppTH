@@ -25,8 +25,22 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
+        private void InicializarMensaje(string mensaje)
 
-        public async Task<IActionResult> Create(int id)
+        {
+
+            if (mensaje == null)
+
+            {
+
+                mensaje = "";
+
+            }
+
+            ViewData["Error"] = mensaje;
+
+        }
+        public async Task<IActionResult> Create(int id ,string mensaje)
         {
             try
             {
@@ -43,6 +57,7 @@ namespace bd.webappth.web.Controllers.MVC
                     //}
                     //else
                     //{
+                    
                     var empleadoEnviar = new Empleado
                     {
                         IdEmpleado=id,
@@ -56,6 +71,7 @@ namespace bd.webappth.web.Controllers.MVC
                         {
                             IdEmpleado = id,
                         };
+                    InicializarMensaje(mensaje);
                         return View(ceseFuncion);
                     //}
 
@@ -128,6 +144,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CeseFuncion ceseFuncion)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(ceseFuncion);
+            }
             Response response = new Response();
             try
             {
