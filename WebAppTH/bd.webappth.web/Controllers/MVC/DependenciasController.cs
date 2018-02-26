@@ -22,6 +22,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
+        
 
         public async Task<IActionResult> Index()
         {
@@ -30,6 +31,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<DependenciaViewModel>(new Uri(WebApp.BaseAddress)
                                                                     , "api/Dependencias/ListarDependencias");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
