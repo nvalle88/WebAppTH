@@ -56,6 +56,12 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TipoRMU TipoRMU)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(TipoRMU);
+            }
+
             Response response = new Response();
             try
             {
