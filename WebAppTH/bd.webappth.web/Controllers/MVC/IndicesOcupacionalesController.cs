@@ -930,10 +930,10 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Index()
         {
-            var lista = new List<IndiceOcupacional>();
+            var lista = new List<IndiceOcupacionalViewModel>();
             try
             {
-                lista = await apiServicio.Listar<IndiceOcupacional>(new Uri(WebApp.BaseAddress)
+                lista = await apiServicio.Listar<IndiceOcupacionalViewModel>(new Uri(WebApp.BaseAddress)
                                                                     , "api/IndicesOcupacionales/ListarIndicesOcupaciones");
                 return View(lista);
             }
@@ -964,7 +964,6 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 IndiceOcupacional=indiceOcupacional,
             };
-
 
             var indiceOcupacionalDetalle = await apiServicio.ObtenerElementoAsync1<IndiceOcupacionalDetalle>(IndiOcupacionalDetalle, new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/DetalleIndiceOcupacional");
 

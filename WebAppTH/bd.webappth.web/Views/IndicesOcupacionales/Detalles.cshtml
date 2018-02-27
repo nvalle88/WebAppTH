@@ -21,8 +21,6 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        @Html.ActionLink("Adicionar Área de conocimiento", "AdicionarAreaConocimiento", "IndicesOcupacionales", new { idIndiceOcupacional=Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
-                        
                     </li>
                     <li>
                        @Html.ActionLink("Adicionar Actividades esenciales", "AdicionarActividesEsenciales", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
@@ -130,34 +128,42 @@
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-graduation-cap"></i> </span>
                                         <h2>Nivel de Instrucci&oacute;n </h2>
+                                        <span class="widget-icon">>
+                                            <i class="fa fa-plus">
+                                            </i>
+
+                                            @Html.ActionLink("Adicionar Área de conocimiento", "AdicionarAreaConocimiento", "IndicesOcupacionales", new { idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { @class = "dialog-window" })
+                                        </span>
+
                                     </header>
                                     <fieldset>
+
                                         <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                             </thead>
                                             <tbody>
                                                 @if (Model.ListaEstudios.Count != 0)
-                                                {
-                                                    @foreach (var item in Model.ListaEstudios)
-                                                    {
-                                                        <tr>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Nombre)
-                                                            </td>
-                                                            <td>
-                                                               @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalEstudios", "Estudios", new { idEstudio = item.IdEstudio, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
-                                                            </td>
-                                                        </tr>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            <p>No existen resultados</p>
-                                                       </td>
-                                                    </tr>
-                                                }
+            {
+                                    @foreach (var item in Model.ListaEstudios)
+{
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nombre)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalEstudios", "Estudios", new { idEstudio = item.IdEstudio, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                        </td>
+                                    </tr>
+}
+}
+else
+{
+                                    <tr>
+                                        <td>
+                                            <p>No existen resultados</p>
+                                        </td>
+                                    </tr>
+}
 
                                             </tbody>
                                         </table>
