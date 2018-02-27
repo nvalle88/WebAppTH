@@ -25,9 +25,17 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         public async Task<IActionResult> Create()
         {
+            InicializarMensaje(null);
             ViewData["IdTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales"), "IdTipoAccionPersonal", "Nombre");
             ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
 
@@ -39,6 +47,12 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FlujoAprobacion FlujoAprobacion)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(FlujoAprobacion);
+
+            }
             Response response = new Response();
             try
             {
@@ -104,6 +118,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -178,6 +193,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<FlujoAprobacion>(new Uri(WebApp.BaseAddress)
                                                                     , "api/FlujosAprobacion/ListarFlujosAprobacion");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -215,7 +231,9 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+
             }
             catch (Exception ex)
             {

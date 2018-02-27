@@ -8,6 +8,32 @@
 
 
 <div id="content">
+    <div class="col col-10">
+
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-12">
+
+                <div class="alert alert-block alert-dismissable">
+
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                    <p>
+
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        }
+    </div>
     <section id="widget-grid" class="">
         <div class="row">
             <article class="col-sm-12 col-md-12 col-lg-12">
@@ -25,13 +51,13 @@
                                 <fieldset>
                                     <legend>Datos Personales</legend>
                                     <div class="row">
-                                        
+
                                         <section class="col col-3">
                                             <div class="form-group">
                                                 <label>CI o Pasaporte:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
-                                                    <input asp-for="Identificacion" onchange="validar()" class="form-control input " placeholder="Identificacion" type="text" >
+                                                    <input asp-for="Identificacion" onchange="validar()" class="form-control input " placeholder="Identificacion" type="text">
                                                 </div>
                                                 <span asp-validation-for="Identificacion" class="text-danger"></span>
                                                 <span id="idIdentificacion" class="text-danger"></span>
@@ -42,7 +68,7 @@
                                                 <label>Nombres:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                    <input asp-for="Nombres" class="form-control input " placeholder="Nombres" type="text"  >
+                                                    <input asp-for="Nombres" class="form-control input " placeholder="Nombres" type="text">
                                                 </div>
                                                 <span asp-validation-for="Nombres" class="text-danger"></span>
                                             </div>
@@ -52,7 +78,7 @@
                                                 <label>Apellidos:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                    <input asp-for="Apellidos" class="form-control input " placeholder="Apellidos" type="text"  >
+                                                    <input asp-for="Apellidos" class="form-control input " placeholder="Apellidos" type="text">
                                                 </div>
                                                 <span asp-validation-for="Apellidos" class="text-danger"></span>
                                             </div>
@@ -85,7 +111,7 @@
                                             <label>Estado Civil:</label>
                                             <div class="form-group">
                                                 <div class="input">
-                                                    <select asp-for="IdEstadoCivil" asp- class="form-control input " asp-items="ViewBag.IdEstadoCivil"  >
+                                                    <select asp-for="IdEstadoCivil" asp- class="form-control input " asp-items="ViewBag.IdEstadoCivil">
                                                         <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
                                                     <span asp-validation-for="IdEstadoCivil" class="text-danger"></span>
@@ -96,7 +122,7 @@
                                             <label>Tipo de Sangre:</label>
                                             <div class="form-group">
                                                 <div class="input">
-                                                    <select asp-for="IdTipoSangre" asp- class="form-control input " asp-items="ViewBag.IdTipoSangre"  >
+                                                    <select asp-for="IdTipoSangre" asp- class="form-control input " asp-items="ViewBag.IdTipoSangre">
                                                         <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
                                                     <span asp-validation-for="IdTipoSangre" class="text-danger"></span>
@@ -109,7 +135,7 @@
                                             <label>Nacionalidad:</label>
                                             <div class="form-group">
                                                 <div class="input">
-                                                    <select asp-for="IdNacionalidad" asp- class="form-control input " asp-items="ViewBag.IdNacionalidad"  >
+                                                    <select asp-for="IdNacionalidad" asp- class="form-control input " asp-items="ViewBag.IdNacionalidad">
                                                         <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
                                                     <span asp-validation-for="IdNacionalidad" class="text-danger"></span>
@@ -120,7 +146,7 @@
                                             <label>Autoidentificaci&oacute;n &eacute;tnica:</label>
                                             <div class="form-group">
                                                 <div class="input">
-                                                    <select  asp-for="IdEtnia" asp- class="form-control input " asp-items="ViewBag.IdEtnia">
+                                                    <select asp-for="IdEtnia" asp- class="form-control input " asp-items="ViewBag.IdEtnia">
                                                         <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
                                                     <span asp-validation-for="IdEtnia" class="text-danger"></span>
@@ -131,8 +157,7 @@
                                             <label>Nacionalidad Ind&iacute;gena:</label>
                                             <div class="form-group">
                                                 <div class="input">
-                                                    <select  asp-for="IdNacionalidadIndigena" asp- class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena">
-                                                    </select>
+                                                    <select asp-for="IdNacionalidadIndigena" asp- class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena"></select>
                                                 </div>
                                             </div>
                                         </section>
@@ -141,7 +166,7 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
-                                                    <input asp-for="CorreoPrivado" class="form-control input " placeholder="Correo Privado"   data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
+                                                    <input asp-for="CorreoPrivado" class="form-control input " placeholder="Correo Privado" data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
                                                 </div>
                                                 <span asp-validation-for="CorreoPrivado" class="text-danger"></span>
                                             </div>
@@ -149,9 +174,9 @@
                                     </div>
                                     <div class="row">
                                         <section class="col col-3">
-                                            
-                                                <label>Fecha de Nacimiento:</label>
-                                                 <div class="form-group">
+
+                                            <label>Fecha de Nacimiento:</label>
+                                            <div class="form-group">
                                                 <label class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                     <input asp-for="FechaNacimiento" asp- class="form-control" placeholder="Seleccione la Fecha de Inicio">
@@ -165,12 +190,12 @@
                                                 <label>Lugar de Trabajo:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-institution fa  fa-fw"></i></span>
-                                                    <input asp-for="LugarTrabajo" class="form-control input " placeholder="Lugar de Trabajo" type="text"  >
+                                                    <input asp-for="LugarTrabajo" class="form-control input " placeholder="Lugar de Trabajo" type="text">
                                                 </div>
                                                 <span asp-validation-for="LugarTrabajo" class="text-danger"></span>
                                             </div>
                                         </section>
-                                        
+
                                     </div>
                                     <div class="row">
                                         <article class="col col-6">
@@ -181,7 +206,7 @@
                                                     <label>Pa&iacute;s:</label>
                                                     <div class="form-group">
                                                         <div class="input">
-                                                            <select  asp-for="IdPaisLugarNacimiento" class="form-control input " asp-items="ViewBag.IdPaisLugarNacimiento"  >
+                                                            <select asp-for="IdPaisLugarNacimiento" class="form-control input " asp-items="ViewBag.IdPaisLugarNacimiento">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                         </div>
@@ -192,8 +217,7 @@
                                                     <label>Ciudad:</label>
                                                     <div class="form-group">
                                                         <div class="input">
-                                                            <select class="form-control input" asp-for="IdCiudadLugarNacimiento" asp-items="ViewBag.IdCiudadLugarNacimiento"  >
-                                                            </select>
+                                                            <select class="form-control input" asp-for="IdCiudadLugarNacimiento" asp-items="ViewBag.IdCiudadLugarNacimiento"></select>
                                                         </div>
                                                         <span asp-validation-for="IdCiudadLugarNacimiento" class="text-danger"></span>
                                                     </div>
@@ -208,7 +232,7 @@
                                                     <label>Pa&iacute;s:</label>
                                                     <div class="form-group">
                                                         <div class="input">
-                                                            <select  asp-for="IdPaisLugarSufragio" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"  >
+                                                            <select asp-for="IdPaisLugarSufragio" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                         </div>
@@ -219,7 +243,7 @@
                                                     <label>Provincia:</label>
                                                     <div class="form-group">
                                                         <div class="input">
-                                                            <select  asp-for="IdProvinciaLugarSufragio" class="form-control input " asp-items="ViewBag.IdProvinciaLugarSufragio"  >
+                                                            <select asp-for="IdProvinciaLugarSufragio" class="form-control input " asp-items="ViewBag.IdProvinciaLugarSufragio">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                             <span asp-validation-for="IdProvinciaLugarSufragio" class="text-danger"></span>
@@ -236,7 +260,7 @@
                                                     <label>Pa&iacute;s:</label>
                                                     <div class="form">
                                                         <div class="input">
-                                                            <select asp-for="IdPaisLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"  >
+                                                            <select asp-for="IdPaisLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                             <span asp-validation-for="IdPaisLugarPersona" class="text-danger"></span>
@@ -248,7 +272,7 @@
                                                     <label>Provincia:</label>
                                                     <div class="form">
                                                         <div class="input">
-                                                            <select  asp-for="IdProvinciaLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdProvinciaLugarPersona" >
+                                                            <select asp-for="IdProvinciaLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdProvinciaLugarPersona">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                             <span asp-validation-for="IdProvinciaLugarPersona" class="text-danger"></span>
@@ -259,7 +283,7 @@
                                                     <label>Ciudad:</label>
                                                     <div class="form">
                                                         <div class="input">
-                                                            <select  asp-for="IdCiudadLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdCiudadLugarPersona" >
+                                                            <select asp-for="IdCiudadLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdCiudadLugarPersona">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                             <span asp-validation-for="IdCiudadLugarPersona" class="text-danger"></span>
@@ -270,7 +294,7 @@
                                                     <label>Parroquia:</label>
                                                     <div class="form-group">
                                                         <div class="input">
-                                                            <select asp-for="IdParroquia" class="form-control input" asp-items="ViewBag.IdParroquia" >
+                                                            <select asp-for="IdParroquia" class="form-control input" asp-items="ViewBag.IdParroquia">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                         </div>
@@ -284,7 +308,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                            <input asp-for="CallePrincipal" class="form-control input " placeholder="Calle Principal" type="text"  >
+                                                            <input asp-for="CallePrincipal" class="form-control input " placeholder="Calle Principal" type="text">
                                                         </div>
                                                         <span asp-validation-for="CallePrincipal" class="text-danger"></span>
                                                     </div>
@@ -295,7 +319,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                            <input asp-for="CalleSecundaria" class="form-control input " placeholder="Calle Secundaria" type="text"  >
+                                                            <input asp-for="CalleSecundaria" class="form-control input " placeholder="Calle Secundaria" type="text">
                                                         </div>
                                                         <span asp-validation-for="CalleSecundaria" class="text-danger"></span>
                                                     </div>
@@ -308,7 +332,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                            <input asp-for="Referencia" class="form-control input " placeholder="Referencia" type="text"  >
+                                                            <input asp-for="Referencia" class="form-control input " placeholder="Referencia" type="text">
                                                         </div>
                                                         <span asp-validation-for="Referencia" class="text-danger"></span>
                                                     </div>
@@ -330,7 +354,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                            <input asp-for="Numero" class="form-control input " placeholder="Numero del Domicilio" onKeyPress="return checkIt(event)"  >
+                                                            <input asp-for="Numero" class="form-control input " placeholder="Numero del Domicilio" onKeyPress="return checkIt(event)">
                                                         </div>
                                                         <span asp-validation-for="Numero" class="text-danger"></span>
                                                     </div>
@@ -340,7 +364,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
-                                                            <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text"  >
+                                                            <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text">
                                                         </div>
                                                         <span asp-validation-for="TelefonoPrivado" class="text-danger"></span>
                                                     </div>
@@ -350,7 +374,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
-                                                            <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text"  >
+                                                            <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text">
                                                         </div>
                                                         <span asp-validation-for="TelefonoCasa" class="text-danger"></span>
                                                     </div>
@@ -358,7 +382,6 @@
                                             </div>
                                         </article>
                                     </div>
-                                    <span class="text-danger">@ViewData["Error"]</span>
                                 </fieldset>
                                 <footer>
                                     <input type="submit" id="GuardarForm" value="Guardar y Continuar" class="btn btn-primary" />

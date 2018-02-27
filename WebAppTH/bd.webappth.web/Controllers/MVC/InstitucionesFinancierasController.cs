@@ -24,9 +24,17 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         public IActionResult Create()
         {
+            InicializarMensaje(null);
             return View();
         }
 
@@ -34,6 +42,12 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(InstitucionFinanciera InstitucionFinanciera)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(InstitucionFinanciera);
+
+            }
             Response response = new Response();
             try
             {
@@ -90,6 +104,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<InstitucionFinanciera>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -159,6 +174,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress)
                                                                     , "api/InstitucionesFinancieras/ListarInstitucionesFinancieras");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -194,7 +210,8 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
-                    return RedirectToAction("Index");
+                    // return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { mensaje = response.Message });
                 }
                 return BadRequest();
             }

@@ -7,6 +7,32 @@
 
 
 <div id="content">
+    <div class="col col-10">
+
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-12">
+
+                <div class="alert alert-block alert-dismissable">
+
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                    <p>
+
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        }
+    </div>
     <div class="row">
     </div>
     <section id="widget-grid" class="">
@@ -68,7 +94,7 @@
 
                                         <input type="hidden" asp-for="Empleado.IdEmpleado" />
                                         <input type="hidden" asp-for="Empleado.IdPersona" />
-                                        <input type="hidden" asp-for="Empleado.IdCiudadLugarNacimiento" />                                        
+                                        <input type="hidden" asp-for="Empleado.IdCiudadLugarNacimiento" />
                                         <input type="hidden" asp-for="Empleado.IdProvinciaLugarSufragio" />
                                         <input type="hidden" asp-for="Empleado.IdDependencia" />
 
@@ -80,7 +106,7 @@
                                         <input type="hidden" asp-for="EmpleadoContactoEmergencia.IdPersona" />
                                         <input type="hidden" asp-for="EmpleadoContactoEmergencia.IdEmpleado" />
                                         <input type="hidden" asp-for="EmpleadoContactoEmergencia.IdParentesco" />
-                                        
+
                                         <input type="hidden" asp-for="PersonaSustituto.IdPersonaSustituto" />
                                         <input type="hidden" asp-for="PersonaSustituto.IdParentesco" />
                                         <input type="hidden" asp-for="PersonaSustituto.IdPersona" />
@@ -157,7 +183,7 @@
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
                                                                             <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' placeholder="Numero de la Cuenta" onKeyPress="return checkIt(event)">
-                                                                          
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -168,7 +194,7 @@
                                                                         <div class="input-group">
                                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                                             <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                            
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -378,7 +404,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-6">                                                                            
+                                                                        <div class="col-sm-6">
                                                                             <label>Provincia: </label>
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
@@ -448,13 +474,13 @@
                                                                             </div>
                                                                         </div>
 
-                                                                          <div class="col-sm-3">
+                                                                        <div class="col-sm-3">
                                                                             <label>Provincia: </label>
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                    
-                                                                                    <select asp-for="Persona.Parroquia.Ciudad.Provincia.IdProvincia" class="form-control" asp-items="ViewBag.IdProvinciaPorPais" id="provinciaLugarPersona"  data-msg-required='El campo es requerido' data-rule-required='true'>
+
+                                                                                    <select asp-for="Persona.Parroquia.Ciudad.Provincia.IdProvincia" class="form-control" asp-items="ViewBag.IdProvinciaPorPais" id="provinciaLugarPersona" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                         <option value="0" selected="" disabled="">Seleccione</option>
                                                                                     </select>
 
@@ -467,10 +493,10 @@
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
                                                                                     @*<select id="idciudadLugarPersona" class="form-control input "  data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                        <option value="0" selected="" disabled="">Seleccione</option>
-                                                                                    </select>*@
+                                                                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                                                                        </select>*@
 
-                                                                                    <select asp-for="Persona.Parroquia.Ciudad.IdCiudad" class="form-control" asp-items="ViewBag.IdCiudadPorProvincia" id="idciudadLugarPersona"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                    <select asp-for="Persona.Parroquia.Ciudad.IdCiudad" class="form-control" asp-items="ViewBag.IdCiudadPorProvincia" id="idciudadLugarPersona" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                         <option value="0" selected="" disabled="">Seleccione</option>
                                                                                     </select>
 
@@ -484,7 +510,7 @@
                                                                             <div class="form-group">
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                    <select asp-for="Persona.IdParroquia" class="form-control" asp-items="ViewBag.IdParroquia" id="parroquiaLugarPersona"  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                    <select asp-for="Persona.IdParroquia" class="form-control" asp-items="ViewBag.IdParroquia" id="parroquiaLugarPersona" data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                         <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdParroquia)></option>
                                                                                     </select>
                                                                                 </div>
@@ -927,48 +953,48 @@
                                                                         </div>
                                                                     </div>
 
-                                                                     <div class="col-sm-3">
-                                                                            <label>Provincia:</label>
-                                                                            <div class="form-group">
-                                                                                <div class="input-group">
-                                                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                    
-                                                                                    <select asp-for="Persona.Parroquia.Ciudad.Provincia.IdProvincia" class="form-control" asp-items="ViewBag.IdProvinciaPorPais" id="provinciaLugarPersona"  data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                        <option value="0" selected="" disabled="">Seleccione</option>
-                                                                                    </select>
+                                                                    <div class="col-sm-3">
+                                                                        <label>Provincia:</label>
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
 
-                                                                                </div>
+                                                                                <select asp-for="Persona.Parroquia.Ciudad.Provincia.IdProvincia" class="form-control" asp-items="ViewBag.IdProvinciaPorPais" id="provinciaLugarPersona" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                    <option value="0" selected="" disabled="">Seleccione</option>
+                                                                                </select>
+
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-3">
-                                                                            <label>Ciudad:</label>
-                                                                            <div class="form-group">
-                                                                                <div class="input-group">
-                                                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
-                                                                                    @*<select id="idciudadLugarPersona" class="form-control input "  data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <label>Ciudad:</label>
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa fa-fw"></i></span>
+                                                                                @*<select id="idciudadLugarPersona" class="form-control input "  data-msg-required='El campo es requerido' data-rule-required='true'>
                                                                                         <option value="0" selected="" disabled="">Seleccione</option>
                                                                                     </select>*@
 
-                                                                                    <select asp-for="Persona.Parroquia.Ciudad.IdCiudad" class="form-control" asp-items="ViewBag.IdCiudadPorProvincia" id="idciudadLugarPersona"  data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                        <option value="0" selected="" disabled="">Seleccione</option>
-                                                                                    </select>
+                                                                                <select asp-for="Persona.Parroquia.Ciudad.IdCiudad" class="form-control" asp-items="ViewBag.IdCiudadPorProvincia" id="idciudadLugarPersona" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                    <option value="0" selected="" disabled="">Seleccione</option>
+                                                                                </select>
 
-                                                                                </div>
                                                                             </div>
                                                                         </div>
+                                                                    </div>
 
 
-                                                                        <div class="col-sm-2">
-                                                                            <label>Parroquia:</label>
-                                                                            <div class="form-group">
-                                                                                <div class="input-group">
-                                                                                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                                                    <select asp-for="Persona.IdParroquia" class="form-control" asp-items="ViewBag.IdParroquia" id="parroquiaLugarPersona"  data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                                        <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdParroquia)></option>
-                                                                                    </select>
-                                                                                </div>
+                                                                    <div class="col-sm-2">
+                                                                        <label>Parroquia:</label>
+                                                                        <div class="form-group">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                                                <select asp-for="Persona.IdParroquia" class="form-control" asp-items="ViewBag.IdParroquia" id="parroquiaLugarPersona" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.Persona.IdParroquia)></option>
+                                                                                </select>
                                                                             </div>
                                                                         </div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-sm-6">
@@ -1984,7 +2010,7 @@
         <br />
         <input type="submit" id="EditarForm" value="Editar" class="btn btn-primary" />
         <br />
-        
+
     </section>
 </div>
 

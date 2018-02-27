@@ -27,13 +27,26 @@ namespace bd.webappth.web.Controllers.MVC
 
         public IActionResult Create()
         {
+            InicializarMensaje(null);
             return View();
         }
-
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Genero Genero)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(Genero);
+            }
             Response response = new Response();
             try
             {
@@ -90,6 +103,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<Genero>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -159,6 +173,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<Genero>(new Uri(WebApp.BaseAddress)
                                                                     , "api/Generos/ListarGeneros");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -196,7 +211,9 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+
             }
             catch (Exception ex)
             {

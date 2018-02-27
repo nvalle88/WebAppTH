@@ -25,21 +25,36 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
-
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         public async Task<IActionResult> Create(int IdSolicitudViatico)
         {
+            
+            
             ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
             var itinerarioViatico = new ItinerarioViatico
             {
                 IdSolicitudViatico = IdSolicitudViatico
             };
+            InicializarMensaje(null);
             return View(itinerarioViatico);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ItinerarioViatico itinerarioViatico)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(itinerarioViatico);
+            }
             Response response = new Response();
           
             try
@@ -107,6 +122,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<ItinerarioViatico>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
                         return View(respuesta.Resultado);
                     }
@@ -122,7 +138,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, ItinerarioViatico itinerarioViatico)
         {
             Response response = new Response();
@@ -177,9 +193,9 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index(int IdSolicitudViatico)
+        public async Task<IActionResult> Index(int IdSolicitudViatico,string mensaje)
         {
-
+            InicializarMensaje(mensaje);
             SolicitudViatico sol = new SolicitudViatico();
             ListaEmpleadoViewModel empleado = new ListaEmpleadoViewModel();
             List<ItinerarioViatico> lista = new List<ItinerarioViatico>();
@@ -190,6 +206,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     var respuestaSolicitudViatico = await apiServicio.SeleccionarAsync<Response>(IdSolicitudViatico.ToString(), new Uri(WebApp.BaseAddress),
                                                                   "api/SolicitudViaticos");
+                    //InicializarMensaje(null);
                     if (respuestaSolicitudViatico.IsSuccess)
                     {
                         sol = JsonConvert.DeserializeObject<SolicitudViatico>(respuestaSolicitudViatico.Resultado.ToString());
@@ -251,8 +268,6 @@ namespace bd.webappth.web.Controllers.MVC
                         return View(solicitudViaticoViewModel);
                     }
                 }
-
-
                 return BadRequest();
             }
             catch (Exception)
@@ -294,7 +309,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index", new { IdSolicitudViatico = itinerario.IdSolicitudViatico });
                 }
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
             }
             catch (Exception ex)
             {

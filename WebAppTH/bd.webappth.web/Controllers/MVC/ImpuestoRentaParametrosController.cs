@@ -24,16 +24,30 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         public IActionResult Create()
         {
+            InicializarMensaje(null);
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ImpuestoRentaParametros ImpuestoRentaParametros)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(ImpuestoRentaParametros);
+
+            }
             Response response = new Response();
             try
             {
@@ -90,6 +104,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<ImpuestoRentaParametros>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -159,6 +174,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<ImpuestoRentaParametros>(new Uri(WebApp.BaseAddress)
                                                                     , "api/ImpuestoRentaParametros/ListarImpuestoRentaParametros");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -196,7 +212,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
             }
             catch (Exception ex)
             {

@@ -25,9 +25,19 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> Create()
+        private void InicializarMensaje(string mensaje)
         {
-            ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
+
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
+            ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "TipoEscala");
             return View();
         }
 
@@ -35,6 +45,12 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(EscalaGrados escalaGrados)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(escalaGrados);
+
+            }
             Response response = new Response();
             try
             {
@@ -59,7 +75,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 ViewData["Error"] = response.Message;
-                ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
+                ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "TipoEscala");
                 return View(escalaGrados);
 
             }
@@ -90,9 +106,10 @@ namespace bd.webappth.web.Controllers.MVC
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<EscalaGrados>(respuesta.Resultado.ToString());
-                    ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
+                    ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "TipoEscala");
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -129,11 +146,11 @@ namespace bd.webappth.web.Controllers.MVC
                             Message = "Se ha actualizado una escala grado",
                             UserName = "Usuario 1"
                         });
-
+                        InicializarMensaje(null);
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
-                    ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "Nombre");
+                    ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "TipoEscala");
                     return View(escalaGrados);
 
                 }
@@ -163,6 +180,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<EscalaGrados>(new Uri(WebApp.BaseAddress)
                                                                     , "api/EscalasGrados/ListarEscalasGrados");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -200,7 +218,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+                //return BadRequest();
             }
             catch (Exception ex)
             {
