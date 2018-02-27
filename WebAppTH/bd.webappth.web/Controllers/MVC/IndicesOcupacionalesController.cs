@@ -939,17 +939,100 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando Indices ocupacionales",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
+        }
+
+
+        public async Task<IActionResult> ConocimientosAdicionales(int id)
+        {
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = id,
+            };
+
+            var ListaConocimientosAdicionales = await apiServicio.Listar<ConocimientosAdicionalesViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/ConocimientosAdicionales/ListarConocimientosAdicionalesPorIndiceOcupacional");
+
+            return View(ListaConocimientosAdicionales);
+        }
+
+        public async Task<IActionResult> ComportamientoObservable(int id)
+        {
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = id,
+            };
+
+            var ListaEstudios = await apiServicio.Listar<ComportamientoObservableViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/ComportamientosObservables/ListarComportamientosObservablesPorIndiceOcupacional");
+
+            return View(ListaEstudios);
+        }
+
+        public async Task<IActionResult> Estudios(int id)
+        {
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = id,
+            };
+
+            var ListaEstudios = await apiServicio.Listar<EstudioViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudiosPorIndiceOcupacional");
+
+            return View(ListaEstudios);
+        }
+
+        public async Task<IActionResult> Capacitaciones(int id)
+        {
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = id,
+            };
+
+            var ListaActividadesEsenciales = await apiServicio.Listar<CapacitacionViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Capacitaciones/ListarCapacitacionesPorIndiceOcupacional");
+
+            return View(ListaActividadesEsenciales);
+        }
+
+        public async Task<IActionResult> AreaConocimiento(int id)
+        {
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = id,
+            };
+
+            var ListaActividadesEsenciales = await apiServicio.Listar<AreaConocimientoViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientosPorIndiceOcupacional");
+
+            return View(ListaActividadesEsenciales);
+        }
+
+        public async Task<IActionResult> ActividadesEsenciales(int id)
+        {
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = id,
+            };
+
+            var ListaActividadesEsenciales = await apiServicio.Listar<ActividadesEsencialesViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/ActividadesEsenciales/ListarActividadesEsencialesPorIndiceOcupacional");
+
+            return View(ListaActividadesEsenciales);
+        }
+
+        public async Task<IActionResult> Detalle(int id)
+        {
+
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = id,
+            };
+
+            var indiceOcupacionalDetalle = await apiServicio.ObtenerElementoAsync1<IndiceOcupacionalViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/InformacionBasicaIndiceOcupacional");
+
+            return View(indiceOcupacionalDetalle);
         }
 
         public async Task<IActionResult> Detalles(int id)

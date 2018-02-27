@@ -9,6 +9,8 @@ namespace bd.webappth.entidades.ViewModels
         public int IdIndiceOcupacional { get; set; }
         public string Dependencia { get; set; }
         public string ManualPuesto { get; set; }
+        public string Mision { get; set; }
+        public string RelacionesInternasExternas { get; set; }
         public string RolPuesto { get; set; }
         public string EscalaGrado { get; set; }
         public decimal Remuneracion { get; set; }

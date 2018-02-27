@@ -22,6 +22,19 @@
     <None Remove="Controllers\API\**" />
     <None Remove="Views\CapacitacionesProveedores}\**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\IndicesOcupacionales\AdicionarActividesEsenciales.cshtml" />
+    <Content Remove="Views\IndicesOcupacionales\AdicionarAreaConocimiento.cshtml" />
+    <Content Remove="Views\IndicesOcupacionales\AdicionarAreaConocimientoLocal.cshtml" />
+    <Content Remove="Views\IndicesOcupacionales\AdicionarCapacitaciones.cshtml" />
+    <Content Remove="Views\IndicesOcupacionales\AdicionarComportamientosObservables.cshtml" />
+    <Content Remove="Views\IndicesOcupacionales\AdicionarConocimientosAdicionales.cshtml" />
+    <Content Remove="Views\IndicesOcupacionales\AdicionarEstudio.cshtml" />
+    <Content Remove="Views\IndicesOcupacionales\AdicionarExperienciaLaboralRequerida.cshtml" />
+    <Content Remove="Views\IndicesOcupacionales\AdicionarMision.cshtml" />
+    <Content Remove="Views\IndicesOcupacionales\AdicionarRIE.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bd.log.guardar" Version="1.1.1" />
     <PackageReference Include="EnviarCorreo" Version="1.1.8" />
