@@ -9,6 +9,32 @@
 
 
 <!-- MAIN CONTENT -->
+<div class="col col-10">
+
+    @if (@ViewData["Error"].ToString() != "")
+
+    {
+
+        <div class="col-lg-7">
+
+            <div class="alert alert-block alert-dismissable">
+
+                <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                <p>
+
+                    <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    }
+</div>
 <div id="content">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -448,7 +474,7 @@
                                                                     @Html.DisplayFor(modelItem => item.Estudio.Nombre)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.AnoExperiencia.Descripcion)
+                                                                    @Html.DisplayFor(modelItem => item.AnoExperiencia)
                                                                 </td>
                                                                 <td>
                                                                     @Html.DisplayFor(modelItem => item.EspecificidadExperiencia.Descripcion)

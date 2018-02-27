@@ -27,7 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
            
         }
 
-        [Authorize(Policy = PoliticasSeguridad.TienePermiso)]
+       [Authorize(Policy = PoliticasSeguridad.TienePermiso)]
         public async Task<IActionResult> Index()
         {
 

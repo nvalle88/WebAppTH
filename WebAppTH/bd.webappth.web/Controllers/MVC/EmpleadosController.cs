@@ -65,7 +65,14 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
-
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         public async Task<IActionResult> Index()
         {
             var lista = new List<ListaEmpleadoViewModel>();
@@ -73,6 +80,8 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
                                                                     , "api/Empleados/ListarEmpleados");
+
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -191,6 +200,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
+                InicializarMensaje(null);
                 await CargarCombos(datosBasicosEmpleado);
                 return View(datosBasicosEmpleado);
             }
@@ -230,8 +240,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
        
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(string mensaje)
         {
+            InicializarMensaje(mensaje);
             await CargarCombos();
             return View();
         }
@@ -1198,6 +1209,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (empleadoViewModel!=null)
                     {
+                        InicializarMensaje(null);
                         return View(empleadoViewModel);
                     }
 
@@ -1469,18 +1481,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
-
-
-        private void InicializarMensaje(string mensaje)
-        {
-            if (mensaje == null)
-            {
-                mensaje = "";
-            }
-            ViewData["Error"] = mensaje;
-        }
-
-
+        
 
     }
 }

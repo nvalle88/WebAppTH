@@ -7,7 +7,32 @@
 
 			<!-- MAIN CONTENT -->
 <div id="content">
+    <div class="col col-10">
 
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-10">
+
+                <div class="alert alert-block alert-dismissable">
+
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                    <p>
+
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        }
+    </div>
     <!-- widget grid -->
     <section id="widget-grid" class="">
 
@@ -17,7 +42,7 @@
             <article class="col-sm-12 col-md-12 col-lg-10">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
-               
+
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                         <h2>Documentos de Informaci&oacute;n Institucional</h2>
@@ -28,17 +53,18 @@
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-                           
+
                         </div>
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                          
-                            <form  asp-action="Create"  method="post" id="checkout-form"  class="smart-form" novalidate="novalidate"  enctype="multipart/form-data">
+
+                            <form asp-action="Create" method="post" id="checkout-form" class="smart-form" novalidate="novalidate" enctype="multipart/form-data">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-8">
+                                            @Html.DisplayNameFor(model => model.Nombre)
                                             <label class="input">
                                                 <i class="icon-prepend fa fa-user"></i>
                                                 <input maxlength="250" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
@@ -47,16 +73,17 @@
                                         </section>
                                     </div>
                                     <section>
+                                        @Html.DisplayNameFor(model => model.Url)
                                         <div class="input input-file">
                                             <span class="button"><input asp-for="Url" id="file" type="file" name="files" onchange="this.parentNode.nextSibling.value = this.value">Buscar</span><input type="text" placeholder="Seleccione un archivo" readonly="">
                                         </div>
-                                            <span class="errorDiv text-danger">Archivos permitidos extensi&oacute;n .pdf y tama&ntilde;o m&aacute;ximo de 10mb </span>      
+                                        <span class="errorDiv text-danger">Archivos permitidos extensi&oacute;n .pdf y tama&ntilde;o m&aacute;ximo de 10mb </span>
                                     </section>
                                     <span class="text-danger">@ViewData["Error"]</span>
                                 </fieldset>
-                                <footer>                                 
+                                <footer>
                                     <input type="submit" id="btnUpload" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Index"  class="btn btn-default">Cancelar</a>
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -67,13 +94,13 @@
                 <!-- end widget -->
 
             </article>
-       
+
         </div>
         <!-- END ROW -->
     </section>
     <!-- end widget grid -->
     <!-- Modal -->
-   
+
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {

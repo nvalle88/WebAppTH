@@ -24,22 +24,22 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Index()
         {
-            var lista = new List<AnoExperiencia>();
+            //var lista = new List<AnoExperiencia>();
 
-            lista = await apiServicio.Listar<AnoExperiencia>(new Uri(WebApp.BaseAddress)
-                                                                , "api/AnosExperiencia/ListarAnosExperiencia");
-            return View(lista);
+            //lista = await apiServicio.Listar<AnoExperiencia>(new Uri(WebApp.BaseAddress)
+            //                                                    , "api/AnosExperiencia/ListarAnosExperiencia");
+           return View();
 
         }
 
-        public async Task<JsonResult> Listar()
-        {
+        //public async Task<JsonResult> Listar()
+        //{
 
-            var lista = new List<AnoExperiencia>();
+        //    //var lista = new List<AnoExperiencia>();
 
-            lista = await apiServicio.Listar<AnoExperiencia>(new Uri(WebApp.BaseAddress)
-                                                                , "api/AnosExperiencia/ListarAnosExperiencia");
-            return Json(lista);
-        }
+        //    //lista = await apiServicio.Listar<AnoExperiencia>(new Uri(WebApp.BaseAddress)
+        //    //                                                    , "api/AnosExperiencia/ListarAnosExperiencia");
+        //   return Json();
+        //}
     }
 }
