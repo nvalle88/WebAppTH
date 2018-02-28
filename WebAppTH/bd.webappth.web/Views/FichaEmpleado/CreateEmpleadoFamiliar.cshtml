@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.ViewModels.DatosBasicosEmpleadoViewModel
+@model bd.webappth.entidades.ViewModels.EmpleadoFamiliarViewModel
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
@@ -14,7 +14,7 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Crear empleado</h2>
+                        <h2>Empleado Familiar</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -25,13 +25,23 @@
                                 <fieldset>
                                     <legend>Datos Personales</legend>
                                     <div class="row">
-                                        
+                                        <section class="col col-3">
+                                            <label>Tipo de Identificaci&oacute;n:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdTipoIdentificacion" asp- class="form-control" asp-items="ViewBag.IdTipoIdentificacion">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdTipoIdentificacion" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
                                         <section class="col col-3">
                                             <div class="form-group">
                                                 <label>CI o Pasaporte:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
-                                                    <input asp-for="Identificacion" onchange="validar()" class="form-control input " placeholder="Identificacion" type="text" >
+                                                    <input asp-for="Identificacion" onchange="validar()" class="form-control input " placeholder="Identificacion" type="text">
                                                 </div>
                                                 <span asp-validation-for="Identificacion" class="text-danger"></span>
                                                 <span id="idIdentificacion" class="text-danger"></span>
@@ -42,7 +52,7 @@
                                                 <label>Nombres:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                    <input asp-for="Nombres" class="form-control input " placeholder="Nombres" type="text"  >
+                                                    <input asp-for="Nombres" class="form-control input " placeholder="Nombres" type="text">
                                                 </div>
                                                 <span asp-validation-for="Nombres" class="text-danger"></span>
                                             </div>
@@ -52,11 +62,11 @@
                                                 <label>Apellidos:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                    <input asp-for="Apellidos" class="form-control input " placeholder="Apellidos" type="text"  >
+                                                    <input asp-for="Apellidos" class="form-control input " placeholder="Apellidos" type="text">
                                                 </div>
                                                 <span asp-validation-for="Apellidos" class="text-danger"></span>
                                             </div>
-                                        </section>
+                                        </section>                                
                                     </div>
                                     <div class="row">
                                         <section class="col col-3">
@@ -85,7 +95,7 @@
                                             <label>Estado Civil:</label>
                                             <div class="form-group">
                                                 <div class="input">
-                                                    <select asp-for="IdEstadoCivil" asp- class="form-control input " asp-items="ViewBag.IdEstadoCivil"  >
+                                                    <select asp-for="IdEstadoCivil" asp- class="form-control input " asp-items="ViewBag.IdEstadoCivil">
                                                         <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
                                                     <span asp-validation-for="IdEstadoCivil" class="text-danger"></span>
@@ -96,7 +106,7 @@
                                             <label>Tipo de Sangre:</label>
                                             <div class="form-group">
                                                 <div class="input">
-                                                    <select asp-for="IdTipoSangre" asp- class="form-control input " asp-items="ViewBag.IdTipoSangre"  >
+                                                    <select asp-for="IdTipoSangre" asp- class="form-control input " asp-items="ViewBag.IdTipoSangre">
                                                         <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
                                                     <span asp-validation-for="IdTipoSangre" class="text-danger"></span>
@@ -109,7 +119,7 @@
                                             <label>Nacionalidad:</label>
                                             <div class="form-group">
                                                 <div class="input">
-                                                    <select asp-for="IdNacionalidad" asp- class="form-control input " asp-items="ViewBag.IdNacionalidad"  >
+                                                    <select asp-for="IdNacionalidad" asp- class="form-control input " asp-items="ViewBag.IdNacionalidad">
                                                         <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
                                                     <span asp-validation-for="IdNacionalidad" class="text-danger"></span>
@@ -120,7 +130,7 @@
                                             <label>Autoidentificaci&oacute;n &eacute;tnica:</label>
                                             <div class="form-group">
                                                 <div class="input">
-                                                    <select  asp-for="IdEtnia" asp- class="form-control input " asp-items="ViewBag.IdEtnia">
+                                                    <select asp-for="IdEtnia" asp- class="form-control input " asp-items="ViewBag.IdEtnia">
                                                         <option value="0" selected="selected" disabled="">Seleccione</option>
                                                     </select>
                                                     <span asp-validation-for="IdEtnia" class="text-danger"></span>
@@ -131,8 +141,7 @@
                                             <label>Nacionalidad Ind&iacute;gena:</label>
                                             <div class="form-group">
                                                 <div class="input">
-                                                    <select  asp-for="IdNacionalidadIndigena" asp- class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena">
-                                                    </select>
+                                                    <select asp-for="IdNacionalidadIndigena" asp- class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena"></select>
                                                 </div>
                                             </div>
                                         </section>
@@ -141,7 +150,7 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
-                                                    <input asp-for="CorreoPrivado" class="form-control input " placeholder="Correo Privado"   data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
+                                                    <input asp-for="CorreoPrivado" class="form-control input " placeholder="Correo Privado" data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
                                                 </div>
                                                 <span asp-validation-for="CorreoPrivado" class="text-danger"></span>
                                             </div>
@@ -149,9 +158,8 @@
                                     </div>
                                     <div class="row">
                                         <section class="col col-3">
-                                            
-                                                <label>Fecha de Nacimiento:</label>
-                                                 <div class="form-group">
+                                            <label>Fecha de Nacimiento:</label>
+                                            <div class="form-group">
                                                 <label class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                     <input asp-for="FechaNacimiento" asp- class="form-control" placeholder="Seleccione la Fecha de Inicio">
@@ -160,74 +168,31 @@
                                             </div>
                                         </section>
 
-                                        <section class="col col-9">
+                                        <section class="col col-6">
                                             <div class="form-group">
                                                 <label>Lugar de Trabajo:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-institution fa  fa-fw"></i></span>
-                                                    <input asp-for="LugarTrabajo" class="form-control input " placeholder="Lugar de Trabajo" type="text"  >
+                                                    <input asp-for="LugarTrabajo" class="form-control input " placeholder="Lugar de Trabajo" type="text">
                                                 </div>
                                                 <span asp-validation-for="LugarTrabajo" class="text-danger"></span>
                                             </div>
                                         </section>
-                                        
+
+                                        <section class="col col-3">
+                                            <label>Parentesco:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdParentesco" asp- class="form-control input " asp-items="ViewBag.IdParentesco">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdParentesco" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
+
                                     </div>
                                     <div class="row">
-                                        <article class="col col-6">
-                                            <legend>Lugar de Nacimiento</legend>
-                                            <br />
-                                            <section class="row">
-                                                <div class="col col-6">
-                                                    <label>Pa&iacute;s:</label>
-                                                    <div class="form-group">
-                                                        <div class="input">
-                                                            <select  asp-for="IdPaisLugarNacimiento" class="form-control input " asp-items="ViewBag.IdPaisLugarNacimiento"  >
-                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
-                                                            </select>
-                                                        </div>
-                                                        <span asp-validation-for="IdPaisLugarNacimiento" class="text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <section class="col col-6">
-                                                    <label>Ciudad:</label>
-                                                    <div class="form-group">
-                                                        <div class="input">
-                                                            <select class="form-control input" asp-for="IdCiudadLugarNacimiento" asp-items="ViewBag.IdCiudadLugarNacimiento"  >
-                                                            </select>
-                                                        </div>
-                                                        <span asp-validation-for="IdCiudadLugarNacimiento" class="text-danger"></span>
-                                                    </div>
-                                                </section>
-                                            </section>
-                                        </article>
-                                        <article class="col col-6">
-                                            <legend>Lugar de Sufragio</legend>
-                                            <br />
-                                            <div class="row">
-                                                <section class="col col-6">
-                                                    <label>Pa&iacute;s:</label>
-                                                    <div class="form-group">
-                                                        <div class="input">
-                                                            <select  asp-for="IdPaisLugarSufragio" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"  >
-                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
-                                                            </select>
-                                                        </div>
-                                                        <span asp-validation-for="IdPaisLugarSufragio" class="text-danger"></span>
-                                                    </div>
-                                                </section>
-                                                <section class="col col-6">
-                                                    <label>Provincia:</label>
-                                                    <div class="form-group">
-                                                        <div class="input">
-                                                            <select  asp-for="IdProvinciaLugarSufragio" class="form-control input " asp-items="ViewBag.IdProvinciaLugarSufragio"  >
-                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
-                                                            </select>
-                                                            <span asp-validation-for="IdProvinciaLugarSufragio" class="text-danger"></span>
-                                                        </div>
-                                                    </div>
-                                                </section>
-                                            </div>
-                                        </article>
                                         <article class="col col-12">
                                             <legend>Direcci&oacute;n Domicilio Permanente</legend>
                                             <br />
@@ -236,7 +201,7 @@
                                                     <label>Pa&iacute;s:</label>
                                                     <div class="form">
                                                         <div class="input">
-                                                            <select asp-for="IdPaisLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio"  >
+                                                            <select asp-for="IdPaisLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                             <span asp-validation-for="IdPaisLugarPersona" class="text-danger"></span>
@@ -248,7 +213,7 @@
                                                     <label>Provincia:</label>
                                                     <div class="form">
                                                         <div class="input">
-                                                            <select  asp-for="IdProvinciaLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdProvinciaLugarPersona" >
+                                                            <select asp-for="IdProvinciaLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdProvinciaLugarPersona">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                             <span asp-validation-for="IdProvinciaLugarPersona" class="text-danger"></span>
@@ -259,7 +224,7 @@
                                                     <label>Ciudad:</label>
                                                     <div class="form">
                                                         <div class="input">
-                                                            <select  asp-for="IdCiudadLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdCiudadLugarPersona" >
+                                                            <select asp-for="IdCiudadLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdCiudadLugarPersona">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                             <span asp-validation-for="IdCiudadLugarPersona" class="text-danger"></span>
@@ -270,7 +235,7 @@
                                                     <label>Parroquia:</label>
                                                     <div class="form-group">
                                                         <div class="input">
-                                                            <select asp-for="IdParroquia" class="form-control input" asp-items="ViewBag.IdParroquia" >
+                                                            <select asp-for="IdParroquia" class="form-control input" asp-items="ViewBag.IdParroquia">
                                                                 <option value="0" selected="selected" disabled="">Seleccione</option>
                                                             </select>
                                                         </div>
@@ -284,7 +249,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                            <input asp-for="CallePrincipal" class="form-control input " placeholder="Calle Principal" type="text"  >
+                                                            <input asp-for="CallePrincipal" class="form-control input " placeholder="Calle Principal" type="text">
                                                         </div>
                                                         <span asp-validation-for="CallePrincipal" class="text-danger"></span>
                                                     </div>
@@ -295,7 +260,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                            <input asp-for="CalleSecundaria" class="form-control input " placeholder="Calle Secundaria" type="text"  >
+                                                            <input asp-for="CalleSecundaria" class="form-control input " placeholder="Calle Secundaria" type="text">
                                                         </div>
                                                         <span asp-validation-for="CalleSecundaria" class="text-danger"></span>
                                                     </div>
@@ -308,7 +273,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                            <input asp-for="Referencia" class="form-control input " placeholder="Referencia" type="text"  >
+                                                            <input asp-for="Referencia" class="form-control input " placeholder="Referencia" type="text">
                                                         </div>
                                                         <span asp-validation-for="Referencia" class="text-danger"></span>
                                                     </div>
@@ -330,7 +295,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                            <input asp-for="Numero" class="form-control input " placeholder="Numero del Domicilio" onKeyPress="return checkIt(event)"  >
+                                                            <input asp-for="Numero" class="form-control input " placeholder="Numero del Domicilio" onKeyPress="return checkIt(event)">
                                                         </div>
                                                         <span asp-validation-for="Numero" class="text-danger"></span>
                                                     </div>
@@ -340,7 +305,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
-                                                            <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text"  >
+                                                            <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text">
                                                         </div>
                                                         <span asp-validation-for="TelefonoPrivado" class="text-danger"></span>
                                                     </div>
@@ -350,7 +315,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
-                                                            <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text"  >
+                                                            <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text">
                                                         </div>
                                                         <span asp-validation-for="TelefonoCasa" class="text-danger"></span>
                                                     </div>
@@ -361,7 +326,7 @@
                                     <span class="text-danger">@ViewData["Error"]</span>
                                 </fieldset>
                                 <footer>
-                                    <input type="submit" id="GuardarForm" value="Guardar" class="btn btn-primary" />
+                                    <input type="submit" id="GuardarForm" value="Guardar y Continuar" class="btn btn-primary" />
                                     <a asp-action="IndexEmpleadoFamiliar" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
@@ -387,11 +352,11 @@
     <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
 
-<script src='~/lib/select2/dist/js/select2.min.js'></script>
-<script src='~/lib/select2/dist/js/i18n/es.js'></script>
-<script src='~/lib/waitMe/waitMe.min.js'></script>
-<script src='~/js/site.js'></script>
-    
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
     <script src='~/lib/waitMe/waitMe.min.js'></script>
     <script src='~/js/site.js'></script>
 
@@ -399,13 +364,13 @@
         $(document).ready(function () {
 
             $("#IdEtnia").change(function () {
-            
+
             mostrarLoadingPanel("content", "Cargando...");
             $("#IdNacionalidadIndigena").empty();
              Init_Select2()
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("ListarNacionalidadIndigena")',
+                url: '@Url.Action("ListarNacionalidadIndigena","Empleados")',
                     dataType: 'json',
                     data: { etnia: $("#IdEtnia").val() },
                     success: function (data) {
@@ -426,60 +391,6 @@
                 return false;
         })
 
-        $("#IdPaisLugarNacimiento").change(function () {
-            mostrarLoadingPanel("content","Cargando...")
-            $("#IdCiudadLugarNacimiento").empty();
-            Init_Select2()
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("ListarCiudadesPorPais")',
-                    dataType: 'json',
-                    data: { pais: $("#IdPaisLugarNacimiento").val() },
-                    success: function (data) {
-                        $.each(data, function (i, data) {
-                            $("#IdCiudadLugarNacimiento").append('<option value="'
-                                + data.idCiudad + '">'
-                                + data.nombre + '</option>');
-                            Init_Select2()
-                        });
-                    }, complete: function (data) {
-                        $("#content").waitMe("hide");
-                    },
-
-                    error: function (ex) {
-                        alert('Failed to retrieve data.' + ex);
-                    }
-                });
-                return false;
-        })
-
-        $("#IdPaisLugarSufragio").change(function () {
-            mostrarLoadingPanel("content","Cargando...")
-            $("#IdProvinciaLugarSufragio").empty();
-            Init_Select2()
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("ListarProvinciaPorPais")',
-                    dataType: 'json',
-                    data: { pais: $("#IdPaisLugarSufragio").val() },
-                    success: function (data) {
-                        $.each(data, function (i, data) {
-                            $("#IdProvinciaLugarSufragio").append('<option value="'
-                                + data.idProvincia + '">'
-                                + data.nombre + '</option>');
-                            Init_Select2()
-
-                        });
-                    }, complete: function (data) {
-                        $("#content").waitMe("hide");
-                    },
-
-                    error: function (ex) {
-                        alert('Failed to retrieve data.' + ex);
-                    }
-                });
-                return false;
-        })
 
         $("#IdPaisLugarPersona").change(function () {
             mostrarLoadingPanel("content","Cargando...")
@@ -489,7 +400,7 @@
             Init_Select2()
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("ListarProvinciaPorPais")',
+                    url: '@Url.Action("ListarProvinciaPorPais", "Empleados")',
                     dataType: 'json',
                     data: { pais: $("#IdPaisLugarPersona").val() },
                     success: function (data) {
@@ -518,7 +429,7 @@
             Init_Select2()
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("ListarCiudadPorProvincia")',
+                    url: '@Url.Action("ListarCiudadPorProvincia", "Empleados")',
                     dataType: 'json',
                     data: { provincia: $("#IdProvinciaLugarPersona").val() },
                     success: function (data) {
@@ -547,7 +458,7 @@
             Init_Select2()
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("ListarParroquiaPorCiudad")',
+                    url: '@Url.Action("ListarParroquiaPorCiudad", "Empleados")',
                     dataType: 'json',
                     data: { idCiudad: $("#IdCiudadLugarPersona").val() },
                     success: function (data) {
@@ -580,51 +491,11 @@
 
     </script>
 
-    @*<script type="text/javascript">
-
-        function checkIt(evt) {
-            evt = (evt) ? evt : window.event
-            var charCode = (evt.which) ? evt.which : evt.keyCode
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                status = "This field accepts numbers only."
-                return false
-            }
-            status = ""
-            return true
-        }
-        function NumCheck(e, field) {
-            key = e.keyCode ? e.keyCode : e.which
-            // backspace
-            if (key == 8) return true
-            // 0-9
-            if (key > 47 && key < 58) {
-                if (field.value == "") return true
-                regexp = /.[0-9]{10}$/
-                return !(regexp.test(field.value))
-            }
-            // .
-            if (key == 44) {
-                if (field.value == "") return false
-                regexp = /^[0-9]+$/
-                return regexp.test(field.values)
-            }
-            // other key
-            return false
-
-        }
-
-        function handleChange(input) {
-            if (input.value < 0) input.value = 0;
-            if (input.value > 100) input.value = 100;
-        }
-
-    </script>*@
-
-<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             Init_Select2();
         });
-</script>
+    </script>
 
 
 

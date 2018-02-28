@@ -1,0 +1,54 @@
+@model bd.webappth.entidades.ViewModels.ViewModelPersonaEstudio
+<fieldset>
+    <div class="row">
+        <section class="col col-4">
+            <label class="input">
+                <select asp-for="IdEstudio" class="form-control" id="IdEstudio" asp-items="ViewBag.IdEstudio">
+                    <option value="0" selected="" disabled=""></option>
+                </select>
+                <span asp-validation-for="IdEstudio" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label class="input">
+                <select asp-for="IdAreaConocimiento" class="form-control" id="IdAreaConocimiento" asp-items="ViewBag.IdAreaConocimiento">
+                    <option value="0" selected="" disabled=""></option>
+                </select>
+                <span asp-validation-for="IdAreaConocimiento" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label class="input">
+                <select asp-for="IdTitulo" id="IdTitulo" class="form-control" asp-items="ViewBag.IdTitulo" >
+                    <option value="0" selected="" disabled=""></option>
+                </select>
+                <span asp-validation-for="IdTitulo" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label class="input">
+                <i class="icon-prepend fa fa-user"></i>
+                <input maxlength="32" asp-for="NoSenescyt" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.NoSenescyt)" />
+                <span asp-validation-for="NoSenescyt" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label class="input">
+                <i class="icon-append fa fa-calendar"></i>
+                <input asp-for="FechaGraduado" type="text" placeholder="Seleccione fecha desde" class="datepicker" data-dateformat='dd/mm/yy'>
+                <span asp-validation-for="FechaGraduado" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <section>
+        <label class="label"></label>
+        <label class="textarea">
+            <i class="icon-append fa fa-comment"></i>
+            <textarea maxlength="50" asp-for="Observaciones" rows="3" placeholder="@Html.DisplayNameFor(model=>model.Observaciones)"></textarea>
+            <span asp-validation-for="Observaciones" class="text-danger"></span>
+        </label>
+    </section>
+    <span class="text-danger">@ViewData["Error"]</span>
+</fieldset>
