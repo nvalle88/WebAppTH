@@ -7,14 +7,39 @@
 
 <!-- MAIN CONTENT -->
 <div id="content">
+    <div class="col col-10">
 
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-7">
+
+                <div class="alert alert-block alert-dismissable">
+
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                    <p>
+
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        }
+    </div>
     <!-- widget grid -->
     <section id="widget-grid" class="">
 
         <!-- START ROW -->
         <div class="row">
             <!-- NEW COL START -->
-            <article class="col-sm-12 col-md-12 col-lg-4">
+            <article class="col-sm-12 col-md-12 col-lg-7">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
 
@@ -35,11 +60,10 @@
 
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdInstitucionFinanciera"/>
+                                <input type="hidden" asp-for="IdInstitucionFinanciera" />
                                 @{await Html.RenderPartialAsync("_PartialViewInstitucionesFinancieras");}
-                                
+
                                 <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>

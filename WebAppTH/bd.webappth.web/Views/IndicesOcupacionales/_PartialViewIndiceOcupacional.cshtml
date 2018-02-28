@@ -1,0 +1,10 @@
+@model bd.webappth.entidades.ViewModels.IndiceOcupacionalViewModel
+<div class="btn-group btn-group-justified">
+    <a asp-action="Detalle" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Datos de <br /> identificaci&oacute;n <br />del puesto </a>
+    <a asp-action="ActividadesEsenciales" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional"  class="btn btn-default">Actividades Esenciales</a>
+    <a asp-action="AreaConocimiento" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">&Aacute;reas de conocimiento</a>
+    <a asp-action="Capacitaciones" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Capacitaciones</a>
+    <a asp-action="Estudios" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Estudios</a>
+    <a asp-action="ComportamientoObservable" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional"class="btn btn-default">Comportamiento <br /> observable</a>
+    <a asp-action="ConocimientosAdicionales" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Conocimientos adicionales</a>
+</div>

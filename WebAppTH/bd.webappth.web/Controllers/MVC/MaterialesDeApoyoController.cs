@@ -24,17 +24,30 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
-        public async Task<IActionResult> Create()
+        private void InicializarMensaje(string mensaje)
         {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             ViewData["IdFormularioDevengacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FormularioDevengacion>(new Uri(WebApp.BaseAddress), "api/FormulariosDevengacion/ListarFormulariosDevengacion"), "IdFormularioDevengacion", "ModoSocial");
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(MaterialApoyo MaterialApoyo)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(MaterialApoyo);
+            }
             Response response = new Response();
             try
             {
@@ -97,6 +110,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -111,7 +125,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, MaterialApoyo MaterialApoyo)
         {
             Response response = new Response();
@@ -169,6 +183,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<MaterialApoyo>(new Uri(WebApp.BaseAddress)
                                                                     , "api/MaterialesDeApoyo/ListarMaterialesDeApoyo");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -206,7 +221,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+                //return BadRequest();
             }
             catch (Exception ex)
             {

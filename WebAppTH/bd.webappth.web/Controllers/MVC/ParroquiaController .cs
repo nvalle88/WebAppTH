@@ -48,23 +48,14 @@ namespace bd.webappth.web.Controllers.MVC
 
 
         private void InicializarMensaje(string mensaje)
-
         {
-
             if (mensaje == null)
-
             {
-
                 mensaje = "";
-
             }
 
             ViewData["Error"] = mensaje;
-
         }
-
-
-
         public async Task<IActionResult> Create(String mensaje)
         {
             ViewData["IdPais"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");

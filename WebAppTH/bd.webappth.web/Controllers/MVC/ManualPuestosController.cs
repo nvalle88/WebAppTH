@@ -25,24 +25,38 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
-        public async Task<IActionResult> Create()
+        private void InicializarMensaje(string mensaje)
         {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            
             var listarie = await apiServicio.Listar<RelacionesInternasExternas>(new Uri(WebApp.BaseAddress)
                                                                    , "api/RelacionesInternasExternas/ListarRelacionesInternasExternas");
-
+            
             var manualpuestoViewModel = new ViewModelManualPuesto
             {
+                
                 RelacionesInternasExternas = listarie
             };
-
+            InicializarMensaje(mensaje);
             return View(manualpuestoViewModel);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ViewModelManualPuesto viewModelManualPuesto)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(viewModelManualPuesto);
+            }
             Response response = new Response();
             try
             {
@@ -72,7 +86,10 @@ namespace bd.webappth.web.Controllers.MVC
 
                     return RedirectToAction("Index");
                 }
+                var listarie = await apiServicio.Listar<RelacionesInternasExternas>(new Uri(WebApp.BaseAddress)
+                                                                   , "api/RelacionesInternasExternas/ListarRelacionesInternasExternas");
 
+                viewModelManualPuesto.RelacionesInternasExternas = listarie;
                 ViewData["Error"] = response.Message;
                 return View(viewModelManualPuesto);
 
@@ -102,7 +119,7 @@ namespace bd.webappth.web.Controllers.MVC
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
                                                                   "api/ManualPuestos");
 
-
+                    InicializarMensaje(null);
                     var manualpuesto = JsonConvert.DeserializeObject<ManualPuesto>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
@@ -111,6 +128,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                         var viewmodelmanualpuesto = new ViewModelManualPuesto
                         {
+                            
                             ManualPuesto = manualpuesto,
                             RelacionesInternasExternas = listarie
 
@@ -130,7 +148,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, ViewModelManualPuesto viewModelManualPuesto)
         {
             Response response = new Response();
@@ -185,7 +203,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string mensaje)
         {
 
             var lista = new List<ManualPuesto>();
@@ -193,6 +211,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<ManualPuesto>(new Uri(WebApp.BaseAddress)
                                                                     , "api/ManualPuestos/ListarManualPuestos");
+                InicializarMensaje(mensaje);
                 return View(lista);
             }
             catch (Exception ex)
@@ -230,7 +249,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+                // return BadRequest();
             }
             catch (Exception ex)
             {

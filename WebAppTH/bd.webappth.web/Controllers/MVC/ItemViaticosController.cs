@@ -24,16 +24,29 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
-        public IActionResult Create()
+        private void InicializarMensaje(string mensaje)
         {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
+        public IActionResult Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ItemViatico ItemViatico)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(ItemViatico);
+            }
             Response response = new Response();
             try
             {
@@ -90,6 +103,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<ItemViatico>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -104,7 +118,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, ItemViatico ItemViatico)
         {
             Response response = new Response();
@@ -159,6 +173,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<ItemViatico>(new Uri(WebApp.BaseAddress)
                                                                     , "api/ItemViaticos/ListarItemViaticos");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -196,7 +211,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
             }
             catch (Exception ex)
             {

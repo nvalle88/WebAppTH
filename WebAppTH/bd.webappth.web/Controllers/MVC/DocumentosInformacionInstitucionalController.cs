@@ -40,9 +40,17 @@ namespace bd.webappth.web.Controllers.MVC
             this._hostingEnvironment = _hostingEnvironment;
 
         }
-
-        public IActionResult Create()
+        private void InicializarMensaje(string mensaje)
         {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
+        public IActionResult Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -164,6 +172,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<DocumentoInformacionInstitucional>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -240,6 +249,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<DocumentoInformacionInstitucional>(new Uri(WebApp.BaseAddress)
                                                                     , "api/DocumentosInformacionInstitucional/ListarDocumentosInformacionInstitucional");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -277,7 +287,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                // return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
             }
             catch (Exception ex)
             {

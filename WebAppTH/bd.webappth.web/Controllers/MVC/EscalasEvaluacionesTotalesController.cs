@@ -24,9 +24,17 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
-        public IActionResult Create()
+        private void InicializarMensaje(string mensaje)
         {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
+        public IActionResult Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -34,6 +42,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(EscalaEvaluacionTotal escalaEvaluacionTotal)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(escalaEvaluacionTotal);
+            }
             Response response = new Response();
             try
             {
@@ -90,6 +103,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<EscalaEvaluacionTotal>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -159,6 +173,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<EscalaEvaluacionTotal>(new Uri(WebApp.BaseAddress)
                                                                     , "api/EscalasEvaluacionesTotales/ListarEscalasEvaluacionesTotales");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -196,7 +211,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+                //return BadRequest();
             }
             catch (Exception ex)
             {

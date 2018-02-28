@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.IndiceOcupacional>
+@model List<bd.webappth.entidades.ViewModels.IndiceOcupacionalViewModel>
 
 <a asp-action="Create">
     <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
@@ -26,16 +26,16 @@
                                 <thead>
                                     <tr>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Dependencia.Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Dependencia)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ManualPuesto.Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ManualPuesto)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().RolPuesto.Nombre)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().RolPuesto)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EscalaGrados.Grado)  /  @Html.DisplayNameFor(model => model.FirstOrDefault().EscalaGrados.Remuneracion)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EscalaGrado)  /  @Html.DisplayNameFor(model => model.FirstOrDefault().Remuneracion)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -46,21 +46,21 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Dependencia.Nombre)
+                                                @Html.DisplayFor(modelItem => item.Dependencia)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ManualPuesto.Nombre)
+                                                @Html.DisplayFor(modelItem => item.ManualPuesto)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.RolPuesto.Nombre)
+                                                @Html.DisplayFor(modelItem => item.RolPuesto)
                                             </td>
-                                            <td data-toggle="toggle" data-placement="right" title="@item.EscalaGrados.Grado  @item.EscalaGrados.Remuneracion @item.ManualPuesto.Nombre">
-                                                @Html.DisplayFor(modelItem => item.EscalaGrados.Grado)  /  @Html.DisplayFor(modelItem => item.EscalaGrados.Remuneracion)
+                                            <td data-toggle="toggle" data-placement="right" title="@item.EscalaGrado  @item.Remuneracion @item.ManualPuesto">
+                                                @Html.DisplayFor(modelItem => item.EscalaGrado)  /  @Html.DisplayFor(modelItem => item.Remuneracion)
                                             </td>
 
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdIndiceOcupacional }) |
-                                                @Html.ActionLink("Detalle", "Detalles", new { id = item.IdIndiceOcupacional }) |
+                                                @Html.ActionLink("Detalle", "Detalle", new { id = item.IdIndiceOcupacional }) |
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })
                                             </td>
                                         </tr>

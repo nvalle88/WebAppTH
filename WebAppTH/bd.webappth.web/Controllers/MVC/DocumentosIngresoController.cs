@@ -24,9 +24,17 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
-
-        public IActionResult Create()
+        private void InicializarMensaje(string mensaje)
         {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
+        public IActionResult Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -40,6 +48,12 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DocumentosIngreso documentosIngreso)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(documentosIngreso);
+
+            }
             Response response = new Response();
             try
             {
@@ -161,6 +175,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<DocumentosIngreso>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -230,6 +245,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<DocumentosIngreso>(new Uri(WebApp.BaseAddress)
                                                                     , "api/DocumentosIngreso/ListarDocumentosIngreso");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -267,7 +283,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
             }
             catch (Exception ex)
             {

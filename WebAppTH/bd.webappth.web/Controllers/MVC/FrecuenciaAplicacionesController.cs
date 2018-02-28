@@ -24,9 +24,18 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
 
         public IActionResult Create()
         {
+            InicializarMensaje(null);
             return View();
         }
 
@@ -34,6 +43,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FrecuenciaAplicacion FrecuenciaAplicacion)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(FrecuenciaAplicacion);
+            }
             Response response = new Response();
             try
             {
@@ -90,6 +104,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<FrecuenciaAplicacion>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -159,6 +174,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<FrecuenciaAplicacion>(new Uri(WebApp.BaseAddress)
                                                                     , "api/FrecuenciaAplicaciones/ListarFrecuenciaAplicaciones");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -196,7 +212,9 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+
             }
             catch (Exception ex)
             {
