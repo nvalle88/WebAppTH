@@ -1,6 +1,7 @@
 @model bd.webappth.entidades.ViewModels.IndiceOcupacionalViewModel
-
-@{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional",Model);}
+@using bd.webappth.entidades.ViewModels
+@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.IdIndiceOcupacional, OpcionMenu = 0}; }
+@{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">

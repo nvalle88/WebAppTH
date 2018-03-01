@@ -3,7 +3,7 @@
 @model List<bd.webappth.entidades.ViewModels.ActividadesEsencialesViewModel>
 @using bd.webappth.entidades.ViewModels
 
-@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }; }
+@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional,OpcionMenu= 1}; }
 @{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional", modelo);}
 
 <!-- MAIN CONTENT -->

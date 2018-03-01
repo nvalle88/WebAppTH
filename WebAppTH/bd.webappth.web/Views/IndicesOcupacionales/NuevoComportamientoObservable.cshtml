@@ -3,12 +3,21 @@
 @model List<bd.webappth.entidades.ViewModels.ComportamientoObservableViewModel>
 @using bd.webappth.entidades.ViewModels
 
-@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }; }
+@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional,OpcionMenu=5 }; }
 @{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
-    <p></p>
+    <p></p>    <p></p>
+    <a asp-action="ComportamientoObservable" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional">
+        <button type="button" asp-action="ComportamientoObservable" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-arrow-left"></i>
+            </span>Volver
+
+        </button>
+    </a>
+    <p> </p>
     <section id="widget-grid" class="">
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
