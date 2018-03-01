@@ -25,19 +25,12 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
         private void InicializarMensaje(string mensaje)
-
         {
-
             if (mensaje == null)
-
             {
-
                 mensaje = "";
-
             }
-
             ViewData["Error"] = mensaje;
-
         }
 
         public async Task<IActionResult> Create(string mensaje)

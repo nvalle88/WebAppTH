@@ -1,0 +1,502 @@
+@model bd.webappth.entidades.ViewModels.EmpleadoFamiliarViewModel
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/js/site.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+
+
+<div id="content">
+    <section id="widget-grid" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Empleado Familiar</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form asp-action="CreateEmpleadoFamiliar" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <fieldset>
+                                    <legend>Datos Personales</legend>
+                                    <div class="row">
+                                        <section class="col col-3">
+                                            <label>Tipo de Identificaci&oacute;n:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdTipoIdentificacion" asp- class="form-control" asp-items="ViewBag.IdTipoIdentificacion">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdTipoIdentificacion" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <section class="col col-3">
+                                            <div class="form-group">
+                                                <label>CI o Pasaporte:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
+                                                    <input asp-for="Identificacion" onchange="validar()" class="form-control input " placeholder="Identificacion" type="text">
+                                                </div>
+                                                <span asp-validation-for="Identificacion" class="text-danger"></span>
+                                                <span id="idIdentificacion" class="text-danger"></span>
+                                            </div>
+                                        </section>
+                                        <section class="col col-3">
+                                            <div class="form-group">
+                                                <label>Nombres:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                    <input asp-for="Nombres" class="form-control input " placeholder="Nombres" type="text">
+                                                </div>
+                                                <span asp-validation-for="Nombres" class="text-danger"></span>
+                                            </div>
+                                        </section>
+                                        <section class="col col-3">
+                                            <div class="form-group">
+                                                <label>Apellidos:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                                                    <input asp-for="Apellidos" class="form-control input " placeholder="Apellidos" type="text">
+                                                </div>
+                                                <span asp-validation-for="Apellidos" class="text-danger"></span>
+                                            </div>
+                                        </section>                                
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-3">
+                                            <label>Sexo:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdSexo" asp- class="form-control input " asp-items="ViewBag.IdSexo">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdSexo" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <section class="col col-3">
+                                            <label>G&eacute;nero:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdGenero" asp- class="form-control input " asp-items="ViewBag.IdGenero">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdGenero" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <section class="col col-3">
+                                            <label>Estado Civil:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdEstadoCivil" asp- class="form-control input " asp-items="ViewBag.IdEstadoCivil">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdEstadoCivil" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <section class="col col-3">
+                                            <label>Tipo de Sangre:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdTipoSangre" asp- class="form-control input " asp-items="ViewBag.IdTipoSangre">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdTipoSangre" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-3">
+                                            <label>Nacionalidad:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdNacionalidad" asp- class="form-control input " asp-items="ViewBag.IdNacionalidad">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdNacionalidad" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <section class="col col-3">
+                                            <label>Autoidentificaci&oacute;n &eacute;tnica:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdEtnia" asp- class="form-control input " asp-items="ViewBag.IdEtnia">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdEtnia" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <section class="col col-3">
+                                            <label>Nacionalidad Ind&iacute;gena:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdNacionalidadIndigena" asp- class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena"></select>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <section class="col col-3">
+                                            <label>Correo Privado:</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
+                                                    <input asp-for="CorreoPrivado" class="form-control input " placeholder="Correo Privado" data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
+                                                </div>
+                                                <span asp-validation-for="CorreoPrivado" class="text-danger"></span>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-3">
+                                            <label>Fecha de Nacimiento:</label>
+                                            <div class="form-group">
+                                                <label class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input asp-for="FechaNacimiento" asp- class="form-control" placeholder="Seleccione la Fecha de Inicio">
+                                                </label>
+                                                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                                            </div>
+                                        </section>
+
+                                        <section class="col col-6">
+                                            <div class="form-group">
+                                                <label>Lugar de Trabajo:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-institution fa  fa-fw"></i></span>
+                                                    <input asp-for="LugarTrabajo" class="form-control input " placeholder="Lugar de Trabajo" type="text">
+                                                </div>
+                                                <span asp-validation-for="LugarTrabajo" class="text-danger"></span>
+                                            </div>
+                                        </section>
+
+                                        <section class="col col-3">
+                                            <label>Parentesco:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdParentesco" asp- class="form-control input " asp-items="ViewBag.IdParentesco">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdParentesco" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
+
+                                    </div>
+                                    <div class="row">
+                                        <article class="col col-12">
+                                            <legend>Direcci&oacute;n Domicilio Permanente</legend>
+                                            <br />
+                                            <div class="row">
+                                                <section class="col col-3">
+                                                    <label>Pa&iacute;s:</label>
+                                                    <div class="form">
+                                                        <div class="input">
+                                                            <select asp-for="IdPaisLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio">
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                            </select>
+                                                            <span asp-validation-for="IdPaisLugarPersona" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </section>
+
+                                                <section class="col col-3">
+                                                    <label>Provincia:</label>
+                                                    <div class="form">
+                                                        <div class="input">
+                                                            <select asp-for="IdProvinciaLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdProvinciaLugarPersona">
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                            </select>
+                                                            <span asp-validation-for="IdProvinciaLugarPersona" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <section class="col col-3">
+                                                    <label>Ciudad:</label>
+                                                    <div class="form">
+                                                        <div class="input">
+                                                            <select asp-for="IdCiudadLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdCiudadLugarPersona">
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                            </select>
+                                                            <span asp-validation-for="IdCiudadLugarPersona" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <section class="col col-3">
+                                                    <label>Parroquia:</label>
+                                                    <div class="form-group">
+                                                        <div class="input">
+                                                            <select asp-for="IdParroquia" class="form-control input" asp-items="ViewBag.IdParroquia">
+                                                                <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                            </select>
+                                                        </div>
+                                                        <span asp-validation-for="IdParroquia" class="text-danger"></span>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-6">
+                                                    <label>Calle Principal:</label>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                            <input asp-for="CallePrincipal" class="form-control input " placeholder="Calle Principal" type="text">
+                                                        </div>
+                                                        <span asp-validation-for="CallePrincipal" class="text-danger"></span>
+                                                    </div>
+                                                </section>
+
+                                                <section class="col col-6">
+                                                    <label>Calle Secundaria:</label>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                            <input asp-for="CalleSecundaria" class="form-control input " placeholder="Calle Secundaria" type="text">
+                                                        </div>
+                                                        <span asp-validation-for="CalleSecundaria" class="text-danger"></span>
+                                                    </div>
+                                                </section>
+                                            </div>
+
+                                            <div class="row">
+                                                <section class="col col-6">
+                                                    <label>Referencia:</label>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                            <input asp-for="Referencia" class="form-control input " placeholder="Referencia" type="text">
+                                                        </div>
+                                                        <span asp-validation-for="Referencia" class="text-danger"></span>
+                                                    </div>
+                                                </section>
+                                                <section class="col col-6">
+                                                    <label>Ocupaci&oacute;n:</label>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                                                            <input asp-for="Ocupacion" class="form-control input " placeholder="Ocupaci&oacute;n" type="text">
+                                                        </div>
+                                                        <span asp-validation-for="Ocupacion" class="text-danger"></span>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-4">
+                                                    <label>No. de Domicilio:</label>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
+                                                            <input asp-for="Numero" class="form-control input " placeholder="Numero del Domicilio" onKeyPress="return checkIt(event)">
+                                                        </div>
+                                                        <span asp-validation-for="Numero" class="text-danger"></span>
+                                                    </div>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label>Tel&eacute;fono de Privado:</label>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
+                                                            <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text">
+                                                        </div>
+                                                        <span asp-validation-for="TelefonoPrivado" class="text-danger"></span>
+                                                    </div>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label>Tel&eacute;fono de Casa:</label>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
+                                                            <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text">
+                                                        </div>
+                                                        <span asp-validation-for="TelefonoCasa" class="text-danger"></span>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <span class="text-danger">@ViewData["Error"]</span>
+                                </fieldset>
+                                <footer>
+                                    <input type="submit" id="GuardarForm" value="Guardar y Continuar" class="btn btn-primary" />
+                                    <a asp-action="IndexEmpleadoFamiliar" class="btn btn-default">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+
+@section Scripts {
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#IdEtnia").change(function () {
+
+            mostrarLoadingPanel("content", "Cargando...");
+            $("#IdNacionalidadIndigena").empty();
+             Init_Select2()
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListarNacionalidadIndigena","Empleados")',
+                    dataType: 'json',
+                    data: { etnia: $("#IdEtnia").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#IdNacionalidadIndigena").append('<option value="'
+                                + data.idNacionalidadIndigena + '">'
+                                + data.nombre + '</option>');
+                            Init_Select2()
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
+
+
+        $("#IdPaisLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdProvinciaLugarPersona").empty();
+            $("#IdCiudadLugarPersona").empty();
+            $("#IdParroquia").empty();
+            Init_Select2()
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarProvinciaPorPais", "Empleados")',
+                    dataType: 'json',
+                    data: { pais: $("#IdPaisLugarPersona").val() },
+                    success: function (data) {
+                        $("#IdProvinciaLugarPersona").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdProvinciaLugarPersona").append('<option value="'
+                                + data.idProvincia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+        $("#IdProvinciaLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdCiudadLugarPersona").empty();
+            $("#IdParroquia").empty();
+            Init_Select2()
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarCiudadPorProvincia", "Empleados")',
+                    dataType: 'json',
+                    data: { provincia: $("#IdProvinciaLugarPersona").val() },
+                    success: function (data) {
+                        $("#IdCiudadLugarPersona").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdCiudadLugarPersona").append('<option value="'
+                                + data.idCiudad + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+
+        $("#IdCiudadLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdParroquia").empty();
+            Init_Select2()
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarParroquiaPorCiudad", "Empleados")',
+                    dataType: 'json',
+                    data: { idCiudad: $("#IdCiudadLugarPersona").val() },
+                    success: function (data) {
+                        $("#IdParroquia").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdParroquia").append('<option value="'
+                                + data.idParroquia + '">'
+                                + data.nombre + '</option>');
+                            Init_Select2()
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+        });
+
+
+       // Evento que envía una petición Ajax al servidor
+    $('#GuardarForm').click(function (e) {
+     mostrarLoadingPanel("content", "Guardando empleado e inicializando el manual de puesto...")
+    });
+
+
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
+
+
+
+}

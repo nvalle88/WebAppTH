@@ -47,7 +47,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ItinerarioViatico itinerarioViatico)
         {
             if (!ModelState.IsValid)
@@ -138,7 +138,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, ItinerarioViatico itinerarioViatico)
         {
             Response response = new Response();

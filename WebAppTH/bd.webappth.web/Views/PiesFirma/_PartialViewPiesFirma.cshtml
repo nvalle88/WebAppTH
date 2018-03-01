@@ -1,34 +1,107 @@
 @model bd.webappth.entidades.Negocio.PieFirma
 <fieldset>
+
+    @*<div class="row">
+            <section class="col col-8">
+                <label class="input">
+                    <select asp-for="IdIndiceOcupacional" class="form-control" asp-items="ViewBag.IdIndiceOcupacional">
+                        <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdIndiceOcupacional)></option>
+                    </select>
+                    <span asp-validation-for="IdIndiceOcupacional" class="text-danger"></span>
+                </label>
+            </section>
+        </div>*@
     <div class="row">
-        <section class="col col-8">
-            <label class="input">
-                <select asp-for="IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.IdTipoAccionPersonal">
-                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdTipoAccionPersonal)></option>
-                </select>
-                <span asp-validation-for="IdTipoAccionPersonal" class="text-danger"></span>
-            </label>
-        </section>
+        <div class="col-sm-5">
+            <label>Ciudad:</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                    <select id="ciudad" class="form-control input " asp-items="ViewBag.IdCiudad">
+                        <option value="0" selected="" disabled="">Seleccione</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <label>Sucursal:</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                    <select id="sucursal" class="form-control input "></select>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
-        <section class="col col-8">
-            <label class="input">
-                <select asp-for="IdIndiceOcupacional" class="form-control" asp-items="ViewBag.IdIndiceOcupacional">
-                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdIndiceOcupacional)></option>
-                </select>
-                <span asp-validation-for="IdIndiceOcupacional" class="text-danger"></span>
-            </label>
-        </section>
+        <div class="col-sm-5">
+
+            <div class="form-group">
+                <label>Dependencia:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
+                    <input class="form-control input" type="text" id="dependencia" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <input class="form-control input" type="hidden" id="iddependencia" asp-for="IndiceOcupacional.IdDependencia">
+
+        <div class="col-sm-5">
+            <label>Manual Puesto:</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                    <select id="manualpuesto" asp-for="IndiceOcupacional.IdManualPuesto" class="form-control input "></select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5">
+            <label>Rol Puesto:</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                    <select id="rolpuesto" asp-for="IndiceOcupacional.IdRolPuesto" class="form-control input "></select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <label>Escala Grados:</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
+                    <select id="escalagrados" asp-for="IndiceOcupacional.IdEscalaGrados" class="form-control input "></select>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row">
-        <section class="col col-8">
-            <label class="input">
-                <i class="icon-append fa fa-comment"></i>
-                <input maxlength="20" asp-for="Nivel" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nivel)" />
-                <span asp-validation-for="Nivel" class="text-danger"></span>
-            </label>
-        </section>
-    </div>
+        <div class="col-sm-5">
+            <label>Accion Personal:</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                    <select asp-for="IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.IdTipoAccionPersonal">
+                        <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdTipoAccionPersonal)></option>
+                    </select>
+                    <span asp-validation-for="IdTipoAccionPersonal" class="text-danger"></span>
 
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <label>NIvel:</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
+                    <input maxlength="20" asp-for="Nivel"  class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nivel)" />
+                    <span asp-validation-for="Nivel" class="text-danger"></span>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </fieldset>
