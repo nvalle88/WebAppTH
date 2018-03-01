@@ -8,13 +8,11 @@
 
     <!-- MAIN CONTENT -->
     <div id="content">
-
         <p></p>
-        <a asp-action="Create">
-            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-                <span class="btn-label">
+        <a asp-action="NuevoComportamientoObservable" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional">
+            <button type="button" asp-action="NuevoComportamientoObservable" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional" class="btn btn-labeled btn-default"> <span class="btn-label">
                     <i class="glyphicon glyphicon-plus"></i>
-                </span>Nuava &aacute;rea de conocimiento
+                </span>Nuevo comportamiento observable
 
             </button>
         </a>
@@ -25,7 +23,7 @@
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                         <header>
                             <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                            <h2>&Aacute;rea de conocimiento</h2>
+                            <h2>Comportamiento observable</h2>
                         </header>
                         <div>
                             <div class="jarviswidget-editbox">
@@ -114,10 +112,7 @@ else
                                             </td>
 
                                             <td>
-
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdComportamientoObservable })<br /> |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdComportamientoObservable }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
-
+                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalComportamiemtoObservable", "ComportamientosObservables", new { idComportamientoObservable = item.IdComportamientoObservable, idIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                             </td>
                                         </tr>
 }

@@ -9,11 +9,10 @@
     <div id="content">
 
         <p></p>
-        <a asp-action="Create">
-            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-                <span class="btn-label">
+        <a asp-action="NuevoCapacitaciones" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional">
+            <button type="button" asp-action="NuevoActividadEsencial" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional" class="btn btn-labeled btn-default">     <span class="btn-label">
                     <i class="glyphicon glyphicon-plus"></i>
-                </span>Nuava capacitaci&oacute;n
+                </span>Adicionar capacitacitaciones
 
             </button>
         </a>
@@ -24,7 +23,7 @@
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                         <header>
                             <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                            <h2>Capacitaciones</h2>
+                            <h2>Capacitaciones asignadas</h2>
                         </header>
                         <div>
                             <div class="jarviswidget-editbox">
@@ -43,7 +42,7 @@
 
                                         <tr>
                                             <th data-class="">
-                                                Observaciones
+                                                Capacitaciones
                                             </th>
                                             <th>
                                                 <i class="fa fa-cog "></i>
@@ -72,9 +71,7 @@ else
                                             </td>
                                             <td>
 
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCapacitacion })<br /> |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCapacitacion }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
-
+                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalCapacitaciones", "Capacitaciones", new { idCapacitacion = item.IdCapacitacion, idIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                             </td>
                                         </tr>
 }
