@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.PersonaEstudio>
+@model List<bd.webappth.entidades.Negocio.TrayectoriaLaboral>
 
 @{await Html.RenderPartialAsync("_PartialViewMenu");}
 
@@ -6,11 +6,11 @@
 <div id="content">
 
     <p></p>
-    <a asp-action="CreatePersonaEstudio">
-        <button type="button" asp-action="CreatePersonaEstudio" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+    <a asp-action="CreateTrayectoriaLaboral">
+        <button type="button" asp-action="CreateTrayectoriaLaboral" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo Estudio
+            </span>Nueva Trayectoria Laboral
 
         </button>
     </a>
@@ -39,7 +39,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Formaci&oacute;n Acad&eacute;mica</h2>
+                        <h2>Trayectoria Laboral</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -54,16 +54,19 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            T&iacute;tulo 
+                                            Fecha Inicio
                                         </th>
                                         <th data-class="">
-                                            Fecha Graduado
+                                            Fecha Fin
                                         </th>
                                         <th data-class="">
-                                            No Senescyt
+                                            Empresa
                                         </th>
                                         <th data-class="">
-                                            Observaciones
+                                            Puesto Trabajo
+                                        </th>
+                                        <th data-class="">
+                                            Descripci&oacute;n
                                         </th>
                                         <th>
                                             <i class="fa fa-cog "></i>
@@ -76,21 +79,24 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Titulo.Nombre)
+                                            @Html.DisplayFor(modelItem => item.FechaInicio)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.FechaGraduado)
+                                            @Html.DisplayFor(modelItem => item.FechaFin)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.NoSenescyt)
+                                            @Html.DisplayFor(modelItem => item.Empresa)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Observaciones)
-                                        </td>                                    
+                                            @Html.DisplayFor(modelItem => item.PuestoTrabajo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DescripcionFunciones)
+                                        </td>
                                         <td>
 
-                                            @Html.ActionLink("Editar", "EditPersonaEstudio", new { id = item.IdPersonaEstudio }) |
-                                            @Html.ActionLink("Eliminar", "DeletePersonaEstudio", new { id = item.IdPersonaEstudio }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
+                                            @Html.ActionLink("Editar", "EditTrayectoriaLaboral", new { id = item.IdTrayectoriaLaboral }) |
+                                            @Html.ActionLink("Eliminar", "DeleteTrayectoriaLaboral", new { id = item.IdTrayectoriaLaboral }, new { onclick = "return confirm('Desea eliminar la Trayectoria Laboral... ?');" })
 
                                         </td>
                                     </tr>

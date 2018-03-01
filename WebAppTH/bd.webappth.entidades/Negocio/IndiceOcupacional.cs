@@ -39,6 +39,13 @@ namespace bd.webappth.entidades.Negocio
         public string NumeroPartidaIndividual { get; set; }
         public virtual PartidaGeneral PartidaGeneral { get; set; }
 
+        [Display(Name = "Ámbito:")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        public int? IdAmbito { get; set; }
+        public virtual Ambito Ambito { get; set; }
+
+        public string Nivel { get; set; }
+
         //public string FullName { get {return Dependencia.Nombre +"/ "+ ManualPuesto.Nombre +"/ "+ManualPuesto.Nombre +"/ "+ RolPuesto.Nombre+"/"+ "("+ EscalaGrados.Grado+")" + EscalaGrados.Remuneracion; } set {; } }
 
 
