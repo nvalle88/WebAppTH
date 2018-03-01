@@ -25,9 +25,17 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         public async Task<IActionResult> Create()
         {
+            InicializarMensaje(null);
             var lista = await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad");
             ViewData["IdCiudad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
 
@@ -38,6 +46,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Sucursal sucursal)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(sucursal);
+            }
             entidades.Utils.Response response = new entidades.Utils.Response();
             
             try
@@ -97,6 +110,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<Sucursal>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -136,6 +150,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return RedirectToAction("Index");
                     }
+                    ViewData["IdCiudad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
                     ViewData["Error"] = response.Message;
                     return View(sucursal);
 
@@ -167,6 +182,7 @@ namespace bd.webappth.web.Controllers.MVC
                 lista = await apiServicio.Listar<Sucursal>(new Uri(WebApp.BaseAddress)
                                                                     , "api/Sucursal/ListarSucursal");
 
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -204,7 +220,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+                //return BadRequest();
             }
             catch (Exception ex)
             {
