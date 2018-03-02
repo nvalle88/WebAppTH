@@ -740,6 +740,9 @@ namespace bd.webappth.web.Controllers.MVC
             var listaGruposOcupaciones = await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales");
             ViewData["IdGrupoOcupacional"] = new SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "TipoEscala");
 
+            var listaAmbitos = await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales");
+            ViewData["IdAmbito"] = new SelectList(await apiServicio.Listar<Ambito>(new Uri(WebApp.BaseAddress), "api/Ambitos/ListarAmbitos"), "IdAmbito", "Nombre");
+
         }
 
         private void InicializarMensaje(string mensaje)
@@ -786,6 +789,11 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (ModelState.IsValid)
                 {
+                    if (indiceOcupacional.Nivel == "0")
+                    {
+                        indiceOcupacional.Nivel = "Profecional";
+                    }
+                    else { indiceOcupacional.Nivel = "No Profecional"; }
                     response = await apiServicio.InsertarAsync(indiceOcupacional,
                                                                  new Uri(WebApp.BaseAddress),
                                                                  "api/IndicesOcupacionales/InsertarIndiceOcupacional");
