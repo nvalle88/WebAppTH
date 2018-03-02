@@ -177,6 +177,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress)
                                                                     , "api/Pais/ListarPais");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)

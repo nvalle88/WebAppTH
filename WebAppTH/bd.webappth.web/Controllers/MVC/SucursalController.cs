@@ -74,7 +74,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     return RedirectToAction("Index");
                 }
-
+                ViewData["IdCiudad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
                 ViewData["Error"] = response.Message;
                 return View(sucursal);
 
@@ -90,7 +90,6 @@ namespace bd.webappth.web.Controllers.MVC
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP WebAppTh"
                 });
-
                 return BadRequest();
             }
         }
@@ -151,8 +150,9 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["IdCiudad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
-                    ViewData["Error"] = response.Message;
-                    return View(sucursal);
+                    //ViewData["Error"] = response.Message;
+                    //return View(sucursal);
+                    return RedirectToAction("Index");
 
                 }
                 return BadRequest();

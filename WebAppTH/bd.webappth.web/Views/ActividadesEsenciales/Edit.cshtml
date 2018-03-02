@@ -9,7 +9,7 @@
 <div id="content">
 
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <div class="col col-10">
 
             @if (@ViewData["Error"].ToString() != "")
@@ -45,7 +45,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Actividades Esenciales</h2>
+                        <h2>Actividades esenciales</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -62,7 +62,7 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_ActividadesEsencialesPartialView");}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <input type="submit" value="Guardar" class="btn btn-default" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
