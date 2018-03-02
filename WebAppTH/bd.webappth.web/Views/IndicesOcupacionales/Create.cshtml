@@ -806,7 +806,7 @@
                var $link = $(this);
                var title = $link.text();
                $('#myModal.modal-title').html(title);
-               var url = '@Url.Action("CargarDependencias")?idsucursal='+ $('#sucursal').val() ;
+               var url = '@Url.Action("CargarDependencias", "Dependencias")?idsucursal='+ $('#sucursal').val() ;
                if (url.indexOf('#') == 0) {
                    $('#myModal').modal('show');
                    $("#myModal").waitMe("hide");

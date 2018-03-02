@@ -558,7 +558,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             //Cargar Paises
             var listaPaises = await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais");
-            ViewData["IdPaisDireccion"] = new SelectList(listaPaises, "IdPais", "Nombre", empleadoFamiliarViewModel.IdPaisLugarPersona);
+            ViewData["IdPaisLugarPersona"] = new SelectList(listaPaises, "IdPais", "Nombre", empleadoFamiliarViewModel.IdPaisLugarPersona);
 
             //Cargar Provincias por país
 
@@ -578,9 +578,6 @@ namespace bd.webappth.web.Controllers.MVC
             var ciudadLugarPersona = new Ciudad { IdCiudad = empleadoFamiliarViewModel.IdCiudadLugarPersona };
             var listaParroquias = await apiServicio.Listar<Parroquia>(ciudadLugarPersona, new Uri(WebApp.BaseAddress), "api/Parroquia/ListarParroquiaPorCiudad");
             ViewData["IdParroquia"] = new SelectList(listaParroquias, "IdParroquia", "Nombre");
-
-
-
 
         }
 
@@ -631,23 +628,44 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/TrayectoriasLaborales");
+                                                                  "api/EmpleadoFamiliares");
 
 
-                    var trayectorialaboral = JsonConvert.DeserializeObject<TrayectoriaLaboral>(respuesta.Resultado.ToString());
+                    var empleadoFamiliar = JsonConvert.DeserializeObject<EmpleadoFamiliar>(respuesta.Resultado.ToString());
 
                     if (respuesta.IsSuccess)
                     {
-                        var viewmodelTrayectoriaLaboral = new ViewModelTrayectoriaLaboral()
+                        var viewmodelEmpleadoFamiliar = new EmpleadoFamiliarViewModel()
                         {
-                            IdTrayectoriaLaboral = trayectorialaboral.IdTrayectoriaLaboral,
-                            FechaInicio = trayectorialaboral.FechaInicio,
-                            FechaFin = trayectorialaboral.FechaFin,
-                            Empresa = trayectorialaboral.Empresa,
-                            PuestoTrabajo = trayectorialaboral.PuestoTrabajo,
-                            DescripcionFunciones = trayectorialaboral.DescripcionFunciones
+                            FechaNacimiento = empleadoFamiliar.Persona.FechaNacimiento,
+                            IdSexo = Convert.ToInt32(empleadoFamiliar.Persona.IdSexo),
+                            IdTipoIdentificacion = Convert.ToInt32(empleadoFamiliar.Persona.IdTipoIdentificacion),
+                            IdEstadoCivil = Convert.ToInt32(empleadoFamiliar.Persona.IdEstadoCivil),
+                            IdGenero = Convert.ToInt32(empleadoFamiliar.Persona.IdGenero),
+                            IdNacionalidad = Convert.ToInt32(empleadoFamiliar.Persona.IdNacionalidad),
+                            IdTipoSangre = Convert.ToInt32(empleadoFamiliar.Persona.IdTipoSangre),
+                            IdEtnia = Convert.ToInt32(empleadoFamiliar.Persona.IdEtnia),
+                            Identificacion = empleadoFamiliar.Persona.Identificacion,
+                            Nombres = empleadoFamiliar.Persona.Nombres,
+                            Apellidos = empleadoFamiliar.Persona.Apellidos,
+                            TelefonoPrivado = empleadoFamiliar.Persona.TelefonoPrivado,
+                            TelefonoCasa = empleadoFamiliar.Persona.TelefonoCasa,
+                            CorreoPrivado = empleadoFamiliar.Persona.CorreoPrivado,
+                            LugarTrabajo = empleadoFamiliar.Persona.LugarTrabajo,
+                            IdNacionalidadIndigena = empleadoFamiliar.Persona.IdNacionalidadIndigena,
+                            CallePrincipal = empleadoFamiliar.Persona.CallePrincipal,
+                            CalleSecundaria = empleadoFamiliar.Persona.CalleSecundaria,
+                            Referencia = empleadoFamiliar.Persona.Referencia,
+                            Numero = empleadoFamiliar.Persona.Numero,
+                            IdParroquia = Convert.ToInt32(empleadoFamiliar.Persona.IdParroquia),
+                            Ocupacion = empleadoFamiliar.Persona.Ocupacion,
+                            IdParentesco = empleadoFamiliar.Parentesco.IdParentesco,
+                            IdEmpleado = empleadoFamiliar.IdEmpleado,
+                            IdEmpleadoFamiliar = empleadoFamiliar.IdEmpleadoFamiliar
+
                         };
-                        return View(viewmodelTrayectoriaLaboral);
+                        await CargarCombos(viewmodelEmpleadoFamiliar);
+                        return View(viewmodelEmpleadoFamiliar);
                     }
 
                 }
@@ -725,12 +743,12 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = await ObtenerEmpleado();
-            var lista = new List<TrayectoriaLaboral>();
+            var lista = new List<EmpleadoFamiliar>();
             try
             {
 
-                lista = await apiServicio.ObtenerElementoAsync1<List<TrayectoriaLaboral>>(empleado, new Uri(WebApp.BaseAddress)
-                                                                    , "api/TrayectoriasLaborales/ListarTrayectoriasLaboralesporEmpleado");
+                lista = await apiServicio.ObtenerElementoAsync1<List<EmpleadoFamiliar>>(empleado, new Uri(WebApp.BaseAddress)
+                                                                    , "api/EmpleadoFamiliares/ListarEmpleadosFamiliaresPorId");
                 return View(lista);
             }
             catch (Exception ex)
@@ -738,7 +756,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                 {
                     ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando trayectorias laborales",
+                    Message = "Listando empleados familiares",
                     ExceptionTrace = ex.Message,
                     LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
