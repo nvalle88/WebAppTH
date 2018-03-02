@@ -898,6 +898,33 @@
                             return false;
                         });
 
+                        $("#idgrupoocupacional").change(function () {
+                            mostrarLoadingPanel("content", "Cargando...")
+                            $("#idescalagrados").empty();
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("ListarEscalasGradosPorGrupoOcupacional", "EscalaGrados")',
+                                dataType: 'json',
+                                data: { idgrupoocupacional: $("#idgrupoocupacional").val() },
+                                success: function (data) {
+                                    $("#idescalagrados").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                                    $.each(data, function (i, data) {
+                                        $("#idescalagrados").append('<option value="'
+                                            + data.idEscalaGrados + '">'
+                                            + data.nombre + '</option>');
+
+                                    });
+                                }, complete: function (data) {
+                                    $("#content").waitMe("hide");
+                                },
+
+                                error: function (ex) {
+                                    alert('Failed to retrieve data.' + ex);
+                                }
+                            });
+                            return false;
+                        });
+
         });
     </script>
     <script src='~/lib/select2/dist/js/select2.min.js'></script>
