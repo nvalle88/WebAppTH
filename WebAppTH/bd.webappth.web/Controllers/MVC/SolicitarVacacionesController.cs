@@ -24,10 +24,17 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
-
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         public async Task<IActionResult> Create()
         {
-
+            InicializarMensaje(null);
             return View();
         }
 
@@ -41,6 +48,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             var empleado = new Empleado()
             {
+                
                 IdEmpleado = idEmpleado
             };
 
@@ -49,7 +57,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<SolicitudVacaciones>(empleado, new Uri(WebApp.BaseAddress)
                                                                     , "api/SolicitudVacaciones/ListarSolicitudesVacaciones");
-
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -87,7 +95,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
             }
             catch (Exception ex)
             {
@@ -110,7 +119,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Create(SolicitudVacaciones solicitudVacaciones)
         {
 
-
+            if (ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(null);
+            }
 
             Response response = new Response();
             try
@@ -177,6 +190,7 @@ namespace bd.webappth.web.Controllers.MVC
                     //ViewData["FechaDesde"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -186,6 +200,62 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception)
             {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, SolicitudVacaciones solicitudVacaciones)
+        {
+            Response response = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(solicitudVacaciones.IdEmpleado.ToString()))
+                {
+                    if (solicitudVacaciones.Estado ==0)
+                    {
+                        solicitudVacaciones.FechaSolicitud = DateTime.Now;;
+                        var resultado = await apiServicio.ObtenerElementoAsync1<Response>(solicitudVacaciones, new Uri(WebApp.BaseAddress), "api/SolicitudVacaciones/SolicitudVacaciones");
+                    
+                        response = await apiServicio.EditarAsync(solicitudVacaciones.IdEmpleado.ToString(), solicitudVacaciones, new Uri(WebApp.BaseAddress),
+                                                                     "api/SolicitudVacaciones");
+
+                        if (response.IsSuccess)
+                        {
+                            await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                            {
+                                ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                                EntityID = string.Format("{0} : {1}", "Solicitud Horas Extras", id),
+                                LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                                LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                                Message = "Se ha actualizado una Solicitud de Horas Extra",
+                                UserName = "Usuario 1"
+                            });
+
+                            return RedirectToAction("Index");
+                        }
+                       // ViewData["Error"] = "Se ha actualizado una Solicitud de Horas Extra";
+                    }
+                    ViewData["Error"] = response.Message;
+                    //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+                    return View(solicitudVacaciones);
+
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Editando una Solicitud de Horas Extra",
+                    ExceptionTrace = ex.Message,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
                 return BadRequest();
             }
         }

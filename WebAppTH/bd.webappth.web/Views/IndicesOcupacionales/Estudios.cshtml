@@ -3,18 +3,18 @@
 @model List<bd.webappth.entidades.ViewModels.EstudioViewModel>
     @using bd.webappth.entidades.ViewModels
 
-    @{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }; }
+    @{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional ,OpcionMenu=4}; }
     @{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional", modelo);}
 
     <!-- MAIN CONTENT -->
     <div id="content">
 
         <p></p>
-        <a asp-action="Create">
-            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+        <a asp-action="NuevoEstudios" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional">
+            <button type="button" asp-action="NuevoEstudios" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional" class="btn btn-labeled btn-default">    
                 <span class="btn-label">
                     <i class="glyphicon glyphicon-plus"></i>
-                </span>Nuava &aacute;rea de conocimiento
+                </span>Adicionar estudios
 
             </button>
         </a>
@@ -25,7 +25,7 @@
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                         <header>
                             <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                            <h2>&Aacute;rea de conocimiento</h2>
+                            <h2>Estudios asignados</h2>
                         </header>
                         <div>
                             <div class="jarviswidget-editbox">
@@ -44,7 +44,7 @@
 
                                         <tr>
                                             <th data-class="">
-                                                Observaciones
+                                                Descripci&oacute;n
                                             </th>
                                             <th>
                                                 <i class="fa fa-cog "></i>
@@ -72,10 +72,7 @@ else
                                                 @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
                                             <td>
-
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdEstudio })<br /> |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEstudio }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
-
+                                                @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalEstudios", "Estudios", new { idEstudio = item.IdEstudio, idIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                             </td>
                                         </tr>
 }

@@ -17,5 +17,7 @@ namespace bd.webappth.entidades.ViewModels
         public string ModalidadPartida { get; set; }
         public int PartidaGeneral { get; set; }
         public string PartidaIndividual { get; set; }
+
+        public int OpcionMenu { get; set; }
     }
 }

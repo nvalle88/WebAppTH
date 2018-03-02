@@ -25,10 +25,18 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
-        public async Task<IActionResult> Create()
+        private void InicializarMensaje(string mensaje)
         {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
 
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -36,7 +44,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SolicitudPlanificacionVacaciones solicitudPlanificacionVacaciones)
         {
-
+            if (ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(solicitudPlanificacionVacaciones);
+            }
             Response response = new Response();
             try
             {
@@ -101,6 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                     ViewData["FechaDesde"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -185,7 +198,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<SolicitudPlanificacionVacaciones>(empleado, new Uri(WebApp.BaseAddress)
                                                                     , "api/SolicitudPlanificacionVacaciones/ListarSolicitudesPlanificacionesVacaciones");
-
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -223,7 +236,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+                //return BadRequest();
             }
             catch (Exception ex)
             {

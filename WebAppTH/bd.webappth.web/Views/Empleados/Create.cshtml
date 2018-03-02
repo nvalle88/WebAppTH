@@ -51,7 +51,17 @@
                                 <fieldset>
                                     <legend>Datos Personales</legend>
                                     <div class="row">
-
+                                        <section class="col col-3">
+                                            <label>Tipo de Identificaci&oacute;n:</label>
+                                            <div class="form-group">
+                                                <div class="input">
+                                                    <select asp-for="IdTipoIdentificacion" asp- class="form-control" asp-items="ViewBag.IdTipoIdentificacion">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="IdTipoIdentificacion" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </section>
                                         <section class="col col-3">
                                             <div class="form-group">
                                                 <label>CI o Pasaporte:</label>

@@ -3,17 +3,17 @@
 @model List<bd.webappth.entidades.ViewModels.ActividadesEsencialesViewModel>
 @using bd.webappth.entidades.ViewModels
 
-@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional,OpcionMenu= 1}; }
+@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional,OpcionMenu=1 }; }
 @{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
-    <p></p>
-    <a asp-action="NuevoActividadEsencial" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional">
+    <p></p>    <p></p>
+    <a asp-action="ActividadesEsenciales" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional">
         <button type="button" asp-action="NuevoActividadEsencial" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional" class="btn btn-labeled btn-default">
             <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Adicionar Actividades Esenciales
+                <i class="glyphicon glyphicon-arrow-left"></i>
+            </span>Volver
 
         </button>
     </a>
@@ -24,7 +24,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Actividades esenciales asignadas</h2>
+                        <h2>Actividades esenciales no asignadas</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -32,34 +32,34 @@
                         <div class="widget-body no-padding">
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
-                               @if (Model.FirstOrDefault().IdActividadesEsenciales != -1)
-                                {
-                                    <tr>
-                                        <th class="hasinput">
-                                            <input type="text" class="form-control" placeholder="Buscar" />
-                                        </th>
-                                        <th></th>
-                                    </tr>
+                                    @if (Model.FirstOrDefault().IdActividadesEsenciales != -1)
+                                    {
+                                        <tr>
+                                            <th class="hasinput">
+                                                <input type="text" class="form-control" placeholder="Buscar" />
+                                            </th>
+                                            <th></th>
+                                        </tr>
 
-                                    <tr>
-                                        <th>
-                                            Actividades esenciales
-                                        </th>
-                                        <th>
-                                            <i></i>
-                                            Opciones
-                                        </th>
-                                    </tr>
+                                        <tr>
+                                            <th>
+                                                Actividades esenciales
+                                            </th>
+                                            <th>
+                                                <i></i>
+                                                Opciones
+                                            </th>
+                                        </tr>
 
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <th data-class="">
-                                            Observaciones
-                                        </th>
-                                    </tr>
-                                }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <th data-class="">
+                                                Observaciones
+                                            </th>
+                                        </tr>
+                                    }
                                 </thead>
                                 <tbody>
                                     @if (Model.FirstOrDefault().IdActividadesEsenciales != -1)
@@ -71,7 +71,7 @@
                                                     @Html.DisplayFor(modelItem => item.Descripcion)
                                                 </td>
                                                 <td>
-                                                    @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalActividadesEsenciales", "ActividadesEsenciales", new { IdActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
+                                                    @Html.ActionLink("Adicionar", "AdicionarActividesEsenciales", new { idActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }, new { onclick = "return confirm('Desea asignar el registro... ?');" })
 
                                                 </td>
                                             </tr>

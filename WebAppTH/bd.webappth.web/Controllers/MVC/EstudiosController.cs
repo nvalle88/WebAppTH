@@ -116,7 +116,7 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
-                    return RedirectToAction("Detalles", "IndicesOcupacionales", new { id = indiceOcupacionalEstudio.IdIndiceOcupacional });
+                    return RedirectToAction("Estudios", "IndicesOcupacionales", new { id = indiceOcupacionalEstudio.IdIndiceOcupacional });
                 }
                 return BadRequest();
             }

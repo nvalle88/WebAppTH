@@ -378,7 +378,7 @@ namespace bd.webappth.web.Controllers.MVC
                             UserName = "Usuario 1"
                         });
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("IndexEmpleado");
                     }
                     ViewData["Error"] = response.Message;
 
@@ -459,7 +459,7 @@ namespace bd.webappth.web.Controllers.MVC
                             UserName = "Usuario 1"
                         });
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("IndexEmpleado");
                     }
                     ViewData["Error"] = response.Message;
 
