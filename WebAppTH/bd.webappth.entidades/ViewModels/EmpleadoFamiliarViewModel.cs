@@ -8,6 +8,7 @@ namespace bd.webappth.entidades.ViewModels
     public class EmpleadoFamiliarViewModel : IValidatableObject
     {
         public int IdEmpleado { get; set; }
+        public int IdEmpleadoFamiliar { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Tipo de identificación:")]
