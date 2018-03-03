@@ -3,6 +3,7 @@
 <fieldset>
     <div class="row">
         <section class="col col-8">
+            <label class="label">@Html.DisplayNameFor(model => model.BrigadaSSO)</label>
             <label class="input">
                 <select asp-for="IdBrigadaSSO" class="form-control" asp-items="ViewBag.IdBrigadaSSO">
                     <option value="0"><Seleccione una @Html.DisplayNameFor(model => model.IdBrigadaSSO)></option>
@@ -14,8 +15,8 @@
 
     <div class="row">
         <section class="col col-8">
+            <label class="label">@Html.DisplayNameFor(model => model.Nombre)</label>
             <label class="input">
-                <i class="icon-prepend fa fa-user"></i>
                 <input maxlength="20" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </label>

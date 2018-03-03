@@ -1,7 +1,7 @@
 @model bd.webappth.entidades.Negocio.BrigadaSSO
 <fieldset>
     <section>
-        <label class="label"></label>
+        <label class="label">@Html.DisplayNameFor(model => model.Nombre)</label>
         <label class="textarea">
             <i class="icon-append fa fa-comment"></i>
             <textarea maxlength="50" asp-for="Nombre" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Nombre)"></textarea>

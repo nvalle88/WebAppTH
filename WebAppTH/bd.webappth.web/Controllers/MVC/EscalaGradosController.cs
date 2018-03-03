@@ -48,6 +48,7 @@ namespace bd.webappth.web.Controllers.MVC
             if (!ModelState.IsValid)
             {
                 InicializarMensaje(null);
+                ViewData["IdGrupoOcupacional"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "TipoEscala");
                 return View(escalaGrados);
 
             }
