@@ -9,6 +9,7 @@ namespace bd.webappth.entidades.ViewModels
     {
         public int IdEmpleado { get; set; }
         public int IdEmpleadoFamiliar { get; set; }
+        public int IdPersona { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Tipo de identificación:")]
@@ -77,7 +78,7 @@ namespace bd.webappth.entidades.ViewModels
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Fecha de Nacimiento:")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime FechaNacimiento { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]

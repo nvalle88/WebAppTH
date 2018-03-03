@@ -20,10 +20,11 @@
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            <form asp-action="CreateEmpleadoFamiliar" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="EditEmpleadoFamiliar" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdEmpleadoFamiliar" />
                                 <input type="hidden" asp-for="IdEmpleado" />
+                                <input type="hidden" asp-for="IdPersona" />
                                 @{await Html.RenderPartialAsync("_PartialViewEmpleadoFamiliar");}
                                 <footer>
                                     <input type="submit" id="GuardarForm" value="Guardar" class="btn btn-primary" />
