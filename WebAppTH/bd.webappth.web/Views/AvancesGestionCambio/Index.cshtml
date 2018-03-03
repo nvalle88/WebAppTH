@@ -6,7 +6,7 @@
 }
 
 <p></p>
-
+<link href="~/js/tabla/table.css" rel="stylesheet" />
 @Html.ActionLink("Nuevo Avance de Gestion de Cambio", "Create", "AvancesGestionCambio", new { IdActividadesGestionCambio = Model.IdActividadesGestionCambio }, new { @class = "btn btn-primary" })
 
 @Html.ActionLink("Regresar a Actividad de Gestion de Cambio", "Index", "ActividadesGestionCambio", new { IdActividadesGestionCambio = Model.IdActividadesGestionCambio }, new { @class = "btn btn-primary" })
@@ -17,7 +17,7 @@
 <div id="content">
    
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <!-- row -->
         <div class="row">
 
@@ -38,9 +38,9 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Avance de Gesti&oacuten de Cambio</h2>
+                        <h2>Avance de Gesti&oacuten de cambio</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -54,16 +54,7 @@
                         <div class="widget-body no-padding">
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
-                                    <tr>
-                                        <th class="hasinput">
-                                            <input type="text" class="form-control" placeholder="Buscar" />
-                                        </th>
-                                        <th class="hasinput">
-                                            <input type="text" class="form-control" placeholder="Buscar" />
-                                        </th>
-                                        <th>
-                                        </th>
-                                    </tr>
+                                    
                                     <tr>
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.ListaAvancesGestionCambio.FirstOrDefault().Fecha)
