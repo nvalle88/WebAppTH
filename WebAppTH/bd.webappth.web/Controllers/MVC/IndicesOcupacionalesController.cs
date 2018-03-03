@@ -791,9 +791,9 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     if (indiceOcupacional.Nivel == "0")
                     {
-                        indiceOcupacional.Nivel = "Profecional";
+                        indiceOcupacional.Nivel = Constantes.NivelProfesional;
                     }
-                    else { indiceOcupacional.Nivel = "No Profecional"; }
+                    else { indiceOcupacional.Nivel = Constantes.NivelNoProfesional; }
                     response = await apiServicio.InsertarAsync(indiceOcupacional,
                                                                  new Uri(WebApp.BaseAddress),
                                                                  "api/IndicesOcupacionales/InsertarIndiceOcupacional");
@@ -816,7 +816,8 @@ namespace bd.webappth.web.Controllers.MVC
                 }
                 await CargarListaCombox();
                 InicializarMensaje(response.Message);
-                return View(indiceOcupacional);
+                var indiceDetalle = new IndiceOcupacionalDetalle { IndiceOcupacional = indiceOcupacional };
+                return View(indiceDetalle);
 
             }
             catch (Exception ex)
