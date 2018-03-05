@@ -1,0 +1,63 @@
+@model bd.webappth.entidades.Negocio.AntecedentesLaborales
+
+<fieldset>
+    <div class="row">
+
+        <div style="margin-left:2%;">
+
+            <section>
+                <label>@Html.DisplayNameFor(model => model.FichaMedica.IdFichaMedica)</label>
+                <div class="form-group">
+                    <label class="input">
+                        <select style="width:300px;" asp-for="IdFichaMedica" class="form-control input " asp-items="ViewBag.IdFichaMedica">
+                            <option value="0" selected="" disabled="">Seleccione</option>
+                        </select>
+                        <span asp-validation-for="IdFichaMedica" class="text-danger"></span>
+                    </label>
+                </div>
+            </section>
+
+            <section>
+                <label>
+                    <label>@Html.DisplayNameFor(model => model.Empresa)</label>
+                    <input style="width:300px;" maxlength="50" asp-for="Empresa" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Empresa)" />
+                    <span asp-validation-for="Empresa" class="text-danger"></span>
+                </label>
+            </section>
+
+            <section>
+                <label>
+                    <label>@Html.DisplayNameFor(model => model.Cargo)</label>
+                    <input style="width:300px;" maxlength="150" asp-for="Cargo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Cargo)" />
+                    <span asp-validation-for="Cargo" class="text-danger"></span>
+                </label>
+            </section>
+
+            <section>
+                <label>
+                    <label>@Html.DisplayNameFor(model => model.TiempoTrabajo)</label>
+                    <input style="width:300px;resize:none;" maxlength="500" asp-for="TiempoTrabajo" class="form-control" placeholder="@Html.DisplayNameFor(model => model.TiempoTrabajo)" ></input>
+                    <span asp-validation-for="TiempoTrabajo" class="text-danger"></span>
+                </label>
+            </section>
+
+            <section>
+                <label>
+                    <label>@Html.DisplayNameFor(model => model.DetalleRiesgosExpuesto)</label>
+                    <textarea style="width:300px;resize:none;" maxlength="500" asp-for="DetalleRiesgosExpuesto" class="form-control" placeholder="@Html.DisplayNameFor(model => model.DetalleRiesgosExpuesto)" rows="4"></textarea>
+                    <span asp-validation-for="DetalleRiesgosExpuesto" class="text-danger"></span>
+                </label>
+            </section>
+
+            <section>
+                <label>
+                    <label>@Html.DisplayNameFor(model => model.EppUtilizados)</label>
+                    <textarea style="width:300px;resize:none;" maxlength="500" asp-for="EppUtilizados" class="form-control" placeholder="@Html.DisplayNameFor(model => model.EppUtilizados)" rows="4"></textarea>
+                    <span asp-validation-for="EppUtilizados" class="text-danger"></span>
+                </label>
+            </section>
+
+        </div>
+    </div>
+    
+</fieldset>

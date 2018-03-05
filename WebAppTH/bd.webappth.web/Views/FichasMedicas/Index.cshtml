@@ -1,0 +1,335 @@
+﻿@model bd.webappth.entidades.ViewModels.FichaMedicaViewModel
+
+@{
+    ViewData["Title"] = "Historia clínica ocupacional";
+
+}
+
+ 
+    <style>
+        .labels{
+
+            text-align:left;
+            font-weight:bold;
+
+            color:black;
+            background-color:transparent;
+            width:25%;
+            height:50px;
+
+            float:left;
+
+            border-color:white;
+            border-width:0px;
+        }
+
+        .labels input{
+            font-weight:100;
+        }
+
+        input.label-data{
+            text-align:right;
+            width:80%;
+            color:black;
+            background-color:transparent;
+            border-width:0px;
+        }
+    </style>
+
+
+<!-- MAIN CONTENT -->
+    <div id="content">
+
+        <div style="background-color:rgb(64,64,64);" >
+            <form asp-action="Index" id="checkout-form" class="smart-form" novalidate="novalidate">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="text" asp-for="DatosBasicosPersonaViewModel.Identificacion" style="width:100px;" />
+                <input type="submit" value="Enviar cédula"  />
+
+            </form>
+        </div>
+        <br />
+        <br />
+
+        <div class="col col-10">
+
+
+        </div>
+
+        <section style="float:none;">
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.NombresApellidos)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.NombresApellidos" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.LugarNacimiento)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.LugarNacimiento" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.FechaNacimiento)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.FechaNacimiento" readonly class="label-data" data-dateformat='dd/mm/yy'/>
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.FechaIngreso)</p>
+                <input type="date" style="width:260px;background-color:transparent;border:0px;" asp-for="DatosBasicosPersonaViewModel.FechaIngreso" data-dateformat='dd/mm/yy' readonly />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.DireccionDomiciliaria)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.DireccionDomiciliaria" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.Telefono)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.Telefono" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.Edad)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.Edad" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+
+                <input value="" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.Genero)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.Genero" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.NivelEducativo)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.NivelEducativo" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.EstadoCivil)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.EstadoCivil" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.Profesion)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.Profesion" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.NumeroHijos)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.NumeroHijos" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.Etnia)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.Etnia" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.CondicionEspecial)</p>
+                <input type="checkbox" style="width:50px;" asp-for="DatosBasicosPersonaViewModel.CondicionEspecial" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.TipoDiscapacidad)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.TipoDiscapacidad" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.Conadis)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.Conadis" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.Porcentaje)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.Porcentaje" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.NombreCargoTrabajo)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.NombreCargoTrabajo" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.DescripcionPuestoTrabajo)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.DescripcionPuestoTrabajo" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.SedeTrabajo)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.SedeTrabajo" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.ContactoEmergencias)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.ContactoEmergencias" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.Parentesco)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.Parentesco" readonly class="label-data" />
+            </div>
+
+            <div class="labels">
+                <p>@Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.ParienteTelefono)</p>
+                <input asp-for="DatosBasicosPersonaViewModel.ParienteTelefono" readonly class="label-data" />
+            </div>
+
+
+
+
+        </section>
+
+        <div style="">
+
+        </div>
+
+        <br />
+        <br />
+
+        <section id="NuevaFicha" style="background-color:transparent;margin-left:1%">
+
+            <p></p>
+
+            <span class="btn-label" style="float-left:2%;">
+                <i class="glyphicon glyphicon-plus"></i>
+                <div style="padding-left:10px;height:100%;float:right;">@Html.ActionLink("Nuevo", "Create", new { id = Model.DatosBasicosPersonaViewModel.IdPersona })</div>
+
+            </span>
+           <p></p>
+
+        </section>
+
+        <!-- widget grid -->
+        <section id="" class="">
+            <!-- row -->
+            <div class="row">
+                <!-- NEW WIDGET START -->
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                        <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                        <header>
+                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                            <h2>Fichas médicas</h2>
+                        </header>
+                        <!-- widget div-->
+                        <div>
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+                            </div>
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            |
+
+                            <div class="widget-body no-padding">
+                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+                                        <!--
+                                        <tr>
+                                            <th class="hasinput">
+                                                <input type="text" class="form-control" placeholder="Buscar" />
+                                            </th>
+
+                                            <th>
+
+                                            </th>
+
+                                        </tr>
+                                            -->
+                                        <tr>
+
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().IdFichaMedica)
+                                            </th>
+
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().FechaFichaMedica)
+
+                                            </th>
+
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.FichasMedicas)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IdFichaMedica)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaFichaMedica)
+                                            </td>
+
+
+
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdFichaMedica }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                            </td>
+                                        </tr>
+                                }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end widget content -->
+                        </div>
+                        <!-- end widget div -->
+                    </div>
+
+                </article>
+                <!-- WIDGET END -->
+            </div>
+            <!-- end row -->
+            <!-- end row -->
+        </section>
+        <!-- end widget grid -->
+    </div>
+<!-- END MAIN CONTENT -->
+
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+
+    <script>
+        
+
+        function NuevaFicha() {
+
+            if (@Model.DatosBasicosPersonaViewModel.IdPersona > 0) {
+
+                $("#NuevaFicha").show();
+            } else {
+                $("#NuevaFicha").hide();
+                //alert("No existe el registro");
+            }
+
+        }
+
+        onload = function () {
+            NuevaFicha();
+
+        }
+
+    </script>
+}
+

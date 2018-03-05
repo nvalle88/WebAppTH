@@ -1,0 +1,46 @@
+@model bd.webappth.entidades.Negocio.AntecedentesFamiliares
+
+<fieldset>
+    <div class="row">
+
+        <div style="margin-left:2%;" >
+
+            <section >
+                <label>@Html.DisplayNameFor(model => model.FichaMedica.IdFichaMedica)</label>
+                <div class="form-group">
+                    <label class="input">
+                        <select style="width:300px;" asp-for="IdFichaMedica" class="form-control input " asp-items="ViewBag.IdFichaMedica">
+                            <option value="0" selected="" disabled="">Seleccione</option>
+                        </select>
+                        <span asp-validation-for="IdFichaMedica" class="text-danger"></span>
+                    </label>
+                </div>
+            </section>
+
+            <section>
+                <label>
+                    <label>@Html.DisplayNameFor(model => model.Parentesco)</label>
+                    <input style="width:300px;" maxlength="50" asp-for="Parentesco" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Parentesco)" />
+                    <span asp-validation-for="Parentesco" class="text-danger"></span>
+                </label>
+            </section>
+
+            <section>
+                <label>
+                    <label>@Html.DisplayNameFor(model => model.Enfermedad)</label>
+                    <input style="width:300px;" maxlength="150" asp-for="Enfermedad" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Enfermedad)" />
+                    <span asp-validation-for="Enfermedad" class="text-danger"></span>
+                </label>
+            </section>
+
+            <section>
+                <label>
+                    <label>@Html.DisplayNameFor(model => model.Observaciones)</label>
+                    <textarea style="width:300px;resize:none;" maxlength="500" asp-for="Observaciones" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Observaciones)" rows="4" ></textarea>
+                    <span asp-validation-for="Observaciones" class="text-danger"></span>
+                </label>
+            </section>
+        </div>
+    </div>
+    
+</fieldset>
