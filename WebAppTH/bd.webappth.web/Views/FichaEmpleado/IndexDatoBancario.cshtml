@@ -1,20 +1,23 @@
-@model List<bd.webappth.entidades.Negocio.EmpleadoFamiliar>
+@model bd.webappth.entidades.Negocio.DatosBancarios
 
 @{await Html.RenderPartialAsync("_PartialViewMenu");}
 
 <!-- MAIN CONTENT -->
 <div id="content">
+    @if (Model.IdEmpleado == 0)
+    {
+        <p></p>
+        <a asp-action="CreateDatoBancario">
+            <button type="button" asp-action="CreateDatoBancario" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nuevo Dato Bancario
 
-    <p></p>
-    <a asp-action="CreateEmpleadoFamiliar">
-        <button type="button" asp-action="CreateEmpleadoFamiliar" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo Familiar
+            </button>
+        </a>
+        <p> </p>
+    }
 
-        </button>
-    </a>
-    <p> </p>
 
     <!-- widget grid -->
     <section id="widget-grid" class="">
@@ -39,7 +42,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Familiares</h2>
+                        <h2>Dato Bancario de Empleado</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -54,16 +57,13 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Nombre 
+                                            Intituci&oacute;n Financiera
                                         </th>
                                         <th data-class="">
-                                            Identificacion
+                                            N&uacute;mero de Cuenta
                                         </th>
                                         <th data-class="">
-                                            Tel&eacute;fono Privado
-                                        </th>
-                                        <th data-class="">
-                                            Parentesco
+                                            Ahorros
                                         </th>
                                         <th>
                                             <i class="fa fa-cog "></i>
@@ -71,26 +71,22 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
+                                <tbody>   
+                                    @if (@Model.IdEmpleado != 0) { 
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.Nombres) @Html.DisplayFor(modelItem => item.Persona.Apellidos)
+                                            @Html.DisplayFor(modelItem => Model.InstitucionFinanciera.Nombre)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.Identificacion)
+                                            @Html.DisplayFor(modelItem => Model.NumeroCuenta)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.TelefonoPrivado)
+                                            @Html.DisplayFor(modelItem => Model.Ahorros)
                                         </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Parentesco.Nombre)
-                                        </td>                                    
                                         <td>
 
-                                            @Html.ActionLink("Editar", "EditEmpleadoFamiliar", new { id = item.IdEmpleadoFamiliar }) |
-                                            @Html.ActionLink("Eliminar", "DeleteEmpleadoFamiliar", new { id = item.IdPersona }, new { onclick = "return confirm('Desea eliminar el Familiar... ?');" })
+                                            @Html.ActionLink("Editar", "EditDatoBancario", new { id = Model.IdDatosBancarios }) |
+                                            @Html.ActionLink("Eliminar", "DeleteDatoBancario", new { id = Model.IdDatosBancarios }, new { onclick = "return confirm('Desea eliminar el Dato Bancario... ?');" })
 
                                         </td>
                                     </tr>

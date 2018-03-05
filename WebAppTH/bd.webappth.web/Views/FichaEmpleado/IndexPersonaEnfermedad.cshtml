@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.EmpleadoFamiliar>
+@model List<bd.webappth.entidades.Negocio.PersonaEnfermedad>
 
 @{await Html.RenderPartialAsync("_PartialViewMenu");}
 
@@ -6,11 +6,11 @@
 <div id="content">
 
     <p></p>
-    <a asp-action="CreateEmpleadoFamiliar">
-        <button type="button" asp-action="CreateEmpleadoFamiliar" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+    <a asp-action="CreatePersonaEnfermedad">
+        <button type="button" asp-action="CreatePersonaEnfermedad" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo Familiar
+            </span>Nueva Enfermedad
 
         </button>
     </a>
@@ -39,7 +39,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Familiares</h2>
+                        <h2>Enfermedades de Empleado</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -54,16 +54,10 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Nombre 
+                                            Tipo de Enfermedad
                                         </th>
                                         <th data-class="">
-                                            Identificacion
-                                        </th>
-                                        <th data-class="">
-                                            Tel&eacute;fono Privado
-                                        </th>
-                                        <th data-class="">
-                                            Parentesco
+                                            Instituci&oacute;n que Emite
                                         </th>
                                         <th>
                                             <i class="fa fa-cog "></i>
@@ -76,21 +70,15 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.Nombres) @Html.DisplayFor(modelItem => item.Persona.Apellidos)
+                                            @Html.DisplayFor(modelItem => item.TipoEnfermedad.Nombre)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.Identificacion)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.TelefonoPrivado)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Parentesco.Nombre)
-                                        </td>                                    
+                                            @Html.DisplayFor(modelItem => item.InstitucionEmite)
+                                        </td>                                   
                                         <td>
 
-                                            @Html.ActionLink("Editar", "EditEmpleadoFamiliar", new { id = item.IdEmpleadoFamiliar }) |
-                                            @Html.ActionLink("Eliminar", "DeleteEmpleadoFamiliar", new { id = item.IdPersona }, new { onclick = "return confirm('Desea eliminar el Familiar... ?');" })
+                                            @Html.ActionLink("Editar", "EditPersonaEnfermedad", new { id = item.IdPersonaEnfermedad }) |
+                                            @Html.ActionLink("Eliminar", "DeletePersonaEnfermedad", new { id = item.IdPersonaEnfermedad }, new { onclick = "return confirm('Desea eliminar la Enfermedad... ?');" })
 
                                         </td>
                                     </tr>

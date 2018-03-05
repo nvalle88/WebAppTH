@@ -16,9 +16,7 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "El {0} es obligatorio")]
         public bool Ahorros { get; set; }
 
-        [Display(Name = "Empleado")]
-        [Required(ErrorMessage = "El {0} es obligatorio")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar {0}")]
+    
         public int IdEmpleado { get; set; }
         public virtual Empleado Empleado { get; set; }
 

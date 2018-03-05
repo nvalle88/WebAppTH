@@ -15,7 +15,7 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Fecha de nacimiento:")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime FechaNacimiento { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Identificación:")]
@@ -76,7 +76,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Género:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdGenero { get; set; }
+        public int? IdGenero { get; set; }
         public virtual Genero Genero { get; set; }
 
         [Display(Name = "Tipo de sangre:")]

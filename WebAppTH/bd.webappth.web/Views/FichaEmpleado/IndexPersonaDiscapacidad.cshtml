@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.EmpleadoFamiliar>
+@model List<bd.webappth.entidades.Negocio.PersonaDiscapacidad>
 
 @{await Html.RenderPartialAsync("_PartialViewMenu");}
 
@@ -6,11 +6,11 @@
 <div id="content">
 
     <p></p>
-    <a asp-action="CreateEmpleadoFamiliar">
-        <button type="button" asp-action="CreateEmpleadoFamiliar" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+    <a asp-action="CreatePersonaDiscapacidad">
+        <button type="button" asp-action="CreatePersonaDiscapacidad" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo Familiar
+            </span>Nueva Discapacidad
 
         </button>
     </a>
@@ -39,7 +39,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Familiares</h2>
+                        <h2>Discapacidades de Empleado</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -54,16 +54,13 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Nombre 
+                                            Tipo de Discapacidad
                                         </th>
                                         <th data-class="">
-                                            Identificacion
+                                            N&uacute;mero de Carnet
                                         </th>
                                         <th data-class="">
-                                            Tel&eacute;fono Privado
-                                        </th>
-                                        <th data-class="">
-                                            Parentesco
+                                            Porciento
                                         </th>
                                         <th>
                                             <i class="fa fa-cog "></i>
@@ -76,21 +73,18 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.Nombres) @Html.DisplayFor(modelItem => item.Persona.Apellidos)
+                                            @Html.DisplayFor(modelItem => item.TipoDiscapacidad.Nombre)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.Identificacion)
+                                            @Html.DisplayFor(modelItem => item.NumeroCarnet)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.TelefonoPrivado)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Parentesco.Nombre)
-                                        </td>                                    
+                                            @Html.DisplayFor(modelItem => item.Porciento)
+                                        </td>                                   
                                         <td>
 
-                                            @Html.ActionLink("Editar", "EditEmpleadoFamiliar", new { id = item.IdEmpleadoFamiliar }) |
-                                            @Html.ActionLink("Eliminar", "DeleteEmpleadoFamiliar", new { id = item.IdPersona }, new { onclick = "return confirm('Desea eliminar el Familiar... ?');" })
+                                            @Html.ActionLink("Editar", "EditPersonaDiscapacidad", new { id = item.IdPersonaDiscapacidad }) |
+                                            @Html.ActionLink("Eliminar", "DeletePersonaDiscapacidad", new { id = item.IdPersonaDiscapacidad }, new { onclick = "return confirm('Desea eliminar la Discapacidad... ?');" })
 
                                         </td>
                                     </tr>
