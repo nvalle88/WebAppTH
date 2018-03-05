@@ -24,10 +24,17 @@ namespace bd.webappth.web.Controllers
             this.apiServicio = apiServicio;
 
         }
-
-        public async Task<IActionResult> Create()
+        private void InicializarMensaje(string mensaje)
         {
-            
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -35,6 +42,12 @@ namespace bd.webappth.web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PlanGestionCambio PlanGestionCambio)
         {
+            if (ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(PlanGestionCambio);
+
+            }
             Response response = new Response();
             try
             {
@@ -94,9 +107,10 @@ namespace bd.webappth.web.Controllers
                     
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<PlanGestionCambio>(respuesta.Resultado.ToString());
-                    
+
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -168,7 +182,8 @@ namespace bd.webappth.web.Controllers
             {               
                     lista = await apiServicio.Listar<PlanGestionCambio>(new Uri(WebApp.BaseAddress)
                                                                     , "api/PlanesGestionCambio/ListarPlanesGestionCambio");
-                    return View(lista);              
+                InicializarMensaje(null);
+                return View(lista);              
             }
             catch (Exception ex)
             {
@@ -207,9 +222,10 @@ namespace bd.webappth.web.Controllers
                 }
                 else
                 {
-                    
-                    ViewData["Mensaje"] = Mensaje.Error;
-                    return View("NoExisteElemento");
+
+                    //ViewData["Mensaje"] = Mensaje.Error;
+                    //return View("NoExisteElemento");
+                    return RedirectToAction("Index", new { mensaje = response.Message });
                 }
                 
             }

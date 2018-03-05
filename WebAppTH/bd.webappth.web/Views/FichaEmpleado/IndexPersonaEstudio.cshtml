@@ -6,8 +6,8 @@
 <div id="content">
 
     <p></p>
-    <a asp-action="Create">
-        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+    <a asp-action="CreatePersonaEstudio">
+        <button type="button" asp-action="CreatePersonaEstudio" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nuevo Estudio
@@ -89,8 +89,8 @@
                                         </td>                                    
                                         <td>
 
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdPersonaEstudio })<br /> |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdPersonaEstudio }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
+                                            @Html.ActionLink("Editar", "EditPersonaEstudio", new { id = item.IdPersonaEstudio }) |
+                                            @Html.ActionLink("Eliminar", "DeletePersonaEstudio", new { id = item.IdPersonaEstudio }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
 
                                         </td>
                                     </tr>

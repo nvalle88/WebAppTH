@@ -19,7 +19,7 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Porciento de discapacidad:")]
         [Range(1,100, ErrorMessage = "El {0} no tiene que estar entre {1} y {2}")]
-        public int Porciento { get; set; }
+        public int? Porciento { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 

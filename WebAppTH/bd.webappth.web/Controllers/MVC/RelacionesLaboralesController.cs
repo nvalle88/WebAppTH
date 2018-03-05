@@ -23,12 +23,21 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
         }
 
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         public async Task<IActionResult> Index()
         {
             var lista = new List<RelacionLaboral>();
             try
             {
                 lista = await apiServicio.Listar<RelacionLaboral>(new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaborales");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -48,9 +57,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create()
         {
+            InicializarMensaje(null);
             ViewData["IdRegimenLaboral"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
           
-
             return View();
         }
 
@@ -58,6 +67,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RelacionLaboral relacionLaboral)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(relacionLaboral);
+            }
             Response response = new Response();
             try
             {
@@ -121,6 +135,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -200,7 +215,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                // return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
             }
             catch (Exception ex)
             {

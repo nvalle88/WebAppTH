@@ -35,9 +35,17 @@ namespace bd.webappth.web.Controllers.MVC
             this.uploadFileService = uploadFileService;
 
         }
-
-        public IActionResult Create()
+        private void InicializarMensaje(string mensaje)
         {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
+        public IActionResult Create( string mensaje)
+        {
+            InicializarMensaje(null);
             return View();
         }
 
@@ -45,7 +53,7 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(MaterialInduccion view, List<IFormFile> files)
         {
-
+            InicializarMensaje(null);
             if (files.Count > 0)
             {
                 byte[] data;
@@ -125,6 +133,7 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<Response> CreateFichero(DocumentoInstitucionalTransfer file)
         {
+            InicializarMensaje(null);
             Response response = new Response();
             try
             {
@@ -197,6 +206,7 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<MaterialInduccion>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -273,6 +283,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<MaterialInduccion>(new Uri(WebApp.BaseAddress)
                                                                     , "api/MaterialesInduccion/ListarMaterialesInduccion");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -323,7 +334,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
+                //return BadRequest();
             }
             catch (Exception ex)
             {

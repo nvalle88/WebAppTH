@@ -25,19 +25,12 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
         private void InicializarMensaje(string mensaje)
-
         {
-
             if (mensaje == null)
-
             {
-
                 mensaje = "";
-
             }
-
             ViewData["Error"] = mensaje;
-
         }
 
         public async Task<IActionResult> Create(string mensaje)
@@ -184,6 +177,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress)
                                                                     , "api/Pais/ListarPais");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)

@@ -1,136 +1,148 @@
 
 
-@model List<bd.webappth.entidades.ViewModels.ConocimientosAdicionalesViewModel>
-    @using bd.webappth.entidades.ViewModels
+@model List<bd.webappth.entidades.ViewModels.ExperienciaLaboralRequeridaViewModel>
+@using bd.webappth.entidades.ViewModels
 
-    @{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }; }
-    @{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional", modelo);}
+@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional ,OpcionMenu=7}; }
+@{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional", modelo);}
 
-    <!-- MAIN CONTENT -->
-    <div id="content">
+<!-- MAIN CONTENT -->
+<div id="content">
 
-        <p></p>
-        <a asp-action="Create">
-            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-                <span class="btn-label">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </span>Nuavo conocimiento adicional
+    <p></p>
+    <a asp-action="NuevoExperienciaLaboralRequerida" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional">
+        <button type="button" asp-action="NuevoExperienciaLaboralRequerida" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Adicionar
 
-            </button>
-        </a>
-        <p> </p>
+        </button>
+    </a>
+    <p> </p>
 
-        <!-- widget grid -->
-        <section id="widget-grid" class="">
-            <!-- row -->
-            <div class="row">
-                <!-- NEW WIDGET START -->
-                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <!-- Widget ID (each widget will need unique ID)-->
-                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                        <!-- widget options:
-                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                       <h2>Experiencias laborales requeridas</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    @if (Model.FirstOrDefault().IdExperienciaLaboralRequerida != -1)
+                                    {
+                                        <tr>
+                                            <th class="hasinput">
+                                                <input type="text" class="form-control" placeholder="Buscar" />
+                                            </th>
+                                            <th class="hasinput">
+                                                <input type="text" class="form-control" placeholder="Buscar" />
+                                            </th>
+                                            <th class="hasinput">
+                                                <input type="text" class="form-control" placeholder="Buscar" />
+                                            </th>
+                                            <th class="hasinput">
+                                                <input type="text" class="form-control" placeholder="Buscar" />
+                                            </th>
+                                            <th></th>
+                                        </tr>
 
-                        data-widget-colorbutton="false"
-                        data-widget-editbutton="false"
-                        data-widget-togglebutton="false"
-                        data-widget-deletebutton="false"
-                        data-widget-fullscreenbutton="false"
-                        data-widget-custombutton="false"
-                        data-widget-collapsed="true"
-                        data-widget-sortable="false"
+                                        <tr>
+                                            <th data-class="">
+                                                A&ntilde;o de experienca
+                                            </th>
+                                            <th data-class="">
+                                                Meses
+                                            </th>
+                                            <th data-class="">
+                                                Expecificidad de experiencia
+                                            </th>
+                                            <th data-class="">
+                                                Estudio
+                                            </th>
+                                            <th>
+                                                <i class="fa fa-cog "></i>
+                                                Opciones
+                                            </th>
+                                        </tr>
 
-                        -->
-                        <header>
-                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                            <h2>Conocimientos adicionales</h2>
-                        </header>
-                        <!-- widget div-->
-                        <div>
-                            <!-- widget edit box -->
-                            <div class="jarviswidget-editbox">
-                                <!-- This area used as dropdown edit box -->
-                            </div>
-                            <!-- end widget edit box -->
-                            <!-- widget content -->
-                            <div class="widget-body no-padding">
-                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                    <thead>
-                                        @if (Model.FirstOrDefault().IdConocimientosAdicionales != -1)
-                                        {
-                                            <tr>
-                                                <th class="hasinput">
-                                                    <input type="text" class="form-control" placeholder="Buscar" />
-                                                </th>
-                                                <th></th>
-                                            </tr>
-
-                                            <tr>
-                                                <th data-class="">
-                                                    Observaciones
-                                                </th>
-                                                <th>
-                                                    <i class="fa fa-cog "></i>
-                                                    Opciones
-                                                </th>
-                                            </tr>
-
-                                        }
-                                        else
-                                        {
-                                            <tr>
-                                                <th data-class="">
-                                                    Observaciones
-                                                </th>
-                                            </tr>
-                                        }
-                                    </thead>
-                                    <tbody>
-                                        @if (Model.FirstOrDefault().IdConocimientosAdicionales != -1)
-                                        {
-                                            @foreach (var item in Model)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Descripcion)
-                                                    </td>
-                                                    <td>
-
-                                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdConocimientosAdicionales })<br /> |
-                                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdConocimientosAdicionales }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
-
-                                                    </td>
-                                                </tr>
-                                            }
-                                        }
-                                        else
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <th data-class="">
+                                                Observaciones
+                                            </th>
+                                        </tr>
+                                    }
+                                </thead>
+                                <tbody>
+                                    @if (Model.FirstOrDefault().IdExperienciaLaboralRequerida != -1)
+                                    {
+                                        @foreach (var item in Model)
                                         {
                                             <tr>
                                                 <td>
-                                                    <p>No existen resultados</p>
+                                                    @Html.DisplayFor(modelItem => item.AnoExperiencia)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.MesExperiencia)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DescripcionEspecificidadExperiencia)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.NombreEstudio)
+                                                </td>
+                                                <td>
+
+                                                    @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalExperienciaLaboralRequerida", "ExperienciaLaboralRequeridas", new { idExperienciaLaboralRequerida = item.IdExperienciaLaboralRequerida, idIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                 </td>
                                             </tr>
                                         }
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- end widget content -->
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>
+                                                <p>No existen resultados</p>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
-                        <!-- end widget div -->
+                        <!-- end widget content -->
                     </div>
+                    <!-- end widget div -->
+                </div>
 
-                </article>
-                <!-- WIDGET END -->
-            </div>
-            <!-- end row -->
-            <!-- end row -->
-        </section>
-        <!-- end widget grid -->
-    </div>
-    <!-- END MAIN CONTENT -->
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
 
-    @section Scripts {
-        <script src='~/js/datatables/init.js'></script>
-    }
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+}
 
 

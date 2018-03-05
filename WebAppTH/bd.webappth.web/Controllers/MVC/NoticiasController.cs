@@ -37,9 +37,17 @@ namespace bd.webappth.web.Controllers.MVC
             this._hostingEnvironment = _hostingEnvironment;
             this.uploadFileService = uploadFileService;
         }
-
-        public IActionResult Create()
+        private void InicializarMensaje(string mensaje)
         {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
+        public IActionResult Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -47,6 +55,7 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(NoticiaViewModel view, List<IFormFile> files)
         {
+
             
             if (files.Count > 0)
             {
@@ -83,6 +92,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         Titulo = view.Titulo,
                     };
+                    InicializarMensaje(null);
                     return View(noticia);
                 }
 
@@ -96,6 +106,7 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<Response> CrearFichero(NoticiaTransfer file)
         {
+            InicializarMensaje(null);
             Response response = new Response();
             try
             {
@@ -234,6 +245,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -358,6 +370,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<Noticia>(new Uri(WebApp.BaseAddress)
                                                                     , "api/Noticias/ListarNoticias");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -398,7 +411,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
             }
             catch (Exception ex)
             {

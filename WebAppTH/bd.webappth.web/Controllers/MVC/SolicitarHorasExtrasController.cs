@@ -25,10 +25,17 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         public async Task<IActionResult> Create()
         {
-
+            InicializarMensaje(null);
             return View();
         }
 
@@ -56,7 +63,11 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Create(SolicitudHorasExtras solicitudhorasextra)
         {
 
-
+            if (ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(solicitudhorasextra);
+            }
 
             Response response = new Response();
             try
@@ -136,6 +147,7 @@ namespace bd.webappth.web.Controllers.MVC
                     //ViewData["FechaDesde"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
                     if (respuesta.IsSuccess)
                     {
+                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -231,7 +243,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                                     , "api/SolicitudHorasExtras/ListarSolicitudesHorasExtra");
 
 
-
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)
@@ -269,7 +281,8 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToAction("Index", new { mensaje = response.Message });
             }
             catch (Exception ex)
             {

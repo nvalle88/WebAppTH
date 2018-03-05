@@ -1,21 +1,21 @@
-@model List<bd.webappth.entidades.Negocio.Mision>
+@model List<bd.webappth.entidades.Negocio.PersonaDiscapacidad>
 
-@{
-    ViewData["Title"] = "Index";
-}
-<p></p>
-<a asp-action="Create">
-    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-        <span class="btn-label">
-            <i class="glyphicon glyphicon-plus"></i>
-        </span>Nueva Misi&oacuten
+@{await Html.RenderPartialAsync("_PartialViewMenu");}
 
-    </button>
-</a>
-<p> </p>
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
-   
+
+    <p></p>
+    <a asp-action="CreatePersonaDiscapacidad">
+        <button type="button" asp-action="CreatePersonaDiscapacidad" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Discapacidad
+
+        </button>
+    </a>
+    <p> </p>
+
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -39,7 +39,7 @@
                     -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Misi&oacuten</h2>
+                        <h2>Discapacidades de Empleado</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -53,32 +53,41 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                                        <th data-class="expand">
+                                            Tipo de Discapacidad
                                         </th>
-
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
+                                        <th data-class="">
+                                            N&uacute;mero de Carnet
                                         </th>
-                                        <th>Opciones</th>
+                                        <th data-class="">
+                                            Porciento
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-cog "></i>
+                                            Opciones
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>
-                                           
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdMision }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdMision }, new { onclick = "return confirm('Desea eliminar la mision... ?');" })
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoDiscapacidad.Nombre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NumeroCarnet)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Porciento)
+                                        </td>                                   
+                                        <td>
+
+                                            @Html.ActionLink("Editar", "EditPersonaDiscapacidad", new { id = item.IdPersonaDiscapacidad }) |
+                                            @Html.ActionLink("Eliminar", "DeletePersonaDiscapacidad", new { id = item.IdPersonaDiscapacidad }, new { onclick = "return confirm('Desea eliminar la Discapacidad... ?');" })
+
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -87,7 +96,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>
@@ -98,7 +107,8 @@
 </div>
 <!-- END MAIN CONTENT -->
 
- @section Scripts {
-   <script src='~/js/datatables/init.js'></script>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
 }
+
 
