@@ -78,6 +78,7 @@ namespace bd.webappth.web.Controllers.MVC
                            IdDependencia= dependencia.IdDependencia,
                            IdProceso = dependencia.IdProceso,
                         };
+                        InicializarMensaje(null);
                         await CargarListaComboEdit(ciudad.IdCiudad, dependencia.IdSucursal);
                         return View(dependenciaViewModel);
                     }
@@ -125,6 +126,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
+                    await CargarListaCombox();
                     return View(dependenciaViewModel);
 
                 }
@@ -158,6 +160,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DependenciaViewModel dependenciaViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(dependenciaViewModel);
+            }
             Response response = new Response();
             try
             {

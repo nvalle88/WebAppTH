@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 			<!-- MAIN CONTENT -->
 <div id="content">
     <div class="col col-10">
@@ -36,14 +37,14 @@
         <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nueva Estado Tipo Accion Personal
+            </span>Nuevo
 
         </button>
     </a>
     <p> </p>
 
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -63,7 +64,7 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Estado Tipo Accion Personal</h2>
                     </header>
@@ -78,13 +79,6 @@
                         <div class="widget-body no-padding">
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
-                                    <tr>
-                                        <th class="hasinput">
-                                            <input type="text" class="form-control" placeholder="Buscar" />
-                                        </th>
-                                        <th>
-                                        </th>
-                                    </tr>
                                     <tr>
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)

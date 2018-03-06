@@ -47,7 +47,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CapacitacionTemario capacitacionTemario)
         {
             if (!ModelState.IsValid)
@@ -129,7 +129,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, CapacitacionTemario capacitacionTemario)
         {
             Response response = new Response();
@@ -185,6 +185,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<CapacitacionTemario>(new Uri(WebApp.BaseAddress)
                                                                     , "api/CapacitacionesTemarios/ListarCapacitacionesTemarios");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)

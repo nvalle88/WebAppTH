@@ -3,9 +3,36 @@
 @{
     ViewData["Title"] = "Index";
 }
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 			<!-- MAIN CONTENT -->
 <div id="content">
 
+    <div class="col col-10">
+
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-12">
+
+                <div class="alert alert-block alert-dismissable">
+
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                    <p>
+
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        }
+    </div>
     <p></p>
     <a asp-action="SeleccionarDependencia">
         <button type="button" asp-action="SeleccionarDependencia" class="btn btn-labeled btn-default">
@@ -19,7 +46,7 @@
 
 
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -39,7 +66,7 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Empleados de dependencia</h2>
                     </header>
@@ -63,7 +90,7 @@
                                         </th>
                                         <th>
                                         </th>
-<tr>
+                                    <tr>
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().NombreApellido)
                                         </th>
@@ -85,7 +112,7 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Cesar de Funciones", "Create", new { id = item.IdEmpleado }) 
+                                                @Html.ActionLink("Cesar de Funciones", "Create", new { id = item.IdEmpleado })
                                                 @*@Html.ActionLink("Eliminar", "Delete", new { id = item.IdEstadoCivil }, new { onclick = "return confirm('Desea eliminar el Estado Civil... ?');" })*@
                                             </td>
                                         </tr>

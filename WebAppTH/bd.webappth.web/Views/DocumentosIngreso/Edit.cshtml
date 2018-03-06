@@ -9,7 +9,7 @@
 <div id="content">
 
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <div class="col col-10">
 
             @if (@ViewData["Error"].ToString() != "")
@@ -63,7 +63,7 @@
                                 <input type="hidden" asp-for="IdDocumentosIngreso" />
                                 @{await Html.RenderPartialAsync("_PartialViewDocumentosIngreso");}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <input type="submit" value="Guardar" class="btn btn-default" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>

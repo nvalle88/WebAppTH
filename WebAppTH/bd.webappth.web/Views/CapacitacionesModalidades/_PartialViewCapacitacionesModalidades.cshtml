@@ -3,8 +3,8 @@
 <fieldset>
     <div class="row">
         <section class="col col-8">
+            <label class="label">@Html.DisplayNameFor(model => model.Descripcion)</label>
             <label class="input">
-                <i class="icon-prepend fa fa-edit"></i>
                 <input maxlength="20" asp-for="Descripcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </label>

@@ -2,9 +2,8 @@
 
 <fieldset>
     <section>
-        <label class="label"></label>
+        <label class="label">@Html.DisplayNameFor(model => model.Descripcion)</label>
         <label class="textarea">
-            <i class="icon-append fa fa-comment"></i>
             <textarea maxlength="500" asp-for="Descripcion" rows="3" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
             <span asp-validation-for="Descripcion" class="text-danger"></span>
         </label>

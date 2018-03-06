@@ -4,11 +4,11 @@
     ViewData["Title"] = "Index";
 }
 <link href="~/css/tabla/table.css" rel="stylesheet" />
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 
 
 <div id="content">
-
+    <p></p>
     <a asp-action="Create">
         <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
             <span class="btn-label">
@@ -17,7 +17,7 @@
 
         </button>
     </a>
-
+    <p></p>
     @*<div class="row">
 
             <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
@@ -26,7 +26,7 @@
             </div>
         </div>*@
 
-   @* @Html.ActionLink("Cargar", "CargarCapacitaciones", "IndiceOcupacionalCapacitaciones", new { id = 5 }, new { @class = "dialog-window btn btn-info" })*@
+    @* @Html.ActionLink("Cargar", "CargarCapacitaciones", "IndiceOcupacionalCapacitaciones", new { id = 5 }, new { @class = "dialog-window btn btn-info" })*@
 
     @*@{await Html.RenderPartialAsync("_PartialViewIndiceOcupacionalCapacitaciones", new bd.webappth.entidades.Negocio.IndiceOcupacionalCapacitaciones());}*@
 
@@ -49,10 +49,6 @@
             </div>
         </div>
     </div>
-
-
-
-</div>
 
 
     <!-- widget grid -->
@@ -108,7 +104,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
-    {
+                                    {
                                         <tr>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
@@ -139,49 +135,50 @@
     </section>
     <!-- end widget grid -->
 </div>
+
 <!-- END MAIN CONTENT -->
 
- @section Scripts {
-    <script src='~/js/datatables/init.js'> </script>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
 
-     <script >
-         $(document).ready(function () {
-             $("body").on("click", "a.dialog-window", null, function (e) {
-                 e.preventDefault();
-                 var $link = $(this);
-                 var title = $link.text();
-                 $('#CargarCapacitaciones .modal-title').html(title);
-                 var url = $(this).attr('href');
-                 if (url.indexOf('#') == 0) {
-                     $('#CargarCapacitaciones').modal('show');
-                 }
-                 else {
-                     $.get(url, function (data) {
-                         $('#CargarCapacitaciones .te').html(data);
-                         $('#CargarCapacitaciones').modal();
-                     }).success(function () { $('input:text:visible:first').focus(); });
+    <script>
+        $(document).ready(function () {
+            $("body").on("click", "a.dialog-window", null, function (e) {
+                e.preventDefault();
+                var $link = $(this);
+                var title = $link.text();
+                $('#CargarCapacitaciones .modal-title').html(title);
+                var url = $(this).attr('href');
+                if (url.indexOf('#') == 0) {
+                    $('#CargarCapacitaciones').modal('show');
+                }
+                else {
+                    $.get(url, function (data) {
+                        $('#CargarCapacitaciones .te').html(data);
+                        $('#CargarCapacitaciones').modal();
+                    }).success(function () { $('input:text:visible:first').focus(); });
 
-                 }
-             });
-         });
-
-
-     </script>
-
-
-@*<script>
-    $(function () {
-        $.ajaxSetup({ cache: false });
-        $("a[data-modal]").on("click", function (e) {
-            $('#myModalContent').load("/IndiceOcupacionalCapacitacionesController/CargarCapacitaciones", function () {
-                $('#myModal').modal({
-                    keyboard: true
-                }, 'show');
+                }
             });
-            return false;
         });
-    });
-</script>*@
+
+
+    </script>
+
+
+    @*<script>
+            $(function () {
+                $.ajaxSetup({ cache: false });
+                $("a[data-modal]").on("click", function (e) {
+                    $('#myModalContent').load("/IndiceOcupacionalCapacitacionesController/CargarCapacitaciones", function () {
+                        $('#myModal').modal({
+                            keyboard: true
+                        }, 'show');
+                    });
+                    return false;
+                });
+            });
+        </script>*@
 
 
 
