@@ -47,6 +47,7 @@ namespace bd.webappth.web.Controllers.MVC
             if (!ModelState.IsValid)
             {
                 InicializarMensaje(null);
+                ViewData["IdFormulaRMU"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FormulasRMU>(new Uri(WebApp.BaseAddress), "api/FormulasRMU/ListarFormulasRMU"), "IdFormulaRMU", "Formula");
                 return View(IngresoEgresoRMU);
             }
             Response response = new Response();

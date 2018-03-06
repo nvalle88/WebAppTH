@@ -2,6 +2,7 @@
 <fieldset>
     <div class="row">
         <section class="col col-8">
+            <label class="label">@Html.DisplayNameFor(model => model.TipoAccionPersonal.Nombre)</label>
             <label class="input">
                 <select asp-for="IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.IdTipoAccionPersonal">
                     <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdTipoAccionPersonal)></option>
@@ -13,6 +14,7 @@
 
     <div class="row">
         <section class="col col-8">
+            <label class="label">@Html.DisplayNameFor(model => model.Empleado.NombreUsuario)</label>
             <label class="input">
                 <select asp-for="IdEmpleado" class="form-control" asp-items="ViewBag.IdEmpleado">
                     <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdEmpleado)></option>
