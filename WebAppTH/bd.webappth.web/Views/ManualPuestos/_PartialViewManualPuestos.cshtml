@@ -1,13 +1,12 @@
 @model bd.webappth.entidades.ViewModels.ViewModelManualPuesto
 
- 
+<link href="~/css/tabla/table.css" rel="stylesheet" />
         <div class="row">
             <article class="col-lg-12">
                 <section class="col sm-4">
                     <div class="form-group">
-                        <label>Nombre:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
+                        <label class="form-control" style="border:none">Nombre:</label>
+                        <div class="input-group" style="width:100%;">
                             <input asp-for="ManualPuesto.Nombre" class="form-control input " placeholder="Nombre" type="text">
                         </div>
                     </div>
@@ -17,9 +16,8 @@
         <section>
             <label class="label"></label>
             <div class="form-group">
-                <label>Descripci&oacute;n:</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="icon-append fa fa-comment"></i></span>
+                <label class="form-control" style="border:none">Descripci&oacute;n:</label>
+                <div class="input-group" style="width:100%;">
                     <textarea maxlength="250" class="form-control" asp-for="ManualPuesto.Descripcion" rows="3" placeholder="@Html.DisplayNameFor(model=>model.ManualPuesto.Descripcion)"></textarea>
                     <span asp-validation-for="ManualPuesto.Descripcion" class="text-danger"></span>
                 </div>
@@ -28,9 +26,8 @@
         <section>
             <label class="label"></label>
             <div class="form-group">
-                <label>Misi&oacute;n:</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="icon-append fa fa-comment"></i></span>
+                <label class="form-control" style="border:none">Misi&oacute;n:</label>
+                <div class="input-group" style="width:100%;">
                     <textarea maxlength="1000" class="form-control" asp-for="ManualPuesto.Mision" rows="3" placeholder="@Html.DisplayNameFor(model=>model.ManualPuesto.Mision)"></textarea>
                     <span asp-validation-for="ManualPuesto.Mision" class="text-danger"></span>
                 </div>
@@ -41,7 +38,7 @@
         <div id="content">
 
             <!-- widget grid -->
-            <section id="widget-grid" class="">
+            <section id="" class="">
                 <!-- row -->
                 <div class="row">
                     <!-- NEW WIDGET START -->
@@ -49,9 +46,9 @@
                         <!-- Widget ID (each widget will need unique ID)-->
                         <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
 
-                            <header>
+                            <header id="table">
                                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                                <h2>Relaciones Internas y Externas</h2>
+                                <h2>Relaciones internas y externas</h2>
                             </header>
                             <!-- widget div-->
                             <div>

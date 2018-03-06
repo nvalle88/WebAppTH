@@ -1,22 +1,24 @@
 @model List<bd.webappth.entidades.ViewModels.IndiceOcupacionalViewModel>
 
-<a asp-action="Create">
-    <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-        <span class="btn-label">
-            <i class="glyphicon glyphicon-plus"></i>
-        </span>Nuevo
-    </button>
-</a>
-<p> </p>
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+
 <!-- MAIN CONTENT -->
 <div id="content">
-    <section id="widget-grid" class="">
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo
+        </button>
+    </a>
+    <p> </p>
+    <section id="" class="">
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Indices Ocupacionales</h2>
+                        <h2>Indices ocupacionales</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -26,8 +28,8 @@
                                 <thead>
                                     <tr>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().PartidaIndividual)
-                                        </th>
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().PartidaIndividual)
+                                            </th>
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Dependencia)
                                         </th>
@@ -50,38 +52,38 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                            
+
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PartidaIndividual)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Dependencia)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ManualPuesto)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.RolPuesto)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Nivel)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Ambito)
-                                        </td>
-                                        <td data-toggle="toggle" data-placement="right" title="@item.EscalaGrado  @item.Remuneracion @item.ManualPuesto">
-                                            @Html.DisplayFor(modelItem => item.EscalaGrado)  /  @Html.DisplayFor(modelItem => item.Remuneracion)
-                                        </td>
+                                        <tr>
+                                           <td>
+                                                    @Html.DisplayFor(modelItem => item.PartidaIndividual)
+                                                </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Dependencia)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ManualPuesto)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.RolPuesto)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nivel)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Ambito)
+                                            </td>
+                                            <td data-toggle="toggle" data-placement="right" title="@item.EscalaGrado  @item.Remuneracion @item.ManualPuesto">
+                                                @Html.DisplayFor(modelItem => item.EscalaGrado)  /  @Html.DisplayFor(modelItem => item.Remuneracion)
+                                            </td>
 
-                                        <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdIndiceOcupacional }) |
-                                            @Html.ActionLink("Detalle", "Detalle", new { id = item.IdIndiceOcupacional }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })
-                                        </td>
-                                    </tr>
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdIndiceOcupacional }) |
+                                                @Html.ActionLink("Detalle", "Detalle", new { id = item.IdIndiceOcupacional }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

@@ -163,6 +163,7 @@ namespace bd.webappth.web.Controllers.MVC
             if (!ModelState.IsValid)
             {
                 InicializarMensaje(null);
+                await CargarListaCombox();
                 return View(dependenciaViewModel);
             }
             Response response = new Response();
