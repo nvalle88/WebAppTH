@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Induccion\" />
+    <Folder Include="Views\FormunarioIndiceOcupacional\" />
     <Folder Include="Views\Services\" />
     <Folder Include="Views\ActividadesEsenciales\" />
     <Folder Include="Views\AnosExperiencia\" />
