@@ -1,0 +1,91 @@
+@model bd.webappth.entidades.ViewModels.DocumentoFAOViewModel
+<div class="btn-group btn-group-justified">
+
+    @if (Model.OpcionMenu == 0)
+    {
+        <a asp-action="Detalle" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default"> Datos de <br /> Lista servidores Fao <br />Sevidor</a>
+    }
+    else
+    {
+        <a asp-action="Detalle" asp-controller="DocumentoFAO" class="btn btn-default"> Datos de <br /> Identificaci&oacute;n <br />del puesto </a>
+    }
+    @if (Model.OpcionMenu == 1)
+    {
+        <a asp-action="AsignarEmpleadoFAO" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default"> Datos de <br /> Asignar <br />Sevidor</a>
+    }
+    else
+    {
+        <a asp-action="AsignarEmpleadoFAO" asp-controller="DocumentoFAO" class="btn btn-default"> Datos de <br />Asignar <br />Servidor</a>
+    }
+
+
+    @if (Model.OpcionMenu == 2)
+    {
+        <a asp-action="Estudios" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" class="btn btn-default">Instrucci&oacute;n <br />formal requerida</a>
+
+    }
+    else
+    {
+        <a asp-action="Estudios" asp-controller="IndicesOcupacionales" class="btn btn-default">Instrucci&oacute;n <br />formal requerida</a>
+    }
+
+    @if (Model.OpcionMenu == 3)
+    {
+        <a asp-action="AreaConocimiento" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" class="btn btn-default">&Aacute;reas  <br /> de  <br />conocimiento</a>
+
+    }
+    else
+    {
+        <a asp-action="AreaConocimiento" asp-controller="IndicesOcupacionales" class="btn btn-default">&Aacute;reas  <br /> de  <br />conocimiento</a>
+
+    }
+
+
+    @if (Model.OpcionMenu == 4)
+    {
+        <a asp-action="ExperienciaLaboralRequerida" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" class="btn btn-default">Experienca laboral <br /> requerida</a>
+    }
+    else
+    {
+        <a asp-action="ExperienciaLaboralRequerida" asp-controller="IndicesOcupacionales" class="btn btn-default">Experienca laboral <br /> requerida</a>
+    }
+
+
+    @if (Model.OpcionMenu == 5)
+    {
+        <a asp-action="Capacitaciones" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" class="btn btn-default">Capacitaci&oacute;n <br /> requerida <br /> para el puesto</a>
+
+    }
+    else
+    {
+        <a asp-action="Capacitaciones" asp-controller="IndicesOcupacionales" class="btn btn-default">Capacitaci&oacute;n <br />  requerida <br /> para el puesto</a>
+
+    }
+
+
+
+    @if (Model.OpcionMenu == 6)
+    {
+        <a asp-action="ConocimientosAdicionales" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" class="btn btn-default">Conocimientos <br /> adicionales</a>
+
+    }
+    else
+    {
+        <a asp-action="ConocimientosAdicionales" asp-controller="IndicesOcupacionales" class="btn btn-default"> Conocimientos <br />adicionales</a>
+
+    }
+
+    @if (Model.OpcionMenu == 7)
+    {
+        <a asp-action="ComportamientoObservable" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" class="btn btn-default">Competencias</a>
+    }
+    else
+    {
+        <a asp-action="ComportamientoObservable" asp-controller="IndicesOcupacionales" class="btn btn-default">Competencias</a>
+    }
+
+
+
+
+
+</div>
