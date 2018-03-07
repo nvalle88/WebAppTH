@@ -3,7 +3,7 @@
 <fieldset>
     <div class="row">
         <section class="col col-4">
-            <label>Ciudad</label>
+            <label class="label">@Html.DisplayNameFor(model => model.IdCiudad)</label>
             <label class="input">
                 <select asp-for="IdCiudad" class="form-control" id="ciudad" asp-items="ViewBag.IdCiudad">
                     <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdCiudad)</option>
@@ -12,7 +12,7 @@
             </label>
         </section>
         <section class="col col-4">
-            <label>Sucursal</label>
+            <label class="label">@Html.DisplayNameFor(model => model.NombreSucursal)</label>
             <label class="input">
                 <select asp-for="IdSucursal" id="sucursal" asp- class="form-control" asp-items="ViewBag.IdSucursal">
                     <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdSucursal)</option>
@@ -21,7 +21,7 @@
             </label>
         </section>
         <section class="col col-4">
-            <label>Dependencia Padre</label>
+            <label class="label">@Html.DisplayNameFor(model => model.NombreDependenciaPadre)</label>
             <label class="input">
                 <select asp-for="IdDependenciaPadre" id="dependencia" asp- class="form-control" asp-items="ViewBag.IdDependencia">
                     <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdDependenciaPadre)</option>
@@ -32,14 +32,14 @@
     </div>
     <div class="row">
         <section class="col col-6">
-            <label>Nombre</label>
+            <label class="label">Unidad Administrativa</label>
             <label class="input">
                 <input maxlength="50" asp-for="NombreDependencia" class="form-control" placeholder="Nombre" />
                 <span asp-validation-for="NombreDependencia" class="text-danger"></span>
             </label>
         </section>
         <section class="col col-6">
-            <label>Proceso</label>
+            <label class="label">@Html.DisplayNameFor(model => model.NombreProceso)</label>
             <label class="input">
                 <select asp-for="IdProceso" asp- class="form-control" asp-items="ViewBag.IdProceso">
                     <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdProceso)</option>

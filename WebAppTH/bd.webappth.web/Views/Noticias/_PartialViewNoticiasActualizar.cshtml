@@ -6,14 +6,12 @@
            
             <div class="col-sm-9">
                 <label class="input">
-                    <i class="icon-prepend fa fa-user"></i>
                     <input asp-for="Titulo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Titulo)" />
                     <span class="nombreErr text-danger"></span>
                 </label>
             </div>
             <div class="col-sm-3">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     <input asp-for="Fecha" type="text" data-dateformat='dd/mm/yy' class="form-control input datepicker " placeholder="Fecha " data-msg-required='El campo es requerido' data-rule-required='true'>
                 </div>
             </div>
@@ -27,7 +25,6 @@
                  </div>
                  <div class="col-sm-9 padding-left-0" >
                  <label class="textarea">
-                 <i class="icon-append fa fa-comment"></i>
                  <textarea asp-for="Descripcion" rows="7" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
                  <span asp-validation-for="Descripcion" class="text-danger"></span>
                  </label>

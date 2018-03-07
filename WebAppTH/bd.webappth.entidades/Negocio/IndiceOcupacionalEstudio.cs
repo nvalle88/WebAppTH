@@ -10,12 +10,12 @@ namespace bd.webappth.entidades.Negocio
         
         //Propiedades Virtuales Referencias a otras clases
 
-        [Display(Name = "Índice ocupacional:")]
+        [Display(Name = "Índice ocupacional")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdIndiceOcupacional { get; set; }
         public virtual IndiceOcupacional IndiceOcupacional { get; set; }
 
-        [Display(Name = "Estudio:")]
+        [Display(Name = "Estudio")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdEstudio { get; set; }
         public virtual Estudio Estudio { get; set; }
