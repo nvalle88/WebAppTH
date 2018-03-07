@@ -15,7 +15,7 @@ namespace bd.webappth.entidades.Negocio
 
         //Propiedades Virtuales Referencias a otras clases
 
-        [Display(Name = "Pregunta:")]
+        [Display(Name = "Pregunta")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdPregunta { get; set; }
         public virtual Pregunta Pregunta { get; set; }

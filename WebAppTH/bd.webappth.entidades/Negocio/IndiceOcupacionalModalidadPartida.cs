@@ -10,34 +10,34 @@ namespace bd.webappth.entidades.Negocio
         public int IdIndiceOcupacionalModalidadPartida { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Fecha:")]
+        [Display(Name = "Fecha")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Salario real:")]
+        [Display(Name = "Salario real")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal? SalarioReal { get; set; }
         
         //Propiedades Virtuales Referencias a otras clases
 
-        [Display(Name = "Índice ocupacional:")]
+        [Display(Name = "Índice ocupacional")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdIndiceOcupacional { get; set; }
         public virtual IndiceOcupacional IndiceOcupacional { get; set; }
 
-        [Display(Name = "Empleado:")]
+        [Display(Name = "Empleado")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdEmpleado { get; set; }
         public virtual Empleado Empleado { get; set; }
 
-        [Display(Name = "Fondo de financiamiento:")]
+        [Display(Name = "Fondo de financiamiento")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int? IdFondoFinanciamiento { get; set; }
         public virtual FondoFinanciamiento FondoFinanciamiento { get; set; }
 
-        [Display(Name = "Tipo de nombramiento:")]
+        [Display(Name = "Tipo de nombramiento")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int? IdTipoNombramiento { get; set; }
         public virtual TipoNombramiento TipoNombramiento { get; set; }

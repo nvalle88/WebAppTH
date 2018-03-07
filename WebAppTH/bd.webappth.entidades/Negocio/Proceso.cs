@@ -11,7 +11,7 @@ namespace bd.webappth.entidades.Negocio
 
         //Propiedades Virtuales Referencias a otras clases
 
-        [Display(Name = "Proceso:")]
+        [Display(Name = "Proceso")]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Nombre { get; set; }
 
