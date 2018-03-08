@@ -1,0 +1,200 @@
+@model bd.webappth.entidades.ViewModels.EmpleadoSustitutoViewModel
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/js/site.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+
+
+<div id="content">
+    <section id="widget-grid" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Persona Sustituto</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form asp-action="CreatePersonaSustituto" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @{await Html.RenderPartialAsync("_PartialViewPersonaSustituto", Model);}
+                                <footer>
+                                    <input type="submit" id="GuardarForm" value="Guardar" class="btn btn-primary" />
+                                    <a asp-action="IndexPersonaSustituto" class="btn btn-default">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+
+@section Scripts {
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#IdEtnia").change(function () {
+
+            mostrarLoadingPanel("content", "Cargando...");
+            $("#IdNacionalidadIndigena").empty();
+             Init_Select2()
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListarNacionalidadIndigena","Empleados")',
+                    dataType: 'json',
+                    data: { etnia: $("#IdEtnia").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#IdNacionalidadIndigena").append('<option value="'
+                                + data.idNacionalidadIndigena + '">'
+                                + data.nombre + '</option>');
+                            Init_Select2()
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
+
+
+        $("#IdPaisLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdProvinciaLugarPersona").empty();
+            $("#IdCiudadLugarPersona").empty();
+            $("#IdParroquia").empty();
+            Init_Select2()
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarProvinciaPorPais", "Empleados")',
+                    dataType: 'json',
+                    data: { pais: $("#IdPaisLugarPersona").val() },
+                    success: function (data) {
+                        $("#IdProvinciaLugarPersona").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdProvinciaLugarPersona").append('<option value="'
+                                + data.idProvincia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+        $("#IdProvinciaLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdCiudadLugarPersona").empty();
+            $("#IdParroquia").empty();
+            Init_Select2()
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarCiudadPorProvincia", "Empleados")',
+                    dataType: 'json',
+                    data: { provincia: $("#IdProvinciaLugarPersona").val() },
+                    success: function (data) {
+                        $("#IdCiudadLugarPersona").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdCiudadLugarPersona").append('<option value="'
+                                + data.idCiudad + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+
+        $("#IdCiudadLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdParroquia").empty();
+            Init_Select2()
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarParroquiaPorCiudad", "Empleados")',
+                    dataType: 'json',
+                    data: { idCiudad: $("#IdCiudadLugarPersona").val() },
+                    success: function (data) {
+                        $("#IdParroquia").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdParroquia").append('<option value="'
+                                + data.idParroquia + '">'
+                                + data.nombre + '</option>');
+                            Init_Select2()
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+        });
+
+
+       // Evento que envía una petición Ajax al servidor
+    $('#GuardarForm').click(function (e) {
+     mostrarLoadingPanel("content", "Guardando empleado e inicializando el manual de puesto...")
+    });
+
+
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
+
+
+
+}
