@@ -1,0 +1,315 @@
+@model bd.webappth.entidades.Negocio.PersonaSustituto
+
+@{await Html.RenderPartialAsync("_PartialViewMenu");}
+
+
+<div id="content">
+
+    <p></p>
+    <a asp-action="CreatePersonaSustituto">
+        <button type="button" asp-action="CreatePersonaSustituto" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Persona Sustituto
+
+        </button>
+    </a>
+    <p> </p>
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Persona Sustituto</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-class="expand">
+                                            Nombre 
+                                        </th>
+                                        <th data-class="">
+                                            Identificacion
+                                        </th>
+                                        <th data-class="">
+                                            Tel&eacute;fono Privado
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-cog "></i>
+                                            Opciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   @if (Model.PersonaDiscapacidad!=null)
+                                   {
+                                   
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.Nombres) @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.Apellidos)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.Identificacion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.TelefonoPrivado)
+                                        </td>                                   
+                                        <td>
+
+                                            @Html.ActionLink("Editar", "EditPersonaSustituto", new { id = Model.PersonaDiscapacidad.Persona.IdPersona }) |
+                                            @Html.ActionLink("Eliminar", "DeletePersonaSustituto", new { id = Model.PersonaDiscapacidad.Persona.IdPersona }, new { onclick = "return confirm('Desea eliminar la Persona Sustituto... ?');" })
+
+                                        </td>
+                                    </tr>
+                                   }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+
+<div id="content">
+
+    <p></p>
+    <a asp-action="CreateEnfermedadSustituto">
+        <button type="button" asp-action="CreateEnfermedadSustituto" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Enfermedad Sustituto
+
+        </button>
+    </a>
+    <p> </p>
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Enfermedad Sustituto</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-class="expand">
+                                            Tipo de Enfermedad
+                                        </th>
+                                        <th data-class="">
+                                            Instituci&oacute;n que Emite
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-cog "></i>
+                                            Opciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.EnfermedadSustituto)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TipoEnfermedad.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.InstitucionEmite)
+                                            </td>
+                                            <td>
+
+                                                @Html.ActionLink("Editar", "EditEnfermedadSustituto", new { id = item.IdEnfermedadSustituto }) |
+                                                @Html.ActionLink("Eliminar", "DeleteEnfermedadSustituto", new { id = item.IdEnfermedadSustituto }, new { onclick = "return confirm('Desea eliminar la Enfermedad del Sustituto.. ?');" })
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+
+<div id="content">
+
+    <p></p>
+    <a asp-action="CreateDiscapacidadSustituto">
+        <button type="button" asp-action="CreateDiscapacidadSustituto" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nueva Discapacidad Sustituto
+
+        </button>
+    </a>
+    <p> </p>
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Discapacidad Sustituto</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-class="expand">
+                                            Tipo de Discapacidad
+                                        </th>
+                                        <th data-class="">
+                                            Porcentaje de Discapacidad
+                                        </th>
+                                        <th data-class="">
+                                            N&uacute;mero de Carnet
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-cog "></i>
+                                            Opciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.DiscapacidadSustituto)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoDiscapacidad.Nombre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PorcentajeDiscapacidad)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NumeroCarnet)
+                                        </td>
+                                        <td>
+
+                                            @Html.ActionLink("Editar", "EditDiscapacidadSustituto", new { id = item.IdDiscapacidadSustituto }) |
+                                            @Html.ActionLink("Eliminar", "DeleteDiscapacidadSustituto", new { id = item.IdDiscapacidadSustituto }, new { onclick = "return confirm('Desea eliminar la Discapacidad del Sustituto.. ?');" })
+
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+
+
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+}
+
+
