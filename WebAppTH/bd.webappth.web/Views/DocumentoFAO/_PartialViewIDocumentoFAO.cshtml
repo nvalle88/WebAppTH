@@ -3,19 +3,19 @@
 
     @if (Model.OpcionMenu == 0)
     {
-        <a asp-action="Detalle" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default"> Datos de <br /> Lista servidores Fao <br />Sevidor</a>
+        <a asp-action="Detalle" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default">Lista servidores <br /> FAO</a>
     }
     else
     {
-        <a asp-action="Detalle" asp-controller="DocumentoFAO" class="btn btn-default"> Datos de <br /> Identificaci&oacute;n <br />del puesto </a>
+        <a asp-action="Detalle" asp-controller="DocumentoFAO" class="btn btn-default">Lista servidores <br /> FAO</a>
     }
     @if (Model.OpcionMenu == 1)
     {
-        <a asp-action="AsignarEmpleadoFAO" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default"> Datos de <br /> Asignar <br />Sevidor</a>
+        <a asp-action="AsignarEmpleadoFAO" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default"> Asignar Sevidor <br /> FAO</a>
     }
     else
     {
-        <a asp-action="AsignarEmpleadoFAO" asp-controller="DocumentoFAO" class="btn btn-default"> Datos de <br />Asignar <br />Servidor</a>
+        <a asp-action="AsignarEmpleadoFAO" asp-controller="DocumentoFAO" class="btn btn-default"> Asignar Sevidor <br /> FAO</a>
     }
 
 
