@@ -49,6 +49,7 @@ namespace bd.webappth.web.Controllers.MVC
             if (!ModelState.IsValid)
             {
                 InicializarMensaje(null);
+                ViewData["IdCiudad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
                 return View(sucursal);
             }
             entidades.Utils.Response response = new entidades.Utils.Response();

@@ -12,6 +12,7 @@ namespace bd.webappth.entidades.Utils
         public static string FechaRangoMenor { get { return "La fecha inicial no puede ser mayor que la fecha final "; } }
         public static string FechaRangoMayor { get { return "La fecha final no puede ser menor que la fecha inicial "; } }
         public static string ExisteRegistro { get { return "Existe un registro de igual información"; } }
+        public static string ExisteEmpleado { get { return "Existe un empleado de igual información"; } }
         public static string Satisfactorio { get { return "La acción se ha realizado satisfactoriamente"; } }
         public static string Error { get { return "Ha ocurrido error inesperado"; } }
         public static string RegistroNoEncontrado { get { return "El registro solicitado no se ha encontrado"; } }

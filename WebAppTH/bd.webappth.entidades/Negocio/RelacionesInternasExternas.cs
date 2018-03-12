@@ -10,12 +10,12 @@ namespace bd.webappth.entidades.Negocio
         public int IdRelacionesInternasExternas { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Nombre:")]
+        [Display(Name = "Nombre")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Descripción:")]
+        [Display(Name = "Descripción")]
         [DataType(DataType.MultilineText)]
         [StringLength(500, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Descripcion { get; set; }

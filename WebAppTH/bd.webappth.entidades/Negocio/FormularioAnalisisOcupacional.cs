@@ -41,6 +41,7 @@ namespace bd.webappth.entidades.Negocio
         [DataType(DataType.Text)]
         public string MisionPuesto { get; set; }
 
+        public int? Estado { get; set; }
         //Propiedades Virtuales Referencias a otras clases
 
         [Display(Name = "Empleado:")]

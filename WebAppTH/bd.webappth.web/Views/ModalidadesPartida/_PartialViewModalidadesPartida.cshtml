@@ -13,8 +13,8 @@
 
     <div class="row">
         <section class="col col-8">
+            <label class="label">@Html.DisplayNameFor(model => model.Nombre)</label>
             <label class="input">
-                <i class="icon-append fa fa-comment"></i>
                 <input maxlength="20" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </label>

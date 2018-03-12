@@ -64,20 +64,21 @@
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-4">
+                                            <label class="label">@Html.DisplayNameFor(model => model.Nombre)</label>
                                             <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
                                                 <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
                                                 <span asp-validation-for="Nombre" class="text-danger"></span>
                                             </label>
                                         </section>
                                         <section class="col col-4">
+                                            <label class="label">@Html.DisplayNameFor(model => model.Telefono)</label>
                                             <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
                                                 <input maxlength="32" asp-for="Telefono" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Telefono)" />
                                                 <span asp-validation-for="Telefono" class="text-danger"></span>
                                             </label>
                                         </section>
                                         <section class="col col-4">
+                                            <label class="label">@Html.DisplayNameFor(model => model.Pais.Nombre)</label>
                                             <label class="input">
                                                 <select asp-for="IdPais" class="form-control" asp-items="ViewBag.IdPais">
                                                     <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdPais)></option>
@@ -88,9 +89,8 @@
                                     </div>
 
                                     <section>
-                                        <label class="label"></label>
+                                        <label class="label">@Html.DisplayNameFor(model => model.Direccion)</label>
                                         <label class="textarea">
-                                            <i class="icon-append fa fa-comment"></i>
                                             <textarea maxlength="50" asp-for="Direccion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Direccion)"></textarea>
                                             <span asp-validation-for="Direccion" class="text-danger"></span>
                                         </label>

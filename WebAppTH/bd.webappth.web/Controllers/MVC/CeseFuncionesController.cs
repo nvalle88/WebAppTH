@@ -219,6 +219,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdDependencia = idDependenciaEnviar,
                 };
                 var listaempleados = await apiServicio.Listar<EmpleadoSolicitudViewModel>(empleado, new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosdeDependenciaSinCesacion");
+                InicializarMensaje(null);
                 return View(listaempleados);
             }
             catch (Exception)

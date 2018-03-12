@@ -195,7 +195,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Index(int IdSolicitudViatico,string mensaje)
         {
-            InicializarMensaje(mensaje);
+            
             SolicitudViatico sol = new SolicitudViatico();
             ListaEmpleadoViewModel empleado = new ListaEmpleadoViewModel();
             List<ItinerarioViatico> lista = new List<ItinerarioViatico>();
@@ -264,11 +264,12 @@ namespace bd.webappth.web.Controllers.MVC
                         ViewData["Pais"] = pais.Nombre;
                         ViewData["Provincia"] = provincia.Nombre;
                         ViewData["Ciudad"] = ciudad.Nombre;
-
+                        InicializarMensaje(mensaje);
                         return View(solicitudViaticoViewModel);
                     }
                 }
-                return BadRequest();
+               // return RedirectToAction("Index", new { mensaje = respuestaEmpleado.Message });
+               return BadRequest();
             }
             catch (Exception)
             {

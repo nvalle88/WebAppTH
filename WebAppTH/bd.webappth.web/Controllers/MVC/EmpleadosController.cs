@@ -215,6 +215,7 @@ namespace bd.webappth.web.Controllers.MVC
                     return RedirectToAction("AgregarDistributivo",new {IdEmpleado=empleado.IdEmpleado });
                 }
                 await CargarCombos(datosBasicosEmpleado);
+                ViewData["Error"] = Mensaje.ExisteEmpleado;
                 return View(datosBasicosEmpleado);
             }
             catch (Exception ex)

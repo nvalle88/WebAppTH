@@ -24,7 +24,7 @@
         Url.Action("Index", "Login");
     }
     <nav  >
-        <ul   >
+        <ul  >
             @foreach (var nivel1 in menuItems.Where(p => p.AdmePadre == null || p.AdmePadre == Convert.ToString(0)))
             {
                 <li >

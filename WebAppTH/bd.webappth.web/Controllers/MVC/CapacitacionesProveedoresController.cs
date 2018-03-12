@@ -186,6 +186,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<CapacitacionProveedor>(new Uri(WebApp.BaseAddress)
                                                                     , "api/CapacitacionesProveedores/ListarCapacitacionesProveedores");
+                InicializarMensaje(null);
                 return View(lista);
             }
             catch (Exception ex)

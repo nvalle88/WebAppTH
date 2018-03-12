@@ -10,13 +10,13 @@ namespace bd.webappth.entidades.Negocio
         public int IdRelacionLaboral { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Relación laboral:")]
+        [Display(Name = "Relación laboral")]
         [StringLength(20, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Nombre { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 
-        [Display(Name = "Régimen laboral:")]
+        [Display(Name = "Régimen laboral")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdRegimenLaboral { get; set; }
         public virtual RegimenLaboral RegimenLaboral { get; set; }
