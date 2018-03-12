@@ -1,10 +1,23 @@
-@model List<bd.webappth.entidades.Negocio.ExamenComplementario>
+@model bd.webappth.entidades.ViewModels.ExamenesComplementariosViewModel
+@using bd.webappth.entidades.Negocio
 
 @{
-    ViewData["Title"] = "Examenes Complementarios"; 
+    ViewData["Title"] = "Examenes Complementarios";
 }
+
+@{
+    var mficha = new FichaMedica();
+
+    mficha = Model.fichaMedica;
+}
+
 <!-- MAIN CONTENT -->
 <div id="content">
+
+    @{await Html.RenderPartialAsync("../FichasMedicas/_PartialViewMenu", mficha);}
+
+    <br />
+    &nbsp;
 
     <div class="col col-10">
         @if (@ViewData["Error"].ToString() != "")
@@ -25,16 +38,28 @@
     </div>
 
     <p></p>
-    <a asp-action="Create">
-        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+
+    <div style="">
+
+        <form asp-action="Create2" id="checkout-form" novalidate="novalidate">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="fichaMedica.IdFichaMedica" style="width:100px;" />
+            <input type="hidden" asp-for="fichaMedica.IdPersona" style="width:100px;" />
+
+            <button type="submit" class="btn btn-labeled btn-default" style="width:100px;" onclick="espera()">
+                <span class="btn-label" >
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nuevo&nbsp;
+
+            </button>
 
 
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo
+        </form>
 
-        </button>
-    </a>
+    </div>
+
     <p> </p>
 
     <!-- widget grid -->
@@ -76,19 +101,19 @@
 
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdFichaMedica)
+                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().IdFichaMedica)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Fecha)
+                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().Fecha)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Resultado)
+                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().Resultado)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().TipoExamenComplementario.Nombre)
+                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().TipoExamenComplementario.Nombre)
                                         </th>
 
                                         <th>Opciones</th>
@@ -96,31 +121,31 @@
 
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.ListaExamenesComplementarios)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.IdFichaMedica)
-                                        </td>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IdFichaMedica)
+                                            </td>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Fecha)
-                                        </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Fecha)
+                                            </td>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Resultado)
-                                        </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Resultado)
+                                            </td>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TipoExamenComplementario.Nombre)
-                                        </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TipoExamenComplementario.Nombre)
+                                            </td>
 
 
-                                        <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdExamenComplementario }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdExamenComplementario }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
-                                        </td>
-                                    </tr>
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdExamenComplementario, idFM = item.IdFichaMedica }, new { onclick = "espera()" }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdExamenComplementario, idFM = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -142,5 +167,20 @@
 
 @section Scripts {
     <script src='~/js/datatables/init.js'></script>
+
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script>
+
+        onload = function () {
+
+            $("#btn_6").css("background-color", "#3276b1");
+            $("#btn_6").css("color", "white");
+        }
+    </script>
 }
 

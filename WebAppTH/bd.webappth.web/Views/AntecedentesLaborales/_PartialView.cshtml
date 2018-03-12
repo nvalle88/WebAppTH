@@ -6,7 +6,10 @@
         <div style="margin-left:2%;">
 
             <section>
+                <!--
                 <label>@Html.DisplayNameFor(model => model.FichaMedica.IdFichaMedica)</label>
+                
+                <!--
                 <div class="form-group">
                     <label class="input">
                         <select style="width:300px;" asp-for="IdFichaMedica" class="form-control input " asp-items="ViewBag.IdFichaMedica">
@@ -15,12 +18,16 @@
                         <span asp-validation-for="IdFichaMedica" class="text-danger"></span>
                     </label>
                 </div>
+                -->
+
+                <input type="hidden" style="width:300px;" maxlength="50" asp-for="IdFichaMedica" class="form-control" placeholder="@Html.DisplayNameFor(model => model.IdFichaMedica)" readonly/>
+
             </section>
 
             <section>
                 <label>
                     <label>@Html.DisplayNameFor(model => model.Empresa)</label>
-                    <input style="width:300px;" maxlength="50" asp-for="Empresa" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Empresa)" />
+                    <input style="width:300px;" maxlength="50" asp-for="Empresa" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Empresa)" />
                     <span asp-validation-for="Empresa" class="text-danger"></span>
                 </label>
             </section>
@@ -28,7 +35,7 @@
             <section>
                 <label>
                     <label>@Html.DisplayNameFor(model => model.Cargo)</label>
-                    <input style="width:300px;" maxlength="150" asp-for="Cargo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Cargo)" />
+                    <input style="width:300px;" maxlength="150" asp-for="Cargo" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Cargo)" />
                     <span asp-validation-for="Cargo" class="text-danger"></span>
                 </label>
             </section>
@@ -61,3 +68,4 @@
     </div>
     
 </fieldset>
+

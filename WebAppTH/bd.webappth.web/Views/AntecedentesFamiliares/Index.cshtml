@@ -1,10 +1,24 @@
-@model List<bd.webappth.entidades.Negocio.AntecedentesFamiliares>
+@model bd.webappth.entidades.ViewModels.AntecedentesFamiliaresViewModel
+@using bd.webappth.entidades.Negocio
 
 @{
-    ViewData["Title"] = "Antecedentes familiares"; 
+    ViewData["Title"] = "Antecedentes familiares";
 }
+
+@{
+    var mficha = new FichaMedica();
+
+    mficha = Model.fichaMedica;
+}
+
+
 <!-- MAIN CONTENT -->
 <div id="content">
+
+    @{await Html.RenderPartialAsync("../FichasMedicas/_PartialViewMenu", mficha);}
+
+    <br />
+    &nbsp;
 
     <div class="col col-10">
         @if (@ViewData["Error"].ToString() != "")
@@ -25,16 +39,27 @@
     </div>
 
     <p></p>
-    <a asp-action="Create">
-        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
 
 
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo
 
-        </button>
-    </a>
+    <div style="">
+        <form asp-action="Create2" id="checkout-form"  novalidate="novalidate">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="fichaMedica.IdFichaMedica" style="width:100px;" />
+            <input type="hidden" asp-for="fichaMedica.IdPersona" style="width:100px;" />
+
+            <button type="submit" class="btn btn-labeled btn-default" style="width:100px;" onclick="espera()">
+                <span class="btn-label" >
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nuevo&nbsp;
+
+            </button>
+        </form>
+
+    </div>
+
     <p> </p>
 
     <!-- widget grid -->
@@ -76,19 +101,19 @@
 
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FichaMedica.IdFichaMedica)
+                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().FichaMedica.IdFichaMedica)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Parentesco)
+                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().Parentesco)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Enfermedad)
+                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().Enfermedad)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Observaciones)
+                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().Observaciones)
                                         </th>
 
 
@@ -96,30 +121,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.ListaAntecedentesFamiliares)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FichaMedica.IdFichaMedica)
-                                        </td>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IdFichaMedica)
+                                            </td>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Parentesco)
-                                        </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Parentesco)
+                                            </td>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Enfermedad)
-                                        </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Enfermedad)
+                                            </td>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Observaciones)
-                                        </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Observaciones)
+                                            </td>
 
-                                        <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdAntecedentesFamiliares}) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdAntecedentesFamiliares }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
-                                        </td>
-                                    </tr>
+                                            <td>
+
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdAntecedentesFamiliares, idFM = item.IdFichaMedica } , new { onclick = "espera()"} ) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdAntecedentesFamiliares, idFM = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -141,5 +167,21 @@
 
 @section Scripts {
     <script src='~/js/datatables/init.js'></script>
+
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script>
+
+        onload = function () {
+            
+            $("#btn_3").css("background-color", "#3276b1");
+            $("#btn_3").css("color", "white");
+        }
+
+    </script>
 }
 

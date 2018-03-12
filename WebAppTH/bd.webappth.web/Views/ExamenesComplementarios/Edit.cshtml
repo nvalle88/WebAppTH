@@ -55,10 +55,13 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdExamenComplementario" />
                                 @{await Html.RenderPartialAsync("_PartialView");}
+
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                    <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                    <input type="submit" asp-action="Index" asp-controller="ExamenesComplementarios" asp-route-idFicha="@Model.IdFichaMedica" class="btn btn-default" value="Cancelar" onclick="espera()" />
+
                                 </footer>
+
                             </form>
                         </div>
                         <!-- end widget content -->

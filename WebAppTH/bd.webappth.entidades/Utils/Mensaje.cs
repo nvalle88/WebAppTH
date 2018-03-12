@@ -19,7 +19,11 @@ namespace bd.webappth.entidades.Utils
         public static string BorradoNoSatisfactorio { get { return "No es posible eliminar el registro, existen relaciones que dependen de él"; } }
         public static string NoExistenRegistrosPorAsignar { get { return "No existen Registros por agregar"; } }    
         public static string GenerandoListas { get { return "Las listas se están cargando"; } }
+        public static string GuardadoSatisfactorio { get {return "Los datos se han guardado correctamente"; } }
+        public static string BorradoSatisfactorio { get { return "El registro se ha eliminado correctamente"; } }
+        public static string ErrorFichaEdicion { get { return "Existe una ficha en edición"; } }
 
+        
 
     }
 }

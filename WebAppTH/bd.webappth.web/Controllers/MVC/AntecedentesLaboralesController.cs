@@ -11,6 +11,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using Newtonsoft.Json;
 using bd.log.guardar.Enumeradores;
+using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -26,6 +27,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        
+
+
         private void InicializarMensaje(string mensaje)
 
         {
@@ -38,30 +42,68 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Error"] = mensaje;
         }
 
-        public async Task<IActionResult> Create(string mensaje)
+        public async Task<IActionResult> Create(string mensaje, FichaMedica fichaMedica)
         {
-            ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+            //ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+
+            AntecedentesLaborales antLab = new AntecedentesLaborales();
+            //antLab.IdFichaMedica = this.idFichaCache;
 
             InicializarMensaje(mensaje);
 
-            return View();
+            return View(antLab);
         }
+
+
+        public async Task<IActionResult> Create2(string mensaje, int idFicha, int idPersona)
+        {
+
+            AntecedentesLaborales antLab = new AntecedentesLaborales();
+            antLab.IdFichaMedica = idFicha;
+
+            InicializarMensaje("");
+
+            return View("Create", antLab);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create2(FichaMedica fichaMedica)
+        {
+
+            AntecedentesLaborales antLab = new AntecedentesLaborales();
+            antLab.IdFichaMedica = fichaMedica.IdFichaMedica;
+
+            InicializarMensaje("");
+
+            return View("Create", antLab);
+        }
+
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AntecedentesLaborales AntecedentesLaborales)
         {
 
-            
+
+            AntecedentesLaboralesViewModel alvm = new AntecedentesLaboralesViewModel();
+
 
             if (!ModelState.IsValid)
             {
                 InicializarMensaje(Mensaje.ModeloInvalido);
-                ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+
+                //ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
                 return View(AntecedentesLaborales);
             }
 
-                Response response = new Response();
+
+            Response response = new Response();
+
+
             try
             {
                 response = await apiServicio.InsertarAsync(AntecedentesLaborales,
@@ -70,49 +112,29 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = Mensaje.Satisfactorio,
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "AntecedentesLaborales:", AntecedentesLaborales.IdAntecedentesLaborales),
-                    });
-
-                    ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
-                    return RedirectToAction("Index");
+                    //ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+                    
+                    return RedirectToAction("Index","AntecedentesLaborales", new { mensaje = Mensaje.GuardadoSatisfactorio ,idFicha = AntecedentesLaborales.IdFichaMedica});
                 }
 
-                ViewData["Error"] = response.Message + ", verifique que haya seleccionado un: código ficha médica" ;
-                ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+                //ViewData["Error"] = response.Message + ", verifique que haya seleccionado un: código ficha médica" ;
+                //ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
 
-                return View(AntecedentesLaborales);
+                return RedirectToAction("Index", "AntecedentesLaborales", new { mensaje = response.Message ,idFicha = AntecedentesLaborales.IdFichaMedica });
 
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.Excepcion,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
-
                 InicializarMensaje(Mensaje.Error);
-                return View(AntecedentesLaborales);
-
-
+                return RedirectToAction("Index", "AntecedentesLaborales", new { mensaje = Mensaje.Excepcion,idFicha = AntecedentesLaborales.IdFichaMedica });
             }
+
+
         }
 
         public async Task<IActionResult> Edit(string id)
         {
-            ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+            //ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
 
             try
             {
@@ -132,7 +154,7 @@ namespace bd.webappth.web.Controllers.MVC
                         InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
-                    ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+                    //ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
 
                 }
 
@@ -159,113 +181,126 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        /*
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = Mensaje.Satisfactorio,
-                            UserName = "Usuario 1"
-                        });
-                        //ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
-                        return RedirectToAction("Index");
-                        */
+                        
+                        return RedirectToAction("Index", "AntecedentesLaborales", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = AntecedentesLaborales.IdFichaMedica });
                     }
                     
-
+                    return RedirectToAction("Index", "AntecedentesLaborales", new { mensaje = response.Message, idFicha = AntecedentesLaborales.IdFichaMedica });
                     
 
-                    ViewData["Error"] = response.Message;
-                    ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
-                    return View(AntecedentesLaborales);
-
                 }
                 return BadRequest();
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.Excepcion,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+                
 
                 return BadRequest();
 
             }
         }
 
-        public async Task<IActionResult> Index(string mensaje)
+        public async Task<IActionResult> Index(string mensaje, int idFicha, int idPersona)
         {
-            ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+            //ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+
+            var alvm = new AntecedentesLaboralesViewModel();
+
             var lista = new List<AntecedentesLaborales>();
+
+            var fichaMedica = new FichaMedica();
+            fichaMedica.IdPersona = idPersona;
+            fichaMedica.IdFichaMedica = idFicha;
+            
+
+            Response response = new Response();
+            
             try
             {
-                lista = await apiServicio.Listar<AntecedentesLaborales>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/AntecedentesLaborales/ListarAntecedentesLaborales");
-                InicializarMensaje(mensaje);
 
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                if (idPersona < 1)
                 {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.GenerandoListas,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
-            }
-        }
+                    response = await apiServicio.InsertarAsync<Response>(fichaMedica.IdFichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerIdPersonaPorFicha");
+
+                    if (response.IsSuccess)
+                    {
+                        fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+                    }
+
+                }
+                else
+                {
+                    response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerUltimaFichaMedica");
 
 
-        public async Task<IActionResult> Delete(string id)
-        {
+                    if (response.IsSuccess)
+                    {
+                        fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+                    }
 
-            try
-            {
-                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "api/AntecedentesLaborales");
+                }
+                
+                
+                response = await apiServicio.InsertarAsync<Response>(fichaMedica.IdFichaMedica,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/AntecedentesLaborales/ListarAntecedentesLaboralesPorFicha");
+
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
-                        Message = Mensaje.Satisfactorio,
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+                    lista = JsonConvert.DeserializeObject<List<AntecedentesLaborales>>(response.Resultado.ToString());    
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
+                
+
+                
+                InicializarMensaje(mensaje);
+
+
+                alvm.ListaAntecedentesLaborales = lista;
+                alvm.fichaMedica = fichaMedica;
+
+                return View(alvm);
+
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.Excepcion,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
+               
                 return BadRequest();
             }
         }
+
+
+        
+
+            public async Task<IActionResult> Delete(string id, int idFM )
+            {
+
+                FichaMedica fm = new FichaMedica();
+                fm.IdFichaMedica = idFM;
+
+                try
+                {
+                    var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
+                                                                   , "api/AntecedentesLaborales");
+                    if (response.IsSuccess)
+                    {
+                    
+                        return RedirectToAction("Index", "AntecedentesLaborales", new { mensaje = Mensaje.BorradoSatisfactorio,idFicha = idFM });
+
+                    }
+                    
+                    return RedirectToAction("Index", "AntecedentesLaborales", new { mensaje = response.Message , idFicha = idFM });
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest();
+                }
+
+            }
         
     }
 }

@@ -279,6 +279,7 @@ namespace bd.webappth.entidades.Negocio
         public string PielHallazgos { get; set; }
 
 
+        public int Estado { get; set; }
 
 
         public virtual ICollection<AntecedentesFamiliares> AntecedentesFamiliares { get; set; }
