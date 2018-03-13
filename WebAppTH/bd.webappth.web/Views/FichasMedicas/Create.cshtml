@@ -10,6 +10,11 @@
 			<!-- MAIN CONTENT -->
 <div id="content">
 
+    @{await Html.RenderPartialAsync("_PartialViewMenu");}
+
+    <br />
+    &nbsp;
+
     <div class="col col-10">
         @if (@ViewData["Error"].ToString() != "")
 
@@ -59,7 +64,7 @@
                                 @{await Html.RenderPartialAsync("_PartialView", Model);}
 
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <input type="submit" value="Guardar" class="btn btn-default" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>

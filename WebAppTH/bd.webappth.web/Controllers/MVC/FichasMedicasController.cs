@@ -27,6 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+
         private void InicializarMensaje(string mensaje)
 
         {
@@ -40,7 +41,160 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
+        public async Task<IActionResult> Menu(int idPersona, int idFichaMedica, int idMenu)
+        {
 
+
+
+
+            FichaMedica fichaMedica = new FichaMedica();
+
+            fichaMedica.IdPersona = idPersona;
+            fichaMedica.IdFichaMedica = idFichaMedica;
+
+
+            Response response = new Response();
+
+            response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerUltimaFichaMedica");
+
+
+            if (response.IsSuccess)
+            {
+                fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+
+                if (idMenu == 0)
+                {
+                    return RedirectToAction("Index", "FichasMedicas", fichaMedica);
+                }
+
+                else if (idMenu == 1)
+                {
+
+                    return RedirectToAction("AntecedentesProfesionales", "FichasMedicas", new { mensaje = "", idFicha = fichaMedica.IdFichaMedica , idPersona = fichaMedica.IdPersona } );
+                }
+                 
+                else if (idMenu == 2)
+                {
+                    return RedirectToAction("Index", "AntecedentesLaborales", fichaMedica);
+                }
+
+                else if (idMenu == 3)
+                {
+                    return RedirectToAction("Index", "AntecedentesFamiliares", fichaMedica);
+                }
+
+                else if (idMenu == 4)
+                {
+                    return RedirectToAction("Habitos", "FichasMedicas", new { mensaje = "", idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+                }
+
+                else if (idMenu == 5)
+                {
+                    return RedirectToAction("DatosMedicos", "FichasMedicas", new { mensaje = "", idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+
+                }
+
+                else if (idMenu == 6)
+                {
+                    return RedirectToAction("Index", "ExamenesComplementarios", fichaMedica);
+                }
+
+                else if (idMenu == 7)
+                {
+                    return RedirectToAction("Index", "FichasMedicas", new { mensaje = "", idFicha = 0, idPersona = 0 });
+                }
+
+            }
+
+            if ( idMenu == 0 )
+            {
+                return RedirectToAction("Index", "FichasMedicas", new { mensaje = "", idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+            }
+
+            else if (idMenu == 7)
+            {
+                return RedirectToAction("Index", "FichasMedicas", new { mensaje = "", idFicha = 0, idPersona = 0 });
+            }
+
+            else if(idPersona < 1){
+                return RedirectToAction("Index", "FichasMedicas", new { mensaje = "Debe seleccionar un paciente, o ingresar una cédula", idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+            }
+
+            
+            return RedirectToAction("Index", "FichasMedicas", new { mensaje = response.Message, idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+        }
+
+
+
+
+
+
+
+        public async Task<IActionResult> Index(string mensaje, FichaMedica fichaMedica, int idPersona)
+        {
+            
+            InicializarMensaje(mensaje);
+            
+            
+
+            try
+            {
+
+                var fmvm = new FichaMedicaViewModel();
+
+                fmvm.FichasMedicas = new List<FichaMedica>();
+                fmvm.DatosBasicosPersonaViewModel = new DatosBasicosPersonaViewModel();
+                fmvm.DatosBasicosPersonaViewModel.IdPersona = idPersona;
+
+                var lista = new List<Persona>();
+
+                lista = await apiServicio.Listar<Persona>(new Uri(WebApp.BaseAddress)
+                                                                    , "api/FichasMedicas/ListarPersonasFichaMedica");
+
+
+                fmvm.ListaPersonas = lista;
+
+
+
+                fmvm.DatosBasicosPersonaViewModel.IdPersona = fichaMedica.IdPersona;
+
+
+
+                if (fichaMedica.IdPersona > 0)
+                {
+
+                    Response response = new Response();
+
+                    response = await apiServicio.ObtenerElementoAsync1<Response>(fmvm,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/ListarFichaMedicaViewModel");
+
+
+
+                    if (response.IsSuccess)
+                    {
+                        var fms = JsonConvert.DeserializeObject<FichaMedicaViewModel>(response.Resultado.ToString());
+
+
+                        return View(fms);
+                    }
+                }
+
+                //fmvm.ListaPersonas = new List<Persona>();
+                
+
+
+                return View(fmvm);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
 
 
 
@@ -48,14 +202,11 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(FichaMedicaViewModel fichaMedicaViewModel)
         {
+            InicializarMensaje("");
+
             Response response = new Response();
             try
             {
-
-                //string identificacion = fichaMedicaViewModel.DatosBasicosPersonaViewModel.Identificacion;
-
-                //var a = new FichaMedicaViewModel();
-                //a.DatosBasicosPersonaViewModel.Identificacion = fichaMedicaViewModel.DatosBasicosPersonaViewModel.Identificacion;
 
 
                 response = await apiServicio.ObtenerElementoAsync1<Response>(fichaMedicaViewModel,
@@ -68,8 +219,10 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         var fms = JsonConvert.DeserializeObject<FichaMedicaViewModel>(response.Resultado.ToString());
                     
-                        return View(fms);
-                    }
+
+                        return View("Index",fms);
+
+                }
 
 
                 ViewData["Error"] = response.Message;
@@ -81,52 +234,141 @@ namespace bd.webappth.web.Controllers.MVC
 
                 FichaMedicaViewModel fmvm2 = new FichaMedicaViewModel();
                 List<FichaMedica> listafm = new List<FichaMedica>();
+                List<Persona> lista = new List<Persona>();
+
+                lista = await apiServicio.Listar<Persona>(new Uri(WebApp.BaseAddress)
+                                                                    , "api/FichasMedicas/ListarPersonasFichaMedica");
+
+
+                fmvm2.ListaPersonas = lista;
 
                 fmvm2.DatosBasicosPersonaViewModel = dbvm;
                 fmvm2.FichasMedicas = listafm;
-
-                return View(fmvm2);
-
                 
+                return View("Index", fmvm2);
+
 
             }
             catch (Exception ex)
             {
-                /*
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.Excepcion,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                */
-                return BadRequest();
+                return RedirectToAction("Index", "FichasMedicas", new { mensaje = response.Message, idFicha = 0, idPersona = 0 });
+                //return BadRequest();ertretre
 
             }
         }
 
 
-
-
-        public async Task<IActionResult> Create(string mensaje,string id)
+        public async Task<IActionResult> SeleccionPaciente(string id)
         {
-            
-            InicializarMensaje(mensaje);
-            var fichaMedica = new FichaMedica();
 
+            FichaMedicaViewModel fmvm = new FichaMedicaViewModel();
+            DatosBasicosPersonaViewModel dbp= new DatosBasicosPersonaViewModel();
+            List<FichaMedica> listaF = new List<FichaMedica>();
+            List<Persona> listaP = new List<Persona>();
+
+            fmvm.DatosBasicosPersonaViewModel = dbp;
+            fmvm.ListaPersonas = listaP;
+            fmvm.FichasMedicas = listaF;
+
+            fmvm.DatosBasicosPersonaViewModel.Identificacion = id;
+            fmvm.DatosBasicosPersonaViewModel.IdPersona = 0;
+
+            return await Index(fmvm);
+        }
+
+
+
+
+        public async Task<IActionResult> Create(string mensaje, string id)
+        {
+
+            Response response = new Response();
+
+            InicializarMensaje(mensaje);
+
+            var fichaMedica = new FichaMedica();
             int id2 = Convert.ToInt32(id);
-            DateTime hoy = DateTime.Today;
+
 
             fichaMedica.IdPersona = id2;
-            fichaMedica.FechaFichaMedica = hoy;
 
-            fichaMedica.AntecedenteMedico = "";
-            fichaMedica.AntecedenteQuirurgico = "";
 
-            return View(fichaMedica);
+
+            try
+            {
+
+                response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/FichasMedicas/VerUltimaFichaMedica");
+
+
+                if (response.IsSuccess)
+                {
+                    fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+                    
+
+                    // aqui!!!!
+                    
+                    return RedirectToAction("Index", "FichasMedicas", new { mensaje = "Ya existe una ficha en edición, no se ha creado una nueva ficha", idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+                }
+                else
+                {
+
+                    DateTime hoy = DateTime.Today;
+
+
+                    fichaMedica.FechaFichaMedica = hoy;
+                    fichaMedica.Estado = 0;
+
+                    fichaMedica.Diagnostico = "Sin diagnóstico";
+
+
+
+                    if (!ModelState.IsValid)
+                    {
+                        InicializarMensaje(null);
+
+                        return View(fichaMedica);
+                    }
+
+                    response = await apiServicio.InsertarAsync(fichaMedica,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/FichasMedicas/InsertarFichasMedicas");
+
+
+                    if (response.IsSuccess)
+                    {
+
+
+                        response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/FichasMedicas/VerUltimaFichaMedica");
+
+
+                        if (response.IsSuccess)
+                        {
+                            fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+                            return RedirectToAction("AntecedentesProfesionales", "FichasMedicas", fichaMedica);
+
+                        }
+
+
+                    }
+
+
+                }
+
+
+
+
+            }
+            catch (Exception ex1) {
+
+
+            }
+
+            return View();
             
             
         }
@@ -154,17 +396,6 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = Mensaje.Satisfactorio,
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "FichasMedicas:", fichaMedica.IdFichaMedica),
-                    });
-
                     return RedirectToAction("Index");
                 }
 
@@ -175,22 +406,373 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.Excepcion,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
-
+                
                 InicializarMensaje(Mensaje.Error);
+
                 return View(fichaMedica);
 
 
             }
         }
+
+
+        public async Task<IActionResult> Habitos(string mensaje, int idFicha ,int idPersona)
+        {
+
+
+            FichaMedica fichaMedica = new FichaMedica();
+            fichaMedica.IdPersona = idPersona;
+
+
+            InicializarMensaje(mensaje);
+
+            
+            Response response = new Response();
+                
+            response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerUltimaFichaMedica");
+
+
+            if (response.IsSuccess)
+            {
+                fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+            }else{
+
+                mensaje = "Habitos Index mnes,ficha nodata";
+            }
+
+            
+            return View(fichaMedica);
+            
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Habitos(FichaMedica fichaMedica)
+        {
+
+            Response response = new Response();
+
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+
+                return View(fichaMedica);
+            }
+
+
+            response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                            new Uri(WebApp.BaseAddress),
+                                                            "api/FichasMedicas/VerUltimaFichaMedica");
+            if (response.IsSuccess)
+            {
+                var fichaMedica2 = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+                fichaMedica2.AntecedenteMedico = fichaMedica.AntecedenteMedico;
+                fichaMedica2.AntecedenteQuirurgico = fichaMedica.AntecedenteQuirurgico;
+                fichaMedica2.Alergias = fichaMedica.Alergias;
+                fichaMedica2.Vacunas = fichaMedica.Vacunas;
+                fichaMedica2.UsoMedicinaDiaria = fichaMedica.UsoMedicinaDiaria;
+                fichaMedica2.FechaUltimaDosis = fichaMedica.FechaUltimaDosis;
+
+                fichaMedica2.PrimeraMenstruacion = fichaMedica.PrimeraMenstruacion;
+                fichaMedica2.UltimaMenstruacion = fichaMedica.UltimaMenstruacion;
+                fichaMedica2.CicloMenstrual = fichaMedica.CicloMenstrual;
+                fichaMedica2.Gestas = fichaMedica.Gestas;
+                fichaMedica2.Partos = fichaMedica.Partos;
+                fichaMedica2.Cesarias = fichaMedica.Cesarias;
+                fichaMedica2.Abortos = fichaMedica.Abortos;
+                fichaMedica2.HijosVivos = fichaMedica.HijosVivos;
+                fichaMedica2.UltimoPapTest = fichaMedica.UltimoPapTest;
+                fichaMedica2.UltimaMamografia = fichaMedica.UltimaMamografia;
+                fichaMedica2.Anticoncepcion = fichaMedica.Anticoncepcion;
+                
+                fichaMedica2.Cigarrillo = fichaMedica.Cigarrillo;
+                fichaMedica2.FrecuenciaCigarrillo = fichaMedica.FrecuenciaCigarrillo;
+                fichaMedica2.CigarrilloDesde = fichaMedica.CigarrilloDesde;
+                fichaMedica2.CigarrilloHasta = fichaMedica.CigarrilloHasta;
+
+                fichaMedica2.Licor = fichaMedica.Licor;
+                fichaMedica2.LicorFrecuencia = fichaMedica.LicorFrecuencia;
+                fichaMedica2.LicorDesde = fichaMedica.LicorDesde;
+                fichaMedica2.LicorHasta = fichaMedica.LicorHasta;
+
+                fichaMedica2.Drogas = fichaMedica.Drogas;
+                fichaMedica2.FrecuenciaDrogas = fichaMedica.FrecuenciaDrogas;
+                fichaMedica2.DrogasDesde = fichaMedica.DrogasDesde;
+                fichaMedica2.DrogasHasta = fichaMedica.DrogasHasta;
+
+                fichaMedica2.Ejercicios = fichaMedica.Ejercicios;
+                fichaMedica2.EjerciciosFrecuencia = fichaMedica.EjerciciosFrecuencia;
+                fichaMedica2.EjerciciosTipo = fichaMedica.EjerciciosTipo;
+
+                fichaMedica2.HabitosObservaciones = fichaMedica.HabitosObservaciones;
+
+
+                response = await apiServicio.EditarAsync(fichaMedica.IdFichaMedica + "", fichaMedica2, new Uri(WebApp.BaseAddress),
+                                                                    "api/FichasMedicas");
+
+                if (response.IsSuccess)
+                {
+                    fichaMedica = fichaMedica2;
+                    
+                    return RedirectToAction("Habitos", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+                }
+
+            }
+
+
+            return View();
+
+        }
+
+
+        public async Task<IActionResult> AntecedentesProfesionales(string mensaje, int idFicha ,int idPersona)
+        {
+
+
+            FichaMedica fichaMedica = new FichaMedica();
+            fichaMedica.IdPersona = idPersona;
+
+
+            InicializarMensaje(mensaje);
+
+            
+            Response response = new Response();
+                
+            response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerUltimaFichaMedica");
+
+
+            if (response.IsSuccess)
+            {
+                fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+            }else{
+
+                mensaje = "AntecedentesProfesionales Index mnes,ficha nodata";
+            }
+
+            
+            return View(fichaMedica);
+            
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AntecedentesProfesionales(FichaMedica fichaMedica)
+        {
+
+            Response response = new Response();
+
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+
+                return View(fichaMedica);
+            }
+
+            
+             response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerUltimaFichaMedica");
+             if (response.IsSuccess)
+             {
+                var fichaMedica2 = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+                fichaMedica2.AccidenteTrabajo = fichaMedica.AccidenteTrabajo;
+                fichaMedica2.FechaAccidente = fichaMedica.FechaAccidente;
+                fichaMedica2.EmpresaAccidente = fichaMedica.EmpresaAccidente;
+
+                fichaMedica2.EnfermedadProfesional = fichaMedica.EnfermedadProfesional;
+                fichaMedica2.FechaDiagnostico = fichaMedica.FechaDiagnostico;
+                fichaMedica2.EmpresaEnfermedad = fichaMedica.EmpresaEnfermedad;
+                fichaMedica2.DetalleAccidenteEnfermedadOcupacional = fichaMedica.DetalleAccidenteEnfermedadOcupacional;
+
+
+                response = await apiServicio.EditarAsync(fichaMedica.IdFichaMedica + "", fichaMedica2, new Uri(WebApp.BaseAddress),
+                                                                    "api/FichasMedicas");
+
+                if (response.IsSuccess)
+                {
+                    fichaMedica = fichaMedica2;
+
+                    return RedirectToAction("AntecedentesProfesionales", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+                }
+
+             }
+             
+             
+            return View();   
+            
+        }
+
+
+
+
+        public async Task<IActionResult> DatosMedicos(string mensaje, int idFicha, int idPersona)
+        {
+
+
+            FichaMedica fichaMedica = new FichaMedica();
+            fichaMedica.IdPersona = idPersona;
+
+
+            InicializarMensaje(mensaje);
+
+
+            Response response = new Response();
+
+            response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerUltimaFichaMedica");
+
+
+            if (response.IsSuccess)
+            {
+                fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+            }
+            else
+            {
+
+                mensaje = "AntecedentesProfesionales Index mnes,ficha nodata";
+            }
+
+
+            return View(fichaMedica);
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DatosMedicos(FichaMedica fichaMedica)
+        {
+
+            Response response = new Response();
+
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+
+                return View(fichaMedica);
+            }
+
+
+            response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                            new Uri(WebApp.BaseAddress),
+                                                            "api/FichasMedicas/VerUltimaFichaMedica");
+            if (response.IsSuccess)
+            {
+                var fichaMedica2 = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+                fichaMedica2.TensionArterial = fichaMedica.TensionArterial;
+                fichaMedica2.FrecuenciaCardiaca = fichaMedica.FrecuenciaCardiaca;
+                fichaMedica2.FrecuenciaRespiratoria = fichaMedica.FrecuenciaRespiratoria;
+                fichaMedica2.Talla = fichaMedica.Talla;
+                fichaMedica2.Peso = fichaMedica.Peso;
+                fichaMedica2.LateralidadDominante = fichaMedica.LateralidadDominante;
+                fichaMedica2.Interpretacion = fichaMedica.Interpretacion;
+
+                fichaMedica2.Cabeza = fichaMedica.Cabeza;
+                fichaMedica2.CabezaHallazgos = fichaMedica.CabezaHallazgos;
+
+                fichaMedica2.Ojos = fichaMedica.Ojos;
+                fichaMedica2.OjosHallazgos = fichaMedica.OjosHallazgos;
+
+                fichaMedica2.Oidos = fichaMedica.Oidos;
+                fichaMedica2.OidosHallazgos = fichaMedica.OidosHallazgos;
+
+                fichaMedica2.Nariz = fichaMedica.Nariz;
+                fichaMedica2.NarizHallazgos = fichaMedica.NarizHallazgos;
+
+                fichaMedica2.Boca = fichaMedica.Boca;
+                fichaMedica2.BocaHallazgos = fichaMedica.BocaHallazgos;
+
+                fichaMedica2.FaringeAmigdalas = fichaMedica.FaringeAmigdalas;
+                fichaMedica2.FaringeAmigdalasHallazgos = fichaMedica.FaringeAmigdalasHallazgos;
+
+                fichaMedica2.Cuello = fichaMedica.Cuello;
+                fichaMedica2.CuelloHallazgos = fichaMedica.CuelloHallazgos;
+
+                fichaMedica2.Corazon = fichaMedica.Corazon;
+                fichaMedica2.CorazonHallazgos = fichaMedica.CorazonHallazgos;
+
+                fichaMedica2.Pulmones = fichaMedica.Pulmones;
+                fichaMedica2.PulmonesHallazgos = fichaMedica.PulmonesHallazgos;
+
+                fichaMedica2.Abdomen = fichaMedica.Abdomen;
+                fichaMedica2.AbdomenHallazgos = fichaMedica.AbdomenHallazgos;
+
+                fichaMedica2.Hernias = fichaMedica.Hernias;
+                fichaMedica2.HerniasHallazgos = fichaMedica.HerniasHallazgos;
+
+                fichaMedica2.Genitales = fichaMedica.Genitales;
+                fichaMedica2.GenitalesHallazgos = fichaMedica.GenitalesHallazgos;
+
+                fichaMedica2.ExtremidadesSuperiores = fichaMedica.ExtremidadesSuperiores;
+                fichaMedica2.ExtremidadesSuperioresHallazgos = fichaMedica.ExtremidadesSuperioresHallazgos;
+
+                fichaMedica2.ExtremidadesInferiores = fichaMedica.ExtremidadesInferiores;
+                fichaMedica2.ExtremidadesInferioresHallazgos = fichaMedica.ExtremidadesInferioresHallazgos;
+
+                fichaMedica2.Varices = fichaMedica.Varices;
+                fichaMedica2.VaricesHallazgos = fichaMedica.VaricesHallazgos;
+
+                fichaMedica2.SistemaNerviosoCentral = fichaMedica.SistemaNerviosoCentral;
+                fichaMedica2.SistemaNerviosoHallazgos = fichaMedica.SistemaNerviosoHallazgos;
+
+                fichaMedica2.Piel = fichaMedica.Piel;
+                fichaMedica2.PielHallazgos = fichaMedica.PielHallazgos;
+                
+                fichaMedica2.SospechaEnfermedadLaboral = fichaMedica.SospechaEnfermedadLaboral;
+                fichaMedica2.DetalleEnfermedad = fichaMedica.DetalleEnfermedad;
+
+                fichaMedica2.AptoCargo = fichaMedica.AptoCargo;
+
+                fichaMedica2.Diagnostico = fichaMedica.Diagnostico;
+
+                fichaMedica2.Recomendaciones = fichaMedica.Recomendaciones;
+
+                fichaMedica2.Estado = fichaMedica.Estado;
+
+
+                response = await apiServicio.EditarAsync(fichaMedica.IdFichaMedica + "", fichaMedica2, new Uri(WebApp.BaseAddress),
+                                                                    "api/FichasMedicas");
+
+                if (response.IsSuccess)
+                {
+                    fichaMedica = fichaMedica2;
+
+                    return RedirectToAction("Index", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+                }
+
+            }
+
+
+            return RedirectToAction("Index", "FichasMedicas", new { mensaje = response.Message, idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public async Task<IActionResult> Edit(string id)
         {
@@ -203,9 +785,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<FichaMedica>(respuesta.Resultado.ToString());
-
-                    //ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Empleado>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "Identificacion");
-
+                    
 
                     if (respuesta.IsSuccess)
                     {
@@ -237,22 +817,10 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = Mensaje.Satisfactorio,
-                            UserName = "Usuario 1"
-                        });
-
+                        
                         return RedirectToAction("Index");
                     }
                     
-
-                    //ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Empleado>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "Identificacion");
-
                     ViewData["Error"] = response.Message;
                     return View(FichaMedica);
 
@@ -261,52 +829,71 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.Excepcion,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
 
                 return BadRequest();
 
             }
         }
 
-        
-        public async Task<IActionResult> Index(string mensaje)
+
+        public async Task<IActionResult> CambiarEstado(string id, int idFM, int idPer)
         {
             
-            try
+            Response response = new Response();
+
+            FichaMedica fichaMedica2 = new FichaMedica();
+
+            fichaMedica2.IdFichaMedica = idFM;
+            fichaMedica2.IdPersona = idPer;
+
+            response = await apiServicio.InsertarAsync<Response>(fichaMedica2,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/FichasMedicas/VerUltimaFichaMedica");
+
+
+            if (response.IsSuccess)
             {
-                
-                var a = new FichaMedicaViewModel();
-                a.FichasMedicas = new List<FichaMedica>();
-                a.DatosBasicosPersonaViewModel = new DatosBasicosPersonaViewModel();
-                return View(a);
-                
+                fichaMedica2 = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+               
+                return RedirectToAction("Index", "FichasMedicas", new { mensaje = Mensaje.ErrorFichaEdicion, idFicha = fichaMedica2.IdFichaMedica, idPersona = fichaMedica2.IdPersona });
             }
-            catch (Exception ex)
+            else
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                response = await apiServicio.InsertarAsync<Response>(idFM,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/ObtenerFichaPorId");
+
+                if (response.IsSuccess)
                 {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.GenerandoListas,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
+                    FichaMedica fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+
+                    fichaMedica.Estado = 0;
+
+
+                    response = await apiServicio.EditarAsync(fichaMedica.IdFichaMedica + "", fichaMedica, new Uri(WebApp.BaseAddress),
+                                                                        "api/FichasMedicas");
+
+                    if (response.IsSuccess)
+                    {
+                        
+                        return RedirectToAction("DatosMedicos", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+
+                    }
+
+
+                    return RedirectToAction("Index", "FichasMedicas", new { mensaje = "No se ha podido cambiar el estado", idFicha = idFM, idPersona = idPer });
+                }
             }
+            
+            return RedirectToAction("Index", "FichasMedicas", new { mensaje = "Error al cambiar estado de la ficha", idFicha = idFM, idPersona = idPer });
+
         }
 
 
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string id, int idFM ,int idPer)
         {
+            
 
             try
             {
@@ -314,34 +901,21 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/FichasMedicas");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
-                        Message = Mensaje.Satisfactorio,
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+
+                    return RedirectToAction("Index", "FichasMedicas", new { mensaje = Mensaje.BorradoSatisfactorio, idFicha = idFM, idPersona = idPer }); ;
+
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
+
+                return RedirectToAction("Index", "FichasMedicas", new { mensaje = response.Message + ", (borre los antecedentes laborales, familiares y exámenes complementarios asignados a esta ficha) ", idFicha = idFM, idPersona = idPer });
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.Excepcion,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
                 return BadRequest();
             }
+
         }
+
+        
         
     }
 }

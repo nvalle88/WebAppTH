@@ -68,19 +68,8 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/TiposExamenesComplementarios/InsertarTiposExamenesComplementarios");
                 if (response.IsSuccess)
                 {
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = Mensaje.Satisfactorio,
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "TiposExamenesComplementarios:", TipoExamenComplementario.IdTipoExamenComplementario),
-                    });
-
-                    return RedirectToAction("Index");
+                    InicializarMensaje(Mensaje.GuardadoSatisfactorio);
+                    return RedirectToAction("Index", new { mensaje = Mensaje.GuardadoSatisfactorio });
                 }
 
                 ViewData["Error"] = response.Message;
@@ -90,15 +79,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.Excepcion,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
 
                 InicializarMensaje(Mensaje.Error);
                 return View(TipoExamenComplementario);
@@ -152,17 +132,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = Mensaje.Satisfactorio,
-                            UserName = "Usuario 1"
-                        });
 
-                        return RedirectToAction("Index");
+
+                        return RedirectToAction("Index", new { mensaje = Mensaje.GuardadoSatisfactorio });
                     }
                     
 
@@ -205,15 +177,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.GenerandoListas,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+                
                 return BadRequest();
             }
         }
@@ -228,30 +192,14 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/TiposExamenesComplementarios");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
-                        Message = Mensaje.Satisfactorio,
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+
+                    return RedirectToAction("Index", new { mensaje = Mensaje.BorradoSatisfactorio });
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
+                return RedirectToAction("Index", new { mensaje = Mensaje.BorradoNoSatisfactorio });
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.Excepcion,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+                
 
                 return BadRequest();
             }

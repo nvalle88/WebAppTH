@@ -6,7 +6,10 @@
         <div style="margin-left:2%;">
 
             <section>
+                <!--
                 <label>@Html.DisplayNameFor(model => model.FichaMedica.IdFichaMedica)</label>
+
+                <!--
                 <div class="form-group">
                     <label class="input">
                         <select style="width:300px;" asp-for="IdFichaMedica" class="form-control input " asp-items="ViewBag.IdFichaMedica">
@@ -15,6 +18,10 @@
                         <span asp-validation-for="IdFichaMedica" class="text-danger"></span>
                     </label>
                 </div>
+                -->
+
+                <input type="hidden" style="width:300px;" maxlength="50" asp-for="IdFichaMedica" class="form-control" placeholder="@Html.DisplayNameFor(model => model.IdFichaMedica)" readonly />
+
             </section>
 
             <section>

@@ -5,7 +5,7 @@
 }
 
 
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
 
     <div class="col col-10">
@@ -55,9 +55,11 @@
                             <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialView", Model);}
+
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                    <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                    <input type="submit" asp-action="Index" asp-controller="AntecedentesFamiliares" asp-route-idFicha="@Model.IdFichaMedica" class="btn btn-default" value="Cancelar" onclick="espera()" />
+
                                 </footer>
                             </form>
                         </div>
@@ -78,8 +80,20 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
+
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+
     <script type="text/javascript">
 
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
 
     </script>
 }
