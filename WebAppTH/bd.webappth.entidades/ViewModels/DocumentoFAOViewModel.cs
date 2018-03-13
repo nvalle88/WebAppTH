@@ -35,6 +35,11 @@ namespace bd.webappth.entidades.ViewModels
         public string Mision { get; set; }
         [DisplayName("Actividad")]
         public string actividad{get; set; }
+        public bool InternoMismoProceso { get; set; }
+        public bool InternoOtroProceso { get; set; }
+        public bool ExternosCiudadania { get; set; }
+        public bool ExtPersJuridicasPubNivelNacional { get; set; }
+
 
     }
 }

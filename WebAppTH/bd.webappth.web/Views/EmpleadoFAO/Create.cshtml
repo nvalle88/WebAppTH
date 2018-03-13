@@ -59,8 +59,8 @@
                                             <legend>Identificaci&oacute;n general</legend>
                                             <br />
                                             <section class="col col-12">
-                                                <label class="input" hidden="hidden">
-                                                    <input maxlength="32" asp-for="IdEmpleado" class="form-control" hidden="hidden" />
+                                                <label class="input" >
+                                                    <input maxlength="32" asp-for="IdEmpleado" class="form-control" type="hidden" />
                                                     
                                                 </label>
                                                 <label class="label">@Html.DisplayNameFor(model => model.Institucion):</label>
@@ -156,14 +156,20 @@
                                                 <label class="label">Con usuarios internos de otro proceso</label>
                                             </section>
                                             <section class="col col-6">
-                                                <label class="label">
-                                                    <input type="checkbox" style="width:50px;" class="label-data" />
-                                                </label>
-                                                <label class="label">
-                                                    <input type="checkbox" style="width:50px;" class="label-data" />
-                                                </label>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" name="InternoMismoProceso" value="true" />
+                                                        <input type="hidden" name="InternoMismoProceso" value="false" checked="checked" />
+                                                        <i></i>
+                                                    </label>
+                                                    <br />
+                                                    <br />
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" name="InternoOtroProceso" value="true" />
+                                                        <input type="hidden" name="InternoOtroProceso" value="false" checked="checked" />
+                                                        <i></i>
+                                                    </label>
+                                                </section>
                                             </section>
-                                        </section>
                                         <section class="col col-6">
                                             <legend>Externo</legend>
                                             <br />
@@ -172,11 +178,17 @@
                                                 <label class="label">Con usuarios externos - personas jur&iacutedicas</label>
                                             </section>
                                             <section class="col col-6">
-                                                <label class="label">
-                                                    <input type="checkbox" style="width:50px;" class="label-data" />
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="ExternosCiudadania" value="true" />
+                                                    <input type="hidden" name="ExternosCiudadania" value="false" checked="checked" />
+                                                    <i></i>
                                                 </label>
-                                                <label class="label">
-                                                    <input type="checkbox" style="width:50px;" class="label-data" />
+                                                <br />
+                                                <br />
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="true" />
+                                                    <input type="hidden" name="ExtPersJuridicasPubNivelNacional" value="false" checked="checked" />
+                                                    <i></i>
                                                 </label>
                                             </section>
                                         </section>

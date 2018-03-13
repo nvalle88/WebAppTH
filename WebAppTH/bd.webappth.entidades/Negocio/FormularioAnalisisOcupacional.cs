@@ -23,7 +23,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "¿ExtPersJurídicasPubNivelNacional?")]
-        public bool? ExtPersJurídicasPubNivelNacional { get; set; }
+        public bool? ExtPersJuridicasPubNivelNacional { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Fecha de registro:")]

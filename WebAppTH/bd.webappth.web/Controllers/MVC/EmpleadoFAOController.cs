@@ -72,10 +72,10 @@ namespace bd.webappth.web.Controllers.MVC
 
 
                 IdEmpleado = documentoFAOViewModel.IdEmpleado,
-                InternoMismoProceso = false,
-                InternoOtroProceso = false,
-                ExternosCiudadania = false,
-                ExtPersJurídicasPubNivelNacional = false,
+                InternoMismoProceso = documentoFAOViewModel.InternoMismoProceso,
+                InternoOtroProceso = documentoFAOViewModel.InternoOtroProceso,
+                ExternosCiudadania = documentoFAOViewModel.ExternosCiudadania,
+                ExtPersJuridicasPubNivelNacional = documentoFAOViewModel.ExtPersJuridicasPubNivelNacional,
                 FechaRegistro = DateTime.Now,
                 Anio = DateTime.Now.Year,
                 MisionPuesto = documentoFAOViewModel.Mision,
@@ -85,7 +85,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             response = await apiServicio.InsertarAsync(empleadoid,
                                                          new Uri(WebApp.BaseAddress),
-                                                         "api/FormularioAnalisisOcupacional/InsertarFormularioAnalisisOcupacional");
+                                                         "api/FormularioAnalisisOcupacional/ActualizarFormularioAnalisisOcupacional");
             if (response.IsSuccess)
             {
 
@@ -158,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
                 InternoMismoProceso = false,
                 InternoOtroProceso = false,
                 ExternosCiudadania = false,
-                ExtPersJurídicasPubNivelNacional = false,
+                ExtPersJuridicasPubNivelNacional = false,
                 FechaRegistro = DateTime.Now,
                 Anio = DateTime.Now.Year,
                 MisionPuesto = "Debe Introducir misión del puesto",

@@ -106,7 +106,7 @@ namespace bd.webappth.web.Controllers.MVC
                 InternoMismoProceso = false,
                 InternoOtroProceso = false,
                 ExternosCiudadania = false,
-                ExtPersJurídicasPubNivelNacional = false,
+                ExtPersJuridicasPubNivelNacional = false,
                 FechaRegistro = DateTime.Now,
                 Anio = DateTime.Now.Year,
                 MisionPuesto = "Debe Introducir misión del puesto",

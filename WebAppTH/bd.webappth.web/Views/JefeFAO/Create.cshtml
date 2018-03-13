@@ -153,11 +153,33 @@
                                                 <label class="label">Con usuarios internos de otro proceso</label>
                                             </section>
                                             <section class="col col-6">
-                                                <label class="label">
-                                                    <input type="checkbox" style="width:50px;" class="label-data" />
+                                                <label class="checkbox">
+                                                    @if (Model.InternoMismoProceso == false)
+                                                    { 
+                                                        <input type="checkbox" name="InternoMismoProceso" value="false" disabled="disabled" />
+                                                     }
+                                                    else
+                                                    { 
+                                                        <input type="checkbox" name="InternoMismoProceso" value="true" checked="checked" disabled="disabled" />
+                                                    }
+                                                    @*<input type="checkbox" name="InternoMismoProceso" value="true" />
+                                                    <input type="hidden" name="InternoMismoProceso" value="false" checked="checked" />*@
+                                                    <i></i>
                                                 </label>
-                                                <label class="label">
-                                                    <input type="checkbox" style="width:50px;" class="label-data" />
+                                                <br />
+                                                <br />
+                                                <label class="checkbox">
+                                                    @if (Model.InternoOtroProceso == false)
+                                                    {
+                                                        <input type="checkbox" name="InternoOtroProceso" value="false" disabled="disabled" />
+                                                    }
+                                                    else
+                                                    { 
+                                                        <input type="checkbox"  name="InternoOtroProceso" value="true" checked="checked" disabled="disabled" />
+                                                    }
+                                                    @*<input type="checkbox" name="InternoOtroProceso" value="true" />
+                                                    <input type="hidden" name="InternoOtroProceso" value="false" checked="checked" />*@
+                                                    <i></i>
                                                 </label>
                                             </section>
                                         </section>
@@ -169,11 +191,33 @@
                                                 <label class="label">Con usuarios externos - personas jur&iacutedicas</label>
                                             </section>
                                             <section class="col col-6">
-                                                <label class="label">
-                                                    <input type="checkbox" style="width:50px;" class="label-data" />
+                                                <label class="checkbox">
+                                                    @if (Model.ExternosCiudadania == false)
+                                                    {
+                                                        <input type="checkbox" name="ExternosCiudadania" value="false"  disabled="disabled"/>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input  type="checkbox" name="ExternosCiudadania" value="true" checked="checked" disabled="disabled"/>
+                                                    }
+                                                    @*<input type="checkbox" name="ExternosCiudadania" value="true" />
+                                                    <input type="hidden" name="ExternosCiudadania" value="false" checked="checked" />*@
+                                                    <i></i>
                                                 </label>
-                                                <label class="label">
-                                                    <input type="checkbox" style="width:50px;" class="label-data" />
+                                                <br />
+                                                <br />
+                                                <label class="checkbox">
+                                                    @if (Model.ExtPersJuridicasPubNivelNacional == false)
+                                                    {
+                                                        <input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="false" disabled="disabled" />
+                                                    }
+                                                    else
+                                                    { 
+                                                        <input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="true" checked="checked" disabled="disabled" />
+                                                    }
+                                                @*<input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="true" />
+                                                <input type="hidden" name="ExtPersJuridicasPubNivelNacional" value="false" checked="checked" />*@
+                                                <i></i>
                                                 </label>
                                             </section>
                                         </section>
