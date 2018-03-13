@@ -5,7 +5,10 @@
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <script src='~/js/site.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 7 }; }
 
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 <div id="content">
     <section id="widget-grid" class="">

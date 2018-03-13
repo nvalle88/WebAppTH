@@ -1,7 +1,12 @@
 @model List<bd.webappth.entidades.Negocio.EmpleadoFamiliar>
 
-@{await Html.RenderPartialAsync("_PartialViewMenu");}
 
+
+
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 3 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <!-- MAIN CONTENT -->
 <div id="content">
 
@@ -54,7 +59,7 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Nombre 
+                                            Nombre
                                         </th>
                                         <th data-class="">
                                             Identificacion
@@ -74,26 +79,26 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.Nombres) @Html.DisplayFor(modelItem => item.Persona.Apellidos)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.Identificacion)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Persona.TelefonoPrivado)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Parentesco.Nombre)
-                                        </td>                                    
-                                        <td>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Persona.Nombres) @Html.DisplayFor(modelItem => item.Persona.Apellidos)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Persona.Identificacion)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Persona.TelefonoPrivado)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Parentesco.Nombre)
+                                            </td>
+                                            <td>
 
-                                            @Html.ActionLink("Editar", "EditEmpleadoFamiliar", new { id = item.IdEmpleadoFamiliar }) |
-                                            @Html.ActionLink("Eliminar", "DeleteEmpleadoFamiliar", new { id = item.IdPersona }, new { onclick = "return confirm('Desea eliminar el Familiar... ?');" })
+                                                @Html.ActionLink("Editar", "EditEmpleadoFamiliar", new { id = item.IdEmpleadoFamiliar }) |
+                                                @Html.ActionLink("Eliminar", "DeleteEmpleadoFamiliar", new { id = item.IdPersona }, new { onclick = "return confirm('Desea eliminar el Familiar... ?');" })
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

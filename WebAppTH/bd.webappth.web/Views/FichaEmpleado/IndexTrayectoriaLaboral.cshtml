@@ -1,6 +1,9 @@
 @model List<bd.webappth.entidades.Negocio.TrayectoriaLaboral>
 
-@{await Html.RenderPartialAsync("_PartialViewMenu");}
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 2 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -77,29 +80,29 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FechaInicio)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FechaFin)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Empresa)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PuestoTrabajo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DescripcionFunciones)
-                                        </td>
-                                        <td>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaInicio)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaFin)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Empresa)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PuestoTrabajo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DescripcionFunciones)
+                                            </td>
+                                            <td>
 
-                                            @Html.ActionLink("Editar", "EditTrayectoriaLaboral", new { id = item.IdTrayectoriaLaboral }) |
-                                            @Html.ActionLink("Eliminar", "DeleteTrayectoriaLaboral", new { id = item.IdTrayectoriaLaboral }, new { onclick = "return confirm('Desea eliminar la Trayectoria Laboral... ?');" })
+                                                @Html.ActionLink("Editar", "EditTrayectoriaLaboral", new { id = item.IdTrayectoriaLaboral }) |
+                                                @Html.ActionLink("Eliminar", "DeleteTrayectoriaLaboral", new { id = item.IdTrayectoriaLaboral }, new { onclick = "return confirm('Desea eliminar la Trayectoria Laboral... ?');" })
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

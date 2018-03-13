@@ -1,22 +1,24 @@
 @model bd.webappth.entidades.Negocio.EmpleadoContactoEmergencia
 
-@{await Html.RenderPartialAsync("_PartialViewMenu");}
+@{await Html.RenderPartialAsync("_PartialViewMenu");}@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 7 }; }
 
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <!-- MAIN CONTENT -->
 <div id="content">
 
-    @if (Model.IdEmpleado==0)
-    {   
-    <p></p>
-    <a asp-action="CreateEmpleadoContactoEmergencia">
-        <button type="button" asp-action="CreateEmpleadoContactoEmergencia" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo Contacto de Emergencia
+    @if (Model.IdEmpleado == 0)
+    {
+        <p></p>
+        <a asp-action="CreateEmpleadoContactoEmergencia">
+            <button type="button" asp-action="CreateEmpleadoContactoEmergencia" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nuevo Contacto de Emergencia
 
-        </button>
-    </a>
-    <p> </p>
+            </button>
+        </a>
+        <p> </p>
     }
     <!-- widget grid -->
     <section id="widget-grid" class="">
@@ -56,7 +58,7 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Nombre 
+                                            Nombre
                                         </th>
                                         <th data-class="">
                                             Tel&eacute;fono Privado
@@ -72,26 +74,26 @@
                                 </thead>
                                 <tbody>
                                     @if (Model.IdEmpleado != 0)
-	                                {
-		
-	
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => Model.Persona.Nombres) @Html.DisplayFor(modelItem => Model.Persona.Apellidos)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => Model.Persona.TelefonoPrivado)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => Model.Parentesco.Nombre)
-                                        </td>                                    
-                                        <td>
+                                    {
 
-                                            @Html.ActionLink("Editar", "EditEmpleadoContactoEmergencia", new { id = Model.IdPersona }) |
-                                            @Html.ActionLink("Eliminar", "DeleteEmpleadoContactoEmergencia", new { id = Model.IdPersona }, new { onclick = "return confirm('Desea eliminar el Contacto de Emergencia... ?');" })
 
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.Persona.Nombres) @Html.DisplayFor(modelItem => Model.Persona.Apellidos)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.Persona.TelefonoPrivado)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.Parentesco.Nombre)
+                                            </td>
+                                            <td>
+
+                                                @Html.ActionLink("Editar", "EditEmpleadoContactoEmergencia", new { id = Model.IdPersona }) |
+                                                @Html.ActionLink("Eliminar", "DeleteEmpleadoContactoEmergencia", new { id = Model.IdPersona }, new { onclick = "return confirm('Desea eliminar el Contacto de Emergencia... ?');" })
+
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
