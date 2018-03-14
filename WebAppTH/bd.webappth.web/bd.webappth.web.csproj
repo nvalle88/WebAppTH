@@ -35,6 +35,10 @@
     <Content Remove="Views\IndicesOcupacionales\AdicionarMision.cshtml" />
     <Content Remove="Views\IndicesOcupacionales\AdicionarRIE.cshtml" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\JefeFAO\Create.cshtml~RF5868176.TMP" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bd.log.guardar" Version="1.1.1" />
     <PackageReference Include="EnviarCorreo" Version="1.1.8" />
