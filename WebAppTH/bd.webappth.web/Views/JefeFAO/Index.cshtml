@@ -63,7 +63,7 @@
                                             <td>Validado</td>
                                             <td>Sin Validadar</td>
                                             <td>
-                                                @Html.ActionLink("Validar", "Create", new { id = item.IdEmpleado })
+                                                @Html.ActionLink("Validar", "Create", new { id = item.IdEmpleado, IdActividad = item.IdFormularioAnalisisOcupacional })
                                             </td>
 
                                         }

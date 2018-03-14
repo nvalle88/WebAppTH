@@ -67,7 +67,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             Response response = new Response();
 
-            var empleadoid = new FormularioAnalisisOcupacional
+            var empleadoid = new DocumentoFAOViewModel
             {
 
 
@@ -78,12 +78,21 @@ namespace bd.webappth.web.Controllers.MVC
                 ExtPersJuridicasPubNivelNacional = documentoFAOViewModel.ExtPersJuridicasPubNivelNacional,
                 FechaRegistro = DateTime.Now,
                 Anio = DateTime.Now.Year,
-                MisionPuesto = documentoFAOViewModel.Mision,
-                Estado = 0
+                Mision = documentoFAOViewModel.Mision,
+                actividad1=documentoFAOViewModel.actividad1,
+                actividad2 = documentoFAOViewModel.actividad2,
+                actividad3 = documentoFAOViewModel.actividad3,
+                actividad4 = documentoFAOViewModel.actividad4,
+                actividad5 = documentoFAOViewModel.actividad5,
+                actividad6 = documentoFAOViewModel.actividad6,
+                actividad7 = documentoFAOViewModel.actividad7,
+                actividad8 = documentoFAOViewModel.actividad8,
+                actividad9 = documentoFAOViewModel.actividad9,
+                actividad10 = documentoFAOViewModel.actividad10,
 
             };
 
-            response = await apiServicio.InsertarAsync(empleadoid,
+            response = await apiServicio.InsertarAsync(documentoFAOViewModel,
                                                          new Uri(WebApp.BaseAddress),
                                                          "api/FormularioAnalisisOcupacional/ActualizarFormularioAnalisisOcupacional");
             if (response.IsSuccess)
