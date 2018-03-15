@@ -1,6 +1,9 @@
 @model List<bd.webappth.entidades.Negocio.PersonaDiscapacidad>
 
-@{await Html.RenderPartialAsync("_PartialViewMenu");}
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 4 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -71,23 +74,23 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TipoDiscapacidad.Nombre)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NumeroCarnet)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Porciento)
-                                        </td>                                   
-                                        <td>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TipoDiscapacidad.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NumeroCarnet)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Porciento)
+                                            </td>
+                                            <td>
 
-                                            @Html.ActionLink("Editar", "EditPersonaDiscapacidad", new { id = item.IdPersonaDiscapacidad }) |
-                                            @Html.ActionLink("Eliminar", "DeletePersonaDiscapacidad", new { id = item.IdPersonaDiscapacidad }, new { onclick = "return confirm('Desea eliminar la Discapacidad... ?');" })
+                                                @Html.ActionLink("Editar", "EditPersonaDiscapacidad", new { id = item.IdPersonaDiscapacidad }) |
+                                                @Html.ActionLink("Eliminar", "DeletePersonaDiscapacidad", new { id = item.IdPersonaDiscapacidad }, new { onclick = "return confirm('Desea eliminar la Discapacidad... ?');" })
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

@@ -1,8 +1,10 @@
 @model bd.webappth.entidades.Negocio.PersonaSustituto
 
-@{await Html.RenderPartialAsync("_PartialViewMenu");}
 
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 8 }; }
 
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <div id="content">
 
     <p></p>
@@ -54,7 +56,7 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Nombre 
+                                            Nombre
                                         </th>
                                         <th data-class="">
                                             Identificacion
@@ -69,27 +71,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   @if (Model.PersonaDiscapacidad!=null)
-                                   {
-                                   
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.Nombres) @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.Apellidos)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.Identificacion)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.TelefonoPrivado)
-                                        </td>                                   
-                                        <td>
+                                    @if (Model.PersonaDiscapacidad != null)
+                                    {
 
-                                            @Html.ActionLink("Editar", "EditPersonaSustituto", new { id = Model.PersonaDiscapacidad.Persona.IdPersona }) |
-                                            @Html.ActionLink("Eliminar", "DeletePersonaSustituto", new { id = Model.PersonaDiscapacidad.Persona.IdPersona }, new { onclick = "return confirm('Desea eliminar la Persona Sustituto... ?');" })
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.Nombres) @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.Apellidos)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.Identificacion)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.PersonaDiscapacidad.Persona.TelefonoPrivado)
+                                            </td>
+                                            <td>
 
-                                        </td>
-                                    </tr>
-                                   }
+                                                @Html.ActionLink("Editar", "EditPersonaSustituto", new { id = Model.PersonaDiscapacidad.Persona.IdPersona }) |
+                                                @Html.ActionLink("Eliminar", "DeletePersonaSustituto", new { id = Model.PersonaDiscapacidad.Persona.IdPersona }, new { onclick = "return confirm('Desea eliminar la Persona Sustituto... ?');" })
+
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -272,23 +274,23 @@
                                 <tbody>
                                     @foreach (var item in Model.DiscapacidadSustituto)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TipoDiscapacidad.Nombre)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PorcentajeDiscapacidad)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NumeroCarnet)
-                                        </td>
-                                        <td>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TipoDiscapacidad.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PorcentajeDiscapacidad)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NumeroCarnet)
+                                            </td>
+                                            <td>
 
-                                            @Html.ActionLink("Editar", "EditDiscapacidadSustituto", new { id = item.IdDiscapacidadSustituto }) |
-                                            @Html.ActionLink("Eliminar", "DeleteDiscapacidadSustituto", new { id = item.IdDiscapacidadSustituto }, new { onclick = "return confirm('Desea eliminar la Discapacidad del Sustituto.. ?');" })
+                                                @Html.ActionLink("Editar", "EditDiscapacidadSustituto", new { id = item.IdDiscapacidadSustituto }) |
+                                                @Html.ActionLink("Eliminar", "DeleteDiscapacidadSustituto", new { id = item.IdDiscapacidadSustituto }, new { onclick = "return confirm('Desea eliminar la Discapacidad del Sustituto.. ?');" })
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

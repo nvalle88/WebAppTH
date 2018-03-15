@@ -1,7 +1,9 @@
 @model List<bd.webappth.entidades.Negocio.PersonaEnfermedad>
 
-@{await Html.RenderPartialAsync("_PartialViewMenu");}
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 5 }; }
 
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <!-- MAIN CONTENT -->
 <div id="content">
 
@@ -68,20 +70,20 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TipoEnfermedad.Nombre)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.InstitucionEmite)
-                                        </td>                                   
-                                        <td>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TipoEnfermedad.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.InstitucionEmite)
+                                            </td>
+                                            <td>
 
-                                            @Html.ActionLink("Editar", "EditPersonaEnfermedad", new { id = item.IdPersonaEnfermedad }) |
-                                            @Html.ActionLink("Eliminar", "DeletePersonaEnfermedad", new { id = item.IdPersonaEnfermedad }, new { onclick = "return confirm('Desea eliminar la Enfermedad... ?');" })
+                                                @Html.ActionLink("Editar", "EditPersonaEnfermedad", new { id = item.IdPersonaEnfermedad }) |
+                                                @Html.ActionLink("Eliminar", "DeletePersonaEnfermedad", new { id = item.IdPersonaEnfermedad }, new { onclick = "return confirm('Desea eliminar la Enfermedad... ?');" })
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

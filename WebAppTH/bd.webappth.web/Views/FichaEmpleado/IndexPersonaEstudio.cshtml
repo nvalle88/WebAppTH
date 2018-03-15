@@ -1,6 +1,9 @@
 @model List<bd.webappth.entidades.Negocio.PersonaEstudio>
 
-@{await Html.RenderPartialAsync("_PartialViewMenu");}
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 1 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -54,7 +57,7 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            T&iacute;tulo 
+                                            T&iacute;tulo
                                         </th>
                                         <th data-class="">
                                             Fecha Graduado
@@ -74,26 +77,26 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Titulo.Nombre)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FechaGraduado)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NoSenescyt)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Observaciones)
-                                        </td>                                    
-                                        <td>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Titulo.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaGraduado)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NoSenescyt)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Observaciones)
+                                            </td>
+                                            <td>
 
-                                            @Html.ActionLink("Editar", "EditPersonaEstudio", new { id = item.IdPersonaEstudio }) |
-                                            @Html.ActionLink("Eliminar", "DeletePersonaEstudio", new { id = item.IdPersonaEstudio }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
+                                                @Html.ActionLink("Editar", "EditPersonaEstudio", new { id = item.IdPersonaEstudio }) |
+                                                @Html.ActionLink("Eliminar", "DeletePersonaEstudio", new { id = item.IdPersonaEstudio }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

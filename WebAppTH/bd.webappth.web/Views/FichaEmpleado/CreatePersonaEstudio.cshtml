@@ -6,7 +6,10 @@
 <script src='~/js/site.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 
-@{await Html.RenderPartialAsync("_PartialViewMenu");}
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 1 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 @{
     ViewData["Title"] = "PersonaEstudio";
