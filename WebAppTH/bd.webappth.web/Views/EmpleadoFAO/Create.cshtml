@@ -1,0 +1,231 @@
+@model bd.webappth.entidades.ViewModels.DocumentoFAOViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+
+<div id="content">
+     @*<div class="col col-10">
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-7">
+                <div class="alert alert-block alert-dismissable">
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                    <p>
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                    </p>
+                </div>
+            </div>
+
+        }
+    </div>*@
+    <!-- widget grid -->
+    <section id="" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Formulario analisis ocupacional- servidor</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend>Identificaci&oacute;n general</legend>
+                                            <br />
+                                            <section class="col col-12">
+                                                <label class="input" >
+                                                    <input maxlength="32" asp-for="IdEmpleado" class="form-control" type="hidden" />
+                                                    
+                                                </label>
+                                                <label class="label">@Html.DisplayNameFor(model => model.Institucion):</label>
+                                                <label class="label">@Html.DisplayNameFor(model => model.UnidadAdministrativa):</label>
+                                                @*<label class="label">@Html.DisplayNameFor(model => model.Puesto)</label>*@
+                                                <label class="label">@Html.DisplayNameFor(model => model.nombre):</label>
+                                                <label class="label">@Html.DisplayNameFor(model => model.Identificacion):</label>
+                                                <label class="label">@Html.DisplayNameFor(model => model.LugarTrabajo):</label>
+                                            </section>
+                                            <section class="col col-12">
+                                                <label class="label"> @Html.DisplayFor(model => model.Institucion)</label>
+                                                <label class="label"> @Html.DisplayFor(model => model.UnidadAdministrativa)</label>
+                                                @* <label class="label"> @Html.DisplayFor(model => model.Puesto)</label>*@
+                                                <label class="label"> @Html.DisplayFor(model => model.nombre)</label>
+                                                <label class="label"> @Html.DisplayFor(model => model.Identificacion)</label>
+                                                <label class="label"> @Html.DisplayFor(model => model.LugarTrabajo)</label>
+                                            </section>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-12">
+                                            <legend>Misi&oacute;n</legend>
+                                            <br />
+                                            <label class="input">
+                                                <textarea cols="150" rows="5"  asp-for="Mision" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Mision)">
+                                                </textarea>
+                                                <span asp-validation-for="Mision" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend>Actividades</legend>
+                                            <br />
+                                            <label class="input">
+                                                <i class="icon-prepend">1.-</i>
+                                                <input maxlength="32" asp-for="actividad1" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.actividad1)">
+                                            </label>
+                                            <br />
+                                            <label class="input">
+                                                <i class="icon-prepend">2.-</i>
+                                                <input maxlength="32" asp-for="actividad2" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.actividad2)">
+                                            </label>
+                                            <br />
+                                            <label class="input">
+                                                <i class="icon-prepend">3.-</i>
+                                                <input maxlength="32" asp-for="actividad3" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.actividad3)">
+                                            </label>
+                                            <br />
+                                            <label class="input">
+                                                <i class="icon-prepend">4.-</i>
+                                                <input maxlength="32" asp-for="actividad4" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.actividad4)">
+                                            </label>
+                                            <br />
+                                            <label class="input">
+                                                <i class="icon-prepend">5.-</i>
+                                                <input maxlength="32" asp-for="actividad5" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.actividad5)">
+                                            </label>
+                                            <br />
+                                            <label class="input">
+                                                <i class="icon-prepend">6.-</i>
+                                                <input maxlength="32" asp-for="actividad6" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.actividad6)">
+                                            </label>
+                                            <br />
+                                            <label class="input">
+                                                <i class="icon-prepend">7.-</i>
+                                                <input maxlength="32" asp-for="actividad7" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.actividad7)">
+                                            </label>
+                                            <br />
+                                            <label class="input">
+                                                <i class="icon-prepend">8.-</i>
+                                                <input maxlength="32" asp-for="actividad8" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.actividad8)">
+                                            </label>
+                                            <br />
+                                            <label class="input">
+                                                <i class="icon-prepend">9.-</i>
+                                                <input maxlength="32" asp-for="actividad9" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.actividad9)">
+                                            </label>
+                                            <br />
+                                            <label class="input">
+                                                <i class="icon-prepend">10.-</i>
+                                                <input maxlength="32" asp-for="actividad10" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.actividad10)">
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <legend>Relaciones interna y externas del puesto</legend>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <legend>Interno</legend>
+                                            <br />
+                                            <section class="col col-6">
+                                                <label class="label">Con usuarios internos del mismo proceso</label>
+                                                <label class="label">Con usuarios internos de otro proceso</label>
+                                            </section>
+                                            <section class="col col-6">
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" name="InternoMismoProceso" value="true" />
+                                                        <input type="hidden" name="InternoMismoProceso" value="false" checked="checked" />
+                                                        <i></i>
+                                                    </label>
+                                                    <br />
+                                                    <br />
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" name="InternoOtroProceso" value="true" />
+                                                        <input type="hidden" name="InternoOtroProceso" value="false" checked="checked" />
+                                                        <i></i>
+                                                    </label>
+                                                </section>
+                                            </section>
+                                        <section class="col col-6">
+                                            <legend>Externo</legend>
+                                            <br />
+                                            <section class="col col-6">
+                                                <label class="label">Con usuarios externos- ciudadania</label>
+                                                <label class="label">Con usuarios externos - personas jur&iacutedicas</label>
+                                            </section>
+                                            <section class="col col-6">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="ExternosCiudadania" value="true" />
+                                                    <input type="hidden" name="ExternosCiudadania" value="false" checked="checked" />
+                                                    <i></i>
+                                                </label>
+                                                <br />
+                                                <br />
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="true" />
+                                                    <input type="hidden" name="ExtPersJuridicasPubNivelNacional" value="false" checked="checked" />
+                                                    <i></i>
+                                                </label>
+                                            </section>
+                                        </section>
+                                    </div>
+                                </fieldset>
+
+                                <footer>
+                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+
+                                </footer>
+
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+</div>
+
+
+@section Scripts {
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
+}

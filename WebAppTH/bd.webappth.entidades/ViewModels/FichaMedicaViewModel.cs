@@ -8,6 +8,9 @@ namespace bd.webappth.entidades.ViewModels
 
         public DatosBasicosPersonaViewModel DatosBasicosPersonaViewModel { get; set; }
         public List<FichaMedica> FichasMedicas { get; set; }
-        
+
+        public List<Persona> ListaPersonas { get; set; }
+
+
     }
 }
