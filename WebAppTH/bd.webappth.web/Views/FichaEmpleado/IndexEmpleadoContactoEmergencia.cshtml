@@ -1,6 +1,6 @@
 @model bd.webappth.entidades.Negocio.EmpleadoContactoEmergencia
 
-@{await Html.RenderPartialAsync("_PartialViewMenu");}@using bd.webappth.entidades.Utils
+@using bd.webappth.entidades.Utils
 @{ var modelo = new FichaEmpleado { OpcionMenu = 7 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
