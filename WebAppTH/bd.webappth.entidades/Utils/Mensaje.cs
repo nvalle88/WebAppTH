@@ -23,8 +23,8 @@ namespace bd.webappth.entidades.Utils
         public static string GuardadoSatisfactorio { get {return "Los datos se han guardado correctamente"; } }
         public static string BorradoSatisfactorio { get { return "El registro se ha eliminado correctamente"; } }
         public static string ErrorFichaEdicion { get { return "Existe una ficha en edición"; } }
+        public static string ErrorCargaArchivo { get { return "Se produjo un error al cargar el archivo"; } }
 
-        
 
     }
 }

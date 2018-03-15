@@ -33,14 +33,29 @@
 
         .labels input {
             font-weight: 100;
+            background-color:transparent;
         }
 
     input.label-data {
         text-align: left;
-        width: 60%;
+        width: 48%;
         color: black;
         background-color: transparent;
         border-width: 0px;
+        /*margin-left:50%;*/
+        float:right;
+        padding-right:5px;
+    }
+
+    .cont-div {
+        text-align: left;
+        width: 48%;
+        color: black;
+        background-color: transparent;
+        border-width: 0px;
+        /*margin-left:50%;*/
+        float: right;
+        padding-right: 5px;
     }
     
 </style>
@@ -75,13 +90,14 @@
     &nbsp;
 
     <div class="input">
+        @Html.DisplayName("Ingresar cédula de nuevo paciente"):<br />
         <form asp-action="Index" id="checkout-form" class="smart-form" novalidate="novalidate">
             <input type="hidden" asp-for="DatosBasicosPersonaViewModel.IdPersona" value="0" />
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="submit" value="Ingresar cédula" onclick="espera()" style="height:30px;width:100px;float:left;" />
+            <input type="submit" value="Ingresar cédula" style="height:30px;width:100px;float:left;" />
             <input type="text" asp-for="DatosBasicosPersonaViewModel.Identificacion" class="form-control" style="width:100px;padding-left:5px;" />
-            
+
 
         </form>
 
@@ -129,13 +145,13 @@
                                         </div>
 
                                         <div class="labels">
-                                            @Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.FechaNacimiento):
-                                            <input asp-for="DatosBasicosPersonaViewModel.FechaNacimiento" readonly class="label-data" data-dateformat='dd/mm/yy' />
+                                            @Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.FechaNacimiento ):
+                                            <input  asp-for="DatosBasicosPersonaViewModel.FechaNacimiento" readonly class="label-data" data-dateformat='dd/mm/yy' />
                                         </div>
 
                                         <div class="labels">
                                             @Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.FechaIngreso):
-                                            <input type="date" style="width:260px;background-color:transparent;border:0px;" asp-for="DatosBasicosPersonaViewModel.FechaIngreso" data-dateformat='dd/mm/yy' readonly />
+                                            <input type="date"  class="label-data" asp-for="DatosBasicosPersonaViewModel.FechaIngreso" data-dateformat='dd/mm/yy' readonly />
                                         </div>
 
                                         <div class="labels">
@@ -193,7 +209,9 @@
 
                                         <div class="labels">
                                             @Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.CondicionEspecial):
-                                            <input type="checkbox" style="width:50px;" asp-for="DatosBasicosPersonaViewModel.CondicionEspecial" onclick="return false;" class="label-data" />
+                                            <div class="cont-div">
+                                                <input type="checkbox" asp-for="DatosBasicosPersonaViewModel.CondicionEspecial" onclick="return false;" />
+                                            </div>
                                         </div>
 
                                         <div class="labels">
@@ -358,6 +376,9 @@
                                     <tr>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.FechaFichaMedica)
+                                            
+                                            
+
                                         </td>
 
                                         <td>
@@ -544,7 +565,7 @@ else
                 $("#tablaFichas").show();
                 $("#pacientesSeccion").hide();
 
-                habilitarBotones();
+                //habilitarBotones();
 
                 $("#btn_0").css("background-color", "#3276b1");
                 $("#btn_0").css("color", "white");
@@ -562,7 +583,7 @@ else
 
                 $("#pacientesSeccion").show();
 
-                deshabilitarBotones();
+                //deshabilitarBotones();
 
                 $("#btn_7").css("background-color", "#3276b1");
                 $("#btn_7").css("color", "white");

@@ -18,6 +18,8 @@ namespace bd.webappth.entidades.Negocio
         public int IdPersona { get; set; }
 
         [Display(Name = "Fecha de apertura de la historia clínica")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaFichaMedica { get; set; }
 
         [Display(Name = "Antecedentes médicos")]

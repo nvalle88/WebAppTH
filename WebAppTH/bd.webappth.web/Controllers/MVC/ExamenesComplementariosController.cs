@@ -12,6 +12,10 @@ using bd.webappseguridad.entidades.Enumeradores;
 using Newtonsoft.Json;
 using bd.log.guardar.Enumeradores;
 using bd.webappth.entidades.ViewModels;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using bd.webappth.entidades.ObjectTransfer;
+using Microsoft.AspNetCore.Hosting;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -19,11 +23,13 @@ namespace bd.webappth.web.Controllers.MVC
     {
         
         private readonly IApiServicio apiServicio;
+        private IHostingEnvironment _hostingEnvironment;
 
 
-        public ExamenesComplementariosController(IApiServicio apiServicio)
+        public ExamenesComplementariosController(IApiServicio apiServicio, IHostingEnvironment _hostingEnvironment)
         {
             this.apiServicio = apiServicio;
+            this._hostingEnvironment = _hostingEnvironment;
 
         }
 
@@ -67,6 +73,8 @@ namespace bd.webappth.web.Controllers.MVC
             return View(antLab);
         }
 
+
+        /*
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ExamenComplementario ExamenComplementario)
@@ -79,9 +87,7 @@ namespace bd.webappth.web.Controllers.MVC
             if (!ModelState.IsValid)
             {
                 InicializarMensaje(Mensaje.ModeloInvalido);
-                
-
-
+            
                 return View(ExamenComplementario);
             }
 
@@ -115,106 +121,109 @@ namespace bd.webappth.web.Controllers.MVC
 
 
         }
-
-
-        /*
-        public async Task<IActionResult> Edit(string id)
-        {
-
-            ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
-            ViewData["IdTipoExamenComplementario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoExamenComplementario>(new Uri(WebApp.BaseAddress), "api/TiposExamenesComplementarios/ListarTiposExamenesComplementarios"), "IdTipoExamenComplementario", "Nombre");
-
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/ExamenesComplementarios");
-
-
-                    respuesta.Resultado = JsonConvert.DeserializeObject<ExamenComplementario>(respuesta.Resultado.ToString());
-
-                    //ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Empleado>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "Identificacion");
-
-
-                    if (respuesta.IsSuccess)
-                    {
-                        InicializarMensaje(null);
-                        return View(respuesta.Resultado);
-                    }
-
-                }
-
-                return BadRequest();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
+        */
+        
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, ExamenComplementario ExamenComplementario)
+        public async Task<IActionResult> Create(ExamenComplementario examenComplementario, List<IFormFile> files)
         {
 
-            ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
             ViewData["IdTipoExamenComplementario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoExamenComplementario>(new Uri(WebApp.BaseAddress), "api/TiposExamenesComplementarios/ListarTiposExamenesComplementarios"), "IdTipoExamenComplementario", "Nombre");
+            ExamenesComplementariosViewModel alvm = new ExamenesComplementariosViewModel();
+
+
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(Mensaje.ModeloInvalido);
+
+
+
+                return View(examenComplementario);
+            }
+
 
             Response response = new Response();
+
+
             try
             {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    response = await apiServicio.EditarAsync(id, ExamenComplementario, new Uri(WebApp.BaseAddress),
-                                                                 "api/ExamenesComplementarios");
+                
 
-                    if (response.IsSuccess)
+                if (files.Count > 0)
+                {
+                    byte[] data;
+                    using (var br = new BinaryReader(files[0].OpenReadStream()))
+                        data = br.ReadBytes((int)files[0].OpenReadStream().Length);
+
+                    var documenttransfer = new ExamenComplementarioTransfer
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                        IdExamenComplementario = examenComplementario.IdExamenComplementario,
+                        Fecha = examenComplementario.Fecha,
+                        Resultado = examenComplementario.Resultado,
+                        IdTipoExamenComplementario = examenComplementario.IdTipoExamenComplementario,
+                        IdFichaMedica = examenComplementario.IdFichaMedica,
+                        Url = examenComplementario.Url,
+
+                        Fichero = data,
+                    };
+
+                    var respuesta = await CreateFichero(documenttransfer);
+                    if (respuesta.IsSuccess)
+                    {
+                        return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = examenComplementario.IdFichaMedica });
+                    }
+                    else
+                    {
+                        ViewData["Error"] = respuesta.Message;
+
+                        var documento = new ExamenComplementarioTransfer
                         {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = Mensaje.Satisfactorio,
-                            UserName = "Usuario 1"
-                        });
+                            IdExamenComplementario = examenComplementario.IdExamenComplementario,
+                            Fecha = examenComplementario.Fecha,
+                            Resultado = examenComplementario.Resultado,
+                            IdTipoExamenComplementario = examenComplementario.IdTipoExamenComplementario,
+                            IdFichaMedica = examenComplementario.IdFichaMedica,
+                            Url = examenComplementario.Url,
 
-                        return RedirectToAction("Index");
+                            Fichero = data,
+                        };
+
+                        
+                        return View(documento);
                     }
-                    
-
-                    //ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Empleado>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "Identificacion");
-
-                    ViewData["Error"] = response.Message;
-
-                    ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
-                    ViewData["IdTipoExamenComplementario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoExamenComplementario>(new Uri(WebApp.BaseAddress), "api/TiposExamenesComplementarios/ListarTiposExamenesComplementarios"), "IdTipoExamenComplementario", "Nombre");
-
-                    return View(ExamenComplementario);
 
                 }
-                return BadRequest();
+                else
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        InicializarMensaje(Mensaje.ModeloInvalido);
+
+                        return View(examenComplementario);
+                    }
+
+                    response = await apiServicio.InsertarAsync(examenComplementario,
+                                                         new Uri(WebApp.BaseAddress),
+                                                         "api/ExamenesComplementarios/InsertarExamenesComplementarios");
+                    if (response.IsSuccess)
+                    {
+                        return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = examenComplementario.IdFichaMedica });
+                    }
+                }
+                
+                return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = Mensaje.ErrorCargaArchivo, idFicha = examenComplementario.IdFichaMedica });
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = Mensaje.Excepcion,
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
-                ViewData["IdTipoExamenComplementario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoExamenComplementario>(new Uri(WebApp.BaseAddress), "api/TiposExamenesComplementarios/ListarTiposExamenesComplementarios"), "IdTipoExamenComplementario", "Nombre");
-                return BadRequest();
-
+                InicializarMensaje(Mensaje.Error);
+                return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = Mensaje.Excepcion, idFicha = examenComplementario.IdFichaMedica });
             }
-        }*/
 
+
+        }
+        
+    
 
 
         public async Task<IActionResult> Edit(string id)
@@ -251,7 +260,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, ExamenComplementario ExamenComplementario)
+        public async Task<IActionResult> Edit(string id, ExamenComplementario examenComplementario, List<IFormFile> files)
         {
 
             ViewData["IdTipoExamenComplementario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoExamenComplementario>(new Uri(WebApp.BaseAddress), "api/TiposExamenesComplementarios/ListarTiposExamenesComplementarios"), "IdTipoExamenComplementario", "Nombre");
@@ -261,25 +270,74 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, ExamenComplementario, new Uri(WebApp.BaseAddress),
+
+                    if (files.Count > 0)
+                    {
+                        byte[] data;
+                        using (var br = new BinaryReader(files[0].OpenReadStream()))
+                            data = br.ReadBytes((int)files[0].OpenReadStream().Length);
+
+                        var documenttransfer = new ExamenComplementarioTransfer
+                        {
+                            IdExamenComplementario = examenComplementario.IdExamenComplementario,
+                            Fecha = examenComplementario.Fecha,
+                            Resultado = examenComplementario.Resultado,
+                            IdTipoExamenComplementario = examenComplementario.IdTipoExamenComplementario,
+                            IdFichaMedica = examenComplementario.IdFichaMedica,
+                            Url = examenComplementario.Url,
+
+                            Fichero = data,
+                        };
+
+                        var respuesta = await UpdateFichero(documenttransfer);
+
+                        if (respuesta.IsSuccess)
+                        {
+                            return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = examenComplementario.IdFichaMedica });
+                        }
+                        else
+                        {
+                            ViewData["Error"] = respuesta.Message;
+
+                            var documento = new ExamenComplementarioTransfer
+                            {
+                                IdExamenComplementario = examenComplementario.IdExamenComplementario,
+                                Fecha = examenComplementario.Fecha,
+                                Resultado = examenComplementario.Resultado,
+                                IdTipoExamenComplementario = examenComplementario.IdTipoExamenComplementario,
+                                IdFichaMedica = examenComplementario.IdFichaMedica,
+                                Url = examenComplementario.Url,
+
+                                Fichero = data,
+                            };
+
+
+                            return View(documento);
+                        }
+
+                    }
+                    else
+                    {
+                        response = await apiServicio.EditarAsync(id, examenComplementario, new Uri(WebApp.BaseAddress),
                                                                  "api/ExamenesComplementarios");
 
-                    if (response.IsSuccess)
-                    {
+                        if (response.IsSuccess)
+                        {
 
-                        return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = ExamenComplementario.IdFichaMedica });
+                            return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = examenComplementario.IdFichaMedica });
+                        }
+
+                        return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = response.Message, idFicha = examenComplementario.IdFichaMedica });
                     }
-
-                    return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = response.Message, idFicha = ExamenComplementario.IdFichaMedica });
-
-
+    
                 }
-                return BadRequest();
+
+                return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = Mensaje.ErrorCargaArchivo, idFicha = examenComplementario.IdFichaMedica });
             }
             catch (Exception ex)
             {
 
-                return BadRequest();
+                return RedirectToAction("Index", "ExamenesComplementarios", new { mensaje = Mensaje.Excepcion, idFicha = examenComplementario.IdFichaMedica });
 
             }
         }
@@ -385,6 +443,111 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<Response> CreateFichero(ExamenComplementarioTransfer file)
+        {
+            Response response = new Response();
+            try
+            {
+                response = await apiServicio.InsertarAsync(file,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ExamenesComplementarios/UploadFiles");
+                if (response.IsSuccess)
+                {
+                    return new Response
+                    {
+                        IsSuccess = true,
+                        Message = response.Message,
+                    };
+
+                }
+
+                ViewData["Error"] = response.Message;
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<Response> UpdateFichero(ExamenComplementarioTransfer file)
+        {
+            Response response = new Response();
+            try
+            {
+                response = await apiServicio.InsertarAsync(file,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ExamenesComplementarios/UpdateFiles");
+                if (response.IsSuccess)
+                {
+                    return new Response
+                    {
+                        IsSuccess = true,
+                        Message = response.Message,
+                    };
+
+                }
+
+                ViewData["Error"] = response.Message;
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
+            }
+        }
+
+
+
+
+        public async Task<FileResult> Download(string id)
+        {
+            var id2 = new ExamenComplementario
+            {
+                IdExamenComplementario = Convert.ToInt32(id),
+            };
+
+            var response = await apiServicio.ObtenerElementoAsync(id2,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ExamenesComplementarios/GetFile");
+
+            
+            var m = JsonConvert.DeserializeObject<ExamenComplementarioTransfer>(response.Resultado.ToString());
+            var fileName = $"{ response.Message}.pdf";
+
+            return File(m.Fichero, "application/pdf", fileName);
+        }
+
+
+
 
     }
 }

@@ -877,7 +877,7 @@ namespace bd.webappth.web.Controllers.MVC
                     if (response.IsSuccess)
                     {
                         
-                        return RedirectToAction("DatosMedicos", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+                        return RedirectToAction("DatosMedicos", "FichasMedicas", new { mensaje = Mensaje.Satisfactorio, idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
 
                     }
 
