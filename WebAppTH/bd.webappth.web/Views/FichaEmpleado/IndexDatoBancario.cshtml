@@ -1,6 +1,8 @@
 @model bd.webappth.entidades.Negocio.DatosBancarios
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 6 }; }
 
-@{await Html.RenderPartialAsync("_PartialViewMenu");}
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -71,25 +73,26 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>   
-                                    @if (@Model.IdEmpleado != 0) { 
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => Model.InstitucionFinanciera.Nombre)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => Model.NumeroCuenta)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => Model.Ahorros)
-                                        </td>
-                                        <td>
+                                <tbody>
+                                    @if (@Model.IdEmpleado != 0)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.InstitucionFinanciera.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.NumeroCuenta)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => Model.Ahorros)
+                                            </td>
+                                            <td>
 
-                                            @Html.ActionLink("Editar", "EditDatoBancario", new { id = Model.IdDatosBancarios }) |
-                                            @Html.ActionLink("Eliminar", "DeleteDatoBancario", new { id = Model.IdDatosBancarios }, new { onclick = "return confirm('Desea eliminar el Dato Bancario... ?');" })
+                                                @Html.ActionLink("Editar", "EditDatoBancario", new { id = Model.IdDatosBancarios }) |
+                                                @Html.ActionLink("Eliminar", "DeleteDatoBancario", new { id = Model.IdDatosBancarios }, new { onclick = "return confirm('Desea eliminar el Dato Bancario... ?');" })
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

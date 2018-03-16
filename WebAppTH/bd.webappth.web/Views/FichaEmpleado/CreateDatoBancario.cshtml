@@ -6,37 +6,39 @@
 <script src='~/js/site.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 6 }; }
 
-
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
     @*<div class="col col-10">
 
-        @if (@ViewData["Error"].ToString() != "")
+            @if (@ViewData["Error"].ToString() != "")
 
-        {
+            {
 
-            <div class="col-lg-7">
+                <div class="col-lg-7">
 
-                <div class="alert alert-block alert-dismissable">
+                    <div class="alert alert-block alert-dismissable">
 
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                        <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
 
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
 
-                    <p>
+                        <p>
 
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                            <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
 
-                    </p>
+                        </p>
+
+                    </div>
 
                 </div>
 
-            </div>
-
-        }
-    </div>*@
+            }
+        </div>*@
     <!-- widget grid -->
     <section id="widget-grid" class="">
 

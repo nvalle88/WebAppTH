@@ -1,13 +1,113 @@
 
-
+@model bd.webappth.entidades.Utils.FichaEmpleado
 <div class="btn-group btn-group-justified">
-    <a href="javascript:void(0);" class="btn btn-default">Datos <br /> Personales</a>
-    <a href="@Url.Action("IndexPersonaEstudio", "FichaEmpleado")" class="btn btn-default">Formaci&oacute;n <br /> Acad&eacute;mica </a>
-    <a href="@Url.Action("IndexTrayectoriaLaboral", "FichaEmpleado")" class="btn btn-default">Trayectoria <br /> Laboral</a>
-    <a href="@Url.Action("IndexEmpleadoFamiliar", "FichaEmpleado")" class="btn btn-default">Familiares</a>
-    <a href="@Url.Action("IndexPersonaDiscapacidad", "FichaEmpleado")" class="btn btn-default">Discapacidades</a>
-    <a href="@Url.Action("IndexPersonaEnfermedad", "FichaEmpleado")" class="btn btn-default">Enfermedades</a>
-    <a href="@Url.Action("IndexDatoBancario", "FichaEmpleado")" class="btn btn-default">Datos <br /> Bancarios</a>
-    <a href="@Url.Action("IndexEmpleadoContactoEmergencia", "FichaEmpleado")" class="btn btn-default">Contacto <br /> Emergencia</a>
-    <a href="@Url.Action("IndexPersonaSustituto", "FichaEmpleado")" class="btn btn-default">Persona <br /> Sustituto</a>
+    @if (Model.OpcionMenu == 0)
+    {
+        <a asp-action="Detalle" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" class="btn btn-default"> Datos de <br /> Identificaci&oacute;n <br />del puesto </a>
+    }
+    else
+    {
+        <a asp-action="Detalle" asp-controller="IndicesOcupacionales" class="btn btn-default"> Datos de <br /> Identificaci&oacute;n <br />del puesto </a>
+    }
+
+
+    @if (Model.OpcionMenu == 1)
+    {
+        <a href="@Url.Action("IndexPersonaEstudio", "FichaEmpleado")" style="background-color:#3276b1;color:white;" class="btn btn-default">Formaci&oacute;n <br /> Acad&eacute;mica </a>
+
+    }
+    else
+    {
+        <a href="@Url.Action("IndexPersonaEstudio", "FichaEmpleado")" class="btn btn-default">Formaci&oacute;n <br /> Acad&eacute;mica </a>
+
+
+    }
+
+    @if (Model.OpcionMenu == 2)
+    {
+        <a href="@Url.Action("IndexTrayectoriaLaboral", "FichaEmpleado")" style="background-color:#3276b1;color:white;" class="btn btn-default">Trayectoria <br /> Laboral</a>
+
+
+    }
+    else
+    {
+        <a href="@Url.Action("IndexTrayectoriaLaboral", "FichaEmpleado")"  class="btn btn-default">Trayectoria <br /> Laboral</a>
+
+    }
+
+    @if (Model.OpcionMenu == 3)
+    {
+        <a href="@Url.Action("IndexEmpleadoFamiliar", "FichaEmpleado")" style="background-color:#3276b1;color:white;" class="btn btn-default">Familiares</a>
+
+    }
+    else
+    {
+        <a href="@Url.Action("IndexEmpleadoFamiliar", "FichaEmpleado")" class="btn btn-default">Familiares</a>
+    }
+
+    @if (Model.OpcionMenu == 4)
+    {
+        <a href="@Url.Action("IndexPersonaDiscapacidad", "FichaEmpleado")" style="background-color:#3276b1;color:white;" class="btn btn-default">Discapacidades</a>
+
+
+    }
+    else
+    {
+        <a href="@Url.Action("IndexPersonaDiscapacidad", "FichaEmpleado")" class="btn btn-default">Discapacidades</a>
+
+    }
+
+    @if (Model.OpcionMenu == 5)
+    {
+        <a href="@Url.Action("IndexPersonaEnfermedad", "FichaEmpleado")" style="background-color:#3276b1;color:white;" class="btn btn-default">Enfermedades</a>
+
+    }
+    else
+    {
+        <a href="@Url.Action("IndexPersonaEnfermedad", "FichaEmpleado")" class="btn btn-default">Enfermedades</a>
+
+
+    }
+
+
+    @if (Model.OpcionMenu == 6)
+    {
+        <a href="@Url.Action("IndexDatoBancario", "FichaEmpleado")" style="background-color:#3276b1;color:white;" class="btn btn-default">Datos <br /> Bancarios</a>
+    }
+    else
+    {
+        <a href="@Url.Action("IndexDatoBancario", "FichaEmpleado")" class="btn btn-default">Datos <br /> Bancarios</a>
+
+    }
+
+    @if (Model.OpcionMenu == 7)
+    {
+        <a href="@Url.Action("IndexEmpleadoContactoEmergencia", "FichaEmpleado")" style="background-color:#3276b1;color:white;" class="btn btn-default">Contacto <br /> Emergencia</a>
+
+    }
+    else
+    {
+        <a href="@Url.Action("IndexEmpleadoContactoEmergencia", "FichaEmpleado")" class="btn btn-default">Contacto <br /> Emergencia</a>
+
+
+    }
+
+    @if (Model.OpcionMenu == 8)
+    {
+        <a href="@Url.Action("IndexPersonaSustituto", "FichaEmpleado")" style="background-color:#3276b1;color:white;" class="btn btn-default">Persona <br /> Sustituto</a>
+
+
+    }
+    else
+    {
+        <a href="@Url.Action("IndexPersonaSustituto", "FichaEmpleado")" class="btn btn-default">Persona <br /> Sustituto</a>
+
+
+
+    }
+
+
+
+
+
 </div>

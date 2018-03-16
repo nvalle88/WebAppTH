@@ -9,7 +9,10 @@
 @{
     ViewData["Title"] = "PersonaEstudio";
 }
+@using bd.webappth.entidades.Utils
+@{ var modelo = new FichaEmpleado { OpcionMenu = 2 }; }
 
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
