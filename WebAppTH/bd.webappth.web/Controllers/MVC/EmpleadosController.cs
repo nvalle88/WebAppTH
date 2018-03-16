@@ -6,9 +6,11 @@ using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.webappth.entidades.ViewModels;
 using bd.webappth.servicios.Interfaces;
+using EnviarCorreo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using SendMails.methods;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -75,6 +77,8 @@ namespace bd.webappth.web.Controllers.MVC
         }
         public async Task<IActionResult> Index()
         {
+            
+
             var lista = new List<ListaEmpleadoViewModel>();
             try
             {
@@ -118,6 +122,10 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        public  void SendMail()
+        {
+           
+        }
 
 
         private async Task CargarCombos(DatosBasicosEmpleadoViewModel datosBasicosEmpleado)
@@ -1483,6 +1491,34 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
         
+
+        public void EnviarMail()
+        {
+            MailConfig.HostUri = "smtp.gmail.com";
+            MailConfig.PrimaryPort = 465;
+            MailConfig.SecureSocketOptions = 2;
+
+            //Class for submit the email 
+            var mail = new Mail
+            {
+                Password = "nvr1604**"
+                                 ,
+                Body = "mensaje"
+                                 ,
+                EmailFrom = "nestorvalle880416@gmail.com"
+                                 ,
+                EmailTo = "nestorvalle880416@gmail.com"
+                                 ,
+                NameFrom = "Name From"
+                                 ,
+                NameTo = "Name To"
+                                 ,
+                Subject = "asunto",
+            };
+            //execute the method Send Mail or SendMailAsync
+            var a = Emails.SendEmailAsync(mail);
+        }
+
 
     }
 }

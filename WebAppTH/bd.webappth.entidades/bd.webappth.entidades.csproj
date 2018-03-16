@@ -16,6 +16,7 @@
     <PackageReference Include="bd.log.guardar" Version="1.1.1" />
     <PackageReference Include="EnviarCorreo" Version="1.1.8" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
+    <PackageReference Include="SendMailSMTPNet.Core" Version="1.2.4" />
   </ItemGroup>
 
 </Project>
