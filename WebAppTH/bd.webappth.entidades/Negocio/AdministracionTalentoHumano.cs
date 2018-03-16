@@ -20,7 +20,8 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "¿Aplica política?")]
         public bool SeAplicaraPolitica { get; set; }
-
+        public string Descripcion { get; set; }
+        public bool Cumple { get; set; }
 
 
         //Propiedades Virtuales Referencias a otras clases

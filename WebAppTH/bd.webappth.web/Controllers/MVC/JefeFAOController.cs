@@ -63,10 +63,11 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     IdEmpleado = id,
                     IdFormularioAnalisisOcupacional = IdActividad
+                    
 
                 };
                 var response = await apiServicio.ObtenerElementoAsync(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ObtenerEncabezadoEmpleadosFaoValidar");
+                                                                    , "api/Empleados/ObtenerEncabezadoEmpleadosFaoValidarConActividades");
 
                 if (response.IsSuccess)
                 {
@@ -74,7 +75,7 @@ namespace bd.webappth.web.Controllers.MVC
                     return View(empleado);
                 }
                 ViewData["Error"] = response.Message;
-                return View();
+                return RedirectToAction("Index");
 
             }
             catch (Exception ex)
@@ -89,8 +90,19 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+
+                var usuario = new DocumentoFAOViewModel
+                {
+                    NombreUsuario = NombreUsuario,
+                    ListaActividads= documentoFAOViewModel.ListaActividads,
+                    ListaExepciones = documentoFAOViewModel.ListaExepciones
+
+                };
                 //Debug.Write(documentoFAOViewModel.Count);
-                var response = await apiServicio.ObtenerElementoAsync(documentoFAOViewModel, new Uri(WebApp.BaseAddress)
+                var response = await apiServicio.ObtenerElementoAsync(usuario, new Uri(WebApp.BaseAddress)
                                                                     , "api/FormularioAnalisisOcupacional/ActualizarActividades");
 
                 if (response.IsSuccess)

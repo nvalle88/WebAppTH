@@ -1,6 +1,8 @@
 @model List<bd.webappth.entidades.ViewModels.DocumentoFAOViewModel>
-
+@using bd.webappth.entidades.ViewModels
 <link href="~/css/tabla/table.css" rel="stylesheet" />
+@{ var modelo = new DocumentoFAOViewModel { OpcionMenu = 0 }; }
+@{await Html.RenderPartialAsync("_PartialViewIDocumentoFAO", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -55,16 +57,14 @@
                                         {
                                             <td>Sin Validadar</td>
                                             <td>Sin Validadar</td>
-                                            <td></td>
+                                            <td> @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEmpleado }, new { onclick = "return confirm('Desea eliminar la asignacion... ?');" })</td>
 
                                         }
                                         @if (item.estado == 0)
                                         {
                                             <td>Validado</td>
                                             <td>Sin Validadar</td>
-                                            <td>
-                                                @Html.ActionLink("Validar", "Create", new { id = item.IdEmpleado, IdActividad = item.IdFormularioAnalisisOcupacional })
-                                            </td>
+                                            <td></td>
 
                                         }
                                         @if (item.estado == 1)
@@ -72,7 +72,18 @@
                                             <td>Validado</td>
                                             <td>Validado</td>
                                             <td>
-                                                @*@Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado }) |*@
+                                                @Html.ActionLink("Validar", "Create", new { id = item.IdEmpleado, IdActividad = item.IdFormularioAnalisisOcupacional })
+                                                @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado }) |*@
+                                                @* @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEmpleado }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })*@
+                                            </td>
+
+                                        }
+                                        @if (item.estado == 2)
+                                        {
+                                            <td>Validado</td>
+                                            <td>Validado</td>
+                                            <td>
+                                                @Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado, IdActividad = item.IdFormularioAnalisisOcupacional })
                                                 @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado }) |*@
                                                 @* @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEmpleado }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })*@
                                             </td>
@@ -89,8 +100,10 @@
         </article>
     </div>
 </div>
+
+
 @section Scripts {
     <script src='~/js/datatables/init.js'></script>
-
 }
+
 
