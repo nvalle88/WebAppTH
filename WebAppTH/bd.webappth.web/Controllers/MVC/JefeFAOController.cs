@@ -118,5 +118,33 @@ namespace bd.webappth.web.Controllers.MVC
             }
             return View(documentoFAOViewModel);
         }
+        public async Task<IActionResult> Detalle(int id, int IdActividad)
+        {
+            try
+            {
+
+                var usuario = new DocumentoFAOViewModel
+                {
+                    IdEmpleado = id,
+                    IdFormularioAnalisisOcupacional = IdActividad
+
+                };
+                var response = await apiServicio.ObtenerElementoAsync(usuario, new Uri(WebApp.BaseAddress)
+                                                                    , "api/Empleados/ObtenerEncabezadoEmpleadosFaoValidarConExepcionesVisualizarJefe");
+
+                if (response.IsSuccess)
+                {
+                    var empleado = JsonConvert.DeserializeObject<DocumentoFAOViewModel>(response.Resultado.ToString());
+                    return View(empleado);
+                }
+                ViewData["Error"] = response.Message;
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

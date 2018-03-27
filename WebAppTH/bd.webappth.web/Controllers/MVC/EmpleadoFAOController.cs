@@ -25,8 +25,12 @@ namespace bd.webappth.web.Controllers.MVC
 
 
         }
-        
-        public async Task<IActionResult> Create()
+
+        public async Task<IActionResult> ValidacionFao()
+        {
+            return View();
+        }
+            public async Task<IActionResult> Create()
         {
             try
             {
@@ -46,9 +50,10 @@ namespace bd.webappth.web.Controllers.MVC
                     var empleado = JsonConvert.DeserializeObject<DocumentoFAOViewModel>(response.Resultado.ToString());
                    return View(empleado);
                 }
-                ViewData["Error"] = response.Message;
-                return View();
-                
+                //ViewData["Error"] = response.Message;
+                return RedirectToAction("ValidacionFao");
+                //return View();
+
             }
             catch (Exception ex)
             {

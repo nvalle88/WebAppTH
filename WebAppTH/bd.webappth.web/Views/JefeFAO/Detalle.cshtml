@@ -1,14 +1,8 @@
 @model bd.webappth.entidades.ViewModels.DocumentoFAOViewModel
 
-@using bd.webappth.entidades.ViewModels
-<link href="~/css/tabla/table.css" rel="stylesheet" />
-@{ var modelo = new DocumentoFAOViewModel { OpcionMenu = 0 }; }
-@{await Html.RenderPartialAsync("_PartialViewIDocumentoFAO", modelo);}
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Detalle";
 }
-
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 
@@ -135,9 +129,9 @@
                                             </table>
                                         </section>
                                     </div>
-                                    
+
                                     <div class="row">
-                                        
+
                                         <section class="col col-6">
                                             <legend>Relaciones interna y externas del puesto</legend>
                                             <br />
@@ -152,14 +146,14 @@
                                                     @if (Model.InternoMismoProceso == false)
                                                     {
 
-                                        <input type="checkbox" name="InternoMismoProceso" value="false" disabled="disabled" />
+                                                    <input type="checkbox" name="InternoMismoProceso" value="false" disabled="disabled" />
                                                     }
                                                     else
                                                     {
-                                        <input type="checkbox" name="InternoMismoProceso" value="true" checked="checked" disabled="disabled" />
+                                                    <input type="checkbox" name="InternoMismoProceso" value="true" checked="checked" disabled="disabled" />
                                                     }
                                                     @*<input type="checkbox" name="InternoMismoProceso" value="true" />
-                <input type="hidden" name="InternoMismoProceso" value="false" checked="checked" />*@
+                                                        <input type="hidden" name="InternoMismoProceso" value="false" checked="checked" />*@
                                                     <i></i>
                                                 </label>
                                                 <br />
@@ -167,14 +161,14 @@
                                                 <label class="checkbox">
                                                     @if (Model.InternoOtroProceso == false)
                                                     {
-                                        <input type="checkbox" name="InternoOtroProceso" value="false" disabled="disabled" />
+                                                    <input type="checkbox" name="InternoOtroProceso" value="false" disabled="disabled" />
                                                     }
                                                     else
                                                     {
-                                        <input type="checkbox" name="InternoOtroProceso" value="true" checked="checked" disabled="disabled" />
+                                                    <input type="checkbox" name="InternoOtroProceso" value="true" checked="checked" disabled="disabled" />
                                                     }
                                                     @*<input type="checkbox" name="InternoOtroProceso" value="true" />
-                <input type="hidden" name="InternoOtroProceso" value="false" checked="checked" />*@
+                                                        <input type="hidden" name="InternoOtroProceso" value="false" checked="checked" />*@
                                                     <i></i>
                                                 </label>
                                             </section>
@@ -193,14 +187,14 @@
                                                 <label class="checkbox">
                                                     @if (Model.ExternosCiudadania == false)
                                                     {
-                                    <input type="checkbox" name="ExternosCiudadania" value="false" disabled="disabled" />
+                                                    <input type="checkbox" name="ExternosCiudadania" value="false" disabled="disabled" />
                                                     }
                                                     else
                                                     {
-                                    <input type="checkbox" name="ExternosCiudadania" value="true" checked="checked" disabled="disabled" />
+                                                    <input type="checkbox" name="ExternosCiudadania" value="true" checked="checked" disabled="disabled" />
                                                     }
                                                     @*<input type="checkbox" name="ExternosCiudadania" value="true" />
-                    <input type="hidden" name="ExternosCiudadania" value="false" checked="checked" />*@
+                                                        <input type="hidden" name="ExternosCiudadania" value="false" checked="checked" />*@
                                                     <i></i>
                                                 </label>
                                                 <br />
@@ -208,14 +202,14 @@
                                                 <label class="checkbox">
                                                     @if (Model.ExtPersJuridicasPubNivelNacional == false)
                                                     {
-                                    <input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="false" disabled="disabled" />
+                                                    <input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="false" disabled="disabled" />
                                                     }
                                                     else
                                                     {
-                                    <input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="true" checked="checked" disabled="disabled" />
+                                                    <input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="true" checked="checked" disabled="disabled" />
                                                     }
                                                     @*<input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="true" />
-                    <input type="hidden" name="ExtPersJuridicasPubNivelNacional" value="false" checked="checked" />*@
+                                                        <input type="hidden" name="ExtPersJuridicasPubNivelNacional" value="false" checked="checked" />*@
                                                     <i></i>
                                                 </label>
                                             </section>
@@ -246,91 +240,10 @@
                                             </table>
                                         </section>
                                     </div>
-                                    <div class="row">
-                                        <section class="col col-lg-12">
-                                            <legend>informe de la unidad administraci&oacute;n de talento humano</legend>
-                                            <br />
-                                            <legend>Rol Puesto</legend>
-                                            <br />
-                                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th data-hide="phone">
-                                                            Puesto
-                                                        </th>
-                                                        <th>Opcion</th>
-                                                    </tr>
-                                                </thead>
-                                                @foreach (var item in Model.ListasRolPUestos)
-                                                {
-
-                                                <tr>
-                                                    <td width="50%">
-                                                        @Html.DisplayFor(modelItem => item.Nombre)
-                                                    </td>
-                                                    <td width="50%">
-                                                        <label class="radio">
-                                                            <input name="ListaRolPUesto" type="radio" checked="checked" value="@item.IdRolPuesto" disabled="disabled" />
-                                                            <i></i>
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                }
-                                            </table>
-                                        </section>
-                                    </div>
-                                    <div class="row">
-                                        <section class="col col-lg-12">
-                                            <legend>Cumplimiento de perfil requerido</legend>
-                                            <br />
-                                            <section class="col col-10">
-                                                <label class="label">La o el servidor re&uacute;ne los requisitos min&iacute;mos  para el puesto seg&uacute;n el Manual de Puestos Institucional</label>
-                                                <br />
-                                                <label class="label">Se aplicar&aacute; p&oacute;litica?</label>
-                                            </section>
-                                            <section class="col col-2">
-                                                <label class="checkbox">
-                                                    @if (Model.Cumple == false)
-                                                    {
-                                                <input type="checkbox" name="Cumple" value="true" disabled="disabled" />
-
-                                                    }
-                                                    else
-                                                    {
-                                                <input type="checkbox" name="Cumple" checked="checked" value="false" disabled="disabled" />
-                                                    
-                                                    }
-                                                    <i></i>
-                                                </label>
-                                                <br />
-                                                <br />
-                                                <label class="checkbox">
-                                                    @if (Model.aplicapolitica == false)
-                                                    {
-                                                    <input type="checkbox" name="aplicapolitica" value="true" disabled="disabled" />
-                                                    }
-                                                    else
-                                                    {
-                                                    <input type="checkbox" name="aplicapolitica" value="false" checked="checked" disabled="disabled" />
-
-                                                    }
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                        </section>
-                                        <section id="requisitos" class="col col-lg-12">
-                                            <br />
-                                            <label class="label">Que requisitos no cumple</label>
-                                            <label class="textarea">
-                                                <textarea maxlength="100" name="Descripcionpuesto" rows="3" placeholder="Descripcion"></textarea>
-
-                                            </label>
-                                        </section>
-                                    </div>
                                 </fieldset>
 
                                 <footer>
-                                    <a asp-action="Asignados" class="btn btn-default">Cancelar</a>
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
 
                                 </footer>
 
@@ -363,22 +276,21 @@
     </script>
     <script type="text/javascript">
 
-        @if (Model.Cumple == true) {
 
-            @: ocultarRequisitos();
-        }
-        else
-        {
-            @: mostrarRequisitos();
 
-        }
         function ocultarRequisitos() {
-            document.getElementById('requisitos').hidden = "true"; //para mostrar
-            //alert("oculto");
-        }
 
-        function mostrarRequisitos() {
-            document.getElementById('requisitos').hidden = "false"; //para mostrar
+            if (document.getElementById('requisitos').hidden == "") {
+
+                document.getElementById('requisitos').hidden = "hidden"; //para ocultar
+
+            }
+
+            else {
+
+                document.getElementById('requisitos').hidden = ""; //para mostrar
+
+            }
 
         }
 
@@ -391,3 +303,4 @@
         }*@
     </script>
 }
+
