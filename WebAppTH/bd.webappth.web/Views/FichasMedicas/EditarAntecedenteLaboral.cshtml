@@ -54,11 +54,11 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdAntecedentesLaborales" />
-                                @{await Html.RenderPartialAsync("_PartialView");}
+                                @{await Html.RenderPartialAsync("_PartialViewAntecedenteLaboral");}
 
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
-                                    <input type="submit" asp-action="Index" asp-controller="AntecedentesLaborales" asp-route-idFicha="@Model.IdFichaMedica" class="btn btn-default" value="Cancelar" onclick="espera()" />
+                                    <input type="submit" asp-action="EditarAntecedenteLaboral" asp-controller="FichasMedicas" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                    <input type="submit" asp-action="IndexAntecedenteLaboral" asp-controller="FichasMedicas" asp-route-idFicha="@Model.IdFichaMedica" class="btn btn-default" value="Cancelar" onclick="espera()" />
 
                                 </footer>
 

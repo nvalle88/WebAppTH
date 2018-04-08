@@ -1,8 +1,8 @@
-@model bd.webappth.entidades.ViewModels.ExamenesComplementariosViewModel
+@model bd.webappth.entidades.ViewModels.AntecedentesFamiliaresViewModel
 @using bd.webappth.entidades.Negocio
 
 @{
-    ViewData["Title"] = "Examenes Complementarios";
+    ViewData["Title"] = "Antecedentes familiares";
 }
 
 @{
@@ -10,6 +10,7 @@
 
     mficha = Model.fichaMedica;
 }
+
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -39,9 +40,10 @@
 
     <p></p>
 
-    <div style="">
 
-        <form asp-action="Create2" id="checkout-form" novalidate="novalidate">
+
+    <div style="">
+        <form asp-action="CreateAntecedenteFamiliar2" id="checkout-form"  novalidate="novalidate">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -54,8 +56,6 @@
                 </span>Nuevo&nbsp;
 
             </button>
-
-
         </form>
 
     </div>
@@ -85,7 +85,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Examenes Complementarios</h2>
+                        <h2>Antecedentes familiares</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -101,27 +101,27 @@
 
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().IdFichaMedica)
+                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().FichaMedica.IdFichaMedica)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().Fecha)
+                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().Parentesco)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().Resultado)
+                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().Enfermedad)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().TipoExamenComplementario.Nombre)
+                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().Observaciones)
                                         </th>
+
 
                                         <th>Opciones</th>
                                     </tr>
-
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.ListaExamenesComplementarios)
+                                    @foreach (var item in Model.ListaAntecedentesFamiliares)
                                     {
                                         <tr>
                                             <td>
@@ -129,22 +129,21 @@
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Fecha)
+                                                @Html.DisplayFor(modelItem => item.Parentesco)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Resultado)
+                                                @Html.DisplayFor(modelItem => item.Enfermedad)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.TipoExamenComplementario.Nombre)
+                                                @Html.DisplayFor(modelItem => item.Observaciones)
                                             </td>
 
-
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdExamenComplementario, idFM = item.IdFichaMedica }, new { onclick = "espera()" }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdExamenComplementario, idFM = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" }) |
-                                                @Html.ActionLink("Descargar", "Download", new { id = item.IdExamenComplementario })
+
+                                                @Html.ActionLink("Editar", "EditarAntecedenteFamiliar", new { id = item.IdAntecedentesFamiliares, idFM = item.IdFichaMedica } , new { onclick = "espera()"} ) |
+                                                @Html.ActionLink("Eliminar", "DeleteAntecedenteFamiliar", new { id = item.IdAntecedentesFamiliares, idFM = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                             </td>
                                         </tr>
                                     }
@@ -178,10 +177,11 @@
     <script>
 
         onload = function () {
-
-            $("#btn_6").css("background-color", "#3276b1");
-            $("#btn_6").css("color", "white");
+            
+            $("#btn_3").css("background-color", "#3276b1");
+            $("#btn_3").css("color", "white");
         }
+
     </script>
 }
 

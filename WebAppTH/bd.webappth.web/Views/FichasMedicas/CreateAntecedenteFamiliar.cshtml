@@ -1,8 +1,7 @@
-@model bd.webappth.entidades.Negocio.AntecedentesLaborales
-@using bd.webappth.entidades.Negocio
+@model bd.webappth.entidades.Negocio.AntecedentesFamiliares
 
 @{
-    ViewData["Title"] = "Antecedente laboral";
+    ViewData["Title"] = "Antecedente Familiar";
 }
 
 
@@ -39,7 +38,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Antecedente laboral</h2>
+                        <h2>Antecedente familiar</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -55,22 +54,14 @@
 
                             <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                @{await Html.RenderPartialAsync("_PartialView", Model);}
-
-                                @{
-                                    FichaMedica modelo = new FichaMedica();
-                                    modelo.IdFichaMedica = Model.IdFichaMedica;
-
-                                }
-
+                                @{await Html.RenderPartialAsync("_PartialViewAntecedenteFamiliar", Model);}
 
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
-                                    <input type="submit" asp-action="Index" asp-controller="AntecedentesLaborales" asp-route-idFicha="@Model.IdFichaMedica" class="btn btn-default" value="Cancelar" onclick="espera()" />
+                                    <input type="submit" asp-action="CreateAntecedenteFamiliar" asp-controller="FichasMedicas" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                    <input type="submit" asp-action="IndexAntecedenteFamiliar" asp-controller="FichasMedicas" asp-route-idFicha="@Model.IdFichaMedica" class="btn btn-default" value="Cancelar" onclick="espera()" />
 
                                 </footer>
                             </form>
-
                         </div>
                         <!-- end widget content -->
                     </div>
@@ -96,7 +87,9 @@
     <script src='~/lib/waitMe/waitMe.min.js'></script>
     <script src='~/js/site.js'></script>
 
+
     <script type="text/javascript">
+
         function espera() {
 
             mostrarLoadingPanel("content", "Cargando...");

@@ -52,10 +52,11 @@
             <section class="col col-lg-12">
                 <legend>Examen complementario</legend>
                 <section>
-                    <object id="output" type="application/pdf" width="100%" height="1px"></object>
+                    <object id="output" type="application/pdf" data="@Model.Url" width="100%" height="1px"></object>
                 </section>
             </section>
 
+            
 
         </div>
 
@@ -63,4 +64,22 @@
 
 <script>
     document.getElementById("examenpdf").style.visibility = "hidden";
+</script>
+
+<script>
+
+    @if (Model.Url != null && Model.Url != "")
+    {
+
+        <text>
+            var output2 = document.getElementById('output');
+            output2.style.height = "700px";
+            output2.style.width = "100%";
+            document.getElementById("examenpdf").style.visibility = "visible";
+            
+        </text>
+
+    }
+
+    
 </script>

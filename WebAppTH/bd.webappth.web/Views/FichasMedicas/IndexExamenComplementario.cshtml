@@ -1,8 +1,8 @@
-@model bd.webappth.entidades.ViewModels.AntecedentesFamiliaresViewModel
+@model bd.webappth.entidades.ViewModels.ExamenesComplementariosViewModel
 @using bd.webappth.entidades.Negocio
 
 @{
-    ViewData["Title"] = "Antecedentes familiares";
+    ViewData["Title"] = "Examenes Complementarios";
 }
 
 @{
@@ -10,7 +10,6 @@
 
     mficha = Model.fichaMedica;
 }
-
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -40,10 +39,9 @@
 
     <p></p>
 
-
-
     <div style="">
-        <form asp-action="Create2" id="checkout-form"  novalidate="novalidate">
+
+        <form asp-action="CreateExamenComplementario2" id="checkout-form" novalidate="novalidate">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -56,6 +54,8 @@
                 </span>Nuevo&nbsp;
 
             </button>
+
+
         </form>
 
     </div>
@@ -85,7 +85,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Antecedentes familiares</h2>
+                        <h2>Examenes Complementarios</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -101,27 +101,27 @@
 
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().FichaMedica.IdFichaMedica)
+                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().IdFichaMedica)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().Parentesco)
+                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().Fecha)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().Enfermedad)
+                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().Resultado)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaAntecedentesFamiliares.FirstOrDefault().Observaciones)
+                                            @Html.DisplayNameFor(model => model.ListaExamenesComplementarios.FirstOrDefault().TipoExamenComplementario.Nombre)
                                         </th>
-
 
                                         <th>Opciones</th>
                                     </tr>
+
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.ListaAntecedentesFamiliares)
+                                    @foreach (var item in Model.ListaExamenesComplementarios)
                                     {
                                         <tr>
                                             <td>
@@ -129,21 +129,29 @@
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Parentesco)
+                                                @Html.DisplayFor(modelItem => item.Fecha)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Enfermedad)
+                                                @Html.DisplayFor(modelItem => item.Resultado)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Observaciones)
+                                                @Html.DisplayFor(modelItem => item.TipoExamenComplementario.Nombre)
                                             </td>
 
-                                            <td>
 
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdAntecedentesFamiliares, idFM = item.IdFichaMedica } , new { onclick = "espera()"} ) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdAntecedentesFamiliares, idFM = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                            <td>
+                                                @Html.ActionLink("Editar", "EditarExamenComplementario", new { id = item.IdExamenComplementario, idFM = item.IdFichaMedica }, new { onclick = "espera()" }) |
+                                                @Html.ActionLink("Eliminar", "DeleteExamenComplementario", new { id = item.IdExamenComplementario, idFM = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" }) |
+
+                                                @if (item.Url != null)
+                                                {
+                                                    @Html.ActionLink("Descargar", "Download", new { id = item.IdExamenComplementario })
+
+                                                }
+
+                                                
                                             </td>
                                         </tr>
                                     }
@@ -177,11 +185,10 @@
     <script>
 
         onload = function () {
-            
-            $("#btn_3").css("background-color", "#3276b1");
-            $("#btn_3").css("color", "white");
-        }
 
+            $("#btn_6").css("background-color", "#3276b1");
+            $("#btn_6").css("color", "white");
+        }
     </script>
 }
 

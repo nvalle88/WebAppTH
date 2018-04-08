@@ -44,7 +44,7 @@
 
     <div style="">
 
-        <form asp-action="Create2" id="checkout-form" novalidate="novalidate">
+        <form asp-action="CreateAntecedenteLaboral2" id="checkout-form" novalidate="novalidate">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -154,8 +154,8 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdAntecedentesLaborales , idFM = item.IdFichaMedica } , new { onclick = "espera()" }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdAntecedentesLaborales, idFM = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                @Html.ActionLink("Editar", "EditarAntecedenteLaboral", new { id = item.IdAntecedentesLaborales , idFM = item.IdFichaMedica } , new { onclick = "espera()" }) |
+                                                @Html.ActionLink("Eliminar", "DeleteAntecedenteLaboral", new { id = item.IdAntecedentesLaborales, idFM = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                             </td>
                                         </tr>
                                     }

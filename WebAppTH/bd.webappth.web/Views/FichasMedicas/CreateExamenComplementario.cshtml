@@ -1,7 +1,8 @@
-@model bd.webappth.entidades.Negocio.AntecedentesFamiliares
+﻿@model bd.webappth.entidades.Negocio.ExamenComplementario
+@using bd.webappth.entidades.Negocio
 
 @{
-    ViewData["Title"] = "Antecedente familiar";
+    ViewData["Title"] = "Examen complementario";
 }
 
 
@@ -13,7 +14,7 @@
 
         {
 
-            <div class="col-lg-12">
+            <div class="col-lg-7">
                 <div class="alert alert-block alert-dismissable">
                     <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
                     <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
@@ -38,7 +39,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Antecedente familiar</h2>
+                        <h2>Exámen complementario</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -46,19 +47,28 @@
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
+
                         </div>
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate" enctype="multipart/form-data">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdAntecedentesFamiliares" />
-                                @{await Html.RenderPartialAsync("_PartialView");}
+
+
+                                @{await Html.RenderPartialAsync("_PartialViewExamenComplementario", Model);}
+
+                                @{
+                                    FichaMedica modelo = new FichaMedica();
+                                    modelo.IdFichaMedica = Model.IdFichaMedica;
+
+                                }
+
 
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
-                                    <input type="submit" asp-action="Index" asp-controller="AntecedentesFamiliares" asp-route-idFicha="@Model.IdFichaMedica" class="btn btn-default" value="Cancelar" onclick="espera()" />
+                                    <input type="submit" asp-action="CreateExamenComplementario" asp-controller="FichasMedicas" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                    <input type="submit" asp-action="IndexExamenComplementario" asp-controller="FichasMedicas" asp-route-idFicha="@Model.IdFichaMedica" class="btn btn-default" value="Cancelar" onclick="espera()" />
 
                                 </footer>
                             </form>
@@ -78,9 +88,17 @@
     <!-- Modal -->
 
 </div>
+
+
 <!-- END MAIN CONTENT -->
 @section Scripts {
+    <script type="text/javascript">
 
+        $("fichero").click(function (e) {
+
+
+        })
+    </script>
     <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
     <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 

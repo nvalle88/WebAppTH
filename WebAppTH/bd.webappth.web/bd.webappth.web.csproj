@@ -69,6 +69,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\AntecedentesLaborales\" />
+    <Folder Include="Views\ExamenesComplementarios\" />
     <Folder Include="Views\Induccion\" />
     <Folder Include="Views\ConfiguracionGeneral\" />
     <Folder Include="Views\Services\" />
