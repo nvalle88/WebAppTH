@@ -3,11 +3,11 @@
 
     @if (Model.OpcionMenu == 0)
     {
-        <a asp-action="Detalle" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default">Servidores <br /> Asignados</a>
+        <a asp-action="Asignados" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default">Servidores <br /> Asignados</a>
     }
     else
     {
-        <a asp-action="Detalle" asp-controller="DocumentoFAO" class="btn btn-default">Servidores <br /> Asignados</a>
+        <a asp-action="Asignados" asp-controller="DocumentoFAO" class="btn btn-default">Servidores <br /> Asignados</a>
     }
     @if (Model.OpcionMenu == 1)
     {

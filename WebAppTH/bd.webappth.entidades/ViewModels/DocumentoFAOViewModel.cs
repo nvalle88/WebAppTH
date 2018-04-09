@@ -35,25 +35,26 @@ namespace bd.webappth.entidades.ViewModels
         [DisplayName("Mision")]
         public string Mision { get; set; }
         [DisplayName("Actividad")]
+        public string actividad { get; set; }
+        [DisplayName("Exepcion")]
+        public string Exepcion { get; set; }
         public bool InternoMismoProceso { get; set; }
         public bool InternoOtroProceso { get; set; }
         public bool ExternosCiudadania { get; set; }
         public bool ExtPersJuridicasPubNivelNacional { get; set; }
-        public string actividad1 { get; set; }
-        public string actividad2 { get; set; }
-        public string actividad3 { get; set; }
-        public string actividad4 { get; set; }
-        public string actividad5 { get; set; }
-        public string actividad6 { get; set; }
-        public string actividad7 { get; set; }
-        public string actividad8 { get; set; }
-        public string actividad9 { get; set; }
-        public string actividad10 { get; set; }
         public int Anio { get; set; }
         public DateTime FechaRegistro { get; set; }
         public int IdFormularioAnalisisOcupacional { get; set; }
         public List<ActividadesAnalisisOcupacional> ListaActividad { get; set; }
+        public List<Exepciones> ListaExepcion { get; set; }
         public List<string> ListaActividads { get; set; }
+        public List<string> ListaExepciones{ get; set; }
+        public List<string> ListActividades { get; set; }
+        public List<RolPuesto> ListasRolPUestos { get; set; }
+        public List<string> ListaRolPUesto { get; set; }
+        public bool aplicapolitica { get; set; }
+        public string Descripcionpuesto { get; set; }
+        public bool Cumple { get; set; }
 
     }
 }

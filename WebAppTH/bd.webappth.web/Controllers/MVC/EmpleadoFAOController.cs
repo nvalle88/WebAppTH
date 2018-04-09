@@ -25,8 +25,12 @@ namespace bd.webappth.web.Controllers.MVC
 
 
         }
-        
-        public async Task<IActionResult> Create()
+
+        public async Task<IActionResult> ValidacionFao()
+        {
+            return View();
+        }
+            public async Task<IActionResult> Create()
         {
             try
             {
@@ -46,9 +50,10 @@ namespace bd.webappth.web.Controllers.MVC
                     var empleado = JsonConvert.DeserializeObject<DocumentoFAOViewModel>(response.Resultado.ToString());
                    return View(empleado);
                 }
-                ViewData["Error"] = response.Message;
-                return View();
-                
+                //ViewData["Error"] = response.Message;
+                return RedirectToAction("ValidacionFao");
+                //return View();
+
             }
             catch (Exception ex)
             {
@@ -67,30 +72,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             Response response = new Response();
 
-            var empleadoid = new DocumentoFAOViewModel
-            {
-
-
-                IdEmpleado = documentoFAOViewModel.IdEmpleado,
-                InternoMismoProceso = documentoFAOViewModel.InternoMismoProceso,
-                InternoOtroProceso = documentoFAOViewModel.InternoOtroProceso,
-                ExternosCiudadania = documentoFAOViewModel.ExternosCiudadania,
-                ExtPersJuridicasPubNivelNacional = documentoFAOViewModel.ExtPersJuridicasPubNivelNacional,
-                FechaRegistro = DateTime.Now,
-                Anio = DateTime.Now.Year,
-                Mision = documentoFAOViewModel.Mision,
-                actividad1=documentoFAOViewModel.actividad1,
-                actividad2 = documentoFAOViewModel.actividad2,
-                actividad3 = documentoFAOViewModel.actividad3,
-                actividad4 = documentoFAOViewModel.actividad4,
-                actividad5 = documentoFAOViewModel.actividad5,
-                actividad6 = documentoFAOViewModel.actividad6,
-                actividad7 = documentoFAOViewModel.actividad7,
-                actividad8 = documentoFAOViewModel.actividad8,
-                actividad9 = documentoFAOViewModel.actividad9,
-                actividad10 = documentoFAOViewModel.actividad10,
-
-            };
+            
 
             response = await apiServicio.InsertarAsync(documentoFAOViewModel,
                                                          new Uri(WebApp.BaseAddress),
