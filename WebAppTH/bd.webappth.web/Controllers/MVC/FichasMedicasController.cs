@@ -12,6 +12,10 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using Newtonsoft.Json;
 using bd.log.guardar.Enumeradores;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using bd.webappth.entidades.ObjectTransfer;
+using Microsoft.AspNetCore.Http;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -19,11 +23,13 @@ namespace bd.webappth.web.Controllers.MVC
     {
         
         private readonly IApiServicio apiServicio;
+        private IHostingEnvironment _hostingEnvironment;
 
 
-        public FichasMedicasController(IApiServicio apiServicio)
+        public FichasMedicasController(IApiServicio apiServicio, IHostingEnvironment _hostingEnvironment)
         {
             this.apiServicio = apiServicio;
+            this._hostingEnvironment = _hostingEnvironment;
 
         }
 
@@ -55,10 +61,17 @@ namespace bd.webappth.web.Controllers.MVC
 
             Response response = new Response();
 
-            response = await apiServicio.InsertarAsync<Response>(fichaMedica,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/FichasMedicas/VerUltimaFichaMedica");
+            try
+            {
 
+                response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/FichasMedicas/VerUltimaFichaMedica");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "FichasMedicas", new { mensaje = Mensaje.ErrorServicio, idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
+            }
 
             if (response.IsSuccess)
             {
@@ -78,12 +91,12 @@ namespace bd.webappth.web.Controllers.MVC
                  
                 else if (idMenu == 2)
                 {
-                    return RedirectToAction("Index", "AntecedentesLaborales", fichaMedica);
+                    return RedirectToAction("IndexAntecedenteLaboral", "FichasMedicas", fichaMedica);
                 }
 
                 else if (idMenu == 3)
                 {
-                    return RedirectToAction("Index", "AntecedentesFamiliares", fichaMedica);
+                    return RedirectToAction("IndexAntecedenteFamiliar", "FichasMedicas", fichaMedica);
                 }
 
                 else if (idMenu == 4)
@@ -99,7 +112,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 else if (idMenu == 6)
                 {
-                    return RedirectToAction("Index", "ExamenesComplementarios", fichaMedica);
+                    return RedirectToAction("IndexExamenComplementario", "FichasMedicas", fichaMedica);
                 }
 
                 else if (idMenu == 7)
@@ -192,7 +205,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return RedirectToAction("Index", "FichasMedicas", new { mensaje = Mensaje.ErrorServicio, idFicha = fichaMedica.IdFichaMedica, idPersona = fichaMedica.IdPersona });
             }
         }
 
@@ -915,7 +928,973 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        
-        
+
+        // Métodos para antecedentes familiares
+
+        public async Task<IActionResult> CreateAntecedenteFamiliar(string mensaje, FichaMedica fichaMedica)
+        {
+            AntecedentesFamiliares antLab = new AntecedentesFamiliares();
+
+
+            InicializarMensaje(mensaje);
+
+            return View(antLab);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAntecedenteFamiliar(AntecedentesFamiliares AntecedentesFamiliares)
+        {
+
+
+            AntecedentesFamiliaresViewModel alvm = new AntecedentesFamiliaresViewModel();
+
+
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(Mensaje.ModeloInvalido);
+
+                return View(AntecedentesFamiliares);
+            }
+
+
+            Response response = new Response();
+
+
+            try
+            {
+                response = await apiServicio.InsertarAsync(AntecedentesFamiliares,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/AntecedentesFamiliares/InsertarAntecedentesFamiliares");
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("IndexAntecedenteFamiliar", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = AntecedentesFamiliares.IdFichaMedica });
+                }
+
+                return RedirectToAction("IndexAntecedenteFamiliar", "FichasMedicas", new { mensaje = response.Message, idFicha = AntecedentesFamiliares.IdFichaMedica });
+
+            }
+            catch (Exception ex)
+            {
+                InicializarMensaje(Mensaje.Error);
+                return RedirectToAction("IndexAntecedenteFamiliar", "FichasMedicas", new { mensaje = Mensaje.Excepcion, idFicha = AntecedentesFamiliares.IdFichaMedica });
+            }
+
+
+        }
+
+
+        public async Task<IActionResult> CreateAntecedenteFamiliar2(string mensaje, int idFicha, int idPersona)
+        {
+
+            AntecedentesFamiliares antFamiliares = new AntecedentesFamiliares();
+            antFamiliares.IdFichaMedica = idFicha;
+
+            InicializarMensaje("");
+
+            return View("CreateAntecedenteFamiliar", antFamiliares);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAntecedenteFamiliar2(FichaMedica fichaMedica)
+        {
+
+            AntecedentesFamiliares antFamiliares = new AntecedentesFamiliares();
+            antFamiliares.IdFichaMedica = fichaMedica.IdFichaMedica;
+
+            InicializarMensaje("");
+
+            return View("CreateAntecedenteFamiliar", antFamiliares);
+        }
+
+
+
+
+        public async Task<IActionResult> EditarAntecedenteFamiliar(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
+                                                                  "api/AntecedentesFamiliares");
+
+
+                    respuesta.Resultado = JsonConvert.DeserializeObject<AntecedentesFamiliares>(respuesta.Resultado.ToString());
+
+                    if (respuesta.IsSuccess)
+                    {
+                        InicializarMensaje(null);
+                        return View(respuesta.Resultado);
+                    }
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarAntecedenteFamiliar(string id, AntecedentesFamiliares AntecedentesFamiliares)
+        {
+            ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+            Response response = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    response = await apiServicio.EditarAsync(id, AntecedentesFamiliares, new Uri(WebApp.BaseAddress),
+                                                                 "api/AntecedentesFamiliares");
+
+                    if (response.IsSuccess)
+                    {
+
+                        return RedirectToAction("IndexAntecedenteFamiliar", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = AntecedentesFamiliares.IdFichaMedica });
+                    }
+
+                    return RedirectToAction("IndexAntecedenteFamiliar", "FichasMedicas", new { mensaje = response.Message, idFicha = AntecedentesFamiliares.IdFichaMedica });
+
+
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+
+            }
+        }
+
+
+        public async Task<IActionResult> IndexAntecedenteFamiliar(string mensaje, int idFicha, int idPersona)
+        {
+
+
+            var alvm = new AntecedentesFamiliaresViewModel();
+
+            var lista = new List<AntecedentesFamiliares>();
+
+            var fichaMedica = new FichaMedica();
+            fichaMedica.IdPersona = idPersona;
+            fichaMedica.IdFichaMedica = idFicha;
+
+
+            Response response = new Response();
+
+            try
+            {
+
+                if (idPersona < 1)
+                {
+                    response = await apiServicio.InsertarAsync<Response>(fichaMedica.IdFichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerIdPersonaPorFicha");
+
+                    if (response.IsSuccess)
+                    {
+                        fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+                    }
+
+                }
+                else
+                {
+                    response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerUltimaFichaMedica");
+
+
+                    if (response.IsSuccess)
+                    {
+                        fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+                    }
+
+                }
+
+
+                response = await apiServicio.InsertarAsync<Response>(fichaMedica.IdFichaMedica,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/AntecedentesFamiliares/ListarAntecedentesFamiliaresPorFicha");
+
+                if (response.IsSuccess)
+                {
+                    lista = JsonConvert.DeserializeObject<List<AntecedentesFamiliares>>(response.Resultado.ToString());
+                }
+
+
+
+                InicializarMensaje(mensaje);
+
+
+                alvm.ListaAntecedentesFamiliares = lista;
+                alvm.fichaMedica = fichaMedica;
+
+                return View(alvm);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+
+
+        public async Task<IActionResult> DeleteAntecedenteFamiliar(string id, int idFM)
+        {
+
+            FichaMedica fm = new FichaMedica();
+            fm.IdFichaMedica = idFM;
+
+            try
+            {
+                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
+                                                               , "api/AntecedentesFamiliares");
+                if (response.IsSuccess)
+                {
+
+                    return RedirectToAction("IndexAntecedenteFamiliar", "FichasMedicas", new { mensaje = Mensaje.BorradoSatisfactorio, idFicha = idFM });
+
+                }
+
+                return RedirectToAction("IndexAntecedenteFamiliar", "FichasMedicas", new { mensaje = response.Message, idFicha = idFM });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+
+
+        // Métodos para Antecedentes laborales
+
+        public async Task<IActionResult> CreateAntecedenteLaboral(string mensaje, FichaMedica fichaMedica)
+        {
+
+            AntecedentesLaborales antLab = new AntecedentesLaborales();
+
+
+            InicializarMensaje(mensaje);
+
+            return View(antLab);
+        }
+
+
+        public async Task<IActionResult> CreateAntecedenteLaboral2(string mensaje, int idFicha, int idPersona)
+        {
+
+            AntecedentesLaborales antLab = new AntecedentesLaborales();
+            antLab.IdFichaMedica = idFicha;
+
+            InicializarMensaje("");
+
+            return View("CreateAntecedenteLaboral", antLab);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAntecedenteLaboral2(FichaMedica fichaMedica)
+        {
+
+            AntecedentesLaborales antLab = new AntecedentesLaborales();
+            antLab.IdFichaMedica = fichaMedica.IdFichaMedica;
+
+            InicializarMensaje("");
+
+            return View("CreateAntecedenteLaboral", antLab);
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAntecedenteLaboral(AntecedentesLaborales AntecedentesLaborales)
+        {
+
+
+            AntecedentesLaboralesViewModel alvm = new AntecedentesLaboralesViewModel();
+
+
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(Mensaje.ModeloInvalido);
+
+                return View(AntecedentesLaborales);
+            }
+
+
+            Response response = new Response();
+
+
+            try
+            {
+                response = await apiServicio.InsertarAsync(AntecedentesLaborales,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/AntecedentesLaborales/InsertarAntecedentesLaborales");
+                if (response.IsSuccess)
+                {
+
+
+                    return RedirectToAction("IndexAntecedenteLaboral", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = AntecedentesLaborales.IdFichaMedica });
+                }
+
+                return RedirectToAction("IndexAntecedenteLaboral", "FichasMedicas", new { mensaje = response.Message, idFicha = AntecedentesLaborales.IdFichaMedica });
+
+            }
+            catch (Exception ex)
+            {
+                InicializarMensaje(Mensaje.Error);
+                return RedirectToAction("IndexAntecedenteLaboral", "FichasMedicas", new { mensaje = Mensaje.Excepcion, idFicha = AntecedentesLaborales.IdFichaMedica });
+            }
+
+
+        }
+
+        public async Task<IActionResult> EditarAntecedenteLaboral(string id)
+        {
+
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
+                                                                  "api/AntecedentesLaborales");
+
+
+                    respuesta.Resultado = JsonConvert.DeserializeObject<AntecedentesLaborales>(respuesta.Resultado.ToString());
+
+
+                    if (respuesta.IsSuccess)
+                    {
+                        InicializarMensaje(null);
+                        return View(respuesta.Resultado);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarAntecedenteLaboral(string id, AntecedentesLaborales AntecedentesLaborales)
+        {
+            ViewData["IdFichaMedica"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<FichaMedica>(new Uri(WebApp.BaseAddress), "api/FichasMedicas/ListarFichasMedicas"), "IdFichaMedica", "IdFichaMedica");
+            Response response = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    response = await apiServicio.EditarAsync(id, AntecedentesLaborales, new Uri(WebApp.BaseAddress),
+                                                                 "api/AntecedentesLaborales");
+
+                    if (response.IsSuccess)
+                    {
+
+                        return RedirectToAction("IndexAntecedenteLaboral", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = AntecedentesLaborales.IdFichaMedica });
+                    }
+
+                    return RedirectToAction("IndexAntecedenteLaboral", "FichasMedicas", new { mensaje = response.Message, idFicha = AntecedentesLaborales.IdFichaMedica });
+
+
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+
+
+                return BadRequest();
+
+            }
+        }
+
+        public async Task<IActionResult> IndexAntecedenteLaboral(string mensaje, int idFicha, int idPersona)
+        {
+
+            var alvm = new AntecedentesLaboralesViewModel();
+
+            var lista = new List<AntecedentesLaborales>();
+
+            var fichaMedica = new FichaMedica();
+            fichaMedica.IdPersona = idPersona;
+            fichaMedica.IdFichaMedica = idFicha;
+
+
+            Response response = new Response();
+
+            try
+            {
+
+                if (idPersona < 1)
+                {
+                    response = await apiServicio.InsertarAsync<Response>(fichaMedica.IdFichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerIdPersonaPorFicha");
+
+                    if (response.IsSuccess)
+                    {
+                        fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+                    }
+
+                }
+                else
+                {
+                    response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerUltimaFichaMedica");
+
+
+                    if (response.IsSuccess)
+                    {
+                        fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+                    }
+
+                }
+
+
+                response = await apiServicio.InsertarAsync<Response>(fichaMedica.IdFichaMedica,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/AntecedentesLaborales/ListarAntecedentesLaboralesPorFicha");
+
+                if (response.IsSuccess)
+                {
+                    lista = JsonConvert.DeserializeObject<List<AntecedentesLaborales>>(response.Resultado.ToString());
+                }
+
+
+
+                InicializarMensaje(mensaje);
+
+
+                alvm.ListaAntecedentesLaborales = lista;
+                alvm.fichaMedica = fichaMedica;
+
+                return View(alvm);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+
+
+
+        public async Task<IActionResult> DeleteAntecedenteLaboral(string id, int idFM)
+        {
+
+            FichaMedica fm = new FichaMedica();
+            fm.IdFichaMedica = idFM;
+
+            try
+            {
+                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
+                                                               , "api/AntecedentesLaborales");
+                if (response.IsSuccess)
+                {
+
+                    return RedirectToAction("IndexAntecedenteLaboral", "FichasMedicas", new { mensaje = Mensaje.BorradoSatisfactorio, idFicha = idFM });
+
+                }
+
+                return RedirectToAction("IndexAntecedenteLaboral", "FichasMedicas", new { mensaje = response.Message, idFicha = idFM });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+
+        // Métodos para exámenes complemetarios
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateExamenComplementario2(FichaMedica fichaMedica)
+        {
+            ViewData["IdTipoExamenComplementario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoExamenComplementario>(new Uri(WebApp.BaseAddress), "api/TiposExamenesComplementarios/ListarTiposExamenesComplementarios"), "IdTipoExamenComplementario", "Nombre");
+            ExamenComplementario antLab = new ExamenComplementario();
+            antLab.IdFichaMedica = fichaMedica.IdFichaMedica;
+            antLab.Fecha = DateTime.Today;
+            antLab.Resultado = "Esperando resultado";
+
+            InicializarMensaje("");
+
+            return View("CreateExamenComplementario", antLab);
+        }
+
+
+
+        public async Task<IActionResult> CreateExamenComplementario(string mensaje, FichaMedica fichaMedica)
+        {
+            ViewData["IdTipoExamenComplementario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoExamenComplementario>(new Uri(WebApp.BaseAddress), "api/TiposExamenesComplementarios/ListarTiposExamenesComplementarios"), "IdTipoExamenComplementario", "Nombre");
+            ExamenComplementario antLab = new ExamenComplementario();
+
+            InicializarMensaje(mensaje);
+
+            return View(antLab);
+        }
+
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateExamenComplementario(ExamenComplementario examenComplementario, List<IFormFile> files)
+        {
+
+            ViewData["IdTipoExamenComplementario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoExamenComplementario>(new Uri(WebApp.BaseAddress), "api/TiposExamenesComplementarios/ListarTiposExamenesComplementarios"), "IdTipoExamenComplementario", "Nombre");
+            ExamenesComplementariosViewModel alvm = new ExamenesComplementariosViewModel();
+
+
+            if (!ModelState.IsValid || examenComplementario.IdTipoExamenComplementario<1)
+            {
+                InicializarMensaje(Mensaje.ModeloInvalido);
+
+
+
+                return View(examenComplementario);
+            }
+
+
+            Response response = new Response();
+
+
+            try
+            {
+
+
+                if (files.Count > 0)
+                {
+                    byte[] data;
+                    using (var br = new BinaryReader(files[0].OpenReadStream()))
+                        data = br.ReadBytes((int)files[0].OpenReadStream().Length);
+
+                    var documenttransfer = new ExamenComplementarioTransfer
+                    {
+                        IdExamenComplementario = examenComplementario.IdExamenComplementario,
+                        Fecha = examenComplementario.Fecha,
+                        Resultado = examenComplementario.Resultado,
+                        IdTipoExamenComplementario = examenComplementario.IdTipoExamenComplementario,
+                        IdFichaMedica = examenComplementario.IdFichaMedica,
+                        Url = examenComplementario.Url,
+
+                        Fichero = data,
+                    };
+
+                    var respuesta = await CreateFichero(documenttransfer);
+                    if (respuesta.IsSuccess)
+                    {
+                        return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = examenComplementario.IdFichaMedica });
+                    }
+                    else
+                    {
+                        ViewData["Error"] = respuesta.Message;
+
+                        var documento = new ExamenComplementarioTransfer
+                        {
+                            IdExamenComplementario = examenComplementario.IdExamenComplementario,
+                            Fecha = examenComplementario.Fecha,
+                            Resultado = examenComplementario.Resultado,
+                            IdTipoExamenComplementario = examenComplementario.IdTipoExamenComplementario,
+                            IdFichaMedica = examenComplementario.IdFichaMedica,
+                            Url = examenComplementario.Url,
+
+                            Fichero = data,
+                        };
+
+
+                        return View(documento);
+                    }
+
+                }
+                else
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        InicializarMensaje(Mensaje.ModeloInvalido);
+
+                        return View(examenComplementario);
+                    }
+
+                    response = await apiServicio.InsertarAsync(examenComplementario,
+                                                         new Uri(WebApp.BaseAddress),
+                                                         "api/ExamenesComplementarios/InsertarExamenesComplementarios");
+                    if (response.IsSuccess)
+                    {
+                        return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = examenComplementario.IdFichaMedica });
+                    }
+                }
+
+                return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = Mensaje.ErrorCargaArchivo, idFicha = examenComplementario.IdFichaMedica });
+            }
+            catch (Exception ex)
+            {
+                InicializarMensaje(Mensaje.Error);
+                return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = Mensaje.Excepcion, idFicha = examenComplementario.IdFichaMedica });
+            }
+
+
+        }
+
+
+
+
+        public async Task<IActionResult> EditarExamenComplementario(string id)
+        {
+            ViewData["IdTipoExamenComplementario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoExamenComplementario>(new Uri(WebApp.BaseAddress), "api/TiposExamenesComplementarios/ListarTiposExamenesComplementarios"), "IdTipoExamenComplementario", "Nombre");
+
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
+                                                                  "api/ExamenesComplementarios");
+
+
+                    ExamenComplementario resultado = JsonConvert.DeserializeObject<ExamenComplementario>(respuesta.Resultado.ToString());
+                    
+
+                    if (respuesta.IsSuccess)
+                    {
+                        InicializarMensaje(null);
+
+                        //var pdfFile = string.IsNullOrEmpty(resultado.Url) != true ? resultado.Url.Replace("~", WebApp.BaseAddress) : "";
+                        var pdfFile = string.IsNullOrEmpty(resultado.Url) != true ? WebApp.BaseAddress+"/"+resultado.Url : "";
+                        resultado.Url = pdfFile;
+
+                        return View(resultado);
+                    }
+
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarExamenComplementario(string id, ExamenComplementario examenComplementario, List<IFormFile> files)
+        {
+
+            ViewData["IdTipoExamenComplementario"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoExamenComplementario>(new Uri(WebApp.BaseAddress), "api/TiposExamenesComplementarios/ListarTiposExamenesComplementarios"), "IdTipoExamenComplementario", "Nombre");
+
+            Response response = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+
+                    if (files.Count > 0)
+                    {
+                        byte[] data;
+                        using (var br = new BinaryReader(files[0].OpenReadStream()))
+                            data = br.ReadBytes((int)files[0].OpenReadStream().Length);
+
+                        var documenttransfer = new ExamenComplementarioTransfer
+                        {
+                            IdExamenComplementario = examenComplementario.IdExamenComplementario,
+                            Fecha = examenComplementario.Fecha,
+                            Resultado = examenComplementario.Resultado,
+                            IdTipoExamenComplementario = examenComplementario.IdTipoExamenComplementario,
+                            IdFichaMedica = examenComplementario.IdFichaMedica,
+                            Url = examenComplementario.Url,
+
+                            Fichero = data,
+                        };
+
+                        var respuesta = await UpdateFichero(documenttransfer);
+
+                        if (respuesta.IsSuccess)
+                        {
+                            return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = examenComplementario.IdFichaMedica });
+                        }
+                        else
+                        {
+                            ViewData["Error"] = respuesta.Message;
+
+                            var documento = new ExamenComplementarioTransfer
+                            {
+                                IdExamenComplementario = examenComplementario.IdExamenComplementario,
+                                Fecha = examenComplementario.Fecha,
+                                Resultado = examenComplementario.Resultado,
+                                IdTipoExamenComplementario = examenComplementario.IdTipoExamenComplementario,
+                                IdFichaMedica = examenComplementario.IdFichaMedica,
+                                Url = examenComplementario.Url,
+
+                                Fichero = data,
+                            };
+
+
+                            return View(documento);
+                        }
+
+                    }
+                    else
+                    {
+                        response = await apiServicio.EditarAsync(id, examenComplementario, new Uri(WebApp.BaseAddress),
+                                                                 "api/ExamenesComplementarios");
+
+                        if (response.IsSuccess)
+                        {
+
+                            return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = Mensaje.GuardadoSatisfactorio, idFicha = examenComplementario.IdFichaMedica });
+                        }
+
+                        return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = response.Message, idFicha = examenComplementario.IdFichaMedica });
+                    }
+
+                }
+
+                return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = Mensaje.ErrorCargaArchivo, idFicha = examenComplementario.IdFichaMedica });
+            }
+            catch (Exception ex)
+            {
+
+                return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = Mensaje.Excepcion, idFicha = examenComplementario.IdFichaMedica });
+
+            }
+        }
+
+
+
+        public async Task<IActionResult> IndexExamenComplementario(string mensaje, int idFicha, int idPersona)
+        {
+
+            var alvm = new ExamenesComplementariosViewModel();
+
+            var lista = new List<ExamenComplementario>();
+
+            var fichaMedica = new FichaMedica();
+            fichaMedica.IdPersona = idPersona;
+            fichaMedica.IdFichaMedica = idFicha;
+
+
+            Response response = new Response();
+
+            try
+            {
+
+                if (idPersona < 1)
+                {
+                    response = await apiServicio.InsertarAsync<Response>(fichaMedica.IdFichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerIdPersonaPorFicha");
+
+                    if (response.IsSuccess)
+                    {
+                        fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+
+                    }
+
+                }
+                else
+                {
+                    response = await apiServicio.InsertarAsync<Response>(fichaMedica,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FichasMedicas/VerUltimaFichaMedica");
+
+
+                    if (response.IsSuccess)
+                    {
+                        fichaMedica = JsonConvert.DeserializeObject<FichaMedica>(response.Resultado.ToString());
+                    }
+
+                }
+
+
+                response = await apiServicio.InsertarAsync<Response>(fichaMedica.IdFichaMedica,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/ExamenesComplementarios/ListarExamenesComplementariosPorFicha");
+
+                if (response.IsSuccess)
+                {
+                    lista = JsonConvert.DeserializeObject<List<ExamenComplementario>>(response.Resultado.ToString());
+                }
+
+
+
+                InicializarMensaje(mensaje);
+
+
+                alvm.ListaExamenesComplementarios = lista;
+                alvm.fichaMedica = fichaMedica;
+
+                return View(alvm);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+
+
+        public async Task<IActionResult> DeleteExamenComplementario(string id, int idFM)
+        {
+
+            FichaMedica fm = new FichaMedica();
+            fm.IdFichaMedica = idFM;
+
+            try
+            {
+                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
+                                                               , "api/ExamenesComplementarios");
+                if (response.IsSuccess)
+                {
+
+                    return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = Mensaje.BorradoSatisfactorio, idFicha = idFM });
+
+                }
+
+                return RedirectToAction("IndexExamenComplementario", "FichasMedicas", new { mensaje = response.Message, idFicha = idFM });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+
+
+        // Métodos para ficheros
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<Response> CreateFichero(ExamenComplementarioTransfer file)
+        {
+            Response response = new Response();
+            try
+            {
+                response = await apiServicio.InsertarAsync(file,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ExamenesComplementarios/UploadFiles");
+                if (response.IsSuccess)
+                {
+                    return new Response
+                    {
+                        IsSuccess = true,
+                        Message = response.Message,
+                    };
+
+                }
+
+                ViewData["Error"] = response.Message;
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<Response> UpdateFichero(ExamenComplementarioTransfer file)
+        {
+            Response response = new Response();
+            try
+            {
+                response = await apiServicio.InsertarAsync(file,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ExamenesComplementarios/UpdateFiles");
+                if (response.IsSuccess)
+                {
+                    return new Response
+                    {
+                        IsSuccess = true,
+                        Message = response.Message,
+                    };
+
+                }
+
+                ViewData["Error"] = response.Message;
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
+            }
+        }
+
+
+
+
+        public async Task<FileResult> Download(string id)
+        {
+
+            
+                var id2 = new ExamenComplementario
+                {
+                    IdExamenComplementario = Convert.ToInt32(id),
+                };
+
+                var response = await apiServicio.ObtenerElementoAsync(id2,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/ExamenesComplementarios/GetFile");
+
+
+                var m = JsonConvert.DeserializeObject<ExamenComplementarioTransfer>(response.Resultado.ToString());
+                var fileName = $"{ response.Message}.pdf";
+
+                return File(m.Fichero, "application/pdf", fileName);
+            
+
+            
+        }
+
+
     }
 }

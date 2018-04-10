@@ -1,0 +1,470 @@
+@model bd.webappth.entidades.ViewModels.DocumentoFAOViewModel
+
+@using bd.webappth.entidades.ViewModels
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+@{ var modelo = new DocumentoFAOViewModel { OpcionMenu = 0 }; }
+@{await Html.RenderPartialAsync("_PartialViewIDocumentoFAO", modelo);}
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+
+<div id="content">
+    @*<div class="col col-10">
+            @if (@ViewData["Error"].ToString() != "")
+
+            {
+
+                <div class="col-lg-7">
+                    <div class="alert alert-block alert-dismissable">
+                        <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                        <p>
+                            <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                        </p>
+                    </div>
+                </div>
+
+            }
+        </div>*@
+    <!-- widget grid -->
+    <section id="" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Validar fao</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="ValidarJefeTalentoHumano" method="post" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <fieldset>
+                                    <label class="input">
+                                        <input maxlength="32" asp-for="IdEmpleado" class="form-control" type="hidden" />
+                                        <input type="hidden" asp-for="IdManualPuestoActual" />
+                                        <input type="hidden" asp-for="IdAdministracionTalentoHumano" /> 
+                                    </label>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend>Identificaci&oacute;n general</legend>
+                                            <br />
+                                            <section class="col col-12">
+                                                <label class="label">@Html.DisplayNameFor(model => model.Institucion):</label>
+                                                <label class="label">@Html.DisplayNameFor(model => model.UnidadAdministrativa):</label>
+                                                @*<label class="label">@Html.DisplayNameFor(model => model.Puesto)</label>*@
+                                                <label class="label">@Html.DisplayNameFor(model => model.nombre):</label>
+                                                <label class="label">@Html.DisplayNameFor(model => model.Identificacion):</label>
+                                                <label class="label">@Html.DisplayNameFor(model => model.LugarTrabajo):</label>
+                                            </section>
+                                            <section class="col col-12">
+                                                <label class="label"> @Html.DisplayFor(model => model.Institucion)</label>
+                                                <label class="label"> @Html.DisplayFor(model => model.UnidadAdministrativa)</label>
+                                                @* <label class="label"> @Html.DisplayFor(model => model.Puesto)</label>*@
+                                                <label class="label"> @Html.DisplayFor(model => model.nombre)</label>
+                                                <label class="label"> @Html.DisplayFor(model => model.Identificacion)</label>
+                                                <label class="label"> @Html.DisplayFor(model => model.LugarTrabajo)</label>
+                                            </section>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend>Misi&oacute;n</legend>
+                                            <br />
+                                            <label class="input">
+                                                @Html.DisplayFor(model => model.Mision)
+                                                @*<textarea cols="150" rows="5" maxlength="32" asp-for="Mision" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Mision)">
+                                                    </textarea>
+                                                    <span asp-validation-for="Mision" class="text-danger"></span>*@
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend>Actividades</legend>
+                                            <br />
+                                            <br />
+                                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-hide="phone">
+                                                            Actividades
+                                                        </th>
+                                                        <th>Validar</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var item in Model.ListaActividad)
+                                                {
+
+                                                    <tr>
+                                                        <td width="50%">
+                                                            @Html.DisplayFor(modelItem => item.Actividades)
+                                                        </td>
+                                                        <td width="50%">
+                                                            @if (item.Cumple == false)
+                                                            {
+                                                                <input type="checkbox" name="ListaActividads" value="false" disabled="disabled" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="checkbox" name="ListaActividads" value="true" checked="checked" disabled="disabled" />
+
+                                                            }
+                                                        </td>
+
+                                                    </tr>
+
+                                                }
+                                            </table>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <section class="col col-6">
+                                            <legend>Relaciones interna y externas del puesto</legend>
+                                            <br />
+                                            <legend>Interno</legend>
+                                            <br />
+                                            <section class="col col-6">
+                                                <label class="label">Con usuarios internos del mismo proceso</label>
+                                                <label class="label">Con usuarios internos de otro proceso</label>
+                                            </section>
+                                            <section class="col col-6">
+                                                <label class="checkbox">
+                                                    @if (Model.InternoMismoProceso == false)
+                                                    {
+
+                                                        <input type="checkbox" name="InternoMismoProceso" value="false" disabled="disabled" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="InternoMismoProceso" value="true" checked="checked" disabled="disabled" />
+                                                    }
+                                                    @*<input type="checkbox" name="InternoMismoProceso" value="true" />
+                                                        <input type="hidden" name="InternoMismoProceso" value="false" checked="checked" />*@
+                                                    <i></i>
+                                                </label>
+                                                <br />
+                                                <br />
+                                                <label class="checkbox">
+                                                    @if (Model.InternoOtroProceso == false)
+                                                    {
+                                                        <input type="checkbox" name="InternoOtroProceso" value="false" disabled="disabled" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="InternoOtroProceso" value="true" checked="checked" disabled="disabled" />
+                                                    }
+                                                    @*<input type="checkbox" name="InternoOtroProceso" value="true" />
+                                                        <input type="hidden" name="InternoOtroProceso" value="false" checked="checked" />*@
+                                                    <i></i>
+                                                </label>
+                                            </section>
+                                        </section>
+                                        <section class="col col-6">
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <legend>Externo</legend>
+                                            <br />
+                                            <section class="col col-6">
+                                                <label class="label">Con usuarios externos- ciudadania</label>
+                                                <label class="label">Con usuarios externos - personas jur&iacutedicas</label>
+                                            </section>
+                                            <section class="col col-6">
+                                                <label class="checkbox">
+                                                    @if (Model.ExternosCiudadania == false)
+                                                    {
+                                                        <input type="checkbox" name="ExternosCiudadania" value="false" disabled="disabled" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="ExternosCiudadania" value="true" checked="checked" disabled="disabled" />
+                                                    }
+                                                    @*<input type="checkbox" name="ExternosCiudadania" value="true" />
+                                                        <input type="hidden" name="ExternosCiudadania" value="false" checked="checked" />*@
+                                                    <i></i>
+                                                </label>
+                                                <br />
+                                                <br />
+                                                <label class="checkbox">
+                                                    @if (Model.ExtPersJuridicasPubNivelNacional == false)
+                                                    {
+                                                        <input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="false" disabled="disabled" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="true" checked="checked" disabled="disabled" />
+                                                    }
+                                                    @*<input type="checkbox" name="ExtPersJuridicasPubNivelNacional" value="true" />
+                                                        <input type="hidden" name="ExtPersJuridicasPubNivelNacional" value="false" checked="checked" />*@
+                                                    <i></i>
+                                                </label>
+                                            </section>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend>Excepciones</legend>
+                                            <br />
+                                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-hide="phone">
+                                                            Exepciones
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var item in Model.ListaExepcion)
+                                                {
+
+                                                    <tr>
+                                                        <td width="50%">
+                                                            @Html.DisplayFor(modelItem => item.Detalle)
+                                                        </td>
+                                                    </tr>
+
+                                                }
+                                            </table>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend>informe de la unidad administraci&oacute;n de talento humano</legend>
+                                            <br />
+                                            <legend>Rol Puesto</legend>
+                                            <br />
+                                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-hide="phone">
+                                                            Puesto
+                                                        </th>
+                                                        <th>Opcion</th>
+                                                    </tr>
+                                                </thead>
+                                                @foreach (var item in Model.ListasRolPUestos)
+                                                {
+
+                                                    <tr>
+                                                        <td width="50%">
+                                                            @Html.DisplayFor(modelItem => item.Nombre)
+                                                        </td>
+                                                        <td width="50%">
+                                                            <label class="radio">
+                                                                <input name="ListaRolPUesto" type="radio" checked="checked" value="@item.IdRolPuesto" disabled="disabled" />
+                                                                <i></i>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend>Cumplimiento de perfil requerido</legend>
+                                            <br />
+                                            <section class="col col-10">
+                                                <label class="label">La o el servidor re&uacute;ne los requisitos min&iacute;mos  para el puesto seg&uacute;n el Manual de Puestos Institucional</label>
+                                                <br />
+                                                <label class="label">Se aplicar&aacute; p&oacute;litica?</label>
+                                            </section>
+                                            <section class="col col-2">
+                                                <label class="checkbox">
+                                                    @if (Model.Cumple == false)
+                                                    {
+                                                        <input type="checkbox" name="Cumple" value="true" disabled="disabled" />
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="Cumple" checked="checked" value="false" disabled="disabled" />
+
+                                                    }
+                                                    <i></i>
+                                                </label>
+                                                <br />
+                                                <br />
+                                                <label class="checkbox">
+                                                    @if (Model.aplicapolitica == false)
+                                                    {
+                                                        <input type="checkbox" name="aplicapolitica" value="true" disabled="disabled" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="aplicapolitica" value="false" checked="checked" disabled="disabled" />
+
+                                                    }
+                                                    <i></i>
+                                                </label>
+                                            </section>
+                                        </section>
+                                        <section id="requisitos" class="col col-lg-12">
+                                            <br />
+                                            <label class="label">Que requisitos no cumple</label>
+                                            <label class="textarea">
+                                                <textarea maxlength="100" name="Descripcionpuesto" rows="3" placeholder="Descripcion"></textarea>
+
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend>Informe  UATH</legend>
+                                            <br />
+                                            <section class="col col-10">
+                                                <label class="label">Revisar</label>
+                                            </section>
+                                            <section class="col col-2">
+                                                <label class="checkbox">
+                                                    <input id="chkMostrar" type="checkbox" name="Revisar" value="true" />
+                                                    <input id="chkOcultar" type="hidden" name="Revisar" value="false" />
+                                                    <i></i>
+
+                                                </label>
+
+
+                                            </section>
+
+
+                                        </section>
+
+
+                                    </div>
+
+
+                                    <div class="row">
+                                        <section id="cargos" class="col col-lg-6">
+                                            <section class="col col-lg-6">
+                                                <br />
+                                                <label class="label">De:</label>
+                                                <label class="label"> @Html.DisplayFor(model => model.Puesto)</label>
+                                            </section>
+                                            <section class="col col-lg-6">
+                                                <br />
+                                                <label class="label">A:</label>
+                                                <div class="input">
+                                                    <select asp-for="ListasManualPuesto.FirstOrDefault().IdManualPuesto" asp- class="form-control" asp-items="ViewBag.IdManualPuesto">
+                                                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                                                    </select>
+                                                    <span asp-validation-for="ListasManualPuesto.FirstOrDefault().IdManualPuesto" class="text-danger"></span>
+                                                </div>
+                                            </section>
+                                        </section>
+                                    </div>
+                                </fieldset>
+
+                                <footer>
+                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                </footer>
+
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+</div>
+
+
+@section Scripts {
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
+    <script type="text/javascript">
+
+         //habilita para cambio de puesto
+         @if (Model.Revisar == true) {
+
+            //@: mostrarCombox();
+        }
+        else
+        {
+           // @: ocultarCombox();
+
+        }
+        function ocultarCombox() {
+            document.getElementById('cargos').style.visibility = "hidden"; //para mostrar
+            document.getElementById('chkOcultar').style.visibility = "visible";
+            document.getElementById('chkMostrar').style.visibility = "hidden";
+        }
+
+        function mostrarCombox() {
+            document.getElementById('cargos').style.visibility = "visible"; //para mostrar
+            document.getElementById('chkMostrar').style.visibility = "visible";
+            document.getElementById('chkOcultar').style.visibility = "hidden";
+
+        }
+        //si cumple los requisitos
+        @if (Model.Cumple == true) {
+
+            @: ocultarRequisitos();
+        }
+        else
+        {
+            @: mostrarRequisitos();
+
+        }
+        function ocultarRequisitos() {
+            document.getElementById('requisitos').hidden = "true"; //para mostrar
+            //alert("oculto");
+        }
+
+        function mostrarRequisitos() {
+            document.getElementById('requisitos').hidden = "false"; //para mostrar
+
+        }
+
+        //function ocutarcombox() {
+
+        //    if (document.getElementById('cargos').hidden == "") {
+
+        //        document.getElementById('cargos').hidden = "hidden"; //para ocultar
+
+        //    }
+
+        //    else {
+
+        //        document.getElementById('cargos').hidden = ""; //para mostrar
+
+        //    }
+
+        //}
+    </script>
+}
