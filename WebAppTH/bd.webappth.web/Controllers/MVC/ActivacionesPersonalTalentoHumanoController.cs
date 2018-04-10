@@ -17,7 +17,7 @@ namespace bd.webappth.web.Controllers.MVC
 {
     public class ActivacionesPersonalTalentoHumanoController : Controller
     {
-        
+
         private readonly IApiServicio apiServicio;
 
 
@@ -34,7 +34,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (mensaje == null)
             {
-                 mensaje = "";
+                mensaje = "";
             }
 
             ViewData["Error"] = mensaje;
@@ -44,27 +44,17 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Index(string mensaje)
         {
-            InicializarMensaje("");
+            InicializarMensaje(mensaje);
 
             List<ActivarPersonalTalentoHumanoViewModel> lista = new List<ActivarPersonalTalentoHumanoViewModel>();
 
 
             try
             {
-                var listaDependencias = await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress)
-                                                                  , "api/ActivacionesPersonalTalentoHumano/ListarDependencias");
+                lista = await apiServicio.Listar<ActivarPersonalTalentoHumanoViewModel>(new Uri(WebApp.BaseAddress)
+                                                                  , "api/ActivacionesPersonalTalentoHumano/GetListDependenciasByFiscalYearActual");
 
-                var lista2 = listaDependencias.Select(x => new ActivarPersonalTalentoHumanoViewModel
-                {
-                    IdDependencia = x.IdDependencia,
-                    Fecha = DateTime.Now,
-                    Estado = false,
-                    Nombre = x.Nombre
-                }
 
-                ).ToList();
-
-                lista = lista2;
 
                 return View(lista);
 
@@ -89,24 +79,35 @@ namespace bd.webappth.web.Controllers.MVC
             listaViewModel.listaAPTHVM = model;
 
 
-            Response response = await apiServicio.InsertarAsync(listaViewModel,
-                                                         new Uri(WebApp.BaseAddress),
-                                                         "api/ActivacionesPersonalTalentoHumano/InsertarActivacionesPersonalTalentoHumano");
-            if (response.IsSuccess)
-            {
-                return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = response.Message });
-                
-            }
-
-
-
             try
             {
-                return View();
+                Response response = await apiServicio.InsertarAsync(listaViewModel,
+                                                         new Uri(WebApp.BaseAddress),
+                                                         "api/ActivacionesPersonalTalentoHumano/InsertarActivacionesPersonalTalentoHumano");
+                if (response.IsSuccess)
+                {
+
+                    var mensajeResultado = response.Message;
+
+                    if (response.Resultado + "" != "")
+                    {
+                        mensajeResultado = response.Resultado + "";
+                    }
+                    else
+                    {
+                        mensajeResultado = response.Message;
+                    }
+
+                    return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = mensajeResultado });
+
+                }
+
+                return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = response.Message });
+
             }
             catch (Exception ex)
             {
-                return View();
+                return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = Mensaje.Excepcion });
             }
         }
 
