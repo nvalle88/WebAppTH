@@ -2,39 +2,38 @@
 <fieldset>
     <div class="row">
         <section class="col col-3">
+            <label>Fecha inicio</label>
             <label class="input">
-                <i class="icon-append fa fa-calendar"></i>
-                <input asp-for="FechaInicio" type="text" placeholder="Seleccione fecha desde" class="datepicker" data-dateformat='dd/mm/yy'>
+                <input asp-for="FechaInicio" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
                 <span asp-validation-for="FechaInicio" class="text-danger"></span>
             </label>
         </section>
         <section class="col col-3">
+            <label>Fecha fin</label>
             <label class="input">
-                <i class="icon-append fa fa-calendar"></i>
-                <input asp-for="FechaFin" type="text" placeholder="Seleccione fecha desde" class="datepicker" data-dateformat='dd/mm/yy'>
+                <input asp-for="FechaFin" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
                 <span asp-validation-for="FechaFin" class="text-danger"></span>
             </label>
         </section>
         <section class="col col-3">
+            <label>Empresa</label>
             <label class="input">
-                <i class="icon-prepend fa fa-user"></i>
-                <input maxlength="100" asp-for="Empresa" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Empresa)" />
+                <input maxlength="100" asp-for="Empresa" class="form-control" />
                 <span asp-validation-for="Empresa" class="text-danger"></span>
             </label>
         </section>
         <section class="col col-3">
+            <label>Puesto de trabajo</label>
             <label class="input">
-                <i class="icon-prepend fa fa-user"></i>
-                <input maxlength="100" asp-for="PuestoTrabajo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.PuestoTrabajo)" />
+                <input maxlength="100" asp-for="PuestoTrabajo" class="form-control"/>
                 <span asp-validation-for="PuestoTrabajo" class="text-danger"></span>
             </label>
         </section>
     </div>
     <section>
-        <label class="label"></label>
+        <label>Funciones</label>
         <label class="textarea">
-            <i class="icon-append fa fa-comment"></i>
-            <textarea maxlength="250" asp-for="DescripcionFunciones" rows="2" placeholder="@Html.DisplayNameFor(model=>model.DescripcionFunciones)"></textarea>
+            <textarea maxlength="250" asp-for="DescripcionFunciones" rows="5"></textarea>
             <span asp-validation-for="DescripcionFunciones" class="text-danger"></span>
         </label>
     </section>

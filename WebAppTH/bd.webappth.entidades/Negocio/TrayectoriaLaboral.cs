@@ -13,8 +13,10 @@ namespace bd.webappth.entidades.Negocio
 
         public int IdPersona { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime? FechaInicio { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime? FechaFin { get; set; }
 
         [StringLength(100)]

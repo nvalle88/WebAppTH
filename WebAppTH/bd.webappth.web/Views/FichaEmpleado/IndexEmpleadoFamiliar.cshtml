@@ -7,6 +7,7 @@
 @{ var modelo = new FichaEmpleado { OpcionMenu = 3 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 <!-- MAIN CONTENT -->
 <div id="content">
 
@@ -15,14 +16,14 @@
         <button type="button" asp-action="CreateEmpleadoFamiliar" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo Familiar
+            </span>Nuevo
 
         </button>
     </a>
     <p> </p>
 
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -42,7 +43,7 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Familiares</h2>
                     </header>
@@ -62,10 +63,10 @@
                                             Nombre
                                         </th>
                                         <th data-class="">
-                                            Identificacion
+                                            Identificaci&oacute;n
                                         </th>
                                         <th data-class="">
-                                            Tel&eacute;fono Privado
+                                            Tel&eacute;fono privado
                                         </th>
                                         <th data-class="">
                                             Parentesco

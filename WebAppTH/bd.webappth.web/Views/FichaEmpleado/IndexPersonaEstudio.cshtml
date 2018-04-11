@@ -5,6 +5,7 @@
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 <!-- MAIN CONTENT -->
 <div id="content">
 
@@ -13,57 +14,40 @@
         <button type="button" asp-action="CreatePersonaEstudio" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo Estudio
+            </span>Nuevo
 
         </button>
     </a>
     <p> </p>
-
-    <!-- widget grid -->
-    <section id="widget-grid" class="">
-        <!-- row -->
+    <section id="" class="">
         <div class="row">
-            <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                    <!-- widget options:
-                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                    data-widget-colorbutton="false"
-                    data-widget-editbutton="false"
-                    data-widget-togglebutton="false"
-                    data-widget-deletebutton="false"
-                    data-widget-fullscreenbutton="false"
-                    data-widget-custombutton="false"
-                    data-widget-collapsed="true"
-                    data-widget-sortable="false"
-
-                    -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Formaci&oacute;n Acad&eacute;mica</h2>
+                        <h2>Formaci&oacute;nes acad&eacute;micas</h2>
                     </header>
-                    <!-- widget div-->
                     <div>
-                        <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
                         </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
+                                        <th data-class="expand">
+                                           Nivel de estudio
+                                        </th>
+                                        <th data-class="expand">
+                                            &Aacute;rea de conocimiento
+                                        </th>
                                         <th data-class="expand">
                                             T&iacute;tulo
                                         </th>
                                         <th data-class="">
-                                            Fecha Graduado
+                                            Fecha de graduado
                                         </th>
                                         <th data-class="">
-                                            No Senescyt
+                                            No senescyt
                                         </th>
                                         <th data-class="">
                                             Observaciones
@@ -77,26 +61,33 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Titulo.Nombre)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FechaGraduado)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NoSenescyt)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Observaciones)
-                                            </td>
-                                            <td>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Titulo.Estudio.Nombre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Titulo.AreaConocimiento.Descripcion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Titulo.Nombre)
+                                        </td>
 
-                                                @Html.ActionLink("Editar", "EditPersonaEstudio", new { id = item.IdPersonaEstudio }) |
-                                                @Html.ActionLink("Eliminar", "DeletePersonaEstudio", new { id = item.IdPersonaEstudio }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FechaGraduado)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NoSenescyt)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Observaciones)
+                                        </td>
+                                        <td>
 
-                                            </td>
-                                        </tr>
+                                            @Html.ActionLink("Editar", "EditPersonaEstudio", new { id = item.IdPersonaEstudio }) |
+                                            @Html.ActionLink("Eliminar", "DeletePersonaEstudio", new { id = item.IdPersonaEstudio }, new { onclick = "return confirm('Desea eliminar el Estudio... ?');" })
+
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

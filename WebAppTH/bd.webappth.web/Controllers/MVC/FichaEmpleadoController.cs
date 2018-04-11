@@ -303,6 +303,12 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
+
+                if (!ModelState.IsValid)
+                {
+                    return View(viewModelTrayectoriaLaboral);
+                }
+
                 var empleado = await ObtenerEmpleado();
 
                 var trayectoriaLaboral = new TrayectoriaLaboral()
@@ -399,6 +405,11 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(viewModelTrayectoriaLaboral);
+                }
+
                 var empleado = await ObtenerEmpleado();
                 var trayectoriaLaboral = new TrayectoriaLaboral()
                 {
