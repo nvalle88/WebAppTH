@@ -337,7 +337,7 @@
                                             <section class="col col-2">
                                                 <label class="checkbox">
                                                     <input id="chkMostrar" type="checkbox" name="Revisar" value="true" />
-                                                    <input id="chkOcultar" type="hidden" name="Revisar" value="false" />
+                                                    <input id="chkOcultar" type="hidden"  name="Revisar" value="false" />
                                                     <i></i>
                                                 </label>
                                             </section>
@@ -400,26 +400,21 @@
     </script>
     <script type="text/javascript">
 
-         //habilita para cambio de puesto
-         @if (Model.Revisar == true) {
-
-            //@: mostrarCombox();
-        }
-        else
+        if (chkMostrar= true)
         {
-           // @: ocultarCombox();
-
+            mostrarCombox();
+           
+        }
+        if (chkMostrar = false)
+        {
+            ocultarCombox();
         }
         function ocultarCombox() {
             document.getElementById('cargos').style.visibility = "hidden"; //para mostrar
-            document.getElementById('chkOcultar').style.visibility = "visible";
-            document.getElementById('chkMostrar').style.visibility = "hidden";
         }
 
         function mostrarCombox() {
             document.getElementById('cargos').style.visibility = "visible"; //para mostrar
-            document.getElementById('chkMostrar').style.visibility = "visible";
-            document.getElementById('chkOcultar').style.visibility = "hidden";
 
         }
         //si cumple los requisitos
@@ -442,20 +437,20 @@
 
         }
 
-        //function ocutarcombox() {
+        function ocutarcombox() {
 
-        //    if (document.getElementById('cargos').hidden == "") {
+            if (document.getElementById('cargos').hidden == "") {
 
-        //        document.getElementById('cargos').hidden = "hidden"; //para ocultar
+                document.getElementById('cargos').hidden = "hidden"; //para ocultar
 
-        //    }
+            }
 
-        //    else {
+            else {
 
-        //        document.getElementById('cargos').hidden = ""; //para mostrar
+                document.getElementById('cargos').hidden = ""; //para mostrar
 
-        //    }
+            }
 
-        //}
+        }
     </script>
 }
