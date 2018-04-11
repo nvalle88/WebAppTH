@@ -95,6 +95,75 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+        public async Task<IActionResult> ServidoresNuevoPuesto()
+        {
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                var lista = new List<DocumentoFAOViewModel>();
+
+                var usuario = new DocumentoFAOViewModel
+                {
+                    NombreUsuario = NombreUsuario
+
+                };
+                lista = await apiServicio.Listar<DocumentoFAOViewModel>(usuario, new Uri(WebApp.BaseAddress)
+                                                                    , "api/Empleados/ListarEmpleadosCambioPuestoFao");
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+        public async Task<IActionResult> ServidoreSinCambioPuesto()
+        {
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                var lista = new List<DocumentoFAOViewModel>();
+
+                var usuario = new DocumentoFAOViewModel
+                {
+                    NombreUsuario = NombreUsuario
+
+                };
+                lista = await apiServicio.Listar<DocumentoFAOViewModel>(usuario, new Uri(WebApp.BaseAddress)
+                                                                    , "api/Empleados/ListarEmpleadosSinCambioPuestoFao");
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+        public async Task<IActionResult> Historicos()
+        {
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                var lista = new List<DocumentoFAOViewModel>();
+
+                var usuario = new DocumentoFAOViewModel
+                {
+                    NombreUsuario = NombreUsuario
+
+                };
+                lista = await apiServicio.Listar<DocumentoFAOViewModel>(usuario, new Uri(WebApp.BaseAddress)
+                                                                    , "api/Empleados/ListarEmpleadosHistoricoFao");
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
         public async Task<IActionResult> Detalle(int id, int IdActividad)
         {
             try
@@ -113,6 +182,34 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     var empleado = JsonConvert.DeserializeObject<DocumentoFAOViewModel>(response.Resultado.ToString());
                     return View(empleado);
+                }
+                ViewData["Error"] = response.Message;
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+        public async Task<IActionResult> DetalleJefe(int id, int IdActividad)
+        {
+            try
+            {
+                var usuario = new DocumentoFAOViewModel
+                {
+                    IdEmpleado = id,
+                    IdFormularioAnalisisOcupacional = IdActividad
+
+                };
+                var response = await apiServicio.ObtenerElementoAsync(usuario, new Uri(WebApp.BaseAddress)
+                                                                    , "api/Empleados/InformeFinalFAO");
+                if (response.IsSuccess)
+                {
+                    var empleado = JsonConvert.DeserializeObject<DocumentoFAOViewModel>(response.Resultado.ToString());
+                    ViewData["IdManualPuesto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList((empleado.ListasManualPuesto), "IdManualPuesto", "Nombre");
+                    return View(empleado);
+
                 }
                 ViewData["Error"] = response.Message;
                 return View();

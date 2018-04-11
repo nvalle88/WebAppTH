@@ -21,33 +21,33 @@
 
     @if (Model.OpcionMenu == 2)
     {
-        <a  style="background-color:#3276b1;color:white;" class="btn btn-default">Servidores <br />a un nuevo <br /> puesto</a>
+        <a asp-action="ServidoresNuevoPuesto" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default">Servidores <br />a un nuevo <br /> puesto</a>
 
     }
     else
     {
-        <a  class="btn btn-default">Servidores <br />a un nuevo <br /> puesto</a>
+        <a asp-action="ServidoresNuevoPuesto" asp-controller="DocumentoFAO" class="btn btn-default">Servidores <br />a un nuevo <br /> puesto</a>
     }
 
     @if (Model.OpcionMenu == 3)
     {
-        <a  style="background-color:#3276b1;color:white;" class="btn btn-default">Servidores <br />sin cambio <br /> puesto</a>
+        <a asp-action="ServidoreSinCambioPuesto" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default">Servidores <br />sin cambio <br /> puesto</a>
 
     }
     else
     {
-        <a  class="btn btn-default">Servidores <br />sin cambio <br /> puesto</a>
+        <a asp-action="ServidoreSinCambioPuesto" asp-controller="DocumentoFAO" class="btn btn-default">Servidores <br />sin cambio <br /> puesto</a>
 
     }
 
 
     @if (Model.OpcionMenu == 4)
     {
-        <a style="background-color:#3276b1;color:white;" class="btn btn-default">Hist&oacutericos</a>
+        <a asp-action="Historicos" asp-controller="DocumentoFAO" style="background-color:#3276b1;color:white;" class="btn btn-default">Hist&oacutericos</a>
     }
     else
     {
-        <a class="btn btn-default">Hist&oacutericos</a>
+        <a asp-action="Historicos" asp-controller="DocumentoFAO" class="btn btn-default">Hist&oacutericos</a>
     }
 
 
