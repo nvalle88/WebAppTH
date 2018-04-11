@@ -121,7 +121,6 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-
                 var usuario = new DocumentoFAOViewModel
                 {
                     IdEmpleado = id,
@@ -129,12 +128,13 @@ namespace bd.webappth.web.Controllers.MVC
 
                 };
                 var response = await apiServicio.ObtenerElementoAsync(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ObtenerEncabezadoEmpleadosFaoValidarConExepcionesVisualizarJefe");
-
+                                                                    , "api/Empleados/InformeFinalFAO");
                 if (response.IsSuccess)
                 {
                     var empleado = JsonConvert.DeserializeObject<DocumentoFAOViewModel>(response.Resultado.ToString());
+                    ViewData["IdManualPuesto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList((empleado.ListasManualPuesto), "IdManualPuesto", "Nombre");
                     return View(empleado);
+
                 }
                 ViewData["Error"] = response.Message;
                 return View();
