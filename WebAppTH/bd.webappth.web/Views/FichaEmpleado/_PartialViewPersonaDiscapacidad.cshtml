@@ -4,7 +4,7 @@
     <div class="row">
 
         <section class="col col-4">
-            <label>Tipo de Discapacidad:</label>
+            <label>Tipo de discapacidad:</label>
             <label class="input">
                 <select asp-for="IdTipoDiscapacidad" class="form-control" asp-items="ViewBag.IdTipoDiscapacidad">
                     <option value="0"><Seleccione una @Html.DisplayNameFor(model => model.IdTipoDiscapacidad)></option>
@@ -13,18 +13,16 @@
             </label>
         </section>
         <section class="col col-4">
-            <label>N&uacute;mero de Carnet:</label>
+            <label>N&uacute;mero de carnet:</label>
             <label class="input">
-                <i class="icon-prepend fa fa-user"></i>
-                <input maxlength="32" asp-for="NumeroCarnet" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.NumeroCarnet)" />
+                <input maxlength="32" asp-for="NumeroCarnet" class="form-control"  />
                 <span asp-validation-for="NumeroCarnet" class="text-danger"></span>
             </label>
         </section>
         <section class="col col-4">
-            <label>Porciento de Discapacidad:</label>
+            <label>Porciento de discapacidad:</label>
             <label class="input">
-                <i class="icon-prepend fa fa-user"></i>
-                <input maxlength="32" asp-for="Porciento" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Porciento)" onKeyPress="return checkIt(event)" onchange="handleChange(this);" onKeyPress="return checkIt(event)" onchange="handleChange(this);" />
+                <input maxlength="32" asp-for="Porciento" class="form-control"  onKeyPress="return checkIt(event)" onchange="handleChange(this);" onKeyPress="return checkIt(event)" onchange="handleChange(this);" />
                 <span asp-validation-for="Porciento" class="text-danger"></span>
             </label>
         </section>

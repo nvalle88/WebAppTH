@@ -891,12 +891,13 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = await ObtenerEmpleado();
+            personaDiscapacidad.IdPersona = empleado.IdPersona;
             if (!ModelState.IsValid)
             {
                 ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                 return View(personaDiscapacidad);
             }
-            personaDiscapacidad.IdPersona = empleado.IdPersona;
+            
 
             try
             {
@@ -975,7 +976,6 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return RedirectToAction("IndexPersonaDiscapacidad");
                     }
-                    ViewData["Error"] = response.Message;
                     ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                     return View(personaDiscapacidad);
 
@@ -1144,6 +1144,12 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (!string.IsNullOrEmpty(id))
                 {
+                    if (!ModelState.IsValid)
+                    {
+                        ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
+                        return View(personaEnfermedad);
+                    }
+
                     response = await apiServicio.EditarAsync(id, personaEnfermedad, new Uri(WebApp.BaseAddress),
                                                                  "api/PersonaEnfermedades");
 
@@ -1330,6 +1336,12 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (!string.IsNullOrEmpty(id))
                 {
+                    if (!ModelState.IsValid)
+                    {
+                      ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera", "Nombre");
+                        return View(datosBancarios);  
+                    }
+
                     response = await apiServicio.EditarAsync(id, datosBancarios, new Uri(WebApp.BaseAddress),
                                                                  "api/DatosBancarios");
 
@@ -1707,7 +1719,7 @@ namespace bd.webappth.web.Controllers.MVC
                             IdTipoDiscapacidad = personaSustituto.PersonaDiscapacidad.IdTipoDiscapacidad,
                             IdEmpleado = personaSustituto.IdPersonaSustituto,
                             NumeroCarnet= personaSustituto.PersonaDiscapacidad.NumeroCarnet,
-                            Porciento = personaSustituto.PersonaDiscapacidad.Porciento,
+                            Porciento = Convert.ToInt32(personaSustituto.PersonaDiscapacidad.Porciento),
                             IdPersonaDiscapacidad = personaSustituto.PersonaDiscapacidad.IdPersonaDiscapacidad
 
                         };

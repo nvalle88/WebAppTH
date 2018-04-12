@@ -4,6 +4,7 @@
 @{ var modelo = new FichaEmpleado { OpcionMenu = 5 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 <!-- MAIN CONTENT -->
 <div id="content">
 
@@ -12,54 +13,36 @@
         <button type="button" asp-action="CreatePersonaEnfermedad" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nueva Enfermedad
+            </span>Nuevo
 
         </button>
     </a>
     <p> </p>
 
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                    <!-- widget options:
-                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                    data-widget-colorbutton="false"
-                    data-widget-editbutton="false"
-                    data-widget-togglebutton="false"
-                    data-widget-deletebutton="false"
-                    data-widget-fullscreenbutton="false"
-                    data-widget-custombutton="false"
-                    data-widget-collapsed="true"
-                    data-widget-sortable="false"
-
-                    -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Enfermedades de Empleado</h2>
+                        <h2>Enfermedades</h2>
                     </header>
-                    <!-- widget div-->
                     <div>
-                        <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
                         </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
                         <div class="widget-body no-padding">
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Tipo de Enfermedad
+                                            Tipo de enfermedad
                                         </th>
                                         <th data-class="">
-                                            Instituci&oacute;n que Emite
+                                            Instituci&oacute;n que emite
                                         </th>
                                         <th>
                                             <i class="fa fa-cog "></i>

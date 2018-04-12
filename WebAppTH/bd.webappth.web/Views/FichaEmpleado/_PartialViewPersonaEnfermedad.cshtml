@@ -4,7 +4,7 @@
     <div class="row">
 
         <section class="col col-6">
-            <label>Tipo de Enfermedad:</label>
+            <label>Tipo de enfermedad:</label>
             <label class="input">
                 <select asp-for="IdTipoEnfermedad" class="form-control" asp-items="ViewBag.IdTipoEnfermedad">
                     <option value="0"><Seleccione una @Html.DisplayNameFor(model => model.IdTipoEnfermedad)></option>
@@ -13,10 +13,9 @@
             </label>
         </section>
         <section class="col col-6">
-            <label>Instituci&oacute;n que Emite:</label>
+            <label>Instituci&oacute;n que emite:</label>
             <label class="input">
-                <i class="icon-prepend fa fa-user"></i>
-                <input maxlength="150" asp-for="InstitucionEmite" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.InstitucionEmite)" />
+                <input maxlength="150" asp-for="InstitucionEmite" class="form-control" />
                 <span asp-validation-for="InstitucionEmite" class="text-danger"></span>
             </label>
         </section>

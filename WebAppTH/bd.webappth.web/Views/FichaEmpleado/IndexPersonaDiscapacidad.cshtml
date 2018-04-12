@@ -4,7 +4,7 @@
 @{ var modelo = new FichaEmpleado { OpcionMenu = 4 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
-
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 <!-- MAIN CONTENT -->
 <div id="content">
 
@@ -13,14 +13,14 @@
         <button type="button" asp-action="CreatePersonaDiscapacidad" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nueva Discapacidad
+            </span>Nuevo
 
         </button>
     </a>
     <p> </p>
 
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -40,9 +40,9 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Discapacidades de Empleado</h2>
+                        <h2>Discapacidades</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -57,10 +57,10 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Tipo de Discapacidad
+                                            Tipo de discapacidad
                                         </th>
                                         <th data-class="">
-                                            N&uacute;mero de Carnet
+                                            N&uacute;mero de carnet
                                         </th>
                                         <th data-class="">
                                             Porciento
