@@ -79,9 +79,8 @@ namespace bd.webappth.web.Controllers.MVC
                                                          "api/FormularioAnalisisOcupacional/ActualizarFormularioAnalisisOcupacional");
             if (response.IsSuccess)
             {
-
-                //return RedirectToAction("AsignarEmpleadoFAO");
-                return View();
+                return RedirectToAction("Index", "Homes");
+                //return View();
             }
 
             //ViewData["Error"] = response.Message;

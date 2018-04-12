@@ -376,6 +376,7 @@
                                 </fieldset>
 
                                 <footer>
+                                    <a class="btn btn-primary">Visualizar Informe</a>
                                     <a asp-action="Asignados" class="btn btn-default">Cancelar</a>
                                 </footer>
 
@@ -411,23 +412,19 @@
          //habilita para cambio de puesto
          @if (Model.Revisar == true) {
 
-            //@: mostrarCombox();
+            @: mostrarCombox();
         }
         else
         {
-           // @: ocultarCombox();
+           @: ocultarCombox();
 
         }
         function ocultarCombox() {
-            document.getElementById('cargos').style.visibility = "hidden"; //para mostrar
-            document.getElementById('chkOcultar').style.visibility = "visible";
-            document.getElementById('chkMostrar').style.visibility = "hidden";
+            document.getElementById('cargos').style.visibility = "hidden"; //para OCULTAR
         }
 
         function mostrarCombox() {
             document.getElementById('cargos').style.visibility = "visible"; //para mostrar
-            document.getElementById('chkMostrar').style.visibility = "visible";
-            document.getElementById('chkOcultar').style.visibility = "hidden";
 
         }
         //si cumple los requisitos

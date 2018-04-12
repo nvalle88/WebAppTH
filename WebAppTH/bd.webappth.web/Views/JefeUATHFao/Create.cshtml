@@ -336,15 +336,13 @@
                                             </section>
                                             <section class="col col-2">
                                                 <label class="checkbox">
-                                                    <input id="chkMostrar" type="checkbox" name="Revisar" value="true" />
-                                                    <input id="chkOcultar" type="hidden" name="Revisar" value="false" />
+                                                    <input id="chkMostrar" type="checkbox" onclick="ocultarCombox()" name="Revisar" value="true" />
+                                                    <input id="chkOcultar" type="hidden"  name="Revisar" value="false" />
                                                     <i></i>
                                                 </label>
                                             </section>
                                         </section>
                                     </div>
-
-
                                     <div class="row">
                                         <section id="cargos" class="col col-lg-6">
                                             <section class="col col-lg-6">
@@ -399,27 +397,25 @@
         });
     </script>
     <script type="text/javascript">
+        
 
-         //habilita para cambio de puesto
-         @if (Model.Revisar == true) {
 
-            //@: mostrarCombox();
-        }
-        else
-        {
-           // @: ocultarCombox();
+        $("#chkMostrar").change(function () {
+            if (document.getElementById("chkMostrar").checked == true ) {
 
-        }
+                mostrarCombox();
+            } else {
+                ocultarCombox();
+            }
+        });
+
+        
         function ocultarCombox() {
-            document.getElementById('cargos').style.visibility = "hidden"; //para mostrar
-            document.getElementById('chkOcultar').style.visibility = "visible";
-            document.getElementById('chkMostrar').style.visibility = "hidden";
+            document.getElementById('cargos').style.visibility = "hidden";
         }
 
         function mostrarCombox() {
             document.getElementById('cargos').style.visibility = "visible"; //para mostrar
-            document.getElementById('chkMostrar').style.visibility = "visible";
-            document.getElementById('chkOcultar').style.visibility = "hidden";
 
         }
         //si cumple los requisitos
@@ -442,20 +438,7 @@
 
         }
 
-        //function ocutarcombox() {
+        ocultarCombox();
 
-        //    if (document.getElementById('cargos').hidden == "") {
-
-        //        document.getElementById('cargos').hidden = "hidden"; //para ocultar
-
-        //    }
-
-        //    else {
-
-        //        document.getElementById('cargos').hidden = ""; //para mostrar
-
-        //    }
-
-        //}
     </script>
 }
