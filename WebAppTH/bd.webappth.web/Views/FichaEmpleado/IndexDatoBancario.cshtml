@@ -3,7 +3,7 @@
 @{ var modelo = new FichaEmpleado { OpcionMenu = 6 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
-
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 <!-- MAIN CONTENT -->
 <div id="content">
     @if (Model.IdEmpleado == 0)
@@ -13,7 +13,7 @@
             <button type="button" asp-action="CreateDatoBancario" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
                 <span class="btn-label">
                     <i class="glyphicon glyphicon-plus"></i>
-                </span>Nuevo Dato Bancario
+                </span>Nuevo
 
             </button>
         </a>
@@ -22,7 +22,7 @@
 
 
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -42,9 +42,9 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Dato Bancario de Empleado</h2>
+                        <h2>Dato bancario</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -59,13 +59,13 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Intituci&oacute;n Financiera
+                                            Intituci&oacute;n financiera
                                         </th>
                                         <th data-class="">
-                                            N&uacute;mero de Cuenta
+                                            N&uacute;mero de cuenta
                                         </th>
                                         <th data-class="">
-                                            Ahorros
+                                            &iquest; Ahorros &#63
                                         </th>
                                         <th>
                                             <i class="fa fa-cog "></i>

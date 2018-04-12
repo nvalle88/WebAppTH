@@ -4,7 +4,7 @@
     <div class="row">
 
         <section class="col col-4">
-            <label>Instituci&oacute;n Financiera:</label>
+            <label>Instituci&oacute;n financiera</label>
             <label class="input">
                 <select asp-for="IdInstitucionFinanciera" class="form-control" asp-items="ViewBag.IdInstitucionFinanciera">
                     <option value="0"><Seleccione una @Html.DisplayNameFor(model => model.IdInstitucionFinanciera)></option>
@@ -13,9 +13,8 @@
             </label>
         </section>
         <section class="col col-4">
-            <label>N&uacute;mero de Cuenta:</label>
+            <label>N&uacute;mero de cuenta</label>
             <label class="input">
-                <i class="icon-prepend fa fa-user"></i>
                 <input maxlength="20" asp-for="NumeroCuenta" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.NumeroCuenta)" />
                 <span asp-validation-for="NumeroCuenta" class="text-danger"></span>
             </label>
@@ -23,7 +22,7 @@
         <section class="col-col-4">
             <label>&nbsp;&nbsp;</label>
             <label class="checkbox-inline">
-                <label>&iquest; Es Cuenta de Ahorros?</label>
+                <label>&iquest; Es cuenta de ahorros ?</label>
                 <input type="checkbox" asp-for="Ahorros" class="form-control" />
             </label>
         </section>
