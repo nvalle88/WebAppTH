@@ -90,6 +90,18 @@
                                             </td>
 
                                         }
+                                         @if (item.estado == 3)
+                                        {
+                                            <td>Validado</td>
+                                            <td>Validado</td>
+                                            <td>
+                                                @Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado, IdActividad = item.IdFormularioAnalisisOcupacional })
+                                                @*@Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado }) |*@
+                                                @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado }) |*@
+                                                @* @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEmpleado }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })*@
+                                            </td>
+
+                                        }
 
                                     </tr>
                                 }

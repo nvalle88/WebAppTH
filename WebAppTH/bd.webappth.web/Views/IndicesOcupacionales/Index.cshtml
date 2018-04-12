@@ -28,8 +28,8 @@
                                 <thead>
                                     <tr>
                                         <th data-hide="phone">
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().PartidaIndividual)
-                                            </th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().PartidaIndividual)
+                                        </th>
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Dependencia)
                                         </th>
@@ -46,7 +46,10 @@
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Ambito)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EscalaGrado)  /  @Html.DisplayNameFor(model => model.FirstOrDefault().Remuneracion)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EscalaGrado)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Remuneracion)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -55,35 +58,38 @@
 
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                           <td>
-                                                    @Html.DisplayFor(modelItem => item.PartidaIndividual)
-                                                </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Dependencia)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ManualPuesto)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.RolPuesto)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Nivel)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Ambito)
-                                            </td>
-                                            <td data-toggle="toggle" data-placement="right" title="@item.EscalaGrado  @item.Remuneracion @item.ManualPuesto">
-                                                @Html.DisplayFor(modelItem => item.EscalaGrado)  /  @Html.DisplayFor(modelItem => item.Remuneracion)
-                                            </td>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PartidaIndividual)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Dependencia)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ManualPuesto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RolPuesto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nivel)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Ambito)
+                                        </td>
+                                        <td data-toggle="toggle" data-placement="right" title="@item.EscalaGrado  @item.ManualPuesto">
+                                            @Html.DisplayFor(modelItem => item.EscalaGrado)
+                                        </td>
+                                        <td data-toggle="toggle" data-placement="right" title=" @item.ManualPuesto">
+                                             @Html.DisplayFor(modelItem => item.Remuneracion)
+                                        </td>
 
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdIndiceOcupacional }) |
-                                                @Html.ActionLink("Detalle", "Detalle", new { id = item.IdIndiceOcupacional }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })
-                                            </td>
-                                        </tr>
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdIndiceOcupacional }) |
+                                            @Html.ActionLink("Detalle", "Detalle", new { id = item.IdIndiceOcupacional }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
