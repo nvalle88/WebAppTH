@@ -31,8 +31,8 @@
                                 @{await Html.RenderPartialAsync("_PartialViewPersonaDiscapacidad", Model);}
 
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="IndexPersonaDiscapacidad" class="btn btn-default">Cancelar</a>
+                                    <input type="submit" value="Guardar" onclick="cargando()" class="btn btn-primary" />
+                                    <a asp-action="IndexPersonaDiscapacidad" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -103,6 +103,10 @@
         function handleChange(input) {
             if (input.value < 0) input.value = 0;
             if (input.value > 100) input.value = 100;
+        }
+
+        function cargando() {
+            mostrarLoadingPanel("content", "")
         }
 
         $(document).ready(function () {

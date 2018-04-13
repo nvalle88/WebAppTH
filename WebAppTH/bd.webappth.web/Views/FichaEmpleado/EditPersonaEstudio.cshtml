@@ -49,8 +49,8 @@
                                 <input type="hidden" asp-for="IdPersonaEstudio" />
                                 @{await Html.RenderPartialAsync("_PartialViewPersonaEstudio");}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="IndexPersonaEstudio" class="btn btn-default">Cancelar</a>
+                                    <input type="submit" value="Guardar" onclick="cargando()" class="btn btn-primary" />
+                                    <a asp-action="IndexPersonaEstudio"  onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -149,6 +149,9 @@
     </script>
 
     <script type="text/javascript">
+                   function cargando() {
+                       mostrarLoadingPanel("content", "")
+                   }
         $(document).ready(function () {
             Init_Select2();
         });

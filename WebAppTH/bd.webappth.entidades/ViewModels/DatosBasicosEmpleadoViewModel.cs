@@ -8,6 +8,8 @@ namespace bd.webappth.entidades.ViewModels
 {
     public class DatosBasicosEmpleadoViewModel : IValidatableObject
     {
+        public int IdEmpleado { get; set; }
+
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Tipo de identificación:")]
         [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]

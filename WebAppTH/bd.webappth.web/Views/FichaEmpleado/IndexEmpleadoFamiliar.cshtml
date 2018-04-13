@@ -8,12 +8,13 @@
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <link href="~/css/tabla/table.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <!-- MAIN CONTENT -->
 <div id="content">
 
     <p></p>
     <a asp-action="CreateEmpleadoFamiliar">
-        <button type="button" asp-action="CreateEmpleadoFamiliar" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+        <button type="button" asp-action="CreateEmpleadoFamiliar" onclick="cargando()" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nuevo
@@ -95,7 +96,7 @@
                                             </td>
                                             <td>
 
-                                                @Html.ActionLink("Editar", "EditEmpleadoFamiliar", new { id = item.IdEmpleadoFamiliar }) |
+                                                @Html.ActionLink("Editar", "EditEmpleadoFamiliar", new { id = item.IdEmpleadoFamiliar }, new { onclick = "cargando()" }) |
                                                 @Html.ActionLink("Eliminar", "DeleteEmpleadoFamiliar", new { id = item.IdPersona }, new { onclick = "return confirm('Desea eliminar el Familiar... ?');" })
 
                                             </td>
@@ -120,6 +121,13 @@
 <!-- END MAIN CONTENT -->
 
 @section Scripts {
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+    </script>
     <script src='~/js/datatables/init.js'></script>
 }
 

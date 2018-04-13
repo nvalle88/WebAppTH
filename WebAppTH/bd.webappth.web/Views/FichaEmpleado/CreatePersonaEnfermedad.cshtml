@@ -30,8 +30,8 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialViewPersonaEnfermedad", Model);}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="IndexPersonaEnfermedad" class="btn btn-default">Cancelar</a>
+                                    <input type="submit" value="Guardar" onclick="cargando()" class="btn btn-primary" />
+                                    <a asp-action="IndexPersonaEnfermedad" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -54,6 +54,10 @@
 
 
     <script type="text/javascript">
+
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
 
         $(document).ready(function () {
             Init_Select2();
