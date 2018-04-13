@@ -29,7 +29,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Trayectoria Laboral</h2>
+                        <h2>Editar trayectoria laboral</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -47,8 +47,8 @@
                                 <input type="hidden" asp-for="IdTrayectoriaLaboral" />
                                 @{await Html.RenderPartialAsync("_PartialViewTrayectoriaLaboral");}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="IndexTrayectoriaLaboral" class="btn btn-default">Cancelar</a>
+                                    <input type="submit" value="Guardar" onclick="cargando()" class="btn btn-primary" />
+                                    <a asp-action="IndexTrayectoriaLaboral" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -147,6 +147,9 @@
     </script>
 
     <script type="text/javascript">
+                   function cargando() {
+                       mostrarLoadingPanel("content", "")
+                   }
         $(document).ready(function () {
             Init_Select2();
         });

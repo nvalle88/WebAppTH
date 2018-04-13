@@ -7,22 +7,24 @@
 @{ var modelo = new FichaEmpleado { OpcionMenu = 3 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <!-- MAIN CONTENT -->
 <div id="content">
 
     <p></p>
     <a asp-action="CreateEmpleadoFamiliar">
-        <button type="button" asp-action="CreateEmpleadoFamiliar" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+        <button type="button" asp-action="CreateEmpleadoFamiliar" onclick="cargando()" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo Familiar
+            </span>Nuevo
 
         </button>
     </a>
     <p> </p>
 
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -42,7 +44,7 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Familiares</h2>
                     </header>
@@ -62,10 +64,10 @@
                                             Nombre
                                         </th>
                                         <th data-class="">
-                                            Identificacion
+                                            Identificaci&oacute;n
                                         </th>
                                         <th data-class="">
-                                            Tel&eacute;fono Privado
+                                            Tel&eacute;fono privado
                                         </th>
                                         <th data-class="">
                                             Parentesco
@@ -94,7 +96,7 @@
                                             </td>
                                             <td>
 
-                                                @Html.ActionLink("Editar", "EditEmpleadoFamiliar", new { id = item.IdEmpleadoFamiliar }) |
+                                                @Html.ActionLink("Editar", "EditEmpleadoFamiliar", new { id = item.IdEmpleadoFamiliar }, new { onclick = "cargando()" }) |
                                                 @Html.ActionLink("Eliminar", "DeleteEmpleadoFamiliar", new { id = item.IdPersona }, new { onclick = "return confirm('Desea eliminar el Familiar... ?');" })
 
                                             </td>
@@ -119,6 +121,13 @@
 <!-- END MAIN CONTENT -->
 
 @section Scripts {
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+    </script>
     <script src='~/js/datatables/init.js'></script>
 }
 

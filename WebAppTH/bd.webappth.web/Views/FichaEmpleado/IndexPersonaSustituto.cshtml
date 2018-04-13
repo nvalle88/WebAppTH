@@ -5,11 +5,12 @@
 @{ var modelo = new FichaEmpleado { OpcionMenu = 8 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <div id="content">
 
     <p></p>
     <a asp-action="CreatePersonaSustituto">
-        <button type="button" asp-action="CreatePersonaSustituto" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+        <button type="button" asp-action="CreatePersonaSustituto" onclick="cargando()" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nueva Persona Sustituto
@@ -311,6 +312,11 @@
 
 
 @section Scripts {
+    <script type="text/javascript">
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+    </script>
     <script src='~/js/datatables/init.js'></script>
 }
 

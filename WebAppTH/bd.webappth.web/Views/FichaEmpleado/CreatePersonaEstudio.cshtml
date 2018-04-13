@@ -31,7 +31,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Persona Estudio</h2>
+                        <h2>Nueva formaci&oacute;n acad&eacute;mica</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -49,8 +49,8 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialViewPersonaEstudio", Model);}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="IndexPersonaEstudio" class="btn btn-default">Cancelar</a>
+                                    <input type="submit" value="Guardar"  onclick="cargando()" class="btn btn-primary" />
+                                    <a asp-action="IndexPersonaEstudio" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -146,6 +146,9 @@
                 return false;
                    })
 
+                   function cargando() {
+                       mostrarLoadingPanel("content", "")
+                   }
     </script>
 
     <script type="text/javascript">

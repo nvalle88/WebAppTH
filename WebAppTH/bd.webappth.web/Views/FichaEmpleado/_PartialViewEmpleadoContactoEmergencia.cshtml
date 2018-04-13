@@ -1,26 +1,24 @@
-@model bd.webappth.entidades.ViewModels.EmpleadoFamiliarViewModel
+@model bd.webappth.entidades.ViewModels.ContactoEmergenciaViewModel
 
 <fieldset>
     <legend>Datos Personales</legend>
     <div class="row">
-        <section class="col col-6">
-            <div class="form-group">
+        <section class="col col-lg-6">
+            <div>
                 <label>Nombres:</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                    <input asp-for="Nombres" class="form-control input " placeholder="Nombres" type="text">
+                <div>
+                    <input asp-for="Nombre" class="form-control input " placeholder="Nombres" type="text">
                 </div>
-                <span asp-validation-for="Nombres" class="text-danger"></span>
+                <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
         </section>
-        <section class="col col-6">
-            <div class="form-group">
+        <section class="col col-lg-6">
+            <div>
                 <label>Apellidos:</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                    <input asp-for="Apellidos" class="form-control input " placeholder="Apellidos" type="text">
+                <div>
+                    <input asp-for="Apellido" class="form-control input " placeholder="Apellidos" type="text">
                 </div>
-                <span asp-validation-for="Apellidos" class="text-danger"></span>
+                <span asp-validation-for="Apellido" class="text-danger"></span>
             </div>
         </section>
     </div>
@@ -40,9 +38,8 @@
         <section class="col col-4">
             <label>Tel&eacute;fono de Privado:</label>
             <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
-                    <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text">
+                <div>
+                    <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="tel">
                 </div>
                 <span asp-validation-for="TelefonoPrivado" class="text-danger"></span>
             </div>
@@ -50,9 +47,8 @@
         <section class="col col-4">
             <label>Tel&eacute;fono de Casa:</label>
             <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
-                    <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text">
+                <div>
+                    <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="tel">
                 </div>
                 <span asp-validation-for="TelefonoCasa" class="text-danger"></span>
             </div>

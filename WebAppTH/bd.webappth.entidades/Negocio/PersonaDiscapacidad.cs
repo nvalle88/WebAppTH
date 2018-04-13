@@ -8,7 +8,7 @@ namespace bd.webappth.entidades.Negocio
 
     public partial class PersonaDiscapacidad
     {
-        [Key]
+
         public int IdPersonaDiscapacidad { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
@@ -19,7 +19,7 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Porciento de discapacidad:")]
         [Range(1,100, ErrorMessage = "El {0} no tiene que estar entre {1} y {2}")]
-        public int Porciento { get; set; }
+        public int? Porciento { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 
@@ -29,7 +29,7 @@ namespace bd.webappth.entidades.Negocio
         public virtual TipoDiscapacidad TipoDiscapacidad { get; set; }
 
         [Display(Name = "Persona:")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        //[Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdPersona { get; set; }
         public virtual Persona Persona { get; set; }
 

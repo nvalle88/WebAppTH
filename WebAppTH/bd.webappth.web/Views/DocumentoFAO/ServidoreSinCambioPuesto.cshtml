@@ -1,7 +1,7 @@
 @model List<bd.webappth.entidades.ViewModels.DocumentoFAOViewModel>
 @using bd.webappth.entidades.ViewModels
 <link href="~/css/tabla/table.css" rel="stylesheet" />
-@{ var modelo = new DocumentoFAOViewModel { OpcionMenu = 0 }; }
+@{ var modelo = new DocumentoFAOViewModel { OpcionMenu = 3 }; }
 @{await Html.RenderPartialAsync("_PartialViewIDocumentoFAO", modelo);}
 
 <!-- MAIN CONTENT -->
@@ -12,7 +12,7 @@
             <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                 <header id="table">
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2> Servidores Asignados FAO</h2>
+                    <h2> Servidores sin cambio puesto</h2>
                 </header>
                 <div>
                     <div class="jarviswidget-editbox">
@@ -29,12 +29,6 @@
                                     </th>
                                     <th data-hide="phone">
                                         @Html.DisplayNameFor(model => model.FirstOrDefault().apellido)
-                                    </th>
-                                    <th data-hide="phone">
-                                        Servidor
-                                    </th>
-                                    <th data-hide="phone">
-                                        Jefe inmediato
                                     </th>
                                     <th>Opciones</th>
                                 </tr>
@@ -53,46 +47,9 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.apellido)
                                         </td>
-                                        @if (item.estado == -1)
-                                        {
-                                            <td>Sin Validadar</td>
-                                            <td>Sin Validadar</td>
-                                            <td> @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEmpleado }, new { onclick = "return confirm('Desea eliminar la asignacion... ?');" })</td>
-
-                                        }
-                                        @if (item.estado == 0)
-                                        {
-                                            <td>Validado</td>
-                                            <td>Sin Validadar</td>
-                                            <td></td>
-
-                                        }
-                                        @if (item.estado == 1)
-                                        {
-                                            <td>Validado</td>
-                                            <td>Validado</td>
-                                            <td>
-                                                @Html.ActionLink("Validar", "Create", new { id = item.IdEmpleado, IdActividad = item.IdFormularioAnalisisOcupacional })
-                                                @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado }) |*@
-                                                @* @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEmpleado }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })*@
-                                            </td>
-
-                                        }
-                                        @if (item.estado == 2)
-                                        {
-                                            <td>Validado</td>
-                                            <td>Validado</td>
-                                            <td>
-                                                @Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado, IdActividad = item.IdFormularioAnalisisOcupacional })
-                                                @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado }) |*@
-                                                @* @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEmpleado }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })*@
-                                            </td>
-
-                                        }
+                                       
                                         @if (item.estado == 3)
                                         {
-                                            <td>Validado</td>
-                                            <td>Validado</td>
                                             <td>
                                                 @Html.ActionLink("Detalle", "DetalleJefe",  new { id = item.IdEmpleado, IdActividad = item.IdFormularioAnalisisOcupacional })
                                                 @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado }) |*@
