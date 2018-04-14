@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.ViewModels.EmpleadoSustitutoViewModel
+@model bd.webappth.entidades.ViewModels.ViewModelEmpleadoSustituto
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
@@ -17,7 +17,7 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Persona Sustituto</h2>
+                        <h2>Editar persona sustituto</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -25,8 +25,8 @@
                         <div class="widget-body no-padding">
                             <form asp-action="EditPersonaSustituto" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdEmpleadoFamiliar" />
                                 <input type="hidden" asp-for="IdEmpleado" />
+                                <input type="hidden" asp-for="IdPersonaSustituto" />
                                 <input type="hidden" asp-for="IdPersona" />
                                 @{await Html.RenderPartialAsync("_PartialViewPersonaSustituto");}
                                 <footer>

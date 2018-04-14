@@ -314,13 +314,17 @@ namespace bd.webappth.web.Controllers.MVC
 
                 var empleado = await ObtenerEmpleado();
 
-                var trayectoriaLaboral = new TrayectoriaLaboral()
+                var trayectoriaLaboral = new TrayectoriaLaboral
                 {
                     FechaInicio = viewModelTrayectoriaLaboral.FechaInicio,
                     FechaFin = viewModelTrayectoriaLaboral.FechaFin,
                     Empresa = viewModelTrayectoriaLaboral.Empresa,
                     PuestoTrabajo = viewModelTrayectoriaLaboral.PuestoTrabajo,
-                    DescripcionFunciones = viewModelTrayectoriaLaboral.DescripcionFunciones
+                    DescripcionFunciones = viewModelTrayectoriaLaboral.DescripcionFunciones,
+                    AreaAsignada=viewModelTrayectoriaLaboral.AreaAsignada,
+                    FormaIngreso=viewModelTrayectoriaLaboral.FormaIngreso,
+                    MotivoSalida=viewModelTrayectoriaLaboral.MotivoSalida,
+                    TipoInstitucion=viewModelTrayectoriaLaboral.TipoInstitucion,
                 };
 
                 trayectoriaLaboral.IdPersona = empleado.IdPersona;
@@ -386,7 +390,15 @@ namespace bd.webappth.web.Controllers.MVC
                             FechaFin = trayectorialaboral.FechaFin,
                             Empresa = trayectorialaboral.Empresa,
                             PuestoTrabajo = trayectorialaboral.PuestoTrabajo,
-                            DescripcionFunciones = trayectorialaboral.DescripcionFunciones
+                            DescripcionFunciones = trayectorialaboral.DescripcionFunciones,
+
+                            AreaAsignada = trayectorialaboral.AreaAsignada,
+                            FormaIngreso = trayectorialaboral.FormaIngreso,
+                            MotivoSalida = trayectorialaboral.MotivoSalida,
+                            TipoInstitucion = trayectorialaboral.TipoInstitucion,
+
+
+
                         };
                         return View(viewmodelTrayectoriaLaboral);
                     }
@@ -421,7 +433,11 @@ namespace bd.webappth.web.Controllers.MVC
                     FechaFin = viewModelTrayectoriaLaboral.FechaFin,
                     Empresa = viewModelTrayectoriaLaboral.Empresa,
                     PuestoTrabajo = viewModelTrayectoriaLaboral.PuestoTrabajo,
-                    DescripcionFunciones = viewModelTrayectoriaLaboral.DescripcionFunciones
+                    DescripcionFunciones = viewModelTrayectoriaLaboral.DescripcionFunciones,
+                    AreaAsignada = viewModelTrayectoriaLaboral.AreaAsignada,
+                    FormaIngreso = viewModelTrayectoriaLaboral.FormaIngreso,
+                    MotivoSalida = viewModelTrayectoriaLaboral.MotivoSalida,
+                    TipoInstitucion = viewModelTrayectoriaLaboral.TipoInstitucion,
                 };
 
                 trayectoriaLaboral.IdPersona = empleado.IdPersona;
@@ -551,6 +567,11 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["IdPaisLugarSufragio"] = new SelectList(listaPaises, "IdPais", "Nombre", listaPaises.FirstOrDefault());
             ViewData["IdPaisDireccion"] = new SelectList(listaPaises, "IdPais", "Nombre", listaPaises.FirstOrDefault());
 
+        }
+
+        private async Task CargarCombosPersonaSustituto()
+        {
+            ViewData["IdParentesco"] = new SelectList(await apiServicio.Listar<Parentesco>(new Uri(WebApp.BaseAddress), "api/Parentescos/ListarParentescos"), "IdParentesco", "Nombre");
         }
 
         private async Task CargarCombosEdit()
@@ -1025,12 +1046,100 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+
+
+
         public async Task<IActionResult> CreatePersonaEnfermedad()
         {
             ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
             return View();
         }
 
+
+
+
+        public async Task<IActionResult> CreateDiscapacidadSustituto(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("IndexDiscapacidadSustituto");
+            }
+            ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
+            var discapacidadSustituto = new DiscapacidadSustitutoRequest { IdPersonaSustituto = Convert.ToInt32(id) };
+            return View(discapacidadSustituto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateDiscapacidadSustituto(DiscapacidadSustitutoRequest discapacidadSustitutoRequest)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
+                return View(discapacidadSustitutoRequest);
+            }
+            try
+            {
+                var response = await apiServicio.InsertarAsync(discapacidadSustitutoRequest, new Uri(WebApp.BaseAddress), "api/PersonaSustituto/InsertarDiscapacidadSustituto");
+
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("IndexDiscapacidadSustituto", new { id = discapacidadSustitutoRequest.IdPersonaSustituto });
+                }
+                ViewData["Error"] = response.Message;
+                ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
+                return View(discapacidadSustitutoRequest);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+
+        public async Task<IActionResult> CreateEnfermedadSustituto(int? id)
+        {
+            if (id==null)
+            {
+                return RedirectToAction("IndexEnfermedadSustituto");
+            }
+            ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
+            var enfermedadSustituto = new EnfermedadSustitutoRequest { IdPersonaSustituto =Convert.ToInt32(id)};
+            return View(enfermedadSustituto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateEnfermedadSustituto(EnfermedadSustitutoRequest enfermedadSustitutoRequest)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
+                return View(enfermedadSustitutoRequest);
+            }
+            try
+            {
+                var response = await apiServicio.InsertarAsync(enfermedadSustitutoRequest, new Uri(WebApp.BaseAddress), "api/PersonaSustituto/InsertarEnfermedadeSustituto");
+
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("IndexEnfermedadSustituto",new {id=enfermedadSustitutoRequest.IdPersonaSustituto });
+                }
+                ViewData["Error"] = response.Message;
+                ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
+                return View(enfermedadSustitutoRequest);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1724,28 +1833,28 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatePersonaSustituto(EmpleadoSustitutoViewModel empleadoSustitutoViewModel)
+        public async Task<IActionResult> CreatePersonaSustituto(ViewModelEmpleadoSustituto viewModelEmpleadoSustituto)
         {
 
             var empleado = await ObtenerEmpleado();
             if (!ModelState.IsValid)
             {
-                await CargarCombos(empleadoSustitutoViewModel);
-                return View(empleadoSustitutoViewModel);
+                await CargarCombosPersonaSustituto();
+                return View(viewModelEmpleadoSustituto);
             }
-            empleadoSustitutoViewModel.IdEmpleado = empleado.IdEmpleado;
+            viewModelEmpleadoSustituto.IdEmpleado = empleado.IdEmpleado;
 
             try
             {
-                var response = await apiServicio.InsertarAsync(empleadoSustitutoViewModel, new Uri(WebApp.BaseAddress), "api/PersonaSustituto/InsertarPersonaSustituto");
+                var response = await apiServicio.InsertarAsync(viewModelEmpleadoSustituto, new Uri(WebApp.BaseAddress), "api/PersonaSustituto/InsertarPersonaSustituto");
 
                 if (response.IsSuccess)
                 {
-                    var empleadoRespuesta = JsonConvert.DeserializeObject<EmpleadoSustitutoViewModel>(response.Resultado.ToString());
+                    //var empleadoRespuesta = JsonConvert.DeserializeObject<EmpleadoSustitutoViewModel>(response.Resultado.ToString());
                     return RedirectToAction("IndexPersonaSustituto");
                 }
-                await CargarCombos(empleadoSustitutoViewModel);
-                return View(empleadoSustitutoViewModel);
+                await CargarCombosPersonaSustituto();
+                return View(viewModelEmpleadoSustituto);
             }
             catch (Exception ex)
             {
@@ -1762,58 +1871,16 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
 
-
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/PersonaSustituto");
-
-                    var personaSustituto = JsonConvert.DeserializeObject<PersonaSustituto>(respuesta.Resultado.ToString());
-
-                    var respuestaParroquia = await apiServicio.SeleccionarAsync<Response>(personaSustituto.PersonaDiscapacidad.Persona.IdParroquia.ToString(), new Uri(WebApp.BaseAddress),
-                                                              "api/Parroquia");
-
-                    var parroquia = JsonConvert.DeserializeObject<Parroquia>(respuestaParroquia.Resultado.ToString());
+                    var personaSustituto = new ViewModelEmpleadoSustituto { IdPersonaSustituto = Convert.ToInt32(id) };
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(personaSustituto, new Uri(WebApp.BaseAddress),
+                                                                  "api/PersonaSustituto/ObtenerPersonasSustitutos");
 
                     if (respuesta.IsSuccess)
                     {
-                        var viewmodelEmpleadoSustituo = new EmpleadoSustitutoViewModel()
-                        {
-                            FechaNacimiento = personaSustituto.PersonaDiscapacidad.Persona.FechaNacimiento.Value,
-                            IdSexo = Convert.ToInt32(personaSustituto.PersonaDiscapacidad.Persona.IdSexo),
-                            IdTipoIdentificacion = Convert.ToInt32(personaSustituto.PersonaDiscapacidad.Persona.IdTipoIdentificacion),
-                            IdEstadoCivil = Convert.ToInt32(personaSustituto.PersonaDiscapacidad.Persona.IdEstadoCivil),
-                            IdGenero = Convert.ToInt32(personaSustituto.PersonaDiscapacidad.Persona.IdGenero),
-                            IdNacionalidad = Convert.ToInt32(personaSustituto.PersonaDiscapacidad.Persona.IdNacionalidad),
-                            IdTipoSangre = Convert.ToInt32(personaSustituto.PersonaDiscapacidad.Persona.IdTipoSangre),
-                            IdEtnia = Convert.ToInt32(personaSustituto.PersonaDiscapacidad.Persona.IdEtnia),
-                            Identificacion = personaSustituto.PersonaDiscapacidad.Persona.Identificacion,
-                            Nombres = personaSustituto.PersonaDiscapacidad.Persona.Nombres,
-                            Apellidos = personaSustituto.PersonaDiscapacidad.Persona.Apellidos,
-                            TelefonoPrivado = personaSustituto.PersonaDiscapacidad.Persona.TelefonoPrivado,
-                            TelefonoCasa = personaSustituto.PersonaDiscapacidad.Persona.TelefonoCasa,
-                            CorreoPrivado = personaSustituto.PersonaDiscapacidad.Persona.CorreoPrivado,
-                            LugarTrabajo = personaSustituto.PersonaDiscapacidad.Persona.LugarTrabajo,
-                            IdNacionalidadIndigena = personaSustituto.PersonaDiscapacidad.Persona.IdNacionalidadIndigena,
-                            CallePrincipal = personaSustituto.PersonaDiscapacidad.Persona.CallePrincipal,
-                            CalleSecundaria = personaSustituto.PersonaDiscapacidad.Persona.CalleSecundaria,
-                            Referencia = personaSustituto.PersonaDiscapacidad.Persona.Referencia,
-                            Numero = personaSustituto.PersonaDiscapacidad.Persona.Numero,
-                            IdPaisLugarPersona = parroquia.Ciudad.Provincia.IdPais,
-                            IdProvinciaLugarPersona = parroquia.Ciudad.Provincia.IdProvincia,
-                            IdCiudadLugarPersona = parroquia.IdCiudad,
-                            IdParroquia = Convert.ToInt32(personaSustituto.PersonaDiscapacidad.Persona.IdParroquia),
-                            Ocupacion = personaSustituto.PersonaDiscapacidad.Persona.Ocupacion,
-                            IdParentesco = personaSustituto.Parentesco.IdParentesco,
-                            IdTipoDiscapacidad = personaSustituto.PersonaDiscapacidad.IdTipoDiscapacidad,
-                            IdEmpleado = personaSustituto.IdPersonaSustituto,
-                            NumeroCarnet= personaSustituto.PersonaDiscapacidad.NumeroCarnet,
-                            Porciento = Convert.ToInt32(personaSustituto.PersonaDiscapacidad.Porciento),
-                            IdPersonaDiscapacidad = personaSustituto.PersonaDiscapacidad.IdPersonaDiscapacidad
-
-                        };
-                        await CargarCombosEdit();
-                        return View(personaSustituto);
+                        await CargarCombosPersonaSustituto();
+                        var PersonaSustituto = JsonConvert.DeserializeObject<ViewModelEmpleadoSustituto>(respuesta.Resultado.ToString());
+                        return View(PersonaSustituto);
                     }
-
                 }
 
                 return BadRequest();
@@ -1826,51 +1893,89 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPersonaSustituto(string id, EmpleadoSustitutoViewModel empleadoSustitutoViewModel)
+        public async Task<IActionResult> EditPersonaSustituto(ViewModelEmpleadoSustituto viewModel)
         {
             Response response = new Response();
             try
             {
 
 
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(Convert.ToString(viewModel.IdPersonaSustituto)))
                 {
-                    response = await apiServicio.EditarAsync(id, empleadoSustitutoViewModel, new Uri(WebApp.BaseAddress),
-                                                                 "api/PersonaSustituto");
+                    if (!ModelState.IsValid)
+                    {
+                        await CargarCombosPersonaSustituto();
+                        return View(viewModel);
+                    }
+
+                    response = await apiServicio.EditarAsync<Response>(viewModel, new Uri(WebApp.BaseAddress),
+                                                                 "api/PersonaSustituto/EditarPersonaSustituto");
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una persona sustituto",
-                            UserName = "Usuario 1"
-                        });
-
                         return RedirectToAction("IndexPersonaSustituto");
                     }
                     ViewData["Error"] = response.Message;
-                    await CargarCombos(empleadoSustitutoViewModel);
-                    return View(empleadoSustitutoViewModel);
+                    await CargarCombosPersonaSustituto();
+                    return View(viewModel);
 
                 }
                 return BadRequest();
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una persona sustituto",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+                return BadRequest();
+            }
+        }
 
+        public async Task<IActionResult> IndexEnfermedadSustituto(int? id)
+        {
+
+            try
+            {
+                if (id==null)
+                {
+                    return RedirectToAction("IndexPersonaSustituto");
+                }
+                var personaSustitutoActual = new EnfermedadSustitutoRequest { IdPersonaSustituto =Convert.ToInt32(id) };
+                var response = await apiServicio.ObtenerElementoAsync1<Response>(personaSustitutoActual, new Uri(WebApp.BaseAddress),
+                                                              "api/PersonaSustituto/ListarEnfermedadesSustitutos");
+
+                if (response.IsSuccess)
+                {
+                    var enfermedadRequest = JsonConvert.DeserializeObject<EnfermedadSustitutoRequest>(response.Resultado.ToString());
+                    return View(enfermedadRequest);
+                }
+                return RedirectToAction("IndexPersonaSustituto");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> IndexDiscapacidadSustituto(int? id)
+        {
+
+            try
+            {
+                if (id == null)
+                {
+                    return RedirectToAction("IndexPersonaSustituto");
+                }
+                var personaSustitutoActual = new DiscapacidadSustitutoRequest { IdPersonaSustituto = Convert.ToInt32(id) };
+                var response = await apiServicio.ObtenerElementoAsync1<Response>(personaSustitutoActual, new Uri(WebApp.BaseAddress),
+                                                              "api/PersonaSustituto/ListarDiscapacidadSustitutos");
+
+                if (response.IsSuccess)
+                {
+                    var discapacidadRequest = JsonConvert.DeserializeObject<DiscapacidadSustitutoRequest>(response.Resultado.ToString());
+                    return View(discapacidadRequest);
+                }
+                return RedirectToAction("IndexPersonaSustituto");
+            }
+            catch (Exception ex)
+            {
                 return BadRequest();
             }
         }
@@ -1879,37 +1984,16 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = await ObtenerEmpleado();
-            var personaSustituto = new PersonaSustituto();
-            var respuesta = new Response();
             try
             {
+                var empleadoActual = new ViewModelEmpleadoSustituto { IdEmpleado = empleado.IdEmpleado };
+                var listaRespuesta = await apiServicio.Listar<ViewModelEmpleadoSustituto>(empleadoActual, new Uri(WebApp.BaseAddress),
+                                                              "api/PersonaSustituto/ListarPersonasSustitutos");
 
-                respuesta = await apiServicio.ObtenerElementoAsync1<Response>(empleado, new Uri(WebApp.BaseAddress),
-                                                              "api/PersonaSustituto/ObtenerPersonaSustitutosPorId");
-
-                if (respuesta.Resultado != null)
-                {
-                    personaSustituto = JsonConvert.DeserializeObject<PersonaSustituto>(respuesta.Resultado.ToString());
-                    return View(personaSustituto);
-                }
-                else
-                {
-                    PersonaSustituto personaSustitutoVacio = new PersonaSustituto();
-                    return View(personaSustitutoVacio);
-                }
-
+                return View(listaRespuesta);
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Obteniendo persona sustituto",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
         }
@@ -1919,19 +2003,17 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "api/PersonaSustituto");
+
+                if (string.IsNullOrEmpty(id))
+                {
+                    return RedirectToAction("IndexPersonaSustituto");
+                }
+
+                var personaSustitutoEliminar = new ViewModelEmpleadoSustituto { IdPersonaSustituto = Convert.ToInt32(id) };
+                var response = await apiServicio.EliminarAsync(personaSustitutoEliminar, new Uri(WebApp.BaseAddress)
+                                                               , "api/PersonaSustituto/EliminarPersonasSustitutos");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de persona sustituto eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
                     return RedirectToAction("IndexPersonaSustituto");
                 }
                 return BadRequest();

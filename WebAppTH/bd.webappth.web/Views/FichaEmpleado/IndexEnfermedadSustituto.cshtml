@@ -1,18 +1,23 @@
-@model List<bd.webappth.entidades.ViewModels.ViewModelEmpleadoSustituto>
+@model bd.webappth.entidades.ViewModels.EnfermedadSustitutoRequest
 
 
 @using bd.webappth.entidades.Utils
 @{ var modelo = new FichaEmpleado { OpcionMenu = 8 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+
+<br />
+@using bd.webappth.entidades.Utils
+@{ var modeloSustituto = new MenuDiscapacidadSustituto { OpcionMenu = 0 ,IdPersonaSustituto=Model.IdPersonaSustituto}; }
+@{await Html.RenderPartialAsync("_PartialViewMenuPersonaSustituto",modeloSustituto);}
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <!-- MAIN CONTENT -->
 <div id="content">
 
     <p></p>
-    <a asp-action="CreatePersonaSustituto">
-        <button type="button" asp-action="CreatePersonaSustituto" onclick="cargando()" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+    <a asp-action="CreateEnfermedadSustituto" asp-route-id="@Model.IdPersonaSustituto">
+        <button type="button" asp-action="CreateEnfermedadSustituto" asp-route-id="@Model.IdPersonaSustituto" onclick="cargando()" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nuevo
@@ -30,7 +35,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Personas sustitutas</h2>
+                        <h2>Enfermedades del sustituto</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -40,17 +45,12 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Nombre
+                                            Instituci&oacute;n que emite
                                         </th>
                                         <th data-class="">
-                                            Parentesco
+                                            Tipo de enfermedad
                                         </th>
-                                        <th data-class="">
-                                            Tel&eacute;fono privado
-                                        </th>
-                                        <th data-class="">
-                                            Tel&eacute;fono de casa
-                                        </th>
+
                                         <th>
                                             <i class="fa fa-cog "></i>
                                             Opciones
@@ -58,26 +58,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.ListaEnfermedadesSustitutos)
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)  @Html.DisplayFor(modelItem => item.Apellido)
+                                                @Html.DisplayFor(modelItem => item.InstitucionEmite)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreParentesco)
+                                                @Html.DisplayFor(modelItem => item.NombreTipoEnfermedad)
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TelefonoPrivado)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TelefonoCasa)
-                                            </td>
-                                            <td>
 
-                                                @Html.ActionLink("Enfermedades/Discapacidades", "IndexEnfermedadSustituto", new { id = item.IdPersonaSustituto }, new { onclick = "cargando()" }) |
-                                                @Html.ActionLink("Editar", "EditPersonaSustituto", new { id = item.IdPersonaSustituto }, new { onclick = "cargando()" }) |
-                                                @Html.ActionLink("Eliminar", "DeletePersonaSustituto", new { id = item.IdPersonaSustituto }, new { onclick = "return confirm('Desea eliminar la Trayectoria Laboral... ?');" })
+                                            <td>
+                                                @Html.ActionLink("Editar", "EditPersonaSustituto", new { id = Model.IdPersonaSustituto }, new { onclick = "cargando()" }) |
+                                                @Html.ActionLink("Eliminar", "DeletePersonaSustituto", new { id = Model.IdPersonaSustituto }, new { onclick = "return confirm('Desea eliminar la Trayectoria Laboral... ?');" })
 
                                             </td>
                                         </tr>
