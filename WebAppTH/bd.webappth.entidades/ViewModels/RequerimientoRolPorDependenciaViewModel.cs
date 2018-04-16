@@ -7,6 +7,7 @@ namespace bd.webappth.entidades.ViewModels
 {
     public class RequerimientoRolPorDependenciaViewModel
     {
+        public string NombreUsuario { get; set; }
 
         public int IdDependencia { get; set; }
         public string NombreDependencia { get; set; }
