@@ -60,6 +60,9 @@ namespace bd.webappth.entidades.ViewModels
         public int IdManualPuesto { get; set; }
         public int IdManualPuestoActual { get; set; }
         public int IdAdministracionTalentoHumano { get; set; }
+        [DisplayName("Puesto Actual")]
+        public string PuestoActual { get; set; }
+        [DisplayName("Revisión Puesto")]
         public string NuevoPuesto { get; set; }
 
     }
