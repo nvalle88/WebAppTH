@@ -13,14 +13,23 @@ namespace bd.webappth.entidades.Negocio
 
         public int IdPersona { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaInicio { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaFin { get; set; }
 
         [StringLength(100)]
         public string Empresa { get; set; }
+
+        [StringLength(100)]
+        public string TipoInstitucion { get; set; }
+        [StringLength(100)]
+        public string FormaIngreso { get; set; }
+        [StringLength(1000)]
+        public string MotivoSalida { get; set; }
+        [StringLength(100)]
+        public string AreaAsignada { get; set; }
 
         [StringLength(250)]
         public string PuestoTrabajo { get; set; }
