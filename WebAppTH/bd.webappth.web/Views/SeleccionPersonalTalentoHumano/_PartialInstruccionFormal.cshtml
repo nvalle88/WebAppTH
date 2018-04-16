@@ -1,0 +1,22 @@
+@model bd.webappth.entidades.ViewModels.ViewModelSeleccionPersonal
+<fieldset>
+<div class="row">
+    <section class="col col-lg-12">
+        <label class="input">@Html.DisplayNameFor(model => model.nivelIntruccion)</label>
+        <label class="input">
+            <input maxlength="50" asp-for="nivelIntruccion" class="form-control" />
+            <span asp-validation-for="nivelIntruccion" class="text-danger"></span>
+        </label>
+    </section>
+</div>
+<div class="row">
+    <section class="col col-lg-12">
+        <label class="input">@Html.DisplayNameFor(model => model.areaconocimiento)</label>
+        <label class="input">
+            <input maxlength="50" asp-for="areaconocimiento" class="form-control" />
+            <span asp-validation-for="areaconocimiento" class="text-danger"></span>
+        </label>
+    </section>
+</div>
+
+</fieldset>
