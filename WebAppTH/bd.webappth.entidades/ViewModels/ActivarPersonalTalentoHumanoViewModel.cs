@@ -19,5 +19,8 @@ namespace bd.webappth.entidades.ViewModels
 
         public string Nombre { get; set; }
 
+        /* Uso: se llena true cuando existe un registro en el año actual */
+        public bool Existe { get; set; }
+
     }
 }
