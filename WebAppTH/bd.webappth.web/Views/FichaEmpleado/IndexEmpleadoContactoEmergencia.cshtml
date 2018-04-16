@@ -6,11 +6,12 @@
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <!-- MAIN CONTENT -->
 <link href="~/css/tabla/table.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <div id="content">
 
     <p></p>
     <a asp-action="CreateEmpleadoContactoEmergencia">
-        <button type="button" asp-action="CreateEmpleadoContactoEmergencia" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
+        <button type="button" asp-action="CreateEmpleadoContactoEmergencia" onclick="cargando()" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nuevo
@@ -60,17 +61,17 @@
                                                 @Html.DisplayFor(modelItem => item.Nombre) @Html.DisplayFor(modelItem => item.Apellido)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.TelefonoCasa)
+                                                @Html.DisplayFor(modelItem => item.TelefonoPrivado)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.TelefonoPrivado)
+                                                @Html.DisplayFor(modelItem => item.TelefonoCasa)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Parentesco)
                                             </td>
                                             <td>
 
-                                                @Html.ActionLink("Editar", "EditEmpleadoContactoEmergencia", new { id = item.IdEmpleadoContactoEmergencia }) |
+                                                @Html.ActionLink("Editar", "EditEmpleadoContactoEmergencia", new { id = item.IdEmpleadoContactoEmergencia }, new { onclick = "cargando()" }) |
                                                 @Html.ActionLink("Eliminar", "DeleteEmpleadoContactoEmergencia", new { id = item.IdEmpleadoContactoEmergencia }, new { onclick = "return confirm('Desea eliminar el Contacto de Emergencia... ?');" })
 
                                             </td>
@@ -95,6 +96,13 @@
 <!-- END MAIN CONTENT -->
 
 @section Scripts {
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+    </script>
     <script src='~/js/datatables/init.js'></script>
 }
 

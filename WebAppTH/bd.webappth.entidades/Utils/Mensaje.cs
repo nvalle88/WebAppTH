@@ -26,6 +26,7 @@ namespace bd.webappth.entidades.Utils
         public static string ErrorCargaArchivo { get { return "Se produjo un error al cargar el archivo"; } }
         public static string ErrorServicio { get { return "No se pudo establecer conexión con el servicio"; } }
         public static string SinArchivo { get { return "No existe archivo para descargar"; } }
+        
 
     }
 }

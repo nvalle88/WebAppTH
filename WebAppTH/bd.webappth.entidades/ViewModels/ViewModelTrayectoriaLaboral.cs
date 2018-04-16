@@ -15,13 +15,13 @@ namespace bd.webappth.entidades.ViewModels
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Fecha Inicio:")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaInicio { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Fecha Fin:")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaFin { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
@@ -33,6 +33,27 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "Puesto de Trabajo:")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string PuestoTrabajo { get; set; }
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Tipo de Institución:")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        public string TipoInstitucion { get; set; }
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Forma de ingreso:")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        public string FormaIngreso { get; set; }
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Motivo de Salida")]
+        [StringLength(1000, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        public string MotivoSalida { get; set; }
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Área Asignada")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        public string AreaAsignada { get; set; }
+
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Descripción de Funciones:")]
