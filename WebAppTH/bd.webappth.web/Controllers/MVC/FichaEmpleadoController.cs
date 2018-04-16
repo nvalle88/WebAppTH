@@ -1174,6 +1174,124 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        public async Task<IActionResult> EditEnfermedadSustituto(string idPersona,string idEnfermedad)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(idPersona) || !string.IsNullOrEmpty(idEnfermedad))
+                {
+
+                    var enfermedadSustituto = new EnfermedadSustitutoRequest { IdEnfermedadSustituto = Convert.ToInt32(idEnfermedad) };
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(enfermedadSustituto, new Uri(WebApp.BaseAddress),
+                                                                  "api/PersonaSustituto/ObtenerEnfermedadSustitutos");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        var enfermedad = JsonConvert.DeserializeObject<EnfermedadSustitutoRequest>(respuesta.Resultado.ToString());
+                        ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
+                        return View(enfermedad);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditEnfermedadSustituto( EnfermedadSustitutoRequest enfermedadSustitutoRequest)
+        {
+            Response response = new Response();
+            try
+            {
+                    if (!ModelState.IsValid)
+                    {
+                        ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
+                        return View(enfermedadSustitutoRequest);
+                    }
+
+                    response = await apiServicio.EditarAsync<Response>(enfermedadSustitutoRequest, new Uri(WebApp.BaseAddress),
+                                                                 "api/PersonaSustituto/EditarEnfermedadeSustituto");
+
+                    if (response.IsSuccess)
+                    {
+                        return RedirectToAction("IndexEnfermedadSustituto",new {id=enfermedadSustitutoRequest.IdPersonaSustituto });
+                    }
+                    ViewData["Error"] = response.Message;
+                    ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
+                    return View(enfermedadSustitutoRequest);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> EditDiscapacidadSustituto(string idPersona, string idDiscapacidad)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(idPersona) || !string.IsNullOrEmpty(idDiscapacidad))
+                {
+
+                    var discapacidadSustituto = new DiscapacidadSustitutoRequest { IdDiscapacidadSustituto = Convert.ToInt32(idDiscapacidad) };
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(discapacidadSustituto, new Uri(WebApp.BaseAddress),
+                                                                  "api/PersonaSustituto/ObtenerDiscapacidadSustitutos");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        var discapacidad = JsonConvert.DeserializeObject<DiscapacidadSustitutoRequest>(respuesta.Resultado.ToString());
+                        ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
+                        return View(discapacidad);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditDiscapacidadSustituto(DiscapacidadSustitutoRequest discapacidadSustitutoRequest)
+        {
+            Response response = new Response();
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
+                    return View(discapacidadSustitutoRequest);
+                }
+
+                response = await apiServicio.EditarAsync<Response>(discapacidadSustitutoRequest, new Uri(WebApp.BaseAddress),
+                                                             "api/PersonaSustituto/EditarDiscapacidadSustituto");
+
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("IndexDiscapacidadSustituto", new { id = discapacidadSustitutoRequest.IdPersonaSustituto });
+                }
+                ViewData["Error"] = response.Message;
+                ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
+                return View(discapacidadSustitutoRequest);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
         public async Task<IActionResult> EditPersonaEnfermedad(string id)
         {
             try
@@ -1733,7 +1851,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Detalle(DatosBasicosEmpleadoViewModel datosBasicosEmpleado)
@@ -1766,7 +1883,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
-
 
         public async Task<IActionResult> Detalle(string mensaje)
         {
@@ -1814,7 +1930,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-
         private void InicializarMensaje(string mensaje)
         {
             if (mensaje == null)
@@ -1829,7 +1944,6 @@ namespace bd.webappth.web.Controllers.MVC
             await CargarCombos();
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -2113,7 +2227,6 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

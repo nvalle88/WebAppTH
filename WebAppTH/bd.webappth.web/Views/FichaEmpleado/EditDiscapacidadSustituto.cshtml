@@ -5,8 +5,6 @@
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <script src='~/js/site.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
-
-
 @using bd.webappth.entidades.Utils
 @{ var modelo = new FichaEmpleado { OpcionMenu = 8 }; }
 
@@ -15,8 +13,6 @@
 <br />
 @{ var modeloSustituto = new MenuDiscapacidadSustituto { OpcionMenu = 1, IdPersonaSustituto = Model.IdPersonaSustituto }; }
 @{await Html.RenderPartialAsync("_PartialViewMenuPersonaSustituto", modeloSustituto);}
-
-<!-- MAIN CONTENT -->
 <div id="content">
     <section id="widget-grid" class="">
         <div class="row">
@@ -24,19 +20,19 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Nueva discapacidad</h2>
+                        <h2>Editar discapacidad</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            <form asp-action="CreateDiscapacidadSustituto" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="EditDiscapacidadSustituto" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="IdDiscapacidadSustituto" />
                                 <input type="hidden" asp-for="IdPersonaSustituto" />
-                                @{await Html.RenderPartialAsync("_PartialViewDiscapacidadSustituto", Model);}
-
+                                @{await Html.RenderPartialAsync("_PartialViewDiscapacidadSustituto");}
                                 <footer>
-                                    <input type="submit" value="Guardar" onclick="cargando()" class="btn btn-primary" />
+                                    <input type="submit" id="GuardarForm" onclick="cargando()" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="IndexDiscapacidadSustituto" asp-route-id="@Model.IdPersonaSustituto" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
@@ -56,7 +52,7 @@
     <!-- Modal -->
 
 </div>
-<!-- END MAIN CONTENT -->
+
 @section Scripts {
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
