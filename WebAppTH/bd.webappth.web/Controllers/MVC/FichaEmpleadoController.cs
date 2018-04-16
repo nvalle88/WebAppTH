@@ -1998,6 +1998,80 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+
+        public async Task<IActionResult> DeleteDiscapacidadSustituto(string id, string idDiscapacidad)
+        {
+
+            try
+            {
+
+                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(idDiscapacidad))
+                {
+                    return RedirectToAction("IndexPersonaSustituto");
+                }
+
+                var enfermedadSustitutoEliminar = new DiscapacidadSustitutoRequest { IdDiscapacidadSustituto = Convert.ToInt32(idDiscapacidad) };
+                var response = await apiServicio.EliminarAsync(enfermedadSustitutoEliminar, new Uri(WebApp.BaseAddress)
+                                                               , "api/PersonaSustituto/EliminarDiscapacidadSustituto");
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("IndexDiscapacidadSustituto", new { id });
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Eliminar Persona Sustituto",
+                    ExceptionTrace = ex.Message,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
+        public async Task<IActionResult> DeleteEnfermedadSustituto(string id,string idEnfermedad)
+        {
+
+            try
+            {
+
+                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(idEnfermedad))
+                {
+                    return RedirectToAction("IndexPersonaSustituto");
+                }
+
+                var enfermedadSustitutoEliminar = new EnfermedadSustitutoRequest { IdEnfermedadSustituto = Convert.ToInt32(idEnfermedad) };
+                var response = await apiServicio.EliminarAsync(enfermedadSustitutoEliminar, new Uri(WebApp.BaseAddress)
+                                                               , "api/PersonaSustituto/EliminarEnfermedadeSustituto");
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("IndexEnfermedadSustituto",new {id });
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Eliminar Persona Sustituto",
+                    ExceptionTrace = ex.Message,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+
+                return BadRequest();
+            }
+        }
+
         public async Task<IActionResult> DeletePersonaSustituto(string id)
         {
 

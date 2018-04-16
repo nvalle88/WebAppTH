@@ -94,7 +94,7 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink("Editar", "EditDiscapacidadSustituto", new { id = item.IdDiscapacidadSustituto }, new { onclick = "cargando()" }) |
-                                                @Html.ActionLink("Eliminar", "DeleteDiscapacidadSustituto", new { id = item.IdDiscapacidadSustituto }, new { onclick = "return confirm('Desea eliminar la Discapacidad... ?');" })
+                                                @Html.ActionLink("Eliminar", "DeleteDiscapacidadSustituto", new { id = Model.IdPersonaSustituto ,idDiscapacidad=item.IdDiscapacidadSustituto}, new { onclick = "return confirm('Desea eliminar la Discapacidad... ?');" })
                                             </td>
                                         </tr>
                                     }

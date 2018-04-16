@@ -70,7 +70,7 @@
 
                                             <td>
                                                 @Html.ActionLink("Editar", "EditPersonaSustituto", new { id = Model.IdPersonaSustituto }, new { onclick = "cargando()" }) |
-                                                @Html.ActionLink("Eliminar", "DeletePersonaSustituto", new { id = Model.IdPersonaSustituto }, new { onclick = "return confirm('Desea eliminar la Trayectoria Laboral... ?');" })
+                                                @Html.ActionLink("Eliminar", "DeleteEnfermedadSustituto", new { id = Model.IdPersonaSustituto,idEnfermedad=item.IdEnfermedadSustituto }, new { onclick = "return confirm('Desea eliminar la enfermedad... ?');" })
 
                                             </td>
                                         </tr>
