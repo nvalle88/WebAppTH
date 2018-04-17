@@ -12,6 +12,8 @@ using bd.webappseguridad.entidades.Enumeradores;
 using Newtonsoft.Json;
 using bd.log.guardar.Enumeradores;
 using bd.webappth.entidades.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -57,23 +59,18 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-
                 var usuario = new ViewModelSeleccionPersonal
                 {
                     iddependecia = id
                 };
-                var response = await apiServicio.ObtenerElementoAsync(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/SeleccionPersonalTalentoHumano/ObtenerEncabezadopostulante");
-
-                if (response.IsSuccess)
+                var postular = await obtenercabecera(usuario);
+                if (postular != null)
                 {
                     InicializarMensaje(null);
-                    var encabezado = JsonConvert.DeserializeObject<ViewModelSeleccionPersonal>(response.Resultado.ToString());
-                    return View(encabezado);
-                    
+                    return View(postular);
                 }
-               
-                ViewData["Error"] = response.Message;
+
+                ViewData["Error"] = postular.ToString();
                 return RedirectToAction("Index");
 
             }
@@ -87,60 +84,27 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ViewModelSeleccionPersonal viewModelSeleccionPersonal)
         {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                var postular = await obtenercabecera(viewModelSeleccionPersonal);
+                return View(postular);
+            }
+            else
+            {
+                var response = await apiServicio.InsertarAsync(viewModelSeleccionPersonal, new Uri(WebApp.BaseAddress), "api/SeleccionPersonalTalentoHumano/InsertarPostulante");
+                if (response.IsSuccess)
+                {
+                    var empleado = JsonConvert.DeserializeObject<Empleado>(response.Resultado.ToString());
+                    //return RedirectToAction("AgregarDistributivo", new { IdEmpleado = empleado.IdEmpleado });
+                    return View(empleado);
+                }
+                ViewData["Error"] = Mensaje.ExisteEmpleado;
+                return View(viewModelSeleccionPersonal);
+            }
 
-            //    if (!ModelState.IsValid)
-            //    {
-            //        InicializarMensaje(null);
-            //        ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
-            //        ViewData["IdProvincia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Provincia>(new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvincia"), "IdProvincia", "Nombre");
-            //        return View(ciudad);
-            //    }
-            //    Response response = new Response();
-            //    try
-            //    {
-            //        response = await apiServicio.InsertarAsync(ciudad,
-            //                                                     new Uri(WebApp.BaseAddress),
-            //                                                     "api/Ciudad/InsertarCiudad");
-            //        if (response.IsSuccess)
-            //        {
-
-            //            var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-            //            {
-            //                ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-            //                ExceptionTrace = null,
-            //                Message = "Se ha creado una Ciudad",
-            //                UserName = "Usuario 1",
-            //                LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-            //                LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-            //                EntityID = string.Format("{0} {1}", "Ciudad:", ciudad.IdCiudad),
-            //            });
-
-            //            return RedirectToAction("Index");
-            //        }
-
-            //        ViewData["Error"] = response.Message;
-            //        ViewData["IdPais"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre");
-            //        ViewData["IdProvincia"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Provincia>(new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvincia"), "IdProvincia", "Nombre");
-            //        return View(ciudad);
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-            //        {
-            //            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-            //            Message = "Creando Ciudad",
-            //            ExceptionTrace = ex.Message,
-            //            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-            //            LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-            //            UserName = "Usuario APP WebAppTh"
-            //        });
-
-            //        return BadRequest();
-            //    }
-            return View();
         }
-        
+
         public async Task<IActionResult> CreateDatosPersonales(int id)
         {
             try
@@ -161,8 +125,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> IndexInstruccionFormal(int id)
         {
-            ///InicializarMensaje(mensaje);
-            //var lista = new List<ViewModelSeleccionPersonal>();
             try
             {
                 InicializarMensaje(null);
@@ -170,6 +132,11 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     iddependecia = id
                 };
+                var empleado = await ObtenerEmpleado();
+
+                usuario.ListasPersonaEstudio = await apiServicio.ObtenerElementoAsync1<List<PersonaEstudio>>(empleado, new Uri(WebApp.BaseAddress)
+                                                                     , "api/PersonasEstudios/ListarEstudiosporEmpleado");
+
                 return View(usuario);
             }
             catch (Exception ex)
@@ -186,6 +153,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     iddependecia = id
                 };
+                ViewData["IdEstudio"] = new SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
                 return View(usuario);
 
             }
@@ -206,6 +174,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     iddependecia = id
                 };
+
                 return View(usuario);
             }
             catch (Exception ex)
@@ -229,6 +198,36 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 return BadRequest();
             }
+        }
+        public Task<Empleado> ObtenerEmpleado()
+        {
+            var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+            var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var empleadoJson = ObtenerEmpleadoLogueado(NombreUsuario);
+            return empleadoJson;
+        }
+        public async Task<Empleado> ObtenerEmpleadoLogueado(string nombreUsuario)
+        {
+            try
+            {
+                var empleado = new Empleado
+                {
+                    NombreUsuario = nombreUsuario,
+                };
+                var usuariologueado = await apiServicio.ObtenerElementoAsync1<Empleado>(empleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerEmpleadoLogueado");
+                return usuariologueado;
+            }
+            catch (Exception)
+            {
+                return new Empleado();
+            }
+        }
+        public async Task<ViewModelSeleccionPersonal> obtenercabecera(ViewModelSeleccionPersonal viewModelSeleccionPersonal)
+        {
+            var response = await apiServicio.ObtenerElementoAsync1<ViewModelSeleccionPersonal>(viewModelSeleccionPersonal, new Uri(WebApp.BaseAddress)
+                                                                   , "api/SeleccionPersonalTalentoHumano/ObtenerEncabezadopostulante");
+            return response;
+            
         }
     }
 }

@@ -9,23 +9,23 @@ namespace bd.webappth.entidades.Negocio
         [Key]
         public int IdPartidasFase { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "¿Ganador?")]
-        public bool? Ganador { get; set; }
+        //[Required(ErrorMessage = "Debe introducir {0}")]
+        //[Display(Name = "¿Ganador?")]
+        //public bool? Ganador { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 
         [Display(Name = "Indice Ocupacional Modalidad Partida:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdIndiceOcupacionalModalidadPartida { get; set; }
-        public virtual IndiceOcupacionalModalidadPartida IndiceOcupacionalModalidadPartida { get; set; }
+        public int IdIndiceOcupacional { get; set; }
+        public virtual IndiceOcupacional IndiceOcupacional{ get; set; }
 
         [Display(Name = "Fase del concurso:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdFaseConcurso { get; set; }
-        public virtual FaseConcurso FaseConcurso { get; set; }
-
+        public int IdTipoConcurso { get; set; }
+        public DateTime? Fecha { get; set; }
         public virtual ICollection<CandidatoConcurso> CandidatoConcurso { get; set; }
+        public virtual TipoConcurso TipoConcurso { get; set; }
 
 
     }

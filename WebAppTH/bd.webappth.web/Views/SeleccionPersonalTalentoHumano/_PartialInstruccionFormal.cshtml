@@ -1,20 +1,35 @@
 @model bd.webappth.entidades.ViewModels.ViewModelSeleccionPersonal
 <fieldset>
 <div class="row">
-    <section class="col col-lg-12">
-        <label class="input">@Html.DisplayNameFor(model => model.nivelIntruccion)</label>
+    <section class="col col-lg-6">
+        <label>Nivel de estudio</label>
         <label class="input">
-            <input maxlength="50" asp-for="nivelIntruccion" class="form-control" />
-            <span asp-validation-for="nivelIntruccion" class="text-danger"></span>
+            <select asp-for="IdEstudio" class="form-control" id="IdEstudio" asp-items="ViewBag.IdEstudio">
+                <option value="0" selected="selected" disabled=""></option>
+            </select>
+            <span asp-validation-for="IdEstudio" class="text-danger"></span>
         </label>
+       
+    </section>
+    <section class="col col-lg-6">
+        <label>&Aacute;rea de conocimiento</label>
+        <label class="input">
+            <select asp-for="IdAreaConocimiento" class="form-control" id="IdAreaConocimiento" asp-items="ViewBag.IdAreaConocimiento">
+                <option value="0" selected="" disabled=""></option>
+            </select>
+            <span asp-validation-for="IdAreaConocimiento" class="text-danger"></span>
+        </label>
+        
     </section>
 </div>
 <div class="row">
-    <section class="col col-lg-12">
-        <label class="input">@Html.DisplayNameFor(model => model.areaconocimiento)</label>
+    <section class="col col-6">
+        <label>T&iacute;tulo obtenido</label>
         <label class="input">
-            <input maxlength="50" asp-for="areaconocimiento" class="form-control" />
-            <span asp-validation-for="areaconocimiento" class="text-danger"></span>
+            <select asp-for="IdTitulo" id="IdTitulo" class="form-control" asp-items="ViewBag.IdTitulo">
+                <option value="0" selected="" disabled=""></option>
+            </select>
+            <span asp-validation-for="IdTitulo" class="text-danger"></span>
         </label>
     </section>
 </div>

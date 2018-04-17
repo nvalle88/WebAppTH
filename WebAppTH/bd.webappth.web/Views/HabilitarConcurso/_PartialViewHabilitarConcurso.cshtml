@@ -1,0 +1,33 @@
+@model bd.webappth.entidades.Negocio.PartidasFase
+<fieldset>
+    <div class="row">
+        <section class="col col-lg-6">
+            <label>Tipo Concurso</label>
+            <label class="input">
+                <select asp-for="IdTipoConcurso" class="form-control" id="IdTipoConcurso" asp-items="ViewBag.IdTipoConcurso">
+                    <option value="0" selected="selected" disabled=""></option>
+                </select>
+                <span asp-validation-for="IdTipoConcurso" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-lg-6">
+            <label>Puesto Vacantes</label>
+            <label class="input">
+                <select asp-for="IdIndiceOcupacional" class="form-control" id="IdIndiceOcupacional" asp-items="ViewBag.IdIndiceOcupacional">
+                    <option value="0" selected="selected" disabled=""></option>
+                </select>
+                <span asp-validation-for="IdIndiceOcupacional" class="text-danger"></span>
+            </label>
+
+        </section>
+    </div>
+
+    @*<div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <input maxlength="12" asp-for="TasaPorcentualMaxima" onkeypress="return NumCheck(event, this)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TasaPorcentualMaxima)" />
+            </label>
+        </section>
+    </div>*@
+
+</fieldset>
