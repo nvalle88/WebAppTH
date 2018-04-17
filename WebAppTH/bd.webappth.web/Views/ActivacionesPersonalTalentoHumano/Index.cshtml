@@ -130,6 +130,10 @@
                                                     <input id="chk-control" type="checkbox" onclick="clickCheck(this)" style="margin:0px;padding:0px;float:right;">Seleccionar todos
                                                 </div>
                                             </th>
+
+                                            <th>
+                                                &nbsp;
+                                            </th>
                                         </tr>
 
                                         <tr>
@@ -139,6 +143,10 @@
 
                                             <th data-class="expand">
                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
+                                            </th>
+
+                                            <th data-class="expand">
+                                                @Html.DisplayName("Opción")
                                             </th>
 
                                         </tr>
@@ -156,7 +164,50 @@
                                                 @Html.TextBoxFor(model => Model[i].Nombre, new { @readonly = "readonly", @class = "input-invisible" })
                                                 @Html.TextBoxFor(model => Model[i].IdDependencia, new { @hidden = "true" })
                                             </td>
-                                            <td>@Html.CheckBoxFor(model => Model[i].Estado, new { @id = "chk" + i })</td>
+                                            
+                                            <td style="padding-left:2%;">
+                                                @if (Model[i].Existe == true)
+                                                {
+                                                    if (Model[i].Estado == false)
+                                                    {
+
+                                                        @Html.CheckBoxFor(model => Model[i].Estado, new { @id = "chk" + i, @hidden = "true" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.CheckBoxFor(model => Model[i].Estado, new { @id = "chk" + i })
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    @Html.CheckBoxFor(model => Model[i].Estado, new { @id = "chk" + i })
+
+
+                                                }
+
+                                            </td>
+
+                                            <td>
+                                                
+                                                
+
+                                                @if (Model[i].Existe == true)
+                                                {
+                                                    if (Model[i].Estado == false)
+                                                    {
+
+                                                        @Html.ActionLink("Detalle", "Detalle", new { idDependencia = Model[i].IdDependencia})
+                                                        
+                                                        <text>
+                                                            | <a id="textActivar@(i)" onclick="activarCheck(@i)">Reactivar</a>
+                                                        </text>
+                                                    }
+
+                                                }
+                                                
+
+                                            </td>
 
                                         </tr>
                                 }
@@ -237,7 +288,25 @@
             }
 
         }
-        
+
+
+        function activarCheck(numeroElemento) {
+
+            var id = "#chk" + numeroElemento;
+
+            if ($(id).is(":visible")) {
+
+                $(id).hide();
+                $("#textActivar" + numeroElemento).text('Reactivar');
+            } else { 
+                $(id).show();
+                $("#chk" + numeroElemento).prop('checked', false);
+                $("#textActivar" + numeroElemento).text('Cancelar');
+            }
+
+            
+
+        }
 
     </script>
 }

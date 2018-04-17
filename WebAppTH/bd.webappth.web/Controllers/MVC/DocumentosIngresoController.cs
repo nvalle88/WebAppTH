@@ -307,6 +307,11 @@ namespace bd.webappth.web.Controllers.MVC
         {
             var listaDocumentos = new List<DocumentosIngreso>();
             var listaDocumentosEntregados = new List<DocumentosIngresoEmpleado>();
+
+            var documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado();
+            documentoingresoViewModel.listadocumentosingreso = new List<DocumentosIngreso>();
+            documentoingresoViewModel.listadocumentosingresoentregado = new List<DocumentosIngresoEmpleado>();
+
             try
             {
                 var empleado = new Empleado
@@ -331,7 +336,7 @@ namespace bd.webappth.web.Controllers.MVC
                     listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleadoConsulta,new Uri(WebApp.BaseAddress)
                                                                                       , "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
 
-                    var documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado
+                    documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado
                     {
                         empleadoViewModel = emp,
                         listadocumentosingreso = listaDocumentos,
@@ -345,7 +350,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception)
             {
-                return View(new ViewModelDocumentoIngresoEmpleado());
+                return View(documentoingresoViewModel);
             }
         }
 

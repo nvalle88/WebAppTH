@@ -12,6 +12,7 @@ using bd.webappseguridad.entidades.Enumeradores;
 using Newtonsoft.Json;
 using bd.log.guardar.Enumeradores;
 using bd.webappth.entidades.ViewModels;
+using System.Security.Claims;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -113,6 +114,67 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
+        public async Task<IActionResult> Detalle(string mensaje,int idDependencia)
+        {
+            InicializarMensaje(mensaje);
+
+            var modelo = new RequerimientoRolPorDependenciaViewModel();
+            modelo.RolesNivelJerarquicoSuperior = new RequerimientoRolPorGrupoOcupacionalViewModel();
+            modelo.RolesNivelOperativo = new RequerimientoRolPorGrupoOcupacionalViewModel();
+            modelo.RolesNivelJerarquicoSuperior.ListaRolesRequeridos = new List<RequerimientoRolViewModel>();
+            modelo.RolesNivelOperativo.ListaRolesRequeridos = new List<RequerimientoRolViewModel>();
+
+            modelo.IdDependencia = 0;
+
+
+            try
+            {
+                if ( idDependencia > 0 )
+                {
+                    modelo.IdDependencia = idDependencia;
+                }
+
+
+                // Obtención de datos para generar pantalla
+                var respuesta = await apiServicio.ObtenerElementoAsync<RequerimientoRolPorDependenciaViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/ObtenerRequerimientoRolPorIdDependencia");
+
+                if (respuesta.IsSuccess)
+                {
+                    respuesta.Resultado = JsonConvert.DeserializeObject<RequerimientoRolPorDependenciaViewModel>(respuesta.Resultado.ToString());
+
+                    return View(respuesta.Resultado);
+                }
+                else
+                {
+                    return RedirectToAction("AutorizacionError", "SituacionPropuesta", new { mensaje = respuesta.Message });
+                }
+                
+
+            }
+            catch (Exception ex)
+            {
+
+
+                if (String.IsNullOrEmpty(mensaje) == true)
+                {
+                    mensaje = Mensaje.Excepcion;
+                }
+
+                InicializarMensaje(mensaje);
+
+                return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = Mensaje.RegistroNoEncontrado});
+
+            }
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Volver()
+        {
+            return RedirectToAction("Index");
+        }
 
     }
 }

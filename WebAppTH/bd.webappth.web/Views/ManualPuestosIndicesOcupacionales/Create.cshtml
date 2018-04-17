@@ -1,0 +1,964 @@
+﻿@model bd.webappth.entidades.ViewModels.IndiceOcupacionalDetalle
+
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+<script src='~/js/site.js'></script>
+
+<!-- MAIN CONTENT -->
+<div class="col col-10">
+
+    @if (@ViewData["Error"].ToString() != "")
+
+    {
+
+        <div class="col-lg-7">
+
+            <div class="alert alert-block alert-dismissable">
+
+                <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                <p>
+
+                    <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    }
+</div>
+<div id="content">
+    <!-- widget grid -->
+    <section id="" class="">
+        <!-- row -->
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-deletebutton="false">
+                    <header>
+                        <h2>Ingresar &iacute;ndice ocupacional</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body fuelux">
+                            <div class="step-content">
+                                <div class="step-pane active" id="step1">
+                                    <fieldset>
+                                        <div>
+                                            <div class="jarviswidget-editbox">
+                                            </div>
+                                            <div class="widget-body no-padding">
+                                                <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                    <fieldset>
+                                                        @if (@ViewData["Error"].ToString() != "")
+    {
+
+                                                    <div class="col-lg-12">
+                                                        <div class="alert alert-block  bordered">
+                                                            <a class="close" data-dismiss="alert" href="#"><p><strong> <bold>X</bold></strong></p></a>
+                                                            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                                                            <p>
+                                                                <span class="text-info"><strong> <bold> @ViewData["Error"]</bold></strong></span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+}
+
+                                                        <div class="row">
+                                                            <section class="col col-4">
+                                                                <label>Ciudad:</label>
+                                                                <label class="input">
+                                                                    <select id="ciudad" class="form-control input " asp-items="ViewBag.IdCiudad">
+                                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                                    </select>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-4">
+                                                                <label>Sucursal:</label>
+                                                                <label class="input">
+                                                                    <select id="sucursal" class="form-control input "></select>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-4">
+                                                                <label>Dependencia:</label>
+                                                                <label class="input">
+                                                                    <input class="form-control input" type="text" id="dependencia" readonly="readonly">
+                                                                </label>
+                                                            </section>
+                                                            @*<section class="col col-4">
+                <label>Dependencia:</label>
+                <label class="input">
+                    <select id="dependencia" class="form-control input " asp-items="ViewBag.IdDependencia">
+                        <option value="0" selected="" disabled="">Seleccione</option>
+                    </select>
+                </label>
+            </section>*@
+                                                            <input class="form-control input" asp-for="IndiceOcupacional.IdDependencia" type="hidden" id="iddependencia">
+
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <section class="col col-4">
+                                                                <label>Manual de Puesto:</label>
+                                                                <label class="input">
+                                                                    <select asp-for="IndiceOcupacional.IdManualPuesto" asp- class="form-control" asp-items="ViewBag.IdManualPuesto">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdManualPuesto)</option>
+                                                                    </select>
+                                                                    <span asp-validation-for="IndiceOcupacional.IdManualPuesto" class="text-danger"></span>
+                                                                </label>
+                                                            </section>
+
+                                                            <section class="col col-4">
+                                                                <label>Rol Puesto:</label>
+                                                                <label class="input">
+                                                                    <select asp-for="IndiceOcupacional.IdRolPuesto" asp- class="form-control" asp-items="ViewBag.IdRolPuesto">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdRolPuesto)</option>
+                                                                    </select>
+                                                                    <span asp-validation-for="IndiceOcupacional.IdRolPuesto" class="text-danger"></span>
+                                                                </label>
+                                                            </section>
+
+                                                            <section class="col col-4">
+                                                                <label>Nivel :</label>
+                                                                <label class="input">
+                                                                    <select id="idgrupoocupacional" class="form-control input " asp-items="ViewBag.IdGrupoOcupacional">
+                                                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                                                    </select>
+                                                                </label>
+                                                            </section>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-4">
+                                                                <label>Escala Grado:</label>
+                                                                <label class="input">
+                                                                    <select asp-for="IndiceOcupacional.IdEscalaGrados" id="idescalagrados" asp- class="form-control">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdEscalaGrados)</option>
+                                                                    </select>
+                                                                    <span asp-validation-for="IndiceOcupacional.IdEscalaGrados" class="text-danger"></span>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-4">
+                                                                <label> Partida General:</label>
+                                                                <label class="input">
+                                                                    <select asp-for="IndiceOcupacional.IdPartidaGeneral" asp- class="form-control" asp-items="ViewBag.IdPartidaGeneral">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdPartidaGeneral)</option>
+                                                                    </select>
+                                                                    <span asp-validation-for="IndiceOcupacional.IdPartidaGeneral" class="text-danger"></span>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-4">
+                                                                <label>Partida Individual:</label>
+                                                                <label class="input">
+                                                                    <input asp-for="IndiceOcupacional.NumeroPartidaIndividual" class="form-control input " type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                    <span asp-validation-for="IndiceOcupacional.NumeroPartidaIndividual" class="text-danger"></span>
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-6">
+                                                                <label>@Html.DisplayNameFor(model => model.IndiceOcupacional.IdAmbito)</label>
+                                                                <label class="input">
+                                                                    <select asp-for="IndiceOcupacional.IdAmbito"  asp- class="form-control" asp-items="ViewBag.IdAmbito">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdAmbito)</option>
+                                                                    </select>
+                                                                    <span asp-validation-for="IndiceOcupacional.IdAmbito" class="text-danger"></span>
+                                                                </label>
+                                                            </section>
+                                                            <section class="col col-6">
+                                                                <label> @Html.DisplayNameFor(model => model.IndiceOcupacional.Nivel):</label>
+                                                                <label class="input">
+                                                                    <select asp-for="IndiceOcupacional.Nivel" asp- class="form-control">
+                                                                        <option value="0">Profesional</option>
+                                                                        <option value="1" >No profesional</option>
+                                                                    </select>
+                                                                    <span asp-validation-for="IndiceOcupacional.Nivel" class="text-danger"></span>
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                    </fieldset>
+                                                    <footer>
+                                                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                                                        <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                                    </footer>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="step-pane" id="step2">
+                                    <h3></h3>
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary">
+                                                Acciones
+                                            </button>
+                                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a asp-action="AdicionarAreaConocimientoLocal" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar área de conocimiento</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-action="AdicionarActividesEsenciales" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar actividades esenciales</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p></p>
+                                        <!-- end col -->
+                                    </div>
+
+                                    <article class="col-lg-12">
+                                        <legend>Instrucci&oacute;n Formal Requerida </legend>
+                                        <article class="col-sm-12 col-md-12 col-lg-6">
+                                            <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                                <header>
+                                                    <span class="widget-icon"> <i class="fa fa-graduation-cap"></i> </span>
+                                                    <h2>Nivel de instrucci&oacute;n </h2>
+                                                </header>
+                                                <fieldset>
+                                                    <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                        <thead>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.ListaEstudios != null)
+                                                            {
+                                                                @foreach (var item in Model.ListaEstudios)
+                                                                {
+                                                                    <tr>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Nombre)
+                                                                        </td>
+
+                                                                        <td>
+                                                                            @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalEstudios", "Estudios", new { idEstudio = item.IdEstudio, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        <p>No existen resultados</p>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+
+                                                        </tbody>
+                                                    </table>
+                                                </fieldset>
+                                            </div>
+                                        </article>
+                                        <article class="col-sm-12 col-md-12 col-lg-6">
+                                            <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                                <header>
+                                                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                    <h2>&Aacute;rea de conocimiento </h2>
+                                                </header>
+                                                <fieldset>
+
+                                                    <table id="dt_basic" data-toggle="modal" data-placement="top" title="Ejemplo" class="table table-striped table-bordered table-hover" width="100%">
+                                                        <thead>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.ListaAreaConocimientos != null)
+                                                            {
+                                                                @foreach (var item in Model.ListaAreaConocimientos)
+                                                                {
+                                                                    <tr>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.IdAreaConocimiento)
+                                                                        </td>
+
+                                                                        <td>
+                                                                            @Html.ActionLink("Eliminar", "Accion", new { idAreaConocimiento = item.IdAreaConocimiento }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        <p>No existen resultados</p>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+
+                                                        </tbody>
+                                                    </table>
+                                                </fieldset>
+                                            </div>
+                                        </article>
+                                    </article>
+                                </div>
+                                <div class="step-pane" id="step3">
+                                    <h3></h3>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary">
+                                                Acciones
+                                            </button>
+                                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a asp-action="AdicionarMision" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar misi&oacute;n</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p></p>
+                                        <!-- end col -->
+                                    </div>
+                                    @*<article class="col-sm-12 col-md-12 col-lg-12">
+                                            <fieldset>
+                                                <legend>Misi&oacute;n</legend>
+
+                                                @if (Model.ListaMisiones != null)
+                                                {
+                                                    @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalMisiones", "Misiones", new { idMision = Model.ListaMisiones.FirstOrDefault().IdMision, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                    <p class="text-justify text-">
+                                                        @Model.ListaMisiones.FirstOrDefault().Descripcion
+                                                    </p>
+                                                }
+                                                else
+                                                {
+                                                    <p>No se ha establecido la misi&oacute;n</p>
+                                                }
+
+                                            </fieldset>
+                                        </article>*@
+                                </div>
+                                <div class="step-pane" id="step4">
+                                    <h3></h3>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary">
+                                                Acciones
+                                            </button>
+                                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a asp-action="AdicionarRIE" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar relaciones insternas externas</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p></p>
+                                    </div>
+                                    <article class="col-sm-12 col-md-12 col-lg-12">
+                                        <fieldset>
+
+                                            <legend>Relaciones Internas y Externas</legend>
+                                            @if (Model.ListaRelacionesInternasExternas != null)
+                                            {
+                                                @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalRelacionesInternasExternas", "RelacionesInternasExternas", new { idRelacionesInternasExternas = Model.ListaRelacionesInternasExternas.FirstOrDefault().IdRelacionesInternasExternas, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                <p>
+                                                    @Model.ListaRelacionesInternasExternas.FirstOrDefault().Descripcion
+                                                </p>
+                                            }
+                                            else
+                                            {
+                                                <p>No se ha establecido la misi&oacute;n</p>
+                                            }
+
+                                        </fieldset>
+                                    </article>
+
+                                </div>
+                                @*Experiencia Laboral*@
+                                <div class="step-pane" id="step5">
+                                    <h3></h3>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary">
+                                                Acciones
+                                            </button>
+                                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a asp-action="AdicionarRIE" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar relaciones insternas externas</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p></p>
+                                    </div>
+
+                                    <article class="col-sm-12 col-md-12 col-lg-12">
+                                        <legend>Experiencia Laboral Requerida </legend>
+                                        <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-clock-o"></i> </span>
+                                                <h2>Experiencia laboral requerida </h2>
+                                            </header>
+                                            <fieldset>
+
+                                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+
+                                                        <tr>
+                                                            @if (Model.ListaExperienciaLaboralRequeridas != null)
+                                                            {
+                                                                <th data- class="expand"><i class="fa fa-fw fa-clock-o text-muted hidden-md hidden-sm hidden-xs"></i> Nivel instrucci&oacute;n</th>
+                                                                <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Años de experiencia</th>
+                                                                <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Especidad de la experiencia</th>
+                                                                <th></th>
+                                                            }
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.ListaExperienciaLaboralRequeridas != null)
+                                                        {
+                                                            @foreach (var item in Model.ListaExperienciaLaboralRequeridas)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Estudio.Nombre)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.AnoExperiencia)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.EspecificidadExperiencia.Descripcion)
+                                                                    </td>
+
+
+                                                                    <td>
+                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalExperienciaLaboralRequerida", "ExperienciaLaboralRequerida", new { idExperienciaLaboralRequerida = item.IdExperienciaLaboralRequerida, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <p>No existen resultados</p>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                    </article>
+
+                                </div>
+                                <div class="step-pane" id="step6">
+                                    <h3></h3>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary">
+                                                Acciones
+                                            </button>
+                                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a asp-action="AdicionarCapacitaciones" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar capacitaciones requeridas</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p></p>
+                                    </div>
+
+                                    <article class="col-sm-12 col-md-12 col-lg-12">
+                                        <legend>Capacitaci&oacute;n Requerida para el puesto </legend>
+                                        <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-list-alt"></i> </span>
+                                                <h2>Capacitaci&oacute;n requerida</h2>
+                                            </header>
+                                            <fieldset>
+
+                                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.ListaCapacitaciones != null)
+                                                        {
+                                                            @foreach (var item in Model.ListaCapacitaciones)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Nombre)
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalCapacitaciones", "Capacitaciones", new { idCapacitacion = item.IdCapacitacion, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <p>No existen resultados</p>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                    </article>
+
+                                </div>
+
+                                <div class="step-pane" id="step7">
+                                    <h3></h3>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary">
+                                                Acciones
+                                            </button>
+                                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a asp-action="AdicionarActividesEsenciales" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar actividades esenciales</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p></p>
+                                    </div>
+
+                                    <article class="col-sm-12 col-md-12 col-lg-12">
+                                        <legend>Actividades esenciales </legend>
+                                        <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-hospital-o"></i> </span>
+                                                <h2>Actividades esenciales </h2>
+                                            </header>
+                                            <fieldset>
+
+                                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.ListaActividadesEsenciales != null)
+                                                        {
+                                                            @foreach (var item in Model.ListaActividadesEsenciales)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Descripcion)
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalActividadesEsenciales", "ActividadesEsenciales", new { IdActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <p>No existen resultados</p>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                    </article>
+
+                                </div>
+                                <div class="step-pane" id="step8">
+                                    <h3></h3>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary">
+                                                Acciones
+                                            </button>
+                                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a asp-action="AdicionarConocimientosAdicionales" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar conocimientos adicionales</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p></p>
+                                    </div>
+                                    <article class="col-sm-12 col-md-12 col-lg-12">
+                                        <legend> Conocimientos adicionales </legend>
+                                        <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-plus-square"></i> </span>
+                                                <h2>Conocimientos adicionales</h2>
+                                            </header>
+                                            <fieldset>
+
+                                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.ListaConocimientosAdicionales != null)
+                                                        {
+                                                            @foreach (var item in Model.ListaConocimientosAdicionales)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Descripcion)
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalConocimientosAdicionales", "ConocimientosAdicionales", new { idConocimientosAdicionales = item.IdConocimientosAdicionales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <p>No existen resultados</p>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                    </article>
+                                </div>
+
+                                <div class="step-pane" id="step9">
+                                    <h3></h3>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary">
+                                                Acciones
+                                            </button>
+                                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a asp-action="AdicionarComportamientosObservables" asp-controller="IndicesOcupacionales" class="dialog-window"><i class="fa fa-graduation-cap"></i>  Adicionar competencias t&eacute;cnicas </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p></p>
+                                    </div>
+                                    <article class="col-sm-12 col-md-12 col-lg-12">
+                                        <legend>Competencias t&eacute;cnicas </legend>
+                                        <div class="jarviswidget jarviswidget-color-darken" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" id="wid-id-1">
+                                            <header>
+                                                <span class="widget-icon"> <i class="fa fa-adjust"></i> </span>
+                                                <h2>Competencias t&eacute;cnicas</h2>
+                                            </header>
+                                            <fieldset>
+
+                                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            @if (Model.ListaComportamientoObservables != null)
+                                                            {
+                                                                <th data-class="expand"><i class="fa fa-fw fa-clock-o text-muted hidden-md hidden-sm hidden-xs"></i> Denominaci&oacute;n</th>
+                                                                <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Nivel</th>
+                                                                <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> Comportamiento observable</th>
+                                                                <th data-hide="phone"><i class="fa fa-fw fa-dot-circle-o text-muted hidden-md hidden-sm hidden-xs"></i> ¿Es competencia t&eacute;cnica?</th>
+                                                                <th data-hide="phone">Opciones</th>
+                                                            }
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.ListaComportamientoObservables != null)
+                                                        {
+                                                            @foreach (var item in Model.ListaComportamientoObservables)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.DenominacionCompetencia.Nombre)
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Nivel.Nombre)
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Descripcion)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.DenominacionCompetencia.CompetenciaTecnica)
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalComportamiemtoObservable", "ComportamientosObservables", new { idComportamientoObservable = item.IdComportamientoObservable, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td><p>No existen resultados</p></td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                    </article>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+
+
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalActividadesEsenciales());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalAreaConocimiento());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.Negocio.IndiceOcupacionalCapacitaciones());}
+@{await Html.RenderPartialAsync("Modal", new bd.webappth.entidades.ViewModels.IndiceOcupacionalComportamientoObservableView());}
+@{await Html.RenderPartialAsync("Modal");}
+
+
+
+
+@section Scripts {
+    <!-- PAGE RELATED PLUGIN(S) -->
+
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    <script src='~/js/vistasmodales/modal.js'></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
+
+
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    @*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+           $("#ciudad").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#sucursal").empty();
+            $("#dependencia").val("");
+            $("#manualpuesto").empty();
+            $("#rolpuesto").empty();
+            $("#escalagrados").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarSucursalesPorCiudad", "CeseFunciones")',
+                    dataType: 'json',
+                    data: { idciudad: $("#ciudad").val() },
+                    success: function (data) {
+                        $("#sucursal").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#sucursal").append('<option value="'
+                                + data.idSucursal + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+           $("#sucursal").change(function (e) {
+               mostrarLoadingPanel("content", "Cargando...")
+               $("#dependencia").val("");
+               $("#manualpuesto").empty();
+               $("#rolpuesto").empty();
+               $("#escalagrados").empty();
+               e.preventDefault();
+               var $link = $(this);
+               var title = $link.text();
+               $('#myModal.modal-title').html(title);
+               var url = '@Url.Action("CargarDependencias", "Dependencias")?idsucursal='+ $('#sucursal').val() ;
+               if (url.indexOf('#') == 0) {
+                   $('#myModal').modal('show');
+                   $("#myModal").waitMe("hide");
+               }
+               else {
+                   $.get(url, function (data) {
+                       $('#myModal .te').html(data);
+                       $('#myModal').modal();
+                       $('#selectC').select2();
+                       $("#content").waitMe("hide");
+                   }).success(function () { $('input:text:visible:first').focus(); });
+
+               }
+                $("#content").waitMe("hide");
+                return false;
+           })
+
+
+
+
+                        $("#manualpuesto").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#rolpuesto").empty();
+            $("#escalagrados").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarRolPuestoporManualPuesto")',
+                    dataType: 'json',
+                    data: {
+                        idmanualpuesto: $("#manualpuesto").val(),
+                        iddependencia: $("#iddependencia").val(),
+                        },
+                    success: function (data) {
+                        $("#rolpuesto").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#rolpuesto").append('<option value="'
+                                + data.rolPuesto.idRolPuesto + '">'
+                                + data.rolPuesto.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                        })
+
+
+                        $("#rolpuesto").change(function () {
+                            mostrarLoadingPanel("content", "Cargando...")
+                            $("#escalagrados").empty();
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("ListarEscalaGradosPorRolPuesto")',
+                                dataType: 'json',
+                                data: {
+                                    idmanualpuesto: $("#manualpuesto").val(),
+                                    iddependencia: $("#iddependencia").val(),
+                                    idrolpuesto: $("#rolpuesto").val(),
+                                },
+                                success: function (data) {
+                                    if (data[0].escalaGrados.grado !== null) {
+                                        $("#escalagrados").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                                        $.each(data, function (i, data) {
+
+                                            $("#escalagrados").append('<option value="'
+                                                + data.escalaGrados.idEscalaGrados + '">'
+                                                + data.escalaGrados.nombre + " (Grado " + data.escalaGrados.grado + ")" + " que percibe" + " $" + data.escalaGrados.remuneracion + '</option>');
+                                        });
+                                    }
+                                    else {
+                                        $("#escalagrados").append('<option value="'
+                                            + 0 + '">'
+                                            + "No aplica" + '</option>');
+
+                                    }
+                                }, complete: function (data) {
+                                    $("#content").waitMe("hide");
+                                },
+
+                                error: function (ex) {
+                                    alert('Failed to retrieve data.' + ex);
+                                }
+                            });
+                            return false;
+                        });
+
+                        $("#idgrupoocupacional").change(function () {
+                            mostrarLoadingPanel("content", "Cargando...")
+                            $("#idescalagrados").empty();
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("ListarEscalasGradosPorGrupoOcupacional", "EscalaGrados")',
+                                dataType: 'json',
+                                data: { idgrupoocupacional: $("#idgrupoocupacional").val() },
+                                success: function (data) {
+                                    $("#idescalagrados").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                                    $.each(data, function (i, data) {
+                                        $("#idescalagrados").append('<option value="'
+                                            + data.idEscalaGrados + '">'
+                                            + data.nombre + '</option>');
+
+                                    });
+                                }, complete: function (data) {
+                                    $("#content").waitMe("hide");
+                                },
+
+                                error: function (ex) {
+                                    alert('Failed to retrieve data.' + ex);
+                                }
+                            });
+                            return false;
+                        });
+
+        });
+    </script>
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+   @* <script src='~/js/site.js'></script>*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
+}
+
+
+
+

@@ -1,0 +1,83 @@
+
+
+@model List<bd.webappth.entidades.ViewModels.EstudioViewModel>
+    @using bd.webappth.entidades.ViewModels
+
+    @{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional ,OpcionMenu=4}; }
+    @{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional", modelo);}
+
+    <!-- MAIN CONTENT -->
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+    <div id="content">
+
+        
+        <p> </p>
+        <section id="" class="">
+            <div class="row">
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                        <header id="table">
+                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                            <h2>Instrucci&oacute;nes formales requeridas asignados</h2>
+                        </header>
+                        <div>
+                            <div class="jarviswidget-editbox">
+                            </div>
+                            <div class="widget-body no-padding">
+                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+                                        @if (Model.FirstOrDefault().IdEstudio != -1)
+        {
+
+                                        <tr>
+                                            <th data-class="">
+                                                Instrucci&oacute;n formal requerida
+                                            </th>
+                                            
+                                        </tr>
+
+}
+else
+{
+                                        <tr>
+                                            <th data-class="">
+                                                Observaciones
+                                            </th>
+                                        </tr>
+}
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.FirstOrDefault().IdEstudio != -1)
+        {
+                                        @foreach (var item in Model)
+{
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                            </td>
+                                        </tr>
+}
+}
+else
+{
+                                        <tr>
+                                            <td>
+                                                <p>No existen resultados</p>
+                                            </td>
+                                        </tr>
+}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    @section Scripts {
+        <script src='~/js/datatables/init.js'></script>
+    }
+
+
