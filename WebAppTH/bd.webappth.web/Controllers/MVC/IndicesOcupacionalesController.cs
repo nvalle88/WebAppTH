@@ -12,6 +12,7 @@ using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using bd.webappth.entidades.ViewModels;
+using bd.webappth.entidades.Constantes;
 
 namespace bd.webappth.web.Controllers.MVC
 {

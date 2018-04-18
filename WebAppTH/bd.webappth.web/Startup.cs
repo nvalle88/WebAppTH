@@ -48,6 +48,8 @@ namespace bd.webappth.web
 
 
             services.AddMvc();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services.AddDataProtection()
            .UseCryptographicAlgorithms(
            new AuthenticatedEncryptionSettings()
@@ -147,6 +149,7 @@ namespace bd.webappth.web
             });
             //app.UseIdentity();
 
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

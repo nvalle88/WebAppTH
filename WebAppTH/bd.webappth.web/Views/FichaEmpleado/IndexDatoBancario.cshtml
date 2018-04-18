@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <!-- MAIN CONTENT -->
 <div id="content">
+    @{await Html.RenderPartialAsync("_PartialViewBotonIndexEmpleado");}
     @if (Model.IdEmpleado == 0)
     {
         <p></p>
@@ -20,6 +21,8 @@
         </a>
         <p> </p>
     }
+
+
 
 
     <!-- widget grid -->
@@ -89,7 +92,7 @@
                                             </td>
                                             <td>
 
-                                                @Html.ActionLink("Editar", "EditDatoBancario", new { id = Model.IdDatosBancarios },new { onclick= "cargando()" }) |
+                                                @Html.ActionLink("Editar", "EditDatoBancario", new { id = Model.IdDatosBancarios }, new { onclick = "cargando()" }) |
                                                 @Html.ActionLink("Eliminar", "DeleteDatoBancario", new { id = Model.IdDatosBancarios }, new { onclick = "return confirm('Desea eliminar el Dato Bancario... ?');" })
 
                                             </td>
