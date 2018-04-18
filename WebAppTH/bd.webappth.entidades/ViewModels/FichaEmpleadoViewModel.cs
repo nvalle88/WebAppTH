@@ -22,10 +22,13 @@ namespace bd.webappth.entidades.ViewModels
         
         public string Telefono { get; set; }
 
-        [Display(Name = " Imposiciones al IESS:")]
+        [Display(Name = "Meses de imposiciones al IESS:")]
+        [Range(0, 1000, ErrorMessage = "Los {0} no pueden ser mayor a {2} ")]
         public int MesesImposiciones { get; set; }
 
-        [Display(Name = " Imposiciones al IESS:")]
+        [Display(Name = " Días de imposiciones al IESS:")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "{0} no es un valor numérico")]
+        [Range(0, 31, ErrorMessage = "Los {0} no pueden ser mayor a {2} ")]
         public int DiasImposiciones { get; set; }
 
         [Display(Name = "Fondo de reserva")]

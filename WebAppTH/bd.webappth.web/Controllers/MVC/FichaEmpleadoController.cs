@@ -1882,7 +1882,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Detalle",new {mensaje= Mensaje.GuardadoSatisfactorio});
+                    return RedirectToAction("Detalle",new { mensaje = Mensaje.GuardadoSatisfactorio, idEmpleado = HttpContext.Session.GetInt32(Constantes.idEmpleadoSession) });
                 }
                 await CargarCombosEmpleado(datosBasicosEmpleado);
                 ViewData["Error"] = Mensaje.ExisteEmpleado;
@@ -1896,17 +1896,23 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public IActionResult FichaEmpleados(int idEmpleado, int idPersona)
-        {
-            HttpContext.Session.SetInt32(Constantes.idEmpleadoSession, idEmpleado);
-            HttpContext.Session.SetInt32(Constantes.idPersonaSession, idPersona);
-            return RedirectToActionPermanent("Detalle");
-        }
-
-        public async Task<IActionResult> Detalle(string mensaje)
+       
+        public async Task <IActionResult> FichasEmpleadosVista(int idEmpleado, int idPersona)
         {
 
            
+           
+            return RedirectToAction("Detalle");
+        }
+
+        public async Task<IActionResult> Detalle(string mensaje, int idEmpleado, int idPersona)
+        {
+
+            if (HttpContext.Session.GetInt32(Constantes.idEmpleadoSession) != idEmpleado)
+            {
+                HttpContext.Session.SetInt32(Constantes.idEmpleadoSession, idEmpleado);
+                HttpContext.Session.SetInt32(Constantes.idPersonaSession, idPersona);
+            }
 
             var empleado = ObtenerEmpleado();
 

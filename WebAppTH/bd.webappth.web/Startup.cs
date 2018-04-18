@@ -48,7 +48,7 @@ namespace bd.webappth.web
 
 
             services.AddMvc();
-            services.AddDistributedMemoryCache();
+            //services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddDataProtection()
            .UseCryptographicAlgorithms(
