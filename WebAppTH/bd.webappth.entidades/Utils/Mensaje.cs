@@ -27,6 +27,7 @@ namespace bd.webappth.entidades.Utils
         public static string ErrorServicio { get { return "No se pudo establecer conexión con el servicio"; } }
         public static string CorregirFormulario { get { return "Corregir la información"; } }
         public static string SinArchivo { get { return "No existe archivo para descargar"; } }
+        
 
     }
 }

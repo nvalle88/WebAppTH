@@ -228,7 +228,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
+        
         public async Task<IActionResult> Delete(string id)
         {
 

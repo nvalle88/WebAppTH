@@ -39,27 +39,6 @@
 
     <p></p>
 
-    <div style="">
-        <!--
-        <form asp-action="Create2" id="checkout-form" novalidate="novalidate">
-
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <input type="hidden" asp-for="fichaMedica.IdFichaMedica" style="width:100px;" />
-            <input type="hidden" asp-for="fichaMedica.IdPersona" style="width:100px;" />
-
-            <button type="submit" class="btn btn-labeled btn-default" style="width:100px;" onclick="espera()">
-                <span class="btn-label" >
-                    <i class="glyphicon glyphicon-plus"></i>
-                </span>Nuevo&nbsp;
-
-            </button>
-
-
-        </form>
-        -->
-
-    </div>
 
 
     <!-- widget grid -->
@@ -74,7 +53,28 @@
             </div>
         </div>
 
-        
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+
+            <div class="col col-lg-10">
+                <form asp-action="CerrarProceso" asp-route-id="@Model.IdDependencia" id="checkout-form" novalidate="novalidate">
+
+
+                    <button type="submit" class="btn btn-labeled btn-default" onclick="espera()">
+                        <span class="btn-label">
+                            <i class="glyphicon glyphicon-send"></i>
+                        </span>Enviar requerimientos y cerrar proceso&nbsp;
+
+                    </button>
+
+
+                </form>
+            </div>
+        </div>
+
 
         <div class="row">&nbsp;</div>
 
@@ -86,18 +86,18 @@
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
-                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-                    data-widget-colorbutton="false"
-                    data-widget-editbutton="false"
-                    data-widget-togglebutton="false"
-                    data-widget-deletebutton="false"
-                    data-widget-fullscreenbutton="false"
-                    data-widget-custombutton="false"
-                    data-widget-collapsed="true"
-                    data-widget-sortable="false"
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
 
-                    -->
+                -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>@Html.DisplayFor(model => Model.RolesNivelJerarquicoSuperior.NombreGrupoOcupacional)</h2>
@@ -141,31 +141,31 @@
                                 <tbody>
 
                                     @foreach (var item in Model.RolesNivelJerarquicoSuperior.ListaRolesRequeridos)
-                                    {
-                                        <tr>
+                                {
+                                    <tr>
 
-                                            <td>
-                                                @*
-                                                    @Html.ActionLink(item.NombreRolPuesto, "CrearBrechasParaDependencia", new { id = item.IdDependencia }, new { onclick = "espera()"})
-                                                *@
+                                        <td>
+                                            @*
+                                            @Html.ActionLink(item.NombreRolPuesto, "CrearBrechasParaDependencia", new { id = item.IdDependencia }, new { onclick = "espera()"})
+                                            *@
 
-                                                @Html.DisplayFor(modelItem => item.NombreRolPuesto)
-                                            </td>
+                                            @Html.DisplayFor(modelItem => item.NombreRolPuesto)
+                                        </td>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Cantidad)
-                                            </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Cantidad)
+                                        </td>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                        </td>
 
-                                            <td>
-                                                @Html.ActionLink("Eliminar", "Delete", new { idDependencia = Model.IdDependencia, idRol = item.IdRolPuesto }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
-                                            </td>
+                                        <td>
+                                            @Html.ActionLink("Eliminar", "Delete", new { idDependencia = Model.IdDependencia, idRol = item.IdRolPuesto }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                        </td>
 
-                                        </tr>
-                                    }
+                                    </tr>
+                            }
                                 </tbody>
                             </table>
 
@@ -189,18 +189,18 @@
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
-                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-                    data-widget-colorbutton="false"
-                    data-widget-editbutton="false"
-                    data-widget-togglebutton="false"
-                    data-widget-deletebutton="false"
-                    data-widget-fullscreenbutton="false"
-                    data-widget-custombutton="false"
-                    data-widget-collapsed="true"
-                    data-widget-sortable="false"
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
 
-                    -->
+                -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>@Html.DisplayFor(model => Model.RolesNivelOperativo.NombreGrupoOcupacional)</h2>
@@ -243,12 +243,12 @@
                                 <tbody>
 
                                     @foreach (var item in Model.RolesNivelOperativo.ListaRolesRequeridos)
-                                    {
+                                {
                                     <tr>
 
                                         <td>
                                             @*
-            @Html.ActionLink(item.NombreRolPuesto, "CrearBrechasParaDependencia", new { id = item.IdDependencia }, new { onclick = "espera()"})
+                                            @Html.ActionLink(item.NombreRolPuesto, "CrearBrechasParaDependencia", new { id = item.IdDependencia }, new { onclick = "espera()"})
                                             *@
 
                                             @Html.DisplayFor(modelItem => item.NombreRolPuesto)
@@ -266,7 +266,7 @@
                                             @Html.ActionLink("Eliminar", "Delete", new { idDependencia = Model.IdDependencia, idRol = item.IdRolPuesto }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                         </td>
                                     </tr>
-                                    }
+                            }
                                 </tbody>
                             </table>
 

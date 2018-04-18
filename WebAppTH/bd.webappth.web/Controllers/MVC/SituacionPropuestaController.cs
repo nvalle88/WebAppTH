@@ -65,27 +65,25 @@ namespace bd.webappth.web.Controllers.MVC
 
                     var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
                     var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-                    var responseEnviar = new Response
-                    {
-                        Resultado = NombreUsuario
-                    };
-
                     
-                    Response responseResultado = await apiServicio.ObtenerElementoAsync(responseEnviar, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/VerificarAcceso");
 
-                    if(responseResultado.IsSuccess == false) {
-                        return RedirectToAction("AutorizacionError", "SituacionPropuesta", new { mensaje = responseResultado.Message });
+                    modelo.NombreUsuario = NombreUsuario;
+
+
+                    // Obtención de datos para generar pantalla
+                    var respuesta = await apiServicio.ObtenerElementoAsync<RequerimientoRolPorDependenciaViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/ObtenerRequerimientoRolPorDependencia");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        respuesta.Resultado = JsonConvert.DeserializeObject<RequerimientoRolPorDependenciaViewModel>(respuesta.Resultado.ToString());
+
+                        return View(respuesta.Resultado);
                     }
-
-
-                    modelo.IdDependencia = Convert.ToInt32(responseResultado.Resultado);
-
-                    var modeloRecibido = await apiServicio.ObtenerElementoAsync1<RequerimientoRolPorDependenciaViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/ObtenerRequerimientoRolPorDependencia");
-
-
-
-                    return View(modeloRecibido);
+                    else
+                    {
+                        return RedirectToAction("AutorizacionError", "SituacionPropuesta", new { mensaje = respuesta.Message });
+                    }
+                    
 
                 }
 
@@ -125,22 +123,49 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> CrearRolesNivelSuperior(string mensaje, string id)
         {
             var modelo = new RequerimientoRolPorDependenciaViewModel();
-
             modelo.IdDependencia = Convert.ToInt32(id);
 
             InicializarMensaje(mensaje);
 
             try
             {
-                var modeloRecibido = await apiServicio.ObtenerElementoAsync1<RequerimientoRolPorDependenciaViewModel>(modelo,new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/CrearRequerimientoRolPorDependencia");
-                                                                  
-                return View(modeloRecibido);
 
-            } catch (Exception ex) {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+
+                    var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+
+                    modelo.NombreUsuario = NombreUsuario;
+
+
+                    // Obtención de datos para generar pantalla
+                    var respuesta = await apiServicio.ObtenerElementoAsync<RequerimientoRolPorDependenciaViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/CrearRequerimientoRolPorDependencia");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        respuesta.Resultado = respuesta.Resultado = JsonConvert.DeserializeObject<RequerimientoRolPorDependenciaViewModel>(respuesta.Resultado.ToString()); ;
+
+                        return View(respuesta.Resultado);
+                    }
+                    else
+                    {
+                        return RedirectToAction("AutorizacionError", "SituacionPropuesta", new { mensaje = respuesta.Message });
+                    }
+
+                }
+
+                return RedirectToAction("Login", "Login");
+            }
+            catch (Exception ex)
+            {
 
                 return RedirectToAction("Index", "SituacionPropuesta", new { mensaje = Mensaje.ErrorServicio });
             }
-            
+
         }
 
         public async Task<IActionResult> CrearRolesNivelOperativo(string mensaje, string id)
@@ -153,9 +178,35 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                var modeloRecibido = await apiServicio.ObtenerElementoAsync1<RequerimientoRolPorDependenciaViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/CrearRequerimientoRolPorDependencia");
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
 
-                return View(modeloRecibido);
+                if (claim.IsAuthenticated == true)
+                {
+
+                    var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+
+                    modelo.NombreUsuario = NombreUsuario;
+
+
+                    // Obtención de datos para generar pantalla
+                    var respuesta = await apiServicio.ObtenerElementoAsync<RequerimientoRolPorDependenciaViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/CrearRequerimientoRolPorDependencia");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        respuesta.Resultado = respuesta.Resultado = JsonConvert.DeserializeObject<RequerimientoRolPorDependenciaViewModel>(respuesta.Resultado.ToString()); ;
+
+                        return View(respuesta.Resultado);
+                    }
+                    else
+                    {
+                        return RedirectToAction("AutorizacionError", "SituacionPropuesta", new { mensaje = respuesta.Message });
+                    }
+
+                }
+
+                return RedirectToAction("Login", "Login");
 
             }
             catch (Exception ex)
@@ -269,6 +320,35 @@ namespace bd.webappth.web.Controllers.MVC
                 return RedirectToAction("Index", "SituacionPropuesta", new { mensaje = Mensaje.ErrorServicio});
             }
         }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CerrarProceso( int id)
+        {
+
+            try {
+                var modelo = new RequerimientoRolPorDependenciaViewModel();
+                modelo.IdDependencia = id;
+
+                var respuesta = await apiServicio.ObtenerElementoAsync<RequerimientoRolPorDependenciaViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/CerrarProcesoRequerimientoPersona");
+
+
+                if( respuesta.IsSuccess) {
+                    return RedirectToAction("AutorizacionError", "SituacionPropuesta", new { mensaje = respuesta.Message });
+                }
+
+                return RedirectToAction("Index", "SituacionPropuesta", new { mensaje = respuesta.Message });
+
+            }
+            catch(Exception ex){
+                return RedirectToAction("Index", "SituacionPropuesta", new { mensaje = Mensaje.Excepcion });
+            }
+
+            
+        }
+
 
 
     }
