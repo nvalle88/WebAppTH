@@ -1,7 +1,7 @@
 @model List<bd.webappth.entidades.Negocio.PersonaEstudio>
 
 @using bd.webappth.entidades.Utils
-@{ var modelo = new FichaEmpleado { OpcionMenu = 1 }; }
+@{ var modelo = new FichaEmpleado { OpcionMenu = 1, }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <!-- MAIN CONTENT -->
 <div id="content">
-
+    @{await Html.RenderPartialAsync("_PartialViewBotonIndexEmpleado");}
     <p></p>
     <a asp-action="CreatePersonaEstudio">
         <button type="button" asp-action="CreatePersonaEstudio" onclick="cargando()" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">

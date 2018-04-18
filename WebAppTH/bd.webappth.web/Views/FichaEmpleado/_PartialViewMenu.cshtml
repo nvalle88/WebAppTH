@@ -1,70 +1,78 @@
 
 @model bd.webappth.entidades.Utils.FichaEmpleado
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+   
+   @{
+       var a = @Context.Session.GetInt32(Constantes.idEmpleadoSession);
+    }
 <div class="btn-group btn-group-justified">
     @if (Model.OpcionMenu == 0)
     {
-    <a asp-action="Detalle" asp-controller="FichaEmpleado" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Datos b&aacute;sicos <br />del<br />empleado </a>
+        <a asp-action="Detalle" asp-controller="FichaEmpleado"  asp-route-idEmpleado="@a"  onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Datos b&aacute;sicos <br />del<br />empleado </a>
     }
     else
     {
-        <a asp-action="Detalle" asp-controller="FichaEmpleado"  onclick="cargando()" class="btn btn-default"> Datos b&aacute;sicos <br />del<br />empleado </a>
+        <a asp-action="Detalle" asp-controller="FichaEmpleado" asp-route-idEmpleado="@a" onclick="cargando()" class="btn btn-default"> Datos b&aacute;sicos <br />del<br />empleado </a>
     }
 
 
     @if (Model.OpcionMenu == 1)
     {
-        <a href="@Url.Action("IndexPersonaEstudio", "FichaEmpleado")"  onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Formaci&oacute;n <br /> Acad&eacute;mica </a>
+        <a href="@Url.Action("IndexPersonaEstudio", "FichaEmpleado")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Formaci&oacute;n <br /> Acad&eacute;mica </a>
 
     }
     else
     {
-        <a href="@Url.Action("IndexPersonaEstudio", "FichaEmpleado")"  onclick="cargando()" class="btn btn-default">Formaci&oacute;n <br /> Acad&eacute;mica </a>
+        <a href="@Url.Action("IndexPersonaEstudio", "FichaEmpleado")" onclick="cargando()" class="btn btn-default">Formaci&oacute;n <br /> Acad&eacute;mica </a>
 
 
     }
 
     @if (Model.OpcionMenu == 2)
     {
-        <a href="@Url.Action("IndexTrayectoriaLaboral", "FichaEmpleado")"  onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Trayectoria <br /> Laboral</a>
+        <a href="@Url.Action("IndexTrayectoriaLaboral", "FichaEmpleado")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Trayectoria <br /> Laboral</a>
 
 
     }
     else
     {
-        <a href="@Url.Action("IndexTrayectoriaLaboral", "FichaEmpleado")"   onclick="cargando()" class="btn btn-default">Trayectoria <br /> Laboral</a>
+        <a href="@Url.Action("IndexTrayectoriaLaboral", "FichaEmpleado")" onclick="cargando()" class="btn btn-default">Trayectoria <br /> Laboral</a>
 
     }
 
     @if (Model.OpcionMenu == 3)
     {
-        <a href="@Url.Action("IndexEmpleadoFamiliar", "FichaEmpleado")"  onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Familiares</a>
+        <a href="@Url.Action("IndexEmpleadoFamiliar", "FichaEmpleado")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Familiares</a>
 
     }
     else
     {
-        <a href="@Url.Action("IndexEmpleadoFamiliar", "FichaEmpleado")"  onclick="cargando()" class="btn btn-default">Familiares</a>
+        <a href="@Url.Action("IndexEmpleadoFamiliar", "FichaEmpleado")" onclick="cargando()" class="btn btn-default">Familiares</a>
     }
 
     @if (Model.OpcionMenu == 4)
     {
-        <a href="@Url.Action("IndexPersonaDiscapacidad", "FichaEmpleado")"  onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Discapacidades</a>
+        <a href="@Url.Action("IndexPersonaDiscapacidad", "FichaEmpleado")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Discapacidades</a>
 
 
     }
     else
     {
-        <a href="@Url.Action("IndexPersonaDiscapacidad", "FichaEmpleado")"  onclick="cargando()" class="btn btn-default">Discapacidades</a>
+        <a href="@Url.Action("IndexPersonaDiscapacidad", "FichaEmpleado")" onclick="cargando()" class="btn btn-default">Discapacidades</a>
 
     }
 
     @if (Model.OpcionMenu == 5)
     {
-        <a href="@Url.Action("IndexPersonaEnfermedad", "FichaEmpleado")"  onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Enfermedades</a>
+        <a href="@Url.Action("IndexPersonaEnfermedad", "FichaEmpleado")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Enfermedades</a>
 
     }
     else
     {
-        <a href="@Url.Action("IndexPersonaEnfermedad", "FichaEmpleado")"  onclick="cargando()" class="btn btn-default">Enfermedades</a>
+        <a href="@Url.Action("IndexPersonaEnfermedad", "FichaEmpleado")" onclick="cargando()" class="btn btn-default">Enfermedades</a>
 
 
     }
@@ -72,11 +80,11 @@
 
     @if (Model.OpcionMenu == 6)
     {
-        <a href="@Url.Action("IndexDatoBancario", "FichaEmpleado")"  onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Datos <br /> Bancarios</a>
+        <a href="@Url.Action("IndexDatoBancario", "FichaEmpleado")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Datos <br /> Bancarios</a>
     }
     else
     {
-        <a href="@Url.Action("IndexDatoBancario", "FichaEmpleado")"  onclick="cargando()" class="btn btn-default">Datos <br /> Bancarios</a>
+        <a href="@Url.Action("IndexDatoBancario", "FichaEmpleado")" onclick="cargando()" class="btn btn-default">Datos <br /> Bancarios</a>
 
     }
 

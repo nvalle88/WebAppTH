@@ -308,6 +308,16 @@ namespace bd.webappth.web.Controllers.MVC
             return Json(listaCiudades);
         }
 
+        public async Task<JsonResult> ListarBrigadaSSORolPorBrigadaSSO(string brigada)
+        {
+            var BrigadaSSO = new BrigadaSSO
+            {
+                IdBrigadaSSO = Convert.ToInt32(brigada),
+            };
+            var listaBrigadaSSORol = await apiServicio.Listar<BrigadaSSORol>(BrigadaSSO, new Uri(WebApp.BaseAddress), "api/BrigadasSSORoles/ListarBrigadasSSORolesPorBrigadaSSO");
+            return Json(listaBrigadaSSORol);
+        }
+
         public async Task<JsonResult> ListarProvinciaPorPais(string pais)
         {
             var Pais = new Pais

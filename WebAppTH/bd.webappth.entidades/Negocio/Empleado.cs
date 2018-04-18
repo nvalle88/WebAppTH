@@ -12,13 +12,11 @@ namespace bd.webappth.entidades.Negocio
 
         public DateTime FechaIngreso { get; set; }
 
-        public DateTime FechaIngresoSectorPublico { get; set; }
+        public DateTime? FechaIngresoSectorPublico { get; set; }
 
         public bool TrabajoSuperintendenciaBanco { get; set; }
 
-
         public bool FondosReservas { get; set; }
-
 
         public bool DeclaracionJurada { get; set; }
 
@@ -29,10 +27,30 @@ namespace bd.webappth.entidades.Negocio
         public int DiasImposiciones { get; set; }
 
         public string NombreUsuario { get; set; }
+
         public bool EsJefe { get; set; }
+
         public bool Activo { get; set; }
 
+        public bool? Nepotismo { get; set; }
+
+        public bool? OtrosIngresos { get; set; }
+
+        public string Telefono { get; set; }
+
+        public int? Extension { get; set; }
+
+        public string Detalle { get; set; }
+
+        public int? AnoDesvinculacion { get; set; }
+
+        public string TipoRelacion { get; set; }
+
         //Propiedades Virtuales Referencias a otras clases
+
+
+        public int? IdBrigadaSSORol { get; set; }
+        public virtual BrigadaSSORol BrigadaSSORol { get; set; }
 
         public int IdPersona { get; set; }
         public virtual Persona Persona { get; set; }
