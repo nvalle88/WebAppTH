@@ -60,8 +60,9 @@ namespace bd.webappth.entidades.ViewModels
 
         //listas
         public List<PersonaEstudio> ListasPersonaEstudio { get; set; }
-       
-        
+        public List<PersonaEstudio> ListasCandidatoExperiencia { get; set; }
+
+
 
     }
 }

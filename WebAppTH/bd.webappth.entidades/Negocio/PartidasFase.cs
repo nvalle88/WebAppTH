@@ -24,6 +24,8 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdTipoConcurso { get; set; }
         public DateTime? Fecha { get; set; }
+        public int Vacantes { get; set; }
+        public int Estado { get; set; }
         public virtual ICollection<CandidatoConcurso> CandidatoConcurso { get; set; }
         public virtual TipoConcurso TipoConcurso { get; set; }
 

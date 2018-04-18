@@ -4,43 +4,68 @@
         <section class="col col-lg-12">
             <label class="input">
                 @Html.DisplayNameFor(model => model.UnidadAdministrativa):
-            @Html.DisplayFor(model => model.UnidadAdministrativa)
-        </label>
-    </section>
-</div>
-<div class="row">
-    <section class="col col-lg-12">
-        <label class="input">
-            @Html.DisplayNameFor(model => model.PuestoInstitucional):
-        @Html.DisplayFor(model => model.PuestoInstitucional)
-    </label>
-</section>
-</div>
-<div class="row">
-    <legend>Datos personales</legend>
-    <br />
-    <section class="col col-6">
-        <label class="input">@Html.DisplayNameFor(model => model.identificacion)</label>
-        <label class="input">
-            <input maxlength="50" asp-for="identificacion" class="form-control" />
-            <span asp-validation-for="identificacion" class="text-danger"></span>
-        </label>
-    </section>
-    <section class="col col-6">
-        <label class="input">@Html.DisplayNameFor(model => model.nombres)</label>
-        <label class="input">
-            <input maxlength="50" asp-for="nombres" class="form-control" />
-            <span asp-validation-for="nombres" class="text-danger"></span>
-        </label>
-    </section>
-</div>
-<div class="row">
-    <section class="col col-6">
-        <label class="input">@Html.DisplayNameFor(model => model.Apellidos)</label>
-        <label class="input">
-            <input maxlength="50" asp-for="Apellidos" class="form-control" />
-            <span asp-validation-for="Apellidos" class="text-danger"></span>
-        </label>
-    </section>
-</div>
+                @Html.DisplayFor(model => model.UnidadAdministrativa)
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-lg-12">
+            <label class="input">
+                @Html.DisplayNameFor(model => model.PuestoInstitucional):
+                @Html.DisplayFor(model => model.PuestoInstitucional)
+            </label>
+        </section>
+    </div>
+    <div class="row">
+                        <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Nombres</th>
+                                    <th>Cedula</th>
+                                    <th>Experiencia en Dias</th>
+                                    <th>Experiencia / Años/Meses/Dias</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*@foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NumeroPartidaGeneral)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NumeroPartidaIndividual)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PuestoInstitucional)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.grupoOcupacional)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NumeroPuesto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Remuneracion)
+                                        </td>
+
+                                        <td>
+                                            @if (item.NumeroPuesto == 0)
+                                            {
+                                                @*<label>Habilitar</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("Postular", "Create", new { id = item.iddependecia })
+                                            }
+                                        </td>
+                                    </tr>
+                                }*@
+                            </tbody>
+                        </table>
+                  </div>
 </fieldset>

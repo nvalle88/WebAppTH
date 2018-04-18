@@ -6,7 +6,7 @@
 }
 
 <div id="content">
-  <div class="col col-10">
+    <div class="col col-10">
         @if (@ViewData["Error"].ToString() != "")
 
         {
@@ -34,7 +34,7 @@
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                    
+
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Partida Vacantes</h2>
@@ -80,34 +80,39 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NumeroPartidaGeneral)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NumeroPartidaIndividual)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PuestoInstitucional)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.grupoOcupacional)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NumeroPuesto)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Remuneracion)
-                                        </td>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NumeroPartidaGeneral)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NumeroPartidaIndividual)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PuestoInstitucional)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.grupoOcupacional)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NumeroPuesto)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Remuneracion)
+                                            </td>
 
-                                        <td>
-                                            @Html.ActionLink("Postular", "Create", new { id = item.iddependecia })
-                                            
-                                        </td>
-                                    </tr>
+                                            <td>
+                                                @if (item.NumeroPuesto == 0)
+                                                {
+                                                 @*<label>Habilitar</label>*@
+                                                }else
+                                                {
+                                                @Html.ActionLink("Postular", "Create", new { id = item.iddependecia })
+                                                }
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
