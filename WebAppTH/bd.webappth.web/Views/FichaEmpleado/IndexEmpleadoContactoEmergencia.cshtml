@@ -8,7 +8,7 @@
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <div id="content">
-
+    @{await Html.RenderPartialAsync("_PartialViewBotonIndexEmpleado");}
     <p></p>
     <a asp-action="CreateEmpleadoContactoEmergencia">
         <button type="button" asp-action="CreateEmpleadoContactoEmergencia" onclick="cargando()" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">

@@ -308,6 +308,16 @@ namespace bd.webappth.web.Controllers.MVC
             return Json(listaCiudades);
         }
 
+        public async Task<JsonResult> ListarBrigadaSSORolPorBrigadaSSO(string brigada)
+        {
+            var BrigadaSSO = new BrigadaSSO
+            {
+                IdBrigadaSSO = Convert.ToInt32(brigada),
+            };
+            var listaBrigadaSSORol = await apiServicio.Listar<BrigadaSSORol>(BrigadaSSO, new Uri(WebApp.BaseAddress), "api/BrigadasSSORoles/ListarBrigadasSSORolesPorBrigadaSSO");
+            return Json(listaBrigadaSSORol);
+        }
+
         public async Task<JsonResult> ListarProvinciaPorPais(string pais)
         {
             var Pais = new Pais
@@ -1517,6 +1527,105 @@ namespace bd.webappth.web.Controllers.MVC
             };
             //execute the method Send Mail or SendMailAsync
             var a = Emails.SendEmailAsync(mail);
+        }
+
+        public async Task<IActionResult> CheckListDocumentosEmpleado(string identificacion,string mensaje)
+        {
+            InicializarMensaje(mensaje);
+
+            var listaDocumentos = new List<DocumentosIngreso>();
+            var listaDocumentosEntregados = new List<DocumentosIngresoEmpleado>();
+
+            var documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado();
+            documentoingresoViewModel.listadocumentosingreso = new List<DocumentosIngreso>();
+            documentoingresoViewModel.listadocumentosingresoentregado = new List<DocumentosIngresoEmpleado>();
+
+            try
+            {
+                var empleado = new Empleado
+                {
+                    Persona = new Persona
+                    {
+                        Identificacion = identificacion
+                    }
+                };
+                var emp = await apiServicio.ObtenerElementoAsync1<ListaEmpleadoViewModel>(empleado, new Uri(WebApp.BaseAddress),
+                                                              "api/Empleados/ObtenerDatosCompletosEmpleado");
+
+                var empleadoConsulta = new Empleado
+                {
+                    IdEmpleado = emp.IdEmpleado
+                };
+                //var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(empleadoConsulta, new Uri(WebApp.BaseAddress), "api/DocumentosIngreso/GetDocumentoIngresoEmpleado");
+                //if (!respuesta.IsSuccess)
+                //{
+                listaDocumentos = await apiServicio.Listar<DocumentosIngreso>(new Uri(WebApp.BaseAddress)
+                                                                                  , "api/DocumentosIngreso/ListarDocumentosIngreso");
+                listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleadoConsulta, new Uri(WebApp.BaseAddress)
+                                                                                  , "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
+
+                documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado
+                {
+                    empleadoViewModel = emp,
+                    listadocumentosingreso = listaDocumentos,
+                    listadocumentosingresoentregado = listaDocumentosEntregados
+
+                };
+
+                return View(documentoingresoViewModel);
+                //}
+
+            }
+            catch (Exception)
+            {
+                return View(documentoingresoViewModel);
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DocumentoEntregado(ViewModelDocumentoIngresoEmpleado viewModelDocumentoIngresoEmpleado)
+        {
+            Response response = new Response();
+            var listaDocumentosEntregados = new List<DocumentosIngresoEmpleado>();
+            try
+            {
+                var empleado = new Empleado
+                {
+                    IdEmpleado = viewModelDocumentoIngresoEmpleado.empleadoViewModel.IdEmpleado
+                };
+
+                listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleado, new Uri(WebApp.BaseAddress)
+                                                                  , "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
+
+                if (listaDocumentosEntregados.Count == 0)
+                {
+                    response = await apiServicio.InsertarAsync(viewModelDocumentoIngresoEmpleado,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/DocumentosIngreso/InsertarDocumentosIngresoEmpleado");
+                }
+                else
+                {
+                    response = await apiServicio.ObtenerElementoAsync1<Response>(viewModelDocumentoIngresoEmpleado, new Uri(WebApp.BaseAddress),
+                                                                                     "api/DocumentosIngreso/EditarCheckListDocumentos");
+                }
+
+                if (response.IsSuccess)
+                {
+                    
+                    return RedirectToAction("CheckListDocumentosEmpleado", new { identificacion = viewModelDocumentoIngresoEmpleado.empleadoViewModel.Identificacion, mensaje = response.Message });
+                }
+
+                ViewData["Error"] = response.Message;
+                return RedirectToAction("CheckListDocumentosEmpleado", new { identificacion = viewModelDocumentoIngresoEmpleado.empleadoViewModel.Identificacion});
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
         }
 
 

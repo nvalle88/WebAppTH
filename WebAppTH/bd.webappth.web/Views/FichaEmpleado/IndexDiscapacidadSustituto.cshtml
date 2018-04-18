@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <!-- MAIN CONTENT -->
 <div id="content">
-
+   
     <p></p>
     <a asp-action="CreateDiscapacidadSustituto" asp-route-id="@Model.IdPersonaSustituto">
         <button type="button" asp-action="CreateDiscapacidadSustituto" asp-route-id="@Model.IdPersonaSustituto" onclick="cargando()" asp-controller="FichaEmpleado" class="btn btn-labeled btn-default">
@@ -26,6 +26,7 @@
         </button>
     </a>
     <p> </p>
+
 
     <!-- widget grid -->
     <section id="" class="">
@@ -93,8 +94,8 @@
                                                 @Html.DisplayFor(modelItem => item.PorcentajeDiscapacidad)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Editar", "EditDiscapacidadSustituto", new { idPersona = Model.IdPersonaSustituto, idDiscapacidad=item.IdDiscapacidadSustituto }, new { onclick = "cargando()" }) |
-                                                @Html.ActionLink("Eliminar", "DeleteDiscapacidadSustituto", new { id = Model.IdPersonaSustituto ,idDiscapacidad=item.IdDiscapacidadSustituto}, new { onclick = "return confirm('Desea eliminar la Discapacidad... ?');" })
+                                                @Html.ActionLink("Editar", "EditDiscapacidadSustituto", new { idPersona = Model.IdPersonaSustituto, idDiscapacidad = item.IdDiscapacidadSustituto }, new { onclick = "cargando()" }) |
+                                                @Html.ActionLink("Eliminar", "DeleteDiscapacidadSustituto", new { id = Model.IdPersonaSustituto, idDiscapacidad = item.IdDiscapacidadSustituto }, new { onclick = "return confirm('Desea eliminar la Discapacidad... ?');" })
                                             </td>
                                         </tr>
                                     }
