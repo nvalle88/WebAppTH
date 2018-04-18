@@ -28,43 +28,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @*@foreach (var item in Model)
+                                @foreach (var item in Model.ListasCanditadoExperiencia)
                                 {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.NumeroPartidaGeneral)
+                                            @Html.DisplayFor(modelItem => item.Nombres)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
+                                            @Html.DisplayFor(modelItem => item.Cedula)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.NumeroPartidaIndividual)
+                                            @Html.DisplayFor(modelItem => item.ExperienciaDias)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.PuestoInstitucional)
+                                            @Html.DisplayFor(modelItem => item.ExperienciaMesAno)
                                         </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.grupoOcupacional)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NumeroPuesto)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Remuneracion)
-                                        </td>
+                                        
 
                                         <td>
-                                            @if (item.NumeroPuesto == 0)
-                                            {
-                                                @*<label>Habilitar</label>
-                                            }
-                                            else
-                                            {
-                                                @Html.ActionLink("Postular", "Create", new { id = item.iddependecia })
-                                            }
+                                           
+                                                @Html.ActionLink("Evaluar", "Create", new { id = item.Cedula })
+                                            
                                         </td>
                                     </tr>
-                                }*@
+                                }
                             </tbody>
                         </table>
                   </div>

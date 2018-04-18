@@ -9,6 +9,7 @@ namespace bd.webappth.entidades.ViewModels
     public class ViewModelSeleccionPersonal
     {
         public int? iddependecia { get; set; }
+        public int IdPrtidaFase { get; set; }
         [Display(Name = "Partida General")]
         public string NumeroPartidaGeneral { get; set; }
         [Display(Name = "Unidad Administrativa")]
@@ -60,7 +61,7 @@ namespace bd.webappth.entidades.ViewModels
 
         //listas
         public List<PersonaEstudio> ListasPersonaEstudio { get; set; }
-        public List<PersonaEstudio> ListasCandidatoExperiencia { get; set; }
+        public List<ViewModelCandidatoExperiencia> ListasCanditadoExperiencia { get; set; }
 
 
 

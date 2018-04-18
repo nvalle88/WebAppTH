@@ -55,13 +55,14 @@ namespace bd.webappth.web.Controllers.MVC
                 return View(lista);
             }
         }
-        public async Task<IActionResult> Create(int id)
+        public async Task<IActionResult> Create(int id, int partida)
         {
             try
             {
                 var usuario = new ViewModelSeleccionPersonal
                 {
-                    iddependecia = id
+                    iddependecia = id,
+                    IdPrtidaFase = partida
                 };
                 var postular = await obtenercabecera(usuario);
                 if (postular != null)
@@ -226,6 +227,11 @@ namespace bd.webappth.web.Controllers.MVC
         {
             var response = await apiServicio.ObtenerElementoAsync1<ViewModelSeleccionPersonal>(viewModelSeleccionPersonal, new Uri(WebApp.BaseAddress)
                                                                    , "api/SeleccionPersonalTalentoHumano/ObtenerEncabezadopostulante");
+            //if (response!= null)
+            //{
+            //    var idependecia =response.iddependecia;
+
+            //}
             return response;
             
         }
