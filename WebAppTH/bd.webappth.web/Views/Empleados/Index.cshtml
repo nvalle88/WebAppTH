@@ -118,6 +118,7 @@
                                             <td>
 
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado })<br />
+                                                | @Html.ActionLink("Documentos", "CheckListDocumentosEmpleado", new { identificacion = item.Identificacion })<br />
 
                                             </td>
                                         </tr>
