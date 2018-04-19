@@ -97,7 +97,11 @@ namespace bd.webappth.web.Controllers.MVC
                 }
             }
 
-
+        /// <summary>
+        /// Este método no funciona hay hacerlo
+        /// </summary>
+        /// <param name="fichaCandidato"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FichaCandidatoViewModel fichaCandidato)
@@ -112,12 +116,12 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                var response = await apiServicio.InsertarAsync(fichaCandidato, new Uri(WebApp.BaseAddress), "api/Empleados/InsertarEmpleado");
+                var response = await apiServicio.InsertarAsync(fichaCandidato, new Uri(WebApp.BaseAddress), "api/Candidatos/InsertarCandidato");
 
                 if (response.IsSuccess)
                 {
                     var empleado = JsonConvert.DeserializeObject<Empleado>(response.Resultado.ToString());
-                    return RedirectToAction("AgregarDistributivo", new { IdEmpleado = empleado.IdEmpleado });
+                   // return RedirectToAction("AgregarDistributivo", new { IdEmpleado = empleado.IdEmpleado });
                 }
                 ViewData["Error"] = Mensaje.ExisteEmpleado;
                 return View(fichaCandidato);
