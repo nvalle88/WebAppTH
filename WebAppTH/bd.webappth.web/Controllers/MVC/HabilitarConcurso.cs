@@ -34,11 +34,17 @@ namespace bd.webappth.web.Controllers.MVC
             }
             ViewData["Error"] = mensaje;
         }
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int id, int vacante)
         {
+            var usario = new ViewModelPartidaFase
+            {
+                Idindiceocupacional = id,
+                Vacantes = vacante
+
+            };
             await Cargarcombos();
             InicializarMensaje(null);
-            return View();
+            return View(usario);
         }
 
         public async Task<IActionResult> Index()
@@ -61,7 +67,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PartidasFase partidasFase)
+        public async Task<IActionResult> Create(ViewModelPartidaFase partidasFase)
         {
             if (!ModelState.IsValid)
             {
@@ -73,15 +79,19 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(partidasFase,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/HabilitarConcurso/InsertarHabilitarConsurso");
-                if (response.IsSuccess)
+                if (partidasFase.VacantesCredo <= partidasFase.Vacantes)
                 {
-                    return RedirectToAction("Create");
+                    response = await apiServicio.InsertarAsync(partidasFase,
+                                                                         new Uri(WebApp.BaseAddress),
+                                                                         "api/HabilitarConcurso/InsertarHabilitarConsurso");
+                    if (response.IsSuccess)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    await Cargarcombos(); 
                 }
                 await Cargarcombos();
-                ViewData["Error"] = response.Message;
+                ViewData["Error"] = "Numero de Vancante superior";
                 return View(partidasFase);
 
             }
@@ -93,21 +103,20 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Edit(string id)
         {
+
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/Sexos");
-
-
-                    respuesta.Resultado = JsonConvert.DeserializeObject<Sexo>(respuesta.Resultado.ToString());
-                    if (respuesta.IsSuccess)
+                    var usario = new ViewModelPartidaFase
                     {
-                        InicializarMensaje(null);
-                        return View(respuesta.Resultado);
-                    }
+                        Idindiceocupacional = Convert.ToInt32( id),
 
+                    };
+                    await Cargarcombos();
+                    
+                        InicializarMensaje(null);
+                        return View(usario);
                 }
 
                 return BadRequest();
