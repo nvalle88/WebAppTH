@@ -1,10 +1,11 @@
-@model List<bd.webappth.entidades.ViewModels.ViewModelPartidaFase>
+@model List<bd.webappth.entidades.ViewModels.FichaCandidatoViewModel>
 
 @{
-    ViewData["Title"] = "Concurso";
+    ViewData["Title"] = "Index";
 }
-
 <link href="~/css/tabla/table.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <!-- MAIN CONTENT -->
 <div id="content">
     <div class="col col-10">
@@ -43,6 +44,7 @@
         </button>
     </a>
     <p> </p>
+
     <!-- widget grid -->
     <section id="" class="">
         <!-- row -->
@@ -66,7 +68,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Concurso</h2>
+                        <h2>Candidatos</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -81,22 +83,24 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().grupoOcupacional)
+                                            Nombres y Apellidos
                                         </th>
-
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().PuestoInstitucional)
+                                        <th data-class="">
+                                            Identificaci&oacuten
                                         </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Vacantes)
+                                        <th data-class="">
+                                            Celular 
                                         </th>
-
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().VacantesCredo)
+                                        <th data-class="">
+                                            Tel&eacutefono 
                                         </th>
-
-
-                                        <th>Opciones</th>
+                                        <th data-class="">
+                                           Correo
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-cog "></i>
+                                            Opciones
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -104,29 +108,23 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.grupoOcupacional)
+                                            @Html.DisplayFor(modelItem => item.Nombres)  @Html.DisplayFor(modelItem => item.Apellidos)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.PuestoInstitucional)
+                                            @Html.DisplayFor(modelItem => item.Identificacion)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Vacantes)
+                                            @Html.DisplayFor(modelItem => item.TelefonoPrivado)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.VacantesCredo)
+                                            @Html.DisplayFor(modelItem => item.TelefonoCasa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CorreoPrivado)
                                         </td>
 
                                         <td>
-                                            @if (item.estado == 0)
-        {
-                                    @Html.ActionLink("Abierto", "Create", new { id = item.Idindiceocupacional , vacante = item.Vacantes })
-}
-else
-{
-
-                                    <label>Cerrado</label>
-                                    @Html.ActionLink("Editar", "Edit", new { id = item.Idindiceocupacional })
-}
+                                            @Html.ActionLink("Ficha del candidato", "Detalle", "FichaCandidatos", new { idCandidato = item.IdCandidato, idPersona =item.IdPersona}, new { onclick = "cargando()" })<br />
                                         </td>
                                     </tr>
                                     }
@@ -149,5 +147,14 @@ else
 <!-- END MAIN CONTENT -->
 
 @section Scripts {
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+    </script>
+
     <script src='~/js/datatables/init.js'></script>
 }
+

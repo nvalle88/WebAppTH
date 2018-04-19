@@ -14,5 +14,12 @@ namespace bd.webappth.entidades.Constantes
         /// </summary>
         public const string idEmpleadoSession = "idEmpleado";
         public const string idPersonaSession = "idPersona";
+
+        /// <summary>
+        /// Constantes para la session de ficha de los candidatos
+        /// </summary>
+        public const string idCandidatoSession = "idCandidatoSession";
+
+        public const string idCandidatoPersonaSession = "idCandidatoPersonaSession";
     }
 }

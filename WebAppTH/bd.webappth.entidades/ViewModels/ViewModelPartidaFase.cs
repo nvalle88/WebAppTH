@@ -12,5 +12,8 @@ namespace bd.webappth.entidades.ViewModels
         public int Idindiceocupacional { get; set; }
         public int IdTipoConcurso { get; set; }
         public int IdPartidaFase { get; set; }
+        public int estado { get; set; }
+        public int Vacantes { get; set; }
+        public int VacantesCredo { get; set; }
     }
 }
