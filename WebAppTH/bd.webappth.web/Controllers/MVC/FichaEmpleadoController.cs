@@ -1896,15 +1896,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-       
-        public async Task <IActionResult> FichasEmpleadosVista(int idEmpleado, int idPersona)
-        {
-
-           
-           
-            return RedirectToAction("Detalle");
-        }
-
         public async Task<IActionResult> Detalle(string mensaje, int idEmpleado, int idPersona)
         {
 

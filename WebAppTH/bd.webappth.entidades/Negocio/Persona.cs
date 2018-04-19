@@ -116,6 +116,8 @@ namespace bd.webappth.entidades.Negocio
 
         public virtual ICollection<Empleado> Empleado { get; set; }
 
+        public virtual ICollection<Candidato> Candidato { get; set; }
+
         public virtual ICollection<EmpleadoContactoEmergencia> EmpleadoContactoEmergencia { get; set; }
 
         public virtual ICollection<EmpleadoFamiliar> EmpleadoFamiliar { get; set; }
