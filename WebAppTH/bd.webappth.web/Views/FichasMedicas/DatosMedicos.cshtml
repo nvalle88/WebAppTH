@@ -22,8 +22,8 @@
     }
 
     .titulo {
-        background-color: black;
-        color: white;
+        background-color: #cbd2d5;
+        color: Black;
         padding-left: 1%;
     }
 
@@ -152,7 +152,7 @@
 
                                                         <p>@Html.DisplayNameFor(model => model.TensionArterial)</p>
 
-                                                        <input type="text" maxlength="50" asp-for="TensionArterial" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TensionArterial)" />
+                                                        <input type="text" maxlength="50" asp-for="TensionArterial" class="form-control"  />
                                                         <span asp-validation-for="TensionArterial" class="text-danger"></span>
                                                     </label>
 
@@ -166,7 +166,7 @@
                                                         <p>
                                                             @Html.DisplayNameFor(model => model.FrecuenciaCardiaca)
                                                         </p>
-                                                        <input type="text" maxlength="50" asp-for="FrecuenciaCardiaca" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.FrecuenciaCardiaca)" />
+                                                        <input type="text" maxlength="50" asp-for="FrecuenciaCardiaca" class="form-control"  />
                                                         <span asp-validation-for="FrecuenciaCardiaca" class="text-danger"></span>
                                                     </label>
                                                     <br />
@@ -182,7 +182,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.FrecuenciaRespiratoria)
                                                     </p>
-                                                    <input type="text" maxlength="50" asp-for="FrecuenciaRespiratoria" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.FrecuenciaRespiratoria)" />
+                                                    <input type="text" maxlength="50" asp-for="FrecuenciaRespiratoria" class="form-control"  />
                                                     <span asp-validation-for="FrecuenciaRespiratoria" class="text-danger"></span>
                                                 </label>
                                             </div>
@@ -194,7 +194,7 @@
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Talla)</p>
 
-                                                    <input type="text" maxlength="50" asp-for="Talla" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Talla)" />
+                                                    <input type="text" maxlength="50" asp-for="Talla" class="form-control"  />
                                                     <span asp-validation-for="Talla" class="text-danger"></span>
                                                 </label>
                                                 <br />
@@ -206,7 +206,7 @@
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Peso)</p>
 
-                                                    <input type="text" maxlength="50" asp-for="Peso" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Peso)" />
+                                                    <input type="text" maxlength="50" asp-for="Peso" class="form-control"  />
                                                     <span asp-validation-for="Peso" class="text-danger"></span>
                                                 </label>
 
@@ -258,6 +258,9 @@
 
                                     </article>
 
+                                    <article class="col col-lg-12">
+                                        &nbsp;
+                                    </article>
 
                                     <article class="col col-lg-12">
                                         <legend>
@@ -269,6 +272,25 @@
 
 
                                         <div>
+                                            <div class="contenedor-seccion2">
+
+                                                <div class="columna1">
+                                                    <p>&nbsp;</p>
+                                                </div>
+
+                                                <div class="columna2">
+                                                    <p>&nbsp;</p>
+                                                </div>
+
+                                                <div class="columna3">
+                                                    <p>&nbsp;</p>
+                                                </div>
+
+                                                <div class="columna4">
+                                                    <p>&nbsp;</p>
+                                                </div>
+
+                                            </div>
 
                                             <div class="contenedor-seccion2">
 
@@ -309,7 +331,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="CabezaHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.CabezaHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="CabezaHallazgos" class="form-control"  />
                                                     <span asp-validation-for="CabezaHallazgos" class="text-danger"></span>
 
                                                 </div>
@@ -335,7 +357,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="OjosHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.OjosHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="OjosHallazgos" class="form-control"  />
                                                     <span asp-validation-for="OjosHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -360,7 +382,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="OidosHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.OidosHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="OidosHallazgos" class="form-control"  />
                                                     <span asp-validation-for="OidosHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -385,7 +407,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="NarizHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.NarizHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="NarizHallazgos" class="form-control"  />
                                                     <span asp-validation-for="NarizHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -410,7 +432,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="BocaHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.BocaHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="BocaHallazgos" class="form-control" />
                                                     <span asp-validation-for="BocaHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -435,7 +457,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="FaringeAmigdalasHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.FaringeAmigdalasHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="FaringeAmigdalasHallazgos" class="form-control"  />
                                                     <span asp-validation-for="FaringeAmigdalasHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -460,7 +482,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="CuelloHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.CuelloHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="CuelloHallazgos" class="form-control"  />
                                                     <span asp-validation-for="CuelloHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -485,7 +507,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="CorazonHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.CorazonHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="CorazonHallazgos" class="form-control"  />
                                                     <span asp-validation-for="CorazonHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -510,7 +532,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="PulmonesHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.PulmonesHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="PulmonesHallazgos" class="form-control"  />
                                                     <span asp-validation-for="PulmonesHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -535,7 +557,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="AbdomenHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.AbdomenHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="AbdomenHallazgos" class="form-control"  />
                                                     <span asp-validation-for="AbdomenHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -560,7 +582,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="HerniasHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.HerniasHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="HerniasHallazgos" class="form-control"  />
                                                     <span asp-validation-for="HerniasHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -585,7 +607,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="GenitalesHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.GenitalesHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="GenitalesHallazgos" class="form-control"  />
                                                     <span asp-validation-for="GenitalesHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -610,7 +632,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="ExtremidadesSuperioresHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.ExtremidadesSuperioresHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="ExtremidadesSuperioresHallazgos" class="form-control" />
                                                     <span asp-validation-for="ExtremidadesSuperioresHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -635,7 +657,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="ExtremidadesInferioresHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.ExtremidadesInferioresHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="ExtremidadesInferioresHallazgos" class="form-control" />
                                                     <span asp-validation-for="ExtremidadesInferioresHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -660,7 +682,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="VaricesHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.VaricesHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="VaricesHallazgos" class="form-control" />
                                                     <span asp-validation-for="VaricesHallazgos" class="text-danger"></span>>
                                                 </div>
 
@@ -685,7 +707,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="SistemaNerviosoHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.SistemaNerviosoHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="SistemaNerviosoHallazgos" class="form-control"  />
                                                     <span asp-validation-for="SistemaNerviosoHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -709,7 +731,7 @@
                                                 </div>
 
                                                 <div class="columna4">
-                                                    <input style="width:98%;" maxlength="250" asp-for="PielHallazgos" class="form-control" placeholder="@Html.DisplayNameFor(model => model.PielHallazgos)" />
+                                                    <input style="width:98%;" maxlength="250" asp-for="PielHallazgos" class="form-control"  />
                                                     <span asp-validation-for="PielHallazgos" class="text-danger"></span>
                                                 </div>
 
@@ -754,7 +776,7 @@
                                                         <p>
                                                             @Html.DisplayNameFor(model => model.DetalleEnfermedad)
                                                         </p>
-                                                        <input maxlength="100" asp-for="DetalleEnfermedad" class="form-control" placeholder="@Html.DisplayNameFor(model => model.DetalleEnfermedad)" />
+                                                        <input maxlength="100" asp-for="DetalleEnfermedad" class="form-control" />
                                                         <span asp-validation-for="DetalleEnfermedad" class="text-danger"></span>
                                                     </label>
                                                     <br />
@@ -782,7 +804,7 @@
 
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Diagnostico)</p>
-                                                    <textarea maxlength="500" asp-for="Diagnostico" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Diagnostico)" rows="4" style="resize:none;"></textarea>
+                                                    <textarea maxlength="500" asp-for="Diagnostico" class="form-control"  rows="4" style="resize:none;"></textarea>
                                                     <span asp-validation-for="Diagnostico" class="text-danger"></span>
                                                 </label>
 
@@ -811,7 +833,7 @@
 
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Recomendaciones)</p>
-                                                    <textarea maxlength="500" asp-for="Recomendaciones" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Recomendaciones)" rows="4" style="resize:none;"></textarea>
+                                                    <textarea maxlength="500" asp-for="Recomendaciones" class="form-control"  rows="4" style="resize:none;"></textarea>
                                                     <span asp-validation-for="Recomendaciones" class="text-danger"></span>
                                                 </label>
 

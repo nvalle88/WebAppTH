@@ -22,14 +22,14 @@
                 
                 -->
 
-                <input type="hidden" style="width:300px;" maxlength="50" asp-for="IdFichaMedica" class="form-control" placeholder="@Html.DisplayNameFor(model => model.IdFichaMedica)" readonly/>
+                <input type="hidden" style="width:300px;" maxlength="50" asp-for="IdFichaMedica" class="form-control" readonly/>
 
             </section>
 
             <section>
                 <label>
                     <label>@Html.DisplayNameFor(model => model.Parentesco)</label>
-                    <input style="width:300px;" maxlength="50" asp-for="Parentesco" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Parentesco)" />
+                    <input style="width:300px;" maxlength="50" asp-for="Parentesco" class="form-control"  />
                     <span asp-validation-for="Parentesco" class="text-danger"></span>
                 </label>
             </section>
@@ -37,7 +37,7 @@
             <section>
                 <label>
                     <label>@Html.DisplayNameFor(model => model.Enfermedad)</label>
-                    <input style="width:300px;" maxlength="150" asp-for="Enfermedad" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Enfermedad)" />
+                    <input style="width:300px;" maxlength="150" asp-for="Enfermedad" class="form-control"  />
                     <span asp-validation-for="Enfermedad" class="text-danger"></span>
                 </label>
             </section>
@@ -45,7 +45,7 @@
             <section>
                 <label>
                     <label>@Html.DisplayNameFor(model => model.Observaciones)</label>
-                    <textarea style="width:300px;resize:none;" maxlength="500" asp-for="Observaciones" class="form-control" placeholder="@Html.DisplayNameFor(model => model.Observaciones)" rows="4" ></textarea>
+                    <textarea style="width:300px;resize:none;" maxlength="500" asp-for="Observaciones" class="form-control"  rows="4" ></textarea>
                     <span asp-validation-for="Observaciones" class="text-danger"></span>
                 </label>
             </section>
