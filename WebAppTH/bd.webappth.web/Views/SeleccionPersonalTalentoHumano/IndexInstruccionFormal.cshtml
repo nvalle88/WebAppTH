@@ -1,7 +1,7 @@
-﻿@model bd.webappth.entidades.ViewModels.ViewModelSeleccionPersonal
+﻿@model List<bd.webappth.entidades.Negocio.CandidatoEstudio>
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 @using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelSeleccionPersonal { iddependecia = Model.iddependecia, OpcionMenu = 2 }; }
+@{ var modelo = new ViewModelSeleccionPersonal { OpcionMenu = 2 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
@@ -64,31 +64,31 @@
 
                                     <tr>
                                         <th data-class="expand">
-                                                @Html.DisplayNameFor(model => model.areaconocimiento)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.nivelIntruccion)
-                                            </th>
-                                            <th>Opciones</th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Titulo.AreaConocimiento)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Titulo.Nombre)
+                                        </th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.ListasPersonaEstudio)
-                                        {
+                                    @foreach (var item in Model)
+                                    {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Titulo.AreaConocimiento)
+                                                @Html.DisplayFor(modelItem => item.Titulo.AreaConocimiento.Descripcion)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Titulo.Nombre)
                                             </td>
-                                            
+
                                             <td>
-                                                @Html.ActionLink("Eliminar", "", new { id = item.IdPersonaEstudio })
+                                                @Html.ActionLink("Eliminar", "", new { id = item.IdCandidatoEstudio })
 
                                             </td>
                                         </tr>
-                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
