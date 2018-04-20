@@ -1,5 +1,5 @@
 ﻿@model bd.webappth.entidades.ViewModels.RequerimientoRolPorDependenciaViewModel
-
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Planificación de puestos";
@@ -44,9 +44,8 @@
         <!-- row -->
 
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
 
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 * Propuesta @Model.NombreDependencia
             </div>
         </div>
@@ -57,9 +56,8 @@
 
         <div class="row">
 
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
 
-            <div class="col col-lg-10">
+            <div class="col col-lg-12">
                 <form asp-action="Volver" id="checkout-form" novalidate="novalidate">
 
 
@@ -81,9 +79,8 @@
 
         <div class="row">
 
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
 
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
@@ -177,9 +174,8 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
 
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:

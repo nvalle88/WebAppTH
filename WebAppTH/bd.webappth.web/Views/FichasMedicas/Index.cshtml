@@ -1,5 +1,6 @@
 ﻿@model bd.webappth.entidades.ViewModels.FichaMedicaViewModel
 @using bd.webappth.entidades.Negocio
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Historia clínica ocupacional";
@@ -15,7 +16,7 @@
 <style>
 
     #DatosPersonales {
-        visibility:hidden;
+        visibility: hidden;
     }
 
     .labels {
@@ -29,11 +30,11 @@
         border-color: black;
         border-width: 0px;
     }
-        
+
 
         .labels input {
             font-weight: 100;
-            background-color:transparent;
+            background-color: transparent;
         }
 
     input.label-data {
@@ -43,8 +44,8 @@
         background-color: transparent;
         border-width: 0px;
         /*margin-left:50%;*/
-        float:right;
-        padding-right:5px;
+        float: right;
+        padding-right: 5px;
     }
 
     .cont-div {
@@ -57,16 +58,13 @@
         float: right;
         padding-right: 5px;
     }
-    
 </style>
 
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
 
-
-
-    @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
     <br />
 
@@ -90,7 +88,7 @@
     &nbsp;
 
     <div class="input">
-        @Html.DisplayName("Ingresar cédula de nuevo paciente"):<br />
+        @Html.DisplayName("Nuevo paciente"):<br />
         <form asp-action="Index" id="checkout-form" class="smart-form" novalidate="novalidate">
             <input type="hidden" asp-for="DatosBasicosPersonaViewModel.IdPersona" value="0" />
 
@@ -105,7 +103,7 @@
     <br />
     <br />
 
-    <section id="DatosPersonales" class="" >
+    <section id="DatosPersonales" class="">
 
         <!-- START ROW -->
         <div class="row">
@@ -145,13 +143,13 @@
                                         </div>
 
                                         <div class="labels">
-                                            @Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.FechaNacimiento ):
-                                            <input  asp-for="DatosBasicosPersonaViewModel.FechaNacimiento" readonly class="label-data" data-dateformat='dd/mm/yy' />
+                                            @Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.FechaNacimiento):
+                                            <input asp-for="DatosBasicosPersonaViewModel.FechaNacimiento" readonly class="label-data" data-dateformat='dd/mm/yy' />
                                         </div>
 
                                         <div class="labels">
                                             @Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.FechaIngreso):
-                                            <input type="date"  class="label-data" asp-for="DatosBasicosPersonaViewModel.FechaIngreso" data-dateformat='dd/mm/yy' readonly />
+                                            <input type="date" class="label-data" asp-for="DatosBasicosPersonaViewModel.FechaIngreso" data-dateformat='dd/mm/yy' readonly />
                                         </div>
 
                                         <div class="labels">
@@ -322,7 +320,7 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Fichas médicas</h2>
                     </header>
@@ -353,7 +351,7 @@
                                         -->
                                     <tr>
 
-                                        <th data-class="expand" class="expand sorting_desc" >
+                                        <th data-class="expand" class="expand sorting_desc">
                                             @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().FechaFichaMedica)
 
                                         </th>
@@ -362,7 +360,7 @@
                                             @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().IdFichaMedica)
                                         </th>
 
-                                        <th data-class="expand" class="expand sorting" >
+                                        <th data-class="expand" class="expand sorting">
                                             @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().Estado)
 
                                         </th>
@@ -371,36 +369,36 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.FichasMedicas.OrderBy( x => x.FechaFichaMedica ))
+                                    @foreach (var item in Model.FichasMedicas.OrderBy(x => x.FechaFichaMedica))
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FechaFichaMedica)
-                                            
-                                            
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaFichaMedica)
 
-                                        </td>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.IdFichaMedica)
-                                        </td>
 
-                                        <td>
-                                            @if (item.Estado == 1)
-        {
-                                    @: Finalizado
-}
-else
-{
-                                    @: En edición
-}
-                                        </td>
+                                            </td>
 
-                                        <td>
-                                            @Html.ActionLink("Editar", "CambiarEstado", new { id = item.IdFichaMedica, idFM = item.IdFichaMedica, idPer = item.IdPersona }, new { onclick = "espera()" }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFichaMedica, idFM = item.IdFichaMedica, idPer = item.IdPersona }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
-                                        </td>
-                                    </tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IdFichaMedica)
+                                            </td>
+
+                                            <td>
+                                                @if (item.Estado == 1)
+                                                {
+                                                    @: Finalizado
+                                }
+                                                else
+                                                {
+                                                    @: En edición
+                                }
+                                            </td>
+
+                                            <td>
+                                                @Html.ActionLink("Editar", "CambiarEstado", new { id = item.IdFichaMedica, idFM = item.IdFichaMedica, idPer = item.IdPersona }, new { onclick = "espera()" }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFichaMedica, idFM = item.IdFichaMedica, idPer = item.IdPersona }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -445,7 +443,7 @@ else
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Pacientes</h2>
                     </header>
@@ -513,7 +511,7 @@ else
 
 
                                             <td>
-                                                @Html.ActionLink("Ver", "SeleccionPaciente", new { id = item.Identificacion })
+                                                @Html.ActionLink("Ver", "SeleccionPaciente", new { id = item.Identificacion }, new { onclick = "espera()" })
 
                                                 @*  @Html.ActionLink("Editar", "Edit", new { id = item.IdFichaMedica })  |
                                                     @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
@@ -594,7 +592,7 @@ else
         onload = function () {
             NuevaFicha();
 
-            
+
         }
 
 
