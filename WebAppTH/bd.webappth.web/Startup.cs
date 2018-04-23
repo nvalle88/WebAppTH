@@ -48,6 +48,8 @@ namespace bd.webappth.web
 
 
             services.AddMvc();
+
+            
             //services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddDataProtection()
@@ -74,7 +76,12 @@ namespace bd.webappth.web
             services.AddScoped<IUploadFileService, UploadFileService>();
 
 
-            services.AddAuthorization(options =>
+
+            
+
+         
+
+            services.AddMvc().Services.AddAuthorization(options=>
             {
                 options.AddPolicy("EstaAutorizado",
                                   policy => policy.Requirements.Add(new RolesRequirement()));

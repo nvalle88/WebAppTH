@@ -2,13 +2,7 @@
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 
-@using bd.webappth.entidades.Utils
-@{ var modelo = new MenuFichaCandidato { OpcionMenu = 0 }; }
-
-@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
-
 <div id="content">
-    @{await Html.RenderPartialAsync("_PartialViewBotonIndexEmpleado");}
     <section id="widget-grid" class="">
         <div class="col col-10">
 
@@ -16,19 +10,19 @@
 
             {
 
-                <div class="col-lg-12">
+            <div class="col-lg-12">
 
-                    <div class="alert alert-block alert-dismissable">
+                <div class="alert alert-block alert-dismissable">
 
-                        <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
 
-                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
 
-                        <p>
-                            <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-                        </p>
-                    </div>
+                    <p>
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                    </p>
                 </div>
+            </div>
             }
         </div>
         <div class="row">
@@ -54,20 +48,24 @@
                                             <span asp-validation-for="Identificacion" class="text-danger"></span>
                                             <span id="idIdentificacion" class="text-danger"></span>
                                         </section>
-                                        <section class="col col-4">
-                                            <label>Nombres</label>
-                                            <input asp-for="Nombres" readonly class="form-control input " placeholder="Nombres" type="text" />
-                                            <span asp-validation-for="Nombres" class="text-danger"></span>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label>Apellidos </label>
-                                            <input asp-for="Apellidos" readonly class="form-control input " placeholder="Apellidos" type="text" />
-                                            <span asp-validation-for="Apellidos" class="text-danger"></span>
-                                        </section>
+                                       
                                     </div>
                                     <div class="row">
                                         <article class="col col-lg-12">
                                             <div class="row">
+                                                <section class="col col-4">
+                                                    <label>Nombres</label>
+                                                    <input asp-for="Nombres" readonly class="form-control input " placeholder="Nombres" type="text" />
+                                                    <span asp-validation-for="Nombres" class="text-danger"></span>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label>Apellidos </label>
+                                                    <input asp-for="Apellidos" readonly class="form-control input " placeholder="Apellidos" type="text" />
+                                                    <span asp-validation-for="Apellidos" class="text-danger"></span>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                
                                                 <section class="col col-4">
                                                     <label>Correo Privado </label>
                                                     <input asp-for="CorreoPrivado" readonly class="form-control input " placeholder="Correo Privado" data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto" />
