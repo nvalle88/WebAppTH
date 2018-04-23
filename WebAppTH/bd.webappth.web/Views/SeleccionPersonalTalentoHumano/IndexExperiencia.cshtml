@@ -1,7 +1,7 @@
-﻿@model bd.webappth.entidades.ViewModels.ViewModelSeleccionPersonal
+﻿@model List<bd.webappth.entidades.Negocio.CandidatoTrayectoriaLaboral>
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 @using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelSeleccionPersonal { iddependecia = Model.iddependecia, OpcionMenu = 3 }; }
+@{ var modelo = new ViewModelSeleccionPersonal { OpcionMenu = 3 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
@@ -28,112 +28,97 @@
         }
     </div>
     <p></p>
-    <a asp-action="CreateExperiencia">
-        <button type="button" asp-action="CreateExperiencia" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo
-        </button>
-    </a>
-    <p> </p>
-
-    <!-- widget grid -->
-    <section id="" class="">
-        <!-- row -->
-        <div class="row">
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-
-                    <header id="table">
-                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Experiencia</h2>
-                    </header>
-                    <!-- widget div-->
-                    <div>
-                        <!-- widget edit box -->
-                        <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
-                        </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
-                        <div class="widget-body no-padding">
-                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                <thead>
-
-                                    <tr>
-                                        @*<th data-class="expand">
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NumeroPartidaGeneral)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().UnidadAdministrativa)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NumeroPartidaIndividual)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().PuestoInstitucional)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().grupoOcupacional)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NumeroPuesto)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Remuneracion)
-                                            </th>
-                                            <th>Opciones</th>*@
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @*@foreach (var item in Model)
-                                        {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NumeroPartidaGeneral)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NumeroPartidaIndividual)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.PuestoInstitucional)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.grupoOcupacional)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NumeroPuesto)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Remuneracion)
-                                            </td>
-
-                                            <td>
-                                                @Html.ActionLink("Postular", "Create", new { id = item.iddependecia })
-
-                                            </td>
-                                        </tr>
-                                        }*@
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- end widget content -->
-                    </div>
-                    <!-- end widget div -->
-                </div>
-
-            </article>
-            <!-- WIDGET END -->
-        </div>
-        <!-- end row -->
-        <!-- end row -->
+    <section class="col col-lg-10">
+        <a asp-action="CreateExperiencia">
+            <button type="button" asp-action="CreateExperiencia" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nuevo
+            </button>
+        </a>
     </section>
-    <!-- end widget grid -->
+    <section class="col col-lg-2">
+        @if (Model.Count > 0)
+        {
+            { await Html.RenderPartialAsync("_PartialViewBotonIndexExperiencia"); }
+        }
+         </section>
+        <p> </p>
+
+
+        <!-- widget grid -->
+        <section id="" class="">
+            <!-- row -->
+            <div class="row">
+                <!-- NEW WIDGET START -->
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+
+                        <header id="table">
+                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                            <h2>Experiencia</h2>
+                        </header>
+                        <!-- widget div-->
+                        <div>
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+                            </div>
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+
+                                        <tr>
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Institucion)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().FechaFin)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().FechaFin)
+                                            </th>
+
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Institucion)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FechaInicio)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FechaFin)
+                                                </td>
+                                                <td>
+                                                    @Html.ActionLink("Eliminar", "", new { id = item.IdCandidatoTrayectoriaLaboral })
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end widget content -->
+                        </div>
+                        <!-- end widget div -->
+                    </div>
+
+                </article>
+                <!-- WIDGET END -->
+            </div>
+            <!-- end row -->
+            <!-- end row -->
+        </section>
+        <!-- end widget grid -->
 </div>
 <!-- END MAIN CONTENT -->
 

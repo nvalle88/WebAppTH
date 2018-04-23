@@ -1,7 +1,7 @@
 ﻿@model bd.webappth.entidades.ViewModels.ViewModelSeleccionPersonal
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 @using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelSeleccionPersonal { iddependecia = Model.iddependecia, OpcionMenu = 3 }; }
+@{ var modelo = new ViewModelSeleccionPersonal { OpcionMenu = 3 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <!-- MAIN CONTENT -->
@@ -49,13 +49,13 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="CreateExperiencia" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialViewExperiencia", Model);}
 
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                    <a asp-action="IndexExperiencia" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>

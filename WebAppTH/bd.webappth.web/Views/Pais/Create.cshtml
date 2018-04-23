@@ -57,20 +57,14 @@
 
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <form asp-action="Create" id="checkout-form" class="smart-form">
+                               
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-8">
+                                            <label>Pa&iacute;s</label>
                                             <label class="input">
-                                                @Html.DisplayNameFor(model => model.Nombre)
-                                            </label>
-                                        </section>
-                                    </div>
-                                    <div class="row">
-                                        <section class="col col-8">
-                                            <label class="input">
-                                                <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="Nombre" />
+                                                <input maxlength="32" asp-for="Nombre" class="form-control" />
                                                 <span asp-validation-for="Nombre" class="text-danger"></span>
                                             </label>
                                         </section>
@@ -79,7 +73,7 @@
                                 </fieldset>
 
                                 <footer>
-                                   
+
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
@@ -102,8 +96,5 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
-
-
-    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

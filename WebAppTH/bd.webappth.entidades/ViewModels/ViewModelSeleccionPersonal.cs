@@ -9,7 +9,11 @@ namespace bd.webappth.entidades.ViewModels
     public class ViewModelSeleccionPersonal
     {
         public int? iddependecia { get; set; }
-        public int IdPrtidaFase { get; set; }
+        public int IdCandidato { get; set; }
+        public int IdPartidaFase { get; set; }
+        public int NoSenescyt { get; set; }
+        public DateTime FechaGraduado { get; set; }
+        public string Observaciones { get; set; }
         [Display(Name = "Partida General")]
         public string NumeroPartidaGeneral { get; set; }
         [Display(Name = "Unidad Administrativa")]
@@ -27,7 +31,7 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "Remuneración")]
         public decimal? Remuneracion { get; set; }
         public int OpcionMenu { get; set; }
-        
+
 
 
 

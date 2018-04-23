@@ -201,6 +201,12 @@ namespace bd.webappth.entidades.ViewModels
                                            memberNames: new[] { "Identificacion" });
                     }
                 }
+                else
+                {
+                    yield return
+                     new ValidationResult(errorMessage: "La cédula no es válida",
+                                          memberNames: new[] { "Identificacion" });
+                }
             }
 
         }
