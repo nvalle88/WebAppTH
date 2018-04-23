@@ -116,7 +116,7 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Detalle", "CheckListDocumentosEmpleado", new { identificacion = item.Identificacion })
+                                                @Html.ActionLink("Detalle", "CheckListDocumentosEmpleado", new { identificacion = item.Identificacion},new { onclick = "cargando()" } )
                                             </td>
                                         </tr>
                                     }
