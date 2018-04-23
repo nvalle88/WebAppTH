@@ -42,9 +42,6 @@
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().EscalaGrado)
                                         </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Remuneracion)
-                                        </th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -73,9 +70,6 @@
                                         </td>
                                         <td data-toggle="toggle" data-placement="right" title="@item.EscalaGrado  @item.ManualPuesto">
                                             @Html.DisplayFor(modelItem => item.EscalaGrado)
-                                        </td>
-                                        <td data-toggle="toggle" data-placement="right" title=" @item.ManualPuesto">
-                                             @Html.DisplayFor(modelItem => item.Remuneracion)
                                         </td>
 
                                         <td>
