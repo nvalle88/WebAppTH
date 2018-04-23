@@ -34,16 +34,8 @@
 
         }
     </div>
-    <p></p>
-    <a asp-action="Create">
-        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo
 
-        </button>
-    </a>
-    <p> </p>
+    <p></p>
 
     <!-- widget grid -->
     <section id="" class="">
@@ -124,10 +116,7 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Ficha del empleado", "Detalle", "FichaEmpleado", new { idEmpleado = item.IdEmpleado, idPersona = item.IdPersona }, new { onclick = "cargando()" })<br />
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado })<br />
-                                               
-
+                                                @Html.ActionLink("Detalle", "CheckListDocumentosEmpleado", new { identificacion = item.Identificacion })
                                             </td>
                                         </tr>
                                     }
