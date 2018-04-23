@@ -38,6 +38,18 @@ namespace bd.webappth.web.Controllers.MVC
             }
             ViewData["Error"] = mensaje;
         }
+        [HttpPost]
+        public async Task<JsonResult> BusquedaCandidatos(string identificacion)
+        {
+            var candidato = new Candidato
+            {
+                Identificacion = Convert.ToString( identificacion)
+            };
+            var listaAreasConocimientos = await apiServicio.ObtenerElementoAsync1<Candidato>(candidato, new Uri(WebApp.BaseAddress), "api/SeleccionPersonalTalentoHumano/ObtenerCandidato");
+            int idCandidato = listaAreasConocimientos.IdCandidato;
+            HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, idCandidato);
+            return Json(listaAreasConocimientos);
+        }
         public async Task<IActionResult> IndexCandidatosPostulados(int partida)
         {
             try
@@ -134,7 +146,7 @@ namespace bd.webappth.web.Controllers.MVC
                     HttpContext.Session.SetInt32(Constantes.idDependeciaConcursoSession, 0);
                     return RedirectToAction("Index");
                 }
-                return View(usuario);
+                return View();
 
             }
             catch (Exception ex)
@@ -347,7 +359,30 @@ namespace bd.webappth.web.Controllers.MVC
                 throw;
             }
         }
-        public async Task<IActionResult> Evaluar(int id)
+        public async Task<IActionResult> Evaluar(int id,int a)
+        {
+            try
+            {
+                InicializarMensaje(null);
+
+                var usuario = new ViewModelEvaluarCandidato
+                {
+                    IdCandidato = id,
+                    IdPartidaFase = a
+
+                };
+                var response = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluarCandidato>(usuario, new Uri(WebApp.BaseAddress)
+                                                                         , "api/SeleccionPersonalTalentoHumano/CandidatoEvaluar");
+
+                return View(response);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+        public async Task<IActionResult> DetalleEvaluar(int id)
         {
             try
             {
@@ -359,9 +394,33 @@ namespace bd.webappth.web.Controllers.MVC
 
                 };
                 var response = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluarCandidato>(usuario, new Uri(WebApp.BaseAddress)
-                                                                         , "api/SeleccionPersonalTalentoHumano/CandidatoEvaluar");
+                                                                         , "api/SeleccionPersonalTalentoHumano/DetalleCandidatoEvaluar");
 
                 return View(response);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Evaluar(ViewModelEvaluarCandidato viewModelEvaluarCandidato)
+        {
+            try
+            {
+                InicializarMensaje(null);
+
+                
+                var response = await apiServicio.InsertarAsync<ViewModelEvaluarCandidato>(viewModelEvaluarCandidato, new Uri(WebApp.BaseAddress)
+                                                                         , "api/SeleccionPersonalTalentoHumano/InsertarEvaluacion");
+
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View(viewModelEvaluarCandidato);
 
             }
             catch (Exception ex)

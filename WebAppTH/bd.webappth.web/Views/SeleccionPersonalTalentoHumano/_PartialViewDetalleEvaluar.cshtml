@@ -121,11 +121,17 @@
                         Instruccion Formal
                     </td>
                     <td>
-                        <input type="checkbox" name="ApliInstruccion" value="true" />
-                        <input type="hidden" name="ApliInstruccion" value="false" checked="checked" />
+                        @if(Model.ApliInstruccion == true)
+                        {
+                        <input type="checkbox" name="ApliInstruccion" readonly="readonly" checked="checked" />
+                        }else
+                        {
+                        <input type="checkbox" name="ApliInstruccion" readonly="readonly" />
+                        }
+
                     </td>
                     <td>
-                        <input type="number" id="num1" name="PorInstruccion" onchange="fsuma()"/>
+                        @Html.DisplayFor(model => model.PorInstruccion)
                     </td>
                 </tr>
                 <tr>
@@ -133,11 +139,17 @@
                         Experiencia
                     </td>
                     <td>
-                        <input type="checkbox" name="ApliExperiencia" value="true" />
-                        <input type="hidden" name="ApliExperiencia" value="false" checked="checked" />
+                        @if(Model.ApliExperiencia == true)
+                        {
+                    <input type="checkbox" name="ApliExperiencia"  readonly="readonly"  checked="checked" />
+                        }else
+                        {
+                    <input type="checkbox"  name="ApliExperiencia" readonly="readonly" />
+                        }
+                        
                     </td>
                     <td>
-                        <input type="number" id="num2" name="PorExperiencia" onchange="fsuma()" />
+                        @Html.DisplayFor(model => model.PorExperiencia)
                     </td>
                 </tr>
                 <tr>
@@ -146,7 +158,7 @@
                         Total
                     </td>
                     <td>
-                        <input type=text id="resul" readonly="readonly" />
+                        @Html.DisplayFor(model => model.Total)
                     </td>
                 </tr>
             </tbody>
@@ -163,11 +175,20 @@
                     </td>
                     <td>
                         Elegible
-                        <input name="Elegido" type="radio" value="true" />
+                        @if (Model.Elegido == true)
+                        {
+                            
+                            <input  type="radio"checked="checked" readonly="readonly" />
+                         }
+                                               
                     </td>
                     <td>
                         No Elegible
-                        <input name="Elegido" type="radio" value="false"/>
+                        @if (Model.Elegido == false)
+                        {
+                            
+                            <input type="radio"  readonly="readonly"/>
+                         }
                     </td>
                 </tr>
             </tbody>
@@ -175,7 +196,8 @@
     </div>
     <br />
     <div class="row">
-        <textarea class="form-control"name="Descripcion" rows="4" cols="20"></textarea>
+        @Html.DisplayFor(model => model.Descripcion)
+        
     </div>
 
 </fieldset>

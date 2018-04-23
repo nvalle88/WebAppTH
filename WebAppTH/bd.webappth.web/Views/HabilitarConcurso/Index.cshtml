@@ -34,14 +34,14 @@
         }
     </div>
     <p></p>
-    <a asp-action="Create">
+    @*<a asp-action="Create">
         <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nuevo
 
         </button>
-    </a>
+    </a>*@
     <p> </p>
     <!-- widget grid -->
     <section id="" class="">
@@ -118,15 +118,15 @@
 
                                         <td>
                                             @if (item.estado == 0)
-        {
+                                      {
                                     @Html.ActionLink("Abierto", "Create", new { id = item.Idindiceocupacional , vacante = item.Vacantes })
-}
-else
-{
+                                        }
+                                    else
+                                     {
 
                                     <label>Cerrado</label>
-                                    @Html.ActionLink("Editar", "Edit", new { id = item.Idindiceocupacional })
-}
+                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdPartidaFase })
+                                        }
                                         </td>
                                     </tr>
                                     }
