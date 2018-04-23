@@ -1,11 +1,11 @@
 @model bd.webappth.entidades.Negocio.DocumentosIngreso
 
 @{
-    ViewData["Title"] = "DocumentosIngreso";
+    ViewData["Title"] = "Documentos ingreso";
 }
 
 
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
     <div class="col col-10">
 
@@ -45,7 +45,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Documento Ingreso</h2>
+                        <h2>Documento ingreso</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -63,8 +63,8 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialViewDocumentosIngreso", Model);}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                    <input type="submit" value="Guardar" onclick="espera()" class="btn btn-default" />
+                                    <a asp-action="Index" onclick="espera()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -85,8 +85,16 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+    <script src='~/js/site.js'></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script>
 
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
 
     </script>
 }
