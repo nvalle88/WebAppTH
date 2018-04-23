@@ -1,0 +1,89 @@
+@model bd.webappth.entidades.ViewModels.ViewModelEvaluarCandidato
+<fieldset>
+    <legend>Datos Basicos</legend>
+    <div class="row">
+        <section class="col col-lg-12">
+            <label class="input">
+                @Html.DisplayNameFor(model => model.Identificacion):
+                @Html.DisplayFor(model => model.Identificacion)
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-lg-12">
+            <label class="input">
+                @Html.DisplayNameFor(model => model.Nombres):
+                @Html.DisplayFor(model => model.Nombres)
+            </label>
+        </section>
+    </div>
+    <legend>Datos Instruccion Formal</legend>
+    <div class="row">
+        <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+            <thead>
+
+                <tr>
+
+                    <th data-class="expand">
+                        @Html.DisplayNameFor(model => model.ListasPersonaEstudio.FirstOrDefault().Titulo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ListasPersonaEstudio.FirstOrDefault().NoSenecity)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListasPersonaEstudio)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Titulo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NoSenecity)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <legend>Datos Experiencia Laboral</legend>
+    <div class="row">
+        <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+            <thead>
+
+                <tr>
+
+                    <th data-class="expand">
+                        @Html.DisplayNameFor(model => model.ListasCanditadoExperiencia.FirstOrDefault().Institucion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ListasCanditadoExperiencia.FirstOrDefault().FechaInicio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ListasCanditadoExperiencia.FirstOrDefault().FechaFin)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListasCanditadoExperiencia)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Institucion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaInicio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaFin)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</fieldset>

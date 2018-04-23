@@ -1,7 +1,7 @@
 ﻿@model bd.webappth.entidades.ViewModels.ViewModelSeleccionPersonal
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 @using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelSeleccionPersonal { iddependecia = Model.iddependecia, OpcionMenu = 1 }; }
+@{ var modelo = new ViewModelSeleccionPersonal { OpcionMenu = 1 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <!-- MAIN CONTENT -->
@@ -11,7 +11,7 @@
 
         {
 
-            <div class="col-lg-7">
+            <div class="col-lg-12">
                 <div class="alert alert-block alert-dismissable">
                     <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
                     <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
@@ -49,9 +49,9 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="CreateDatosPersonales" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                
+
                                 @{await Html.RenderPartialAsync("_PartialViewDatosPersonales", Model);}
 
                                 <footer>
@@ -77,5 +77,89 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+
+            $("#IdEstudio").change(function () {
+            //mostrarLoadingPanel("content","Cargando...")
+            $("#IdAreaConocimiento").empty();
+            $("#IdTitulo").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarAreasConocimientosporEstudio","Empleados")',
+                    dataType: 'json',
+                    data: { idEstudio: $("#IdEstudio").val() },
+                    success: function (data) {
+                        $("#IdAreaConocimiento").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdAreaConocimiento").append('<option value="'
+                                + data.idAreaConocimiento + '">'
+                                + data.descripcion + '</option>');
+
+                        });
+                        Init_Select2();
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+
+                   $("#IdAreaConocimiento").change(function () {
+           // mostrarLoadingPanel("content","Cargando...")
+            $("#IdTitulo").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarTitulosporAreaConocimiento", "Empleados")',
+                    dataType: 'json',
+                    data: {
+                        idAreaConocimiento: $("#IdAreaConocimiento").val(),
+                        idEstudio: $("#IdEstudio").val()
+                          },
+                    success: function (data) {
+                        $("#IdTitulo").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdTitulo").append('<option value="'
+                                + data.idTitulo + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                        Init_Select2();
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+                   function cargando() {
+                       mostrarLoadingPanel("content", "")
+                   }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
 
 }

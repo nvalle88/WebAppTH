@@ -20,8 +20,8 @@
     }
 
     .titulo {
-        background-color: black;
-        color: white;
+        background-color: #cbd2d5;
+        color: Black;
         padding-left: 1%;
     }
 
@@ -150,7 +150,7 @@
 
                                                     <label class="input">
                                                         <p>@Html.DisplayNameFor(model => model.AntecedenteMedico)</p>
-                                                        <textarea maxlength="500" asp-for="AntecedenteMedico" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.AntecedenteMedico)" rows="4" style="resize:none;"></textarea>
+                                                        <textarea maxlength="500" asp-for="AntecedenteMedico" class="form-control" rows="4" style="resize:none;"></textarea>
                                                         <span asp-validation-for="AntecedenteMedico" class="text-danger"></span>
                                                     </label>
                                                 </div>
@@ -161,7 +161,7 @@
 
                                                     <label class="input">
                                                         <p>@Html.DisplayNameFor(model => model.AntecedenteQuirurgico)</p>
-                                                        <textarea maxlength="500" asp-for="AntecedenteQuirurgico" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.AntecedenteQuirurgico)" rows="4" style="resize:none;"></textarea>
+                                                        <textarea maxlength="500" asp-for="AntecedenteQuirurgico" class="form-control"  rows="4" style="resize:none;"></textarea>
                                                         <span asp-validation-for="AntecedenteQuirurgico" class="text-danger"></span>
                                                     </label>
 
@@ -178,7 +178,7 @@
 
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Alergias)</p>
-                                                    <input maxlength="110" asp-for="Alergias" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Alergias)" />
+                                                    <input maxlength="110" asp-for="Alergias" class="form-control"  />
                                                     <span asp-validation-for="Alergias" class="text-danger"></span>
                                                 </label>
 
@@ -192,7 +192,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.Vacunas)
                                                     </p>
-                                                    <input maxlength="110" asp-for="Vacunas" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Vacunas)" />
+                                                    <input maxlength="110" asp-for="Vacunas" class="form-control"  />
                                                     <span asp-validation-for="Vacunas" class="text-danger"></span>
                                                 </label>
 
@@ -205,7 +205,7 @@
 
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.UsoMedicinaDiaria)</p>
-                                                    <input maxlength="110" asp-for="UsoMedicinaDiaria" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.UsoMedicinaDiaria)" />
+                                                    <input maxlength="110" asp-for="UsoMedicinaDiaria" class="form-control"  />
                                                     <span asp-validation-for="UsoMedicinaDiaria" class="text-danger"></span>
                                                 </label>
 
@@ -219,7 +219,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.FechaUltimaDosis)
                                                     </p>
-                                                    <input type="date" style="width:260px;" asp-for="FechaUltimaDosis" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.FechaUltimaDosis)" />
+                                                    <input type="date" style="width:260px;" asp-for="FechaUltimaDosis" class="form-control"  />
                                                     <span asp-validation-for="FechaUltimaDosis" class="text-danger"></span>
                                                 </label>
 
@@ -237,7 +237,7 @@
                                     <article class="col col-lg-12">
                                         <legend>
                                             <div class="contenedor-cabecera">
-                                                <div class="titulo">Antecedentes gineco obstétricos</div>
+                                                <div class="titulo">Antecedentes gineco-obstétricos</div>
 
                                             </div>
                                         </legend>
@@ -254,7 +254,7 @@
                                                     <label class="input">
                                                         <p>@Html.DisplayNameFor(model => model.PrimeraMenstruacion)</p>
 
-                                                        <input type="date" maxlength="50" asp-for="PrimeraMenstruacion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.PrimeraMenstruacion)" />
+                                                        <input type="date" maxlength="50" asp-for="PrimeraMenstruacion" class="form-control"  />
                                                         <span asp-validation-for="PrimeraMenstruacion" class="text-danger"></span>
                                                     </label>
 
@@ -267,7 +267,7 @@
                                                     <label class="input">
                                                         <p>@Html.DisplayNameFor(model => model.UltimaMenstruacion)</p>
 
-                                                        <input type="date" maxlength="50" asp-for="UltimaMenstruacion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.UltimaMenstruacion)" />
+                                                        <input type="date" maxlength="50" asp-for="UltimaMenstruacion" class="form-control"  />
                                                         <span asp-validation-for="UltimaMenstruacion" class="text-danger"></span>
                                                     </label>
 
@@ -281,7 +281,7 @@
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.CicloMenstrual)</p>
 
-                                                    <input maxlength="50" asp-for="CicloMenstrual" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.CicloMenstrual)" />
+                                                    <input maxlength="50" asp-for="CicloMenstrual" class="form-control"  />
                                                     <span asp-validation-for="CicloMenstrual" class="text-danger"></span>
                                                 </label>
 
@@ -294,7 +294,7 @@
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Gestas)</p>
 
-                                                    <input maxlength="50" asp-for="Gestas" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Gestas)" />
+                                                    <input maxlength="50" asp-for="Gestas" class="form-control"  />
                                                     <span asp-validation-for="Gestas" class="text-danger"></span>
                                                 </label>
                                                 <br />
@@ -305,7 +305,7 @@
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Partos)</p>
 
-                                                    <input maxlength="50" asp-for="Partos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Partos)" />
+                                                    <input maxlength="50" asp-for="Partos" class="form-control"  />
                                                     <span asp-validation-for="Partos" class="text-danger"></span>
                                                 </label>
 
@@ -318,7 +318,7 @@
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Cesarias)</p>
 
-                                                    <input maxlength="50" asp-for="Cesarias" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Cesarias)" />
+                                                    <input maxlength="50" asp-for="Cesarias" class="form-control"  />
                                                     <span asp-validation-for="Cesarias" class="text-danger"></span>
                                                 </label>
                                                 <br />
@@ -331,7 +331,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.Abortos)
                                                     </p>
-                                                    <input maxlength="50" asp-for="Abortos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Abortos)" />
+                                                    <input maxlength="50" asp-for="Abortos" class="form-control"  />
                                                     <span asp-validation-for="Abortos" class="text-danger"></span>
                                                 </label>
                                             </div>
@@ -344,7 +344,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.HijosVivos)
                                                     </p>
-                                                    <input maxlength="50" asp-for="HijosVivos" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.HijosVivos)" />
+                                                    <input maxlength="50" asp-for="HijosVivos" class="form-control"  />
                                                     <span asp-validation-for="HijosVivos" class="text-danger"></span>
                                                 </label>
                                                 <br />
@@ -357,7 +357,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.UltimoPapTest)
                                                     </p>
-                                                    <input type="date" asp-for="UltimoPapTest" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.UltimoPapTest)" />
+                                                    <input type="date" asp-for="UltimoPapTest" class="form-control"  />
                                                     <span asp-validation-for="UltimoPapTest" class="text-danger"></span>
                                                 </label>
 
@@ -370,7 +370,7 @@
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.UltimaMamografia)</p>
 
-                                                    <input type="date" asp-for="UltimaMamografia" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.UltimaMamografia)" />
+                                                    <input type="date" asp-for="UltimaMamografia" class="form-control"  />
                                                     <span asp-validation-for="UltimaMamografia" class="text-danger"></span>
                                                 </label>
                                                 <br />
@@ -383,7 +383,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.Anticoncepcion)
                                                     </p>
-                                                    <input maxlength="50" asp-for="Anticoncepcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Anticoncepcion)" />
+                                                    <input maxlength="50" asp-for="Anticoncepcion" class="form-control"  />
                                                     <span asp-validation-for="Anticoncepcion" class="text-danger"></span>
                                                 </label>
                                             </div>
@@ -427,7 +427,7 @@
                                                         <p>
                                                             @Html.DisplayNameFor(model => model.FrecuenciaCigarrillo)
                                                         </p>
-                                                        <input maxlength="100" asp-for="FrecuenciaCigarrillo" class="form-control" placeholder="@Html.DisplayNameFor(model => model.FrecuenciaCigarrillo)" />
+                                                        <input maxlength="100" asp-for="FrecuenciaCigarrillo" class="form-control"  />
                                                         <span asp-validation-for="FrecuenciaCigarrillo" class="text-danger"></span>
                                                     </label>
 
@@ -439,7 +439,7 @@
                                                         <p>
                                                             @Html.DisplayNameFor(model => model.CigarrilloDesde)
                                                         </p>
-                                                        <input type="number" asp-for="CigarrilloDesde" class="form-control" placeholder="@Html.DisplayNameFor(model => model.CigarrilloDesde)" />
+                                                        <input type="number" asp-for="CigarrilloDesde" class="form-control"  />
                                                         <span asp-validation-for="CigarrilloDesde" class="text-danger"></span>
                                                     </label>
 
@@ -454,7 +454,7 @@
                                                         <p>
                                                             @Html.DisplayNameFor(model => model.CigarrilloHasta)
                                                         </p>
-                                                        <input type="number" asp-for="CigarrilloHasta" placeholder="@Html.DisplayNameFor(model => model.CigarrilloHasta)" data-dateformat='dd/mm/yy' />
+                                                        <input type="number" asp-for="CigarrilloHasta"  data-dateformat='dd/mm/yy' />
                                                         <span asp-validation-for="CigarrilloHasta" class="text-danger"></span>
                                                     </label>
 
@@ -485,7 +485,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.LicorFrecuencia)
                                                     </p>
-                                                    <input maxlength="100" asp-for="LicorFrecuencia" class="form-control" placeholder="@Html.DisplayNameFor(model => model.LicorFrecuencia)" />
+                                                    <input maxlength="100" asp-for="LicorFrecuencia" class="form-control"  />
                                                     <span asp-validation-for="LicorFrecuencia" class="text-danger"></span>
                                                 </label>
                                             </div>
@@ -495,7 +495,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.LicorDesde)
                                                     </p>
-                                                    <input type="number" asp-for="LicorDesde" class="form-control" placeholder="@Html.DisplayNameFor(model => model.LicorDesde)" />
+                                                    <input type="number" asp-for="LicorDesde" class="form-control"  />
                                                     <span asp-validation-for="LicorDesde" class="text-danger"></span>
                                                 </label>
                                             </div>
@@ -509,7 +509,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.LicorHasta)
                                                     </p>
-                                                    <input type="number" asp-for="LicorHasta" placeholder="@Html.DisplayNameFor(model => model.LicorHasta)" data-dateformat='dd/mm/yy' />
+                                                    <input type="number" asp-for="LicorHasta"  data-dateformat='dd/mm/yy' />
                                                     <span asp-validation-for="LicorHasta" class="text-danger"></span>
                                                 </label>
 
@@ -539,7 +539,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.FrecuenciaDrogas)
                                                     </p>
-                                                    <input maxlength="100" asp-for="FrecuenciaDrogas" class="form-control" placeholder="@Html.DisplayNameFor(model => model.FrecuenciaDrogas)" />
+                                                    <input maxlength="100" asp-for="FrecuenciaDrogas" class="form-control"  />
                                                     <span asp-validation-for="FrecuenciaDrogas" class="text-danger"></span>
                                                 </label>
 
@@ -551,7 +551,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.DrogasDesde)
                                                     </p>
-                                                    <input type="number" asp-for="DrogasDesde" class="form-control" placeholder="@Html.DisplayNameFor(model => model.DrogasDesde)" />
+                                                    <input type="number" asp-for="DrogasDesde" class="form-control"  />
                                                     <span asp-validation-for="DrogasDesde" class="text-danger"></span>
                                                 </label>
 
@@ -566,7 +566,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.DrogasHasta)
                                                     </p>
-                                                    <input type="number" asp-for="DrogasHasta" placeholder="@Html.DisplayNameFor(model => model.DrogasHasta)" data-dateformat='dd/mm/yy' />
+                                                    <input type="number" asp-for="DrogasHasta"  data-dateformat='dd/mm/yy' />
                                                     <span asp-validation-for="DrogasHasta" class="text-danger"></span>
                                                 </label>
 
@@ -595,7 +595,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.EjerciciosFrecuencia)
                                                     </p>
-                                                    <input maxlength="100" asp-for="EjerciciosFrecuencia" class="form-control" placeholder="@Html.DisplayNameFor(model => model.EjerciciosFrecuencia)" />
+                                                    <input maxlength="100" asp-for="EjerciciosFrecuencia" class="form-control"  />
                                                     <span asp-validation-for="EjerciciosFrecuencia" class="text-danger"></span>
                                                 </label>
                                             </div>
@@ -606,7 +606,7 @@
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.EjerciciosTipo)
                                                     </p>
-                                                    <input maxlength="100" asp-for="EjerciciosTipo" class="form-control" placeholder="@Html.DisplayNameFor(model => model.EjerciciosTipo)" />
+                                                    <input maxlength="100" asp-for="EjerciciosTipo" class="form-control"  />
                                                     <span asp-validation-for="EjerciciosTipo" class="text-danger"></span>
                                                 </label>
 
@@ -626,7 +626,7 @@
                                             <div class="contenedor-seccion">
 
                                                 <p>@Html.DisplayNameFor(model => model.HabitosObservaciones)</p>
-                                                <textarea maxlength="50" asp-for="HabitosObservaciones" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.HabitosObservaciones)" rows="4" style="resize:none;"></textarea>
+                                                <textarea maxlength="50" asp-for="HabitosObservaciones" class="form-control"  rows="4" style="resize:none;"></textarea>
                                                 <span asp-validation-for="HabitosObservaciones" class="text-danger"></span>
 
 

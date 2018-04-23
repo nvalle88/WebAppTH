@@ -178,7 +178,7 @@ namespace bd.webappth.servicios.Servicios
                     return respuesta;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

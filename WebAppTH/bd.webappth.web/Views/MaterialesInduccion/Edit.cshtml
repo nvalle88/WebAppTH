@@ -44,7 +44,7 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
 
                     <header>
-                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        
                         <h2>Material de Inducci&oacute;n</h2>
                     </header>
                     <!-- widget div-->
@@ -65,7 +65,6 @@
                                     <div class="row">
                                         <section class="col col-8">
                                             <label class="input">
-                                                <i class="icon-prepend fa fa-user"></i>
                                                 <input maxlength="32" asp-for="Titulo" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Titulo)" />
                                                 <span asp-validation-for="Titulo" class="text-danger"></span>
                                             </label>
@@ -75,15 +74,16 @@
                                     <section>
                                         <label class="label"></label>
                                         <label class="textarea">
-                                            <i class="icon-append fa fa-comment"></i>
                                             <textarea maxlength="250" asp-for="Descripcion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
                                             <span asp-validation-for="Descripcion" class="text-danger"></span>
                                         </label>
                                     </section>
                                     <span class="text-danger">@ViewData["Error"]</span>
+
+
                                 </fieldset>
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <input type="submit" value="Guardar" class="btn btn-default" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>

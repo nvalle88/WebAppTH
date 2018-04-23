@@ -279,24 +279,57 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var lista = new List<MaterialInduccion>();
+            var imagenes = new List<MaterialInduccion>();
+            var documentos = new List<MaterialInduccion>();
+            var videos = new List<MaterialInduccion>();
+
             try
             {
+                /*
                 lista = await apiServicio.Listar<MaterialInduccion>(new Uri(WebApp.BaseAddress)
                                                                     , "api/MaterialesInduccion/ListarMaterialesInduccion");
+                */
+                
                 InicializarMensaje(null);
+
+
+                /**/
+
+                lista = await apiServicio.Listar<MaterialInduccion>(new Uri(WebApp.BaseAddress)
+                        , "api/MaterialesInduccion/ListarMaterialesInduccionTTHH");
+
+                foreach (var item in lista)
+                {
+                    var ext = Path.GetExtension(item.Url);
+                    if (ext == ".jpeg" || ext == ".bmp" || ext == ".jpe" || ext == ".jpg" || ext == ".gif" || ext == ".png")
+                    {
+                        imagenes.Add(item);
+                    }
+                    else if (ext == ".pdf" || ext == ".xlsx" || ext == ".xls" || ext == ".docx" || ext == ".doc" || ext == ".pptx" || ext == ".ppt" || ext == "ppsx" || ext == "pps")
+                    {
+                        documentos.Add(item);
+                    }
+                    else
+                    {
+                        item.Url = item.Url.Replace("watch?v=", "embed/");
+                        videos.Add(item);
+                    }
+                }
+
+                var ViewModelInduccion = new ViewModelInduccion
+                {
+                    Imagenes = imagenes,
+                    Archivos = documentos,
+                    Videos = videos
+                };
+                return View(ViewModelInduccion);
+
+
+
                 return View(lista);
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando materiales de inducción",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
         }

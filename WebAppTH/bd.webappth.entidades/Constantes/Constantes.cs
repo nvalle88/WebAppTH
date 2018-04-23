@@ -19,7 +19,13 @@ namespace bd.webappth.entidades.Constantes
         /// Constantes para la session de ficha de los candidatos
         /// </summary>
         public const string idCandidatoSession = "idCandidatoSession";
-
         public const string idCandidatoPersonaSession = "idCandidatoPersonaSession";
+
+        /// <summary>
+        /// Constantes para la session de CadidatoConcurso
+        /// </summary>
+        public const string idCandidatoConcursoSession = "idCandidatoConcursoSession";
+        public const string idDependeciaConcursoSession = "idDependeciaConcursoSession";
+        public const string idParidaFaseConcursoSession = "idParidaFaseConcursoSession";
     }
 }

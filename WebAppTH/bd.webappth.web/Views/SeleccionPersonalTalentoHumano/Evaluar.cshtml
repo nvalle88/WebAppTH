@@ -1,9 +1,5 @@
-﻿@model bd.webappth.entidades.ViewModels.ViewModelSeleccionPersonal
+﻿@model bd.webappth.entidades.ViewModels.ViewModelEvaluarCandidato
 <link href="~/css/tabla/table.css" rel="stylesheet" />
-@using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelSeleccionPersonal {iddependecia=Model.iddependecia ,IdPartidaFase = Model.IdPartidaFase, OpcionMenu = 0 }; }
-
-@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <!-- MAIN CONTENT -->
 <div id="content">
     <div class="col col-10">
@@ -46,7 +42,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Informacion Basica</h2>
+                        <h2>Informacion del Candidato</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -62,8 +58,8 @@
 
                             <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="iddependecia" />
-                                @{await Html.RenderPartialAsync("_PartialViewPostulante", Model);}
+                                <input type="hidden" asp-for="IdCandidato" />
+                                @{await Html.RenderPartialAsync("_PartialViewEvaluar", Model);}
 
                                 @*<footer>
                                         <input type="submit" value="Guardar" class="btn btn-primary" />

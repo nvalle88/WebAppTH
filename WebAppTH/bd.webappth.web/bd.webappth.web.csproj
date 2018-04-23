@@ -14,12 +14,16 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\API\**" />
+    <Compile Remove="Views - Copia\**" />
     <Compile Remove="Views\CapacitacionesProveedores}\**" />
     <Content Remove="Controllers\API\**" />
+    <Content Remove="Views - Copia\**" />
     <Content Remove="Views\CapacitacionesProveedores}\**" />
     <EmbeddedResource Remove="Controllers\API\**" />
+    <EmbeddedResource Remove="Views - Copia\**" />
     <EmbeddedResource Remove="Views\CapacitacionesProveedores}\**" />
     <None Remove="Controllers\API\**" />
+    <None Remove="Views - Copia\**" />
     <None Remove="Views\CapacitacionesProveedores}\**" />
   </ItemGroup>
 
@@ -65,16 +69,12 @@
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="3.4.0" />
+    <PackageReference Include="TimePeriodLibrary.NET" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views - Copia\AntecedentesLaborales\" />
-    <Folder Include="Views - Copia\ExamenesComplementarios\" />
-    <Folder Include="Views\AntecedentesLaborales\" />
-    <Folder Include="Views\ExamenesComplementarios\" />
-    <Folder Include="Views\Induccion\" />
     <Folder Include="Views\ConfiguracionGeneral\" />
     <Folder Include="Views\Services\" />
     <Folder Include="Views\ActividadesEsenciales\" />

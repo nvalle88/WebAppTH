@@ -1,0 +1,196 @@
+﻿@model bd.webappth.entidades.ViewModels.LavadoActivoEmpleadoViewModel
+
+
+@{
+    ViewData["Title"] = "Planificación de puestos";
+}
+
+<style>
+    .input-invisible{
+        background-color:transparent;
+        width:100%;
+        border:0px;
+    }
+    
+</style>
+
+<!-- MAIN CONTENT -->
+<div id="content">
+
+
+    <div class="col col-10">
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-12">
+                <div class="alert alert-block alert-dismissable">
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                    <p>
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                    </p>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <p></p>
+
+    <div style="">
+        <!--
+        <form asp-action="Create2" id="checkout-form" novalidate="novalidate">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="fichaMedica.IdFichaMedica" style="width:100px;" />
+            <input type="hidden" asp-for="fichaMedica.IdPersona" style="width:100px;" />
+
+            <button type="submit" class="btn btn-labeled btn-default" style="width:100px;" onclick="espera()">
+                <span class="btn-label" >
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nuevo&nbsp;
+
+            </button>
+
+
+        </form>
+        -->
+    </div>
+
+    <p> </p>
+
+    <!-- widget grid -->
+    <section id="" class="">
+        <!-- row -->
+
+        
+        <div class="row">&nbsp;</div>
+
+            <div class="col col-lg-12">
+
+
+                <!-- NEW WIDGET START -->
+                <article class="">
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                        <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                        <header id="table">
+                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                            <h2>Declaración de lavado de activos</h2>
+                        </header>
+                        <!-- widget div-->
+                        <div>
+
+                            @using (Html.BeginForm())
+                        {
+                            @Html.TextBoxFor(model => Model.DatosBasicosEmpleadoViewModel.IdEmpleado, new { @hidden = "true" })
+
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+                            </div>
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+
+                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+
+                                    <thead>
+
+
+                                        <tr>
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.ListaLavadoActivoItemViewModel.FirstOrDefault().Valor)
+                                            </th>
+
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.ListaLavadoActivoItemViewModel.FirstOrDefault().Descripcion)
+                                            </th>
+
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+
+                                        @for(int i=0; i < Model.ListaLavadoActivoItemViewModel.Count; i++)
+                                        {
+                                        <tr>
+
+                                            <td>
+                                    
+                                                Si&nbsp;@Html.RadioButtonFor(model => Model.ListaLavadoActivoItemViewModel[i].Valor, "true", new { @name = "chk_" + i })&emsp;
+                                                No&nbsp;@Html.RadioButtonFor(model => Model.ListaLavadoActivoItemViewModel[i].Valor, "false", new { @name = "chk_" + i })
+                                    
+                                            </td>
+
+                                            <td>
+
+                                                @Html.TextBoxFor(model => Model.ListaLavadoActivoItemViewModel[i].Descripcion, new { @hidden = "true" })
+
+                                                @Html.TextBoxFor(model => Model.ListaLavadoActivoItemViewModel[i].IdLavadoActivoItem, new { @hidden = "true" })
+
+                                                @Html.DisplayFor(model => Model.ListaLavadoActivoItemViewModel[i].Descripcion)
+
+                                            </td>
+
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+
+                                <br />
+
+                                <input type="submit" asp-action="Volver" value="cancelar" class="btn btn-default" style="margin-left:35%;width:15%;" />
+                                <input type="submit" value="Enviar" class="btn btn-default" style="width:15%;" onclick='return confirm("Confirmación de envío \n \n Una vez enviado no podrá volver a editar el documento")' />
+
+
+                                <br />
+                                <br />
+
+                            </div>
+                            <!-- end widget content -->
+                    }
+                        </div>
+                        <!-- end widget div -->
+
+                    </div>
+
+                </article>
+
+
+                <!-- WIDGET END -->
+            </div>
+            <!-- end row -->
+            <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    
+}
+
