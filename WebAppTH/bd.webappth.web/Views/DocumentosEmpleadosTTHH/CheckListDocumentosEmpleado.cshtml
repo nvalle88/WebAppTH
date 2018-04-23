@@ -4,6 +4,7 @@
     .form-control {
         /*border:none;*/
     }
+
     .et {
         border: none;
         color: black;
@@ -15,8 +16,9 @@
         color: black;
         font-weight: 500;
     }
-
 </style>
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", Model.empleadoViewModel);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -50,7 +52,7 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
 
                     <header>
-                        <h2>Documentos de Ingreso Empleado</h2>
+                        <h2>Documentos de ingreso empleado</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -64,7 +66,7 @@
                         <!-- widget content -->
                         <div class="widget-body">
 
-                            <form asp-action="DocumentoEntregado" asp-controller="Empleados" novalidate="novalidate">
+                            <form asp-action="DocumentoEntregado" novalidate="novalidate">
 
 
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -174,8 +176,8 @@
                                     <div class="col col-lg-5">&nbsp;</div>
 
                                     <div class="col col-lg-5">
-                                        <input type="submit" value="Guardar" class="btn btn-default" />
-                                        <a asp-action="Index" asp-controller="Empleados" class="btn btn-default">Regresar</a>
+                                        <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                        <a asp-action="Index" class="btn btn-default" onclick="espera()">Regresar</a>
                                     </div>
 
                                 </div>
@@ -208,4 +210,10 @@
     <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
     <script src='~/js/site.js'></script>
     <script src='~/lib/waitMe/waitMe.min.js'></script>
+
+    <script>
+        $("#btn_0").css("background-color", "#3276b1");
+        $("#btn_0").css("color", "white");
+
+    </script>
 }

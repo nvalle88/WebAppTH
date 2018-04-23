@@ -57,22 +57,13 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
+
                 response = await apiServicio.InsertarAsync(documentosIngreso,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/DocumentosIngreso/InsertarDocumentosIngreso");
                 if (response.IsSuccess)
                 {
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un documento de ingreso",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Documento Ingreso:", documentosIngreso.IdDocumentosIngreso),
-                    });
+                    
 
                     return RedirectToAction("Index");
                 }

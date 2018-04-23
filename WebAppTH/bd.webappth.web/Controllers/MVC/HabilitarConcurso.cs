@@ -73,7 +73,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 InicializarMensaje(null);
                 await Cargarcombos();
-                
+
                 return View(partidasFase);
             }
             Response response = new Response();
@@ -88,7 +88,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         return RedirectToAction("Index");
                     }
-                    await Cargarcombos(); 
+                    await Cargarcombos();
                 }
                 await Cargarcombos();
                 ViewData["Error"] = "Numero de Vancante superior";
@@ -103,59 +103,55 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Edit(string id)
         {
-
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
                     var usario = new ViewModelPartidaFase
                     {
-                        Idindiceocupacional = Convert.ToInt32( id),
+                        IdPartidaFase = Convert.ToInt32(id),
 
                     };
-                    await Cargarcombos();
-                    
-                        InicializarMensaje(null);
-                        return View(usario);
-                }
-
-                return BadRequest();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, Sexo Sexo)
-        {
-            Response response = new Response();
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    response = await apiServicio.EditarAsync(id, Sexo, new Uri(WebApp.BaseAddress),
-                                                                 "api/Sexos");
-
-                    if (response.IsSuccess)
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(usario, new Uri(WebApp.BaseAddress),
+                                                                  "api/HabilitarConcurso/Edit");
+                    respuesta.Resultado = JsonConvert.DeserializeObject<ViewModelPartidaFase>(respuesta.Resultado.ToString());
+                    if (respuesta.IsSuccess)
                     {
-                        return RedirectToAction("Index");
+                        await Cargarcombos();
+                        InicializarMensaje(null);
+                        return View(respuesta.Resultado);
                     }
-                    ViewData["Error"] = response.Message;
-                    return View(Sexo);
 
                 }
+
                 return BadRequest();
             }
             catch (Exception ex)
             {
-                
                 return BadRequest();
             }
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ViewModelPartidaFase viewModelPartidaFase)
+        {
+            try
+            {
+                var respuesta = await apiServicio.EditarAsync<Response>(viewModelPartidaFase, new Uri(WebApp.BaseAddress),
+                                                              "api/HabilitarConcurso/Editar");
+                if (respuesta.IsSuccess)
+                {
+                    InicializarMensaje(null);
+                    return RedirectToAction("Index");
+                }
 
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
         public async Task<IActionResult> Delete(string id)
         {
 
@@ -165,7 +161,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/Sexos");
                 if (response.IsSuccess)
                 {
-                    
+
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("Index", new { mensaje = response.Message });
@@ -173,11 +169,11 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                
+
                 return BadRequest();
             }
         }
-        public async Task Cargarcombos ()
+        public async Task Cargarcombos()
         {
             try
             {

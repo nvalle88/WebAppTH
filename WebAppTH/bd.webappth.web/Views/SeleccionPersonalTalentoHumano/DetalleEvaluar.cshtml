@@ -56,16 +56,15 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Evaluar" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdCandidato" />
-                                <input type="hidden" asp-for="IdPartidaFase" />
-                                @{await Html.RenderPartialAsync("_PartialViewEvaluar", Model);}
+                                @{await Html.RenderPartialAsync("_PartialViewDetalleEvaluar", Model);}
 
-                                <footer>
+                                @*<footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
-                                </footer>
+                                </footer>*@
                             </form>
                         </div>
                         <!-- end widget content -->
@@ -88,27 +87,8 @@
 
     <script language='javascript'>
         function fsuma() {
-
-            
-
-            
-
-            if (document.getElementById("num1").value > 50) {
-                document.getElementById("num1").value = 50;
-            }
-            else if (document.getElementById("num1").value < 0) { 
-                document.getElementById("num1").value = 0;
-            }
-            if (document.getElementById("num2").value > 50) {
-                document.getElementById("num2").value = 50;
-            }
-            else if (document.getElementById("num2").value < 0) {
-                document.getElementById("num2").value = 0;
-            }
-
             n1 = document.getElementById("num1").value;
             n2 = document.getElementById("num2").value;
-
             res = document.getElementById("resul").value;
             res = parseInt(n1) + parseInt(n2);
             document.getElementById("resul").value = res;

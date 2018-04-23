@@ -161,5 +161,24 @@
             Init_Select2();
         });
     </script>
-
+    <script type="text/javascript">
+        function BusquedaCandidato() {
+            $.ajax({
+                type: 'POST', 
+                url: '@Url.Action("BusquedaCandidatos", "SeleccionPersonalTalentoHumano")',
+                dataType: 'json',
+                data: { identificacion: $("#identificacion").val()},
+                success: function (data) {
+                    if (data != null) { 
+                        document.getElementById("nombres").value = data.nombre;
+                        document.getElementById("apellidos").value = data.apellido;
+                    }
+                    
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            }
+    </script>
 }
