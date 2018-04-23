@@ -31,15 +31,14 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Rubros</h2>
+                        <h2>Consurso</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox"></div>
                         <div class="widget-body no-padding">
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="Idindiceocupacional" />
-                                <input type="text" asp-for="Vacantes" />
+                                <input type="hidden" asp-for="IdPartidaFase" />
                                 @{await Html.RenderPartialAsync("_PartialViewHabilitarConcurso");}
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />

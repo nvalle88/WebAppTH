@@ -68,24 +68,30 @@
                                 <tbody>
                                     @foreach (var item in Model.ListasCanditadoExperiencia)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Nombres)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Cedula)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ExperienciaDias)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ExperienciaMesAno)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Evaluar", "Evaluar", new { id = item.Idcandidato })
-
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nombres)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Cedula)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ExperienciaDias)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ExperienciaMesAno)
+                                        </td>
+                                        <td>
+                                            @if (item.Estado == 0)
+                                            {
+                                                @Html.ActionLink("Evaluar", "Evaluar", new { id = item.Idcandidato, a = Model.IdPartidaFase })
+                                            }
+                                        @if (item.Estado == 1)
+                                            {
+                                                @Html.ActionLink("Detalle", "DetalleEvaluar", new { id = item.Idcandidato})
+                                            }
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

@@ -33,5 +33,10 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdPartidasFase { get; set; }
         public virtual PartidasFase PartidasFase { get; set; }
+        public bool? CumpleInstruccion { get; set; }
+        public bool? CumpleExperiencia { get; set; }
+        public int? PorcentajeInstruccion { get; set; }
+        public int? PorcentajeExperiencia { get; set; }
+        public string Observacion { get; set; }
     }
 }
