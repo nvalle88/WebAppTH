@@ -46,8 +46,11 @@ namespace bd.webappth.web.Controllers.MVC
                 Identificacion = Convert.ToString( identificacion)
             };
             var listaAreasConocimientos = await apiServicio.ObtenerElementoAsync1<Candidato>(candidato, new Uri(WebApp.BaseAddress), "api/SeleccionPersonalTalentoHumano/ObtenerCandidato");
-            int idCandidato = listaAreasConocimientos.IdCandidato;
-            HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, idCandidato);
+            if (listaAreasConocimientos != null)
+            {
+                int idCandidato = listaAreasConocimientos.IdCandidato;
+                HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, idCandidato);
+            }
             return Json(listaAreasConocimientos);
         }
         public async Task<IActionResult> IndexCandidatosPostulados(int partida)
@@ -83,6 +86,9 @@ namespace bd.webappth.web.Controllers.MVC
                                                                     "api/SeleccionPersonalTalentoHumano/ListarPuestoVacantesSeleccionPersonal");
 
                 InicializarMensaje(null);
+                HttpContext.Session.SetInt32(Constantes.idParidaFaseConcursoSession, 0);
+                HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, 0);
+                HttpContext.Session.SetInt32(Constantes.idDependeciaConcursoSession, 0);
                 return View(lista);
             }
             catch (Exception ex)

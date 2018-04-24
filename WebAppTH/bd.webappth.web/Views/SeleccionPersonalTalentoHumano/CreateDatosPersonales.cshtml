@@ -169,9 +169,14 @@
                 dataType: 'json',
                 data: { identificacion: $("#identificacion").val()},
                 success: function (data) {
-                    if (data != null) { 
+                    if (data != null) {
                         document.getElementById("nombres").value = data.nombre;
                         document.getElementById("apellidos").value = data.apellido;
+                    }
+                    else
+                    { 
+                        document.getElementById("nombres").value = " ";
+                        document.getElementById("apellidos").value = " ";
                     }
                     
                 },
