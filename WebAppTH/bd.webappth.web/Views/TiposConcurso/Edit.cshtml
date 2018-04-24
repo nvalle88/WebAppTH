@@ -38,7 +38,6 @@
                                 <input type="hidden" asp-for="IdTipoConcurso"/>
                                 @{await Html.RenderPartialAsync("_PartialViewTiposConcurso");}
                                 <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
