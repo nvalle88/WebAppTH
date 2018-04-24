@@ -26,8 +26,12 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
         }
 
-        public IActionResult Create()
+        public IActionResult Create(string mensaje)
         {
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                ViewData["Error"] =mensaje;
+            }
             return View();
         }
 
@@ -56,20 +60,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado una declaración personal",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Declaración Personal:", viewModelDeclaracionPatrimonioPersonal.DeclaracionPatrimonioPersonal.IdDeclaracionPatrimonioPersonal),
-                    });
-
-
-
-                    return RedirectToAction("Create");
+                    return RedirectToAction("Create",new {mensaje=Mensaje.GuardadoSatisfactorio });
                 }
 
                 ViewData["Error"] = response.Message;
@@ -78,16 +69,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Declaración Personal",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
-
                 return BadRequest();
             }
         }

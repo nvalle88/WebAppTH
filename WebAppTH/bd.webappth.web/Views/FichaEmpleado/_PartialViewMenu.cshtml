@@ -11,11 +11,11 @@
 <div class="btn-group btn-group-justified">
     @if (Model.OpcionMenu == 0)
     {
-        <a asp-action="Detalle" asp-controller="FichaEmpleado"  asp-route-idEmpleado="@a"  onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Datos b&aacute;sicos <br />del<br />empleado </a>
+    <a asp-action="Detalle" asp-controller="FichaEmpleado" asp-route-idEmpleado="@a" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Datos<br />personales</a>
     }
     else
     {
-        <a asp-action="Detalle" asp-controller="FichaEmpleado" asp-route-idEmpleado="@a" onclick="cargando()" class="btn btn-default"> Datos b&aacute;sicos <br />del<br />empleado </a>
+    <a asp-action="Detalle" asp-controller="FichaEmpleado" asp-route-idEmpleado="@a" onclick="cargando()" class="btn btn-default"> Datos<br />personales</a>
     }
 
 
@@ -109,6 +109,20 @@
     else
     {
         <a href="@Url.Action("IndexPersonaSustituto", "FichaEmpleado")" onclick="cargando()" class="btn btn-default">Persona <br /> Sustituto</a>
+
+
+
+    }
+
+    @if (Model.OpcionMenu == 9)
+    {
+        <a href="@Url.Action("IndexPersonaSustituto", "FichaEmpleado")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Declaraci&oacute;n  <br /> patrimonial</a>
+
+
+    }
+    else
+    {
+        <a href="@Url.Action("IndexPersonaSustituto", "FichaEmpleado")" onclick="cargando()" class="btn btn-default">Declaraci&oacute;n  <br /> patrimonial</a>
 
 
 
