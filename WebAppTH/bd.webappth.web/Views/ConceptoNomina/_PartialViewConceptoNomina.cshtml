@@ -1,6 +1,17 @@
-@model bd.webappth.entidades.Negocio.TipoConjuntoNomina
+@model bd.webappth.entidades.Negocio.ConceptoNomina
 <fieldset>
     <div class="row">
+        <section class="col col-lg-12">
+            <label class="label">Procesos</label>
+            <label class="input">
+                <select asp-for="IdProceso" class="form-control" asp-items="ViewBag.IdProceso">
+                    <option value="0" selected="selected">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdProceso" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+        <div class="row" >
         <section class="col col-3">
             <label>C&oacute;digo</label>
             <label class="input">

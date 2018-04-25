@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.TipoConjuntoNomina>
+@model List<bd.webappth.entidades.Negocio.ConceptoNomina>
 
 @{
     ViewData["Title"] = "Index";
@@ -21,7 +21,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Tipos de conjuntos</h2>
+                        <h2>Conceptos</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -30,6 +30,9 @@
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdProceso)
+                                        </th>
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Codigo)
                                         </th>
@@ -46,14 +49,17 @@
                                     {
                                     <tr>
                                         <td>
+                                            @Html.DisplayFor(modelItem => item.Proceso.Descripcion)
+                                        </td>
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.Codigo)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Descripcion)
                                         </td>
                                         <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoConjunto }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoConjunto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdConcepto }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdConcepto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
                                         </td>
                                     </tr>
                                     }
