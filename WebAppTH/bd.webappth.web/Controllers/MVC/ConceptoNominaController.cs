@@ -40,8 +40,8 @@ namespace bd.webappth.web.Controllers.MVC
         {
             InicializarMensaje(mensaje);
             await CargarCombox();
-           // var vista = new ConceptoNomina { Suma = false, Resta = false };
-            return View();
+           var vista = new ConceptoNomina { TipoConcepto = "Ejemplo" };
+            return View(vista);
         }
 
         public async Task CargarCombox()

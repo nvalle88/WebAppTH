@@ -11,7 +11,7 @@
             </label>
         </section>
     </div>
-        <div class="row" >
+    <div class="row">
         <section class="col col-3">
             <label>C&oacute;digo</label>
             <label class="input">
@@ -24,6 +24,80 @@
             <label class="input">
                 <input maxlength="100" asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-3">
+            <label>Tipo de concepto</label>
+            <br />
+            <label class="radio">
+                Percepci&oacute;n <input name="TipoConcepto" type="radio" value="percepcion" asp-for="TipoConcepto" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Deducci&oacute;n <input name="TipoConcepto" type="radio" value="deduccion" asp-for="TipoConcepto" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Provis&oacute;n <input name="TipoConcepto" type="radio" value="provision" asp-for="TipoConcepto" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Trabajo<input name="TipoConcepto" type="radio" value="trabajo" asp-for="TipoConcepto" />
+                <i></i>
+            </label>
+        </section>
+
+        <section class="col col-3">
+            <label>Tipo de c&aacute;lculo</label>
+            <br />
+            <label class="radio">
+                Autom&aacute;tico <input name="TipoCalculo" type="radio" value="automatico" asp-for="TipoCalculo" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Reportado <input name="TipoCalculo" type="radio" value="reportado" asp-for="TipoCalculo" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Dependiente <input name="TipoCalculo" type="radio" value="dependiente" asp-for="TipoCalculo" />
+                <i></i>
+            </label>
+            <br />
+        </section>
+
+        <section class="col col-3">
+            <label>Nivel de acumulaci&oacute;n</label>
+            <br />
+            <label class="radio">
+                Periodo<input name="NivelAcumulacion" type="radio" value="periodo" asp-for="NivelAcumulacion" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Mensual<input name="NivelAcumulacion" type="radio" value="mensual" asp-for="NivelAcumulacion" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Anual<input name="NivelAcumulacion" type="radio" value="anual" asp-for="NivelAcumulacion" />
+                <i></i>
+            </label>
+            <label class="radio">
+                No Acumulable<input name="NivelAcumulacion" type="radio" value="noacumulable" asp-for="NivelAcumulacion" />
+                <i></i>
+            </label>
+        </section>
+
+        <section class="col col-3">
+            <label>Registro en</label>
+            <br />
+            <label class="radio">
+                D&iacute;as<input name="RegistroEn" type="radio" value="dias" asp-for="RegistroEn" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Horas<input name="RegistroEn" type="radio" value="horas" asp-for="RegistroEn" />
+                <i></i>
             </label>
         </section>
     </div>
