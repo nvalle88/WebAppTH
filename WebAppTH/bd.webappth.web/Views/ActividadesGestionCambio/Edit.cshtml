@@ -130,17 +130,17 @@
             $("#SelectDependencia").change(function () {
 
 
-                //mostrarLoadingPanel("content", "Cargando...")
+                mostrarLoadingPanel("content", "Cargando...")
                 $("#SelectEmpleado").empty();
 
-
+                
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarEmpleadosPorSucursalYDependencia", "ActividadesGestionCambio")',
                     dataType: 'json',
                     data: { idDependencia: $("#SelectDependencia").val() },
                     success: function (data) {
-                        $("#SelectEmpleado").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $("#SelectEmpleado").append('<option value="0" selected="" >Seleccione</option>');
                         $.each(data, function (i, data) {
                             $("#SelectEmpleado").append('<option value="'
                                 + data.idEmpleado + '">'
@@ -156,7 +156,6 @@
                     }
                 });
                 return false;
-
 
 
            }); // Fin change
