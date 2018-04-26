@@ -1,26 +1,56 @@
-@model bd.webappth.entidades.ViewModels.ActividadesGestionCambioViewModel
+@model List<bd.webappth.entidades.ViewModels.ActividadesGestionCambioViewModel>
 
 @{
     ViewData["Title"] = "Index";
-
 }
-<link href="~/js/tabla/table.css" rel="stylesheet" />
-<p></p>
+
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 
 
-    @Html.ActionLink("Nueva Actividad de Gestion de Cambio", "Create", "ActividadesGestionCambio", new { IdPlanGestionCambio = Model.IdPlanGestionCambio }, new { @class = "btn btn-primary" })
 
-    @Html.ActionLink("Regresar a Plan de Gestion de Cambio", "Index", "PlanesGestionCambio", new { IdPlanGestionCambio = Model.IdPlanGestionCambio }, new { @class = "btn btn-primary" })
-
-<p> </p>
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
-   
+    <div class="col col-10">
+
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-12">
+
+                <div class="alert alert-block alert-dismissable">
+
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                    <p>
+
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        }
+    </div>
+    <p></p>
+    <a asp-action="Create" onclick="espera()">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo
+
+        </button>
+    </a>
+    <p> </p>
+
     <!-- widget grid -->
     <section id="" class="">
         <!-- row -->
         <div class="row">
-
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
@@ -40,11 +70,10 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Actividades de gesti&oacuten de cambio</h2>
+                        <h2>Plan de  acci&oacute;n</h2>
                     </header>
                     <!-- widget div-->
                     <div>
-                        
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
@@ -52,71 +81,87 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                               
-                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th data-class="expand">
-                                                @Html.DisplayNameFor(model => model.ListaActividadesGestionCambio.FirstOrDefault().FechaInicio)
-                                            </th>
-                                            <th data-hide="phone">
-                                                @Html.DisplayNameFor(model => model.ListaActividadesGestionCambio.FirstOrDefault().FechaFin)
-                                            </th>
-                                            <th data-hide="phone">
-                                                @Html.DisplayNameFor(model => model.ListaActividadesGestionCambio.FirstOrDefault().Descripcion)
-                                            </th>
-                                            <th data-class="expand">
-                                                @Html.DisplayNameFor(model => model.ListaActividadesGestionCambio.FirstOrDefault().Indicador)
-                                            </th>
-                                           
-                                            <th data-hide="phone">
-                                                Suma Indicador Real
-                                            </th>
-                                            <th data-hide="phone">
-                                                @Html.DisplayNameFor(model => model.ListaActividadesGestionCambio.FirstOrDefault().Porcentaje)
-                                            </th>
-                                            <th>Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model.ListaActividadesGestionCambio)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.FechaInicio)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.FechaFin)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Descripcion)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Indicador)
-                                                </td>
-                                               
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Suma)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Porcentaje)
-                                                </td>
-                                                <td>
-                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdActividadesGestionCambio }) |
-                                                    @Html.ActionLink("Detalle", "Index", "AvancesGestionCambio", new { idActividadesGestionCambio = item.IdActividadesGestionCambio })|
-                                                    @Html.ActionLink("Eliminar", "Delete", new { IdActividadesGestionCambio = item.IdActividadesGestionCambio, IdPlanGestionCambio = item.IdPlanGestionCambio }, new { onclick = "return confirm('Desea eliminar la actividad de gestion de cambio... ?');" })
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+
+                                    <tr>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Tarea)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreDependencia)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreEmpleado)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaInicio)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaFin)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Avance)
+                                        </th>
+
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Tarea)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreDependencia)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreEmpleado)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FechaInicio)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FechaFin)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Estado)
+                                        </td>
+
+                                        <td>
+                                            @( item.Avance + " %")
+                                        </td>
+
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdActividadesGestionCambio }, new { onclick = "espera()" })
+                                            
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                         <!-- end widget content -->
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>
@@ -127,7 +172,22 @@
 </div>
 <!-- END MAIN CONTENT -->
 
- @section Scripts {
+@section Scripts {
     <script src='~/js/datatables/init.js'></script>
+
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+    <script src='~/js/site.js'></script>
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script>
+
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
+
+
 }
 

@@ -12,6 +12,8 @@ using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -26,241 +28,293 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> Create(int IdPlanGestionCambio)
+        private void InicializarMensaje(string mensaje)
         {
-            var actividadesGestionCambio = new ActividadesGestionCambio
+
+            if (mensaje == null)
             {
-                IdPlanGestionCambio = IdPlanGestionCambio,
-                FechaInicio = DateTime.Now,
-                FechaFin = DateTime.Now,
-            };
-            return View(actividadesGestionCambio);
+                mensaje = "";
+            }
+
+            ViewData["Error"] = mensaje;
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ActividadesGestionCambio ActividadesGestionCambio)
+
+        public async Task<IActionResult> Index(string mensaje)
         {
-            Response response = new Response();
+            InicializarMensaje(mensaje);
+
+            List<ActividadesGestionCambioViewModel> lista = new List<ActividadesGestionCambioViewModel>();
+            var modelo = new ActividadesGestionCambioViewModel();
+
             try
             {
-                
-              
-                response = await apiServicio.InsertarAsync(ActividadesGestionCambio,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/ActividadesGestionCambio/InsertarActividadesGestionCambio");
-                if (response.IsSuccess)
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
                 {
-                    
-                    return RedirectToAction("Index", new { IdPlanGestionCambio = ActividadesGestionCambio.IdPlanGestionCambio });
+
+                    var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+
+                    modelo.NombreUsuario = NombreUsuario;
+
+
+                    // Obtención de datos para generar pantalla
+                    lista = await apiServicio.ObtenerElementoAsync1<List<ActividadesGestionCambioViewModel>>(modelo, new Uri(WebApp.BaseAddress), "api/ActividadesGestionCambio/ListarActividadesGestionCambio");
+
+                    return View(lista);
+
+
                 }
 
-                ViewData["Error"] = response.Message;
-            
-                return View(ActividadesGestionCambio);
-
-
+                return RedirectToAction("Login", "Login");
 
             }
             catch (Exception ex)
             {
-                return BadRequest();
-            }
-        }
+                mensaje = Mensaje.Excepcion;
 
-        public async Task<IActionResult> Edit(string id)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/ActividadesGestionCambio");
+                return View(lista);
 
-
-                    respuesta.Resultado = JsonConvert.DeserializeObject<ActividadesGestionCambio>(respuesta.Resultado.ToString());
-                    
-                    if (respuesta.IsSuccess)
-                    {
-                        return View(respuesta.Resultado);
-                    }
-
-                }
-
-                return BadRequest();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, ActividadesGestionCambio ActividadesGestionCambio)
+        public async Task<IActionResult> Create(ActividadesGestionCambioViewModel model)
         {
-            Response response = new Response();
+
+            string mensaje = "";
+
             try
             {
-                if (!string.IsNullOrEmpty(id))
+
+                if (ModelState.IsValid)
                 {
-                    response = await apiServicio.EditarAsync(id, ActividadesGestionCambio, new Uri(WebApp.BaseAddress),
-                                                                 "api/ActividadesGestionCambio");
+
+                    Response response = await apiServicio.InsertarAsync(model, new Uri(WebApp.BaseAddress),
+                    "api/ActividadesGestionCambio/InsertarActividadesGestionCambio");
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Actividad de gestión de cambio", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una actividad de gestión de cambio",
-                            UserName = "Usuario 1"
-                        });
+                        var mensajeResultado = response.Message;
 
-                        return RedirectToAction("Index", new { IdPlanGestionCambio = ActividadesGestionCambio.IdPlanGestionCambio });
+                        return RedirectToAction("Index", "ActividadesGestionCambio", new { mensaje = mensajeResultado });
+
                     }
-                    ViewData["Error"] = response.Message;
+
+                    mensaje = response.Message;
+                }
+                else {
+                    mensaje = Mensaje.ModeloInvalido;
+                }
+
+                
+
+                var modelo = new ActividadesGestionCambioViewModel();
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+
+                    var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+
+                    modelo.NombreUsuario = NombreUsuario;
+
+
+
+                    var objetoListas = await apiServicio.ObtenerElementoAsync1<CrearActividadesGestionCambioViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/ActividadesGestionCambio/CrearActividadesGestionCambio");
+
+                    modelo.FechaInicio = objetoListas.actividadesGestionCambioViewModel.FechaInicio;
+                    modelo.FechaFin = objetoListas.actividadesGestionCambioViewModel.FechaFin;
                     
-                    return View(ActividadesGestionCambio);
+
+                    ViewData["Estados"] = new SelectList(objetoListas.ListaEstadoActividadGestionCambioViewModel, "Valor", "Nombre");
+
+                    ViewData["Dependencias"] = new SelectList(objetoListas.ListaDependenciasViewModel, "IdDependencia", "NombreDependencia");
+
+                    ViewData["Empleados"] = new SelectList(objetoListas.ListaDatosBasicosEmpleadoViewModel, "IdEmpleado", "Nombres");
+                    
+
+                    InicializarMensaje(mensaje);
+                    return View(model);
+
 
                 }
-                return BadRequest();
+
+                return RedirectToAction("Login", "Login");
+                
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una actividad gestión de cambio",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
-                return BadRequest();
-            }
-        }
-
-        public async Task<IActionResult> Index(int IdPlanGestionCambio, int IdActividadesGestionCambio)
-        {
-
-            try
-            {
-                    if (IdPlanGestionCambio != 0 && IdActividadesGestionCambio == 0)
-                    {
-
-                        var actividadesGestionCambio = new ActividadesGestionCambioViewModel
-                        {
-                            IdPlanGestionCambio = Convert.ToInt32(IdPlanGestionCambio),
-
-                        };
-
-                        var viewModelActividadesGestionCambio = new ActividadesGestionCambioViewModel
-                        {
-                            IdPlanGestionCambio = Convert.ToInt32(IdPlanGestionCambio),
-                            ListaActividadesGestionCambio = await apiServicio.Listar<ActividadesGestionCambioIndex>(actividadesGestionCambio, new Uri(WebApp.BaseAddress), "api/ActividadesGestionCambio/ListarActividadesGestionCambioconIdPlan")
-                        };
-
-                        return View(viewModelActividadesGestionCambio);
-                    }
-
-                    if (IdPlanGestionCambio == 0 && IdActividadesGestionCambio != 0)
-                    {
-                        var actividadesGestionCambio = new ActividadesGestionCambio
-                        {
-                            IdActividadesGestionCambio = Convert.ToInt32(IdActividadesGestionCambio),
-                        };
-
-
-                        var respuesta = await apiServicio.ObtenerElementoAsync<ActividadesGestionCambio>(actividadesGestionCambio, new Uri(WebApp.BaseAddress),
-                                                                         "api/ActividadesGestionCambio/ActividadesGestionCambioconIdActividad");
-
-                        var actividades = JsonConvert.DeserializeObject<ActividadesGestionCambio>(respuesta.Resultado.ToString());
-
-                        var actividadesGestionCambioViewModel = new ActividadesGestionCambioViewModel
-                        {
-                            IdPlanGestionCambio = Convert.ToInt32(actividades.IdPlanGestionCambio),
-
-                        };
-
-
-                        var viewModelActividadesGestionCambio = new ActividadesGestionCambioViewModel
-                        {
-                            IdPlanGestionCambio = Convert.ToInt32(actividades.IdPlanGestionCambio),
-                            ListaActividadesGestionCambio = await apiServicio.Listar<ActividadesGestionCambioIndex>(actividadesGestionCambioViewModel, new Uri(WebApp.BaseAddress), "api/ActividadesGestionCambio/ListarActividadesGestionCambioconIdPlan")
-                        };
-
-
-                        return View(viewModelActividadesGestionCambio);
-
-                    }
-
-
-                        ViewData["Mensaje"] = "Ir a la página de Plan Gestión Cambio";
-                        return View("NoExisteElemento");
-                    
-
-                }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando una actividad de gestión de cambio",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
+                return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = Mensaje.Excepcion });
             }
         }
 
         
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
 
-        public async Task<IActionResult> Delete(string IdActividadesGestionCambio, string IdPlanGestionCambio)
+            var modelo = new ActividadesGestionCambioViewModel();
+
+            try
+            {
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+
+                    var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+
+                    modelo.NombreUsuario = NombreUsuario;
+
+
+
+                    var objetoListas = await apiServicio.ObtenerElementoAsync1<CrearActividadesGestionCambioViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/ActividadesGestionCambio/CrearActividadesGestionCambio");
+
+                    modelo.FechaInicio = objetoListas.actividadesGestionCambioViewModel.FechaInicio;
+                    modelo.FechaFin = objetoListas.actividadesGestionCambioViewModel.FechaFin;
+
+
+                    ViewData["Estados"] = new SelectList(objetoListas.ListaEstadoActividadGestionCambioViewModel, "Valor", "Nombre");
+
+                    ViewData["Dependencias"] = new SelectList(objetoListas.ListaDependenciasViewModel, "IdDependencia", "NombreDependencia");
+
+                    ViewData["Empleados"] = new SelectList(objetoListas.ListaDatosBasicosEmpleadoViewModel, "IdEmpleado", "Nombres");
+
+
+                    return View(modelo);
+
+
+                }
+
+                return RedirectToAction("Login", "Login");
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = Mensaje.Excepcion;
+
+                return View(modelo);
+
+            }
+        }
+
+
+        public async Task<IActionResult> Edit(string mensaje, int id)
+        {
+            InicializarMensaje(mensaje);
+
+            var modelo = new ActividadesGestionCambioViewModel();
+
+            try
+            {
+                modelo.IdActividadesGestionCambio = id;
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+
+                    var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+
+                    modelo.NombreUsuario = NombreUsuario;
+
+
+
+                    var objetoListas = await apiServicio.ObtenerElementoAsync1<CrearActividadesGestionCambioViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/ActividadesGestionCambio/ObtenerActividadesGestionCambioPorId");
+
+                    modelo.FechaInicio = objetoListas.actividadesGestionCambioViewModel.FechaInicio;
+                    modelo.FechaFin = objetoListas.actividadesGestionCambioViewModel.FechaFin;
+
+
+                    ViewData["Estados"] = new SelectList(objetoListas.ListaEstadoActividadGestionCambioViewModel, "Valor", "Nombre");
+
+                    ViewData["Dependencias"] = new SelectList(objetoListas.ListaDependenciasViewModel, "IdDependencia", "NombreDependencia");
+
+                    ViewData["Empleados"] = new SelectList(objetoListas.ListaDatosBasicosEmpleadoViewModel, "IdEmpleado", "Nombres");
+
+                    modelo = objetoListas.actividadesGestionCambioViewModel;
+
+                    return View(modelo);
+
+
+                }
+
+                return RedirectToAction("Login", "Login");
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = Mensaje.Excepcion;
+
+                return View(modelo);
+
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ActividadesGestionCambioViewModel model)
         {
 
             try
             {
-                var response = await apiServicio.EliminarAsync(IdActividadesGestionCambio, new Uri(WebApp.BaseAddress)
-                                                               , "api/ActividadesGestionCambio");
+                Response response = await apiServicio.InsertarAsync(model, new Uri(WebApp.BaseAddress),
+                    "api/ActividadesGestionCambio/EditarActividadesGestionCambio");
+
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", IdActividadesGestionCambio),
-                        Message = "Registro de actividad de gestión de cambio",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index", new { IdPlanGestionCambio = IdPlanGestionCambio });
+                    var mensajeResultado = response.Message;
+
+                    return RedirectToAction("Index", "ActividadesGestionCambio", new { mensaje = mensajeResultado });
+
                 }
-                else
-                {
-                    ViewData["Mensaje"] = Mensaje.Error;
-                    return View("NoExisteElemento");
-                }
+
+                return RedirectToAction("Edit", "ActividadesGestionCambio", new { mensaje = response.Message , id = model.IdActividadesGestionCambio});
+
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar un actiividad gestión de cambio",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
-                return BadRequest();
+                return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = Mensaje.Excepcion });
             }
         }
+
+
+        public async Task<JsonResult> ListarEmpleadosPorSucursalYDependencia(int idDependencia)
+        {
+            var modelo = new ActividadesGestionCambioViewModel();
+
+            var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+            if (claim.IsAuthenticated == true)
+            {
+                var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                modelo.IdDependencia = idDependencia;
+                modelo.NombreUsuario = NombreUsuario;
+
+                var empleados = await apiServicio.Listar<DatosBasicosEmpleadoViewModel>(modelo, new Uri(WebApp.BaseAddress)
+                               , "api/ActividadesGestionCambio/ObtenerEmpleadosPorSucursalYDependencia");
+
+                return Json(empleados);
+            }
+
+            return Json( new List<DatosBasicosEmpleadoViewModel>() );
+        }
+
     }
 }

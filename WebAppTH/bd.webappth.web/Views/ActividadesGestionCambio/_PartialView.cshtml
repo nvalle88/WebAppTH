@@ -1,0 +1,129 @@
+﻿@model bd.webappth.entidades.ViewModels.ActividadesGestionCambioViewModel
+
+<input type="hidden" asp-for="IdActividadesGestionCambio" />
+
+<fieldset>
+
+    <div class="row">
+
+
+        <section class="col col-lg-6">
+
+            <label>Tarea</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="Tarea" class="form-control" />
+                <span asp-validation-for="Tarea" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-6">
+
+            <label>&nbsp;</label>
+            <label class="input col-lg-12">
+                &nbsp;
+                <br />&nbsp;
+            </label>
+
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-lg-6">
+            <label>&Aacute;rea responsable</label>
+            <label class="input">
+                <select id="SelectDependencia" asp-for="IdDependencia" class="form-control" asp-items="ViewBag.Dependencias">
+                    <option value="0" selected>Seleccione</option>
+                </select>
+
+                <span asp-validation-for="IdDependencia" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-6">
+            <label>Responsable</label>
+            <label class="input">
+                <select id="SelectEmpleado" asp-for="IdEmpleado" class="form-control" asp-items="ViewBag.Empleados">
+                    <option value="0" selected>Seleccione</option>
+                </select>
+                <span asp-validation-for="IdEmpleado" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-lg-6">
+
+            <label>Fecha de inicio</label>
+            <label class="input col-lg-12">
+                <input asp-for="FechaInicio" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy' />
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-6">
+
+            <label>Fecha de finalizaci&oacute;n</label>
+            <label class="input col-lg-12">
+                <input asp-for="FechaFin" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy' />
+                <span asp-validation-for="FechaFin" class="text-danger"></span>
+            </label>
+
+        </section>
+
+    </div>
+
+    <div class="row">
+        <section class="col col-lg-6">
+            <label>Estado</label>
+            <label class="input">
+                <select asp-for="ValorEstado" class="form-control" asp-items="ViewBag.Estados"></select>
+                <span asp-validation-for="ValorEstado" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-6">
+            <label>Avance %</label>
+            <label class="input col-lg-12">
+                <input type="number" asp-for="Avance" min="0" max="100" class="form-control" />
+                <span asp-validation-for="Avance" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-lg-12">
+            <label>Observaciones</label>
+            <label class="input col-lg-12">
+                <textarea maxlength="1000" asp-for="Observaciones" class="form-control" rows="4" style="resize:none;"></textarea>
+                <span asp-validation-for="Observaciones" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+
+    </div>
+
+
+
+</fieldset>
+
+    <script>
+        function validarNumero(element) {
+
+            if (element.value < 0) {
+                element.value = 0;
+            }
+            
+        }
+
+    </script>
+
+    
