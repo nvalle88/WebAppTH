@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.TipoConjuntoNomina>
+@model List<bd.webappth.entidades.Negocio.ConceptoConjuntoNomina>
 
 @{
     ViewData["Title"] = "Index";
@@ -21,7 +21,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Tipos de conjuntos</h2>
+                        <h2>Concepto conjunto</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -31,10 +31,16 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Codigo)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdConcepto)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdConjunto)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Suma)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Resta)
                                         </th>
                                         <th>
                                             Opciones
@@ -46,14 +52,20 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Codigo)
+                                            @Html.DisplayFor(modelItem => item.Concepto.Descripcion)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                            @Html.DisplayFor(modelItem => item.Conjunto.Descripcion)
                                         </td>
                                         <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoConjunto }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoConjunto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
+                                            @Html.DisplayFor(modelItem => item.Suma)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Resta)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdConceptoConjunto }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdConceptoConjunto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
                                         </td>
                                     </tr>
                                     }

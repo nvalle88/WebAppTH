@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.TipoConjuntoNomina>
+@model List<bd.webappth.entidades.Negocio.ProcesoNomina>
 
 @{
     ViewData["Title"] = "Index";
@@ -21,7 +21,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Tipos de conjuntos</h2>
+                        <h2>Procesos</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -52,8 +52,8 @@
                                             @Html.DisplayFor(modelItem => item.Descripcion)
                                         </td>
                                         <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoConjunto }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoConjunto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdProceso }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdProceso }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
                                         </td>
                                     </tr>
                                     }

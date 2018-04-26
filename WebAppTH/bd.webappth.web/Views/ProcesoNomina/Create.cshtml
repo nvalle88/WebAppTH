@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.Negocio.TipoConjuntoNomina
+@model bd.webappth.entidades.Negocio.ProcesoNomina
 
 @{
     ViewData["Title"] = "BrigadasSSO";
@@ -24,7 +24,7 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Crear tipos de conjunto</h2>
+                        <h2>Crear proceso</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -32,7 +32,7 @@
                         <div class="widget-body no-padding">
                             <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                @{await Html.RenderPartialAsync("_PartialViewTipoConjunto", Model);}
+                                @{await Html.RenderPartialAsync("_PartialViewProcesoNomina", Model);}
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
