@@ -28,5 +28,15 @@ namespace bd.webappth.entidades.Utils
         public static string CorregirFormulario { get { return "Corregir la información"; } }
         public static string SinArchivo { get { return "No existe archivo para descargar"; } }
         public static string RegistroEditado { get { return "El registro se ha editado corectamente"; } }
+
+
+        // Mensajes importados desde rm
+        public static string Informacion { get { return "Información"; } }
+        public static string ErrorCrear { get { return "Ha ocurrido un error al crear el registro."; } }
+        public static string RegistroNoExiste { get { return "El registro que desea editar no existe."; } }
+        public static string ErrorEditar { get { return "Ha ocurrido un error al editar el registro."; } }
+        public static string ErrorListado { get { return "Ha ocurrido un error al cargar el listado."; } }
+        public static string ErrorCargarDatos { get { return "Ha ocurrido un error al cargar los datos."; } }
+
     }
 }
