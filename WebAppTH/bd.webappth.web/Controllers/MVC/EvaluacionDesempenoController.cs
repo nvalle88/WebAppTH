@@ -70,21 +70,46 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Evaluar(int idempleado)
         {
 
-            var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-            var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-            var usuario = new ViewModelEvaluador
-            {
-                IdEmpleado = idempleado,
-                NombreUsuario = NombreUsuario
-
-            };
             try
             {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                var usuario = new ViewModelEvaluador
+                {
+                    IdEmpleado = idempleado,
+                    NombreUsuario = NombreUsuario
+
+                };
                 var lista = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluador>(usuario, new Uri(WebApp.BaseAddress)
                                                                    , "api/EvaluacionDesempeno/Evaluar");
+                var totalacti = lista.ListaActividad.Count();
+                lista.totalactividades = totalacti;
 
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdIndiceOcupacional = lista.IdIndiceOcupacional,
+                    
+                };
+                var ListaConocimientos= await apiServicio.Listar<AreaConocimientoViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientosPorIndiceOcupacional");
 
+                var valor = new VIewCompetencias
+                {
+                    IdIndiceOcupacional = lista.IdIndiceOcupacional,
+                    CompetenciaTecnica = true
+                };
+                var CompetenciasTecnicas = await apiServicio.Listar<ComportamientoObservableViewModel>(valor, new Uri(WebApp.BaseAddress), "api/ComportamientosObservables/ListarComportamientosObservablesPorIndiceOcupacionalEstado");
+
+                var competenciasUniversales = new VIewCompetencias
+                {
+                    IdIndiceOcupacional = lista.IdIndiceOcupacional,
+                    CompetenciaTecnica = false
+                };
+                var CompetenciasUniversales = await apiServicio.Listar<ComportamientoObservableViewModel>(competenciasUniversales, new Uri(WebApp.BaseAddress), "api/ComportamientosObservables/ListarComportamientosObservablesPorIndiceOcupacionalEstado");
+
+                lista.ListaConocimientos = ListaConocimientos;
+                lista.ListaCompetenciasTecnicas = CompetenciasTecnicas;
+                lista.ListaCompetenciasUniversales = CompetenciasUniversales;
                 InicializarMensaje(null);
                 return View(lista);
             }
