@@ -1,12 +1,14 @@
-@model List<bd.webappth.entidades.ViewModels.ViewModelEvaluacionDesempeno>
+@model bd.webappth.entidades.ViewModels.ViewModelEvaluador
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+@using bd.webappth.entidades.ViewModels
+@{ var modelo = new ViewModelEvaluador { OpcionMenu = 4 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Create";
 }
-<link href="~/css/tabla/table.css" rel="stylesheet" />
-<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
-<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
-<!-- MAIN CONTENT -->
+
 <div id="content">
     <div class="col col-10">
 
@@ -36,13 +38,13 @@
     </div>
     <p></p>
     @*<a asp-action="Asignar">
-            <button type="button" asp-action="Asignar" class="btn btn-labeled btn-default">
-                <span class="btn-label">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </span>Asignar
+        <button type="button" asp-action="Asignar" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Asignar
 
-            </button>
-        </a>*@
+        </button>
+    </a>*@
     <p> </p>
 
     <!-- widget grid -->
@@ -68,7 +70,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Empleados</h2>
+                        <h2>Competencias Universales</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -82,44 +84,42 @@
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
-                                        <th data-class="expand">
-                                            Nombres y Apellidos
+                                        <th data-hide="phone">
+                                            Destreza
                                         </th>
-                                        <th data-class="">
-                                            Identificaci&oacuten
+                                        <th data-hide="phone">
+                                            Relevancia
                                         </th>
-                                        <th data-class="">
-                                            Tel&eacutefono Privado
+                                        <th data-hide="phone">
+                                            Comportamiento observable
                                         </th>
-                                        
-                                        <th>
-                                            <i class="fa fa-cog "></i>
-                                            Opciones
+                                        <th data-hide="phone">
+                                            Frecuencia de Aplicacion
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NombreApellido)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ManualPuesto)
-                                            </td>
-                                            
-                                            <td>
-                                                @Html.ActionLink("Evaluar", "InformacionGeneral", new { idEmpleado = item.IdEmpleado }, new { onclick = "cargando()" })<br />
-                                                @* @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado })<br />*@
+                                     @foreach (var item in Model.ListaCompetenciasUniversales)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.NombreDenominacionCompetencia)
 
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.NombreNivel)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                                        </td>
+                                                        <td>
+                                                            <select asp-for="IdFrecuenciaAplicacion" class="form-control" id="IdNivelConocimiento" asp-items="ViewBag.IdFrecuenciaAplicacion">
+                                                                <option value="0" selected="selected" disabled=""></option>
+                                                            </select>
+                                                        </td>
 
-                                            </td>
-                                        </tr>
-                                    }
+                                                    </tr>
+                                                }
                                 </tbody>
                             </table>
                         </div>

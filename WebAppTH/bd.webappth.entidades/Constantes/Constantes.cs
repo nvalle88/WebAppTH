@@ -27,5 +27,10 @@ namespace bd.webappth.entidades.Constantes
         public const string idCandidatoConcursoSession = "idCandidatoConcursoSession";
         public const string idDependeciaConcursoSession = "idDependeciaConcursoSession";
         public const string idParidaFaseConcursoSession = "idParidaFaseConcursoSession";
+
+        /// <summary>
+        /// Constantes para la session de CadidatoConcurso
+        /// </summary>
+        public const string idIndiceOcupacionalSession = "idIndiceOcupacionalSession";
     }
 }
