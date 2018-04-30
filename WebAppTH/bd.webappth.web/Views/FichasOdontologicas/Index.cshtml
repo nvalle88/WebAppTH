@@ -6,6 +6,17 @@
     //var ids = Model.IdPersona;
 }
 
+<head>
+
+    <meta http-equiv="Expires" content="0">
+
+    <meta http-equiv="Last-Modified" content="0">
+
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+
+    <meta http-equiv="Pragma" content="no-cache">
+
+</head>
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -83,6 +94,14 @@
                                                 </script>
                                             </div>
                                         </section>
+
+                                        <div class="col col-2">
+                                            <label>&nbsp;</label>
+                                            <div>
+                                                <button asp-action="DescargarFichaOdontologica" class="form-control btn-default">Descargar</button>
+                                            </div>
+
+                                        </div>
                                     </div>
 
                                     <div class="row" id="examenpdf" height="0px">
@@ -110,7 +129,7 @@
 
                             <div class="row" style="text-align:left;">
                                 <footer>
-                                    <input type="submit" asp-action="Index" value="Guardar" class="btn btn-default" />
+                                    <input type="submit" asp-action="Index" value="Guardar" onclick="recarga()" class="btn btn-default" />
                                     
                                 </footer>
                             </div>
@@ -146,15 +165,23 @@
     {
 
         <text>
+        
             var output2 = document.getElementById('output');
+
             output2.style.height = "700px";
             output2.style.width = "100%";
             document.getElementById("examenpdf").style.visibility = "visible";
-
+        
         </text>
 
     }
 
+
+        function recarga() {
+
+            document.getElementById("output").reset();
+            
+        }
 
     </script>
 }
