@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using bd.webappth.entidades.Constantes;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.webappth.entidades.ViewModels;
 using bd.webappth.servicios.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -53,7 +55,8 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-
+                InicializarMensaje(null);
+                return View();
                 throw;
             }
             //var lista = new List<ViewModelEvaluacionDesempeno>();
@@ -66,7 +69,101 @@ namespace bd.webappth.web.Controllers.MVC
             //    return View(lista);
 
         }
+        public async Task<IActionResult> InformacionGeneral(int idempleado)
+        {
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
+                var usuario = new ViewModelEvaluador
+                {
+                    IdEmpleado = idempleado,
+                    NombreUsuario = NombreUsuario
+
+                };
+                var lista = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluador>(usuario, new Uri(WebApp.BaseAddress)
+                                                                   , "api/EvaluacionDesempeno/Evaluar");
+                InicializarMensaje(null);
+                HttpContext.Session.SetInt32(Constantes.idEmpleadoSession, lista.IdEmpleado);
+                HttpContext.Session.SetInt32(Constantes.idIndiceOcupacionalSession, lista.IdIndiceOcupacional);
+                return View(lista);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public async Task<IActionResult> ActividadesEnsenciales(int idIndiceOcupacional)
+        {
+            //var listaa = new ViewModelEvaluador();
+            var usuario = new VIewCompetencias
+            {
+                IdIndiceOcupacional = idIndiceOcupacional
+            };
+            var lista = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluador>(usuario, new Uri(WebApp.BaseAddress)
+                                                                   , "api/EvaluacionDesempeno/Actividades");
+
+            var totalacti = lista.ListaActividad.Count();
+            lista.totalactividades = totalacti;
+
+            InicializarMensaje(null);
+            lista.ListaActividad = lista.ListaActividad;
+            
+            return View(lista);
+
+        }
+        public async Task<IActionResult> ConocimientoEsenciales(int idIndiceOcupacional)
+        {
+            var lista = new ViewModelEvaluador();
+            var indiceOcupacional = new IndiceOcupacional
+            {
+                IdIndiceOcupacional = idIndiceOcupacional,
+
+            };
+            var ListaConocimientos = await apiServicio.Listar<AreaConocimientoViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientosPorIndiceOcupacional");
+            InicializarMensaje(null);
+            lista.ListaConocimientos = ListaConocimientos;
+            ViewData["IdNivelConocimiento"] = new SelectList(await apiServicio.Listar<NivelConocimiento>(new Uri(WebApp.BaseAddress), "api/NivelesConocimiento/ListarNivelesConocimiento"), "IdNivelConocimiento", "Nombre");
+            return View(lista);
+
+        }
+        public async Task<IActionResult> CompetenciasTecnicas(int idIndiceOcupacional)
+        {
+            var lista = new ViewModelEvaluador();
+            var valor = new VIewCompetencias
+            {
+                IdIndiceOcupacional = idIndiceOcupacional,
+                CompetenciaTecnica = true
+            };
+            var CompetenciasTecnicas = await apiServicio.Listar<ComportamientoObservableViewModel>(valor, new Uri(WebApp.BaseAddress), "api/ComportamientosObservables/ListarComportamientosObservablesPorIndiceOcupacionalEstado");
+
+            InicializarMensaje(null);
+            lista.ListaCompetenciasTecnicas = CompetenciasTecnicas;
+            ViewData["IdNivelDesarrollo"] = new SelectList(await apiServicio.Listar<NivelDesarrollo>(new Uri(WebApp.BaseAddress), "api/NivelesDesarrollo/ListarNivelesDesarrollo"), "IdNivelDesarrollo", "Nombre");
+            return View(lista);
+
+        }
+        public async Task<IActionResult> CompetenciasUniversales(int idIndiceOcupacional)
+        {
+            var lista = new ViewModelEvaluador();
+            var valor = new VIewCompetencias
+            {
+                IdIndiceOcupacional = idIndiceOcupacional,
+                CompetenciaTecnica = false
+            };
+            var CompetenciasUniversales = await apiServicio.Listar<ComportamientoObservableViewModel>(valor, new Uri(WebApp.BaseAddress), "api/ComportamientosObservables/ListarComportamientosObservablesPorIndiceOcupacionalEstado");
+
+            InicializarMensaje(null);
+            lista.ListaCompetenciasUniversales = CompetenciasUniversales;
+            ViewData["IdFrecuenciaAplicacion"] = new SelectList(await apiServicio.Listar<FrecuenciaAplicacion>(new Uri(WebApp.BaseAddress), "api/FrecuenciaAplicaciones/ListarFrecuenciaAplicaciones"), "IdFrecuenciaAplicacion", "Nombre");
+            return View(lista);
+
+        }
+        
+
+        
         public async Task<IActionResult> Evaluar(int idempleado)
         {
 
@@ -111,6 +208,9 @@ namespace bd.webappth.web.Controllers.MVC
                 lista.ListaCompetenciasTecnicas = CompetenciasTecnicas;
                 lista.ListaCompetenciasUniversales = CompetenciasUniversales;
                 InicializarMensaje(null);
+                ViewData["IdNivelConocimiento"] = new SelectList(await apiServicio.Listar<NivelConocimiento>(new Uri(WebApp.BaseAddress), "api/NivelesConocimiento/ListarNivelesConocimiento"), "IdNivelConocimiento", "Nombre");
+                ViewData["IdNivelDesarrollo"] = new SelectList(await apiServicio.Listar<NivelDesarrollo>(new Uri(WebApp.BaseAddress), "api/NivelesDesarrollo/ListarNivelesDesarrollo"), "IdNivelDesarrollo", "Nombre");
+                ViewData["IdFrecuenciaAplicacion"] = new SelectList(await apiServicio.Listar<FrecuenciaAplicacion>(new Uri(WebApp.BaseAddress), "api/FrecuenciaAplicaciones/ListarFrecuenciaAplicaciones"), "IdFrecuenciaAplicacion", "Nombre");
                 return View(lista);
             }
             catch (Exception ex)

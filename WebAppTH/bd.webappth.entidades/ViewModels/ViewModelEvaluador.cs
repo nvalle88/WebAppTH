@@ -10,6 +10,11 @@ namespace bd.webappth.entidades.ViewModels
     {
         public int IdEmpleado { get; set; }
         public int IdIndiceOcupacional { get; set; }
+        public int IdNivelConocimiento { get; set; }
+        public int IdNivelDesarrollo { get; set; }
+        public int IdFrecuenciaAplicacion { get; set; }
+        public int OpcionMenu { get; set; }
+
         [Display(Name = "Apellido y Nombres:")]
         public string NombreApellido { get; set; }
         [Display(Name = "Puesto")]
