@@ -17,12 +17,12 @@ using System.Security.Claims;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class AccionesPersonalController : Controller
+    public class MovimientosPersonalController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public AccionesPersonalController(IApiServicio apiServicio)
+        public MovimientosPersonalController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
         }
@@ -57,7 +57,7 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ListaMovimientos(string identificacion)
         {
-
+            InicializarMensaje("");
 
             try
             {
@@ -69,9 +69,16 @@ namespace bd.webappth.web.Controllers.MVC
 
                     var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                    var modeloEnviar = new AccionesPersonalPorEmpleadoViewModel();
-                    modeloEnviar.DatosBasicosEmpleadoViewModel.Identificacion = identificacion;
-                    modeloEnviar.NombreUsuarioActual = NombreUsuario;
+                    var modeloEnviar = new AccionesPersonalPorEmpleadoViewModel {
+
+                        DatosBasicosEmpleadoViewModel = new DatosBasicosEmpleadoViewModel
+                        {
+                            Identificacion = identificacion
+                        },
+
+                        NombreUsuarioActual = NombreUsuario
+                };
+                    
 
                     var modelo = await apiServicio.ObtenerElementoAsync1<AccionesPersonalPorEmpleadoViewModel>(
                             modeloEnviar,
@@ -85,7 +92,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return RedirectToAction("Login", "Login");
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 return BadRequest();

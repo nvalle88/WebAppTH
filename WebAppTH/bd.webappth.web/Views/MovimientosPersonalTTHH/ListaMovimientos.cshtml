@@ -1,4 +1,4 @@
-﻿@model List<bd.webappth.entidades.ViewModels.InduccionViewModel>
+﻿@model bd.webappth.entidades.ViewModels.AccionesPersonalPorEmpleadoViewModel
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 
 @{
@@ -30,8 +30,16 @@
 
     <p></p>
 
+    <a asp-action="Create" asp-route-id="@Model.DatosBasicosEmpleadoViewModel.IdEmpleado" onclick="espera()">
+        <button type="button" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo
 
+        </button>
+    </a>
 
+    <p></p>
     <!-- widget grid -->
     <section id="" class="">
         <!-- row -->
@@ -59,7 +67,7 @@
                 -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Lista estado de inducci&oacute;n</h2>
+                        <h2>Lista movimiento interno personal</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -79,15 +87,27 @@
 
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => Model.FirstOrDefault().Nombres)
+                                            @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().TipoAccionPersonalViewModel.Nombre)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => Model.FirstOrDefault().FechaIngreso)
+                                            @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().FechaRige)
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => Model.FirstOrDefault().EstadoInduccion)
+                                            @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().FechaRigeHasta)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().NoDias)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().EstadoDirector)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().EstadoValidacionTTHH)
                                         </th>
 
                                         <th data-class="expand">
@@ -99,30 +119,37 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.ListaAccionPersonal)
                                 {
                                     <tr>
 
                                         <td>
 
-                                            @Html.DisplayFor(modelItem => item.Nombres)
+                                            @Html.DisplayFor(modelItem => item.TipoAccionPersonalViewModel.Nombre)
                                         </td>
 
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.FechaIngreso)
+                                            @Html.DisplayFor(modelItem => item.FechaRige)
                                         </td>
 
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.EstadoInduccion)
+                                            @Html.DisplayFor(modelItem => item.FechaRigeHasta)
                                         </td>
 
                                         <td>
-                                            @if(item.EstadoInduccion == item.ValorCompletado){
-                                             <text>
-                                                Certificado ??
-                                             </text>
-                                            }
-                                            
+                                            @Html.DisplayFor(modelItem => item.NoDias)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EstadoDirector)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EstadoValidacionTTHH)
+                                        </td>
+
+                                        <td>
+                                            Opciones xd
                                         </td>
 
                                     </tr>
