@@ -52,20 +52,29 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                lista = await apiServicio.Listar<ActivarPersonalTalentoHumanoViewModel>(new Uri(WebApp.BaseAddress)
-                                                                  , "api/ActivacionesPersonalTalentoHumano/GetListDependenciasByFiscalYearActual");
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var usuario = new UsuarioViewModel { NombreUsuarioActual = NombreUsuario };
+
+                    lista = await apiServicio.ObtenerElementoAsync1<List<ActivarPersonalTalentoHumanoViewModel>>(
+                    usuario,
+                    new Uri(WebApp.BaseAddress),
+                    "api/ActivacionesPersonalTalentoHumano/GetListDependenciasByFiscalYearActual");
+
+                    return View(lista);
+                }
 
 
-
-                return View(lista);
-
+                return RedirectToAction("Login", "Login");
 
             }
             catch (Exception ex)
             {
-                mensaje = Mensaje.Excepcion;
-
-                return View(lista);
+                return BadRequest();
 
             }
         }
@@ -129,40 +138,40 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                if ( idDependencia > 0 )
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
                 {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+                    modelo.NombreUsuario = NombreUsuario;
                     modelo.IdDependencia = idDependencia;
+
+                    // Obtención de datos para generar pantalla
+                    var respuesta = await apiServicio.ObtenerElementoAsync<RequerimientoRolPorDependenciaViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/ObtenerRequerimientoRolPorIdDependencia");
+
+
+                    if (respuesta.IsSuccess)
+                    {
+                        respuesta.Resultado = JsonConvert.DeserializeObject<RequerimientoRolPorDependenciaViewModel>(respuesta.Resultado.ToString());
+
+                        return View(respuesta.Resultado);
+                    }
+                    else
+                    {
+                        return RedirectToAction("AutorizacionError", "SituacionPropuesta", new { mensaje = respuesta.Message });
+                    }
+
                 }
 
 
-                // Obtención de datos para generar pantalla
-                var respuesta = await apiServicio.ObtenerElementoAsync<RequerimientoRolPorDependenciaViewModel>(modelo, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/ObtenerRequerimientoRolPorIdDependencia");
-
-                if (respuesta.IsSuccess)
-                {
-                    respuesta.Resultado = JsonConvert.DeserializeObject<RequerimientoRolPorDependenciaViewModel>(respuesta.Resultado.ToString());
-
-                    return View(respuesta.Resultado);
-                }
-                else
-                {
-                    return RedirectToAction("AutorizacionError", "SituacionPropuesta", new { mensaje = respuesta.Message });
-                }
+                return RedirectToAction("Login", "Login");
                 
 
             }
             catch (Exception ex)
             {
 
-
-                if (String.IsNullOrEmpty(mensaje) == true)
-                {
-                    mensaje = Mensaje.Excepcion;
-                }
-
-                InicializarMensaje(mensaje);
-
-                return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = Mensaje.RegistroNoEncontrado});
+                return BadRequest();
 
             }
         }
