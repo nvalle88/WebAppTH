@@ -110,8 +110,23 @@ namespace bd.webappth.web.Controllers.MVC
 
             InicializarMensaje(null);
             lista.ListaActividad = lista.ListaActividad;
-            
+
             return View(lista);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> ActividadesEnsenciales(ViewModelEvaluador viewModelEvaluador)
+        {
+            Response response = new Response();
+            response = await apiServicio.InsertarAsync<ViewModelEvaluador>(viewModelEvaluador, new Uri(WebApp.BaseAddress)
+                                                                   , "api/EvaluacionDesempeno/Insertarctividades");
+
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+                return View();
+           
 
         }
         public async Task<IActionResult> ConocimientoEsenciales(int idIndiceOcupacional)

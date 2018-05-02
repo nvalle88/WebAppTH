@@ -32,6 +32,10 @@ namespace bd.webappth.entidades.ViewModels
         public string NombreUsuario { get; set; }
         public string Cuatroporciento { get; set; }
         public string PorcentajeAumento { get; set; }
+        public List<string> ListaActividades { get; set; }
+        public List<string> ListaIndicadores{ get; set; }
+        public List<string> ListaMetaPeriodo { get; set; }
+        public List<string> ListaActividadescumplidos { get; set; }
         public List<ActividadesEsenciales> ListaActividad { get; set; }
         public List<AreaConocimientoViewModel> ListaConocimientos { get; set; }
         public List<ComportamientoObservableViewModel> ListaCompetenciasTecnicas { get; set; }
