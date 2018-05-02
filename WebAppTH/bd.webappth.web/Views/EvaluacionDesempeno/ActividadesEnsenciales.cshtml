@@ -50,7 +50,7 @@
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            <form asp-action="Create" id="ejemplo" class="smart-form" novalidate="novalidate">
+                            <form asp-action="ActividadesEnsenciales" id="ejemplo" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="row">
                                     <section class="col col-lg-12">
@@ -84,27 +84,31 @@
                                             </thead>
                                             @foreach (var item in Model.ListaActividad)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Descripcion)
+                                            <tr>
+                                                <td hidden="hidden">
+                                                    <input name="ListaActividades" type="hidden" asp- class="form-control" value="@item.IdActividadesEsenciales" />
 
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" asp- class="form-control" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" id="totalRealizar@(item.IdActividadesEsenciales)" asp- class="form-control" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" id="totalRealizado@(item.IdActividadesEsenciales)" asp- class="form-control" onchange="Calcular(@item.IdActividadesEsenciales)" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" id="porcentaje@(item.IdActividadesEsenciales)" name="porcientotxt" asp- class="form-control" readonly="readonly" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" id="Nivelcumplimiento@(item.IdActividadesEsenciales)" asp- class="form-control" readonly="readonly" />
-                                                    </td>
-                                                </tr>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Descripcion)
+
+                                                </td>
+                                                <td>
+                                                    <input name="ListaIndicadores" type="text" asp- class="form-control" />
+                                                </td>
+                                                <td>
+                                                    <input name="ListaMetaPeriodo" type="number" id="totalRealizar@(item.IdActividadesEsenciales)" asp- class="form-control" />
+                                                </td>
+                                                <td>
+                                                    <input name="ListaActividadescumplidos" type="number" id="totalRealizado@(item.IdActividadesEsenciales)" asp- class="form-control" onchange="Calcular(@item.IdActividadesEsenciales)" />
+                                                </td>
+                                                <td>
+                                                    <input type="number" id="porcentaje@(item.IdActividadesEsenciales)" name="porcientotxt" asp- class="form-control" readonly="readonly" />
+                                                </td>
+                                                <td>
+                                                    <input type="number" id="Nivelcumplimiento@(item.IdActividadesEsenciales)" asp- class="form-control" readonly="readonly" />
+                                                </td>
+                                            </tr>
                                             }
                                         </table>
                                     </section>
