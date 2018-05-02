@@ -70,8 +70,8 @@
                                             <label>&nbsp;</label>
                                             <div class="input input-file">
                                                 <!--
-                            <input asp-for="Url" id="file" type="file" name="files" onchange="loadFile(event)">
-                            -->
+            <input asp-for="Url" id="file" type="file" name="files" onchange="loadFile(event)">
+            -->
                                                 <input id="file" type="file" name="files" onchange="loadFile(event)">
                                                 <script>
                                                     var loadFile = function (event) {
@@ -83,6 +83,14 @@
                                                 </script>
                                             </div>
                                         </section>
+
+                                        <div class="col col-2">
+                                            <label>&nbsp;</label>
+                                            <div>
+                                                <button asp-action="DescargarFichaOdontologica" asp-route-id="@Model.IdPersona" class="form-control btn-default">Descargar</button>
+                                            </div>
+                                            
+                                        </div>
                                     </div>
 
                                     <div class="row" id="examenpdf" height="0px">

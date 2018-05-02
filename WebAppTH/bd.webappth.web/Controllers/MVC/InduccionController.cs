@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using bd.webappth.entidades.Utils;
 using bd.webappth.entidades.ViewModels;
@@ -41,19 +42,29 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                lista = await apiServicio.Listar<InduccionViewModel>(new Uri(WebApp.BaseAddress)
-                         , "api/Induccion/ListarEstadoInduccionEmpleados");
 
-                
-                return View(lista);
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var usuario = new UsuarioViewModel { NombreUsuarioActual = NombreUsuario};
+
+                    lista = await apiServicio.ObtenerElementoAsync1<List<InduccionViewModel>>(usuario, new Uri(WebApp.BaseAddress)
+                             , "api/Induccion/ListarEstadoInduccionEmpleados");
+
+
+                    return View(lista);
+                }
+
+                return RedirectToAction("Login", "Login");
 
 
             }
             catch (Exception ex)
             {
-                mensaje = Mensaje.Excepcion;
-
-                return View(lista);
+                return BadRequest();
 
             }
         }

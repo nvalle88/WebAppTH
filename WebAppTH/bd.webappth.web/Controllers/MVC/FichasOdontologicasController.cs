@@ -55,7 +55,9 @@ namespace bd.webappth.web.Controllers.MVC
             modelo.IdPersona = 0;
 
             var pdfFile =  WebApp.BaseAddress + "/FichasOdontologicasDocumentos/"+modelo.IdPersona+".pdf";
+            
             modelo.Url = pdfFile;
+            
 
             return View(modelo);
 
@@ -150,6 +152,29 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+
+        public async Task<FileResult> DescargarFichaOdontologica(string id)
+        {
+
+
+            var id2 = new FichaOdontologicaViewModel
+            {
+                IdPersona = Convert.ToInt32(id),
+            };
+
+            var response = await apiServicio.ObtenerElementoAsync(id2,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ExamenesComplementarios/ObtenerFichaOdontologica");
+
+
+            var m = JsonConvert.DeserializeObject<FichaOdontologicaViewModel>(response.Resultado.ToString());
+            var fileName = $"{id2.IdPersona}.pdf";
+
+            return File(m.Fichero, "application/pdf", fileName);
+
+
+
+        }
 
 
     }
