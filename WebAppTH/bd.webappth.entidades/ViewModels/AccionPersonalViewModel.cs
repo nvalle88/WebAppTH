@@ -12,7 +12,7 @@ namespace bd.webappth.entidades.ViewModels
 
         [Display(Name = "Fecha de solicitud")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Fecha { get; set; }
 
         [Display(Name = "Días restantes")]
@@ -25,12 +25,12 @@ namespace bd.webappth.entidades.ViewModels
 
         [Display(Name = "Fecha desde")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime FechaRige { get; set; }
 
         [Display(Name = "Fecha hasta")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime FechaRigeHasta { get; set; }
 
         public int Estado { get; set; }

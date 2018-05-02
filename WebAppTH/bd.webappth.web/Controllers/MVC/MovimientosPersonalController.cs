@@ -43,21 +43,10 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+
         public async Task<IActionResult> Index(string mensaje)
         {
             InicializarMensaje(mensaje);
-
-            return View();
-
-        }
-
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ListaMovimientos(string identificacion)
-        {
-            InicializarMensaje("");
 
             try
             {
@@ -69,24 +58,19 @@ namespace bd.webappth.web.Controllers.MVC
 
                     var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                    var modeloEnviar = new AccionesPersonalPorEmpleadoViewModel {
-
-                        DatosBasicosEmpleadoViewModel = new DatosBasicosEmpleadoViewModel
-                        {
-                            Identificacion = identificacion
-                        },
-
+                    var modeloEnviar = new AccionesPersonalPorEmpleadoViewModel
+                    {
                         NombreUsuarioActual = NombreUsuario
-                };
-                    
+                    };
 
-                    var modelo = await apiServicio.ObtenerElementoAsync1<AccionesPersonalPorEmpleadoViewModel>(
+
+                    var modelo = await apiServicio.Listar<AccionPersonalViewModel>(
                             modeloEnviar,
                             new Uri(WebApp.BaseAddress),
-                            "api/AccionesPersonal/ListarAccionesPersonalPorEmpleado");
+                            "api/AccionesPersonal/ListarEmpleadosConAccionPersonal");
 
                     return View(modelo);
-                    
+
                 }
 
                 return RedirectToAction("Login", "Login");
@@ -95,6 +79,87 @@ namespace bd.webappth.web.Controllers.MVC
             catch (Exception ex)
             {
 
+                return BadRequest();
+            }
+        }
+
+
+        public async Task<IActionResult> Edit(string mensaje, int id)
+        {
+            try
+            {
+                InicializarMensaje(mensaje);
+
+                var modelo = new AccionPersonalViewModel { IdAccionPersonal = id };
+
+                var respuesta = await apiServicio.ObtenerElementoAsync<AccionPersonalViewModel>(
+                    modelo,
+                    new Uri(WebApp.BaseAddress),
+                    "api/AccionesPersonal/ObtenerAccionPersonalViewModel");
+
+                if (respuesta.IsSuccess)
+                {
+                    modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
+
+
+                    var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+
+                    ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
+
+
+
+                    var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacion");
+
+                    ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+
+
+                    return View(modelo);
+
+                }
+
+                return BadRequest();
+
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+                throw;
+            }
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(AccionPersonalViewModel accionPersonalViewModel)
+        {
+            try
+            {
+
+                var modeloEnviar = new AccionPersonal
+                {
+                    IdAccionPersonal = accionPersonalViewModel.IdAccionPersonal,
+                    IdEmpleado = accionPersonalViewModel.DatosBasicosEmpleadoViewModel.IdEmpleado,
+                    
+                    Estado = accionPersonalViewModel.Estado,
+
+                };
+
+                var respuesta = await apiServicio.InsertarAsync<AccionesPersonalPorEmpleadoViewModel>(
+                            modeloEnviar,
+                            new Uri(WebApp.BaseAddress),
+                            "api/AccionesPersonal/EditarAccionPersonal");
+
+                if (respuesta.IsSuccess)
+                {
+                    return RedirectToAction("Index", new { mensaje = respuesta.Message });
+                }
+
+                return View(accionPersonalViewModel);
+
+            }
+            catch (Exception)
+            {
                 return BadRequest();
             }
         }

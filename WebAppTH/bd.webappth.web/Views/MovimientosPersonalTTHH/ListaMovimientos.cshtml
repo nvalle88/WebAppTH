@@ -149,7 +149,11 @@
                                         </td>
 
                                         <td>
-                                            Opciones xd
+                                            @if ( string.IsNullOrEmpty(item.EstadoDirector) ) { 
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdAccionPersonal }, new { onclick = "espera()" })
+                                            }
+
+                                            
                                         </td>
 
                                     </tr>

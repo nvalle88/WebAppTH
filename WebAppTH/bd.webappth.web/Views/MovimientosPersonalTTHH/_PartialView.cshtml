@@ -5,6 +5,34 @@
 
 <fieldset>
 
+    @{
+        char[] MyChar = { ':'};
+    }
+
+    <div class="row">
+
+        <section class="col col-lg-4">
+
+            <label>Nombre del funcionario</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="DatosBasicosEmpleadoViewModel.Nombres" class="form-control" readonly />
+                <span asp-validation-for="DatosBasicosEmpleadoViewModel.Nombres" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model=>Model.DatosBasicosEmpleadoViewModel.Identificacion).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="DatosBasicosEmpleadoViewModel.Identificacion" class="form-control" readonly />
+                <span asp-validation-for="DatosBasicosEmpleadoViewModel.Identificacion" class="text-danger"></span>
+            </label>
+
+        </section>
+
+    </div>
+
     <div class="row">
 
 

@@ -1,7 +1,7 @@
 @model bd.webappth.entidades.ViewModels.AccionPersonalViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
 
@@ -52,17 +52,17 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialView", Model);}
 
 
-                                    <footer style="background-color:transparent;border:none;">
-                                        <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
-                                        <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.DatosBasicosEmpleadoViewModel.Identificacion" class="btn btn-default" value="Cancelar" onclick="espera()" />
+                                <footer style="background-color:transparent;border:none;">
+                                    <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                    <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.DatosBasicosEmpleadoViewModel.Identificacion" class="btn btn-default" value="Cancelar" onclick="espera()" />
 
-                                    </footer>
-                                
+                                </footer>
+
 
                             </form>
 
@@ -84,6 +84,9 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
     <script src="~/js/moment.min.js"></script>
 
 
@@ -102,8 +105,8 @@
 
     <script>
 
-        function calcularDias() { 
-            
+        function calcularDias() {
+
 
             var fecha1 = moment(document.getElementById("date_Fecha1").value);
             var fecha2 = moment(document.getElementById("date_Fecha2").value);
@@ -111,17 +114,17 @@
             var valNumDiasTxt = fecha2.diff(fecha1, 'days');
 
             if (valNumDiasTxt > 0) {
-                document.getElementById("txt_dias").value = valNumDiasTxt; 
+                document.getElementById("txt_dias").value = valNumDiasTxt;
                 document.getElementById("txt_Numero").value = valNumDiasTxt;
             } else {
                 document.getElementById("txt_dias").value = 0;
                 document.getElementById("txt_Numero").value = 0;
             }
 
-            
+
 
         }
-        
+
     </script>
 
     <!-- Script llamada al waitme -->
