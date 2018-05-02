@@ -26,6 +26,16 @@
         }
     </div>
 
+    <p></p>
+    <div class="alert alert-info">
+        <b>Aviso</b>
+
+        <br>
+        Por favor validar la informaci&oacute;n sobre el movimiento del personal que tiene a cargo. Una vez
+        validada la informaci&oacuten, por favor <b>seleccione el estado del proceso</b>
+    </div>
+    <p></p>
+
     <!-- widget grid -->
     <section id="" class="">
 
@@ -59,7 +69,7 @@
 
                                 <footer style="background-color:transparent;border:none;">
                                     <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
-                                    <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.DatosBasicosEmpleadoViewModel.Identificacion" class="btn btn-default" value="Cancelar" onclick="espera()" />
+                                    <input type="submit" asp-action="Index"  class="btn btn-default" value="Cancelar" onclick="espera()" />
 
                                 </footer>
 

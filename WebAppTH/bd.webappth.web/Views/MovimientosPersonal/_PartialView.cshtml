@@ -31,24 +31,12 @@
         </section>
     </div>
 
+
     <div class="row">
+
         <section class="col col-lg-12">
             <legend>Solicitud a aprobar</legend>
         </section>
-        
-        <section class="col col-lg-4">
-
-            <label>@Html.DisplayNameFor(model => Model.Solicitud)</label>
-            <label class="input col-lg-12">
-                <input type="text" asp-for="Solicitud" class="form-control" readonly disabled />
-                <span asp-validation-for="Solicitud" class="text-danger"></span>
-            </label>
-
-        </section>
-
-    </div>
-
-    <div class="row">
 
         <section class="col col-lg-4">
 
@@ -84,7 +72,33 @@
 
     </div>
 
+    <div class="row">
 
+
+        <section class="col col-lg-8">
+
+            <label>@Html.DisplayNameFor(model => Model.Solicitud)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="Solicitud" class="form-control" readonly disabled />
+                <span asp-validation-for="Solicitud" class="text-danger"></span>
+            </label>
+
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-lg-8">
+            <label>@Html.DisplayNameFor(model => Model.Explicacion)</label>
+            <label class="input col-lg-12">
+                <textarea maxlength="1000" asp-for="Explicacion" class="form-control" rows="5" style="resize:none;" readonly disabled></textarea>
+                <span asp-validation-for="Explicacion" class="text-danger"></span>
+            </label>
+        </section>
+
+
+    </div>
 
     <div class="row">
 
@@ -122,40 +136,26 @@
 
     <div class="row">
 
-        <section class="col col-lg-8">
-            <label>@Html.DisplayNameFor(model => Model.Explicacion)</label>
+        <section class="col col-lg-4">
+            <label>@Html.DisplayNameFor(model => Model.NoDias)</label>
             <label class="input col-lg-12">
-                <textarea maxlength="1000" asp-for="Explicacion" class="form-control" rows="5" style="resize:none;" readonly disabled></textarea>
-                <span asp-validation-for="Explicacion" class="text-danger"></span>
+                <input id="txt_dias" min="0" readonly type="number" asp-for="NoDias" class="form-control" disabled />
+                <span asp-validation-for="NoDias" class="text-danger"></span>
             </label>
-        </section>
 
+        </section>
 
         <section class="col col-lg-4">
-            <div class="col-lg-12">
-                <label>@Html.DisplayNameFor(model => Model.NoDias)</label>
-                <label class="input col-lg-12">
-                    <input id="txt_dias" min="0" readonly type="number" asp-for="NoDias" class="form-control" disabled />
-                    <span asp-validation-for="NoDias" class="text-danger"></span>
-                </label>
-            </div>
-
-            <div class="col-lg-12">&nbsp;</div>
-
-            <div class="col-lg-12">
-                <label>@Html.DisplayNameFor(model => Model.Numero)</label>
-                <label class="input col-lg-12">
-                    <input id="txt_Numero" min="0" readonly type="number" asp-for="Numero" class="form-control" disabled />
-                    <span asp-validation-for="Numero" class="text-danger"></span>
-                </label>
-            </div>
+            
+            <label>@Html.DisplayNameFor(model => Model.Numero)</label>
+            <label class="input col-lg-12">
+                <input id="txt_Numero" min="0" readonly type="number" asp-for="Numero" class="form-control" disabled />
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </label>
 
         </section>
 
-
     </div>
-
-
 
 </fieldset>
 

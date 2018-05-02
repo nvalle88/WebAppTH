@@ -1,0 +1,310 @@
+@model bd.webappth.entidades.ViewModels.AccionPersonalViewModel
+
+@{
+    ViewData["Title"] = "Visualizar";
+}
+
+
+<!-- MAIN CONTENT -->
+<div id="content" style="height:1000px;">
+
+    <div class="col col-10">
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-12">
+                <div class="alert alert-block alert-dismissable">
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                    <p>
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                    </p>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <p></p>
+    
+
+    <!-- widget grid -->
+    <section id="" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Movimiento personal</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <input type="hidden" asp-for="IdAccionPersonal" />
+                                <input type="hidden" asp-for="DatosBasicosEmpleadoViewModel.IdEmpleado" />
+
+                                <fieldset>
+
+                                    @{
+                                        char[] MyChar = { ':' };
+                                    }
+
+                                    <div class="row">
+
+                                        <section class="col col-lg-4">
+                                            <label>@Html.DisplayNameFor(model => Model.Estado)</label>
+                                            <label class="input">
+                                                <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados" disabled readonly>
+                                                    <option value="0" selected>Seleccione</option>
+                                                </select>
+
+                                                <span asp-validation-for="Estado" class="text-danger"></span>
+                                            </label>
+                                        </section>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-lg-4">
+                                            <label>&nbsp;</label>
+                                            <label class="input">&nbsp;</label>
+                                        </section>
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <section class="col col-lg-12">
+                                            <legend>Solicitud</legend>
+                                        </section>
+
+                                        <section class="col col-lg-4">
+
+                                            <label>Nombre del funcionario</label>
+                                            <label class="input col-lg-12">
+                                                <input type="text" asp-for="DatosBasicosEmpleadoViewModel.Nombres" class="form-control" readonly disabled />
+                                                <span asp-validation-for="DatosBasicosEmpleadoViewModel.Nombres" class="text-danger"></span>
+                                            </label>
+
+                                        </section>
+
+                                        <section class="col col-lg-4">
+
+                                            <label>@Html.DisplayNameFor(model => Model.DatosBasicosEmpleadoViewModel.Identificacion).ToString().TrimEnd(MyChar)</label>
+                                            <label class="input col-lg-12">
+                                                <input type="text" asp-for="DatosBasicosEmpleadoViewModel.Identificacion" class="form-control" readonly disabled />
+                                                <span asp-validation-for="DatosBasicosEmpleadoViewModel.Identificacion" class="text-danger"></span>
+                                            </label>
+
+                                        </section>
+
+                                        <section class="col col-lg-4">
+                                            <label>@Html.DisplayNameFor(model => Model.TipoAccionPersonalViewModel)</label>
+                                            <label class="input">
+                                                <select asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones" disabled>
+                                                    <option value="0" selected>Seleccione</option>
+                                                </select>
+
+                                                <span asp-validation-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="text-danger"></span>
+                                            </label>
+                                        </section>
+
+
+                                    </div>
+
+                                    <div class="row">
+
+
+                                        <section class="col col-lg-8">
+
+                                            <label>@Html.DisplayNameFor(model => Model.Solicitud)</label>
+                                            <label class="input col-lg-12">
+                                                <input type="text" asp-for="Solicitud" class="form-control" readonly disabled />
+                                                <span asp-validation-for="Solicitud" class="text-danger"></span>
+                                            </label>
+
+                                        </section>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <section class="col col-lg-8">
+                                            <label>@Html.DisplayNameFor(model => Model.Explicacion)</label>
+                                            <label class="input col-lg-12">
+                                                <textarea maxlength="1000" asp-for="Explicacion" class="form-control" rows="5" style="resize:none;" readonly disabled></textarea>
+                                                <span asp-validation-for="Explicacion" class="text-danger"></span>
+                                            </label>
+                                        </section>
+
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <section class="col col-lg-4">
+
+                                            <label>@Html.DisplayNameFor(model => Model.Fecha)</label>
+                                            <label class="input col-lg-12">
+                                                <input asp-for="Fecha" type="text" class="form-control" data-dateformat='yy-mm-dd' readonly disabled />
+                                                <span asp-validation-for="Fecha" class="text-danger"></span>
+                                            </label>
+
+                                        </section>
+
+                                        <section class="col col-lg-4">
+
+                                            <label>@Html.DisplayNameFor(model => Model.FechaRige)</label>
+                                            <label class="input col-lg-12">
+                                                <input id="date_Fecha1" asp-for="FechaRige" type="datetime" class="form-control" data-dateformat='yy-mm-dd' onchange="calcularDias()" readonly disabled />
+                                                <span asp-validation-for="FechaRige" class="text-danger"></span>
+                                            </label>
+
+                                        </section>
+
+                                        <section class="col col-lg-4">
+
+                                            <label>@Html.DisplayNameFor(model => Model.FechaRigeHasta)</label>
+                                            <label class="input col-lg-12">
+                                                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="form-control" data-dateformat='yy-mm-dd' onchange="calcularDias()" readonly disabled />
+                                                <span asp-validation-for="FechaRigeHasta" class="text-danger"></span>
+                                            </label>
+
+                                        </section>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <section class="col col-lg-4">
+                                            <label>@Html.DisplayNameFor(model => Model.NoDias)</label>
+                                            <label class="input col-lg-12">
+                                                <input id="txt_dias" min="0" readonly type="number" asp-for="NoDias" class="form-control" disabled />
+                                                <span asp-validation-for="NoDias" class="text-danger"></span>
+                                            </label>
+
+                                        </section>
+
+                                        <section class="col col-lg-4">
+
+                                            <label>@Html.DisplayNameFor(model => Model.Numero)</label>
+                                            <label class="input col-lg-12">
+                                                <input id="txt_Numero" min="0" readonly type="number" asp-for="Numero" class="form-control" disabled />
+                                                <span asp-validation-for="Numero" class="text-danger"></span>
+                                            </label>
+
+                                        </section>
+
+                                    </div>
+
+                                </fieldset>
+
+
+
+                                <footer style="background-color:transparent;border:none;">
+                                    <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.DatosBasicosEmpleadoViewModel.Identificacion" class="btn btn-default" value="Regresar" onclick="espera()" />
+
+                                </footer>
+
+
+                            </form>
+
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/moment.min.js"></script>
+
+
+    <!-- Estilos waitMe -->
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <!-- Scripts waitMe -->
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <!-- Scripts comboBox -->
+
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+
+    <script>
+
+        function calcularDias() {
+
+
+            var fecha1 = moment(document.getElementById("date_Fecha1").value);
+            var fecha2 = moment(document.getElementById("date_Fecha2").value);
+
+            var valNumDiasTxt = fecha2.diff(fecha1, 'days');
+
+            if (valNumDiasTxt > 0) {
+                document.getElementById("txt_dias").value = valNumDiasTxt;
+                document.getElementById("txt_Numero").value = valNumDiasTxt;
+            } else {
+                document.getElementById("txt_dias").value = 0;
+                document.getElementById("txt_Numero").value = 0;
+            }
+
+
+
+        }
+
+    </script>
+
+    <!-- Script llamada al waitme -->
+    <script type="text/javascript">
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
+
+    <!-- Script llamada al select2 para los combos -->
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            Init_Select2();
+        });
+
+
+    </script>
+
+}

@@ -132,7 +132,10 @@ namespace bd.webappth.web.Controllers.MVC
                     var model = new AccionPersonalViewModel
                     {
                         DatosBasicosEmpleadoViewModel = datosBasicosEmpleado,
-                        Numero = "0"
+                        Numero = "0",
+                        Fecha = DateTime.Now,
+                        FechaRige = DateTime.Now,
+                        FechaRigeHasta = DateTime.Now
                     };
 
                     var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
@@ -282,6 +285,50 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+
+        public async Task<IActionResult> Visualizar(string mensaje, int id)
+        {
+            try
+            {
+                InicializarMensaje(mensaje);
+
+                var modelo = new AccionPersonalViewModel { IdAccionPersonal = id };
+
+                var respuesta = await apiServicio.ObtenerElementoAsync<AccionPersonalViewModel>(
+                    modelo,
+                    new Uri(WebApp.BaseAddress),
+                    "api/AccionesPersonal/ObtenerAccionPersonalViewModel");
+
+                if (respuesta.IsSuccess)
+                {
+                    modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
+
+
+                    var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+
+                    ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
+
+
+
+                    var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacion");
+
+                    ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+
+
+                    return View(modelo);
+
+                }
+
+                return BadRequest();
+
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+                throw;
+            }
+
+        }
 
     }
 }
