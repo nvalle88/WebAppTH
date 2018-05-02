@@ -118,16 +118,16 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 InicializarMensaje(mensaje);
 
-                var datosBasicosEmpleado = new DatosBasicosEmpleadoViewModel { IdEmpleado = id };
+                var datosBasicosEmpleado = new DatosBasicosEmpleadoSinRequiredViewModel { IdEmpleado = id };
 
-                var respuesta = await apiServicio.ObtenerElementoAsync <DatosBasicosEmpleadoViewModel>(
+                var respuesta = await apiServicio.ObtenerElementoAsync <DatosBasicosEmpleadoSinRequiredViewModel>(
                     datosBasicosEmpleado,
                     new Uri(WebApp.BaseAddress),
                     "api/Empleados/ObtenerDatosBasicosEmpleado");
 
                 if (respuesta.IsSuccess)
                 {
-                    datosBasicosEmpleado = JsonConvert.DeserializeObject<DatosBasicosEmpleadoViewModel>(respuesta.Resultado.ToString());
+                    datosBasicosEmpleado = JsonConvert.DeserializeObject<DatosBasicosEmpleadoSinRequiredViewModel>(respuesta.Resultado.ToString());
 
                     var model = new AccionPersonalViewModel
                     {
@@ -170,6 +170,22 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Create(AccionPersonalViewModel accionPersonalViewModel)
         {
             try {
+
+                if (!ModelState.IsValid)
+                {
+                    var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+
+                    ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
+
+
+
+                    var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacionTTHH");
+
+                    ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+
+                    InicializarMensaje(Mensaje.ModeloInvalido);
+                    return View(accionPersonalViewModel);
+                }
 
                 var modeloEnviar = new AccionPersonal{
                     IdEmpleado = accionPersonalViewModel.DatosBasicosEmpleadoViewModel.IdEmpleado,
@@ -250,6 +266,23 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
 
+                if (!ModelState.IsValid)
+                {
+                    var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+
+                    ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
+
+
+
+                    var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacionTTHH");
+
+                    ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+
+                    InicializarMensaje(Mensaje.ModeloInvalido);
+                    return View(accionPersonalViewModel);
+                }
+
+
                 var modeloEnviar = new AccionPersonal
                 {
                     IdAccionPersonal = accionPersonalViewModel.IdAccionPersonal,
@@ -290,6 +323,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
+                
                 InicializarMensaje(mensaje);
 
                 var modelo = new AccionPersonalViewModel { IdAccionPersonal = id };

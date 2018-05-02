@@ -135,7 +135,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-
+                
                 var modeloEnviar = new AccionPersonal
                 {
                     IdAccionPersonal = accionPersonalViewModel.IdAccionPersonal,
