@@ -20,6 +20,8 @@ namespace bd.webappth.entidades.Constantes
         /// </summary>
         public const string idCandidatoSession = "idCandidatoSession";
         public const string idCandidatoPersonaSession = "idCandidatoPersonaSession";
+        public const string idEvaluadorSession = "idEvaluadorSession";
+        public const string idEval011Session = "idEval011Session";
 
         /// <summary>
         /// Constantes para la session de CadidatoConcurso
