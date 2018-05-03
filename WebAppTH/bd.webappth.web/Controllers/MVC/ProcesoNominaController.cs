@@ -1,5 +1,6 @@
 ﻿using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
+using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -57,7 +58,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/ProcesoNomina/InsertarProcesoNomina");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index", new { mensaje = Mensaje.GuardadoSatisfactorio });
+                    return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
                 }
 
                 ViewData["Error"] = response.Message;
@@ -66,7 +67,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorListado}");
             }
         }
 
@@ -87,7 +88,7 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                 }
 
-                return RedirectToAction("Index", new { mensaje = Mensaje.RegistroNoEncontrado });
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
             catch (Exception)
             {
@@ -116,16 +117,16 @@ namespace bd.webappth.web.Controllers.MVC
                     if (response.IsSuccess)
                     {
 
-                        return RedirectToAction("Index", new { mensaje = Mensaje.RegistroEditado });
+                        return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
                     }
                     ViewData["Error"] = response.Message;
                     return View(ProcesoNomina);
                 }
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEditar}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEditar}");
             }
         }
 
@@ -141,7 +142,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
         }
 
@@ -152,7 +153,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (string.IsNullOrEmpty(id))
                 {
-                    return RedirectToAction("Index");
+                    return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
                 }
                 var tipoConjuntoEliminar = new ProcesoNomina { IdProceso = Convert.ToInt32(id) };
 
@@ -160,13 +161,13 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/ProcesoNomina/EliminarProcesoNomina");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index", new { mensaje = Mensaje.BorradoSatisfactorio });
+                    return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
             }
         }
     }

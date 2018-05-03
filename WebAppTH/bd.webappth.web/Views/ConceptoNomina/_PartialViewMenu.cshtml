@@ -1,0 +1,45 @@
+
+@model bd.webappth.entidades.Utils.MenuConceptoNomina
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+   
+   @{
+       var a = @Context.Session.GetInt32(Constantes.idConceptoNominaSession);
+    }
+<div class="btn-group btn-group-justified">
+    @if (Model.OpcionMenu == 0)
+    {
+        <a asp-action="DetalleConceptoNomina" asp-controller="ConceptoNomina"  asp-route-id="@a"  onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Definici&oacute;n del concepto </a>
+    }
+    else
+    {
+        <a asp-action="DetalleConceptoNomina" asp-controller="ConceptoNomina" asp-route-id="@a" onclick="cargando()" class="btn btn-default"> Definici&oacute;n del concepto</a>
+    }
+
+
+    @if (Model.OpcionMenu == 1)
+    {
+        <a asp-action="IndexConceptoConjunto" asp-controller="ConceptoNomina" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Relaci&oacute;n de conjuntos</a>
+
+    }
+    else
+    {
+        <a asp-action="IndexConceptoConjunto" asp-controller="ConceptoNomina" onclick="cargando()" class="btn btn-default">Relaci&oacute;n de conjuntos</a>
+
+
+    }
+
+    @if (Model.OpcionMenu == 2)
+    {
+        <a asp-action="Formula" asp-controller="ConceptoNomina" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">F&oacute;rmula de c&aacute;lculo</a>
+
+
+    }
+    else
+    {
+        <a asp-action="Formula" asp-controller="ConceptoNomina" onclick="cargando()" class="btn btn-default">F&oacute;rmula de c&aacute;lculo</a>
+
+    }
+</div>

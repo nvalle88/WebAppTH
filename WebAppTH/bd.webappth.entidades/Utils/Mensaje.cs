@@ -6,6 +6,7 @@ namespace bd.webappth.entidades.Utils
 {
   public static class Mensaje
     {
+        public static string  FaltaIngresoDatos { get { return "Debe completar el formulario"; } }
         public static string NoExisteModulo { get { return "No se ha encontrado el Módulo"; } }
         public static string Excepcion { get { return "Ha ocurrido una Excepción"; } }
         public static string Obligatorio { get { return "Debe introducir datos en el campo"; } }
@@ -14,7 +15,6 @@ namespace bd.webappth.entidades.Utils
         public static string ExisteRegistro { get { return "Existe un registro de igual información"; } }
         public static string ExisteEmpleado { get { return "Existe un empleado de igual información"; } }
         public static string Satisfactorio { get { return "La acción se ha realizado satisfactoriamente"; } }
-        public static string Error { get { return "Ha ocurrido error inesperado"; } }
         public static string RegistroNoEncontrado { get { return "El registro solicitado no se ha encontrado"; } }
         public static string ModeloInvalido { get { return "El Módelo es inválido"; } }
         public static string BorradoNoSatisfactorio { get { return "No es posible eliminar el registro, existen relaciones que dependen de él"; } }
@@ -28,5 +28,18 @@ namespace bd.webappth.entidades.Utils
         public static string CorregirFormulario { get { return "Corregir la información"; } }
         public static string SinArchivo { get { return "No existe archivo para descargar"; } }
         public static string RegistroEditado { get { return "El registro se ha editado corectamente"; } }
+
+        public static string RegistroNoExiste { get { return "El registro que desea editar no existe."; } }
+        public static string ErrorCrear { get { return "Ha ocurrido un error al crear el registro."; } }
+        public static string ErrorEditar { get { return "Ha ocurrido un error al editar el registro."; } }
+        public static string ErrorEliminar { get { return "Ha ocurrido un error al eliminar el registro."; } }
+        public static string ErrorListado { get { return "Ha ocurrido un error al cargar el listado."; } }
+        public static string ErrorCargarDatos { get { return "Ha ocurrido un error al cargar los datos."; } }
+        public static string Informacion { get { return "Información"; } }
+        public static string Error { get { return "Error"; } }
+        public static string Aviso { get { return "Aviso"; } }
+
+        public static string ErrorActivar { get { return "Ha ocurrido un error al activar el registro."; } }
+        public static string ErrorDesactivar { get { return "Ha ocurrido un error al desactivar el registro."; } }
     }
 }

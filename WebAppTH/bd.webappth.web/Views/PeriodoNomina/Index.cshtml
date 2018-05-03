@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.ConceptoNomina>
+@model List<bd.webappth.entidades.Negocio.PeriodoNomina>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,8 +6,8 @@
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 <div id="content">
     <p></p>
-    <a asp-action="CreateConceptoNomina">
-        <button type="button" asp-action="CreateConceptoNomina" class="btn btn-labeled btn-default">
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nuevo
@@ -21,7 +21,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Conceptos</h2>
+                        <h2>Periodos</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -34,13 +34,16 @@
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().IdProceso)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Codigo)
-                                        </th>
-                                        <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estatus)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaInicio)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaFin)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Abierto)
                                         </th>
                                         <th>
                                             Opciones
@@ -52,19 +55,22 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Codigo)
+                                            @Html.DisplayFor(modelItem => item.ProcesoNomina.Codigo) / @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Descripcion)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Estatus)
+                                            @Html.DisplayFor(modelItem => item.FechaInicio)
                                         </td>
                                         <td>
-                                            @Html.ActionLink("Detalle", "DetalleConceptoNomina", new { id = item.IdConcepto })
+                                            @Html.DisplayFor(modelItem => item.FechaFin)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Abierto)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdPeriodo })
                                         </td>
                                     </tr>
                                     }

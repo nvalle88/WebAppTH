@@ -27,5 +27,20 @@ namespace bd.webappth.entidades.Constantes
         public const string idCandidatoConcursoSession = "idCandidatoConcursoSession";
         public const string idDependeciaConcursoSession = "idDependeciaConcursoSession";
         public const string idParidaFaseConcursoSession = "idParidaFaseConcursoSession";
+
+
+        /// <summary>
+        /// Constantes para las secciones de la configutración de la nómina 
+        /// Conceptos 
+        /// </summary>
+        public const string idConceptoNominaSession = "idConceptoNominaSession";
+        public const string CodigoConceptoNominaSession = "CodigoConceptoNominaSession";
+        public const string DescripcionConceptoNominaSession = "DescripcionConceptoNominaSession";
+
+        /// <summary>
+        /// Variables de sección para la configuración de tabla del sri
+        /// </summary>
+        public const string  IdSriSession= "IdSriSession";
+        public const string DescripcionSriSession = "DescripcionSriSession";
     }
 }
