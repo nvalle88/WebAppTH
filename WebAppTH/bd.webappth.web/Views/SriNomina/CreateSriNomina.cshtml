@@ -21,7 +21,7 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialViewSriNomina", Model);}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" id="btn-guardar" />
+                                    <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
                                     <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
@@ -36,9 +36,6 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script src='~/js/site.js'></script>
-
-    <script src='~/lib/waitMe/waitMe.min.js'></script>
-
     <script type="text/javascript">
 
         function cargando() {
@@ -46,4 +43,6 @@
         }
 
     </script>
+
+
 }

@@ -6,8 +6,8 @@
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 <div id="content">
     <p></p>
-    <a asp-action="Create">
-        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+    <a asp-action="Create" onclick="cargando()">
+        <button type="button" asp-action="Create" onclick="cargando()" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nuevo
@@ -53,26 +53,26 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ProcesoNomina.Codigo) / @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Descripcion)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FechaInicio)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FechaFin)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Abierto)
-                                        </td>
-                                        <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdPeriodo })
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ProcesoNomina.Codigo) / @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaInicio)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaFin)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Abierto)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdPeriodo },new {onclick="cargando();" })
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -83,7 +83,14 @@
         </div>
     </section>
 </div>
- @section Scripts {
-   <script src='~/js/datatables/init.js'></script>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+    <script type="text/javascript">
+
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+
+    </script>
 }
 

@@ -47,7 +47,6 @@ namespace bd.webappth.web.Controllers.MVC
         {
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
                 return View(ProcesoNomina);
             }
             Response response = new Response();
@@ -58,14 +57,14 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/ProcesoNomina/InsertarProcesoNomina");
                 if (response.IsSuccess)
                 {
-                    return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
+                    return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
-                ViewData["Error"] = response.Message;
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 return View(ProcesoNomina);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorListado}");
             }
@@ -103,7 +102,6 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
                 return View(ProcesoNomina);
             }
             Response response = new Response();
@@ -116,10 +114,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-
-                        return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
+                        return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                    ViewData["Error"] = response.Message;
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     return View(ProcesoNomina);
                 }
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEditar}");
@@ -140,7 +137,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                                      , "api/ProcesoNomina/ListarProcesoNomina");
                 return View(lista);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
@@ -161,7 +158,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/ProcesoNomina/EliminarProcesoNomina");
                 if (response.IsSuccess)
                 {
-                    return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
+                    return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
             }

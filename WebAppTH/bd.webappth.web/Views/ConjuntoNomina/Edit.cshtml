@@ -5,21 +5,7 @@
 }
 <div id="content">
     <section id="" class="">
-        <div class="col col-10">
-            @if (@ViewData["Error"].ToString() != "")
 
-            {
-                <div class="col-lg-7">
-                    <div class="alert alert-block alert-dismissable">
-                        <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-                        <p>
-                            <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-                        </p>
-                    </div>
-                </div>
-            }
-        </div>
         <div class="row">
             <article class="col-sm-12 col-md-12 col-lg-7">
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
@@ -36,8 +22,8 @@
                                 <input type="hidden" asp-for="IdConjunto" />
                                 @{await Html.RenderPartialAsync("_PartialViewConjuntoNomina");}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
+                                    <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -49,4 +35,11 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+
+    </script>
 }

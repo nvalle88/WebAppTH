@@ -37,7 +37,7 @@
 /*
  * GLOBAL: Sound Config (define sound path, enable or disable all sounds)
  */
-	$.sound_path = "sound/";
+	//$.sound_path = "sound/";
 	$.sound_on = true; 
 /*
  * SAVE INSTANCE REFERENCE (DO NOT CHANGE)
@@ -133,7 +133,7 @@
 /*
  * Turns on speech as soon as the page is loaded
  */	
-	voice_command_auto = false,
+	voice_command_auto = true,
 /*
  * 	Sets the language to the default 'en-US'. (supports over 50 languages 
  * 	by google)
