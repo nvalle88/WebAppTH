@@ -1,66 +1,164 @@
 @model bd.webappth.entidades.ViewModels.TipoAccionPersonalViewModel
+
+@{
+    Char[] charsNoPermitidos = {':'};
+
+}
+
 <fieldset>
-  
+
 
     <div class="row">
-        <section class="col col-8">
+        <section class="col col-6">
+            <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.Nombre).ToString().TrimEnd(charsNoPermitidos)</label>
             <label class="input">
-                <i class="icon-append fa fa-comment"></i>
-                <input maxlength="20" asp-for="TipoAccionPersonal.Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.Nombre)" />
+                <input maxlength="20" asp-for="TipoAccionPersonal.Nombre" class="form-control" />
                 <span asp-validation-for="TipoAccionPersonal.Nombre" class="text-danger"></span>
             </label>
         </section>
     </div>
+
     <div class="row">
-        <section class="col col-8">
-            <label class="input">
-                <i class="icon-append fa fa-comment"></i>
-                <input maxlength="20" asp-for="TipoAccionPersonal.NDiasMinimo" onKeyPress="return checkIt(event)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.NDiasMinimo)" />
-                <span asp-validation-for="TipoAccionPersonal.NDiasMinimo" class="text-danger"></span>
-            </label>
+        <section class="col col-9">
+            <legend>M&iacute;nimo</legend>
         </section>
     </div>
+
     <div class="row">
-        <section class="col col-8">
-            <label class="input">
-                <i class="icon-append fa fa-comment"></i>
-                <input maxlength="20" asp-for="TipoAccionPersonal.NDiasMaximo" onKeyPress="return checkIt(event)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.NDiasMaximo)" />
-                <span asp-validation-for="TipoAccionPersonal.NDiasMaximo" class="text-danger"></span>
-            </label>
+
+        <section class="col col-2">
+            <input type="radio" name="grp_tiempo_minimo" value="horas" onclick="getRdbtnMinSelected()" @if(Model.TipoAccionPersonal.NHorasMaximo > 0) { <text>checked</text>}/>&nbsp;Horas
+</section>
+
+
+<section class="col col-2">
+            <input type="radio" name="grp_tiempo_minimo" value="dias" onclick="getRdbtnMinSelected()" @if(Model.TipoAccionPersonal.NDiasMaximo > 0) { <text>checked</text>}/>&nbsp;D&iacute;as meses y a&ntilde;os
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <div id="rowHorasMin" style="visibility: hidden">
+            <section class="col col-2">
+                <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.NHorasMinimo)</label>
+                <label class="input">
+                    <input type="number" id="txt_min_horas" onchange="validarHoras()" maxlength="20" asp-for="TipoAccionPersonal.NHorasMinimo" class="form-control" />
+                    <span asp-validation-for="TipoAccionPersonal.NHorasMinimo" class="text-danger"></span>
+                </label>
+            </section>
+        </div>
+
+        <div id="rowDiasMin" style="visibility: hidden">
+            <section class="col col-2">
+                <label>D&iacute;as</label>
+                <label class="input">
+                    <input type="number" maxlength="20" id="txt_min_dias" value="0" class="form-control" onchange="calcularDias()" />
+                </label>
+            </section>
+
+            <section class="col col-2">
+                <label>Meses</label>
+                <label class="input">
+                    <input type="number" maxlength="20" id="txt_min_meses" value="0" class="form-control" onchange="calcularDias()" />
+                </label>
+            </section>
+
+            <section class="col col-2">
+                <label>A&ntilde;os</label>
+                <label class="input">
+                    <input type="number" maxlength="20" id="txt_min_years" value="0" class="form-control" onchange="calcularDias()" />
+                </label>
+            </section>
+
+            <section class="col col-4">
+                <label>Total m&iacute;nimo de n&uacute;mero d&iacute;as permitido</label>
+                <label class="input col-9">
+                    <input maxlength="20" id="txt_min_total_dias" asp-for="TipoAccionPersonal.NDiasMinimo" class="form-control" readonly/>
+                    <span asp-validation-for="TipoAccionPersonal.NDiasMinimo" class="text-danger"></span>
+                </label>
+            </section>
+
+        </div>
+
+    </div>
+
+    
+
+    <div class="row">
+        <section class="col col-9">
+            <legend>M&aacute;ximo</legend>
         </section>
     </div>
+
+    <div class="row" >
+
+        <div  id="rowHorasMax" style="visibility: hidden">
+
+            <section class="col col-2">
+
+                <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.NDiasMaximo)</label>
+                <label class="input">
+                    <input type="number" id="txt_max_horas" onchange="validarHoras()" maxlength="20" asp-for="TipoAccionPersonal.NHorasMaximo" class="form-control" />
+                    <span asp-validation-for="TipoAccionPersonal.NHorasMaximo" class="text-danger"></span>
+                </label>
+            </section>
+
+        </div>
+
+        <div id="rowDiasMax" style="visibility: hidden">
+
+            <section class="col col-2">
+                <label>D&iacute;as</label>
+                <label class="input">
+                    <input type="number" maxlength="20" id="txt_max_dias" value="0" class="form-control" onchange="calcularDiasMax()" />
+                </label>
+            </section>
+
+            <section class="col col-2">
+                <label>Meses</label>
+                <label class="input">
+                    <input type="number" maxlength="20" id="txt_max_meses" value="0" class="form-control" onchange="calcularDiasMax()" />
+                </label>
+            </section>
+
+            <section class="col col-2">
+                <label>A&ntilde;os</label>
+                <label class="input">
+                    <input type="number" maxlength="20" id="txt_max_years" value="0" class="form-control" onchange="calcularDiasMax()" />
+                </label>
+            </section>
+
+            <section class="col col-4">
+                <label>Total m&aacute;ximo de n&uacute;mero d&iacute;as permitido</label>
+                <label class="input col-9">
+                    <input maxlength="20" id="txt_max_total_dias" asp-for="TipoAccionPersonal.NDiasMaximo" class="form-control" readonly/>
+                    <span asp-validation-for="TipoAccionPersonal.NDiasMaximo" class="text-danger"></span>
+                </label>
+            </section>
+        </div>
+    </div>
+
     <div class="row">
-        <section class="col col-8">
-            <label class="input">
-                <i class="icon-append fa fa-comment"></i>
-                <input maxlength="20" asp-for="TipoAccionPersonal.NHorasMinimo" onKeyPress="return checkIt(event)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.NHorasMinimo)" />
-                <span asp-validation-for="TipoAccionPersonal.NHorasMinimo" class="text-danger"></span>
-            </label>
+        <section class="col col-9">
+            <legend>&nbsp;</legend>
         </section>
     </div>
+
+
     <div class="row">
-        <section class="col col-8">
-            <label class="input">
-                <i class="icon-append fa fa-comment"></i>
-                <input maxlength="20" asp-for="TipoAccionPersonal.NHorasMaximo" onKeyPress="return checkIt(event)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.NHorasMaximo)" />
-                <span asp-validation-for="TipoAccionPersonal.NHorasMaximo" class="text-danger"></span>
-            </label>
-        </section>
-    </div>
-  
-    <div class="row">
-       
-        <section class="col col-8">
+
+        <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.DiasHabiles" class="form-control">
-                <i></i>Es dia habil ?
+                <i></i>Es d&iacute;a habil ?
                 <span asp-validation-for="TipoAccionPersonal.DiasHabiles" class="text-danger"></span>
             </label>
         </section>
 
     </div>
     <div class="row">
-       <section class="col col-8">
+        <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.ImputableVacaciones" class="form-control">
                 <i></i>Es imputable vacaciones ?
@@ -70,10 +168,10 @@
     </div>
     <div class="row">
 
-        <section class="col col-8">
+        <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.ProcesoNomina" class="form-control">
-                <i></i>Es proceso nomina ?
+                <i></i>Es proceso n&oacute;mina ?
                 <span asp-validation-for="TipoAccionPersonal.ProcesoNomina" class="text-danger"></span>
             </label>
         </section>
@@ -81,7 +179,7 @@
     </div>
     <div class="row">
 
-        <section class="col col-8">
+        <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.EsResponsableTH" class="form-control">
                 <i></i>Es responsable de Talento Humano ?
@@ -91,28 +189,41 @@
 
     </div>
     <div class="row">
-        <section class="col col-8">
+
+        <section class="col col-4">
             <label class="input">
                 <select asp-for="TipoAccionPersonal.Matriz" class="form-control" asp-items="ViewBag.IdMatriz">
-                    <option id="0">< Seleccione una Matriz ></option>
+                    <option id="0">Seleccione una Matriz</option>
                 </select>
                 <span asp-validation-for="TipoAccionPersonal.Matriz" class="text-danger"></span>
             </label>
         </section>
+
+        <section class="col col-4">
+            <label class="input">
+                <select asp-for="TipoAccionPersonal.IdEstadoTipoAccionPersonal" class="form-control" asp-items="ViewBag.IdEstadoTipoAccionPersonal">
+                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.TipoAccionPersonal.IdEstadoTipoAccionPersonal)></option>
+                </select>
+                <span asp-validation-for="TipoAccionPersonal.IdEstadoTipoAccionPersonal" class="text-danger"></span>
+            </label>
+        </section>
+
     </div>
+
     <div class="row">
+
         <section class="col col-8">
+            <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.Descripcion)</label>
             <label class="textarea">
-                <i class="icon-append fa fa-comment"></i>
-                <textarea maxlength="50" asp-for="TipoAccionPersonal.Descripcion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.TipoAccionPersonal.Descripcion)"></textarea>
+                <textarea maxlength="300" asp-for="TipoAccionPersonal.Descripcion" rows="4"></textarea>
                 <span asp-validation-for="TipoAccionPersonal.Descripcion" class="text-danger"></span>
             </label>
         </section>
     </div>
 
     <div class="row">
-      
-        <section class="col col-8">
+
+        <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.GeneraAccionPersonal" class="form-control">
                 <i></i>Genera  Acci&oacuten Personal ?
@@ -123,7 +234,7 @@
 
     </div>
     <div class="row">
-         <section class="col col-8">
+        <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.ModificaDistributivo" class="form-control">
                 <i></i>Modifica Distributivo ?
@@ -134,14 +245,229 @@
 
     </div>
     <div class="row">
-        <section class="col col-8">
-            <label class="input">
-                <select asp-for="TipoAccionPersonal.IdEstadoTipoAccionPersonal" class="form-control" asp-items="ViewBag.IdEstadoTipoAccionPersonal">
-                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.TipoAccionPersonal.IdEstadoTipoAccionPersonal)></option>
-                </select>
-                <span asp-validation-for="TipoAccionPersonal.IdEstadoTipoAccionPersonal" class="text-danger"></span>
-            </label>
-        </section>
+        
     </div>
 
 </fieldset>
+
+<script>
+
+    function calcularDias() {
+
+        validarMayoresCero();
+        resetHoras();
+
+        var varDiasTxt = document.getElementById('txt_min_dias').value;
+        var varMesesTxt = document.getElementById('txt_min_meses').value;
+        var varYearsTxt = document.getElementById('txt_min_years').value;
+
+        var varTotalDias = 0;
+
+        if (varDiasTxt > 0) {
+            varTotalDias = varTotalDias + (varDiasTxt*1);
+        }
+
+        if (varMesesTxt > 0) {
+            varTotalDias = varTotalDias + (varMesesTxt*30);
+        }
+
+        if (varYearsTxt > 0) {
+
+            var numEntero = 0;
+            var numDecimal = 0;
+
+            var posicionPunto = varYearsTxt.toString().indexOf(".");
+            var posicionComa = varYearsTxt.toString().indexOf(",");
+
+            if (posicionPunto > 0) {
+
+                numEntero = varYearsTxt.toString().substring(0, (posicionPunto));
+                numDecimal = varYearsTxt.toString().substring((posicionPunto + 1), varYearsTxt.length);
+                
+                varTotalDias = varTotalDias + (numEntero * 365);
+                
+            }
+
+            else if (posicionComa > 0) {
+                numEntero = varYearsTxt.toString().substring(0, (posicionComa));
+                numDecimal = varYearsTxt.toString().substring((posicionComa + 1), varYearsTxt.length);
+
+                varTotalDias = varTotalDias + (numEntero * 365);
+            }
+
+            else {
+                varTotalDias = varTotalDias + (varYearsTxt * 365);
+            }
+            
+        }
+
+        document.getElementById('txt_min_total_dias').value = varTotalDias;
+
+    }
+
+    function calcularDiasMax() {
+
+        validarMayoresCero();
+        resetHoras();
+
+        var varDiasTxt = document.getElementById('txt_max_dias').value;
+        var varMesesTxt = document.getElementById('txt_max_meses').value;
+        var varYearsTxt = document.getElementById('txt_max_years').value;
+
+        var varTotalDias = 0;
+
+        if (varDiasTxt > 0) {
+            varTotalDias = varTotalDias + (varDiasTxt * 1);
+        }
+
+        if (varMesesTxt > 0) {
+            varTotalDias = varTotalDias + (varMesesTxt * 30);
+        }
+
+        if (varYearsTxt > 0) {
+
+            var numEntero = 0;
+            var numDecimal = 0;
+
+            var posicionPunto = varYearsTxt.toString().indexOf(".");
+            var posicionComa = varYearsTxt.toString().indexOf(",");
+
+            if (posicionPunto > 0) {
+
+                numEntero = varYearsTxt.toString().substring(0, (posicionPunto));
+                numDecimal = varYearsTxt.toString().substring((posicionPunto + 1), varYearsTxt.length);
+                
+                varTotalDias = varTotalDias + (numEntero * 365);
+
+            }
+
+            else if (posicionComa > 0) {
+                numEntero = varYearsTxt.toString().substring(0, (posicionComa));
+                numDecimal = varYearsTxt.toString().substring((posicionComa + 1), varYearsTxt.length);
+                
+                varTotalDias = varTotalDias + (numEntero * 365);
+            }
+
+            else {
+                varTotalDias = varTotalDias + (varYearsTxt * 365);
+            }
+
+        }
+
+        document.getElementById('txt_max_total_dias').value = varTotalDias;
+
+    }
+
+    function getRdbtnMinSelected() {
+
+        var varRdbtn = document.getElementsByName("grp_tiempo_minimo");
+
+
+        for (var i = 0; i < varRdbtn.length;i++) { 
+            
+            if (varRdbtn[i].checked) {
+                
+                if (varRdbtn[i].value == "dias") {
+                    i = varRdbtn.length + 1;
+
+                    mostrarDias();
+                }
+                else if (varRdbtn[i].value == "horas") {
+                    i = varRdbtn.length + 1;
+
+                    ocultarDias();
+                }
+            }
+        }
+        
+    }
+
+    function mostrarDias() {
+
+        document.getElementById("rowDiasMin").style.visibility = "visible";
+        document.getElementById("rowHorasMin").style.visibility = "hidden";
+
+        document.getElementById("rowDiasMax").style.visibility = "visible";
+        document.getElementById("rowHorasMax").style.visibility = "hidden";
+        
+    }
+
+    function ocultarDias() {
+
+        document.getElementById("rowDiasMin").style.visibility = "hidden";
+        document.getElementById("rowHorasMin").style.visibility = "visible";
+
+        document.getElementById("rowDiasMax").style.visibility = "hidden";
+        document.getElementById("rowHorasMax").style.visibility = "visible";
+    }
+
+    function validarMayoresCero() { 
+
+        if (document.getElementById('txt_min_dias').value < 0) {
+            document.getElementById('txt_min_dias').value = 0;
+        }
+
+        if (document.getElementById('txt_min_meses').value < 0) {
+            document.getElementById('txt_min_meses').value = 0;
+        }
+
+        if (document.getElementById('txt_min_years').value < 0) {
+            document.getElementById('txt_min_years').value = 0;
+        }
+
+
+        
+
+        if (document.getElementById('txt_max_dias').value < 0) { 
+            document.getElementById('txt_max_dias').value = 0;
+        }
+
+        if (document.getElementById('txt_max_meses').value < 0) {
+            document.getElementById('txt_max_meses').value = 0;
+        }
+
+        if (document.getElementById('txt_max_years').value < 0) {
+            document.getElementById('txt_max_years').value = 0;
+        }
+
+        
+        
+    }
+
+    function resetHoras() { 
+        document.getElementById('txt_min_horas').value = 0;
+        document.getElementById('txt_max_horas').value = 0;
+    }
+
+    function resetDias() { 
+        document.getElementById('txt_min_total_dias').value = 0;
+        document.getElementById('txt_max_total_dias').value = 0;
+
+        document.getElementById('txt_min_dias').value = 0;
+        document.getElementById('txt_min_meses').value = 0;
+        document.getElementById('txt_min_years').value = 0;
+
+        document.getElementById('txt_max_dias').value = 0;
+        document.getElementById('txt_max_meses').value = 0;
+        document.getElementById('txt_max_years').value = 0;
+    }
+
+    function validarHoras() { 
+
+        resetDias();
+
+        if (document.getElementById('txt_min_horas').value < 0) {
+            document.getElementById('txt_min_horas').value = 0;
+        }
+
+        if (document.getElementById('txt_max_horas').value < 0) {
+            document.getElementById('txt_max_horas').value = 0;
+        }
+    }
+
+    getRdbtnMinSelected();
+
+
+
+
+</script>
