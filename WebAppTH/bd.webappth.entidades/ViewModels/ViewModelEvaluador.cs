@@ -38,11 +38,21 @@ namespace bd.webappth.entidades.ViewModels
         public List<string> ListaIndicadores{ get; set; }
         public List<string> ListaMetaPeriodo { get; set; }
         public List<string> ListaActividadescumplidos { get; set; }
+        public List<string> IdAreaConocimiento { get; set; }
+        public List<string> ConocimientosEsenciales { get; set; }
+        public List<string> CompetenciasTecnicas { get; set; }
+
+        //Competencias Tecnicas Puesto
+        public List<string> IdComportamientoObervable { get; set; }
+        public List<string> IdNivelDesarrollos { get; set; }
+
         public List<ActividadesEsenciales> ListaActividad { get; set; }
         public List<AreaConocimientoViewModel> ListaConocimientos { get; set; }
         public List<ComportamientoObservableViewModel> ListaCompetenciasTecnicas { get; set; }
         public List<ComportamientoObservableViewModel> ListaCompetenciasUniversales { get; set; }
+        //Observaciones
 
+            public string Observaciones { get; set; }
 
         //totales
 

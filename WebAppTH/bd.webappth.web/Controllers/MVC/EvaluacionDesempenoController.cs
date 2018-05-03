@@ -146,14 +146,16 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (response.IsSuccess)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("ConocimientoEsenciales");
             }
                 return View();
-           
-
         }
         public async Task<IActionResult> ConocimientoEsenciales(int idIndiceOcupacional)
         {
+            if (idIndiceOcupacional == 0)
+            {
+                idIndiceOcupacional = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idIndiceOcupacionalSession));
+            }
             var lista = new ViewModelEvaluador();
             var indiceOcupacional = new IndiceOcupacional
             {
@@ -167,8 +169,32 @@ namespace bd.webappth.web.Controllers.MVC
             return View(lista);
 
         }
+        [HttpPost]
+        public async Task<IActionResult> ConocimientoEsenciales(ViewModelEvaluador viewModelEvaluador)
+        {
+            var envio = new ViewModelEvaluador()
+            {
+                IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session)),
+                ConocimientosEsenciales = viewModelEvaluador.ConocimientosEsenciales,
+                IdAreaConocimiento = viewModelEvaluador.IdAreaConocimiento
+
+            };
+            Response response = new Response();
+            response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
+                                                                   , "api/EvaluacionDesempeno/InsertarConocimientos");
+
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("CompetenciasTecnicas");
+            }
+            return View();
+        }
         public async Task<IActionResult> CompetenciasTecnicas(int idIndiceOcupacional)
         {
+            if (idIndiceOcupacional == 0)
+            {
+                idIndiceOcupacional = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idIndiceOcupacionalSession));
+            }
             var lista = new ViewModelEvaluador();
             var valor = new VIewCompetencias
             {
@@ -181,6 +207,27 @@ namespace bd.webappth.web.Controllers.MVC
             lista.ListaCompetenciasTecnicas = CompetenciasTecnicas;
             ViewData["IdNivelDesarrollo"] = new SelectList(await apiServicio.Listar<NivelDesarrollo>(new Uri(WebApp.BaseAddress), "api/NivelesDesarrollo/ListarNivelesDesarrollo"), "IdNivelDesarrollo", "Nombre");
             return View(lista);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> CompetenciasTecnicas(ViewModelEvaluador viewModelEvaluador)
+        {
+            var envio = new ViewModelEvaluador()
+            {
+                IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session)),
+                IdComportamientoObervable = viewModelEvaluador.IdComportamientoObervable,
+                IdNivelDesarrollos = viewModelEvaluador.IdNivelDesarrollos
+                
+            };
+            Response response = new Response();
+            response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
+                                                                   , "api/EvaluacionDesempeno/InsertarCompetenciasTecnicas");
+
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("CompetenciasUniversales");
+            }
+            return View();
 
         }
         public async Task<IActionResult> CompetenciasUniversales(int idIndiceOcupacional)
@@ -199,8 +246,42 @@ namespace bd.webappth.web.Controllers.MVC
             return View(lista);
 
         }
-        
+        [HttpPost]
+        public async Task<IActionResult> CompetenciasUniversales(ViewModelEvaluador viewModelEvaluador)
+        {
+            var envio = new ViewModelEvaluador()
+            {
+                IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session)),
+                IdComportamientoObervable = viewModelEvaluador.IdComportamientoObervable,
+                IdNivelDesarrollos = viewModelEvaluador.IdNivelDesarrollos
 
+            };
+            Response response = new Response();
+            response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
+                                                                   , "api/EvaluacionDesempeno/InsertarCompetenciasTecnicas");
+
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("CompetenciasUniversales");
+            }
+            return View();
+
+        }
+        public async Task<IActionResult> Observaciones()
+        {
+            InicializarMensaje(null);
+            return View();
+        }
+        public async Task<IActionResult> Quejas()
+        {
+            InicializarMensaje(null);
+            return View();
+        }
+        public async Task<IActionResult> CalificacionFinal()
+        {
+            InicializarMensaje(null);
+            return View();
+        }
         
         public async Task<IActionResult> Evaluar(int idempleado)
         {

@@ -1,14 +1,18 @@
 @model bd.webappth.entidades.ViewModels.ViewModelEvaluador
-<link href="~/css/tabla/table.css" rel="stylesheet" />
 @using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelEvaluador { OpcionMenu = 3 }; }
+@{ var modelo = new ViewModelEvaluador { OpcionMenu = 7 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Pais";
 }
 
+<!-- MAIN CONTENT -->
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<!-- MAIN CONTENT -->
 <div id="content">
     <div class="col col-10">
 
@@ -70,7 +74,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Competencias Tecnicas</h2>
+                        <h2>Quejas</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -80,58 +84,52 @@
                         </div>
                         <!-- end widget edit box -->
                         <!-- widget content -->
-                        <form asp-action="CompetenciasTecnicas" id="ejemplo" class="smart-form" novalidate="novalidate">
-                            <div class="widget-body no-padding">
-                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th data-hide="phone">
-                                                Destreza
-                                            </th>
-                                            <th data-hide="phone">
-                                                Relevancia
-                                            </th>
-                                            <th data-hide="phone">
-                                                Comportamiento observable
-                                            </th>
-                                            <th data-hide="phone">
-                                                NIvel de desarrollo
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model.ListaCompetenciasTecnicas)
-                                        {
-                                        <tr>
-                                            <td hidden="hidden">
-                                                <input value="@item.IdDenominacionCompetencia" name="IdComportamientoObervable" type="hidden" asp- class="form-control" />
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-class="expand">
+                                            Nombres y Apellidos
+                                        </th>
+                                        <th data-class="">
+                                            Identificaci&oacuten
+                                        </th>
+                                        <th data-class="">
+                                            Tel&eacutefono Privado
+                                        </th>
+
+                                        <th>
+                                            <i class="fa fa-cog "></i>
+                                            Opciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*@foreach (var item in Model.ConocimientosEsenciales)
+                                    {
+                                        <tr>*@
+                                            @*<td>
+                                                @Html.DisplayFor(modelItem => item.NombreApellido)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreDenominacionCompetencia)
+                                                @Html.DisplayFor(modelItem => item.Identificacion)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreNivel)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>
-                                            <td>
-                                                <select asp-for="IdNivelDesarrollo" name="IdNivelDesarrollos" class="form-control" id="IdNivelConocimiento" asp-items="ViewBag.IdNivelDesarrollo">
-                                                    <option value="0" selected="selected" disabled=""></option>
-                                                </select>
+                                                @Html.DisplayFor(modelItem => item.ManualPuesto)
                                             </td>
 
-                                        </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                            <footer>
-                                <input type="submit" value="Guardar" class="btn btn-primary" />
-                                <a asp-action="Index" class="btn btn-default">Cancelar</a>
-                            </footer>
-                            <!-- end widget content -->
-                        </form>
+                                            <td>
+                                                @Html.ActionLink("Evaluar", "InformacionGeneral", new { idEmpleado = item.IdEmpleado }, new { onclick = "cargando()" })<br />
+                                                @* @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado })<br />
+
+
+                                            </td>*@
+                                        @*</tr>
+                                    }*@
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
                     </div>
                     <!-- end widget div -->
                 </div>
@@ -157,4 +155,3 @@
 
     <script src='~/js/datatables/init.js'></script>
 }
-
