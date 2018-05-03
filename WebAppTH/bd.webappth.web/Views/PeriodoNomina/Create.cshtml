@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.Negocio.ConceptoNomina
+@model bd.webappth.entidades.Negocio.PeriodoNomina
 
 @{
     ViewData["Title"] = "BrigadasSSO";
@@ -7,26 +7,12 @@
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <div id="content">
     <section id="" class="">
-        <div class="col col-10">
-            @if (@ViewData["Error"].ToString() != "")
-            {
-                <div class="col-lg-7">
-                    <div class="alert alert-block alert-dismissable">
-                        <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-                        <p>
-                            <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-                        </p>
-                    </div>
-                </div>
-            }
-        </div>
         <div class="row">
             <article class="col-sm-12 col-md-12 col-lg-10">
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Crear concepto</h2>
+                        <h2>Crear periodo</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -34,9 +20,9 @@
                         <div class="widget-body no-padding">
                             <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                @{await Html.RenderPartialAsync("_PartialViewConceptoNomina", Model);}
+                                @{await Html.RenderPartialAsync("_PartialViewPeriodoNomina", Model);}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <input type="submit" value="Guardar" class="btn btn-primary" id="btn-guardar" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>

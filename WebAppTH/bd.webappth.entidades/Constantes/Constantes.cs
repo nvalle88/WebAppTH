@@ -20,6 +20,8 @@ namespace bd.webappth.entidades.Constantes
         /// </summary>
         public const string idCandidatoSession = "idCandidatoSession";
         public const string idCandidatoPersonaSession = "idCandidatoPersonaSession";
+        public const string idEvaluadorSession = "idEvaluadorSession";
+        public const string idEval011Session = "idEval011Session";
 
         /// <summary>
         /// Constantes para la session de CadidatoConcurso
@@ -32,5 +34,20 @@ namespace bd.webappth.entidades.Constantes
         /// Constantes para la session de CadidatoConcurso
         /// </summary>
         public const string idIndiceOcupacionalSession = "idIndiceOcupacionalSession";
+
+
+        /// <summary>
+        /// Constantes para las secciones de la configutración de la nómina 
+        /// Conceptos 
+        /// </summary>
+        public const string idConceptoNominaSession = "idConceptoNominaSession";
+        public const string CodigoConceptoNominaSession = "CodigoConceptoNominaSession";
+        public const string DescripcionConceptoNominaSession = "DescripcionConceptoNominaSession";
+
+        /// <summary>
+        /// Variables de sección para la configuración de tabla del sri
+        /// </summary>
+        public const string  IdSriSession= "IdSriSession";
+        public const string DescripcionSriSession = "DescripcionSriSession";
     }
 }

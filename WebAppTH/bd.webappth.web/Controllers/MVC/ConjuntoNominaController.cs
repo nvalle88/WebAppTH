@@ -1,5 +1,6 @@
 ﻿using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
+using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -67,7 +68,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/ConjuntoNomina/InsertarConjuntoNomina");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index", new { mensaje = Mensaje.GuardadoSatisfactorio });
+                    return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
                 ViewData["Error"] = response.Message;
@@ -77,7 +78,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCrear}");
             }
         }
 
@@ -99,11 +100,11 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                 }
 
-                return RedirectToAction("Index", new { mensaje = Mensaje.RegistroNoEncontrado });
+                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
         }
 
@@ -128,7 +129,7 @@ namespace bd.webappth.web.Controllers.MVC
                     if (response.IsSuccess)
                     {
 
-                        return RedirectToAction("Index", new { mensaje = Mensaje.RegistroEditado });
+                        return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
                     ViewData["Error"] = response.Message;
                     await CargarCombox();
@@ -138,7 +139,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEditar}");
             }
         }
 
@@ -151,9 +152,9 @@ namespace bd.webappth.web.Controllers.MVC
                                                                      , "api/ConjuntoNomina/ListarConjuntoNomina");
                 return View(lista);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.ErrorListado}");
             }
         }
 
@@ -172,13 +173,13 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/ConjuntoNomina/EliminarConjuntoNomina");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index", new { mensaje = Mensaje.BorradoSatisfactorio });
+                    return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
             }
         }
 

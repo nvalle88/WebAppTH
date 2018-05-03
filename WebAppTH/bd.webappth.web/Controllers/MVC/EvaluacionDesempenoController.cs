@@ -11,6 +11,7 @@ using bd.webappth.servicios.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -87,6 +88,7 @@ namespace bd.webappth.web.Controllers.MVC
                 InicializarMensaje(null);
                 HttpContext.Session.SetInt32(Constantes.idEmpleadoSession, lista.IdEmpleado);
                 HttpContext.Session.SetInt32(Constantes.idIndiceOcupacionalSession, lista.IdIndiceOcupacional);
+                HttpContext.Session.SetInt32(Constantes.idEvaluadorSession, lista.IdJefe);
                 return View(lista);
             }
             catch (Exception)
@@ -95,9 +97,29 @@ namespace bd.webappth.web.Controllers.MVC
                 throw;
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> InformacionGeneral(ViewModelEvaluador viewModelEvaluador)
+        {
+            Response response = new Response();
+            response = await apiServicio.InsertarAsync<Response>(viewModelEvaluador, new Uri(WebApp.BaseAddress)
+                                                                   , "api/EvaluacionDesempeno/InsertarEval001");
+            //response.Resultado
+            if (response.IsSuccess)
+            {
+                 var a = JsonConvert.DeserializeObject<int>(response.Resultado.ToString());
+                HttpContext.Session.SetInt32(Constantes.idEval011Session, a);
+                return RedirectToAction("ActividadesEnsenciales");
+            }
+            ViewData["Error"] = response.Message;
+            return View(viewModelEvaluador);
+
+
+        }
         public async Task<IActionResult> ActividadesEnsenciales(int idIndiceOcupacional)
         {
-            //var listaa = new ViewModelEvaluador();
+            if (idIndiceOcupacional==0) {
+                idIndiceOcupacional = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idIndiceOcupacionalSession));
+            }
             var usuario = new VIewCompetencias
             {
                 IdIndiceOcupacional = idIndiceOcupacional
@@ -107,10 +129,11 @@ namespace bd.webappth.web.Controllers.MVC
 
             var totalacti = lista.ListaActividad.Count();
             lista.totalactividades = totalacti;
-
             InicializarMensaje(null);
             lista.ListaActividad = lista.ListaActividad;
-
+            lista.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEmpleadoSession));
+            lista.IdJefe = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEvaluadorSession));
+            lista.IdEval001= Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session));
             return View(lista);
 
         }
@@ -118,7 +141,7 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> ActividadesEnsenciales(ViewModelEvaluador viewModelEvaluador)
         {
             Response response = new Response();
-            response = await apiServicio.InsertarAsync<ViewModelEvaluador>(viewModelEvaluador, new Uri(WebApp.BaseAddress)
+            response = await apiServicio.InsertarAsync<Response>(viewModelEvaluador, new Uri(WebApp.BaseAddress)
                                                                    , "api/EvaluacionDesempeno/Insertarctividades");
 
             if (response.IsSuccess)

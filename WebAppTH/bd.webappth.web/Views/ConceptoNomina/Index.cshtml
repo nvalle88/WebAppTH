@@ -6,8 +6,8 @@
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 <div id="content">
     <p></p>
-    <a asp-action="Create">
-        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+    <a asp-action="CreateConceptoNomina">
+        <button type="button" asp-action="CreateConceptoNomina" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nuevo
@@ -39,6 +39,9 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
                                         </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estatus)
+                                        </th>
                                         <th>
                                             Opciones
                                         </th>
@@ -49,7 +52,7 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Proceso.Descripcion)
+                                            @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Codigo)
@@ -58,8 +61,10 @@
                                             @Html.DisplayFor(modelItem => item.Descripcion)
                                         </td>
                                         <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdConcepto }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdConcepto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
+                                            @Html.DisplayFor(modelItem => item.Estatus)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Detalle", "DetalleConceptoNomina", new { id = item.IdConcepto })
                                         </td>
                                     </tr>
                                     }

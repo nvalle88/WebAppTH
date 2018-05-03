@@ -9,6 +9,8 @@ namespace bd.webappth.entidades.ViewModels
     public class ViewModelEvaluador
     {
         public int IdEmpleado { get; set; }
+        public int IdEval001 { get; set; }
+        public int IdJefe { get; set; }
         public int IdIndiceOcupacional { get; set; }
         public int IdNivelConocimiento { get; set; }
         public int IdNivelDesarrollo { get; set; }
