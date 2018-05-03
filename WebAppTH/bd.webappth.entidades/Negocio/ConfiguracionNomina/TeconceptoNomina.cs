@@ -8,6 +8,6 @@ namespace bd.webappth.entidades.Negocio
         public int IdTeconcepto { get; set; }
         public int IdConcepto { get; set; }
 
-        public virtual ConceptoNomina IdConceptoNavigation { get; set; }
+        public virtual ConceptoNomina ConceptoNomina { get; set; }
     }
 }

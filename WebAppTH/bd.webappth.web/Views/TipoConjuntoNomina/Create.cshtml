@@ -34,7 +34,7 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialViewTipoConjunto", Model);}
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <input type="submit" value="Guardar" class="btn btn-primary" id="btn-guardar" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>

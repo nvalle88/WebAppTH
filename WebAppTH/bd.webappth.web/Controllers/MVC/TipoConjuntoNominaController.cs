@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
+using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -60,16 +61,16 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/TipoConjuntoNomina/InsertarTipoConjuntoNomina");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index",new {mensaje=Mensaje.GuardadoSatisfactorio });
+                    return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
-                ViewData["Error"] = response.Message;
+               
                 return View(TipoConjuntoNomina);
 
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCrear}");
             }
         }
          
@@ -119,16 +120,16 @@ namespace bd.webappth.web.Controllers.MVC
                     if (response.IsSuccess)
                     {
 
-                        return RedirectToAction("Index",new {mensaje=Mensaje.RegistroEditado });
+                        return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
                     ViewData["Error"] = response.Message;
                     return View(TipoConjuntoNomina);
                 }
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEditar}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEditar}");
             }
         }
          
@@ -163,13 +164,13 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/TipoConjuntoNomina/EliminarTipoConjuntoNomina");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index",new { mensaje=Mensaje.BorradoSatisfactorio});
+                    return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                return RedirectToAction("Index",new {mensaje=response.Message });
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
             }
         }
     }

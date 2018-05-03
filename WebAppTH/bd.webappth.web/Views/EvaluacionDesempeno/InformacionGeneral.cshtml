@@ -65,8 +65,10 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="InformacionGeneral" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="IdEmpleado" />
+                                <input type="hidden" asp-for="IdJefe" />
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-6">
