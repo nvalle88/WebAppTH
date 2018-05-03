@@ -38,13 +38,13 @@
     </div>
     <p></p>
     @*<a asp-action="Asignar">
-        <button type="button" asp-action="Asignar" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Asignar
+            <button type="button" asp-action="Asignar" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Asignar
 
-        </button>
-    </a>*@
+            </button>
+        </a>*@
     <p> </p>
 
     <!-- widget grid -->
@@ -55,19 +55,7 @@
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                    <!-- widget options:
-                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                    data-widget-colorbutton="false"
-                    data-widget-editbutton="false"
-                    data-widget-togglebutton="false"
-                    data-widget-deletebutton="false"
-                    data-widget-fullscreenbutton="false"
-                    data-widget-custombutton="false"
-                    data-widget-collapsed="true"
-                    data-widget-sortable="false"
-
-                    -->
+                    
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Conocimiento Esenciales</h2>
@@ -80,37 +68,46 @@
                         </div>
                         <!-- end widget edit box -->
                         <!-- widget content -->
-                        <div class="widget-body no-padding">
-                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th data-hide="phone">
-                                            Conocimiento
-                                        </th>
-                                        <th data-hide="phone">
-                                            Nivel conocimiento
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.ListaConocimientos)
-                                    {
+                        <form asp-action="ConocimientoEsenciales" id="ejemplo" class="smart-form" novalidate="novalidate">
+                            <div class="widget-body no-padding">
+                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
                                         <tr>
+                                            <th data-hide="phone">
+                                                Conocimiento
+                                            </th>
+                                            <th data-hide="phone">
+                                                Nivel conocimiento
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ListaConocimientos)
+                                        {
+                                        <tr>
+                                            <td hidden="hidden">
+                                                <input  value="@item.IdAreaConocimiento" name="IdAreaConocimiento" type="hidden" asp- class="form-control" />
+                                                </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
 
                                             </td>
                                             <td>
-                                                <select asp-for="IdNivelConocimiento" class="form-control" id="IdNivelConocimiento" asp-items="ViewBag.IdNivelConocimiento">
+                                                <select asp-for="IdNivelConocimiento" name="ConocimientosEsenciales" class="form-control" id="IdNivelConocimiento" asp-items="ViewBag.IdNivelConocimiento">
                                                     <option value="0" selected="selected" disabled=""></option>
                                                 </select>
                                             </td>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- end widget content -->
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end widget content -->
+                            <footer>
+                                <input type="submit" value="Guardar" class="btn btn-primary" />
+                                <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                            </footer>
+                        </form>
                     </div>
                     <!-- end widget div -->
                 </div>

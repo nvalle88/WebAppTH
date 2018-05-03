@@ -198,5 +198,9 @@ namespace bd.webappth.entidades.Negocio
         public virtual ICollection<DocumentosIngresoEmpleado> DocumentosIngresoEmpleado { get; set; }
 
         public virtual ICollection<ActividadesGestionCambio> ActividadesGestionCambio { get; set; }
+
+
+        /////Empleado gastos personales por año
+        public virtual ICollection<GastoPersonal> GastoPersonal { get; set; }
     }
 }

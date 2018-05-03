@@ -6,8 +6,8 @@
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 <div id="content">
     <p></p>
-    <a asp-action="Create">
-        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+    <a asp-action="Create" onclick="cargando()">
+        <button type="button" asp-action="Create" onclick="cargando()" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nuevo
@@ -47,21 +47,21 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TipoConjunto.Descripcion)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Codigo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Descripcion)
-                                        </td>
-                                        <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdConjunto }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdConjunto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TipoConjuntoNomina.Descripcion)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Codigo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdConjunto },new {onclick="cargando();" }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdConjunto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -72,7 +72,14 @@
         </div>
     </section>
 </div>
- @section Scripts {
-   <script src='~/js/datatables/init.js'></script>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+    <script type="text/javascript">
+
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+
+    </script>
 }
 

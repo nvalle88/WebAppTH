@@ -24,7 +24,8 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Create(string mensaje)
         {
             await CargarCombox();
-            return View();
+            var vista = new PeriodoNomina { FechaInicio = DateTime.Now, FechaFin = DateTime.Now };
+            return View(vista);
         }
 
         public async Task CargarCombox()
@@ -39,7 +40,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
-               
+                await CargarCombox();
                 return View(PeriodoNomina);
             }
             Response response = new Response();
@@ -62,7 +63,7 @@ namespace bd.webappth.web.Controllers.MVC
                     return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
-                this.TempData["Mensaje"] = response.Message;
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 await CargarCombox();
                 return View(PeriodoNomina);
 
@@ -86,6 +87,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         vista = JsonConvert.DeserializeObject<PeriodoNomina>(respuesta.Resultado.ToString());
                     }
+                
                 await CargarCombox();
                 return View(vista);
             }
@@ -102,6 +104,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
+                await CargarCombox();
                 return View(PeriodoNomina);
             }
             Response response = new Response();
@@ -123,7 +126,7 @@ namespace bd.webappth.web.Controllers.MVC
                     var vista = JsonConvert.DeserializeObject<PeriodoNomina>(response.Resultado.ToString());
                     return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                ViewData["Error"] = response.Message;
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 await CargarCombox();
                 return View(PeriodoNomina);
             }

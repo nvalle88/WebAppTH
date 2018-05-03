@@ -14,8 +14,8 @@
     @{await Html.RenderPartialAsync("_PartialViewBotonIndexConceptoNomina");}
     @{await Html.RenderPartialAsync("_PartialViewConceptoInformacion");}
     <p></p>
-    <a asp-action="CreateConceptoConjunto">
-        <button type="button" asp-action="CreateConceptoConjunto" class="btn btn-labeled btn-default">
+    <a asp-action="CreateConceptoConjunto" onclick="cargando()">
+        <button type="button" asp-action="CreateConceptoConjunto" onclick="cargando()" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>Nuevo
@@ -57,7 +57,7 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Conjunto.Descripcion)
+                                                @Html.DisplayFor(modelItem => item.ConjuntoNomina.Descripcion)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Suma)
@@ -66,7 +66,7 @@
                                                 @Html.DisplayFor(modelItem => item.Resta)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Editar", "EditConceptoConjunto", new { id = item.IdConceptoConjunto }) |
+                                                @Html.ActionLink("Editar", "EditConceptoConjunto", new { id = item.IdConceptoConjunto },new { onclick="cargando();"}) |
                                                 @Html.ActionLink("Eliminar", "DeleteConceptoConjunto", new { id = item.IdConceptoConjunto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
                                             </td>
                                         </tr>
