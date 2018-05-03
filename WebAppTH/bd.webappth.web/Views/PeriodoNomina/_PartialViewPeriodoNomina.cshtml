@@ -1,0 +1,49 @@
+@model bd.webappth.entidades.Negocio.PeriodoNomina
+<fieldset>
+    <div class="row">
+        <section class="col col-lg-8">
+            <label>Procesos</label>
+            <label class="input">
+                <select asp-for="IdProceso" class="form-control" asp-items="ViewBag.IdProceso">
+                    <option value="0" selected="selected">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdProceso" class="text-danger"></span>
+            </label>
+        </section>
+
+       
+        <section class="col col-4">
+            <label>&nbsp;&nbsp;</label>
+            <label class="checkbox-inline">
+                <label>&iquest; Est&aacute; abierto ?</label>
+                <input type="checkbox" asp-for="Abierto" class="form-control" />
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-lg-12">
+            <label>Descripci&oacute;n</label>
+            <label class="input">
+                <input maxlength="100" asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Fecha de inicio</label>
+            <label class="input">
+                <input asp-for="FechaInicio" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label>Fecha final</label>
+            <label class="input">
+                <input asp-for="FechaFin" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
+                <span asp-validation-for="FechaFin" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+  
+</fieldset>   

@@ -1,0 +1,59 @@
+@model bd.webappth.entidades.Negocio.SriDetalle
+
+@{
+    ViewData["Title"] = "BrigadasSSO";
+}
+
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+
+@using bd.webappth.entidades.Utils
+@{ var modelo = new MenuConceptoNomina { OpcionMenu = 1 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+
+<div id="content">
+    @{await Html.RenderPartialAsync("_PartialViewSriInformacion");}
+    <section id="" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-7">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Crear fracci&oacute;n</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form asp-action="CreateSriDetalle" method="post" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @{await Html.RenderPartialAsync("_PartialViewSriDetalle", Model);}
+                                <footer>
+                                    <input type="submit" value="Guardar" class="btn btn-primary" id="btn-guardar" />
+                                    <a asp-action="IndexSriDetalle" onclick="cargando()" class="btn btn-default">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src='~/js/site.js'></script>
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+
+    </script>
+
+}

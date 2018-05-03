@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Security.Claims;
 using bd.webappth.entidades.Utils.Seguridad;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.servicios.Servicios
 {
@@ -31,6 +32,7 @@ namespace bd.webappth.servicios.Servicios
 
         public async Task<Response> SalvarLog<T>(HttpContext context, EntradaLog model)
         {
+
             var NombreUsuario = "";
             try
             {

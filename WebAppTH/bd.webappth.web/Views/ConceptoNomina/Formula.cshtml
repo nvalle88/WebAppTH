@@ -1,0 +1,57 @@
+@model bd.webappth.entidades.Negocio.ConceptoNomina
+
+@{
+    ViewData["Title"] = "BrigadasSSO";
+}
+
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+@using bd.webappth.entidades.Utils
+@{ var modelo = new MenuConceptoNomina { OpcionMenu = 2 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+
+<div id="content">
+
+    @{await Html.RenderPartialAsync("_PartialViewBotonIndexConceptoNomina");}
+
+    @{await Html.RenderPartialAsync("_PartialViewConceptoInformacion");}
+    <section id="" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>F&oacute;rmula de c&aacute;lculo</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form asp-action="Formula" method="post" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @{await Html.RenderPartialAsync("_PartialViewFormula", Model);}
+                                <footer>
+                                    <input type="submit" value="Guardar" class="btn btn-primary" id="btn-guardar" />
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+
+    </script>
+}

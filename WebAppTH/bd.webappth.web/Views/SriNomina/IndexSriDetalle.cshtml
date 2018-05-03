@@ -1,0 +1,103 @@
+@model List<bd.webappth.entidades.Negocio.SriDetalle>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+
+@using bd.webappth.entidades.Utils
+@{ var modelo = new MenuConceptoNomina { OpcionMenu = 1 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+
+<div id="content">
+    @{await Html.RenderPartialAsync("_PartialViewBotonIndexConceptoNomina");}
+    @{await Html.RenderPartialAsync("_PartialViewSriInformacion");}
+    <p></p>
+    <a asp-action="CreateSriDetalle" onclick="cargando()">
+        <button type="button" asp-action="CreateConceptoConjunto"  onclick="cargando()"  class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo
+        </button>
+    </a>
+    <p> </p>
+
+    <section id="" class="">
+        <div class="row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Tabla de fracciones</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FraccionBasica)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ExcesoHasta)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ImpFranccionBasica)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().PorcientoImpFraccExced)
+                                        </th>
+                                        <th>
+                                            Opciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FraccionBasica)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ExcesoHasta)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ImpFranccionBasica)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PorcientoImpFraccExced)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editar", "EditSriDetalle", new { id = item.IdSriDetalle }, new { onclick = "cargando();" }) |
+                                            @Html.ActionLink("Eliminar", "DeleteSriDetalle", new { id = item.IdSriDetalle }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+
+        <script src='~/lib/waitMe/waitMe.min.js'></script>
+        <script src='~/js/site.js'></script>
+
+        <script type="text/javascript">
+
+            function cargando() {
+                mostrarLoadingPanel("content", "")
+            }
+
+        </script>
+}
+

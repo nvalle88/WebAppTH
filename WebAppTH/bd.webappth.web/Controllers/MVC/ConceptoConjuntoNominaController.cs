@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
+using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -37,24 +38,23 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task<IActionResult> Create(string mensaje)
+        public async Task<IActionResult> CreateConceptoConjunto(string mensaje)
         {
             InicializarMensaje(mensaje);
-            await CargarCombox();
+            await CargarComboxConceptoConjunto();
             var vista = new ConceptoConjuntoNomina { Suma = false, Resta = false };
             return View(vista);
         }
 
-        public async Task CargarCombox()
+        public async Task CargarComboxConceptoConjunto()
         {
             ViewData["IdConjunto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ConjuntoNomina>(new Uri(WebApp.BaseAddress), "api/ConjuntoNomina/ListarConjuntoNomina"), "IdConjunto", "Descripcion");
             ViewData["IdConcepto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ConceptoNomina>(new Uri(WebApp.BaseAddress), "api/ConceptoNomina/ListarConceptoNomina"), "IdConcepto", "Descripcion");
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ConceptoConjuntoNomina ConceptoConjuntoNomina)
+        public async Task<IActionResult> CreateConceptoConjunto(ConceptoConjuntoNomina ConceptoConjuntoNomina)
         {
             if (!ModelState.IsValid)
             {
@@ -69,21 +69,21 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/ConceptoConjuntoNomina/InsertarConceptoConjuntoNomina");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index", new { mensaje = Mensaje.GuardadoSatisfactorio });
+                    return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
                 }
 
                 ViewData["Error"] = response.Message;
-                await CargarCombox();
+                await CargarComboxConceptoConjunto();
                 return View(ConceptoConjuntoNomina);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> EditConceptoConjunto(string id)
         {
             try
             {
@@ -96,22 +96,22 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         InicializarMensaje(null);
                         var vista = JsonConvert.DeserializeObject<ConceptoConjuntoNomina>(respuesta.Resultado.ToString());
-                        await CargarCombox();
+                        await CargarComboxConceptoConjunto();
                         return View(vista);
                     }
                 }
 
-                return RedirectToAction("Index", new { mensaje = Mensaje.RegistroNoEncontrado });
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ConceptoConjuntoNomina ConceptoConjuntoNomina)
+        public async Task<IActionResult> EditConceptoConjunto(ConceptoConjuntoNomina ConceptoConjuntoNomina)
         {
 
             if (!ModelState.IsValid)
@@ -130,21 +130,21 @@ namespace bd.webappth.web.Controllers.MVC
                     if (response.IsSuccess)
                     {
 
-                        return RedirectToAction("Index", new { mensaje = Mensaje.RegistroEditado });
+                        return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
                     }
                     ViewData["Error"] = response.Message;
-                    await CargarCombox();
+                    await CargarComboxConceptoConjunto();
                     return View(ConceptoConjuntoNomina);
                 }
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
         }
 
-        public async Task<IActionResult> Index(string mensaje)
+        public async Task<IActionResult> IndexConceptoConjunto(string mensaje)
         {
             try
             {
@@ -153,20 +153,20 @@ namespace bd.webappth.web.Controllers.MVC
                                                                      , "api/ConceptoConjuntoNomina/ListarConceptoConjuntoNomina");
                 return View(lista);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
         }
 
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> ConceptoConjunto(string id)
         {
 
             try
             {
                 if (string.IsNullOrEmpty(id))
                 {
-                    return RedirectToAction("Index");
+                    return this.Redireccionar($"{Mensaje.Error}|{Mensaje.RegistroNoExiste}");
                 }
                 var tipoConjuntoEliminar = new ConceptoConjuntoNomina { IdConceptoConjunto = Convert.ToInt32(id) };
 
@@ -174,13 +174,13 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/ConceptoConjuntoNomina/EliminarConceptoConjuntoNomina");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index", new { mensaje = Mensaje.BorradoSatisfactorio });
+                    return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
             }
         }
 

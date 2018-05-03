@@ -5,8 +5,31 @@
 
 <fieldset>
 
+    @{
+        char[] MyChar = { ':' };
+    }
+
     <div class="row">
 
+        <section class="col col-lg-4">
+
+            <label>Nombre del funcionario</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="DatosBasicosEmpleadoViewModel.Nombres" class="form-control" readonly />
+                <span asp-validation-for="DatosBasicosEmpleadoViewModel.Nombres" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.DatosBasicosEmpleadoViewModel.Identificacion).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="DatosBasicosEmpleadoViewModel.Identificacion" class="form-control" readonly />
+                <span asp-validation-for="DatosBasicosEmpleadoViewModel.Identificacion" class="text-danger"></span>
+            </label>
+
+        </section>
 
         <section class="col col-lg-4">
             <label>@Html.DisplayNameFor(model => Model.TipoAccionPersonalViewModel)</label>
@@ -17,6 +40,21 @@
 
                 <span asp-validation-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="text-danger"></span>
             </label>
+        </section>
+
+    </div>
+
+    <div class="row">
+
+
+        <section class="col col-lg-8">
+
+            <label>@Html.DisplayNameFor(model => Model.Solicitud)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="Solicitud" class="form-control" />
+                <span asp-validation-for="Solicitud" class="text-danger"></span>
+            </label>
+
         </section>
 
         <section class="col col-lg-4">
@@ -30,51 +68,8 @@
             </label>
         </section>
 
-        <section class="col col-lg-4">
-
-            <label>@Html.DisplayNameFor(model => Model.Solicitud)</label>
-            <label class="input col-lg-12">
-                <input type="text" asp-for="Solicitud" class="form-control" />
-                <span asp-validation-for="Solicitud" class="text-danger"></span>
-            </label>
-
-        </section>
-
     </div>
 
-    <div class="row">
-
-        <section class="col col-lg-4">
-
-            <label>@Html.DisplayNameFor(model => Model.Fecha)</label>
-            <label class="input col-lg-12">
-                <input asp-for="Fecha" type="text"  class="datepicker" data-dateformat='yy-mm-dd' />
-                <span asp-validation-for="Fecha" class="text-danger"></span>
-            </label>
-
-        </section>
-
-        <section class="col col-lg-4">
-
-            <label>@Html.DisplayNameFor(model => Model.FechaRige)</label>
-            <label class="input col-lg-12">
-                <input id="date_Fecha1" asp-for="FechaRige" type="datetime" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()"/>
-                <span asp-validation-for="FechaRige" class="text-danger"></span>
-            </label>
-
-        </section>
-
-        <section class="col col-lg-4">
-
-            <label>@Html.DisplayNameFor(model => Model.FechaRigeHasta)</label>
-            <label class="input col-lg-12">
-                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text"  class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()"/>
-                <span asp-validation-for="FechaRigeHasta" class="text-danger"></span>
-            </label>
-
-        </section>
-
-    </div>
 
     <div class="row">
 
@@ -87,30 +82,65 @@
         </section>
 
 
+    </div>
+
+    <div class="row">
+
         <section class="col col-lg-4">
-            <div class="col-lg-12">
-                <label>@Html.DisplayNameFor(model => Model.NoDias)</label>
-                <label class="input col-lg-12">
-                    <input id="txt_dias" min="0" readonly type="number" asp-for="NoDias" class="form-control" />
-                    <span asp-validation-for="NoDias" class="text-danger"></span>
-                </label>
-            </div>
 
-            <div class="col-lg-12">&nbsp;</div>
-
-            <div class="col-lg-12">
-                <label>@Html.DisplayNameFor(model => Model.Numero)</label>
-                <label class="input col-lg-12">
-                    <input id="txt_Numero" min="0" readonly type="number" asp-for="Numero" class="form-control" />
-                    <span asp-validation-for="Numero" class="text-danger"></span>
-                </label>
-            </div>
+            <label>@Html.DisplayNameFor(model => Model.Fecha)</label>
+            <label class="input col-lg-12">
+                <input asp-for="Fecha" type="text" class="datepicker" data-dateformat='yy-mm-dd' />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </label>
 
         </section>
 
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.FechaRige)</label>
+            <label class="input col-lg-12">
+                <input id="date_Fecha1" asp-for="FechaRige" type="datetime" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" />
+                <span asp-validation-for="FechaRige" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.FechaRigeHasta)</label>
+            <label class="input col-lg-12">
+                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" />
+                <span asp-validation-for="FechaRigeHasta" class="text-danger"></span>
+            </label>
+
+        </section>
 
     </div>
 
+    <div class="row">
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.NoDias)</label>
+            <label class="input col-lg-12">
+                <input id="txt_dias" min="0" readonly type="number" asp-for="NoDias" class="form-control" />
+                <span asp-validation-for="NoDias" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.Numero)</label>
+            <label class="input col-lg-12">
+                <input id="txt_Numero" min="0" readonly type="number" asp-for="Numero" class="form-control" />
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </label>
+
+        </section>
+
+    </div>
 
 
 </fieldset>

@@ -1,0 +1,24 @@
+
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+
+@{
+    var descripcion = @Context.Session.GetString(Constantes.DescripcionSriSession);
+}
+<fieldset>
+    <legend>Definici&oacute;n del SRI</legend>
+    <div class="row col-lg-12">
+            <label><b> Descripci&oacute;n:</b></label>
+            <label><b> @descripcion</b></label>
+    </div>
+</fieldset>
+<br />
+
+
+
+
+
+
+
