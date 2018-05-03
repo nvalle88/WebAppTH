@@ -15,5 +15,6 @@ namespace bd.webappth.entidades.ViewModels
         public string Dependencia { get; set; }
         public int IdDependencia { get; set; }
         public string DatosJefe { get; set; }
+        public string NombreUsuario { get; set; }
     }
 }

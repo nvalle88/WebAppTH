@@ -286,28 +286,47 @@
 
     <br />
 
-    <div>
-        <a id="NuevaFicha" asp-controller="FichasMedicas" asp-action="Create" asp-route-id="@Model.DatosBasicosPersonaViewModel.IdPersona">
-            <button type="button" asp-action="Create" class="btn btn-labeled btn-default" style="height:33px">
-                <span class="btn-label" style="bottom:0px;height:100%;">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </span>Nuevo
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-            </button>
-        </a>
-    </div>
-
-    <br />
-
-    <!-- widget grid -->
-    <section id="tablaFichas" class="">
-        <!-- row -->
         <div class="row">
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                    <!-- widget options:
+
+            <a id="NuevaFicha" asp-controller="FichasMedicas" asp-action="Create" asp-route-id="@Model.DatosBasicosPersonaViewModel.IdPersona">
+                <button type="button" asp-action="Create" class="btn btn-labeled btn-default" style="height:33px">
+                    <span class="btn-label" style="bottom:0px;height:100%;">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </span>Nueva Ficha Médica
+
+                </button>
+            </a>
+
+            &nbsp;
+
+            <a id="NuevaFichaOdontologica" asp-controller="FichasMedicas" asp-action="FichaOdontologica" asp-route-id="@Model.DatosBasicosPersonaViewModel.IdPersona">
+                <button type="button" asp-action="Create" class="btn btn-labeled btn-default" style="height:33px">
+                    <span class="btn-label" style="bottom:0px;height:100%;">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </span>Ficha Odontológica
+
+                </button>
+            </a>
+
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        </div>
+
+        <br />
+
+        <!-- widget grid -->
+        <section id="tablaFichas" class="">
+            <!-- row -->
+            <div class="row">
+                <!-- NEW WIDGET START -->
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                        <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
                     data-widget-colorbutton="false"
@@ -320,24 +339,24 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header id="table">
-                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Fichas médicas</h2>
-                    </header>
-                    <!-- widget div-->
-                    <div>
-                        <!-- widget edit box -->
-                        <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
-                        </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
-                        |
+                        <header id="table">
+                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                            <h2>Fichas médicas</h2>
+                        </header>
+                        <!-- widget div-->
+                        <div>
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+                            </div>
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            |
 
-                        <div class="widget-body no-padding">
-                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                <thead>
-                                    <!--
+                            <div class="widget-body no-padding">
+                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+                                        <!--
                                     <tr>
                                         <th class="hasinput">
                                             <input type="text" class="form-control" placeholder="Buscar" />
@@ -349,27 +368,27 @@
 
                                     </tr>
                                         -->
-                                    <tr>
+                                        <tr>
 
-                                        <th data-class="expand" class="expand sorting_desc">
-                                            @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().FechaFichaMedica)
+                                            <th data-class="expand" class="expand sorting_desc">
+                                                @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().FechaFichaMedica)
 
-                                        </th>
+                                            </th>
 
-                                        <th data-class="expand" class="expand sorting">
-                                            @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().IdFichaMedica)
-                                        </th>
+                                            <th data-class="expand" class="expand sorting">
+                                                @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().IdFichaMedica)
+                                            </th>
 
-                                        <th data-class="expand" class="expand sorting">
-                                            @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().Estado)
+                                            <th data-class="expand" class="expand sorting">
+                                                @Html.DisplayNameFor(model => model.FichasMedicas.FirstOrDefault().Estado)
 
-                                        </th>
+                                            </th>
 
-                                        <th>Opciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.FichasMedicas.OrderBy(x => x.FechaFichaMedica))
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.FichasMedicas.OrderBy(x => x.FechaFichaMedica))
                                     {
                                         <tr>
                                             <td>
@@ -385,13 +404,13 @@
 
                                             <td>
                                                 @if (item.Estado == 1)
-                                                {
-                                                    @: Finalizado
-                                }
-                                                else
-                                                {
-                                                    @: En edición
-                                }
+                                            {
+                                                @: Finalizado
+                                        }
+                                        else
+                                        {
+                                            @: En edición
+                                    }
                                             </td>
 
                                             <td>
@@ -399,22 +418,22 @@
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFichaMedica, idFM = item.IdFichaMedica, idPer = item.IdPersona }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                             </td>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end widget content -->
                         </div>
-                        <!-- end widget content -->
+                        <!-- end widget div -->
                     </div>
-                    <!-- end widget div -->
-                </div>
 
-            </article>
-            <!-- WIDGET END -->
-        </div>
-        <!-- end row -->
-        <!-- end row -->
-    </section>
-    <!-- end widget grid -->
+                </article>
+                <!-- WIDGET END -->
+            </div>
+            <!-- end row -->
+            <!-- end row -->
+        </section>
+        <!-- end widget grid -->
 
 
 
@@ -423,14 +442,14 @@
 
 
 
-    <section id="pacientesSeccion" class="">
-        <!-- row -->
-        <div class="row">
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
-                    <!-- widget options:
+        <section id="pacientesSeccion" class="">
+            <!-- row -->
+            <div class="row">
+                <!-- NEW WIDGET START -->
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+                        <!-- widget options:
                     usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
                     data-widget-colorbutton="false"
@@ -443,24 +462,24 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header id="table">
-                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Pacientes</h2>
-                    </header>
-                    <!-- widget div-->
-                    <div>
-                        <!-- widget edit box -->
-                        <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
-                        </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
-                        |
+                        <header id="table">
+                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                            <h2>Pacientes</h2>
+                        </header>
+                        <!-- widget div-->
+                        <div>
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+                            </div>
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            |
 
-                        <div class="widget-body no-padding">
-                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
-                                <thead>
-                                    <!--
+                            <div class="widget-body no-padding">
+                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+                                        <!--
                                     <tr>
                                         <th class="hasinput">
                                             <input type="text" class="form-control" placeholder="Buscar" />
@@ -472,27 +491,27 @@
 
                                     </tr>
                                         -->
-                                    <tr>
+                                        <tr>
 
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaPersonas.FirstOrDefault().Nombres)
-                                        </th>
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.ListaPersonas.FirstOrDefault().Nombres)
+                                            </th>
 
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaPersonas.FirstOrDefault().Apellidos)
-                                        </th>
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.ListaPersonas.FirstOrDefault().Apellidos)
+                                            </th>
 
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaPersonas.FirstOrDefault().Identificacion)
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.ListaPersonas.FirstOrDefault().Identificacion)
 
-                                        </th>
+                                            </th>
 
-                                        <th>Opciones</th>
+                                            <th>Opciones</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.ListaPersonas)
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ListaPersonas)
                                     {
                                         <tr>
 
@@ -514,29 +533,29 @@
                                                 @Html.ActionLink("Ver", "SeleccionPaciente", new { id = item.Identificacion }, new { onclick = "espera()" })
 
                                                 @*  @Html.ActionLink("Editar", "Edit", new { id = item.IdFichaMedica })  |
-                                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFichaMedica }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                 *@
                                             </td>
 
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end widget content -->
                         </div>
-                        <!-- end widget content -->
+                        <!-- end widget div -->
                     </div>
-                    <!-- end widget div -->
-                </div>
 
-            </article>
-            <!-- WIDGET END -->
-        </div>
-        <!-- end row -->
-        <!-- end row -->
-    </section>
-    <!-- end widget grid -->
+                </article>
+                <!-- WIDGET END -->
+            </div>
+            <!-- end row -->
+            <!-- end row -->
+        </section>
+        <!-- end widget grid -->
 
-</div>
+    </div>
 <!-- END MAIN CONTENT -->
 
 @section Scripts {
@@ -556,6 +575,8 @@
             if (@Model.DatosBasicosPersonaViewModel.IdPersona > 0) {
 
                 $("#NuevaFicha").show();
+                $("#NuevaFichaOdontologica").show();
+                
 
                 $("#DatosPersonales").show();
                 $("#DatosPersonales").css("visibility", "visible");
@@ -573,6 +594,7 @@
                 // cambiar a hide
 
                 $("#NuevaFicha").hide();
+                $("#NuevaFichaOdontologica").hide();
 
                 $("#DatosPersonales").hide();
                 $("#DatosPersonales").css("visibility" , "hidden");

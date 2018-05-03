@@ -89,6 +89,11 @@
     <Folder Include="wwwroot\js\datatables\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Views\FondoFinanciamiento\Create.cshtml" />
+    <None Include="Views\FondoFinanciamiento\Edit.cshtml" />
+    <None Include="Views\FondoFinanciamiento\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\bd.sw.externos\bd.sw.externos.csproj" />
     <ProjectReference Include="..\bd.webappth.entidades\bd.webappth.entidades.csproj" />
     <ProjectReference Include="..\bd.webappth.servicios\bd.webappth.servicios.csproj" />

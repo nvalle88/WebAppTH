@@ -166,10 +166,7 @@ namespace bd.webappth.entidades.Negocio
         public virtual ICollection<FormularioDevengacion> FormularioDevengacion2 { get; set; }
 
         public virtual ICollection<FacturaViatico> FacturaViatico { get; set; }
-
-        public virtual ICollection<PlanGestionCambio> PlanGestionCambio { get; set; }
-
-        public virtual ICollection<PlanGestionCambio> PlanGestionCambio1 { get; set; }
+        
 
         public virtual ICollection<EmpleadoMovimiento> EmpleadoMovimiento { get; set; }
 
@@ -200,6 +197,6 @@ namespace bd.webappth.entidades.Negocio
 
         public virtual ICollection<DocumentosIngresoEmpleado> DocumentosIngresoEmpleado { get; set; }
 
-
+        public virtual ICollection<ActividadesGestionCambio> ActividadesGestionCambio { get; set; }
     }
 }

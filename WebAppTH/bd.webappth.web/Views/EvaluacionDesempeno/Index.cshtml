@@ -35,11 +35,11 @@
         }
     </div>
     <p></p>
-    @*<a asp-action="Create">
-            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+    @*<a asp-action="Asignar">
+            <button type="button" asp-action="Asignar" class="btn btn-labeled btn-default">
                 <span class="btn-label">
                     <i class="glyphicon glyphicon-plus"></i>
-                </span>Nuevo
+                </span>Asignar
 
             </button>
         </a>*@
@@ -91,9 +91,7 @@
                                         <th data-class="">
                                             Tel&eacutefono Privado
                                         </th>
-                                        <th data-class="">
-                                            Jefe
-                                        </th>
+                                        
                                         <th>
                                             <i class="fa fa-cog "></i>
                                             Opciones
@@ -113,13 +111,10 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ManualPuesto)
                                             </td>
+                                            
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.DatosJefe)
-                                            </td>
-
-                                            <td>
-                                                @*@Html.ActionLink("Ficha del empleado", "Detalle", "FichaEmpleado", new { idEmpleado = item.IdEmpleado, idPersona = item.IdPersona }, new { onclick = "cargando()" })<br />
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado })<br />*@
+                                                @Html.ActionLink("Evaluar", "InformacionGeneral", new { idEmpleado = item.IdEmpleado }, new { onclick = "cargando()" })<br />
+                                                @* @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado })<br />*@
 
 
                                             </td>

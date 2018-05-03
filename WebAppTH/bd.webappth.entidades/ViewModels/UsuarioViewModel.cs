@@ -4,8 +4,8 @@ using System.Text;
 
 namespace bd.webappth.entidades.ViewModels
 {
-    public partial class AvanceGestionCambioModel
+    public class UsuarioViewModel
     {
-        public decimal Suma { get; set; }
+        public string NombreUsuarioActual { get; set; }
     }
 }

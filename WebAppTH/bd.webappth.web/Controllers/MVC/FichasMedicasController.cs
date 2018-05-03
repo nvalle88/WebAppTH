@@ -1871,6 +1871,45 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<Response> CrearFicheroOdontologicoPdf(FichaOdontologicaViewModel file)
+        {
+            Response response = new Response();
+            try
+            {
+                response = await apiServicio.InsertarAsync(file,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ExamenesComplementarios/CrearFicheroOdontologicoPdf");
+                if (response.IsSuccess)
+                {
+                    return new Response
+                    {
+                        IsSuccess = true,
+                        Message = response.Message,
+                    };
+
+                }
+
+                ViewData["Error"] = response.Message;
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = response.Message,
+                };
+            }
+        }
+
 
         public async Task<FileResult> Download(string id)
         {
@@ -1895,6 +1934,91 @@ namespace bd.webappth.web.Controllers.MVC
             
         }
 
+
+        public async Task<IActionResult> FichaOdontologica(string mensaje, int idFicha, int id)
+        {
+            InicializarMensaje(mensaje);
+
+            var modelo = new FichaOdontologicaViewModel();
+            modelo.IdPersona = id;
+
+            var pdfFile =  WebApp.BaseAddress + "/FichasOdontologicasDocumentos/"+id+".pdf";
+            modelo.Url = pdfFile;
+
+            return View(modelo);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FichaOdontologica(int id, List<IFormFile> files)
+        {
+            var modelo = new FichaOdontologicaViewModel();
+            modelo.IdPersona = id;
+
+            try
+            {
+                if (files.Count > 0)
+                {
+                    byte[] data;
+                    using (var br = new BinaryReader(files[0].OpenReadStream()))
+                        data = br.ReadBytes((int)files[0].OpenReadStream().Length);
+
+                    var documenttransfer = new FichaOdontologicaViewModel
+                    {
+                        IdPersona = id,
+                        Fichero = data
+                    };
+
+                    var respuesta = await CrearFicheroOdontologicoPdf(documenttransfer);
+
+                    if (respuesta.IsSuccess)
+                    {
+                        InicializarMensaje(respuesta.Message);
+                        var pdfFile = WebApp.BaseAddress + "/FichasOdontologicasDocumentos/" + id + ".pdf";
+                        modelo.Url = pdfFile;
+
+                        return View(modelo);
+                    }
+
+                    InicializarMensaje(respuesta.Message);
+                    return View(modelo);
+                }
+
+                InicializarMensaje(Mensaje.ErrorCargaArchivo);
+                return View(modelo);
+
+            }
+            catch (Exception)
+            {
+                InicializarMensaje(Mensaje.Excepcion);
+                return View(modelo);
+            }
+
+        }
+
+        public async Task<FileResult> DescargarFichaOdontologica(string id)
+        {
+
+
+            var id2 = new FichaOdontologicaViewModel
+            {
+                IdPersona = Convert.ToInt32(id),
+            };
+
+            var response = await apiServicio.ObtenerElementoAsync(id2,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ExamenesComplementarios/ObtenerFichaOdontologica");
+
+
+            var m = JsonConvert.DeserializeObject<FichaOdontologicaViewModel>(response.Resultado.ToString());
+            var fileName = $"{id2.IdPersona}.pdf";
+
+            return File(m.Fichero, "application/pdf", fileName);
+
+
+
+        }
 
     }
 }

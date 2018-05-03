@@ -43,6 +43,7 @@ namespace bd.webappth.entidades.Negocio
         public virtual ICollection<ProcesoDetalle> ProcesoDetalle { get; set; }
 
         public virtual ICollection<IndiceOcupacional> IndiceOcupacional { get; set; }
+        public virtual ICollection<ActividadesGestionCambio> ActividadesGestionCambio { get; set; }
 
 
     }

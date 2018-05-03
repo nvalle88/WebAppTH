@@ -1,0 +1,187 @@
+﻿@model bd.webappth.entidades.ViewModels.FichaOdontologicaViewModel
+
+@{
+    ViewData["Title"] = "Ficha Odontológica";
+
+    //var ids = Model.IdPersona;
+}
+
+<head>
+
+    <meta http-equiv="Expires" content="0">
+
+    <meta http-equiv="Last-Modified" content="0">
+
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+
+    <meta http-equiv="Pragma" content="no-cache">
+
+</head>
+
+<!-- MAIN CONTENT -->
+<div id="content">
+    @*
+    @{await Html.RenderPartialAsync("_PartialViewMenu");}
+    *@
+
+    <br />
+    &nbsp;
+
+    <div class="col col-10">
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+            <div class="col-lg-12">
+                <div class="alert alert-block alert-dismissable">
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                    <p>
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                    </p>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <!-- widget grid -->
+    <section id="" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Ficha Odontológica</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+
+                        <form asp-action="FichaOdontologica" id="checkout-form" class="smart-form" novalidate="novalidate" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="widget-body no-padding">
+
+                                <fieldset>
+                                    <div class="row">
+
+
+                                        <section class="col col-4">
+                                            <label>&nbsp;</label>
+                                            <div class="input input-file">
+                                                <!--
+                            <input asp-for="Url" id="file" type="file" name="files" onchange="loadFile(event)">
+                            -->
+                                                <input id="file" type="file" name="files" onchange="loadFile(event)">
+                                                <script>
+                                                    var loadFile = function (event) {
+                                                        var output = document.getElementById('output');
+                                                        output.data = URL.createObjectURL(event.target.files[0]);
+                                                        output.style.height = "700px";
+                                                        document.getElementById("examenpdf").style.visibility = "visible";
+                                                    };
+                                                </script>
+                                            </div>
+                                        </section>
+
+                                        <div class="col col-2">
+                                            <label>&nbsp;</label>
+                                            <div>
+                                                <button asp-action="DescargarFichaOdontologica" class="form-control btn-default">Descargar</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row" id="examenpdf" height="0px">
+
+                                        <section class="col col-lg-12">
+
+
+                                            <section>
+
+                                                <object id="output" type="application/pdf" data="@Model.Url" width="100%" height="1px"></object>
+
+                                            </section>
+                                        </section>
+
+
+
+                                    </div>
+
+
+                                </fieldset>
+
+
+                            </div>
+                            <!-- end widget content -->
+
+                            <div class="row" style="text-align:left;">
+                                <footer>
+                                    <input type="submit" asp-action="Index" value="Guardar" onclick="recarga()" class="btn btn-default" />
+                                    
+                                </footer>
+                            </div>
+
+                            <div class="row">&nbsp;</div>
+                        </form>
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+
+    <script>
+        document.getElementById("examenpdf").style.visibility = "hidden";
+    </script>
+
+    <script>
+        
+    @if (Model.Url != null && Model.Url != "")
+    {
+
+        <text>
+        
+            var output2 = document.getElementById('output');
+
+            output2.style.height = "700px";
+            output2.style.width = "100%";
+            document.getElementById("examenpdf").style.visibility = "visible";
+        
+        </text>
+
+    }
+
+
+        function recarga() {
+
+            document.getElementById("output").reset();
+            
+        }
+
+    </script>
+}
