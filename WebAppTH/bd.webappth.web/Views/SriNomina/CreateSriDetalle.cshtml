@@ -11,6 +11,10 @@
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
+
+
+<link rel="stylesheet" href="~/lib/bootstrap-touchspin-master/src/jquery.bootstrap-touchspin.css" />
+<link rel="stylesheet" href="~/lib/jquery.spinner-master/dist/css/bootstrap-spinner.min.css" />
 <div id="content">
     @{await Html.RenderPartialAsync("_PartialViewSriInformacion");}
     <section id="" class="">
@@ -46,7 +50,6 @@
     <script src='~/js/site.js'></script>
 
     <script src='~/lib/waitMe/waitMe.min.js'></script>
-    <script src='~/js/site.js'></script>
 
     <script type="text/javascript">
 

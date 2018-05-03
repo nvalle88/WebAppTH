@@ -12,19 +12,23 @@ namespace bd.webappth.entidades.Negocio
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Fracción básica")]
-        public double FraccionBasica { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        public decimal FraccionBasica { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Exceso hasta")]
-        public double ExcesoHasta { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        public decimal ExcesoHasta { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Impuesto fracción básica")]
-        public double ImpFranccionBasica { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        public decimal ImpFranccionBasica { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "% impuesto fracción básica")]
-        public double PorcientoImpFraccExced { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:P0}")]
+        public decimal PorcientoImpFraccExced { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Definición del SRI")]
