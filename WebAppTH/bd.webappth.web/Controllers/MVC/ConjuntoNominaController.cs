@@ -21,26 +21,10 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-        private void InicializarMensaje(string mensaje)
-
-        {
-
-            if (mensaje == null)
-
-            {
-
-                mensaje = "";
-
-            }
-
-            ViewData["Error"] = mensaje;
-
-        }
-
-
+      
         public async Task<IActionResult> Create(string mensaje)
         {
-            InicializarMensaje(mensaje);
+             
             await CargarCombox();
             return View();
         }
@@ -57,7 +41,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
+                await CargarCombox();
                 return View(ConjuntoNomina);
             }
             Response response = new Response();
@@ -71,12 +55,12 @@ namespace bd.webappth.web.Controllers.MVC
                     return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
-                ViewData["Error"] = response.Message;
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 await CargarCombox();
                 return View(ConjuntoNomina);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCrear}");
             }
@@ -93,7 +77,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                                   "api/ConjuntoNomina/ObtenerConjuntoNomina");
                     if (respuesta.IsSuccess)
                     {
-                        InicializarMensaje(null);
+                         
                         var vista = JsonConvert.DeserializeObject<ConjuntoNomina>(respuesta.Resultado.ToString());
                         await CargarCombox();
                         return View(vista);
@@ -115,7 +99,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
+                await CargarCombox();
                 return View(ConjuntoNomina);
             }
             Response response = new Response();
@@ -131,7 +115,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                    ViewData["Error"] = response.Message;
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     await CargarCombox();
                     return View(ConjuntoNomina);
                 }
@@ -147,7 +131,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                InicializarMensaje(mensaje);
+                 
                 var lista = await apiServicio.Listar<ConjuntoNomina>(new Uri(WebApp.BaseAddress)
                                                                      , "api/ConjuntoNomina/ListarConjuntoNomina");
                 return View(lista);
@@ -173,11 +157,11 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/ConjuntoNomina/EliminarConjuntoNomina");
                 if (response.IsSuccess)
                 {
-                    return this.Redireccionar($"{Mensaje.Satisfactorio}|{Mensaje.Satisfactorio}");
+                    return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
             }

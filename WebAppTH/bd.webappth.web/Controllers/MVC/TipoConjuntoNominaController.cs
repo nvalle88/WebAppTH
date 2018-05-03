@@ -63,12 +63,11 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-
-               
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 return View(TipoConjuntoNomina);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCrear}");
             }
@@ -122,7 +121,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                    ViewData["Error"] = response.Message;
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     return View(TipoConjuntoNomina);
                 }
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEditar}");
@@ -156,7 +155,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (string.IsNullOrEmpty(id))
                 {
-                    return RedirectToAction("Index");
+                    return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
                 }
                 var tipoConjuntoEliminar = new TipoConjuntoNomina { IdTipoConjunto = Convert.ToInt32(id) };
 
