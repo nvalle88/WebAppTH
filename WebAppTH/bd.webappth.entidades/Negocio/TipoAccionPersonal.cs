@@ -67,10 +67,7 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Estado tipo accion personal")]
         public int IdEstadoTipoAccionPersonal { get; set; }
-        public virtual EstadoTipoAccionPersonal EstadoTipoAccionPersonal { get; set; }
 
-        //Propiedades Virtuales Referencias a otras clases
-
-        public virtual ICollection<AccionPersonal> AccionPersonal { get; set; }
+        
     }
 }
