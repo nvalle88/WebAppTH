@@ -26,9 +26,23 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> Create()
+
+        private void InicializarMensaje(string mensaje)
         {
-           
+
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+
+            ViewData["Error"] = mensaje;
+        }
+
+
+        public async Task<IActionResult> Create(string mensaje)
+        {
+            InicializarMensaje(mensaje);
+
             var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
             {
 
@@ -38,24 +52,66 @@ namespace bd.webappth.web.Controllers.MVC
                                 new Matriz {Id ="Regional", Nombre = "Regional"},
                                 new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
                             },
-
+                TipoAccionPersonal = new TipoAccionPersonal {
+                    NDiasMaximo = 0,
+                    NDiasMinimo = 0,
+                    NHorasMaximo = 0,
+                    NHorasMinimo = 0
+              
+                }
             };
 
             ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
             ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
 
 
-            return View();
+            return View(tipoAccionPersonalViewmodel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TipoAccionPersonal TipoAccionPersonal)
+        public async Task<IActionResult> Create(TipoAccionPersonal tipoAccionPersonal)
         {
+
+            
+
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(TipoAccionPersonal,
+
+                var model = new TipoAccionPersonalViewModel
+                {
+
+                    MatrizLista = new List<Matriz>
+                            {
+                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
+                                new Matriz {Id ="Regional", Nombre = "Regional"},
+                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
+                            },
+                    TipoAccionPersonal = tipoAccionPersonal
+                    
+
+                };
+
+                if (!ModelState.IsValid)
+                {
+
+                    ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(model.MatrizLista, "Id", "Nombre");
+
+                    var listaEstadoTipoAccionPersonal = await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal");
+
+                    ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(
+                        listaEstadoTipoAccionPersonal, "IdEstadoTipoAccionPersonal", "Nombre");
+                    
+
+                    InicializarMensaje(Mensaje.ModeloInvalido);
+
+                    return View(model);
+                }
+
+
+
+                response = await apiServicio.InsertarAsync(tipoAccionPersonal,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/TiposAccionesPersonales/InsertarTipoAccionPersonal");
 
@@ -66,7 +122,16 @@ namespace bd.webappth.web.Controllers.MVC
                             {
                                 new Matriz {Id = "Matriz", Nombre = "Matriz"},
                                 new Matriz {Id ="Regional", Nombre = "Regional"},
-                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}                            },
+                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
+                            },
+                    TipoAccionPersonal = new TipoAccionPersonal
+                    {
+                        NDiasMaximo = 0,
+                        NDiasMinimo = 0,
+                        NHorasMaximo = 0,
+                        NHorasMinimo = 0
+
+                    }
 
                 };
 
@@ -74,10 +139,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { mensaje = response.Message});
                 }
-
-                ViewData["Error"] = response.Message;
+                
                 ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
                 ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
 
@@ -91,8 +155,10 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string id,string mensaje)
         {
+            InicializarMensaje(mensaje);
+
             try
             {
                 if (!string.IsNullOrEmpty(id))
@@ -164,17 +230,8 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Nacionalidad Indígena", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una nacionalidad indígena",
-                            UserName = "Usuario 1"
-                        });
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", new { mensaje = response.Message});
                     }
                     ViewData["Error"] = response.Message;
 
@@ -190,22 +247,15 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un tipo de acción de personal",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+                
 
                 return BadRequest();
             }
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string mensaje)
         {
+            InicializarMensaje(mensaje);
 
             var lista = new List<TipoAccionPersonal>();
             try
@@ -229,30 +279,12 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/TiposAccionesPersonales");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de tipo de acción de personal",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { mensaje = response.Message});
                 }
                 return BadRequest();
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar una tipo de acción de personal",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
 
                 return BadRequest();
             }
