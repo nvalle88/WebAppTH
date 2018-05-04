@@ -39,7 +39,6 @@
                                 <input type="hidden" asp-for="TipoAccionPersonal.IdTipoAccionPersonal"/>
                                 @{await Html.RenderPartialAsync("_PartialViewTiposAccionesPersonales");}
                                 <footer>
-                                    <span class="text-danger">@ViewData["Error"]</span>
                                     <input type="submit" value="Guardar" class="btn btn-default" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
