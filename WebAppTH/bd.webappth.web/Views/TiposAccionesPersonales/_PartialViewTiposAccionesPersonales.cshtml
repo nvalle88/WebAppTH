@@ -27,12 +27,15 @@
     <div class="row">
 
         <section class="col col-2">
-            <input type="radio" name="grp_tiempo_minimo" value="horas" onclick="getRdbtnMinSelected()" @if(Model.TipoAccionPersonal.NHorasMaximo > 0) { <text>checked</text>}/>&nbsp;Horas
-</section>
+            <input id="rdbtnIndefinido" type="radio" name="grp_tiempo_minimo" value="definitivo" onclick="getRdbtnMinSelected()" @if (Model.TipoAccionPersonal.NHorasMaximo < 1 && Model.TipoAccionPersonal.NDiasMaximo < 1) { <text> checked</text>} />&nbsp;Definitivo
+        </section>
 
+        <section class="col col-2">
+            <input type="radio" name="grp_tiempo_minimo" value="horas" onclick="getRdbtnMinSelected()" @if (Model.TipoAccionPersonal.NHorasMaximo > 0) { <text> checked</text>} />&nbsp;Horas
+        </section>
 
-<section class="col col-2">
-            <input type="radio" name="grp_tiempo_minimo" value="dias" onclick="getRdbtnMinSelected()" @if(Model.TipoAccionPersonal.NDiasMaximo > 0) { <text>checked</text>}/>&nbsp;D&iacute;as meses y a&ntilde;os
+        <section class="col col-2">
+            <input type="radio" name="grp_tiempo_minimo" value="dias" onclick="getRdbtnMinSelected()" @if (Model.TipoAccionPersonal.NDiasMaximo > 0) { <text> checked</text>} />&nbsp;D&iacute;as meses y a&ntilde;os
         </section>
 
     </div>
@@ -53,21 +56,21 @@
             <section class="col col-2">
                 <label>D&iacute;as</label>
                 <label class="input">
-                    <input type="number" maxlength="20" id="txt_min_dias" value="0" class="form-control" onchange="calcularDias()" />
+                    <input type="number" min="0" max="364" maxlength="20" id="txt_min_dias" value="0" class="form-control" onchange="calcularDias()" />
                 </label>
             </section>
 
             <section class="col col-2">
                 <label>Meses</label>
                 <label class="input">
-                    <input type="number" maxlength="20" id="txt_min_meses" value="0" class="form-control" onchange="calcularDias()" />
+                    <input type="number" min="0" max="11" maxlength="20" id="txt_min_meses" value="0" class="form-control" onchange="calcularDias()" />
                 </label>
             </section>
 
             <section class="col col-2">
                 <label>A&ntilde;os</label>
                 <label class="input">
-                    <input type="number" maxlength="20" id="txt_min_years" value="0" class="form-control" onchange="calcularDias()" />
+                    <input type="number" min="0" max="100" maxlength="20" id="txt_min_years" value="0" class="form-control" onchange="calcularDias()" />
                 </label>
             </section>
 
@@ -111,21 +114,21 @@
             <section class="col col-2">
                 <label>D&iacute;as</label>
                 <label class="input">
-                    <input type="number" maxlength="20" id="txt_max_dias" value="0" class="form-control" onchange="calcularDiasMax()" />
+                    <input type="number" min="0" max="364" maxlength="20" id="txt_max_dias" value="0" class="form-control" onchange="calcularDiasMax()" />
                 </label>
             </section>
 
             <section class="col col-2">
                 <label>Meses</label>
                 <label class="input">
-                    <input type="number" maxlength="20" id="txt_max_meses" value="0" class="form-control" onchange="calcularDiasMax()" />
+                    <input type="number" min="0" max="11" maxlength="20" id="txt_max_meses" value="0" class="form-control" onchange="calcularDiasMax()" />
                 </label>
             </section>
 
             <section class="col col-2">
                 <label>A&ntilde;os</label>
                 <label class="input">
-                    <input type="number" maxlength="20" id="txt_max_years" value="0" class="form-control" onchange="calcularDiasMax()" />
+                    <input type="number" min="0" max="100" maxlength="20" id="txt_max_years" value="0" class="form-control" onchange="calcularDiasMax()" />
                 </label>
             </section>
 
@@ -193,7 +196,6 @@
         <section class="col col-4">
             <label class="input">
                 <select asp-for="TipoAccionPersonal.Matriz" class="form-control" asp-items="ViewBag.IdMatriz">
-                    <option id="0">Seleccione una Matriz</option>
                 </select>
                 <span asp-validation-for="TipoAccionPersonal.Matriz" class="text-danger"></span>
             </label>
@@ -202,7 +204,6 @@
         <section class="col col-4">
             <label class="input">
                 <select asp-for="TipoAccionPersonal.IdEstadoTipoAccionPersonal" class="form-control" asp-items="ViewBag.IdEstadoTipoAccionPersonal">
-                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.TipoAccionPersonal.IdEstadoTipoAccionPersonal)></option>
                 </select>
                 <span asp-validation-for="TipoAccionPersonal.IdEstadoTipoAccionPersonal" class="text-danger"></span>
             </label>
@@ -226,7 +227,7 @@
         <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.GeneraAccionPersonal" class="form-control">
-                <i></i>Genera  Acci&oacuten Personal ?
+                <i></i>Genera  Acci&oacute;n Personal ?
                 <span asp-validation-for="TipoAccionPersonal.GeneraAccionPersonal" class="text-danger"></span>
             </label>
         </section>
@@ -243,9 +244,6 @@
         </section>
 
 
-    </div>
-    <div class="row">
-        
     </div>
 
 </fieldset>
@@ -371,12 +369,27 @@
                     i = varRdbtn.length + 1;
 
                     mostrarDias();
+                    ocultarHoras();
                 }
+
                 else if (varRdbtn[i].value == "horas") {
                     i = varRdbtn.length + 1;
-
+                    
                     ocultarDias();
+                    mostrarHoras();
+                    
                 }
+                    
+                else if (varRdbtn[i].value == "definitivo") { 
+                    i = varRdbtn.length + 1;
+
+                    ocultarHoras();
+                    ocultarDias();
+                    resetDias();
+                    resetHoras();
+
+                }
+                
             }
         }
         
@@ -385,21 +398,29 @@
     function mostrarDias() {
 
         document.getElementById("rowDiasMin").style.visibility = "visible";
-        document.getElementById("rowHorasMin").style.visibility = "hidden";
-
         document.getElementById("rowDiasMax").style.visibility = "visible";
-        document.getElementById("rowHorasMax").style.visibility = "hidden";
         
     }
 
     function ocultarDias() {
 
         document.getElementById("rowDiasMin").style.visibility = "hidden";
-        document.getElementById("rowHorasMin").style.visibility = "visible";
-
         document.getElementById("rowDiasMax").style.visibility = "hidden";
-        document.getElementById("rowHorasMax").style.visibility = "visible";
     }
+
+    function mostrarHoras() { 
+        
+        document.getElementById("rowHorasMin").style.visibility = "visible";
+        document.getElementById("rowHorasMax").style.visibility = "visible";
+        
+    }
+
+    function ocultarHoras() {
+
+        document.getElementById("rowHorasMin").style.visibility = "hidden";
+        document.getElementById("rowHorasMax").style.visibility = "hidden";
+    }
+
 
     function validarMayoresCero() { 
 
@@ -428,6 +449,35 @@
 
         if (document.getElementById('txt_max_years').value < 0) {
             document.getElementById('txt_max_years').value = 0;
+        }
+
+
+
+        if (document.getElementById('txt_min_dias').value > 364) {
+            document.getElementById('txt_min_dias').value = 364;
+        }
+
+        if (document.getElementById('txt_min_meses').value > 11) {
+            document.getElementById('txt_min_meses').value = 11;
+        }
+
+        if (document.getElementById('txt_min_years').value > 100) {
+            document.getElementById('txt_min_years').value = 100;
+        }
+
+
+
+
+        if (document.getElementById('txt_max_dias').value > 364) {
+            document.getElementById('txt_max_dias').value = 364;
+        }
+
+        if (document.getElementById('txt_max_meses').value > 11) {
+            document.getElementById('txt_max_meses').value = 11;
+        }
+
+        if (document.getElementById('txt_max_years').value > 100) {
+            document.getElementById('txt_max_years').value = 100;
         }
 
         
