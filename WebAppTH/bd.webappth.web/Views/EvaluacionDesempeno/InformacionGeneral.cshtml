@@ -111,7 +111,7 @@
                                             <label>Desde:</label>
                                             <div class="form-group">
                                                 <label class="input-group">
-                                                    <input asp-for="Desde" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
+                                                    <input asp-for="Desde"  readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy'>
                                                 </label>
                                                 <span asp-validation-for="Desde" class="text-danger"></span>
                                             </div>
@@ -120,7 +120,7 @@
                                             <label>Hasta:</label>
                                             <div class="form-group">
                                                 <label class="input-group">
-                                                    <input asp-for="Hasta" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
+                                                    <input asp-for="Hasta"  readonly="readonly" class=" form-control datepicker" data-dateformat='dd/mm/yy'>
                                                 </label>
                                                 <span asp-validation-for="Hasta" class="text-danger"></span>
                                             </div>
@@ -162,99 +162,5 @@
             Init_Select2();
         });
     </script>
-    <script type="text/javascript">
-
-        function habilitarAumento() {
-
-            var select = document.getElementById("aumento");
-            var options = document.getElementsByTagName("option");
-            var resul = (select.value);
-            if (resul == "false") {
-
-                document.getElementById("numaumento").disabled = true;
-                var total1 = document.getElementById("TotalActividades").value;
-                var aument = document.getElementById("numaumento").value;
-                document.getElementById("TotalActividades").value = parseInt(total1) - parseInt(aument);
-                document.getElementById("numaumento").value = "";
-            } else {
-                document.getElementById("numaumento").disabled = false;
-            }
-
-        }
-    </script>
-
-    <script type="text/javascript">
-        function Calcular(id) {
-
-            var porcentaje = document.getElementById("totalactividades").value
-            var num1 = document.getElementById("totalRealizar" + id).value;
-            var num2 = document.getElementById("totalRealizado" + id).value;
-            if (num2 < num1) {
-                num2 = num1;
-            }
-            var a = num2 / num1;
-            var b = parseFloat(a.toFixed(2) * 100);
-            if (b <= 60) {
-                document.getElementById("Nivelcumplimiento" + id).value = "1";
-            }
-            if (b >= 70) {
-                document.getElementById("Nivelcumplimiento" + id).value = "2";
-            }
-            if (b >= 80) {
-                document.getElementById("Nivelcumplimiento" + id).value = "3";
-            }
-            if (b >= 90) {
-                document.getElementById("Nivelcumplimiento" + id).value = "4";
-            }
-            if (b >= 100) {
-                document.getElementById("Nivelcumplimiento" + id).value = "5";
-            }
-            if (b == 100) {
-                var valorporcentaje = 60 / porcentaje;
-                document.getElementById("porcentaje" + id).value = valorporcentaje;
-
-                var total = 0;
-
-                for (var i = 0; i < porcentaje; i++) {
-                    var vppm = 0;
-
-                    if (document.getElementsByName("porcientotxt")[i].value != "") {
-                        vppm = document.getElementsByName("porcientotxt")[i].value;
-                    }
-
-                    total = parseInt(total) + parseInt(vppm);
-                    document.getElementById("TotalActividades").value = parseInt(total);
-                }
-
-            }
-            else {
-                var valorporcentaje = (b * 60) / 100;
-                document.getElementById("porcentaje" + id).value = valorporcentaje / 2;
-                var total = 0;
-                for (var i = 0; i < porcentaje; i++) {
-                    var vppm = 0;
-
-                    if (document.getElementsByName("porcientotxt")[i].value != "") {
-                        vppm = document.getElementsByName("porcientotxt")[i].value;
-                    }
-
-                    total = parseInt(total) + parseInt(vppm);
-                    document.getElementById("TotalActividades").value = parseInt(total);
-                }
-
-            }
-        }
-
-    </script>
-    <script type="text/javascript">
-        function porcentajeaumento() {
-            if (document.getElementById("numaumento").value > 4) {
-                document.getElementById("numaumento").value = 4;
-            }
-            var total1 = document.getElementById("TotalActividades").value;
-            var aument = document.getElementById("numaumento").value;
-            document.getElementById("TotalActividades").value = parseInt(total1) + parseInt(aument);
-        }
-
-    </script>
+    
 }

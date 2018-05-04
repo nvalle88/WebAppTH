@@ -60,36 +60,34 @@ namespace bd.webappth.web.Controllers.MVC
                 return View();
                 throw;
             }
-            //var lista = new List<ViewModelEvaluacionDesempeno>();
-            //try
-            //{
-            //    lista = await apiServicio.Listar<ViewModelEvaluacionDesempeno>(new Uri(WebApp.BaseAddress)
-            //                                                        , "api/EvaluacionDesempeno/ListarEmpleados");
-
-            //    InicializarMensaje(null);
-            //    return View(lista);
-
+            
         }
         public async Task<IActionResult> InformacionGeneral(int idempleado)
         {
             try
             {
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-                var usuario = new ViewModelEvaluador
+                if (idempleado != 0)
                 {
-                    IdEmpleado = idempleado,
-                    NombreUsuario = NombreUsuario
+                    var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                };
-                var lista = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluador>(usuario, new Uri(WebApp.BaseAddress)
-                                                                   , "api/EvaluacionDesempeno/Evaluar");
-                InicializarMensaje(null);
-                HttpContext.Session.SetInt32(Constantes.idEmpleadoSession, lista.IdEmpleado);
-                HttpContext.Session.SetInt32(Constantes.idIndiceOcupacionalSession, lista.IdIndiceOcupacional);
-                HttpContext.Session.SetInt32(Constantes.idEvaluadorSession, lista.IdJefe);
-                return View(lista);
+                    var usuario = new ViewModelEvaluador
+                    {
+                        IdEmpleado = idempleado,
+                        NombreUsuario = NombreUsuario
+
+                    };
+                    var lista = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluador>(usuario, new Uri(WebApp.BaseAddress)
+                                                                       , "api/EvaluacionDesempeno/Evaluar");
+                    InicializarMensaje(null);
+                    HttpContext.Session.SetInt32(Constantes.idEmpleadoSession, lista.IdEmpleado);
+                    HttpContext.Session.SetInt32(Constantes.idIndiceOcupacionalSession, lista.IdIndiceOcupacional);
+                    HttpContext.Session.SetInt32(Constantes.idEvaluadorSession, lista.IdJefe);
+                    lista.Desde = DateTime.Now;
+                    lista.Hasta = DateTime.Now;
+                    return View(lista);
+                }
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
@@ -120,35 +118,41 @@ namespace bd.webappth.web.Controllers.MVC
             if (idIndiceOcupacional==0) {
                 idIndiceOcupacional = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idIndiceOcupacionalSession));
             }
-            var usuario = new VIewCompetencias
+            if (idIndiceOcupacional != 0)
             {
-                IdIndiceOcupacional = idIndiceOcupacional
-            };
-            var lista = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluador>(usuario, new Uri(WebApp.BaseAddress)
-                                                                   , "api/EvaluacionDesempeno/Actividades");
+                var usuario = new VIewCompetencias
+                {
+                    IdIndiceOcupacional = idIndiceOcupacional
+                };
+                var lista = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluador>(usuario, new Uri(WebApp.BaseAddress)
+                                                                       , "api/EvaluacionDesempeno/Actividades");
 
-            var totalacti = lista.ListaActividad.Count();
-            lista.totalactividades = totalacti;
-            InicializarMensaje(null);
-            lista.ListaActividad = lista.ListaActividad;
-            lista.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEmpleadoSession));
-            lista.IdJefe = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEvaluadorSession));
-            lista.IdEval001= Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session));
-            return View(lista);
-
+                var totalacti = lista.ListaActividad.Count();
+                lista.totalactividades = totalacti;
+                InicializarMensaje(null);
+                lista.ListaActividad = lista.ListaActividad;
+                lista.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEmpleadoSession));
+                lista.IdJefe = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEvaluadorSession));
+                lista.IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session));
+                return View(lista);
+            }
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<IActionResult> ActividadesEnsenciales(ViewModelEvaluador viewModelEvaluador)
         {
-            Response response = new Response();
-            response = await apiServicio.InsertarAsync<Response>(viewModelEvaluador, new Uri(WebApp.BaseAddress)
-                                                                   , "api/EvaluacionDesempeno/Insertarctividades");
-
-            if (response.IsSuccess)
+            if (viewModelEvaluador.IdEval001 != 0)
             {
-                return RedirectToAction("ConocimientoEsenciales");
+                Response response = new Response();
+                response = await apiServicio.InsertarAsync<Response>(viewModelEvaluador, new Uri(WebApp.BaseAddress)
+                                                                       , "api/EvaluacionDesempeno/Insertarctividades");
+
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("ConocimientoEsenciales");
+                }
             }
-                return View();
+            return RedirectToAction("InformacionGeneral");
         }
         public async Task<IActionResult> ConocimientoEsenciales(int idIndiceOcupacional)
         {
@@ -165,6 +169,8 @@ namespace bd.webappth.web.Controllers.MVC
             var ListaConocimientos = await apiServicio.Listar<AreaConocimientoViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientosPorIndiceOcupacional");
             InicializarMensaje(null);
             lista.ListaConocimientos = ListaConocimientos;
+            var totalcono = lista.ListaConocimientos.Count();
+            lista.TotalConocimiento = totalcono;
             ViewData["IdNivelConocimiento"] = new SelectList(await apiServicio.Listar<NivelConocimiento>(new Uri(WebApp.BaseAddress), "api/NivelesConocimiento/ListarNivelesConocimiento"), "IdNivelConocimiento", "Nombre");
             return View(lista);
 
@@ -176,7 +182,8 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session)),
                 ConocimientosEsenciales = viewModelEvaluador.ConocimientosEsenciales,
-                IdAreaConocimiento = viewModelEvaluador.IdAreaConocimiento
+                IdAreaConocimiento = viewModelEvaluador.IdAreaConocimiento,
+                TotalConocimiento = viewModelEvaluador.TotalConocimiento
 
             };
             Response response = new Response();
@@ -269,8 +276,40 @@ namespace bd.webappth.web.Controllers.MVC
         }
         public async Task<IActionResult> Observaciones()
         {
+           // var lista = new ViewModelEvaluador();
+            var envio = new ViewModelEvaluador()
+            {
+                IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session))
+
+            };
+            var ListaObservacion = await apiServicio.ObtenerElementoAsync1<Response>(envio, new Uri(WebApp.BaseAddress), "api/EvaluacionDesempeno/ObtenerObservacion");
+            if (ListaObservacion.Resultado != null) {
+                var a = JsonConvert.DeserializeObject<ViewModelEvaluador>(ListaObservacion.Resultado.ToString());
+                InicializarMensaje(null);
+                return View(a);
+            }
             InicializarMensaje(null);
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Observaciones(ViewModelEvaluador viewModelEvaluador)
+        {
+            var envio = new ViewModelEvaluador()
+            {
+                IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session)),
+                Observaciones = viewModelEvaluador.Observaciones
+
+            };
+            Response response = new Response();
+            response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
+                                                                   , "api/EvaluacionDesempeno/InsertarObservacion");
+
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("CalificacionFinal");
+            }
+            return View();
+
         }
         public async Task<IActionResult> Quejas()
         {
@@ -279,8 +318,23 @@ namespace bd.webappth.web.Controllers.MVC
         }
         public async Task<IActionResult> CalificacionFinal()
         {
-            InicializarMensaje(null);
-            return View();
+            var envio = new ViewModelEvaluador()
+            {
+                IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session))
+
+            };
+            if (envio.IdEval001 != 0)
+            {
+                var ListaObservacion = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluador>(envio, new Uri(WebApp.BaseAddress), "api/EvaluacionDesempeno/CalcularTotales");
+                if (ListaObservacion != null) {
+                    InicializarMensaje(null);
+                    return View(ListaObservacion);
+                }
+                InicializarMensaje(null);
+                return View();
+            }
+            return RedirectToAction("InformacionGeneral");
+           
         }
         
         public async Task<IActionResult> Evaluar(int idempleado)
