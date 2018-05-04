@@ -21,6 +21,10 @@ function Init_Select2() {
     });
 }
 
+function cargando() {
+    mostrarLoadingPanel("content", "")
+}
+
 function mostrarLoadingPanel(idElemento, texto) {
     $('#' + idElemento).waitMe({
         effect: 'roundBounce',
