@@ -115,6 +115,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
         public async Task<IActionResult> ActividadesEnsenciales(int idIndiceOcupacional)
         {
+
             if (idIndiceOcupacional==0) {
                 idIndiceOcupacional = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idIndiceOcupacionalSession));
             }
@@ -186,15 +187,18 @@ namespace bd.webappth.web.Controllers.MVC
                 TotalConocimiento = viewModelEvaluador.TotalConocimiento
 
             };
-            Response response = new Response();
-            response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
-                                                                   , "api/EvaluacionDesempeno/InsertarConocimientos");
-
-            if (response.IsSuccess)
+            if (envio.IdEval001 != 0)
             {
-                return RedirectToAction("CompetenciasTecnicas");
+                Response response = new Response();
+                response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
+                                                                       , "api/EvaluacionDesempeno/InsertarConocimientos");
+
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("CompetenciasTecnicas");
+                }
             }
-            return View();
+            return RedirectToAction("InformacionGeneral");
         }
         public async Task<IActionResult> CompetenciasTecnicas(int idIndiceOcupacional)
         {
@@ -226,52 +230,138 @@ namespace bd.webappth.web.Controllers.MVC
                 IdNivelDesarrollos = viewModelEvaluador.IdNivelDesarrollos
                 
             };
-            Response response = new Response();
-            response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
-                                                                   , "api/EvaluacionDesempeno/InsertarCompetenciasTecnicas");
-
-            if (response.IsSuccess)
+            if (envio.IdEval001 != 0)
             {
-                return RedirectToAction("CompetenciasUniversales");
+                Response response = new Response();
+                response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
+                                                                       , "api/EvaluacionDesempeno/InsertarCompetenciasTecnicas");
+
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("CompetenciasUniversales");
+                }
             }
-            return View();
+            return RedirectToAction("InformacionGeneral");
 
         }
         public async Task<IActionResult> CompetenciasUniversales(int idIndiceOcupacional)
         {
-            var lista = new ViewModelEvaluador();
-            var valor = new VIewCompetencias
+            try
             {
-                IdIndiceOcupacional = idIndiceOcupacional,
-                CompetenciaTecnica = false
-            };
-            var CompetenciasUniversales = await apiServicio.Listar<ComportamientoObservableViewModel>(valor, new Uri(WebApp.BaseAddress), "api/ComportamientosObservables/ListarComportamientosObservablesPorIndiceOcupacionalEstado");
+                if (idIndiceOcupacional == 0)
+                {
+                    idIndiceOcupacional = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idIndiceOcupacionalSession));
+                }
+                var lista = new ViewModelEvaluador();
+                var valor = new VIewCompetencias
+                {
+                    IdIndiceOcupacional = idIndiceOcupacional,
+                    CompetenciaTecnica = false
+                };
+                var CompetenciasUniversales = await apiServicio.Listar<ComportamientoObservableViewModel>(valor, new Uri(WebApp.BaseAddress), "api/ComportamientosObservables/ListarComportamientosObservablesPorIndiceOcupacionalEstado");
 
-            InicializarMensaje(null);
-            lista.ListaCompetenciasUniversales = CompetenciasUniversales;
-            ViewData["IdFrecuenciaAplicacion"] = new SelectList(await apiServicio.Listar<FrecuenciaAplicacion>(new Uri(WebApp.BaseAddress), "api/FrecuenciaAplicaciones/ListarFrecuenciaAplicaciones"), "IdFrecuenciaAplicacion", "Nombre");
-            return View(lista);
+                InicializarMensaje(null);
+                lista.ListaCompetenciasUniversales = CompetenciasUniversales;
+                ViewData["IdFrecuenciaAplicacion"] = new SelectList(await apiServicio.Listar<FrecuenciaAplicacion>(new Uri(WebApp.BaseAddress), "api/FrecuenciaAplicaciones/ListarFrecuenciaAplicaciones"), "IdFrecuenciaAplicacion", "Nombre");
+                return View(lista);
 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         [HttpPost]
         public async Task<IActionResult> CompetenciasUniversales(ViewModelEvaluador viewModelEvaluador)
         {
-            var envio = new ViewModelEvaluador()
+            try
             {
-                IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session)),
-                IdComportamientoObervable = viewModelEvaluador.IdComportamientoObervable,
-                IdNivelDesarrollos = viewModelEvaluador.IdNivelDesarrollos
+                var envio = new ViewModelEvaluador()
+                {
+                    IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session)),
+                    IdComportamientoObervable = viewModelEvaluador.IdComportamientoObervable,
+                    IdFrecuenciaAplicaciones = viewModelEvaluador.IdFrecuenciaAplicaciones
 
-            };
-            Response response = new Response();
-            response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
-                                                                   , "api/EvaluacionDesempeno/InsertarCompetenciasTecnicas");
+                };
+                if (envio.IdEval001 != 0)
+                {
+                    Response response = new Response();
+                    response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
+                                                                           , "api/EvaluacionDesempeno/InsertarCompetenciasUniversales");
 
-            if (response.IsSuccess)
-            {
-                return RedirectToAction("CompetenciasUniversales");
+                    if (response.IsSuccess)
+                    {
+                        return RedirectToAction("TrabajoEquipoIniciativaLiderazgo");
+                    }
+                }
+                return RedirectToAction("InformacionGeneral");
             }
-            return View();
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+        public async Task<IActionResult> TrabajoEquipoIniciativaLiderazgo(int idIndiceOcupacional)
+        {
+            try
+            {
+                if (idIndiceOcupacional == 0)
+                {
+                    idIndiceOcupacional = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idIndiceOcupacionalSession));
+                }
+                var lista = new ViewModelEvaluador();
+                var valor = new VIewCompetencias
+                {
+                    IdIndiceOcupacional = idIndiceOcupacional,
+                    CompetenciaTecnica = false
+                };
+                var CompetenciasUniversales = await apiServicio.Listar<ComportamientoObservableViewModel>(valor, new Uri(WebApp.BaseAddress), "api/ComportamientosObservables/ListarComportamientosObservablesEquipoLiderazgo");
+
+                InicializarMensaje(null);
+                lista.ListaEquipoLiderazgo = CompetenciasUniversales;
+                ViewData["IdFrecuenciaAplicacion"] = new SelectList(await apiServicio.Listar<FrecuenciaAplicacion>(new Uri(WebApp.BaseAddress), "api/FrecuenciaAplicaciones/ListarFrecuenciaAplicaciones"), "IdFrecuenciaAplicacion", "Nombre");
+                return View(lista);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> TrabajoEquipoIniciativaLiderazgo(ViewModelEvaluador viewModelEvaluador)
+        {
+            try
+            {
+                var envio = new ViewModelEvaluador()
+                {
+                    IdEval001 = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEval011Session)),
+                    IdComportamientoObervable = viewModelEvaluador.IdComportamientoObervable,
+                    IdFrecuenciaAplicaciones = viewModelEvaluador.IdFrecuenciaAplicaciones
+
+                };
+                if (envio.IdEval001 != 0)
+                {
+                    Response response = new Response();
+                    response = await apiServicio.InsertarAsync<Response>(envio, new Uri(WebApp.BaseAddress)
+                                                                           , "api/EvaluacionDesempeno/InsertarEquipoLiderazgo");
+
+                    if (response.IsSuccess)
+                    {
+                        return RedirectToAction("Observaciones");
+                    }
+                }
+                return RedirectToAction("InformacionGeneral");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
         }
         public async Task<IActionResult> Observaciones()

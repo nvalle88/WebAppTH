@@ -50,6 +50,7 @@ namespace bd.webappth.entidades.ViewModels
         public List<string> PorcentajeCumplido { get; set; }
         
         public List<string> NivelCumplimiento { get; set; }
+        public List<string> IdFrecuenciaAplicaciones { get; set; }
 
         //Competencias Tecnicas Puesto
         public List<string> IdComportamientoObervable { get; set; }
@@ -59,9 +60,10 @@ namespace bd.webappth.entidades.ViewModels
         public List<AreaConocimientoViewModel> ListaConocimientos { get; set; }
         public List<ComportamientoObservableViewModel> ListaCompetenciasTecnicas { get; set; }
         public List<ComportamientoObservableViewModel> ListaCompetenciasUniversales { get; set; }
+        public List<ComportamientoObservableViewModel> ListaEquipoLiderazgo { get; set; }
         //Observaciones
 
-            public string Observaciones { get; set; }
+        public string Observaciones { get; set; }
 
         //totalesActividades
 

@@ -1,7 +1,7 @@
-@model bd.webappth.entidades.ViewModels.ViewModelEvaluador
+@model bd.webappth.entidades.ViewModels.ViewModelQuejas
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 @using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelEvaluador { OpcionMenu = 8 }; }
+@{ var modelo = new ViewModelQuejas { OpcionMenu = 1 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
@@ -112,14 +112,14 @@
                                         </section>
                                     </div>
 
-                                    @*<div class="row">
+                                    <div class="row">
                                         <section class="col col-6">
-                                            <label>Evaluación del ciudadano ( - ):</label>
+                                            <label>Evaluaci&oacute;n del ciudadano ( - ):</label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label"> @Html.DisplayFor(model => model.DatosJefe)</label>
+                                            <label class="label"> @Html.DisplayFor(model => model.TotalQuejas)</label>
                                         </section>
-                                    </div>*@
+                                    </div>
                                     <div class="row">
                                         <section class="col col-6">
                                             <label>Total:</label>
@@ -145,8 +145,3 @@
     <!-- end widget grid -->
     <!-- Modal -->
 </div>
-
-
-@section Scripts {
-    
-}

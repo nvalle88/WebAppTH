@@ -66,12 +66,12 @@ var b = @Context.Session.GetInt32(Constantes.idIndiceOcupacionalSession);
     }
     @if (Model.OpcionMenu == 5)
     {
-        <a asp-action="CompetenciasUniversales" asp-controller="EvaluacionDesempeno" style="background-color:#3276b1;color:white;" class="btn btn-default">Trabajo <br />Iniciativa <br />Liderazgo</a>
+        <a asp-action="TrabajoEquipoIniciativaLiderazgo" asp-route-idIndiceOcupacional="@b" asp-controller="EvaluacionDesempeno" style="background-color:#3276b1;color:white;" class="btn btn-default">Trabajo <br />Iniciativa <br />Liderazgo</a>
 
     }
     else
     {
-        <a asp-action="CompetenciasUniversales" asp-controller="EvaluacionDesempeno" class="btn btn-default">Trabajo<br /> Iniciativa <br />Liderazgo</a>
+        <a asp-action="TrabajoEquipoIniciativaLiderazgo" asp-route-idIndiceOcupacional="@b" asp-controller="EvaluacionDesempeno" class="btn btn-default">Trabajo<br /> Iniciativa <br />Liderazgo</a>
     }
     @if (Model.OpcionMenu == 6)
     {
@@ -82,7 +82,7 @@ var b = @Context.Session.GetInt32(Constantes.idIndiceOcupacionalSession);
     {
         <a asp-action="Observaciones" asp-controller="EvaluacionDesempeno" class="btn btn-default">Observaciones</a>
     }
-    @if (Model.OpcionMenu == 7)
+    @*@if (Model.OpcionMenu == 7)
     {
         <a asp-action="Quejas" asp-controller="EvaluacionDesempeno" style="background-color:#3276b1;color:white;" class="btn btn-default">Quejas</a>
 
@@ -90,7 +90,7 @@ var b = @Context.Session.GetInt32(Constantes.idIndiceOcupacionalSession);
     else
     {
         <a asp-action="Quejas" asp-controller="EvaluacionDesempeno" class="btn btn-default">Quejas</a>
-    }
+    }*@
     @if (Model.OpcionMenu == 8)
     {
         <a asp-action="CalificacionFinal" asp-controller="EvaluacionDesempeno" style="background-color:#3276b1;color:white;" class="btn btn-default">Calificacion <br/> Final</a>
