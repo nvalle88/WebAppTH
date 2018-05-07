@@ -13,10 +13,13 @@
         public int IdProvincia { get; set; }
         public int IdCiudad { get; set; }
         public int IdConfiguracionViatico { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaSolicitud { get; set; }
         public string Descripcion { get; set; }
         public decimal? ValorEstimado { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaLlegada { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaSalida { get; set; }
         public string Observacion { get; set; }
         public int Estado { get; set; }
