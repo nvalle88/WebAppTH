@@ -226,7 +226,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     NombreUsuario = nombreUsuario,
                 };
-                var usuariologueado = await apiServicio.Listar<EmpleadoSolicitudViewModel>(empleado, new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosdeJefeconSolucitudesViaticos");
+                var usuariologueado = await apiServicio.Listar<EmpleadoSolicitudViewModel>(empleado, new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosTalentoHumanoconSolucitudesViaticos");
                 return usuariologueado;
             }
             catch (Exception)
