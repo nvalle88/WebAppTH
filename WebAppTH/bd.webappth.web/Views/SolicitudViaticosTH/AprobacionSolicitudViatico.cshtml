@@ -1,0 +1,1126 @@
+@model bd.webappth.entidades.ViewModels.SolicitudViaticoViewModel
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/js/site.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2> Aprobaci&oacute;n de Solicitud de Vi&aacute;tico</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="EditEstado" asp-controller="SolicitudViaticos" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="SolicitudViatico.FechaSolicitud" />
+                                <input type="hidden" asp-for="SolicitudViatico.IdSolicitudViatico" />
+                                <input type="hidden" asp-for="SolicitudViatico.IdEmpleado" />
+                                <br>
+                                <div class="row">
+                                    <article class="col-lg-12">
+                                        <legend>Solicitud Vi&aacute;tico</legend>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Fecha de solicitud:</label>
+                                                    <input value="@ViewData["FechaSolicitud"]" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Fondo de Financiamiento:</label>
+                                                    <input asp-for="ListaEmpleadoViewModel.FondoFinanciamiento" disabled="disabled" class="form-control input " placeholder="FondoFinanciamiento" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article class="col-lg-12">
+                                        <legend>Datos Generales</legend>
+
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Nombres - Apellidos del Servidor:</label>
+                                                    <input asp-for="ListaEmpleadoViewModel.NombreApellido" disabled="disabled" class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Nombre de la unidad del servidor:</label>
+                                                    <input asp-for="ListaEmpleadoViewModel.Dependencia" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Puesto:</label>
+                                                    <input asp-for="ListaEmpleadoViewModel.RolPuesto" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label>Pa&iacute;s de comisi&oacute;n:</label>
+                                                <div class="form-group">
+                                                    <input value="@ViewData["Pais"]" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <label>Provincia de comisi&oacute;n:</label>
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <input value="@ViewData["Provincia"]" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label>Ciudad de comisi&oacute;n:</label>
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <input value="@ViewData["Ciudad"]" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Fecha de salida:</label>
+                                                    <input asp-for="SolicitudViatico.FechaSalida" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Hora de salida:</label>
+                                                    <input class="form-control" asp-for="SolicitudViatico.HoraSalida" disabled="disabled" id="timepicker1" type="text" placeholder="Seleccione la hora">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Fecha de llegada:</label>
+                                                    <input asp-for="SolicitudViatico.FechaLlegada" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                    </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Hora de llegada:</label>
+                                                    <input class="form-control" asp-for="SolicitudViatico.HoraLlegada" disabled="disabled" id="timepicker2" type="text" placeholder="Seleccione la hora">
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <section>
+                                            <label class="label"></label>
+                                            <div class="form-group">
+                                                <label>Descripci&oacute;n de las actividades a ejecutarse:</label>
+                                                <textarea maxlength="250" class="form-control" asp-for="SolicitudViatico.Descripcion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Descripcion)"></textarea>
+                                                    <span asp-validation-for="SolicitudViatico.Descripcion" class="text-danger"></span>
+                                                </div>
+                                        </section>
+                                        <section>
+                                            <label class="label"></label>
+                                            <div class="form-group">
+                                                <label>Observaci&oacute;n:</label>
+                                                <textarea maxlength="250" class="form-control" asp-for="SolicitudViatico.Observacion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Observacion)"></textarea>
+                                                    <span asp-validation-for="SolicitudViatico.Observacion" class="text-danger"></span>
+                                                </div>
+                                        </section>
+                                    </article>
+
+
+                                </div>
+
+                                <div id="content">
+
+                                    <!-- widget grid -->
+                                    <section id="widget-grid" class="">
+                                        <!-- row -->
+                                        <div class="row">
+                                            <!-- NEW WIDGET START -->
+                                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <!-- Widget ID (each widget will need unique ID)-->
+                                                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-collapsed="false" data-widget-colorbutton="false"
+                                                     data-widget-togglebutton="false"
+                                                     data-widget-deletebutton="false"
+                                                     data-widget-fullscreenbutton="false"
+                                                     data-widget-custombutton="false"
+                                                     data-widget-sortable="false">
+
+                                                    <header id="table">
+                                                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                                        <h2>Itinerarios de Vi&aacute;ticos</h2>
+                                                    </header>
+                                                    <!-- widget div-->
+                                                    <div>
+                                                        <!-- widget edit box -->
+                                                        <div class="jarviswidget-editbox">
+                                                            <!-- This area used as dropdown edit box -->
+                                                        </div>
+                                                        <!-- end widget edit box -->
+                                                        <!-- widget content -->
+                                                        <div class="widget-body no-padding">
+                                                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                                <thead>
+                                                                    <tr>
+
+                                                                        <th data-class="expand">
+                                                                            @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().TipoTransporte.Descripcion)
+                                                                        </th>
+                                                                        <th>
+                                                                            @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().FechaDesde)
+                                                                        </th>
+                                                                        <th>
+                                                                            @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().FechaHasta)
+                                                                        </th>
+                                                                        <th>
+                                                                            @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().Valor)
+                                                                        </th>
+                                                                        <th>
+                                                                            @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().Descripcion)
+                                                                        </th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var item in Model.ItinerarioViatico)
+                                                                    {
+                                                                        <tr>
+
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.TipoTransporte.Descripcion)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.FechaDesde)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.FechaHasta)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.Valor)
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- end widget content -->
+                                                    </div>
+                                                    <!-- end widget div -->
+                                                </div>
+
+                                            </article>
+                                            <!-- WIDGET END -->
+                                        </div>
+                                        <!-- end row -->
+                                        <!-- end row -->
+                                    </section>
+                                    <!-- end widget grid -->
+                                </div>
+                                @*<div class="row">
+                                    <article class="col-lg-12">
+                                        <legend>Datos para transferencia</legend>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="checkbox">
+                                                        <label>&iquest; Cuenta de Ahorros ?</label>
+                                                        <input type="checkbox" disabled="disabled" asp-for="ListaEmpleadoViewModel.TipoCuenta" class="form-control" />
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>No. de Cuenta:</label>
+                                                        <input asp-for="ListaEmpleadoViewModel.NoCuenta" disabled="disabled" class="form-control input " placeholder="No. de Cuenta" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Nombre del Banco:</label>
+                                                    <input asp-for="ListaEmpleadoViewModel.InstitucionBancaria" disabled="disabled" class="form-control input " placeholder="Instituci&oacute;n Bancaria" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>*@
+                                <br />
+                                <div class="row">
+
+                                    <div class="form-group">
+                                        @*<label class="col-md-1 control-label">Estado</label>*@
+                                        <div class="col col-12">
+                                            <div class="col-md-4">
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" name="SolicitudViatico.Estado" value="-1" class="radiobox">
+                                                    <span>Negado</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" name="SolicitudViatico.Estado" value="0" class="radiobox" checked="checked">
+                                                    <span>Pendiente</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" name="SolicitudViatico.Estado" value="1" class="radiobox">
+                                                    <span>Aprobado</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <footer>
+                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <a asp-action="DetalleSolicitudViaticos" asp-route-id="@Model.SolicitudViatico.IdEmpleado" class="btn btn-default">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+
+
+
+
+
+@section Scripts {
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+    <script type="text/javascript">
+
+
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function () {
+
+            //Bootstrap Wizard Validations
+
+            var $validator = $("#wizard-1").validate({
+
+                rules: {
+                    IdTipoIdentificacion: {
+                        required: true
+                    },
+                    Identificacion: {
+                        required: true
+                    },
+                    Nombres: {
+                        required: true
+                    },
+                    Apellidos: {
+                        required: true
+                    },
+                    FechaNacimiento: {
+                        required: true
+                    },
+                    Parentesco: {
+                        required: true
+                    },
+                    IdRelacionLaboral: {
+                        required: true
+                    },
+                    paisLugarNacimiento: {
+                        required: true
+                    },
+                    paisLugarSufragio: {
+                        required: true
+                    },
+                    paisLugarPersona: {
+                        required: true
+                    },
+                    provinciaLugarPersona: {
+                        required: true
+                    },
+                    idciudadLugarPersona: {
+                          required: true
+                      }
+                },
+
+                messages: {
+                    IdTipoIdentificacion: "El campo es requerido",
+                    Identificacion: "El campo es requerido",
+                    Nombres: "El campo es requerido",
+                    Apellidos: "El campo es requerido",
+                    Nombres: "El campo es requerido",
+                    FechaNacimiento: "El campo es requerido",
+                    Parentesco: "El campo es requerido",
+                    IdRelacionLaboral: "El campo es requerido",
+                    paisLugarNacimiento: "El campo es requerido",
+                    paisLugarSufragio: "El campo es requerido",
+                    paisLugarPersona: "El campo es requerido",
+                    provinciaLugarPersona: "El campo es requerido",
+                    idciudadLugarPersona: "El campo es requerido",
+                    email: {
+                        required: "We need your email address to contact you",
+                        email: "Your email address must be in the format of name@domain.com"
+                    }
+                },
+
+                submitHandler: function (form) {
+
+                    $.ajax({
+                         url: '@Url.Action("Create")',
+                         type: "POST",
+                         data: $(form).serialize(),
+                         //data: JSON.stringify({ model }),
+                         dataType: 'json',
+                         //contentType: 'application/json',
+                         success: function (data) {
+                                // Inserting html into the result div on success
+                                $('#results').html(data);
+                            },
+                            error: function (jqXHR, text, error) {
+                                // Displaying if there are any errors
+                                $('#result').html(error);
+                            }
+                        });
+                        return false;
+            },
+
+
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function (error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+
+
+            $('#bootstrap-wizard-1').bootstrapWizard({
+                'tabClass': 'form-wizard',
+                'onNext': function (tab, navigation, index) {
+                    var $valid = $("#wizard-1").valid();
+                    if (!$valid) {
+                        $validator.focusInvalid();
+                        return false;
+                    } else {
+                        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                            'complete');
+                        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                            .html('<i class="fa fa-check"></i>');
+                    }
+                }
+            });
+
+
+            // fuelux wizard
+            var wizard = $('.wizard').wizard();
+
+            wizard.on('finished', function (e, data) {
+                //$("#fuelux-wizard").submit();
+                //console.log("submitted!");
+                $.smallBox({
+                    title: "Congratulations! Your form was submitted",
+                    content: "<i class='fa fa-clock-o'></i> <i>1 seconds ago...</i>",
+                    color: "#5F895F",
+                    iconSmall: "fa fa-check bounce animated",
+                    timeout: 4000
+                });
+
+            });
+
+            $('#timepicker1').timepicker();
+            $('#timepicker2').timepicker();
+            $('#timepicker3').timepicker();
+            $('#timepicker4').timepicker();
+
+
+        })
+
+    </script>
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+
+           $("#paisLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#provinciaLugarPersona").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarProvinciaPorPais")',
+                    dataType: 'json',
+                    data: { pais: $("#paisLugarPersona").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#provinciaLugarPersona").append('<option value="'
+                                + data.idProvincia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+                   $("#provinciaLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#idciudadLugarPersona").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarCiudadPorProvincia")',
+                    dataType: 'json',
+                    data: { provincia: $("#provinciaLugarPersona").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#idciudadLugarPersona").append('<option value="'
+                                + data.idCiudad + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+
+           $("#idciudadLugarPersona").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#parroquiaLugarPersona").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarParroquiaPorCiudad")',
+                    dataType: 'json',
+                    data: { idCiudad: $("#idciudadLugarPersona").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#parroquiaLugarPersona").append('<option value="'
+                                + data.idParroquia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+
+
+                   $("#agregarfamiliar").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarFamiliar")',
+                dataType: 'json',
+                data: {
+                        idTipoIdentificacion: $("#IdTipoIdentificacion").val(),
+                        Identificacion: $("#Identificacion").val(),
+                        Nombres: $("#Nombres").val(),
+                        Apellidos: $("#Apellidos").val(),
+                        idSexo: $("#IdSexo").val(),
+                        idGenero: $("#IdGenero").val(),
+                        idEstadoCivil: $("#IdEstadoCivil").val(),
+                        idTipoSangre: $("#IdTipoSangre").val(),
+                        idNacionalidad: $("#IdNacionalidad").val(),
+                        etniaF: $("#etniaF").val(),
+                        nacionalidadIndigenaF: $("#nacionalidadIndigenaF").val(),
+                        CorreoPrivado: $("#CorreoPrivado").val(),
+                        FechaNacimiento: $("#FechaNacimiento").val(),
+                        LugarTrabajo: $("#LugarTrabajo").val(),
+                        CallePrincipal: $("#CallePrincipal").val(),
+                        CalleSecundaria: $("#CalleSecundaria").val(),
+                        Referencia: $("#Referencia").val(),
+                        Numero: $("#Numero").val(),
+                        parroquiaLugarFamiliar: $("#parroquiaLugarFamiliar").val(),
+                        TelefonoPrivado: $("#TelefonoPrivado").val(),
+                        TelefonoCasa: $("#TelefonoCasa").val(),
+                        Parentesco: $("#Parentesco").val(),
+                        Ocupacion: $("#Ocupacion").val(),
+                    },
+                success: function (data) {
+                    if (data == true) {
+                        var text = '<a class="delete" cedula="jsvar" href="#">Eliminar</a>';
+                        text = text.replace("jsvar", $("#Identificacion").val());
+                        $('#dt_basic').find('#tbody').append([
+                            '<tr>',
+                            '<td  class="ApellidoNombre">' + $("#Apellidos").val() + ' ' + $("#Nombres").val() + '</td>',
+                            '<td  class="Identificacion">' + $("#Identificacion").val() + '</td>',
+                            '<td  class="Sexo">' + $("#IdSexo option:selected").text() + '</td>',
+                            '<td  class="FechaNacimiento">' + $("#FechaNacimiento").val() + '</td>',
+                            '<td  class="Ocupacion">' + $("#Ocupacion").val() + '</td>',
+                            '<td>' + text + '</td>',
+                            '</tr>'
+                        ].join(''));
+
+                        $('a.delete').click(function () {
+                            var id = $(this).attr("cedula");
+                            $.ajax({
+                                url: '@Url.Action("EliminarFamiliar")', type: "POST", dataType: "text",
+                                data: { id: id },
+                                success: function (data) {
+                                    if (data == "true") {
+                                        $('#dt_basic tr:contains("' + id + '")').remove();
+                                    }
+                                    else {
+                                        alert(data);
+                                    }
+                                },
+
+                            });
+                        });
+                    }
+                    else
+                    {
+                        alert("Existe un registro con igual informacion o no todos los campos estan llenos");
+                    }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+                  $("#agregarTrayectoriaLaboral").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarTrayectoriaLaboral")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    FechaInicio: $("#FechaInicio").val(),
+                    FechaFin: $("#FechaFin").val(),
+                    Empresa: $("#Empresa").val(),
+                    PuestoTrabajo: $("#PuestoTrabajo").val(),
+                    DescripcionFunciones: $("#DescripcionFunciones").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete2" empresa="jsvar1" fechainicio="jsvar2" fechafin="jsvar3" puestotrabajo="jsvar4" href="#">Eliminar</a>';
+                            text = text.replace("jsvar1", $("#Empresa").val());
+                            text = text.replace("jsvar2", $("#FechaInicio").val());
+                            text = text.replace("jsvar3", $("#FechaFin").val());
+                            text = text.replace("jsvar4", $("#PuestoTrabajo").val());
+
+                            $('#dt_basic2').find('#tbody2').append([
+                                '<tr>',
+                                '<td  class="FechaInicio">' + $("#FechaInicio").val() +'</td>',
+                                '<td  class="FechaFin">' + $("#FechaFin").val() +'</td>',
+                                '<td  class="Empresa">' + $("#Empresa").val() +'</td>',
+                                '<td  class="PuestoTrabajo">' + $("#PuestoTrabajo").val() + '</td>',
+                                '<td  class="DescripcionFunciones">' + $("#DescripcionFunciones").val() + '</td>',
+                                @*'<td>' + '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new {cedula = ""  }, new { onclick = "return confirm('Desea eliminar el Familiar... ?');" })' + '</td>',*@
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete2').click(function () {
+                   var empresa = $(this).attr("empresa");
+                   var fechainicio = $(this).attr("fechainicio");
+                   var fechafin = $(this).attr("fechafin");
+                   var puestotrabajo = $(this).attr("puestotrabajo");
+              $.ajax({
+                  url: '@Url.Action("EliminarTrayectoriaLaboral")', type: "POST", dataType: "text",
+                  data: {
+                      empresa: empresa,
+                      fechainicio: fechainicio,
+                      fechafin: fechafin,
+                      puestotrabajo: puestotrabajo,
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic2 tr:contains("' + fechainicio + '")'
+                              && 'tr:contains("' + fechafin + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                        }
+
+                        else {
+                            alert("Existe un registro con igual informacion o no todos los campos estan llenos");
+                        }
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+
+
+                  $("#agregarFormacionAcademica").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarFormacionAcademica")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    IdTitulo: $("#IdTitulo").val(),
+                    Observaciones: $("#Observaciones").val(),
+                    FechaGraduado: $("#FechaGraduado").val(),
+                    NoSenescyt: $("#NoSenescyt").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete3" idtitulo="jsvar1" titulo="jsvar2" href="#">Eliminar</a>';
+                            text = text.replace("jsvar1", $("#IdTitulo").val());
+                            text = text.replace("jsvar2", $("#IdTitulo option:selected").text());
+
+                            $('#dt_basic3').find('#tbody3').append([
+                                '<tr>',
+                                '<td  class="IdEstudio">' + $("#IdEstudio option:selected").text() +'</td>',
+                                '<td  class="IdAreaConocimiento">' + $("#IdAreaConocimiento option:selected").text() +'</td>',
+                                '<td  class="IdTitulo">' + $("#IdTitulo option:selected").text() +'</td>',
+                                '<td  class="FechaGraduado">' + $("#FechaGraduado").val() + '</td>',
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete3').click(function () {
+                   var idTitulo = $(this).attr("idtitulo");
+                   var Titulo = $(this).attr("titulo");
+              $.ajax({
+                  url: '@Url.Action("EliminarFormacionAcademica")', type: "POST", dataType: "text",
+                  data: {
+                      idTitulo: idTitulo
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic3 tr:contains("' + Titulo + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                        }
+                        else {
+                            alert("Existe un registro con igual informacion o no todos los campos estan llenos");
+                        }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+                          $("#agregarDiscapacidad").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarDiscapacidad")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    IdTipoDiscapacidad: $("#IdTipoDiscapacidad").val(),
+                    NumeroCarnet: $("#NumeroCarnet").val(),
+                    Porciento: $("#Porciento").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete4" idtipodiscapacidad="jsvar1" tipodiscapacidad="jsvar2" href="#">Eliminar</a>';
+                            text = text.replace("jsvar1", $("#IdTipoDiscapacidad").val());
+                            text = text.replace("jsvar2", $("#IdTipoDiscapacidad option:selected").text());
+
+                            $('#dt_basic4').find('#tbody4').append([
+                                '<tr>',
+                                '<td  class="IdTipoDiscapacidad">' + $("#IdTipoDiscapacidad option:selected").text() + '</td>',
+                                '<td  class="NumeroCarnet">' + $("#NumeroCarnet").val() + '</td>',
+                                '<td  class="Porciento">' + $("#Porciento").val() +'</td>',
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete4').click(function () {
+                   var idTipoDiscapacidad = $(this).attr("idtipodiscapacidad");
+                   var TipoDiscapacidad = $(this).attr("tipodiscapacidad");
+
+              $.ajax({
+                  url: '@Url.Action("EliminarDiscapacidad")', type: "POST", dataType: "text",
+                  data: {
+                      idTipoDiscapacidad: idTipoDiscapacidad
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic4 tr:contains("' + TipoDiscapacidad + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                    }
+                        else {
+                            alert("Existe un registro con igual informacion o no todos los campos estan llenos");
+                        }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                  })
+
+          $("#agregarEnfermedad").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarEnfermedad")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    IdTipoEnfermedad: $("#IdTipoEnfermedad").val(),
+                    InstitucionEmite: $("#InstitucionEmite").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete5" idtipoenfermedad="jsvar1" tipoenfermedad="jsvar2" href="#">Eliminar</a>';
+                            text = text.replace("jsvar1", $("#IdTipoEnfermedad").val());
+                            text = text.replace("jsvar2", $("#IdTipoEnfermedad option:selected").text());
+
+                            $('#dt_basic5').find('#tbody5').append([
+                                '<tr>',
+                                '<td  class="IdTipoEnfermedad">' + $("#IdTipoEnfermedad option:selected").text() + '</td>',
+                                '<td  class="InstitucionEmite">' + $("#InstitucionEmite").val() + '</td>',
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete5').click(function () {
+                   var idTipoEnfermedad = $(this).attr("idtipoenfermedad");
+                   var TipoEnfermedad = $(this).attr("tipoenfermedad");
+              $.ajax({
+                  url: '@Url.Action("EliminarEnfermedad")', type: "POST", dataType: "text",
+                  data: {
+                      idTipoEnfermedad: idTipoEnfermedad
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic5 tr:contains("' + TipoEnfermedad + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                    }
+                    else
+                    {
+                            alert("Existe un registro con igual informacion o no todos los campos estan llenos");
+                    }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                          })
+
+          $("#agregarDiscapacidadSustituto").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarDiscapacidadSustituto")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    IdTipoDiscapacidadSustituto: $("#IdTipoDiscapacidadSustituto").val(),
+                    NumeroCarnetSustituto: $("#NumeroCarnetSustituto").val(),
+                    PorcientoSustituto: $("#PorcentajeDiscapacidadSustituto").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete6" idtipodiscapacidadsustituto="jsvar1" tipodiscapacidadsustituto="jsvar2" href="#">Eliminar</a>';
+                            text = text.replace("jsvar1", $("#IdTipoDiscapacidadSustituto").val());
+                            text = text.replace("jsvar2", $("#IdTipoDiscapacidadSustituto option:selected").text());
+
+                            $('#dt_basic6').find('#tbody6').append([
+                                '<tr>',
+                                '<td  class="IdTipoDiscapacidadSustituto">' + $("#IdTipoDiscapacidadSustituto option:selected").text() + '</td>',
+                                '<td  class="NumeroCarnetSustituto">' + $("#NumeroCarnetSustituto").val() + '</td>',
+                                '<td  class="PorcentajeDiscapacidadSustituto">' + $("#PorcentajeDiscapacidadSustituto").val() +'</td>',
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete6').click(function () {
+                   var idTipoDiscapacidadSustituto = $(this).attr("idtipodiscapacidadsustituto");
+                   var TipoDiscapacidadSustituto = $(this).attr("tipodiscapacidadsustituto");
+
+              $.ajax({
+                  url: '@Url.Action("EliminarDiscapacidadSustituto")', type: "POST", dataType: "text",
+                  data: {
+                      idTipoDiscapacidadSustituto: idTipoDiscapacidadSustituto
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic6 tr:contains("' + TipoDiscapacidadSustituto + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                    }
+                        else {
+                            alert("Existe un registro con igual informacion o no todos los campos estan llenos");
+                        }
+
+                }
+                , complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                  })
+
+          $("#agregarEnfermedadSustituto").click(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("InsertarEnfermedadSustituto")',
+                dataType: 'json',
+                data: {
+                        //idTipoIdentificacion: $("#IdTipoIdentificacion option:selected").text(),
+                    IdTipoEnfermedadSustituto: $("#IdTipoEnfermedadSustituto").val(),
+                    InstitucionEmiteSustituto: $("#InstitucionEmiteSustituto").val(),
+                    },
+                success: function (data) {
+                        if (data == true) {
+                            @*var text = '@Html.ActionLink("Eliminar", "EliminarFamiliar", "Empleados", new { cedula = "jsvar" }, new { @class = "delete" })';*@
+                            var text = '<a class="delete7" idtipoenfermedadsustituto="jsvar1" tipoenfermedadsustituto="jsvar2" href="#">Eliminar</a>';
+                            text = text.replace("jsvar1", $("#IdTipoEnfermedadSustituto").val());
+                            text = text.replace("jsvar2", $("#IdTipoEnfermedadSustituto option:selected").text());
+
+                            $('#dt_basic7').find('#tbody7').append([
+                                '<tr>',
+                                '<td  class="IdTipoEnfermedadSustituto">' + $("#IdTipoEnfermedadSustituto option:selected").text() + '</td>',
+                                '<td  class="InstitucionEmiteSustituto">' + $("#InstitucionEmiteSustituto").val() + '</td>',
+                                '<td>' + text + '</td>',
+                                '</tr>'
+                            ].join(''));
+
+               $('a.delete7').click(function () {
+                   var idTipoEnfermedadSustituto = $(this).attr("idtipoenfermedadsustituto");
+                   var TipoEnfermedadSustituto = $(this).attr("tipoenfermedadsustituto");
+              $.ajax({
+                  url: '@Url.Action("EliminarEnfermedadSustituto")', type: "POST", dataType: "text",
+                  data: {
+                      idTipoEnfermedadSustituto: idTipoEnfermedadSustituto
+                        },
+                  success: function (data) {
+                      if (data == "true") {
+                          $('#dt_basic7 tr:contains("' + TipoEnfermedadSustituto + '")').remove();
+                      }
+                      else {
+                          alert(data);
+                      }
+                  },
+
+              });
+          });
+                    }
+                        else {
+                            alert("Existe un registro con igual informacion o no todos los campos estan llenos");
+                        }
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                   })
+
+
+        });
+
+
+       // Evento que envía una petición Ajax al servidor
+        $('#GuardarForm').click(function(e) {
+    $.ajax({
+        type: "POST",
+        url: "/Empleados/NuevoEmpleado",
+        content: "application/json; charset=utf-8",
+        dataType: "json",
+        // De la siguiente manera indicamos que del div tome los input.
+        data: $('#wizard-1').serialize(),
+        success: function(d) {
+            if (d.result == 'Redireccionar')
+                window.location = d.url;
+            else {
+                alert(d);
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+              alert('Error!!');
+        }
+    });
+});
+
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        function checkIt(evt) {
+            evt = (evt) ? evt : window.event
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                status = "This field accepts numbers only."
+                return false
+            }
+            status = ""
+            return true
+        }
+        function NumCheck(e, field) {
+            key = e.keyCode ? e.keyCode : e.which
+            // backspace
+            if (key == 8) return true
+            // 0-9
+            if (key > 47 && key < 58) {
+                if (field.value == "") return true
+                regexp = /.[0-9]{10}$/
+                return !(regexp.test(field.value))
+            }
+            // .
+            if (key == 44) {
+                if (field.value == "") return false
+                regexp = /^[0-9]+$/
+                return regexp.test(field.values)
+            }
+            // other key
+            return false
+
+        }
+
+        function handleChange(input) {
+            if (input.value < 0) input.value = 0;
+            if (input.value > 100) input.value = 100;
+        }
+
+    </script>
+
+
+
+
+
+}
