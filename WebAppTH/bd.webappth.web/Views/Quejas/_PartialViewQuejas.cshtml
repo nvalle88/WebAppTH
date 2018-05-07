@@ -1,0 +1,48 @@
+@model bd.webappth.entidades.ViewModels.ViewModelQuejas
+
+<fieldset>
+    <div class="row">
+        <section class="col col-6">
+            <label class="label">@Html.DisplayNameFor(model => model.NombreCiudadano)</label>
+            <label class="input">
+                <input asp-for="NombreCiudadano" class="form-control" />
+                <span asp-validation-for="NombreCiudadano" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label class="label">@Html.DisplayNameFor(model => model.ApellidoCiudadano)</label>
+            <label class="input">
+                <input asp-for="ApellidoCiudadano" class="form-control" />
+                <span asp-validation-for="ApellidoCiudadano" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label class="label">@Html.DisplayNameFor(model => model.NumeroFormulario)</label>
+            <label class="input">
+                <input asp-for="NumeroFormulario" class="form-control" />
+                <span asp-validation-for="NumeroFormulario" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label class="label">@Html.DisplayNameFor(model => model.AplicaDescuento)</label>
+            <label class="input">
+                <select asp-for="AplicaDescuento" class="form-control" >
+                    <option  value="true" >Si</option>
+                    <option value="false">NO</option>
+                </select>                
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-lg-12">
+            <label class="label">@Html.DisplayNameFor(model => model.Descripcion)</label>
+            <label class="textarea">
+                <textarea asp-for="Descripcion" rows="5"></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+</fieldset>
+

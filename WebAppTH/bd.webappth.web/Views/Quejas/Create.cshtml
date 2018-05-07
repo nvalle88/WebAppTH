@@ -1,19 +1,23 @@
-@model bd.webappth.entidades.ViewModels.ViewModelEvaluador
+@model bd.webappth.entidades.ViewModels.ViewModelQuejas
+
 @using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelEvaluador { OpcionMenu = 6 }; }
+@{ var modelo = new ViewModelQuejas { OpcionMenu = 0 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 @{
-    ViewData["Title"] = "Pais";
+    
 }
 
 <!-- MAIN CONTENT -->
 <div id="content">
     <div class="col col-10">
+
         @if (@ViewData["Error"].ToString() != "")
 
         {
-            <div class="col-lg-7">
+
+            <div class="col-lg-12">
+
                 <div class="alert alert-block alert-dismissable">
 
                     <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
@@ -32,9 +36,8 @@
 
         }
     </div>
-
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
 
         <!-- START ROW -->
         <div class="row">
@@ -45,7 +48,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>OBSERVACIONES DEL JEFE INMEDIATO (EN CASO DE QUE LAS TENGA)</h2>
+                        <h2>Quejas</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -57,24 +60,12 @@
                         </div>
                         <!-- end widget edit box -->
                         <!-- widget content -->
-
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Observaciones" id="checkout-form" class="smart-form">
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-lg-12">
-                                            <label class="textarea">
-                                                <textarea  asp-for="Observaciones" rows="5"></textarea>
-                                                <span asp-validation-for="Observaciones" class="text-danger"></span>
-                                            </label>
-                                        </section>
-                                    </div>
-
-                                </fieldset>
-
+                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @{await Html.RenderPartialAsync("_PartialViewQuejas", Model);}
                                 <footer>
-
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
                                 </footer>
@@ -97,5 +88,8 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+
+
+    </script>
 }
