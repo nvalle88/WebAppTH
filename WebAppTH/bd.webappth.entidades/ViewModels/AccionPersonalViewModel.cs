@@ -51,10 +51,16 @@ namespace bd.webappth.entidades.ViewModels
         public string EstadoDirector { get; set; }
         public string EstadoValidacionTTHH { get; set; }
 
+
+        public bool GeneraMovimientoPersonal { get; set; }
+
         //Referencias a tablas
         public DatosBasicosEmpleadoSinRequiredViewModel DatosBasicosEmpleadoViewModel { get; set; }
 
         [Display(Name = "Tipo de movimiento")]
         public TipoAccionesPersonalViewModel TipoAccionPersonalViewModel { get; set; }
+
+        public SituacionActualEmpleadoViewModel SituacionActualEmpleadoViewModel { get; set; }
+        public SituacionActualEmpleadoViewModel SituacionPropuestaEmpleadoViewModel { get; set; }
     }
 }
