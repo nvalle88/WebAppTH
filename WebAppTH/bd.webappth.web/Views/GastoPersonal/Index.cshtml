@@ -54,7 +54,7 @@
                                             </td>
                                            
                                             <td>
-                                                @Html.ActionLink("Gastos personales", "Detalle", "FichaEmpleado", new { idEmpleado = item.IdEmpleado, idPersona = item.IdPersona }, new { onclick = "cargando()" })<br />
+                                                @Html.ActionLink("Gastos proyectados", "GastoPersonalIndex", "GastoPersonal", new { id = item.IdEmpleado, nombreEmpleado = item.NombreApellido,identificacion=item.Identificacion }, new { onclick = "cargando()" })<br />
 
                                             </td>
                                         </tr>

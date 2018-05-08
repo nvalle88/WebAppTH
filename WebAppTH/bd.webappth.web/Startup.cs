@@ -106,7 +106,7 @@ namespace bd.webappth.web
         {
 
 
-            var defaultCulture = new CultureInfo("en-us");
+            var defaultCulture = new CultureInfo("es-ec");
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture(defaultCulture),

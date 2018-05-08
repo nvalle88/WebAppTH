@@ -1,0 +1,20 @@
+@model bd.webappth.entidades.Negocio.GastoPersonal
+<fieldset>
+    <div class="row">
+        <section class="col col-lg-6">
+            <label class="label">A&ntilde;os</label>
+            <label class="input">
+                <select asp-for="Ano" class="form-control" asp-items="ViewBag.IdHistoricos">
+                    <option value="0" selected="selected">Seleccione</option>
+                </select>
+                <span asp-validation-for="Ano" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-6">
+            <label></label>
+            <br />
+            <a id="IdBuscarHistorico" onclick="BuscarHistoricos()" class="btn btn-primary btn-circle btn-lg"><i class="glyphicon glyphicon-search"></i></a>
+        </section>
+    </div>
+</fieldset>   
