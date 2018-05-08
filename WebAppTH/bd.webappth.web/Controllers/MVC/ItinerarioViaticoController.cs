@@ -45,7 +45,7 @@ namespace bd.webappth.web.Controllers.MVC
             InicializarMensaje(null);
             return View(itinerarioViatico);
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ItinerarioViatico itinerarioViatico)
@@ -57,6 +57,84 @@ namespace bd.webappth.web.Controllers.MVC
             }
             Response response = new Response();
           
+            try
+            {
+                response = await apiServicio.InsertarAsync(itinerarioViatico,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ItinerarioViatico/InsertarItinerarioViatico");
+                if (response.IsSuccess)
+                {
+
+                    var solicitudViatico = new SolicitudViatico
+                    {
+                        IdSolicitudViatico = itinerarioViatico.IdSolicitudViatico
+                    };
+
+                    response = await apiServicio.InsertarAsync(solicitudViatico, new Uri(WebApp.BaseAddress),
+                                                                "api/SolicitudViaticos/ActualizarValorTotalViatico");
+
+                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    {
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        ExceptionTrace = null,
+                        Message = "Se ha creado un itinerario viático",
+                        UserName = "Usuario 1",
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        EntityID = string.Format("{0} {1}", "Itinerario Viático:", itinerarioViatico.IdItinerarioViatico),
+                    });
+
+
+                    return RedirectToAction("Index", new { IdSolicitudViatico = itinerarioViatico.IdSolicitudViatico });
+
+                }
+
+                ViewData["Error"] = response.Message;
+                return View(itinerarioViatico);
+
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Creando Itinerario Viático",
+                    ExceptionTrace = ex.Message,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP WebAppTh"
+                });
+
+                return BadRequest();
+            }
+        }
+
+
+        public async Task<IActionResult> CreateInforme(int IdSolicitudViatico)
+        {
+
+
+            ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
+            var itinerarioViatico = new ItinerarioViatico
+            {
+                IdSolicitudViatico = IdSolicitudViatico
+            };
+            InicializarMensaje(null);
+            return View(itinerarioViatico);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateInforme(ItinerarioViatico itinerarioViatico)
+        {
+            if (!ModelState.IsValid)
+            {
+                InicializarMensaje(null);
+                return View(itinerarioViatico);
+            }
+            Response response = new Response();
+
             try
             {
                 response = await apiServicio.InsertarAsync(itinerarioViatico,
@@ -260,7 +338,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-                        ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
+                       // ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
                         ViewData["Pais"] = pais.Nombre;
                         ViewData["Provincia"] = provincia.Nombre;
                         ViewData["Ciudad"] = ciudad.Nombre;
@@ -270,6 +348,89 @@ namespace bd.webappth.web.Controllers.MVC
                 }
                // return RedirectToAction("Index", new { mensaje = respuestaEmpleado.Message });
                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+        public async Task<IActionResult> Informe(int IdSolicitudViatico, string mensaje)
+        {
+
+            SolicitudViatico sol = new SolicitudViatico();
+            ListaEmpleadoViewModel empleado = new ListaEmpleadoViewModel();
+            List<ItinerarioViatico> lista = new List<ItinerarioViatico>();
+            try
+            {
+
+                if (IdSolicitudViatico.ToString() != null)
+                {
+                    var respuestaSolicitudViatico = await apiServicio.SeleccionarAsync<Response>(IdSolicitudViatico.ToString(), new Uri(WebApp.BaseAddress),
+                                                                  "api/SolicitudViaticos");
+                    //InicializarMensaje(null);
+                    if (respuestaSolicitudViatico.IsSuccess)
+                    {
+                        sol = JsonConvert.DeserializeObject<SolicitudViatico>(respuestaSolicitudViatico.Resultado.ToString());
+                        var solicitudViatico = new SolicitudViatico
+                        {
+                            IdEmpleado = sol.IdEmpleado,
+                        };
+
+                        var respuestaEmpleado = await apiServicio.SeleccionarAsync<Response>(solicitudViatico.IdEmpleado.ToString(), new Uri(WebApp.BaseAddress),
+                                                                     "api/Empleados");
+
+                        if (respuestaEmpleado.IsSuccess)
+                        {
+                            var emp = JsonConvert.DeserializeObject<Empleado>(respuestaEmpleado.Resultado.ToString());
+                            var empleadoEnviar = new Empleado
+                            {
+                                NombreUsuario = emp.NombreUsuario,
+                            };
+
+                            empleado = await apiServicio.ObtenerElementoAsync1<ListaEmpleadoViewModel>(empleadoEnviar, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDatosCompletosEmpleado");
+
+
+                            lista = new List<ItinerarioViatico>();
+                            var itinerarioViatico = new ItinerarioViatico
+                            {
+                                IdSolicitudViatico = sol.IdSolicitudViatico
+                            };
+                            lista = await apiServicio.ObtenerElementoAsync1<List<ItinerarioViatico>>(itinerarioViatico, new Uri(WebApp.BaseAddress)
+                                                                     , "api/ItinerarioViatico/ListarItinerariosViaticos");
+
+                        }
+
+                        var solicitudViaticoViewModel = new SolicitudViaticoViewModel
+                        {
+                            SolicitudViatico = sol,
+                            ListaEmpleadoViewModel = empleado,
+                            ItinerarioViatico = lista
+
+                        };
+
+
+                        var respuestaPais = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdPais.ToString(), new Uri(WebApp.BaseAddress),
+                                                                 "api/Pais");
+                        var pais = JsonConvert.DeserializeObject<Pais>(respuestaPais.Resultado.ToString());
+                        var respuestaProvincia = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdProvincia.ToString(), new Uri(WebApp.BaseAddress),
+                                                                 "api/Provincia");
+                        var provincia = JsonConvert.DeserializeObject<Provincia>(respuestaProvincia.Resultado.ToString());
+                        var respuestaCiudad = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdCiudad.ToString(), new Uri(WebApp.BaseAddress),
+                                                                 "api/Ciudad");
+                        var ciudad = JsonConvert.DeserializeObject<Ciudad>(respuestaCiudad.Resultado.ToString());
+
+
+
+                        //ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
+                        ViewData["Pais"] = pais.Nombre;
+                        ViewData["Provincia"] = provincia.Nombre;
+                        ViewData["Ciudad"] = ciudad.Nombre;
+                        InicializarMensaje(mensaje);
+                        return View(solicitudViaticoViewModel);
+                    }
+                }
+                // return RedirectToAction("Index", new { mensaje = respuestaEmpleado.Message });
+                return BadRequest();
             }
             catch (Exception)
             {
