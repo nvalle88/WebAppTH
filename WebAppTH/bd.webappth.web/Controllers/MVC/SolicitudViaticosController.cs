@@ -170,7 +170,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-                        ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
+                        //ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
                         ViewData["Pais"] = pais.Nombre;
                         ViewData["Provincia"] = provincia.Nombre;
                         ViewData["Ciudad"] = ciudad.Nombre;
@@ -253,7 +253,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-                        ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
+                        //ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
                         ViewData["Pais"] = pais.Nombre;
                         ViewData["Provincia"] = provincia.Nombre;
                         ViewData["Ciudad"] = ciudad.Nombre;
