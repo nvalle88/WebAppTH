@@ -16,24 +16,25 @@ namespace bd.webappth.entidades.ViewModels
         public int Grado { get; set; }
         [DisplayName("Misión")]
         public string Mision { get; set; }
-        [DisplayName("Relaciones internas y externas:")]
+        [DisplayName("Relaciones internas y externas")]
         public string RelacionesInternasExternas { get; set; }
-        [DisplayName("Rol:")]
+        [DisplayName("Rol")]
         public string RolPuesto { get; set; }
-        [DisplayName("Grupo ocupacional:")]
+        [DisplayName("Grupo ocupacional")]
         public string EscalaGrado { get; set; }
-        [DisplayName("Remuneración:")]
+        [DisplayName("Remuneración")]
         public decimal Remuneracion { get; set; }
-        [DisplayName("Modalidad partida:")]
+        [DisplayName("Modalidad partida")]
         public string ModalidadPartida { get; set; }
-        [DisplayName("Partida general:")]
+        [DisplayName("Partida general")]
         public int PartidaGeneral { get; set; }
-        [DisplayName("Partida individual:")]
+        [DisplayName("Partida individual")]
         public string PartidaIndividual { get; set; }
-        [DisplayName("Ámbito:")]
+        [DisplayName("Ámbito")]
         public string Ambito { get; set; }
-        [DisplayName("Nivel:")]
+        [DisplayName("Nivel")]
         public string Nivel { get; set; }
+        public string Sucursal { get; set; }
 
         public int OpcionMenu { get; set; }
     }

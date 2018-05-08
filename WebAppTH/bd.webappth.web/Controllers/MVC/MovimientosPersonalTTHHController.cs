@@ -140,7 +140,10 @@ namespace bd.webappth.web.Controllers.MVC
                         situacionActualViewModel = JsonConvert.DeserializeObject<SituacionActualEmpleadoViewModel>(situacionActualEmpleadoViewModelResponse.Resultado.ToString());
                     }
 
-
+                    
+                    var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
 
                     var model = new AccionPersonalViewModel
                     {
@@ -152,7 +155,8 @@ namespace bd.webappth.web.Controllers.MVC
                         SituacionActualEmpleadoViewModel = situacionActualViewModel,
                         SituacionPropuestaEmpleadoViewModel = new SituacionActualEmpleadoViewModel()
                         ,
-                        GeneraMovimientoPersonal = false
+                        GeneraMovimientoPersonal = false,
+                        ListaIndicesOcupacionalesModalidadPartida = listaIOMP
                     };
 
 
@@ -534,7 +538,26 @@ namespace bd.webappth.web.Controllers.MVC
 
             ViewData["RMU"] = new SelectList(firstRMU, "IdEscalaGrados", "Remuneracion");
         }
+
+
+        public async Task<IActionResult> ListarModalidadPartida(string mensaje)
+        {
+            this.TempData["Mensaje"] = $"{Mensaje.Aviso}|{"Seleccione para generar la propuesta"}";
+            try {
+
+                var lista= await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
+
+                return View(lista);
+
+            } catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
         
+
 
     }
 }
