@@ -12,16 +12,19 @@ namespace bd.webappth.entidades.Negocio
 
         public int Ano { get; set; }
 
-        public decimal Valor { get; set; }
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Valor")]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        public double Valor { get; set; }
 
-        public int IdTipoGasto { get; set; }
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Tipo de gasto")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        public int IdTipoGastoPersonal { get; set; }
         public virtual TipoDeGastoPersonal TipoDeGastoPersonal { get; set; }
 
         public int IdEmpleado { get; set; }
         public virtual Empleado Empleado { get; set; }
-
-
-
 
     }
 }
