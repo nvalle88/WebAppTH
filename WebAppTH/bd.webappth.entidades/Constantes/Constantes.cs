@@ -49,5 +49,13 @@ namespace bd.webappth.entidades.Constantes
         /// </summary>
         public const string  IdSriSession= "IdSriSession";
         public const string DescripcionSriSession = "DescripcionSriSession";
+
+        /// <summary>
+        /// Variables de sección para los gastos personales de cada empleado
+        /// </summary>
+        public const string IdEmpleadoGastoPersonal = "IdEmpleadoGastoPersonal";
+        public const string NombreEmpleadoGastoPersonal = "NombreEmpleadoGastoPersonal";
+        public const string IdentificacionGastoPersonal = "IdentificacionGastoPersonal";
+
     }
 }

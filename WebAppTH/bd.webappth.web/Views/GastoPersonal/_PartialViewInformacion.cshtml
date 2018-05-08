@@ -1,0 +1,29 @@
+
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+
+@{
+    var nombre = @Context.Session.GetString(Constantes.NombreEmpleadoGastoPersonal);
+    var identificacion = @Context.Session.GetString(Constantes.IdentificacionGastoPersonal);
+}
+<fieldset>
+    <legend>Empleado</legend>
+    <div class="row col-lg-12">
+
+            <label><b> Nombre:</b></label>
+            <label><b> @nombre</b></label>
+            <label>&nbsp; &nbsp; &nbsp; &nbsp;</label>
+            <label><b>Identificaci&oacute;n:</b></label>
+            <label><b> @identificacion</b></label>
+    </div>
+</fieldset>
+<br />
+
+
+
+
+
+
+
