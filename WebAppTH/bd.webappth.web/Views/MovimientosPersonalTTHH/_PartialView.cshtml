@@ -85,6 +85,114 @@
     </div>
 
     <div class="row">
+        <section class="col col-lg-12">
+            <legend>Generar movimiento de personal?</legend>
+        </section>
+
+        <section class="col col-lg-4">
+            @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, false)&nbsp;No
+        </section>
+
+        <section class="col col-lg-4">
+            @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, true)&nbsp;Si
+        </section>
+
+    </div>
+
+    <div class="row" id="divMovimientoPersonal">
+
+        <section class="col col-lg-10">
+            <legend>Situaci&oacute;n actual</legend>
+        </section>
+
+        <section class="col col-lg-6">
+
+            <label>@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.NombreSucursal).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="SituacionActualEmpleadoViewModel.NombreSucursal" class="form-control" readonly />
+                <span asp-validation-for="SituacionActualEmpleadoViewModel.NombreSucursal" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.NombreDependencia).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="SituacionActualEmpleadoViewModel.NombreDependencia" class="form-control" readonly />
+                <span asp-validation-for="SituacionActualEmpleadoViewModel.NombreDependencia" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-6">
+
+            <label>@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.NombreCargo).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="SituacionActualEmpleadoViewModel.NombreCargo" class="form-control" readonly />
+                <span asp-validation-for="SituacionActualEmpleadoViewModel.NombreCargo" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.Remuneracion).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="SituacionActualEmpleadoViewModel.Remuneracion" class="form-control" readonly />
+                <span asp-validation-for="SituacionActualEmpleadoViewModel.Remuneracion" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-10">
+            <legend>Situaci&oacute;n propuesta</legend>
+        </section>
+
+        <section class="col col-lg-6">
+            <label>@Html.DisplayNameFor(model => Model.SituacionPropuestaEmpleadoViewModel.NombreSucursal).ToString().TrimEnd(MyChar)</label>
+            <label class="input">
+                <select id="SelectSucursal" asp-for="SituacionPropuestaEmpleadoViewModel.IdSucursal" class="form-control" asp-items="ViewBag.Sucursales"></select>
+
+                <span asp-validation-for="SituacionPropuestaEmpleadoViewModel.IdSucursal" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-6">
+            <label>@Html.DisplayNameFor(model => Model.SituacionPropuestaEmpleadoViewModel.NombreDependencia).ToString().TrimEnd(MyChar)</label>
+            <label class="input">
+                <select id="SelectDependencia" asp-for="SituacionPropuestaEmpleadoViewModel.IdDependencia" class="form-control" asp-items="ViewBag.Dependencia"></select>
+
+                <span asp-validation-for="SituacionPropuestaEmpleadoViewModel.IdDependencia" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-6">
+            <label>@Html.DisplayNameFor(model => Model.SituacionPropuestaEmpleadoViewModel.NombreCargo).ToString().TrimEnd(MyChar)</label>
+            <label class="input">
+                <select id="SelectRol" asp-for="SituacionPropuestaEmpleadoViewModel.IdCargo" class="form-control" asp-items="ViewBag.ManualPuesto"></select>
+
+                <span asp-validation-for="SituacionPropuestaEmpleadoViewModel.IdCargo" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-6">
+            <label>@Html.DisplayNameFor(model => Model.SituacionPropuestaEmpleadoViewModel.Remuneracion).ToString().TrimEnd(MyChar)</label>
+            <label class="input">
+                <select id="SelectRMU" asp-for="SituacionPropuestaEmpleadoViewModel.Remuneracion" class="form-control" asp-items="ViewBag.RMU"></select>
+
+                <span asp-validation-for="SituacionPropuestaEmpleadoViewModel.Remuneracion" class="text-danger"></span>
+            </label>
+        </section>
+
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-lg-12">
+            <legend>&nbsp;</legend>
+        </section>
 
         <section class="col col-lg-4">
 

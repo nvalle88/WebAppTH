@@ -39,8 +39,9 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(string mensaje)
         {
+            InicializarMensaje(mensaje);
 
             var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
             {
@@ -69,7 +70,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TipoAccionPersonal TipoAccionPersonal)
+        public async Task<IActionResult> Create(TipoAccionPersonal tipoAccionPersonal)
         {
 
             
@@ -87,28 +88,30 @@ namespace bd.webappth.web.Controllers.MVC
                                 new Matriz {Id ="Regional", Nombre = "Regional"},
                                 new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
                             },
-                    TipoAccionPersonal = new TipoAccionPersonal
-                    {
-                        NDiasMaximo = 0,
-                        NDiasMinimo = 0,
-                        NHorasMaximo = 0,
-                        NHorasMinimo = 0
+                    TipoAccionPersonal = tipoAccionPersonal
+                    
 
-                    }
                 };
 
                 if (!ModelState.IsValid)
                 {
 
-                    ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
                     ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(model.MatrizLista, "Id", "Nombre");
+
+                    var listaEstadoTipoAccionPersonal = await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal");
+
+                    ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(
+                        listaEstadoTipoAccionPersonal, "IdEstadoTipoAccionPersonal", "Nombre");
+                    
+
+                    InicializarMensaje(Mensaje.ModeloInvalido);
 
                     return View(model);
                 }
 
 
 
-                response = await apiServicio.InsertarAsync(TipoAccionPersonal,
+                response = await apiServicio.InsertarAsync(tipoAccionPersonal,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/TiposAccionesPersonales/InsertarTipoAccionPersonal");
 
@@ -119,7 +122,16 @@ namespace bd.webappth.web.Controllers.MVC
                             {
                                 new Matriz {Id = "Matriz", Nombre = "Matriz"},
                                 new Matriz {Id ="Regional", Nombre = "Regional"},
-                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}                            },
+                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
+                            },
+                    TipoAccionPersonal = new TipoAccionPersonal
+                    {
+                        NDiasMaximo = 0,
+                        NDiasMinimo = 0,
+                        NHorasMaximo = 0,
+                        NHorasMinimo = 0
+
+                    }
 
                 };
 
@@ -129,8 +141,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     return RedirectToAction("Index", new { mensaje = response.Message});
                 }
-
-                ViewData["Error"] = response.Message;
+                
                 ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
                 ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
 
@@ -144,8 +155,10 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string id,string mensaje)
         {
+            InicializarMensaje(mensaje);
+
             try
             {
                 if (!string.IsNullOrEmpty(id))

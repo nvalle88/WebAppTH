@@ -25,22 +25,32 @@ namespace bd.webappth.entidades.ViewModels
         public string Titulo { get; set; }
         [Display(Name = "Apellido y Nombres Jefe Inmediato:")]
         public string DatosJefe { get; set; }
+
         [Display(Name = "Fecha inicio:")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Desde { get; set; }
+
         [Display(Name = "Fecha Hasta:")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Hasta { get; set; }
+
         public string NombreUsuario { get; set; }
         public string Cuatroporciento { get; set; }
         public string PorcentajeAumento { get; set; }
         public List<string> ListaActividades { get; set; }
+        [Required(ErrorMessage = "Debe introducir {0}")]
         public List<string> ListaIndicadores{ get; set; }
+        [Required(ErrorMessage = "Debe introducir {0}")]
         public List<string> ListaMetaPeriodo { get; set; }
+        [Required(ErrorMessage = "Debe introducir {0}")]
         public List<string> ListaActividadescumplidos { get; set; }
         public List<string> IdAreaConocimiento { get; set; }
         public List<string> ConocimientosEsenciales { get; set; }
         public List<string> CompetenciasTecnicas { get; set; }
+        public List<string> PorcentajeCumplido { get; set; }
+        
+        public List<string> NivelCumplimiento { get; set; }
+        public List<string> IdFrecuenciaAplicaciones { get; set; }
 
         //Competencias Tecnicas Puesto
         public List<string> IdComportamientoObervable { get; set; }
@@ -50,13 +60,25 @@ namespace bd.webappth.entidades.ViewModels
         public List<AreaConocimientoViewModel> ListaConocimientos { get; set; }
         public List<ComportamientoObservableViewModel> ListaCompetenciasTecnicas { get; set; }
         public List<ComportamientoObservableViewModel> ListaCompetenciasUniversales { get; set; }
+        public List<ComportamientoObservableViewModel> ListaEquipoLiderazgo { get; set; }
         //Observaciones
 
-            public string Observaciones { get; set; }
+        public string Observaciones { get; set; }
 
-        //totales
+        //totalesActividades
 
         public int totalactividades { get; set; }
+        public int TotalConocimiento { get; set; }
+
+
+        // totales
+        public double ActividadesTotal { get; set; }
+        public double TotalConocimientos { get; set; }
+        public double TotalCompetenciasTecnicas { get; set; }
+        public double TotalCompetenciasUniversales { get; set; }
+        public double TotalTrabajoLiderazgo { get; set; }
+        public double TotalQuejas { get; set; }
+        public double TotalEvaluacion { get; set; }
 
     }
 }

@@ -96,19 +96,19 @@
 
                                                     </td>
                                                     <td>
-                                                        <input name="ListaIndicadores" type="text" asp- class="form-control" />
+                                                        <input name="ListaIndicadores" type="text" asp- class="form-control" required/>
                                                     </td>
                                                     <td>
-                                                        <input name="ListaMetaPeriodo" type="number" id="totalRealizar@(item.IdActividadesEsenciales)" asp- class="form-control" />
+                                                        <input name="ListaMetaPeriodo" type="number" id="totalRealizar@(item.IdActividadesEsenciales)" asp- class="form-control" required />
                                                     </td>
                                                     <td>
-                                                        <input name="ListaActividadescumplidos" type="number" id="totalRealizado@(item.IdActividadesEsenciales)" asp- class="form-control" onchange="Calcular(@item.IdActividadesEsenciales)" />
+                                                        <input name="ListaActividadescumplidos" type="number" id="totalRealizado@(item.IdActividadesEsenciales)" asp- class="form-control" onchange="Calcular(@item.IdActividadesEsenciales)" required />
                                                     </td>
                                                     <td>
-                                                        <input type="number" id="porcentaje@(item.IdActividadesEsenciales)" name="porcientotxt" asp- class="form-control" readonly="readonly" />
+                                                        <input name="PorcentajeCumplido" type="number" id="porcentaje@(item.IdActividadesEsenciales)" asp- class="form-control" readonly="readonly" required />
                                                     </td>
                                                     <td>
-                                                        <input type="number" id="Nivelcumplimiento@(item.IdActividadesEsenciales)" asp- class="form-control" readonly="readonly" />
+                                                        <input name="NivelCumplimiento" type="number" id="Nivelcumplimiento@(item.IdActividadesEsenciales)" asp- class="form-control" readonly="readonly" required />
                                                     </td>
                                                 </tr>
                                             }
@@ -210,7 +210,7 @@
             var porcentaje = document.getElementById("totalactividades").value
             var num1 = document.getElementById("totalRealizar" + id).value;
             var num2 = document.getElementById("totalRealizado" + id).value;
-            if (num2 < num1) {
+            if (num2 > num1) {
                 num2 = num1;
             }
             var a = num2 / num1;
@@ -239,8 +239,8 @@
                 for (var i = 0; i < porcentaje; i++) {
                     var vppm = 0;
 
-                    if (document.getElementsByName("porcientotxt")[i].value != "") {
-                        vppm = document.getElementsByName("porcientotxt")[i].value;
+                    if (document.getElementsByName("PorcentajeCumplido")[i].value != "") {
+                        vppm = document.getElementsByName("PorcentajeCumplido")[i].value;
                     }
 
                     total = parseInt(total) + parseInt(vppm);
@@ -255,8 +255,8 @@
                 for (var i = 0; i < porcentaje; i++) {
                     var vppm = 0;
 
-                    if (document.getElementsByName("porcientotxt")[i].value != "") {
-                        vppm = document.getElementsByName("porcientotxt")[i].value;
+                    if (document.getElementsByName("PorcentajeCumplido")[i].value != "") {
+                        vppm = document.getElementsByName("PorcentajeCumplido")[i].value;
                     }
 
                     total = parseInt(total) + parseInt(vppm);

@@ -68,6 +68,9 @@
 
                         </div>
                         <!-- end widget content -->
+
+                        <div class="row">&nbsp;</div>
+
                     </div>
                     <!-- end widget div -->
                 </div>
@@ -143,6 +146,129 @@
         });
 
 
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#SelectSucursal").change(function () {
+
+
+                mostrarLoadingPanel("content", "Cargando...")
+                $("#SelectDependencia").empty();
+                $("#SelectRol").empty();
+                $("#SelectRMU").empty();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CargarDependencias", "MovimientosPersonalTTHH")',
+                    dataType: 'json',
+                    data: { idSucursal: $("#SelectSucursal").val() },
+                    success: function (data) {
+                        
+                        $("#SelectDependencia").append('<option value="0" selected>Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#SelectDependencia").append('<option value="'
+                                + data.idDependencia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                        
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+
+
+            }); // Fin change
+
+
+
+            $("#SelectDependencia").change(function () {
+
+
+                mostrarLoadingPanel("content", "Cargando...")
+                $("#SelectRol").empty();
+                $("#SelectRMU").empty();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CargarRoles", "MovimientosPersonalTTHH")',
+                    dataType: 'json',
+                    data: { idDependencia: $("#SelectDependencia").val() },
+                    success: function (data) {
+                        
+                        $("#SelectRol").append('<option value="0" selected>Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#SelectRol").append('<option value="'
+                                + data.idManualPuesto + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                        
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+
+
+           }); // Fin change
+
+
+
+            $("#SelectRol").change(function () {
+
+
+                mostrarLoadingPanel("content", "Cargando...")
+                $("#SelectRMU").empty();
+                
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CargarRMU", "MovimientosPersonalTTHH")',
+                    dataType: 'json',
+                    data: { idCargo: $("#SelectRol").val(), idDependencia: $("#SelectDependencia").val() },
+                    success: function (data) {
+                        
+                        $("#SelectRMU").append('<option value="0" selected>Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#SelectRMU").append('<option value="'
+                                + data.idEscalaGrados + '">'
+                                + data.remuneracion + '</option>');
+
+                        });
+                        
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+
+
+           }); // Fin change
+
+
+
+
+        }); // fin ready
     </script>
 
 }

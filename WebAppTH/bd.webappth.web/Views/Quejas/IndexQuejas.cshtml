@@ -1,29 +1,54 @@
-@model List<bd.webappth.entidades.Negocio.SolicitudViatico>
+@model List<bd.webappth.entidades.ViewModels.ViewModelQuejas>
+@using bd.webappth.entidades.ViewModels
+@{ var modelo = new ViewModelQuejas { OpcionMenu = 0 }; }
 
-    @{
-        ViewData["Title"] = "Index";
-    }
-    <!-- MAIN CONTENT -->
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+@{
+
+}
+@{
+    ViewData["Title"] = "Index";
+}
 <link href="~/css/tabla/table.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<!-- MAIN CONTENT -->
 <div id="content">
     <div class="col col-10">
+
         @if (@ViewData["Error"].ToString() != "")
 
         {
 
             <div class="col-lg-12">
+
                 <div class="alert alert-block alert-dismissable">
+
                     <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
                     <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
                     <p>
+
                         <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
                     </p>
+
                 </div>
+
             </div>
 
         }
     </div>
     <p></p>
+    <a asp-action="Index">
+        <button type="button" asp-action="Index" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-arrow-left"></i>
+            </span>Atras
+
+        </button>
+    </a>
     <a asp-action="Create">
         <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
             <span class="btn-label">
@@ -35,7 +60,7 @@
     <p> </p>
 
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -57,8 +82,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Solicitudes de Vi&aacute;ticos</h2>
-                        
+                        <h2>Quejas</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -72,82 +96,45 @@
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
-
+                                        <th data-class="">
+                                            Nombres
+                                        </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaSalida)
+                                            Apellidos
+                                        </th>
+                                        <th data-class="">
+                                            Descripcion
+                                        </th>
+                                        <th data-class="">
+                                            Aplica Descuento
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaLlegada)
+                                            Opciones
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ValorEstimado)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Observacion)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
-                                        </th>
-
-                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        var Estado = "";
                                         <tr>
-
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.FechaSalida)
+                                                @Html.DisplayFor(modelItem => item.NombreCiudadano)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.FechaLlegada)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ValorEstimado)
+                                                @Html.DisplayFor(modelItem => item.ApellidoCiudadano)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Observacion)
+                                                @Html.DisplayFor(modelItem => item.AplicaDescuento)
                                             </td>
-
-                                            @if (item.Estado == 0)
-                                            {
-                                                Estado = "Pendiente";
-                                            }
-                                            else if (item.Estado == 1)
-                                            {
-                                                Estado = "Aprobado";
-                                            }
-                                            else
-                                            {
-                                                Estado = "Negado";
-                                            }
                                             <td>
-                                                @Html.DisplayFor(modelItem => Estado)
-                                            </td>
-                                            @if (item.Estado == 1)
-                                            {
-                                                <td>
-                                                    @Html.ActionLink("Itinerario", "Index", "ItinerarioViatico", new { IdSolicitudViatico = item.IdSolicitudViatico }) |
-                                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSolicitudViatico }, new { onclick = "return confirm('Desea eliminar la solicitud de viático... ?');" })
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td>
-                                                    @Html.ActionLink("Itinerario", "Index", "ItinerarioViatico", new { IdSolicitudViatico = item.IdSolicitudViatico }) |
-                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdSolicitudViatico }) |
-                                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSolicitudViatico }, new { onclick = "return confirm('Desea eliminar la solicitud de viático... ?');" })
-                                                </td>
-                                            }
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdQuejas }, new { onclick = "cargando()" })<br />
+                                                @* @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado })<br />*@
 
+
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -166,11 +153,17 @@
     </section>
     <!-- end widget grid -->
 </div>
-    <!-- END MAIN CONTENT -->
+<!-- END MAIN CONTENT -->
 
-    @section Scripts {
-        <script src='~/js/datatables/init.js'></script>
-    }
+@section Scripts {
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+    </script>
 
-
+    <script src='~/js/datatables/init.js'></script>
+}
 

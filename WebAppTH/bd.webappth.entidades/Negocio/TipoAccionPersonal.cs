@@ -48,7 +48,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Matriz")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Debe seleccionar {0}")]
         public string Matriz { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
@@ -63,11 +63,17 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Modifica distributivo")]
         public bool ModificaDistributivo { get; set; }
-
+        
+        
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Estado tipo accion personal")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        [Display(Name = "Cambio de estado")]
         public int IdEstadoTipoAccionPersonal { get; set; }
 
-        
+        public virtual EstadoTipoAccionPersonal EstadoTipoAccionPersonal { get; set; }
+
+        //Propiedades Virtuales Referencias a otras clases
+
+        public virtual ICollection<AccionPersonal> AccionPersonal { get; set; }
     }
 }

@@ -41,5 +41,7 @@ namespace bd.webappth.entidades.Utils
 
         public static string ErrorActivar { get { return "Ha ocurrido un error al activar el registro."; } }
         public static string ErrorDesactivar { get { return "Ha ocurrido un error al desactivar el registro."; } }
+
+        public static string SeleccioneCargo { get { return "Debe seleccionar un cargo y una remuneración en: situación propuesta."; } }
     }
 }

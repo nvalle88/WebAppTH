@@ -1,7 +1,7 @@
-@model bd.webappth.entidades.ViewModels.ViewModelEvaluador
+@model bd.webappth.entidades.ViewModels.ViewModelQuejas
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 @using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelEvaluador { OpcionMenu = 0 }; }
+@{ var modelo = new ViewModelQuejas { OpcionMenu = 1 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
@@ -51,7 +51,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Datos Generales</h2>
+                        <h2>Calificacion Final</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -65,75 +65,70 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="InformacionGeneral" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="CalificacionFinal" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdEmpleado" />
                                 <input type="hidden" asp-for="IdJefe" />
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-6">
-                                            <label class="label">@Html.DisplayNameFor(model => model.NombreApellido)</label>
+                                            <label class="label">Indicadores de Gesti&oacute;n del puesto</label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label"> @Html.DisplayFor(model => model.NombreApellido)</label>
-                                        </section>
-                                    </div>
-                                    <div class="row">
-                                        <section class="col col-6">
-                                            <label class="label">@Html.DisplayNameFor(model => model.Puesto)</label>
-                                        </section>
-                                        <section class="col col-6">
-                                            <label class="label"> @Html.DisplayFor(model => model.Puesto)</label>
+                                            <label class="label"> @Html.DisplayFor(model => model.ActividadesTotal)</label>
                                         </section>
                                     </div>
                                     <div class="row">
                                         <section class="col col-6">
-                                            <label class="label">@Html.DisplayNameFor(model => model.Titulo)</label>
+                                            <label class="label">Conocimientos</label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label"> @Html.DisplayFor(model => model.Titulo)</label>
+                                            <label class="label"> @Html.DisplayFor(model => model.TotalConocimientos)</label>
                                         </section>
                                     </div>
                                     <div class="row">
                                         <section class="col col-6">
-                                            <label class="label">@Html.DisplayNameFor(model => model.DatosJefe)</label>
+                                            <label class="label">Competencias t&eacute;cnicas del puesto</label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label"> @Html.DisplayFor(model => model.DatosJefe)</label>
+                                            <label class="label"> @Html.DisplayFor(model => model.TotalCompetenciasTecnicas)</label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label class="label">Competencias Universales</label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label"> @Html.DisplayFor(model => model.TotalCompetenciasUniversales)</label>
                                         </section>
                                     </div>
 
                                     <div class="row">
                                         <section class="col col-6">
-                                            <label class="label">Periodo Evaluacion:</label>
+                                            <label class="label">Trabajo en equipo, Iniciativa y Liderazgo:</label>
                                         </section>
-                                        <section class="col col-3">
-                                            <label>Desde:</label>
-                                            <div class="form-group">
-                                                <label class="input-group">
-                                                    <input asp-for="Desde"  readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy'>
-                                                </label>
-                                                <span asp-validation-for="Desde" class="text-danger"></span>
-                                            </div>
+                                        <section class="col col-6">
+                                            <label class="label"> @Html.DisplayFor(model => model.TotalTrabajoLiderazgo)</label>
                                         </section>
-                                        <section class="col col-3">
-                                            <label>Hasta:</label>
-                                            <div class="form-group">
-                                                <label class="input-group">
-                                                    <input asp-for="Hasta"  readonly="readonly" class=" form-control datepicker" data-dateformat='dd/mm/yy'>
-                                                </label>
-                                                <span asp-validation-for="Hasta" class="text-danger"></span>
-                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label>Evaluaci&oacute;n del ciudadano ( - ):</label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label"> @Html.DisplayFor(model => model.TotalQuejas)</label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label>Total:</label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label"> @Html.DisplayFor(model => model.TotalEvaluacion)</label>
                                         </section>
                                     </div>
                                 </fieldset>
-
-                                <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
-
-                                </footer>
-
                             </form>
                         </div>
                         <!-- end widget content -->
@@ -150,17 +145,3 @@
     <!-- end widget grid -->
     <!-- Modal -->
 </div>
-
-
-@section Scripts {
-    <script src='~/lib/select2/dist/js/select2.min.js'></script>
-    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
-    <script src='~/js/site.js'></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            Init_Select2();
-        });
-    </script>
-    
-}
