@@ -11,7 +11,7 @@ namespace bd.webappth.entidades.ViewModels
         public List<SolicitudTipoViatico> SolicitudTipoViatico { get; set; }
         public List<ItinerarioViatico> ItinerarioViatico { get; set; }
         public ListaEmpleadoViewModel ListaEmpleadoViewModel { get; set; }
-        public List<TipoViatico> ListaTipoViatico { get; set; }
+        public List<TipoViatico> ListaTipoViatico { get; set; }      
         public List<String>ViaticosSeleccionados { get; set; }
     }
 }

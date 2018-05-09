@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.Negocio.ItinerarioViatico
+@model bd.webappth.entidades.Negocio.InformeViatico
 
 @{
     ViewData["Title"] = "ItinerarioViatico";
@@ -43,7 +43,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Itineraria Vi&aacute;tico</h2>
+                        <h2>Transporte Utilizado</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -57,9 +57,9 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form id="wizard-1" asp-action="Create" novalidate="novalidate">
-                                <input type="hidden" asp-for="IdSolicitudViatico" />
-                                @{await Html.RenderPartialAsync("_PartialViewItinerarioViatico", Model);}
+                            <form id="wizard-1" asp-action="CreateInforme" novalidate="novalidate">
+                                <input type="text" asp-for="IdItinerarioViatico" />
+                                @{await Html.RenderPartialAsync("_PartialViewInformeItinerarioViatico", Model);}
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Informe" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-default">Cancelar</a>
@@ -84,12 +84,8 @@
 <!-- END MAIN CONTENT -->
 
 
-
-
-
 @section Scripts {
  
-
 
 
 }
