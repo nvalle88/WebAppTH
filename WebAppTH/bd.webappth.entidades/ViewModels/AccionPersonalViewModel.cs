@@ -62,5 +62,9 @@ namespace bd.webappth.entidades.ViewModels
 
         public SituacionActualEmpleadoViewModel SituacionActualEmpleadoViewModel { get; set; }
         public SituacionActualEmpleadoViewModel SituacionPropuestaEmpleadoViewModel { get; set; }
+
+        public int IdIndiceOcupacionalModalidadPartidaPropuesta { get; set; }
+
+        public List<IndicesOcupacionalesModalidadPartidaViewModel> ListaIndicesOcupacionalesModalidadPartida { get; set; }
     }
 }

@@ -1,10 +1,18 @@
 @model bd.webappth.entidades.ViewModels.AccionPersonalViewModel
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Create";
 }
 
+<style>
+    .formularioClass {
+        
+    }
+    .formularioClass.form-control {
 
+    }
+</style>
 <!-- MAIN CONTENT -->
 <div id="content" style="height:1000px;">
 
@@ -52,25 +60,23 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="Create" id="checkout-form" class="formularioClass" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialView", Model);}
 
+                                <center>
+                                    <footer style="background-color:transparent;border:none;">
+                                        <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                        <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.DatosBasicosEmpleadoViewModel.Identificacion" class="btn btn-default" value="Cancelar" onclick="espera()" />
 
-                                <footer style="background-color:transparent;border:none;">
-                                    <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
-                                    <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.DatosBasicosEmpleadoViewModel.Identificacion" class="btn btn-default" value="Cancelar" onclick="espera()" />
-
-                                </footer>
-
-
+                                    </footer>
+                                </center>
+                                <div class="row">&nbsp;</div>
+                                <div class="row">&nbsp;</div>
                             </form>
 
                         </div>
                         <!-- end widget content -->
-
-                        <div class="row">&nbsp;</div>
-
                     </div>
                     <!-- end widget div -->
                 </div>
@@ -88,6 +94,7 @@
 <!-- END MAIN CONTENT -->
 @section Scripts {
     @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+    <script src='~/js/datatables/init.js'></script>
 
     <script src="~/js/moment.min.js"></script>
 
@@ -138,16 +145,6 @@
 
     </script>
 
-    <!-- Script llamada al select2 para los combos -->
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            Init_Select2();
-        });
-
-
-    </script>
-
     <script>
 
         $(document).ready(function () {
@@ -157,8 +154,7 @@
 
                 mostrarLoadingPanel("content", "Cargando...")
                 $("#SelectDependencia").empty();
-                $("#SelectRol").empty();
-                $("#SelectRMU").empty();
+
 
                 $.ajax({
                     type: 'POST',
@@ -166,7 +162,7 @@
                     dataType: 'json',
                     data: { idSucursal: $("#SelectSucursal").val() },
                     success: function (data) {
-                        
+
                         $("#SelectDependencia").append('<option value="0" selected>Seleccione</option>');
                         $.each(data, function (i, data) {
                             $("#SelectDependencia").append('<option value="'
@@ -174,7 +170,7 @@
                                 + data.nombre + '</option>');
 
                         });
-                        
+
 
                     }, complete: function (data) {
                         $("#content").waitMe("hide");
@@ -196,23 +192,23 @@
 
                 mostrarLoadingPanel("content", "Cargando...")
                 $("#SelectRol").empty();
-                $("#SelectRMU").empty();
+
 
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("CargarRoles", "MovimientosPersonalTTHH")',
                     dataType: 'json',
-                    data: { idDependencia: $("#SelectDependencia").val() },
+                    data: { idDependencia: $("#SelectRol").val() },
                     success: function (data) {
-                        
+
                         $("#SelectRol").append('<option value="0" selected>Seleccione</option>');
                         $.each(data, function (i, data) {
                             $("#SelectRol").append('<option value="'
-                                + data.idManualPuesto + '">'
+                                + data.idRol + '">'
                                 + data.nombre + '</option>');
 
                         });
-                        
+
 
                     }, complete: function (data) {
                         $("#content").waitMe("hide");
@@ -226,45 +222,6 @@
 
 
            }); // Fin change
-
-
-
-            $("#SelectRol").change(function () {
-
-
-                mostrarLoadingPanel("content", "Cargando...")
-                $("#SelectRMU").empty();
-                
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("CargarRMU", "MovimientosPersonalTTHH")',
-                    dataType: 'json',
-                    data: { idCargo: $("#SelectRol").val(), idDependencia: $("#SelectDependencia").val() },
-                    success: function (data) {
-                        
-                        $("#SelectRMU").append('<option value="0" selected>Seleccione</option>');
-                        $.each(data, function (i, data) {
-                            $("#SelectRMU").append('<option value="'
-                                + data.idEscalaGrados + '">'
-                                + data.remuneracion + '</option>');
-
-                        });
-                        
-
-                    }, complete: function (data) {
-                        $("#content").waitMe("hide");
-                    },
-
-                    error: function (ex) {
-                        alert('Failed to retrieve data.' + ex);
-                    }
-                });
-                return false;
-
-
-           }); // Fin change
-
 
 
 
