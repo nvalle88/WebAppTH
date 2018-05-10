@@ -42,13 +42,16 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSriDetalle(SriDetalle sriDetalle)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(sriDetalle);
-            }
             Response response = new Response();
             try
             {
+                if (sriDetalle.FraccionBasica >=sriDetalle.ExcesoHasta)
+                {
+                    ModelState.AddModelError("FraccionBasica","La Fracción básica no puede ser mayor que Exceso hasta");
+                    ModelState.AddModelError("ExcesoHasta", "El Exceso hasta no puede se menor que la Fracción básica");
+                    return View(sriDetalle);
+
+                }
                 if (ObtenerSriNomina().IdSri > 0)
                 {
                     sriDetalle.IdSri = ObtenerSriNomina().IdSri;
@@ -79,6 +82,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
+                    
                     var sriDetalle = new SriDetalle { IdSriDetalle = Convert.ToInt32(id) };
                     var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(sriDetalle, new Uri(WebApp.BaseAddress),
                                                                   "api/SriNomina/ObtenerSriDetalle");
@@ -101,15 +105,16 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditSriDetalle(SriDetalle sriDetalle)
         {
-
-            if (!ModelState.IsValid)
-            {
-                 
-                return View(sriDetalle);
-            }
             Response response = new Response();
             try
             {
+                if (sriDetalle.FraccionBasica >= sriDetalle.ExcesoHasta)
+                {
+                    ModelState.AddModelError("FraccionBasica", "La Fracción básica no puede ser mayor que Exceso hasta");
+                    ModelState.AddModelError("ExcesoHasta", "El Exceso hasta no puede se menor que la Fracción básica");
+                    return View(sriDetalle);
+
+                }
                 if (ObtenerSriNomina().IdSri > 0)
                 {
                     sriDetalle.IdSri = ObtenerSriNomina().IdSri;

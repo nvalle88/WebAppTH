@@ -1,24 +1,72 @@
 @model bd.webappth.entidades.Negocio.ConceptoNomina
 
+@using bd.webappth.entidades.Negocio
+@inject bd.webappth.servicios.Interfaces.IConstantesNomina ConstanteNomina
+@{ var Listaconstantes = new List<ConstanteNomina>();
+    @try
+    {
+        Listaconstantes = await ConstanteNomina.Listar("api/ConstanteNomina/ListarConstanteNomina");
+    }
+    catch (Exception)
+    {
 
-
+        Url.Action("Index", "Login");
+    }
+}
 
 <fieldset>
-    
     <div class="row">
 
         <section class="col col-lg-12">
+
+            <div class="panel-group smart-accordion-default" id="accordion-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion-2" href="#collapseOne-1" aria-expanded="false" class="collapsed"> <i class="fa fa-fw fa-plus-circle txt-color-green"></i> <i class="fa fa-fw fa-minus-circle txt-color-red"></i> Constantes </a></h4>
+                    </div>
+                    <div id="collapseOne-1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                        <div class="panel-body">
+                            <div class="row col col-lg-12">
+                                @{ int a = 0;}
+                                @foreach (var item in Listaconstantes)
+                                {
+                                    a = a + 1;
+                                    <div class="ui-menu-item col col-lg-4" style="border-width:2px;">
+                                        <a href="javascript:void(0);" onclick="anadirElememto('@item.Constante')">&bull; @item.Descripcion</a>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-lg-12"></section>
+        <section id="FormulaVista" class="col col-lg-12">
             <label class="label">F&oacute;rmula de c&aacute;lculo</label>
             <label class="textarea">
                 <textarea maxlength="50" asp-for="FormulaCalculo" rows="10"></textarea>
                 <span asp-validation-for="FormulaCalculo" class="text-danger"></span>
             </label>
         </section>
+
+
         <section class="col col-lg-12">
-            <a href="javascript:void(0);" class="btn btn-primary btn-default btn-sm"><i class="glyphicon glyphicon-ok"></i>&nbsp;  Validar f&oacute;rmula</a>
+            <a href="javascript:void(0);" onclick="validarformula()" class="btn btn-primary btn-default btn-sm"><i class="glyphicon glyphicon-ok"></i>&nbsp;  Validar f&oacute;rmula</a>
         </section>
 
     </div>
+    <div id="mensajeSatisfactorio" class="alert alert-info fade in">
+        <i class="fa-fw fa fa-info"></i>
+        <strong>Informaci&oacute;n!</strong> La f&oacute;rmula es v&aacute;lida.
+    </div>
 
+    <div id="mensajeError" class="alert alert-danger fade in">
+        <i class="fa-fw fa fa-times"></i>
+        <strong>Error!</strong>   La f&oacute;rmula tiene alg&uacute;n error. Por favor verifique nuevamente  .
+    </div>
 
-</fieldset>   
+</fieldset>
