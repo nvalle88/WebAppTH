@@ -51,6 +51,8 @@
         Html.RenderPartialIf("_Tiles", Settings.Value.EnableTiles);
     }
     <span class="hide" id="span_mensaje">@TempData["Mensaje"]</span>
+    <span class="hide" id="span_mensaje_timer">@TempData["MensajeTimer"]</span>
+
     @{ await Html.RenderPartialAsync("_Scripts"); }
     @{RenderSection("Scripts", required: false);}
     @*@Html.PageScripts()*@
