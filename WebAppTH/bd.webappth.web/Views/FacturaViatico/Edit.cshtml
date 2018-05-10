@@ -1,8 +1,10 @@
-@model bd.webappth.entidades.Negocio.InformeViatico
+@model bd.webappth.entidades.Negocio.ItinerarioViatico
 
 @{
     ViewData["Title"] = "ItinerarioViatico";
 }
+
+
 <!-- MAIN CONTENT -->
 <div id="content">
     <div class="col col-10">
@@ -43,7 +45,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Transporte Utilizado</h2>
+                        <h2>Editar Itinerario</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -51,19 +53,19 @@
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-
                         </div>
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form id="wizard-1" asp-action="CreateInforme" novalidate="novalidate">
+                            <form id="wizard-1" asp-action="Edit" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdItinerarioViatico" />
                                 <input type="hidden" asp-for="IdSolicitudViatico" />
-                                @{await Html.RenderPartialAsync("_PartialViewInformeItinerarioViatico", Model);}
+                                @{await Html.RenderPartialAsync("_PartialViewItinerarioViatico");}
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Informe"  asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico"  class="btn btn-default">Cancelar</a>
+                                    <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -83,10 +85,9 @@
 
 </div>
 <!-- END MAIN CONTENT -->
-
-
 @section Scripts {
- 
+    <script type="text/javascript">
 
 
+    </script>
 }

@@ -57,5 +57,11 @@ namespace bd.webappth.entidades.Constantes
         public const string NombreEmpleadoGastoPersonal = "NombreEmpleadoGastoPersonal";
         public const string IdentificacionGastoPersonal = "IdentificacionGastoPersonal";
 
+
+        /// <summary>
+        /// Variables de sección para informe viaticos
+        /// </summary>
+        public const string IdItinerario = "IdItinerario";
+        public const string IdSolicitudtinerario = "IdSolicitudtinerario";
     }
 }
