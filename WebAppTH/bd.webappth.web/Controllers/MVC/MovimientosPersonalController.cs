@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -27,26 +28,11 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
         }
 
-        private void InicializarMensaje(string mensaje)
+        
 
+
+        public async Task<IActionResult> Index()
         {
-
-            if (mensaje == null)
-
-            {
-
-                mensaje = "";
-
-            }
-
-            ViewData["Error"] = mensaje;
-
-        }
-
-
-        public async Task<IActionResult> Index(string mensaje)
-        {
-            InicializarMensaje(mensaje);
 
             try
             {
@@ -84,11 +70,10 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task<IActionResult> Edit(string mensaje, int id)
+        public async Task<IActionResult> Edit(int id)
         {
             try
             {
-                InicializarMensaje(mensaje);
 
                 var modelo = new AccionPersonalViewModel { IdAccionPersonal = id };
 
@@ -100,17 +85,28 @@ namespace bd.webappth.web.Controllers.MVC
                 if (respuesta.IsSuccess)
                 {
                     modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
+                    
+                    await InicializarCombos();
+
+                    
+                    var situacionActualViewModel = new SituacionActualEmpleadoViewModel { IdEmpleado = modelo.DatosBasicosEmpleadoViewModel.IdEmpleado };
+
+                    var situacionActualEmpleadoViewModelResponse = await apiServicio.ObtenerElementoAsync<SituacionActualEmpleadoViewModel>(situacionActualViewModel, new Uri(WebApp.BaseAddress),
+                    "api/Empleados/ObtenerSituacionActualEmpleadoViewModel");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        situacionActualViewModel = JsonConvert.DeserializeObject<SituacionActualEmpleadoViewModel>(situacionActualEmpleadoViewModelResponse.Resultado.ToString());
+                    }
+
+                    modelo.SituacionActualEmpleadoViewModel = situacionActualViewModel;
 
 
-                    var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+                    var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
 
-                    ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
-
-
-
-                    var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacion");
-
-                    ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+                    modelo.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
 
 
                     return View(modelo);
@@ -152,7 +148,13 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (respuesta.IsSuccess)
                 {
-                    return RedirectToAction("Index", new { mensaje = respuesta.Message });
+
+                    return this.RedireccionarMensajeTime(
+                            "MovimientosPersonal",
+                            "Index",
+                             new { identificacion = respuesta.Resultado },
+                            $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
+                         );
                 }
 
                 return View(accionPersonalViewModel);
@@ -164,6 +166,23 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+
+        public async Task InicializarCombos()
+        {
+            // Carga de listas para combos
+
+            // ** Tipos de acciones
+            var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+
+            ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
+
+
+            //** Estados de aprobación
+            var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacion");
+
+            ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+
+        }
 
     }
 }

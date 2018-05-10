@@ -6,18 +6,12 @@
     ViewData["Title"] = "Edit";
 }
 
-<style>
-    .formularioClass {
-    }
 
-        .formularioClass.form-control {
-        }
-</style>
 <!-- MAIN CONTENT -->
 <div id="content" style="height:2000px;">
 
 
-    <!-- widget grid -->
+
     <section id="" class="">
 
         <!-- START ROW -->
@@ -45,15 +39,18 @@
 
                             <form asp-action="Edit" id="checkout-form" class="formularioClass" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                                 @{await Html.RenderPartialAsync("_PartialView", Model);}
 
-                                <center>
+                                <div style="float:right; padding:1%;">
                                     <footer style="background-color:transparent;border:none;">
+
                                         <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
+
                                         <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.DatosBasicosEmpleadoViewModel.Identificacion" class="btn btn-default" value="Cancelar" onclick="espera()" />
 
                                     </footer>
-                                </center>
+                                </div>
                                 <div class="row">&nbsp;</div>
                                 <div class="row">&nbsp;</div>
                             </form>
@@ -70,8 +67,7 @@
         </div>
         <!-- END ROW -->
     </section>
-    <!-- end widget grid -->
-    <!-- Modal -->
+
 
 </div>
 <!-- END MAIN CONTENT -->
@@ -97,6 +93,35 @@
 
     <script>
 
+        var maxDias = 999999999;
+
+        setMaxDias();
+
+        function setMaxDias() { 
+            
+
+            $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("VerTipoAccion", "MovimientosPersonalTTHH")',
+                    dataType: 'json',
+                    data: { idAccion: @Model.TipoAccionPersonalViewModel.IdTipoAccionPersonal },
+                    success: function (data) {
+                        
+
+                        maxDias = data.nDiasMaximo;
+
+                        alert("El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias);
+
+                        }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+            });
+        };
+
         function calcularDias() {
 
 
@@ -106,8 +131,19 @@
             var valNumDiasTxt = fecha2.diff(fecha1, 'days');
 
             if (valNumDiasTxt > 0) {
+
                 document.getElementById("txt_dias").value = valNumDiasTxt;
                 document.getElementById("txt_Numero").value = valNumDiasTxt;
+
+                if (valNumDiasTxt > maxDias && maxDias > 0) {
+
+                    alert("El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias);
+                    document.getElementById("btnGuardar").disabled = true;
+
+                } else {
+                    document.getElementById("btnGuardar").disabled = false;
+                }
+
             } else {
                 document.getElementById("txt_dias").value = 0;
                 document.getElementById("txt_Numero").value = 0;
@@ -116,6 +152,7 @@
 
 
         }
+
 
     </script>
 
@@ -130,32 +167,40 @@
 
     <script>
 
+
         $(document).ready(function () {
 
-            $("#SelectSucursal").change(function () {
+            $("#SelectAccion").change(function () {
 
 
-                mostrarLoadingPanel("content", "Cargando...")
-                $("#SelectDependencia").empty();
+                if ($("#SelectAccion").val() > 0) {
 
+                    mostrarLoadingPanel("content", "Cargando...");
 
-                $.ajax({
+                    $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("CargarDependencias", "MovimientosPersonalTTHH")',
+                    url: '@Url.Action("VerTipoAccion", "MovimientosPersonalTTHH")',
                     dataType: 'json',
-                    data: { idSucursal: $("#SelectSucursal").val() },
+                    data: { idAccion: $("#SelectAccion").val() },
                     success: function (data) {
 
-                        $("#SelectDependencia").append('<option value="0" selected>Seleccione</option>');
-                        $.each(data, function (i, data) {
-                            $("#SelectDependencia").append('<option value="'
-                                + data.idDependencia + '">'
-                                + data.nombre + '</option>');
+                        if (data.generaAccionPersonal == true) {
+                            document.getElementById("rdbTrue").checked = true
+                            document.getElementById("txtGenerarMovimiento").value = true;
+                            MostrarMovimientoPersonal();
+                        }
+                        else if (data.generaAccionPersonal == false) {
+                            document.getElementById("rdbFalse").checked = true;
+                            document.getElementById("txtGenerarMovimiento").value = false;
 
-                        });
+                            OcultarMovimientoPersonal();
+                        }
 
+                        maxDias = data.nDiasMaximo;
 
-                    }, complete: function (data) {
+                        alert("El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias);
+
+                        }, complete: function (data) {
                         $("#content").waitMe("hide");
                     },
 
@@ -165,47 +210,9 @@
                 });
                 return false;
 
+                }
 
             }); // Fin change
-
-
-
-            $("#SelectDependencia").change(function () {
-
-
-                mostrarLoadingPanel("content", "Cargando...")
-                $("#SelectRol").empty();
-
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("CargarRoles", "MovimientosPersonalTTHH")',
-                    dataType: 'json',
-                    data: { idDependencia: $("#SelectRol").val() },
-                    success: function (data) {
-
-                        $("#SelectRol").append('<option value="0" selected>Seleccione</option>');
-                        $.each(data, function (i, data) {
-                            $("#SelectRol").append('<option value="'
-                                + data.idRol + '">'
-                                + data.nombre + '</option>');
-
-                        });
-
-
-                    }, complete: function (data) {
-                        $("#content").waitMe("hide");
-                    },
-
-                    error: function (ex) {
-                        alert('Failed to retrieve data.' + ex);
-                    }
-                });
-                return false;
-
-
-           }); // Fin change
-
 
 
         }); // fin ready

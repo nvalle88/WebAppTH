@@ -323,25 +323,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
                 }
-
-                /*
-                var modeloEnviar = new AccionPersonal
-                {
-                    IdAccionPersonal = accionPersonalViewModel.IdAccionPersonal,
-                    IdEmpleado = accionPersonalViewModel.DatosBasicosEmpleadoViewModel.IdEmpleado,
-                    Fecha = accionPersonalViewModel.Fecha,
-                    FechaRige = accionPersonalViewModel.FechaRige,
-                    FechaRigeHasta = accionPersonalViewModel.FechaRigeHasta,
-                    Estado = accionPersonalViewModel.Estado,
-                    Explicacion = accionPersonalViewModel.Explicacion,
-                    NoDias = accionPersonalViewModel.NoDias,
-                    Numero = accionPersonalViewModel.Numero,
-                    Solicitud = accionPersonalViewModel.Solicitud,
-                    IdTipoAccionPersonal = accionPersonalViewModel.TipoAccionPersonalViewModel.IdTipoAccionPersonal
-
-                };
-                */
-
+                
                 var respuesta = await apiServicio.EditarAsync<AccionesPersonalPorEmpleadoViewModel>(
                             accionPersonalViewModel,
                             new Uri(WebApp.BaseAddress),
@@ -374,8 +356,6 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
 
-                this.TempData["Mensaje"] = $"{Mensaje.Error}|{mensaje}";
-
                 var modelo = new AccionPersonalViewModel { IdAccionPersonal = id };
 
                 var respuesta = await apiServicio.ObtenerElementoAsync<AccionPersonalViewModel>(
@@ -398,6 +378,25 @@ namespace bd.webappth.web.Controllers.MVC
 
                     ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
 
+
+
+                    var situacionActualViewModel = new SituacionActualEmpleadoViewModel { IdEmpleado = modelo.DatosBasicosEmpleadoViewModel.IdEmpleado };
+
+                    var situacionActualEmpleadoViewModelResponse = await apiServicio.ObtenerElementoAsync<SituacionActualEmpleadoViewModel>(situacionActualViewModel, new Uri(WebApp.BaseAddress),
+                    "api/Empleados/ObtenerSituacionActualEmpleadoViewModel");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        situacionActualViewModel = JsonConvert.DeserializeObject<SituacionActualEmpleadoViewModel>(situacionActualEmpleadoViewModelResponse.Resultado.ToString());
+                    }
+
+                    modelo.SituacionActualEmpleadoViewModel = situacionActualViewModel;
+
+                    var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
+
+                    modelo.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
 
                     return View(modelo);
 
@@ -433,8 +432,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return Json(new List<Dependencia>());
             }
         }
-
-
+        
         public async Task<ActionResult> CargarRoles(int idDependencia)
         {
             try
@@ -486,6 +484,28 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        public async Task<ActionResult> VerTipoAccion(int idAccion)
+        {
+            try
+            {
+                var modeloEnviar = new TipoAccionPersonal()
+                {
+                    IdTipoAccionPersonal = idAccion
+                };
+                var modelo = await apiServicio.ObtenerElementoAsync1<TipoAccionPersonal>(
+                    modeloEnviar,
+                    new Uri(WebApp.BaseAddress),
+                    "/api/TiposAccionesPersonales/ObtenerTipoAccionPersonal"
+                    );
+                
+                return Json(modelo);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new List<Dependencia>());
+            }
+        }
 
         public async Task InicializarCombos()
         {
