@@ -1,4 +1,5 @@
 @model bd.webappth.entidades.ViewModels.AccionPersonalViewModel
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,25 +7,7 @@
 
 
 <!-- MAIN CONTENT -->
-<div id="content" style="height:1000px;">
-
-    <div class="col col-10">
-        @if (@ViewData["Error"].ToString() != "")
-
-        {
-
-            <div class="col-lg-12">
-                <div class="alert alert-block alert-dismissable">
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-                    <p>
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-                    </p>
-                </div>
-            </div>
-
-        }
-    </div>
+<div id="content" style="height:2000px;">
 
     <p></p>
     <div class="alert alert-info">
@@ -36,7 +19,7 @@
     </div>
     <p></p>
 
-    <!-- widget grid -->
+
     <section id="" class="">
 
         <!-- START ROW -->
@@ -62,18 +45,19 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="Edit" id="checkout-form" class="formularioClass" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialView", Model);}
 
+                                <div style="float:right; padding:1%;">
+                                    <footer style="background-color:transparent;border:none;">
+                                        <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                        <input type="submit" class="btn btn-default" value="Cancelar" onclick="espera()" />
 
-                                <footer style="background-color:transparent;border:none;">
-                                    <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
-                                    <input type="submit" asp-action="Index"  class="btn btn-default" value="Cancelar" onclick="espera()" />
-
-                                </footer>
-
-
+                                    </footer>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row">&nbsp;</div>
                             </form>
 
                         </div>
@@ -88,14 +72,15 @@
         </div>
         <!-- END ROW -->
     </section>
-    <!-- end widget grid -->
-    <!-- Modal -->
+
 
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @*
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    *@
+    <script src='~/js/datatables/init.js'></script>
 
     <script src="~/js/moment.min.js"></script>
 
@@ -146,14 +131,5 @@
 
     </script>
 
-    <!-- Script llamada al select2 para los combos -->
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            Init_Select2();
-        });
-
-
-    </script>
 
 }

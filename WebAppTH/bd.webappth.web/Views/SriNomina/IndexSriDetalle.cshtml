@@ -60,16 +60,16 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.FraccionBasica)
+                                           $ @Html.DisplayFor(modelItem => item.FraccionBasica)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ExcesoHasta)
+                                           $ @Html.DisplayFor(modelItem => item.ExcesoHasta)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ImpFranccionBasica)
+                                           $ @Html.DisplayFor(modelItem => item.ImpFranccionBasica)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.PorcientoImpFraccExced)
+                                            @Html.DisplayFor(modelItem => item.PorcientoImpFraccExced) %
                                         </td>
                                         <td>
                                             @Html.ActionLink("Editar", "EditSriDetalle", new { id = item.IdSriDetalle }, new { onclick = "cargando();" }) |

@@ -7,6 +7,7 @@ using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
+using bd.webappth.servicios.Nomina;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -16,37 +17,44 @@ namespace bd.webappth.web.Controllers.MVC
     public class ConceptoNominaController : Controller
     {
         private readonly IApiServicio apiServicio;
+        private readonly IConstantesNomina constantesNomina;
 
-        public ConceptoNominaController(IApiServicio apiServicio)
+        public ConceptoNominaController(IApiServicio apiServicio, IConstantesNomina constantesNomina)
         {
             this.apiServicio = apiServicio;
+            this.constantesNomina = constantesNomina;
 
         }
-        private void InicializarMensaje(string mensaje)
 
+
+        public async Task<JsonResult> ValidarFormula(string formula)
         {
-
-            if (mensaje == null)
-
+            try
             {
-
-                mensaje = "";
-
+                Compilador a = new Compilador(apiServicio,constantesNomina);
+                try
+                {
+                    await a.Evaluar(formula);
+                    return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json(false);
+                }
+               
             }
-
-            ViewData["Error"] = mensaje;
-
+            catch (Exception)
+            {
+                return Json(false);
+            }
         }
-
-
-
         public async Task<IActionResult> CreateConceptoConjunto(string mensaje)
         {
             if (ObtenerConceptoNomina().IdConcepto>0)
             {
 
            
-            InicializarMensaje(mensaje);
+             
             await CargarComboxConceptoConjunto();
             var vista = new ConceptoConjuntoNomina { Suma = true, Resta = false };
             return View(vista);
@@ -65,7 +73,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
+                 
                 return View(ConceptoConjuntoNomina);
             }
             Response response = new Response();
@@ -106,7 +114,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                                   "api/ConceptoConjuntoNomina/ObtenerConceptoConjuntoNomina");
                     if (respuesta.IsSuccess)
                     {
-                        InicializarMensaje(null);
+                         
                         var vista = JsonConvert.DeserializeObject<ConceptoConjuntoNomina>(respuesta.Resultado.ToString());
                         await CargarComboxConceptoConjunto();
                         return View(vista);
@@ -128,7 +136,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
+                 
                 return View(ConceptoConjuntoNomina);
             }
             Response response = new Response();
@@ -145,7 +153,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}","IndexConceptoConjunto");
                     }
-                    ViewData["Error"] = response.Message;
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     await CargarComboxConceptoConjunto();
                     return View(ConceptoConjuntoNomina);
                 }
@@ -163,7 +171,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (ObtenerConceptoNomina().IdConcepto > 0)
                 {
-                    InicializarMensaje(mensaje);
+                     
                     var concepto = new ConceptoNomina { IdConcepto = ObtenerConceptoNomina().IdConcepto };
                     var lista = await apiServicio.Listar<ConceptoConjuntoNomina>(concepto, new Uri(WebApp.BaseAddress)
                                                                          , "api/ConceptoConjuntoNomina/ListarConceptoConjuntoNomina");
@@ -205,7 +213,7 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> CreateConceptoNomina(string mensaje)
         {
 
-            InicializarMensaje(mensaje);
+             
             await CargarCombox();
             var vista = new ConceptoNomina { TipoConcepto = "percepcion", Estatus = "Activo", TipoCalculo = "automatico", NivelAcumulacion = "periodo", RegistroEn = "dias" };
             return View(vista);
@@ -225,7 +233,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
+                 
                 return View(ConceptoNomina);
             }
             Response response = new Response();
@@ -241,7 +249,7 @@ namespace bd.webappth.web.Controllers.MVC
                     return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
-                ViewData["Error"] = response.Message;
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 await CargarCombox();
                 return View(ConceptoNomina);
 
@@ -277,7 +285,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}", "Formula");
                     }
-                    ViewData["Error"] = response.Message;
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     await CargarCombox();
                     return View(ConceptoNomina);
                 }
@@ -367,7 +375,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
+                 
                 return View(ConceptoNomina);
             }
             Response response = new Response();
@@ -385,8 +393,8 @@ namespace bd.webappth.web.Controllers.MVC
                     HttpContext.Session.SetString(Constantes.DescripcionConceptoNominaSession, vista.Descripcion);
                     return this.Redireccionar( $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}", "DetalleConceptoNomina");
                     }
-                    ViewData["Error"] = response.Message;
-                    await CargarCombox();
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                await CargarCombox();
                     return View(ConceptoNomina);
             }
             catch (Exception)
@@ -399,7 +407,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                InicializarMensaje(mensaje);
+                 
                 var lista = await apiServicio.Listar<ConceptoNomina>(new Uri(WebApp.BaseAddress)
                                                                      , "api/ConceptoNomina/ListarConceptoNomina");
                 return View(lista);

@@ -33,10 +33,10 @@
 
         </section>
 
-        <section class="col col-lg-3">
+        <section class="col-lg-4">
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.TipoAccionPersonalViewModel)</label>
-            <label class="input">
-                <select asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones">
+            <label class="input" style="padding-right:15px;">
+                <select id="SelectAccion" asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones">
                     <option value="0" selected>Seleccione</option>
                 </select>
 
@@ -65,7 +65,6 @@
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Estado)</label>
             <label class="input">
                 <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados">
-                    <option value="0" selected>Seleccione</option>
                 </select>
 
                 <span asp-validation-for="Estado" class="text-danger"></span>
@@ -98,27 +97,28 @@
 
         <section class="col col-lg-4">
             <div class="input col-lg-12">
-                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, false)&nbsp;No
+                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, false,new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbFalse", @disabled = "disabled" })&nbsp;No
             </div>
         </section>
 
         <section class="col col-lg-4">
             <div class="input col-lg-12">
-                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, true)&nbsp;Si
+                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, true, new { onClick = "ValidarChkMovPersonal(this)" , @id = "rdbTrue" , @disabled = "disabled" })&nbsp;Si
             </div>
+            <input id="txtGenerarMovimiento" asp-for="GeneraMovimientoPersonal" type="text" hidden/>
         </section>
 
     </div>
 
     <div class="row">&nbsp;</div>
 
-    <div class="row" id="divSituacionActual">
+    <div class="row divSituacionActual">
 
-        <section class="col col-lg-10">
+        <section class="col col-lg-10 divSituacionActual">
             <legend class="input col-lg-12">Situaci&oacute;n actual</legend>
         </section>
 
-        <section class="col col-lg-6">
+        <section class="col col-lg-6 divSituacionActual">
 
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.NombreSucursal).ToString().TrimEnd(MyChar)</label>
             <label class="input col-lg-12">
@@ -128,7 +128,7 @@
 
         </section>
 
-        <section class="col col-lg-4">
+        <section class="col col-lg-4 divSituacionActual">
 
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.NombreDependencia).ToString().TrimEnd(MyChar)</label>
             <label class="input col-lg-12">
@@ -138,7 +138,7 @@
 
         </section>
 
-        <section class="col col-lg-6">
+        <section class="col col-lg-6 divSituacionActual">
 
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.NombreCargo).ToString().TrimEnd(MyChar)</label>
             <label class="input col-lg-12">
@@ -148,7 +148,7 @@
 
         </section>
 
-        <section class="col col-lg-4">
+        <section class="col col-lg-4 divSituacionActual">
 
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.Remuneracion).ToString().TrimEnd(MyChar)</label>
             <label class="input col-lg-12">
@@ -162,15 +162,15 @@
 
     <div class="row">&nbsp;</div>
 
-    <div class="row" id="divSituacionPropuesta">
+    <div class="row divSituacionPropuesta">
 
 
 
-        <section class="col col-lg-10">
+        <section class="col col-lg-10 divSituacionPropuesta">
             <legend class="input col-lg-12">Situaci&oacute;n propuesta</legend>
         </section>
 
-        <section class="col col-lg-12">
+        <section class="col col-lg-12 divSituacionPropuesta">
             <div class="jarviswidget jarviswidget-color-darken" id="wid-id-100" data-widget-editbutton="false" style="padding:0px;margin:0px;">
                 <header id="table">
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -384,9 +384,67 @@
 
 </fieldset>
 
+<script>
+
+    function MostrarMovimientoPersonal() {
+        var varItemsActual = document.getElementsByClassName("divSituacionActual").length;
+        var varItemsPropuesta = document.getElementsByClassName("divSituacionPropuesta").length;
+
+        for (var i = 0; i < varItemsActual; i++) {
+            document.getElementsByClassName("divSituacionActual")[i].style.height = "auto";
+            document.getElementsByClassName("divSituacionActual")[i].style.visibility = "visible";
+        }
+
+        for (var j = 0; j < varItemsPropuesta; j++) {
+            document.getElementsByClassName("divSituacionPropuesta")[j].style.height = "auto";
+            document.getElementsByClassName("divSituacionPropuesta")[j].style.visibility = "visible";
+        }
+
+    }
+
+    function OcultarMovimientoPersonal() {
+
+        var varItemsActual = document.getElementsByClassName("divSituacionActual").length;
+        var varItemsPropuesta = document.getElementsByClassName("divSituacionPropuesta").length;
+
+        for (var i = 0; i < varItemsActual; i++) {
+            document.getElementsByClassName("divSituacionActual")[i].style.height = "0px";
+            document.getElementsByClassName("divSituacionActual")[i].style.visibility = "hidden";
+        }
+
+        for (var j = 0; j < varItemsPropuesta; j++) {
+            document.getElementsByClassName("divSituacionPropuesta")[j].style.height = "0px";
+            document.getElementsByClassName("divSituacionPropuesta")[j].style.visibility = "hidden";
+        }
+
+    }
 
 
 
+
+    function ValidarChkMovPersonal(element) {
         
-        
+
+        if (element.value == "True") {
+            MostrarMovimientoPersonal();
+        }
+
+        else if (element.value == "False") {
+            OcultarMovimientoPersonal();
+        }
+
+    }
+
+    @if (Model.GeneraMovimientoPersonal == true) {
+        <text>
+            MostrarMovimientoPersonal();
+        </text>
+    } else if(Model.GeneraMovimientoPersonal == false) {
+        <text>
+            OcultarMovimientoPersonal();
+        </text>
+    }
+
+</script>
+
 

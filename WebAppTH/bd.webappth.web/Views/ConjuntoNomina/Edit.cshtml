@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "brigadasSSO";
 }
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <div id="content">
     <section id="" class="">
 
@@ -36,10 +37,8 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script type="text/javascript">
-
-        function cargando() {
-            mostrarLoadingPanel("content", "")
-        }
-
+        $(document).ready(function () {
+            Init_Select2();
+        });
     </script>
 }

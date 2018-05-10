@@ -73,6 +73,7 @@ namespace bd.webappth.web
 
             services.AddSingleton<IApiServicio, ApiServicio>();
             services.AddSingleton<IMenuServicio, MenuServicio>();
+            services.AddSingleton<IConstantesNomina, ConstanteNominaServicio>();
 
             services.AddSingleton<IAuthorizationHandler, RolesHandler>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -107,6 +108,9 @@ namespace bd.webappth.web
 
 
             var defaultCulture = new CultureInfo("es-ec");
+            defaultCulture.NumberFormat.NumberDecimalSeparator = ".";
+            defaultCulture.NumberFormat.CurrencyDecimalSeparator = ".";
+            //defaultCulture.DateTimeFormat = DateTimeFormatInfo.CurrentInfo;
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture(defaultCulture),
