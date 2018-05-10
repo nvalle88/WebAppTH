@@ -9,7 +9,7 @@ namespace bd.webappth.entidades.Negocio
     {
         public int IdConstante { get; set; }
         public string Constante { get; set; }
-        public string Valor { get; set; }
+        public double Valor { get; set; }
         public string Descripcion { get; set; }
     }
 }

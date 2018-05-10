@@ -74,12 +74,17 @@
                            
                            var tipo = document.getElementById("divtipogasto");
                            var valordiv = document.getElementById("divvalor");
+                           tipo.innerHTML="HOla"
+                           tipo.innerHTML = null;
+                           valordiv.innerHTML = null;
+
+                          
                            $.each(data, function (i, data) {
                                var tipogasto = document.createElement("p");
                                var valor = document.createElement("p");
 
                                tipogasto.innerHTML = "</br><b>"+ data.tipoDeGastoPersonal.descripcion+"</b> </br>";
-                               valor.innerHTML = "</br><b>" + data.valor +"</b></br>";
+                               valor.innerHTML = "</br><b>$ " + data.valor +"</b></br>";
                                tipo.appendChild(tipogasto);
                                valordiv.appendChild(valor);
 

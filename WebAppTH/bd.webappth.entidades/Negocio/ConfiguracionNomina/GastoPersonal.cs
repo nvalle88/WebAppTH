@@ -14,8 +14,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Valor")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
-        public double Valor { get; set; }
+        public decimal Valor { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Tipo de gasto")]

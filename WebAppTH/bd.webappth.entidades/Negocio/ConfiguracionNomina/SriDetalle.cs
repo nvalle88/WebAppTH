@@ -5,30 +5,27 @@ using System.Text;
 
 namespace bd.webappth.entidades.Negocio
 {
-   public class SriDetalle
+    public class SriDetalle
     {
         [Key]
         public int IdSriDetalle { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Fracción básica")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
-        public decimal FraccionBasica { get; set; }
+        public double FraccionBasica { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Exceso hasta")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
-        public decimal ExcesoHasta { get; set; }
+        public double ExcesoHasta { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Impuesto fracción básica")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
-        public decimal ImpFranccionBasica { get; set; }
+        public double ImpFranccionBasica { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "% impuesto fracción básica")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:P0}")]
-        public decimal PorcientoImpFraccExced { get; set; }
+        [Range(0, 100,ErrorMessage ="El {0} debe estar entre {1} y {2}")]
+        public float PorcientoImpFraccExced { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Definición del SRI")]
