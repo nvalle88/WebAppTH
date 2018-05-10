@@ -1,0 +1,257 @@
+﻿@model bd.webappth.entidades.ViewModels.AccionPersonalViewModel
+
+<input type="hidden" asp-for="IdAccionPersonal" />
+<input type="hidden" asp-for="DatosBasicosEmpleadoViewModel.IdEmpleado" />
+
+<fieldset>
+
+    @{
+        char[] MyChar = { ':' };
+    }
+
+    <div class="row">
+
+        <section class="col col-lg-4">
+
+            <label>Nombre del funcionario</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="DatosBasicosEmpleadoViewModel.Nombres" class="form-control" readonly />
+                <span asp-validation-for="DatosBasicosEmpleadoViewModel.Nombres" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.DatosBasicosEmpleadoViewModel.Identificacion).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="DatosBasicosEmpleadoViewModel.Identificacion" class="form-control" readonly />
+                <span asp-validation-for="DatosBasicosEmpleadoViewModel.Identificacion" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+            <label>@Html.DisplayNameFor(model => Model.TipoAccionPersonalViewModel)</label>
+            <label class="input">
+                <select asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones">
+                    <option value="0" selected>Seleccione</option>
+                </select>
+
+                <span asp-validation-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+
+    <div class="row">
+
+
+        <section class="col col-lg-8">
+
+            <label>@Html.DisplayNameFor(model => Model.Solicitud)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="Solicitud" class="form-control" />
+                <span asp-validation-for="Solicitud" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+            <label>@Html.DisplayNameFor(model => Model.Estado)</label>
+            <label class="input">
+                <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados">
+                    <option value="0" selected>Seleccione</option>
+                </select>
+
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+
+
+    <div class="row">
+
+        <section class="col col-lg-8">
+            <label>@Html.DisplayNameFor(model => Model.Explicacion)</label>
+            <label class="input col-lg-12">
+                <textarea maxlength="1000" asp-for="Explicacion" class="form-control" rows="5" style="resize:none;"></textarea>
+                <span asp-validation-for="Explicacion" class="text-danger"></span>
+            </label>
+        </section>
+
+
+    </div>
+
+    <div class="row">
+        <section class="col col-lg-12">
+            <legend>Generar movimiento de personal?</legend>
+        </section>
+
+        <section class="col col-lg-4">
+            @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, false)&nbsp;No
+        </section>
+
+        <section class="col col-lg-4">
+            @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, true)&nbsp;Si
+        </section>
+
+    </div>
+
+    <div class="row" id="divMovimientoPersonal">
+
+        <section class="col col-lg-10">
+            <legend>Situaci&oacute;n actual</legend>
+        </section>
+
+        <section class="col col-lg-6">
+
+            <label>@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.NombreSucursal).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="SituacionActualEmpleadoViewModel.NombreSucursal" class="form-control" readonly />
+                <span asp-validation-for="SituacionActualEmpleadoViewModel.NombreSucursal" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.NombreDependencia).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="SituacionActualEmpleadoViewModel.NombreDependencia" class="form-control" readonly />
+                <span asp-validation-for="SituacionActualEmpleadoViewModel.NombreDependencia" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-6">
+
+            <label>@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.NombreCargo).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="SituacionActualEmpleadoViewModel.NombreCargo" class="form-control" readonly />
+                <span asp-validation-for="SituacionActualEmpleadoViewModel.NombreCargo" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.Remuneracion).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="SituacionActualEmpleadoViewModel.Remuneracion" class="form-control" readonly />
+                <span asp-validation-for="SituacionActualEmpleadoViewModel.Remuneracion" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-10">
+            <legend>Situaci&oacute;n propuesta</legend>
+        </section>
+
+        <section class="col col-lg-6">
+            <label>@Html.DisplayNameFor(model => Model.SituacionPropuestaEmpleadoViewModel.NombreSucursal).ToString().TrimEnd(MyChar)</label>
+            <label class="input">
+                <select id="SelectSucursal" asp-for="SituacionPropuestaEmpleadoViewModel.IdSucursal" class="form-control" asp-items="ViewBag.Sucursales"></select>
+
+                <span asp-validation-for="SituacionPropuestaEmpleadoViewModel.IdSucursal" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-6">
+            <label>@Html.DisplayNameFor(model => Model.SituacionPropuestaEmpleadoViewModel.NombreDependencia).ToString().TrimEnd(MyChar)</label>
+            <label class="input">
+                <select id="SelectDependencia" asp-for="SituacionPropuestaEmpleadoViewModel.IdDependencia" class="form-control" asp-items="ViewBag.Dependencia"></select>
+
+                <span asp-validation-for="SituacionPropuestaEmpleadoViewModel.IdDependencia" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-6">
+            <label>@Html.DisplayNameFor(model => Model.SituacionPropuestaEmpleadoViewModel.NombreCargo).ToString().TrimEnd(MyChar)</label>
+            <label class="input">
+                <select id="SelectRol" asp-for="SituacionPropuestaEmpleadoViewModel.IdCargo" class="form-control" asp-items="ViewBag.ManualPuesto"></select>
+
+                <span asp-validation-for="SituacionPropuestaEmpleadoViewModel.IdCargo" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-6">
+            <label>@Html.DisplayNameFor(model => Model.SituacionPropuestaEmpleadoViewModel.Remuneracion).ToString().TrimEnd(MyChar)</label>
+            <label class="input">
+                <select id="SelectRMU" asp-for="SituacionPropuestaEmpleadoViewModel.Remuneracion" class="form-control" asp-items="ViewBag.RMU"></select>
+
+                <span asp-validation-for="SituacionPropuestaEmpleadoViewModel.Remuneracion" class="text-danger"></span>
+            </label>
+        </section>
+
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-lg-12">
+            <legend>&nbsp;</legend>
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.Fecha)</label>
+            <label class="input col-lg-12">
+                <input asp-for="Fecha" type="text" class="datepicker" data-dateformat='yy-mm-dd' />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.FechaRige)</label>
+            <label class="input col-lg-12">
+                <input id="date_Fecha1" asp-for="FechaRige" type="datetime" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" />
+                <span asp-validation-for="FechaRige" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.FechaRigeHasta)</label>
+            <label class="input col-lg-12">
+                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" />
+                <span asp-validation-for="FechaRigeHasta" class="text-danger"></span>
+            </label>
+
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.NoDias)</label>
+            <label class="input col-lg-12">
+                <input id="txt_dias" min="0" readonly type="number" asp-for="NoDias" class="form-control" />
+                <span asp-validation-for="NoDias" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label>@Html.DisplayNameFor(model => Model.Numero)</label>
+            <label class="input col-lg-12">
+                <input id="txt_Numero" min="0" readonly type="number" asp-for="Numero" class="form-control" />
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </label>
+
+        </section>
+
+    </div>
+
+
+</fieldset>
+
+
+

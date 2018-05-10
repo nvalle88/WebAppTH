@@ -31,13 +31,15 @@
 
         }
     </div>
-    <button type="button" class="btn btn-labeled btn-default">
-        <span class="btn-label">
-            <i class="glyphicon glyphicon-plus"></i>
-        </span>
-        @Html.ActionLink("Nuevo", "Create", "ItinerarioViatico", new { IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico })
-    </button>
-
+    @if (Model.SolicitudViatico.Estado == 0)
+    {
+        <button type="button" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>
+            @Html.ActionLink("Nuevo", "Create", "ItinerarioViatico", new { IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico })
+        </button>
+    }
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -79,7 +81,7 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Fecha de solicitud:</label>
-                                            <input value="@ViewData["FechaSolicitud"]" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                            <input asp-for="SolicitudViatico.FechaSolicitud" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -231,8 +233,20 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdItinerarioViatico }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdItinerarioViatico }, new { onclick = "return confirm('Desea eliminar el itinerario del viático... ?');" })
+                                                @if (Model.SolicitudViatico.Estado == 0)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink("Editar", "Edit", new { id = item.IdItinerarioViatico }) |
+                                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdItinerarioViatico }, new { onclick = "return confirm('Desea eliminar el itinerario del viático... ?');" })
+                                                    </text>
+                                                }
+                                                else if (Model.SolicitudViatico.Estado == 2)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink("Informe", "Informe", new { IdItinerario = item.IdItinerarioViatico })
+
+                                                    </text>
+                                                }
                                             </td>
                                         </tr>
                                     }

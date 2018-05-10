@@ -1,9 +1,9 @@
 @model List<bd.webappth.entidades.Negocio.SolicitudViatico>
 
-    @{
-        ViewData["Title"] = "Index";
-    }
-    <!-- MAIN CONTENT -->
+@{
+    ViewData["Title"] = "Index";
+}
+<!-- MAIN CONTENT -->
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 <div id="content">
     <div class="col col-10">
@@ -58,7 +58,7 @@
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Solicitudes de Vi&aacute;ticos</h2>
-                        
+
                     </header>
                     <!-- widget div-->
                     <div>
@@ -116,7 +116,6 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Observacion)
                                             </td>
-
                                             @if (item.Estado == 0)
                                             {
                                                 Estado = "Pendiente";
@@ -125,21 +124,30 @@
                                             {
                                                 Estado = "Aprobado";
                                             }
-                                            else
+                                            else if (item.Estado == -1)
                                             {
                                                 Estado = "Negado";
+                                            }
+                                            else if (item.Estado == 2)
+                                            {
+                                                Estado = "Asignado Informe";
                                             }
                                             <td>
                                                 @Html.DisplayFor(modelItem => Estado)
                                             </td>
-                                            @if (item.Estado == 1)
+                                            @if (item.Estado != 0)
                                             {
                                                 <td>
                                                     @Html.ActionLink("Itinerario", "Index", "ItinerarioViatico", new { IdSolicitudViatico = item.IdSolicitudViatico }) |
-                                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSolicitudViatico }, new { onclick = "return confirm('Desea eliminar la solicitud de viático... ?');" })
+                                                    @if (item.Estado == 2)
+                                                    {
+                                                        @Html.ActionLink("Informe", "Informe", "ItinerarioViatico", new { IdItinerario = item.IdSolicitudViatico })
+
+                                                    }
                                                 </td>
                                             }
-                                            else
+
+                                            else if (item.Estado == 0)
                                             {
                                                 <td>
                                                     @Html.ActionLink("Itinerario", "Index", "ItinerarioViatico", new { IdSolicitudViatico = item.IdSolicitudViatico }) |
@@ -166,11 +174,11 @@
     </section>
     <!-- end widget grid -->
 </div>
-    <!-- END MAIN CONTENT -->
+<!-- END MAIN CONTENT -->
 
-    @section Scripts {
-        <script src='~/js/datatables/init.js'></script>
-    }
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+}
 
 
 

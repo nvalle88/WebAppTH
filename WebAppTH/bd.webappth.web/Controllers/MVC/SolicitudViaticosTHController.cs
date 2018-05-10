@@ -74,7 +74,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             var SolicitudViaticoViewModel = new SolicitudViaticoViewModel
             {
-               ListaTipoViatico = lista
+                ListaTipoViatico = lista
             };
 
             return View(SolicitudViaticoViewModel);
@@ -95,17 +95,39 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<ActionResult> ListadoEmpleadosSolicitudViaticos()
-        {
-            var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-            var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-            var listadoEmpleados = await ListarEmpleadosPertenecientesaDependenciaconViaticos(NombreUsuario);
-            return View(listadoEmpleados);
-        }
-
-
 
         public async Task<IActionResult> AprobacionSolicitudViatico(int id)
+        {
+            
+            try
+            {
+                var sol = new SolicitudViatico()
+                {
+                    IdSolicitudViatico = id,
+                    Estado = 2
+
+                };
+                var sol1 = new SolicitudViaticoViewModel()
+                {
+                    SolicitudViatico = sol
+                };
+                
+                var respuestaEmpleado = await apiServicio.EditarAsync<Response>(sol1, new Uri(WebApp.BaseAddress),
+                                                             "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
+                if (respuestaEmpleado.IsSuccess)
+                {
+                    return RedirectToAction("ListadoEmpleadosSolicitudViaticos");
+                }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> Detalle(int id)
         {
             SolicitudViatico sol = new SolicitudViatico();
             ListaEmpleadoViewModel empleado = new ListaEmpleadoViewModel();
@@ -157,7 +179,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                         };
 
-                        
+
                         var respuestaPais = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdPais.ToString(), new Uri(WebApp.BaseAddress),
                                                                  "api/Pais");
                         var pais = JsonConvert.DeserializeObject<Pais>(respuestaPais.Resultado.ToString());
@@ -170,16 +192,16 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-                        ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
+                        //ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
                         ViewData["Pais"] = pais.Nombre;
                         ViewData["Provincia"] = provincia.Nombre;
                         ViewData["Ciudad"] = ciudad.Nombre;
 
                         return View(solicitudViaticoViewModel);
                     }
-                    }
+                }
 
- 
+
                 return BadRequest();
             }
             catch (Exception)
@@ -218,20 +240,19 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<List<EmpleadoSolicitudViewModel>> ListarEmpleadosPertenecientesaDependenciaconViaticos(string nombreUsuario)
+        public async Task<IActionResult> ListadoEmpleadosSolicitudViaticos()
         {
             try
             {
-                var empleado = new Empleado
-                {
-                    NombreUsuario = nombreUsuario,
-                };
-                var usuariologueado = await apiServicio.Listar<EmpleadoSolicitudViewModel>(empleado, new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosTalentoHumanoconSolucitudesViaticos");
-                return usuariologueado;
+                var lista = new List<EmpleadoSolicitudViewModel>();
+                lista = await apiServicio.Listar<EmpleadoSolicitudViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosTalentoHumanoconSolucitudesViaticos");
+                return View(lista);
+                //return usuariologueado;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<EmpleadoSolicitudViewModel>();
+                ex.ToString();
+                return View();
             }
 
         }
@@ -279,7 +300,7 @@ namespace bd.webappth.web.Controllers.MVC
                         EntityID = string.Format("{0} {1}", "Solicitud Viático:", solicitudViaticoViewModel.SolicitudViatico.IdSolicitudViatico),
                     });
 
-                    return RedirectToAction("Create","ItinerarioViatico", new { IdSolicitudViatico=respuesta.IdSolicitudViatico });
+                    return RedirectToAction("Create", "ItinerarioViatico", new { IdSolicitudViatico = respuesta.IdSolicitudViatico });
                 }
 
                 ViewData["Error"] = response.Message;
@@ -327,7 +348,7 @@ namespace bd.webappth.web.Controllers.MVC
                             IdSolicitudViatico = Convert.ToInt32(id)
                         };
 
-                        listaSolicitudTiposViaticos = await apiServicio.ObtenerElementoAsync1<List<SolicitudTipoViatico>>(solicitudTipoViatico,new Uri(WebApp.BaseAddress)
+                        listaSolicitudTiposViaticos = await apiServicio.ObtenerElementoAsync1<List<SolicitudTipoViatico>>(solicitudTipoViatico, new Uri(WebApp.BaseAddress)
                                                                               , "api/TiposDeViatico/ListarSolicitudesTiposViaticos");
 
                         var SolicitudViaticoViewModel = new SolicitudViaticoViewModel
@@ -353,8 +374,8 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<ListaEmpleadoViewModel> ObtenerEmpleado(string nombreUsuario)
         {
-         
-           
+
+
 
             try
             {
@@ -371,7 +392,7 @@ namespace bd.webappth.web.Controllers.MVC
                     //respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudViatico>(respuesta.Resultado.ToString());
                     //if (respuesta.IsSuccess)
                     //{
-                        return empleado;
+                    return empleado;
                     //}
 
                 }
@@ -459,29 +480,29 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
-                
-                    response = await apiServicio.InsertarAsync(solicitudViaticoViewModel, new Uri(WebApp.BaseAddress),
-                                                                 "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
 
-                    if (response.IsSuccess)
+                response = await apiServicio.InsertarAsync(solicitudViaticoViewModel, new Uri(WebApp.BaseAddress),
+                                                             "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
+
+                if (response.IsSuccess)
+                {
+                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", solicitudViaticoViewModel.SolicitudViatico.IdSolicitudViatico),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un solicitud viático",
-                            UserName = "Usuario 1"
-                        });
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        EntityID = string.Format("{0} : {1}", "Sistema", solicitudViaticoViewModel.SolicitudViatico.IdSolicitudViatico),
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        Message = "Se ha actualizado un solicitud viático",
+                        UserName = "Usuario 1"
+                    });
 
-                        return RedirectToAction("DetalleSolicitudViaticos", new { id = solicitudViaticoViewModel.SolicitudViatico.IdEmpleado });
-                    }
-                    ViewData["Error"] = response.Message;
-                    return View(solicitudViaticoViewModel);
+                    return RedirectToAction("DetalleSolicitudViaticos", new { id = solicitudViaticoViewModel.SolicitudViatico.IdEmpleado });
+                }
+                ViewData["Error"] = response.Message;
+                return View(solicitudViaticoViewModel);
 
-                
-                
+
+
             }
             catch (Exception ex)
             {

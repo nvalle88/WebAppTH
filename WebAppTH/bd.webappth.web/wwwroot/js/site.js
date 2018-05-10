@@ -42,6 +42,7 @@ function mostrarNotificacion(titulo, texto) {
         case "Información": color = "#3276B1"; icon = "exclamation-circle"; break;
         case "Error": color = "#C46A69"; icon = "times-circle"; break;
         case "Aviso": color = "#c79121"; icon = "exclamation-triangle"; break;
+        case "Success": color = "#1D6922"; icon = "check-circle"; break;
     }
     $.smallBox({
         title: titulo,
@@ -49,6 +50,24 @@ function mostrarNotificacion(titulo, texto) {
         color: color,
         icon: "fa fa-" + icon + " shake animated",
         timeout: 6000
+    });
+}
+
+function mostrarNotificacionTimer(titulo, texto, timer) {
+    var color = "";
+    var icon = "";
+    switch (titulo) {
+        case "Información": color = "#3276B1"; icon = "exclamation-circle"; break;
+        case "Error": color = "#C46A69"; icon = "times-circle"; break;
+        case "Aviso": color = "#c79121"; icon = "exclamation-triangle"; break; 
+        case "Success": color = "#1D6922"; icon = "check-circle"; break;
+    }
+    $.smallBox({
+        title: titulo,
+        content: texto,
+        color: color,
+        icon: "fa fa-" + icon + " shake animated",
+        timeout: timer
     });
 }
 
@@ -73,6 +92,17 @@ function Gestionar_Msg() {
     if (mensaje != "" && mensaje != null) {
         var arr_msg = mensaje.split('|');
         mostrarNotificacion(arr_msg[0], arr_msg[1]);
+    }
+
+    Gestionar_Msg_Timer();
+}
+
+function Gestionar_Msg_Timer() {
+    var mensaje2 = $("#span_mensaje_timer").html();
+    if (mensaje2 != "" && mensaje2 != null) {
+        var arr_msg2 = mensaje2.split('|');
+
+        mostrarNotificacionTimer(arr_msg2[0], arr_msg2[1], arr_msg2[2]);
     }
 }
 

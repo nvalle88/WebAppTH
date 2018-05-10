@@ -124,14 +124,14 @@
                                                 <div class="form-group">
                                                     <label>Fecha de llegada:</label>
                                                     <input asp-for="SolicitudViatico.FechaLlegada" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label>Hora de llegada:</label>
                                                     <input class="form-control" asp-for="SolicitudViatico.HoraLlegada" disabled="disabled" id="timepicker2" type="text" placeholder="Seleccione la hora">
-                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <section>
@@ -139,16 +139,16 @@
                                             <div class="form-group">
                                                 <label>Descripci&oacute;n de las actividades a ejecutarse:</label>
                                                 <textarea maxlength="250" class="form-control" asp-for="SolicitudViatico.Descripcion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Descripcion)"></textarea>
-                                                    <span asp-validation-for="SolicitudViatico.Descripcion" class="text-danger"></span>
-                                                </div>
+                                                <span asp-validation-for="SolicitudViatico.Descripcion" class="text-danger"></span>
+                                            </div>
                                         </section>
                                         <section>
                                             <label class="label"></label>
                                             <div class="form-group">
                                                 <label>Observaci&oacute;n:</label>
                                                 <textarea maxlength="250" class="form-control" asp-for="SolicitudViatico.Observacion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Observacion)"></textarea>
-                                                    <span asp-validation-for="SolicitudViatico.Observacion" class="text-danger"></span>
-                                                </div>
+                                                <span asp-validation-for="SolicitudViatico.Observacion" class="text-danger"></span>
+                                            </div>
                                         </section>
                                     </article>
 
@@ -209,24 +209,24 @@
                                                                 <tbody>
                                                                     @foreach (var item in Model.ItinerarioViatico)
                                                                     {
-                                                                        <tr>
+                                                                    <tr>
 
-                                                                            <td>
-                                                                                @Html.DisplayFor(modelItem => item.TipoTransporte.Descripcion)
-                                                                            </td>
-                                                                            <td>
-                                                                                @Html.DisplayFor(modelItem => item.FechaDesde)
-                                                                            </td>
-                                                                            <td>
-                                                                                @Html.DisplayFor(modelItem => item.FechaHasta)
-                                                                            </td>
-                                                                            <td>
-                                                                                @Html.DisplayFor(modelItem => item.Valor)
-                                                                            </td>
-                                                                            <td>
-                                                                                @Html.DisplayFor(modelItem => item.Descripcion)
-                                                                            </td>
-                                                                        </tr>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.TipoTransporte.Descripcion)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.FechaDesde)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.FechaHasta)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Valor)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                                                        </td>
+                                                                    </tr>
                                                                     }
                                                                 </tbody>
                                                             </table>
@@ -245,33 +245,33 @@
                                     <!-- end widget grid -->
                                 </div>
                                 @*<div class="row">
-                                    <article class="col-lg-12">
-                                        <legend>Datos para transferencia</legend>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="checkbox">
-                                                        <label>&iquest; Cuenta de Ahorros ?</label>
-                                                        <input type="checkbox" disabled="disabled" asp-for="ListaEmpleadoViewModel.TipoCuenta" class="form-control" />
-                                                    </label>
+                                        <article class="col-lg-12">
+                                            <legend>Datos para transferencia</legend>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="checkbox">
+                                                            <label>&iquest; Cuenta de Ahorros ?</label>
+                                                            <input type="checkbox" disabled="disabled" asp-for="ListaEmpleadoViewModel.TipoCuenta" class="form-control" />
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label>No. de Cuenta:</label>
+                                                            <input asp-for="ListaEmpleadoViewModel.NoCuenta" disabled="disabled" class="form-control input " placeholder="No. de Cuenta" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                        </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label>Nombre del Banco:</label>
+                                                        <input asp-for="ListaEmpleadoViewModel.InstitucionBancaria" disabled="disabled" class="form-control input " placeholder="Instituci&oacute;n Bancaria" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                        </div>
                                                 </div>
                                             </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label>No. de Cuenta:</label>
-                                                        <input asp-for="ListaEmpleadoViewModel.NoCuenta" disabled="disabled" class="form-control input " placeholder="No. de Cuenta" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                    </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label>Nombre del Banco:</label>
-                                                    <input asp-for="ListaEmpleadoViewModel.InstitucionBancaria" disabled="disabled" class="form-control input " placeholder="Instituci&oacute;n Bancaria" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>*@
+                                        </article>
+                                    </div>*@
                                 <br />
                                 <div class="row">
 
@@ -280,20 +280,38 @@
                                         <div class="col col-12">
                                             <div class="col-md-4">
                                                 <label class="radio radio-inline">
-                                                    <input type="radio" name="SolicitudViatico.Estado" value="-1" class="radiobox">
+                                                    @if(Model.SolicitudViatico.Estado == -1){
+                                                    <input type="radio" name="SolicitudViatico.Estado" value="-1" class="radiobox" disabled="disabled" checked="checked">
                                                     <span>Negado</span>
+                                                    }else
+                                                    {
+                                                    <input type="radio" name="SolicitudViatico.Estado" value="-1" class="radiobox" disabled="disabled">
+                                                    <span>Negado</span>
+                                                    }
                                                 </label>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="radio radio-inline">
-                                                    <input type="radio" name="SolicitudViatico.Estado" value="0" class="radiobox" checked="checked">
+                                                    @if(Model.SolicitudViatico.Estado == 0){
+                                                    <input type="radio" name="SolicitudViatico.Estado" value="0" class="radiobox" disabled="disabled" checked="checked">
                                                     <span>Pendiente</span>
+                                                    }else
+                                                    {
+                                                    <input type="radio" name="SolicitudViatico.Estado" value="0" class="radiobox" disabled="disabled">
+                                                    <span>Pendiente</span>
+                                                    }
                                                 </label>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="radio radio-inline">
-                                                    <input type="radio" name="SolicitudViatico.Estado" value="1" class="radiobox">
+                                                    @if(Model.SolicitudViatico.Estado == 1){
+                                                    <input type="radio" name="SolicitudViatico.Estado" value="1" class="radiobox" disabled="disabled" checked="checked"> 
                                                     <span>Aprobado</span>
+                                                    }else
+                                                    {
+                                                    <input type="radio" name="SolicitudViatico.Estado" value="1" class="radiobox" disabled="disabled">
+                                                    <span>Aprobado</span>
+                                                    }
                                                 </label>
                                             </div>
                                         </div>
@@ -301,10 +319,10 @@
                                 </div>
                                 <br />
                                 <br />
-                                <footer>
+                                @*<footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="DetalleSolicitudViaticos" asp-route-id="@Model.SolicitudViatico.IdEmpleado" class="btn btn-default">Cancelar</a>
-                                </footer>
+                                </footer>*@
                             </form>
                         </div>
                         <!-- end widget content -->

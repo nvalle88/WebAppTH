@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -27,43 +28,27 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
         }
 
-        private void InicializarMensaje(string mensaje)
+        
+        
 
+
+        public async Task<IActionResult> Index()
         {
-
-            if (mensaje == null)
-
-            {
-
-                mensaje = "";
-
-            }
-
-            ViewData["Error"] = mensaje;
-
-        }
-
-        public async Task<IActionResult> Index(string mensaje)
-        {
-            InicializarMensaje(mensaje);
-
             return View();
-
         }
 
-        public async Task<IActionResult> ListaMovimientos(string identificacion,string mensaje,int num)
+        public async Task<IActionResult> ListaMovimientos(string identificacion,int Empty)
         {
             if ( string.IsNullOrEmpty(identificacion) ) {
                 return RedirectToAction("Index");
             }
-            return await ListaMovimientos(mensaje, identificacion + " ");
+            return await ListaMovimientos(identificacion + " ");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ListaMovimientos(string mensaje, string identificacion)
+        public async Task<IActionResult> ListaMovimientos(string identificacion)
         {
-            InicializarMensaje(mensaje);
 
             try
             {
@@ -93,7 +78,12 @@ namespace bd.webappth.web.Controllers.MVC
                             "api/AccionesPersonal/ListarAccionesPersonalPorEmpleado");
 
                     if (modelo.DatosBasicosEmpleadoViewModel.IdEmpleado == 0) {
-                        return RedirectToAction("Index", new { mensaje = Mensaje.RegistroNoEncontrado});
+                        
+                        return this.Redireccionar(
+                            "MovimientosPersonalTTHH",
+                            "Index",
+                            $"{Mensaje.Error}|{Mensaje.RegistroNoEncontrado}"
+                         );
                     }
 
                     return View("ListaMovimientos", modelo);
@@ -112,12 +102,10 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-        public async Task<IActionResult> Create(string mensaje, int id)
+        public async Task<IActionResult> Create(int id)
         {
             try
             {
-                InicializarMensaje(mensaje);
-
                 var datosBasicosEmpleado = new DatosBasicosEmpleadoSinRequiredViewModel { IdEmpleado = id };
 
                 var respuesta = await apiServicio.ObtenerElementoAsync <DatosBasicosEmpleadoSinRequiredViewModel>(
@@ -140,7 +128,10 @@ namespace bd.webappth.web.Controllers.MVC
                         situacionActualViewModel = JsonConvert.DeserializeObject<SituacionActualEmpleadoViewModel>(situacionActualEmpleadoViewModelResponse.Resultado.ToString());
                     }
 
-
+                    
+                    var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
 
                     var model = new AccionPersonalViewModel
                     {
@@ -150,19 +141,13 @@ namespace bd.webappth.web.Controllers.MVC
                         FechaRige = DateTime.Now,
                         FechaRigeHasta = DateTime.Now,
                         SituacionActualEmpleadoViewModel = situacionActualViewModel,
-                        SituacionPropuestaEmpleadoViewModel = new SituacionActualEmpleadoViewModel()
-                        ,
-                        GeneraMovimientoPersonal = false
+                        GeneraMovimientoPersonal = false,
+                        ListaIndicesOcupacionalesModalidadPartida = listaIOMP
                     };
 
 
-                    await InicializarCombos(
-                        0,
-                        model.SituacionPropuestaEmpleadoViewModel.IdDependencia,
-                        model.SituacionPropuestaEmpleadoViewModel.IdCargo
-                        );
-
-
+                    await InicializarCombos();
+                    
 
                     return View(model);
 
@@ -187,30 +172,33 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (!ModelState.IsValid)
                 {
-                    await InicializarCombos(
-                        accionPersonalViewModel.SituacionPropuestaEmpleadoViewModel.IdSucursal,
-                        accionPersonalViewModel.SituacionPropuestaEmpleadoViewModel.IdDependencia,
-                        accionPersonalViewModel.SituacionPropuestaEmpleadoViewModel.IdCargo
-                   );
+                    await InicializarCombos();
 
-                    InicializarMensaje(Mensaje.ModeloInvalido);
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}";
+
+                    var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
+
+                    accionPersonalViewModel.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
+
                     return View(accionPersonalViewModel);
                 }
 
                 if (accionPersonalViewModel.GeneraMovimientoPersonal == true) {
 
-                    if (
-                        accionPersonalViewModel.SituacionPropuestaEmpleadoViewModel.IdCargo < 1 ||
-                        accionPersonalViewModel.SituacionPropuestaEmpleadoViewModel.Remuneracion < 1
-                        ) {
+                    if (accionPersonalViewModel.IdIndiceOcupacionalModalidadPartidaPropuesta < 1) {
 
-                        await InicializarCombos(
-                            accionPersonalViewModel.SituacionPropuestaEmpleadoViewModel.IdSucursal,
-                            accionPersonalViewModel.SituacionPropuestaEmpleadoViewModel.IdDependencia,
-                            accionPersonalViewModel.SituacionPropuestaEmpleadoViewModel.IdCargo
-                        );
+                        this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SeleccioneIndice}|{"10000"}";
 
-                        InicializarMensaje(Mensaje.SeleccioneCargo);
+                        await InicializarCombos();
+                        
+                        var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
+
+                        accionPersonalViewModel.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
+
                         return View(accionPersonalViewModel);
                     }
                     
@@ -222,7 +210,23 @@ namespace bd.webappth.web.Controllers.MVC
                             new Uri(WebApp.BaseAddress),
                             "api/AccionesPersonal/InsertarAccionPersonal");
                 
-                return RedirectToAction("ListaMovimientos", new { identificacion = respuesta.Resultado , mensaje = respuesta.Message});
+
+                if (respuesta.IsSuccess) {
+
+                    return this.RedireccionarMensajeTime(
+                            "MovimientosPersonalTTHH",
+                            "ListaMovimientos",
+                             new { identificacion = respuesta.Resultado },
+                            $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
+                         );
+                }
+
+                return this.RedireccionarMensajeTime(
+                            "MovimientosPersonalTTHH",
+                            "ListaMovimientos",
+                             new { identificacion = respuesta.Resultado },
+                            $"{Mensaje.Error}|{respuesta.Message}|{"10000"}"
+                         );
 
             } catch (Exception){
                 return BadRequest();
@@ -230,11 +234,9 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task<IActionResult> Edit(string mensaje, int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            try
-            {
-                InicializarMensaje(mensaje);
+            try{
 
                 var modelo = new AccionPersonalViewModel { IdAccionPersonal = id };
 
@@ -243,21 +245,31 @@ namespace bd.webappth.web.Controllers.MVC
                     new Uri(WebApp.BaseAddress),
                     "api/AccionesPersonal/ObtenerAccionPersonalViewModel");
 
+
                 if (respuesta.IsSuccess)
                 {
                     modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
-                    
 
-                    var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
-
-                    ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
+                    await InicializarCombos();
 
 
+                    var situacionActualViewModel = new SituacionActualEmpleadoViewModel { IdEmpleado = modelo.DatosBasicosEmpleadoViewModel.IdEmpleado };
 
-                    var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacionTTHH");
+                    var situacionActualEmpleadoViewModelResponse = await apiServicio.ObtenerElementoAsync<SituacionActualEmpleadoViewModel>(situacionActualViewModel, new Uri(WebApp.BaseAddress),
+                    "api/Empleados/ObtenerSituacionActualEmpleadoViewModel");
 
-                    ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+                    if (respuesta.IsSuccess)
+                    {
+                        situacionActualViewModel = JsonConvert.DeserializeObject<SituacionActualEmpleadoViewModel>(situacionActualEmpleadoViewModelResponse.Resultado.ToString());
+                    }
 
+                    modelo.SituacionActualEmpleadoViewModel = situacionActualViewModel;
+
+                    var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
+
+                    modelo.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
 
                     return View(modelo);
 
@@ -283,21 +295,36 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (!ModelState.IsValid)
                 {
-                    var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
-
-                    ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
-
-
-
-                    var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacionTTHH");
-
-                    ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
-
-                    InicializarMensaje(Mensaje.ModeloInvalido);
+                    await InicializarCombos();
+                    
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}";
                     return View(accionPersonalViewModel);
                 }
 
 
+                if (accionPersonalViewModel.GeneraMovimientoPersonal == true)
+                {
+
+                    if (accionPersonalViewModel.IdIndiceOcupacionalModalidadPartidaPropuesta < 1)
+                    {
+
+                        this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SeleccioneIndice}|{"10000"}";
+
+                        await InicializarCombos();
+
+                        var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
+
+                        accionPersonalViewModel.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
+
+                        return View(accionPersonalViewModel);
+                    }
+
+
+                }
+
+                /*
                 var modeloEnviar = new AccionPersonal
                 {
                     IdAccionPersonal = accionPersonalViewModel.IdAccionPersonal,
@@ -313,15 +340,23 @@ namespace bd.webappth.web.Controllers.MVC
                     IdTipoAccionPersonal = accionPersonalViewModel.TipoAccionPersonalViewModel.IdTipoAccionPersonal
 
                 };
+                */
 
-                var respuesta = await apiServicio.InsertarAsync<AccionesPersonalPorEmpleadoViewModel>(
-                            modeloEnviar,
+                var respuesta = await apiServicio.EditarAsync<AccionesPersonalPorEmpleadoViewModel>(
+                            accionPersonalViewModel,
                             new Uri(WebApp.BaseAddress),
                             "api/AccionesPersonal/EditarAccionPersonalTTHH");
 
                 if (respuesta.IsSuccess)
                 {
-                    return RedirectToAction("ListaMovimientos", new { identificacion = respuesta.Resultado, mensaje = respuesta.Message });
+                    
+                    return this.RedireccionarMensajeTime(
+                            "MovimientosPersonalTTHH",
+                            "ListaMovimientos",
+                             new { identificacion = respuesta.Resultado },
+                            $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
+                         );
+
                 }
 
                 return View(accionPersonalViewModel);
@@ -338,8 +373,8 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                
-                InicializarMensaje(mensaje);
+
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{mensaje}";
 
                 var modelo = new AccionPersonalViewModel { IdAccionPersonal = id };
 
@@ -452,7 +487,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task InicializarCombos( int idSucursal, int idDependencia, int idManualPuesto)
+        public async Task InicializarCombos()
         {
             // Carga de listas para combos
 
@@ -466,75 +501,28 @@ namespace bd.webappth.web.Controllers.MVC
             var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacionTTHH");
 
             ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
-
-            //** Sucursales
-            var listaSucursales = await apiServicio.Listar<Sucursal>(new Uri(WebApp.BaseAddress), "api/Sucursal/ListarSucursal");
-
-            ViewData["Sucursales"] = new SelectList(listaSucursales, "IdSucursal", "Nombre");
-
-            if (idSucursal < 1) {
-                idSucursal = listaSucursales.FirstOrDefault().IdSucursal;
-            }
-
-            //** Dependencias
-            var sucursalModel = new Sucursal { IdSucursal =  idSucursal};
-
-            var listaDependencias = await apiServicio.ObtenerElementoAsync1<List<Dependencia>>(
-                sucursalModel, new Uri(WebApp.BaseAddress), "api/Dependencias/ListarDependenciaporSucursal");
-
-            ViewData["Dependencia"] = new SelectList(listaDependencias, "IdDependencia", "Nombre");
-
-
-
-            //** Roles
-            var dependenciaModel = new Dependencia { IdDependencia = 0 };
-
-            if (idDependencia > 0)
-            {
-                dependenciaModel.IdDependencia = idDependencia;
-            }
-            else if (listaDependencias.Count > 0)
-            {
-                dependenciaModel.IdDependencia = listaDependencias.FirstOrDefault().IdDependencia;
-            }
             
-
-            var listaManualPuesto = await apiServicio.ObtenerElementoAsync1<List<ManualPuesto>>(
-                dependenciaModel, new Uri(WebApp.BaseAddress), "api/ManualPuestos/ListarManualPuestoPorDependencia");
-
-            ViewData["ManualPuesto"] = new SelectList(listaManualPuesto, "IdManualPuesto", "Nombre");
+        }
 
 
+        public async Task<IActionResult> ListarModalidadPartida(string mensaje)
+        {
+            this.TempData["Mensaje"] = $"{Mensaje.Aviso}|{"Seleccione para generar la propuesta"}";
+            try {
 
-            //** RMU
-            var filtroRMU = new IdFiltrosViewModel { IdManualPuesto = 0 };
+                var lista= await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
 
-            if (idManualPuesto > 0)
+                return View(lista);
+
+            } catch (Exception ex)
             {
-                filtroRMU.IdManualPuesto = idManualPuesto;
-                filtroRMU.IdDependencia = idDependencia;
+                return BadRequest();
             }
-
-            else if (listaManualPuesto.Count > 0)
-            {
-                filtroRMU.IdManualPuesto = listaManualPuesto.FirstOrDefault().IdManualPuesto;
-                filtroRMU.IdDependencia = idDependencia;
-            }
-
-            var listaRMU = await apiServicio.ObtenerElementoAsync1<List<EscalaGrados>>(
-                filtroRMU, new Uri(WebApp.BaseAddress), "api/EscalasGrados/ListarEscalaPorManualPuesto");
-
-            var firstRMU = new List<EscalaGrados>();
-
-            if (listaRMU.Count >0) {
-                firstRMU.Add(listaRMU.FirstOrDefault());
-            }
-
-            
-
-            ViewData["RMU"] = new SelectList(firstRMU, "IdEscalaGrados", "Remuneracion");
         }
         
+
 
     }
 }
