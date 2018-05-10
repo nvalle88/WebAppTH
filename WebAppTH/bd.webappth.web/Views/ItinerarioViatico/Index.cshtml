@@ -240,6 +240,13 @@
                                                         @Html.ActionLink("Eliminar", "Delete", new { id = item.IdItinerarioViatico }, new { onclick = "return confirm('Desea eliminar el itinerario del viático... ?');" })
                                                     </text>
                                                 }
+                                                else if (Model.SolicitudViatico.Estado == 2)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink("Informe", "Informe", new { IdItinerario = item.IdItinerarioViatico })
+
+                                                    </text>
+                                                }
                                             </td>
                                         </tr>
                                     }
