@@ -1,12 +1,11 @@
 @model bd.webappth.entidades.Negocio.ConceptoNomina
-<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
-<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 
 @using bd.webappth.entidades.Utils
 @{ var modelo = new MenuConceptoNomina { OpcionMenu = 0 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 <div id="content">
     @{await Html.RenderPartialAsync("_PartialViewBotonIndexConceptoNomina");}
 
@@ -39,7 +38,13 @@
 @section Scripts {
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src='~/lib/waitMe/waitMe.min.js'></script>
-    <script src='~/js/site.js'></script>
+
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
 
 }

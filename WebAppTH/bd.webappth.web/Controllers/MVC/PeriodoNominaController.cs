@@ -23,15 +23,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create(string mensaje)
         {
-            await CargarCombox();
-            var vista = new PeriodoNomina { FechaInicio = DateTime.Now, FechaFin = DateTime.Now };
+            
+            var vista = new PeriodoNomina { FechaInicio = DateTime.Now, FechaFin = DateTime.Now,Mes=DateTime.Now.Day,Ano=DateTime.Now.Year };
             return View(vista);
         }
 
-        public async Task CargarCombox()
-        {
-            ViewData["IdProceso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ProcesoNomina>(new Uri(WebApp.BaseAddress), "api/ProcesoNomina/ListarProcesoNomina"), "IdProceso", "Descripcion");
-        }
+        //public async Task CargarCombox()
+        //{
+        //    ViewData["IdProceso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ProcesoNomina>(new Uri(WebApp.BaseAddress), "api/ProcesoNomina/ListarProcesoNomina"), "IdProceso", "Descripcion");
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -40,7 +40,6 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
-                await CargarCombox();
                 return View(PeriodoNomina);
             }
             Response response = new Response();
@@ -51,7 +50,6 @@ namespace bd.webappth.web.Controllers.MVC
                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.FechaRangoMayor}";
                     ModelState.AddModelError("FechaFin", Mensaje.FechaRangoMayor);
                     ModelState.AddModelError("FechaInicio", Mensaje.FechaRangoMenor);
-                    await CargarCombox();
                     return View(PeriodoNomina);
                 }
 
@@ -64,7 +62,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
-                await CargarCombox();
+                
                 return View(PeriodoNomina);
 
             }
@@ -88,7 +86,7 @@ namespace bd.webappth.web.Controllers.MVC
                         vista = JsonConvert.DeserializeObject<PeriodoNomina>(respuesta.Resultado.ToString());
                     }
                 
-                await CargarCombox();
+                
                 return View(vista);
             }
             catch (Exception)
@@ -104,7 +102,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
-                await CargarCombox();
+                
                 return View(PeriodoNomina);
             }
             Response response = new Response();
@@ -115,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.FechaRangoMayor}";
                     ModelState.AddModelError("FechaFin", Mensaje.FechaRangoMayor);
                     ModelState.AddModelError("FechaInicio", Mensaje.FechaRangoMenor);
-                    await CargarCombox();
+                    
                     return View(PeriodoNomina);
                 }
                 response = await apiServicio.EditarAsync<Response>(PeriodoNomina, new Uri(WebApp.BaseAddress),
@@ -127,7 +125,7 @@ namespace bd.webappth.web.Controllers.MVC
                     return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
-                await CargarCombox();
+                
                 return View(PeriodoNomina);
             }
             catch (Exception)
