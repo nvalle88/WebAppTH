@@ -112,6 +112,31 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         #region InformeVIaticos
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Actividades(InformeViatico informeViatico)
+        {
+            Response response = new Response();
+
+            try
+            {
+                response = await apiServicio.InsertarAsync(informeViatico,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/InformeViaticos/Actividades");
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("Informe", new { IdSolicitudViatico = informeViatico.IdSolicitudViatico, IdItinerarioViatico = informeViatico.IdItinerarioViatico });
+                }
+
+                ViewData["Error"] = response.Message;
+                return RedirectToAction("Informe", new { IdSolicitudViatico = informeViatico.IdSolicitudViatico, IdItinerarioViatico = informeViatico.IdItinerarioViatico });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
         //public async Task<IActionResult> Informe(int IdItinerario, string mensaje)
         //{
 
@@ -198,14 +223,23 @@ namespace bd.webappth.web.Controllers.MVC
                             HttpContext.Session.SetInt32(Constantes.IdItinerario, IdItinerarioViatico);
                             HttpContext.Session.SetInt32(Constantes.IdSolicitudtinerario, IdSolicitudViatico);
 
+                            //busca las actividades del informe
+                            var informeViatico = new InformeViatico
+                            {
+                                IdItinerarioViatico = IdItinerarioViatico
+                            };
+                            var Actividades = await apiServicio.ObtenerElementoAsync1<InformeViatico>(informeViatico, new Uri(WebApp.BaseAddress)
+                                                                     , "api/InformeViaticos/ObtenerActividades");
+
                             var informeViaticoViewModel = new InformeViaticoViewModel
                             {
                                 SolicitudViatico = sol,
                                 ListaEmpleadoViewModel = empleado,
                                 InformeViatico = lista,
                                 FacturaViatico = listaFacruras,
-                                IdItinerarioViatico = IdItinerarioViatico
-
+                                IdItinerarioViatico = IdItinerarioViatico,
+                                IdSolicitudViatico = sol.IdSolicitudViatico,
+                                Descripcion = Actividades.Descripcion
                             };
 
 
