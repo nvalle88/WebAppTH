@@ -36,7 +36,7 @@
         <section class="col-lg-4">
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.TipoAccionPersonalViewModel)</label>
             <label class="input" style="padding-right:15px;">
-                <select asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones">
+                <select id="SelectAccion" asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones">
                     <option value="0" selected>Seleccione</option>
                 </select>
 
@@ -65,7 +65,6 @@
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Estado)</label>
             <label class="input">
                 <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados">
-                    <option value="0" selected>Seleccione</option>
                 </select>
 
                 <span asp-validation-for="Estado" class="text-danger"></span>
@@ -98,14 +97,15 @@
 
         <section class="col col-lg-4">
             <div class="input col-lg-12">
-                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, false,new { onClick = "ValidarChkMovPersonal(this)" })&nbsp;No
+                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, false,new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbFalse", @disabled = "disabled" })&nbsp;No
             </div>
         </section>
 
         <section class="col col-lg-4">
             <div class="input col-lg-12">
-                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, true, new { onClick = "ValidarChkMovPersonal(this)" })&nbsp;Si
+                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, true, new { onClick = "ValidarChkMovPersonal(this)" , @id = "rdbTrue" , @disabled = "disabled" })&nbsp;Si
             </div>
+            <input id="txtGenerarMovimiento" asp-for="GeneraMovimientoPersonal" type="text" hidden/>
         </section>
 
     </div>

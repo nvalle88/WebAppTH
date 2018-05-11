@@ -24,20 +24,11 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Nombre Trasporte:</label>
-                                    <input id="FechaSalida" asp-for="FechaDesde" type="text" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                    <span asp-validation-for="FechaDesde" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
                                     <label>Fecha de salida:</label>
                                     <input id="FechaSalida" asp-for="FechaDesde" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                                     <span asp-validation-for="FechaDesde" class="text-danger"></span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Hora de salida:</label>
@@ -45,6 +36,8 @@
                                     <span asp-validation-for="HoraSalida" class="text-danger"></span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Fecha de llegada:</label>
@@ -59,8 +52,6 @@
                                     <span asp-validation-for="HoraLlegada" class="text-danger"></span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <section class="col col-lg-4">
                                 <div class="form-group">
                                     <label>Valor:</label>
@@ -68,6 +59,8 @@
                                     <span asp-validation-for="Valor" class="text-danger"></span>
                                 </div>
                             </section>
+                        </div>
+                        <div class="row">
                             <section class="col col-lg-4">
                                 <label>Ciudad de Origen:</label>
                                 <div class="form-group">
