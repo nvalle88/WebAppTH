@@ -272,7 +272,7 @@
 
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <a asp-action="Create" asp-controller="FacturaViatico">
+                <a asp-action="Create" asp-controller="FacturaViatico" asp-route-IdSolicitudViatico="@Model.SolicitudViatico.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico"    >
                     <button type="button" asp-action="Create" asp-controller="FacturaViatico" asp-route-IdSolicitudViatico="@Model.SolicitudViatico.IdSolicitudViatico" class="btn btn-labeled btn-default">
                         <span class="btn-label">
                             <i class="glyphicon glyphicon-plus"></i>
@@ -350,12 +350,12 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Editar", "EditarExamenComplementario", new { id = item.IdFacturaViatico}, new { onclick = "espera()" }) |
-                                                @Html.ActionLink("Eliminar", "DeleteExamenComplementario", new { id = item.IdFacturaViatico }, new { onclick = "return confirm('Desea eliminar el registro ?');" }) |
+                                                @Html.ActionLink("Editar", "Edit", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico =Model.SolicitudViatico.IdSolicitudViatico}, new { onclick = "espera()" }) |
+                                                @Html.ActionLink("Eliminar", "Delete","FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico, IdItinerarioViatico = Model.IdItinerarioViatico }, new { onclick = "return confirm('Desea eliminar el registro ?');" }) |
 
                                                 @if (item.Url != null)
                                                 {
-                                                    @Html.ActionLink("Descargar", "Download", new { id = item.IdFacturaViatico })
+                                                    @Html.ActionLink("Descargar", "Download", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico, IdItinerarioViatico = Model.IdItinerarioViatico })
 
                                                 }
 

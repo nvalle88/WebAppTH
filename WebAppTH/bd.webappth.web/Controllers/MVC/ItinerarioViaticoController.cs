@@ -203,7 +203,8 @@ namespace bd.webappth.web.Controllers.MVC
                                 SolicitudViatico = sol,
                                 ListaEmpleadoViewModel = empleado,
                                 InformeViatico = lista,
-                                FacturaViatico = listaFacruras
+                                FacturaViatico = listaFacruras,
+                                IdItinerarioViatico = IdItinerarioViatico
 
                             };
 
