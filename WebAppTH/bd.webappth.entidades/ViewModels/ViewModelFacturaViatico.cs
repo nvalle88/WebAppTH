@@ -1,17 +1,21 @@
-namespace bd.webappth.entidades.Negocio
-{
-    using System;
-    using System.ComponentModel.DataAnnotations;
+ï»¿using bd.webappth.entidades.Negocio;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-    public partial class FacturaViatico
+namespace bd.webappth.entidades.ViewModels
+{
+    public class ViewModelFacturaViatico
     {
+
         [Key]
         public int IdFacturaViatico { get; set; }
         public int IdSolicitudViatico { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Número de factura:")]
-        [StringLength(30, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        [Display(Name = "NÃºmero de factura:")]
+        [StringLength(30, MinimumLength = 2, ErrorMessage = "El {0} no puede tener mÃ¡s de {1} y menos de {2}")]
         public string NumeroFactura { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
@@ -43,17 +47,14 @@ namespace bd.webappth.entidades.Negocio
 
         //Propiedades Virtuales Referencias a otras clases
 
-        [Display(Name = "Tipo de viático:")]
+        [Display(Name = "Tipo de viÃ¡tico:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdItemViatico { get; set; }
-        public virtual ItemViatico ItemViatico { get; set; }
-
         //Propiedades Virtuales Referencias a otras clases
 
         [Display(Name = "Itinerario:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdItinerarioViatico { get; set; }
-        public virtual ItinerarioViatico ItinerarioViatico { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 
@@ -61,6 +62,8 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int AprobadoPor { get; set; }
         public string Url { get; set; }
-        public virtual Empleado Empleado { get; set; }
+
+        public byte[] Fichero { get; set; }
+
     }
 }

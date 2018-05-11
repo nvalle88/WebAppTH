@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.Negocio.InformeViatico
+@model bd.webappth.entidades.Negocio.FacturaViatico
 
 @{
     ViewData["Title"] = "ItinerarioViatico";
@@ -43,7 +43,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Transporte Utilizado</h2>
+                        <h2>Itineraria Vi&aacute;tico</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -57,13 +57,13 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form id="wizard-1" asp-action="CreateInforme" novalidate="novalidate">
-                                <input type="hidden" asp-for="IdItinerarioViatico" />
+                            <form id="wizard-1" asp-action="Create" novalidate="novalidate" enctype="multipart/form-data">
                                 <input type="hidden" asp-for="IdSolicitudViatico" />
-                                @{await Html.RenderPartialAsync("_PartialViewInformeItinerarioViatico", Model);}
+                                <input type="hidden" asp-for="IdItinerarioViatico" />
+                                @{await Html.RenderPartialAsync("_PartialViewIFacturaViatico", Model);}
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Informe"  asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico"  class="btn btn-default">Cancelar</a>
+                                    <a asp-action="Informe" asp-controller="ItinerarioViatico" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico"  class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -85,8 +85,12 @@
 <!-- END MAIN CONTENT -->
 
 
+
+
+
 @section Scripts {
  
+
 
 
 }

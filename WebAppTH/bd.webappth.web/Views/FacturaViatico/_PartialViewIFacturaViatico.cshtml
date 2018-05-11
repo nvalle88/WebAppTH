@@ -1,0 +1,113 @@
+@model bd.webappth.entidades.Negocio.FacturaViatico
+
+<div id="bootstrap-wizard-1" class="col-sm-12">
+    <div class="form-bootstrapWizard">
+        <ul class="bootstrapWizard form-wizard"></ul>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="tab-content">
+        <div id="camposEmpleado">
+            <div class="tab-pane active" id="tab1">
+                <br>
+                <div class="row">
+                    <article class="col-lg-12">
+                        <legend>Facturas</legend>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Numero factura:</label>
+                                <div class="form-group">
+                                    <input asp-for="NumeroFactura" type="number" class="form-control " data-rule-required='true'>
+                                    <span asp-validation-for="NumeroFactura" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Fecha Factura:</label>
+                                    <input type="text" asp-for="FechaFactura" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                    <span asp-validation-for="FechaFactura" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Valor total:</label>
+                                    <input id="ValorTotalFactura" asp-for="ValorTotalFactura" type="number" class="form-control " data-rule-required='true'>
+                                    <span asp-validation-for="ValorTotalFactura" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class="input input-file">
+                                        <input asp-for="Url" id="file" type="file" name="files" onchange="loadFile(event)">
+                                        <script>
+                                            var loadFile = function (event) {
+                                                var output = document.getElementById('output');
+                                                output.data = URL.createObjectURL(event.target.files[0]);
+                                                output.style.height = "700px";
+                                                document.getElementById("examenpdf").style.visibility = "visible";
+                                            };
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Viatico:</label>
+                                    <div class="form-group">
+                                        <select id="ItemViatico" asp-for="IdItemViatico" class="form-control input" asp-items="ViewBag.ItemViatico" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                            <option value="0" selected="" disabled="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Observaciones:</label>
+                                    <textarea maxlength="250" class="form-control" asp-for="Observaciones" rows="3"></textarea>
+                                    <span asp-validation-for="Observaciones" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="row" id="examenpdf" height="0px">
+                                <section class="col col-lg-12">
+                                    <legend>Factura</legend>
+                                    <section>
+                                        <object id="output" type="application/pdf" data="@Model.Url" width="100%" height="1px"></object>
+                                    </section>
+                                </section>
+
+                            </div>*@
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("examenpdf").style.visibility = "hidden";
+</script>
+
+<script>
+
+    @if (Model.Url != null && Model.Url != "")
+    {
+
+        <text>
+            var output2 = document.getElementById('output');
+            output2.style.height = "700px";
+            output2.style.width = "100%";
+            document.getElementById("examenpdf").style.visibility = "visible";
+
+        </text>
+
+    }
+
+
+</script>

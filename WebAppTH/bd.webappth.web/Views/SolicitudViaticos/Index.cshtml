@@ -141,7 +141,7 @@
                                                     @Html.ActionLink("Itinerario", "Index", "ItinerarioViatico", new { IdSolicitudViatico = item.IdSolicitudViatico }) |
                                                     @if (item.Estado == 2)
                                                     {
-                                                        @Html.ActionLink("Informe", "Informe", "ItinerarioViatico", new { IdItinerario = item.IdSolicitudViatico })
+                                                        @Html.ActionLink("Informe", "Index", "ItinerarioViatico", new { IdSolicitudViatico = item.IdSolicitudViatico, })
 
                                                     }
                                                 </td>

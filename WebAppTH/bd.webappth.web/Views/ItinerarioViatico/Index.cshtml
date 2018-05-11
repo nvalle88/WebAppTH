@@ -243,7 +243,7 @@
                                                 else if (Model.SolicitudViatico.Estado == 2)
                                                 {
                                                     <text>
-                                                        @Html.ActionLink("Informe", "Informe", new { IdItinerario = item.IdItinerarioViatico })
+                                                        @Html.ActionLink("Informe", "Informe", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico })
 
                                                     </text>
                                                 }

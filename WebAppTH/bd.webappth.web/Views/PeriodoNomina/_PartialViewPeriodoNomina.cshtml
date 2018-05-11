@@ -4,14 +4,16 @@
         <section class="col col-lg-8">
             <label>Procesos</label>
             <label class="input">
-                <select asp-for="IdProceso" class="form-control" asp-items="ViewBag.IdProceso">
-                    <option value="0" selected="selected">Seleccione</option>
+                <select asp-for="Estado" class="form-control" >
+                    <option value="Abierto" selected="selected">Abierto</option>
+                    <option value="Cerraro" selected="selected">Cerraro</option>
+                    <option value="Otro Estado" selected="selected">Otro Estado</option>
                 </select>
-                <span asp-validation-for="IdProceso" class="text-danger"></span>
+                <span asp-validation-for="Estado" class="text-danger"></span>
             </label>
         </section>
 
-       
+
         <section class="col col-4">
             <label>&nbsp;&nbsp;</label>
             <label class="checkbox-inline">
@@ -45,5 +47,22 @@
             </label>
         </section>
     </div>
-  
+    <div class="row">
+        <section class="col col-6">
+            <label>Mes</label>
+            <label class="input">
+                <input asp-for="Mes" type="number" max="12" min="1">
+                <span asp-validation-for="Mes" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label>A&ntilde;o </label>
+            <label class="input">
+                <input asp-for="Ano" max="2050" min="2018">
+                <span asp-validation-for="Ano" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+
 </fieldset>   

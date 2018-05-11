@@ -25,8 +25,27 @@ namespace bd.webappth.web.Controllers.MVC
             this.constantesNomina = constantesNomina;
 
         }
+        public async Task<bool> ValidarFormulaGuardar(string formula)
+        {
+            try
+            {
+                Compilador a = new Compilador(apiServicio, constantesNomina);
+                try
+                {
+                    var b = await a.Evaluar(formula);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
 
-
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public async Task<JsonResult> ValidarFormula(string formula)
         {
             try
@@ -34,8 +53,8 @@ namespace bd.webappth.web.Controllers.MVC
                 Compilador a = new Compilador(apiServicio,constantesNomina);
                 try
                 {
-                    await a.Evaluar(formula);
-                    return Json(true);
+                   var b= await a.Evaluar(formula);
+                    return Json(b);
                 }
                 catch (Exception)
                 {
@@ -264,11 +283,18 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Formula(ConceptoNomina ConceptoNomina)
         {
+            var validacion =await ValidarFormulaGuardar(ConceptoNomina.FormulaCalculo);
 
+            if (validacion==false)
+            {
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.FormulaNominaInvalida}";
+                // ModelState.AddModelError("FormulaCalculo", "Debe ingresar la fórmula de cálculo");
+                return View(ConceptoNomina);
+            }
             if (string.IsNullOrEmpty(ConceptoNomina.FormulaCalculo))
             {
                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.FaltaIngresoDatos}" ;
-                ModelState.AddModelError("FormulaCalculo", "Debe ingresar la fórmula de cálculo");
+               // ModelState.AddModelError("FormulaCalculo", "Debe ingresar la fórmula de cálculo");
                 return View(ConceptoNomina);
             }
             Response response = new Response();
