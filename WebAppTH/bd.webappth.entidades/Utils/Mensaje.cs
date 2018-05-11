@@ -6,6 +6,9 @@ namespace bd.webappth.entidades.Utils
 {
   public static class Mensaje
     {
+        
+        public static string FormulaNominaInvalida { get { return "La fórmula tiene algún error.Por favor verifique nuevamente."; } }
+
         public static string  FaltaIngresoDatos { get { return "Debe completar el formulario"; } }
         public static string NoExisteModulo { get { return "No se ha encontrado el Módulo"; } }
         public static string Excepcion { get { return "Ha ocurrido una Excepción"; } }

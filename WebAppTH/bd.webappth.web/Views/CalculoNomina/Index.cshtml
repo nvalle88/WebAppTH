@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.PeriodoNomina>
+@model List<bd.webappth.entidades.Negocio.CalculoNomina>
 
 @{
     ViewData["Title"] = "Index";
@@ -21,7 +21,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Periodos</h2>
+                        <h2>Calcular la n&oacute;mina</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -31,25 +31,22 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdPeriodo)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaInicio)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdProceso)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaFin)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Automatico)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Abierto)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Reportado)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Mes)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EmpleadoActivo)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Ano)
-                                        </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EmpleadoPasivo)
                                         </th>
                                         <th>
                                             Opciones
@@ -61,28 +58,27 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                            @Html.DisplayFor(modelItem => item.PeriodoNomina.Descripcion)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.FechaInicio)
+                                            @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.FechaFin)
+                                            @Html.DisplayFor(modelItem => item.Automatico)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Abierto)
+                                            @Html.DisplayFor(modelItem => item.Reportado)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Mes)
+                                            @Html.DisplayFor(modelItem => item.EmpleadoActivo)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Ano)
+                                            @Html.DisplayFor(modelItem => item.EmpleadoActivo)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Estado)
-                                        </td>
-                                        <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdPeriodo }, new { onclick = "cargando();" })
+                                            @Html.ActionLink("Editar", "Reportados", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" }) |
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCalculoNomina }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
                                         </td>
                                     </tr>
                                     }
@@ -95,14 +91,7 @@
         </div>
     </section>
 </div>
-@section Scripts {
-    <script src='~/js/datatables/init.js'></script>
-    <script type="text/javascript">
-
-        function cargando() {
-            mostrarLoadingPanel("content", "")
-        }
-
-    </script>
+ @section Scripts {
+   <script src='~/js/datatables/init.js'></script>
 }
 

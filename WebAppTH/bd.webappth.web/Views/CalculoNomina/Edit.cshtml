@@ -1,7 +1,7 @@
-@model bd.webappth.entidades.Negocio.PeriodoNomina
+@model bd.webappth.entidades.Negocio.CalculoNomina
 
 @{
-    ViewData["Title"] = "BrigadasSSO";
+    ViewData["Title"] = "brigadasSSO";
 }
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
@@ -10,17 +10,18 @@
         <div class="row">
             <article class="col-sm-12 col-md-12 col-lg-7">
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
-                    <header id="table">
+                    <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Crear periodo</h2>
+                        <h2>Editar c&aacute;lculo de n&oacute;mina</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                @{await Html.RenderPartialAsync("_PartialViewPeriodoNomina", Model);}
+                                <input type="hidden" asp-for="IdCalculoNomina" />
+                                @{await Html.RenderPartialAsync("_PartialViewCalculoNomina");}
                                 <footer>
                                     <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
                                     <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>
@@ -35,6 +36,7 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
     <script src='~/lib/select2/dist/js/select2.min.js'></script>
     <script src='~/lib/select2/dist/js/i18n/es.js'></script>
     <script src='~/js/site.js'></script>
@@ -42,6 +44,25 @@
         $(document).ready(function () {
             Init_Select2();
         });
-
     </script>
+
+        <script type="text/javascript">
+
+            function OcultarSuma() {
+
+                if ($("#Suma").prop('checked')) {
+                $("#Suma").prop("checked", false);
+            }
+
+            }
+            function OcultarResta() {
+
+                if ($("#Resta").prop('checked')) {
+                $("#Resta").prop("checked", false);
+            }
+
+
+            }
+    </script>
+
 }

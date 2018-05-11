@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace bd.webappth.entidades.Negocio
@@ -24,13 +25,23 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Descripción")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Descripcion { get; set; }
+
         public bool Abierto { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Proceso")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdProceso { get; set; }
+        [Display(Name = "Estado")]
+        public string Estado { get; set; }
 
-        public virtual ProcesoNomina ProcesoNomina { get; set; }
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Proceso")]
+        [Range(1, 12, ErrorMessage = "Debe seleccionar el {0} ")]
+        public int Mes { get; set; }
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Proceso")]
+        [Range(2018, 2050, ErrorMessage = "Debe seleccionar el {0} ")]
+        public int Ano { get; set; }
+
+        public virtual ICollection<CalculoNomina> CalculoNomina { get; set; }
     }
 }
