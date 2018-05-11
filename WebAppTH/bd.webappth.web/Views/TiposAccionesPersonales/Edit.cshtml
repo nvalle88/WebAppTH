@@ -36,7 +36,7 @@
 
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="TipoAccionPersonal.IdTipoAccionPersonal"/>
+                                <input type="hidden" asp-for="TipoAccionPersonal.IdTipoAccionPersonal" />
                                 @{await Html.RenderPartialAsync("_PartialViewTiposAccionesPersonales");}
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-default" />
@@ -61,15 +61,35 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
-        <script src='~/lib/select2/dist/js/select2.min.js'></script>
-<script src='~/lib/select2/dist/js/i18n/es.js'></script>
-<script src='~/js/site.js'></script>
-<script type="text/javascript">
-            $(document).ready(function () {
-                Init_Select2();
-    });
 
-</script>
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+
+    <!-- Estilos waitMe -->
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <!-- Scripts waitMe -->
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+
+    </script>
+
+
+    <!-- Script llamada al waitme -->
+    <script type="text/javascript">
+                function espera() {
+
+                    mostrarLoadingPanel("content", "Cargando...");
+                }
+
+    </script>
 
 }
