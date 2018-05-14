@@ -118,6 +118,10 @@
                                             {
                                                 Estado = "Asignado Informe";
                                             }
+                                            else if (item.Estado == 3)
+                                            {
+                                                Estado = "Informe Finalizado";
+                                            }
                                             <td>
                                                 @Html.DisplayFor(modelItem => Estado)
                                             </td>
@@ -128,7 +132,22 @@
                                                 }
                                                 @if (item.Estado != 1)
                                                 {
-                                                    @Html.ActionLink("Detalle", "Detalle", new { id = item.IdSolicitudViatico })
+                                                    <text>
+                                                        @Html.ActionLink("Detalle", "Detalle", new { id = item.IdSolicitudViatico }) |
+                                                    </text>
+                                                }
+                                                @if (item.Estado == 2)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink("Informe", "Index", "ItinerarioViaticoTH", new { IdSolicitudViatico = item.IdSolicitudViatico, })
+                                                    </text>
+                                                }
+                                                @if (item.Estado == 3)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViaticoTH", new { IdSolicitudViatico = item.IdSolicitudViatico, }) |
+                                                        @Html.ActionLink("Activa Reliquidacion", "Reliquidacion", new { id = item.IdSolicitudViatico })
+                                                    </text>
                                                 }
                                             </td>
                                         </tr>

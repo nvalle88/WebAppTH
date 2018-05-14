@@ -48,6 +48,14 @@ namespace bd.webappth.entidades.Utils
 
         public static string SeleccioneIndice { get { return "Debe seleccionar un índice en: situación propuesta."; } }
 
+        public static string ConceptoNoExiste { get { return "El concepto no existe."; } }
+        public static string EmpleadoNoExiste { get { return "Identificación del empleado no existe."; } }
+        public static string ConceptoEmpleadoNoExiste { get { return "El concepto y la Identificación del empleado no existen."; } }
+
+        public static object SeleccionarFichero { get { return "Debe seleccionar un fichero..."; } }
+
+        public static object ReportadoConErrores { get { return "Verifique la información del los reportados cargados ya que existen errores en su información, la información con errores no fue guardada..."; } }
+
         public static string ErrorFechaDesdeHasta { get { return "La fecha desde debe ser menor que la fecha hasta."; } }
         
     }

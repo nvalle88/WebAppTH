@@ -61,24 +61,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             ViewData["Error"] = mensaje;
         }
-        public async Task<IActionResult> Create()
-        {
-            InicializarMensaje(null);
-            ObtenerInstancia.Instance = null;
-
-            await CargarCombos();
-
-            var lista = new List<TipoViatico>();
-            lista = await apiServicio.Listar<TipoViatico>(new Uri(WebApp.BaseAddress)
-                                                                   , "api/TiposDeViatico/ListarTiposDeViatico");
-
-            var SolicitudViaticoViewModel = new SolicitudViaticoViewModel
-            {
-                ListaTipoViatico = lista
-            };
-
-            return View(SolicitudViaticoViewModel);
-        }
+       
 
 
         private async Task CargarCombos()
@@ -126,6 +109,39 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+
+        public async Task<IActionResult> Reliquidacion(int id)
+        {
+
+            try
+            {
+                var sol = new SolicitudViatico()
+                {
+                    IdSolicitudViatico = id,
+                    Estado = 4
+
+                };
+                var sol1 = new SolicitudViaticoViewModel()
+                {
+                    SolicitudViatico = sol
+                };
+
+                var respuestaEmpleado = await apiServicio.EditarAsync<Response>(sol1, new Uri(WebApp.BaseAddress),
+                                                             "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
+                if (respuestaEmpleado.IsSuccess)
+                {
+                    return RedirectToAction("ListadoEmpleadosSolicitudViaticos");
+                }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
 
         public async Task<IActionResult> Detalle(int id)
         {
@@ -258,119 +274,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SolicitudViaticoViewModel solicitudViaticoViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                InicializarMensaje(null);
-                return View(solicitudViaticoViewModel);
-            }
-            Response response = new Response();
-            try
-            {
-
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-                var empleado = await ObtenerEmpleado(NombreUsuario);
-
-                solicitudViaticoViewModel.SolicitudViatico.IdEmpleado = empleado.IdEmpleado;
-                solicitudViaticoViewModel.SolicitudViatico.IdConfiguracionViatico = empleado.IdConfiguracionViatico;
-                solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud = DateTime.Now.Date;
-
-                response = await apiServicio.InsertarAsync(solicitudViaticoViewModel,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/SolicitudViaticos/InsertarSolicitudViatico");
-
-                var respuesta = JsonConvert.DeserializeObject<SolicitudViatico>(response.Resultado.ToString());
-
-                if (response.IsSuccess)
-                {
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un solicitud viático",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Solicitud Viático:", solicitudViaticoViewModel.SolicitudViatico.IdSolicitudViatico),
-                    });
-
-                    return RedirectToAction("Create", "ItinerarioViatico", new { IdSolicitudViatico = respuesta.IdSolicitudViatico });
-                }
-
-                ViewData["Error"] = response.Message;
-                return View(solicitudViaticoViewModel);
-
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Solicitud Viático",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
-
-                return BadRequest();
-            }
-        }
-
-        public async Task<IActionResult> Edit(string id)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/SolicitudViaticos");
-
-
-                    var solicitudViatico = JsonConvert.DeserializeObject<SolicitudViatico>(respuesta.Resultado.ToString());
-                    if (respuesta.IsSuccess)
-                    {
-                        InicializarMensaje(null);
-                        await CargarCombos();
-
-                        var listaTiposViaticos = new List<TipoViatico>();
-                        var listaSolicitudTiposViaticos = new List<SolicitudTipoViatico>();
-                        listaTiposViaticos = await apiServicio.Listar<TipoViatico>(new Uri(WebApp.BaseAddress)
-                                                                               , "api/TiposDeViatico/ListarTiposDeViatico");
-                        var solicitudTipoViatico = new SolicitudTipoViatico
-                        {
-                            IdSolicitudViatico = Convert.ToInt32(id)
-                        };
-
-                        listaSolicitudTiposViaticos = await apiServicio.ObtenerElementoAsync1<List<SolicitudTipoViatico>>(solicitudTipoViatico, new Uri(WebApp.BaseAddress)
-                                                                              , "api/TiposDeViatico/ListarSolicitudesTiposViaticos");
-
-                        var SolicitudViaticoViewModel = new SolicitudViaticoViewModel
-                        {
-                            SolicitudViatico = solicitudViatico,
-                            ListaTipoViatico = listaTiposViaticos,
-                            SolicitudTipoViatico = listaSolicitudTiposViaticos
-
-                        };
-
-                        return View(SolicitudViaticoViewModel);
-                    }
-
-                }
-
-                return BadRequest();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
+        
 
         public async Task<ListaEmpleadoViewModel> ObtenerEmpleado(string nombreUsuario)
         {
@@ -425,53 +329,6 @@ namespace bd.webappth.web.Controllers.MVC
             return Json(listaCiudades);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, SolicitudViatico solicitudViatico)
-        {
-            Response response = new Response();
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    response = await apiServicio.EditarAsync(id, solicitudViatico, new Uri(WebApp.BaseAddress),
-                                                                 "api/SolicitudViaticos");
-
-                    if (response.IsSuccess)
-                    {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un solicitud viático",
-                            UserName = "Usuario 1"
-                        });
-
-                        return RedirectToAction("Index");
-                    }
-                    ViewData["Error"] = response.Message;
-                    return View(solicitudViatico);
-
-                }
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un solicitud viático",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
-                return BadRequest();
-            }
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -520,80 +377,5 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index()
-        {
-
-            var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-            var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-            var empleadoJson = ObtenerEmpleado(NombreUsuario);
-            var idEmpleado = empleadoJson.Result.IdEmpleado;
-
-            var empleado = new Empleado()
-            {
-                IdEmpleado = idEmpleado
-            };
-
-            var lista = new List<SolicitudViatico>();
-            try
-            {
-                lista = await apiServicio.Listar<SolicitudViatico>(empleado, new Uri(WebApp.BaseAddress)
-                                                                    , "api/SolicitudViaticos/ListarSolicitudesViaticosPorEmpleado");
-
-                InicializarMensaje(null);
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando estados civiles",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
-            }
-        }
-
-        public async Task<IActionResult> Delete(string id)
-        {
-
-            try
-            {
-                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "api/SolicitudViaticos");
-                if (response.IsSuccess)
-                {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de solicitud viático eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
-                }
-                return RedirectToAction("Index", new { mensaje = response.Message });
-                // return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Solicitud Viático",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
-                return BadRequest();
-            }
-        }
     }
 }

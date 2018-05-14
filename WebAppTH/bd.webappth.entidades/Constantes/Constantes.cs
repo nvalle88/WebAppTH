@@ -63,5 +63,11 @@ namespace bd.webappth.entidades.Constantes
         /// </summary>
         public const string IdItinerario = "IdItinerario";
         public const string IdSolicitudtinerario = "IdSolicitudtinerario";
+
+
+        /// <summary>
+        /// Variables de sección para calculo de Nomina 
+        /// </summary>
+        public const string IdCalculoNominaSession = "IdCalculoNominaSession";
     }
 }

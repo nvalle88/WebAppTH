@@ -1,0 +1,84 @@
+﻿@model bd.webappth.entidades.Negocio.CalculoNomina
+
+@{
+    ViewData["Title"] = "Ficha Odontológica";
+
+    //var ids = Model.IdPersona;
+}
+
+
+<!-- MAIN CONTENT -->
+<div id="content">
+    <section id="" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Reportado</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <form asp-action="MostrarExcel" id="checkout-form" class="smart-form" novalidate="novalidate" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                             <input type="hidden" asp-for="IdCalculoNomina" />
+                            <div class="widget-body no-padding">
+
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <label>&nbsp;</label>
+                                            <div class="input input-file">
+                                                <input id="file" type="file" name="files" onchange="loadFile(event)">
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <footer>
+                                        <button type="submit" id="btn-guardar" class="btn btn-primary " ><i class="fa fa-upload"></i> Cargar</button>
+                                        <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>
+                                    </footer>
+                                </fieldset>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+
+    <script>
+        document.getElementById("examenpdf").style.visibility = "hidden";
+    </script>
+
+    <script>
+        
+    @if (Model.Url != null && Model.Url != "")
+    {
+
+        <text>
+            var output2 = document.getElementById('output');
+            output2.style.height = "700px";
+            output2.style.width = "100%";
+            document.getElementById("examenpdf").style.visibility = "visible";
+
+        </text>
+
+    }
+
+
+    </script>
+}

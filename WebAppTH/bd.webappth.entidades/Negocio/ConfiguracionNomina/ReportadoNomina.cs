@@ -14,6 +14,8 @@ namespace bd.webappth.entidades.Negocio
         public string NombreEmpleado { get; set; }
         public double Cantidad { get; set; }
         public double Importe { get; set; }
+        public bool Valido { get; set; }
+        public string MensajeError { get; set; }
 
         public int IdCalculoNomina { get; set; }
         public virtual CalculoNomina CalculoNomina { get; set; }
