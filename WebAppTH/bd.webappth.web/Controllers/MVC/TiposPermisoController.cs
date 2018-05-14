@@ -11,6 +11,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -25,26 +26,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-
-        private void InicializarMensaje(string mensaje)
-
+        
+        public IActionResult Create()
         {
-
-            if (mensaje == null)
-
-            {
-
-                mensaje = "";
-
-            }
-
-            ViewData["Error"] = mensaje;
-
-        }
-
-        public IActionResult Create(string mensaje)
-        {
-            InicializarMensaje(mensaje);
             return View();
         }
 
@@ -55,7 +39,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}";
                 return View(TipoPermiso);
             }
 
@@ -67,37 +51,16 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/TiposPermiso/InsertarTipoPermiso");
                 if (response.IsSuccess)
                 {
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un tipo de permiso",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "TipoPermiso:", TipoPermiso.IdTipoPermiso),
-                    });
-
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Success}|{response.Message}|{"7000"}";
                     return RedirectToAction("Index");
                 }
 
-                ViewData["Error"] = response.Message;
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"7000"}";
                 return View(TipoPermiso);
 
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando un tipo de permiso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
-
                 return BadRequest();
             }
         }
@@ -115,10 +78,9 @@ namespace bd.webappth.web.Controllers.MVC
                     respuesta.Resultado = JsonConvert.DeserializeObject<TipoPermiso>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
                     {
-                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
-
+                    
                 }
 
                 return BadRequest();
@@ -143,19 +105,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un registro sistema",
-                            UserName = "Usuario 1"
-                        });
-
+                        this.TempData["MensajeTimer"] = $"{Mensaje.Success}|{response.Message}|{"7000"}";
                         return RedirectToAction("Index");
                     }
-                    ViewData["Error"] = response.Message;
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
                     return View(TipoPermiso);
 
                 }
@@ -163,16 +117,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un tipo de permiso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
                 return BadRequest();
             }
         }
@@ -186,7 +130,7 @@ namespace bd.webappth.web.Controllers.MVC
                 lista = await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress)
                                                                     , "api/TiposPermiso/ListarTiposPermiso");
 
-                InicializarMensaje(mensaje);
+                //InicializarMensaje(mensaje);
                 return View(lista);
             }
             catch (Exception ex)
@@ -213,30 +157,23 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/TiposPermiso");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+                    return this.RedireccionarMensajeTime(
+                            "TiposPermiso",
+                            "Index",
+                             new { identificacion = response.Resultado },
+                            $"{Mensaje.Success}|{response.Message}|{"10000"}"
+                         );
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
+
+                return this.RedireccionarMensajeTime(
+                            "TiposPermiso",
+                            "Index",
+                             new { identificacion = response.Resultado },
+                            $"{Mensaje.Error}|{response.Message}|{"10000"}"
+                         );
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar un tipo de permiso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
 
                 return BadRequest();
             }

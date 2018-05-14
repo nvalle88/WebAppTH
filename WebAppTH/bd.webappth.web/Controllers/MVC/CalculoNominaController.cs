@@ -1,26 +1,211 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using bd.webappth.entidades.Constantes;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 
 namespace bd.webappth.web.Controllers.MVC
 {
     public class CalculoNominaController: Controller
     {
-
+        private IHostingEnvironment _hostingEnvironment;
         private readonly IApiServicio apiServicio;
+        private readonly IUploadFileService uploadFileService;
 
-        public CalculoNominaController(IApiServicio apiServicio)
+        public CalculoNominaController(IApiServicio apiServicio, IHostingEnvironment _hostingEnvironment, IUploadFileService uploadFileService)
         {
             this.apiServicio = apiServicio;
+            this._hostingEnvironment = _hostingEnvironment;
+            this.uploadFileService = uploadFileService;
 
         }
+
+
+        public async Task<IActionResult> ReportadoNomina(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    if (HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession) !=Convert.ToInt32(id))
+                    {
+                        HttpContext.Session.SetInt32(Constantes.IdCalculoNominaSession, Convert.ToInt32(id));
+                    }
+                    var CalculoNomina = new CalculoNomina { IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina };
+                    return View(CalculoNomina);
+                }
+
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
+            }
+        }
+
+        private async Task<FileInfo> SubirFichero(List<IFormFile> files)
+        {
+            byte[] data;
+            using (var br = new BinaryReader(files[0].OpenReadStream()))
+                data = br.ReadBytes((int)files[0].OpenReadStream().Length);
+            string sFileName = files[0].FileName;
+            await uploadFileService.UploadFile(data, "DocumentoNomina/Reportados", Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina), ".xlsx");
+            string sWebRootFolder = _hostingEnvironment.WebRootPath;
+
+            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, string.Format("{0}/{1}.{2}", "DocumentoNomina/Reportados", ObtenerCalculoNomina().IdCalculoNomina, "xlsx")));
+            return file;
+        }
+
+
+        private async Task<List<ReportadoNomina>> LeerExcel(FileInfo file)
+        {
+            try
+            {
+                var lista = new List<ReportadoNomina>();
+                using (ExcelPackage package = new ExcelPackage(file))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                    int rowCount = worksheet.Dimension.Rows;
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                     var codigoConcepto =worksheet.Cells[row, 1].Value ==null ? "" : worksheet.Cells[row, 1].Value.ToString();
+                     var identificacionEmpleado = worksheet.Cells[row, 2].Value==null ? "" : worksheet.Cells[row, 2].Value.ToString();
+                     var nombreEmpleado =worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
+                     var cantidadStr = worksheet.Cells[row, 4].Value == null ? Convert.ToString(0.0) : worksheet.Cells[row, 4].Value.ToString() ;
+                     var importeStr =worksheet.Cells[row, 5].Value == null ? Convert.ToString(0.0) :worksheet.Cells[row, 5].Value.ToString();
+
+                        cantidadStr = cantidadStr.Replace(",", ",");
+                        importeStr = importeStr.Replace(",", ",");
+                        var cantidad = Convert.ToDouble(cantidadStr);
+                        var importe = Convert.ToDouble(importeStr);
+                      
+                            var concepto = new ConceptoNomina { Codigo = codigoConcepto };
+                            var conceptoRequest = await apiServicio.ObtenerElementoAsync1<Response>(concepto, new Uri(WebApp.BaseAddress),
+                                                            "api/ConceptoNomina/ExisteConceptoPorCodigo");
+
+                            var persona = new Persona { Identificacion = identificacionEmpleado };
+                            var empleadoRequest = await apiServicio.ObtenerElementoAsync1<Response>(persona, new Uri(WebApp.BaseAddress),
+                                                            "api/Empleados/ExisteEmpleadoPorIdentificacion");
+
+                        var validar =0;
+                            if (conceptoRequest.IsSuccess==false && empleadoRequest.IsSuccess==false)
+                            {
+                                lista.Add(new ReportadoNomina
+                                {
+                                    CodigoConcepto = codigoConcepto,
+                                    IdentificacionEmpleado = identificacionEmpleado,
+                                    NombreEmpleado = nombreEmpleado,
+                                    Cantidad = cantidad,
+                                    Importe = importe,
+                                    IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina,
+                                    Valido = false,
+                                    MensajeError=Mensaje.ConceptoNoExiste
+
+                                });
+                            validar = -1;
+                        }
+                        if (conceptoRequest.IsSuccess == true && empleadoRequest.IsSuccess == false)
+                        {
+                            lista.Add(new ReportadoNomina
+                            {
+                                CodigoConcepto = codigoConcepto,
+                                IdentificacionEmpleado = identificacionEmpleado,
+                                NombreEmpleado = nombreEmpleado,
+                                Cantidad = cantidad,
+                                Importe = importe,
+                                IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina,
+                                Valido = false,
+                                MensajeError = Mensaje.EmpleadoNoExiste
+
+                            });
+                            validar = -1;
+
+                        }
+                        if (conceptoRequest.IsSuccess == false && empleadoRequest.IsSuccess == true)
+                        {
+                            lista.Add(new ReportadoNomina
+                            {
+                                CodigoConcepto = codigoConcepto,
+                                IdentificacionEmpleado = identificacionEmpleado,
+                                NombreEmpleado = nombreEmpleado,
+                                Cantidad = cantidad,
+                                Importe = importe,
+                                IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina,
+                                Valido = false,
+                                MensajeError = Mensaje.ConceptoEmpleadoNoExiste
+
+                            });
+                            validar = -1;
+                        }
+
+                        if (validar==0)
+                        {
+                            lista.Add(new ReportadoNomina
+                            {
+                                CodigoConcepto = codigoConcepto,
+                                IdentificacionEmpleado = identificacionEmpleado,
+                                NombreEmpleado = nombreEmpleado,
+                                Cantidad = cantidad,
+                                Importe = importe,
+                                IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina,
+                                Valido = true,
+                            });  
+                        }
+                        
+                    }
+                    return lista;
+                }
+            }
+            catch (Exception ex)
+            {
+                return new List<ReportadoNomina>();            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MostrarExcel(CalculoNomina calculoNomina, List<IFormFile> files)
+        {
+            if (files.Count<=0)
+            {
+                return this.Redireccionar("CalculoNomina","ReportadoNomina",new  {id=Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
+            }
+
+           
+            var file= await SubirFichero(files);
+            var lista =await LeerExcel(file);
+            var listaSalvar = lista.Where(x => x.Valido == true).ToList();
+            var reportadoRequest = new Response();
+            if (listaSalvar.Count>0)
+            {
+                 reportadoRequest = await apiServicio.InsertarAsync<Response>(listaSalvar, new Uri(WebApp.BaseAddress),
+                            "api/ConceptoNomina/InsertarReportadoNomina"); 
+            }
+            var listaErrores = lista.Where(x => x.Valido == false).ToList();
+            if (listaErrores.Count>0)
+            {
+                this.TempData["Mensaje"] = $"{Mensaje.Aviso}|{Mensaje.ReportadoConErrores}";
+            }
+            else
+            {
+                this.TempData["Mensaje"] = $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}";
+            }
+
+            return View(lista);
+
+        }
+
 
         public async Task<IActionResult> Create(string mensaje)
         {
@@ -190,6 +375,15 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
             }
+        }
+
+        public CalculoNomina ObtenerCalculoNomina()
+        {
+            var gastoPersonal = new CalculoNomina
+            {
+                IdCalculoNomina = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession)),
+            };
+            return gastoPersonal;
         }
 
     }

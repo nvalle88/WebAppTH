@@ -76,7 +76,7 @@
                                             @Html.DisplayFor(modelItem => item.EmpleadoActivo)
                                         </td>
                                         <td>
-                                            @Html.ActionLink("Editar", "Reportados", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" }) |
+                                            @Html.ActionLink("Cargar reportados (.xlsx)", "ReportadoNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" }) |
                                             @Html.ActionLink("Editar", "Edit", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" }) |
                                             @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCalculoNomina }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
                                         </td>
