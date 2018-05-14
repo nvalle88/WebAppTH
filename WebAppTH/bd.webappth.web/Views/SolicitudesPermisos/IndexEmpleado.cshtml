@@ -88,28 +88,11 @@
                                                 @Html.DisplayFor(modelItem => item.Motivo)
                                             </td>
                                             <td>
-
                                                 @Html.DisplayFor(modelItem => item.TipoPermiso.Nombre)
                                             </td>
                                             <td>
 
-                                                @{
-                                                    switch (item.Estado)
-                                                    {
-                                                        case 0:
-                                                            <p>Pendiente</p>
-                                                            break;
-                                                        case 1:
-                                                            <p>Aprobado</p>
-                                                            break;
-                                                        case 2:
-                                                            <p>Denegado</p>
-                                                            break;
-                                                        default:
-                                                            <p>No tiene estado</p>
-                                                            break;
-                                                    }
-                                                }
+                                               
 
                                             </td>
                                             <td>

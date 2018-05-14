@@ -47,5 +47,8 @@ namespace bd.webappth.entidades.Utils
         public static string ErrorDesactivar { get { return "Ha ocurrido un error al desactivar el registro."; } }
 
         public static string SeleccioneIndice { get { return "Debe seleccionar un índice en: situación propuesta."; } }
+
+        public static string ErrorFechaDesdeHasta { get { return "La fecha desde debe ser menor que la fecha hasta."; } }
+        
     }
 }

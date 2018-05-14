@@ -13,6 +13,8 @@ using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -40,6 +42,7 @@ namespace bd.webappth.web.Controllers.MVC
             return View();
         }
 
+        /*
         public async Task<IActionResult> AprobarPermisos(int id)
         {
             
@@ -94,7 +97,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        
+        */
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -155,65 +158,44 @@ namespace bd.webappth.web.Controllers.MVC
             
             try
             {
-
-                ViewData["Error"] = string.Empty;
-
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
                 var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                Empleado empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(NombreUsuario, new Uri(WebApp.BaseAddress), "api/Empleados/EmpleadoSegunNombreUsuario");
+                var usuario = await apiServicio.ObtenerElementoAsync1<Empleado>(NombreUsuario, new Uri(WebApp.BaseAddress), "api/Empleados/EmpleadoSegunNombreUsuario");
 
 
-                var respuesta = await apiServicio.SeleccionarAsync<Response>(empleado.IdEmpleado.ToString(), new Uri(WebApp.BaseAddress),
-                                                                 "api/Empleados");
+                var respuesta = await apiServicio.SeleccionarAsync<Response>(usuario.IdEmpleado.ToString(), new Uri(WebApp.BaseAddress),"api/Empleados");
 
 
-                respuesta.Resultado = JsonConvert.DeserializeObject<Empleado>(respuesta.Resultado.ToString());
+                var empleado = JsonConvert.DeserializeObject<Empleado>(respuesta.Resultado.ToString());
                
-                ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
-
-
-                var solicitudPermiso = new SolicitudPermiso
-                {
-                    Empleado = (Empleado)respuesta.Resultado,
-                    FechaDesde = DateTime.Now,
-                    FechaHasta= DateTime.Now
-
-                };
                 
+
                 var solicitudPermisoViewModel = new SolicitudPermisoViewModel
                 {
-                    NombresApellidosEmpleado = solicitudPermiso.Empleado.Persona.Nombres + " " + solicitudPermiso.Empleado.Persona.Apellidos,
-                    NombreDependencia = solicitudPermiso.Empleado.Dependencia.Nombre,
-                    SolicitudPermiso = solicitudPermiso,
+                    NombresApellidosEmpleado = empleado.Persona.Nombres + " " + empleado.Persona.Apellidos,
+                    NombreDependencia = empleado.Dependencia.Nombre,
 
-                    EstadoLista = new List<ListaEstado>
-                            {
-                                new ListaEstado {Id = "-1", Nombre = "Denegado"},
-                                new ListaEstado {Id ="0", Nombre = "Devuelto"},
-                                new ListaEstado {Id = "1", Nombre = "Aprobado"}
-                            },
+                    SolicitudPermiso = new SolicitudPermiso {
+                        FechaDesde = DateTime.Now.Date,
+                        FechaHasta = DateTime.Now.Date,
+                        Empleado = empleado,
+                        Observacion = "Sin Observación"
+                    }
+
                 };
 
-                ViewData["IdListaEstado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(solicitudPermisoViewModel.EstadoLista, "Id", "Nombre");
-
+                await CargarCombos();
+                
                 return View(solicitudPermisoViewModel);
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Ingresar solicitud permiso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
         }
 
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PedirPermiso(SolicitudPermisoViewModel solicitudPermisoViewModel)
@@ -221,42 +203,27 @@ namespace bd.webappth.web.Controllers.MVC
            
             try
             {
-                string mensaje = string.Empty;
 
+                if (!ModelState.IsValid) {
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}";
+
+                    await CargarCombos();
+                    return View(solicitudPermisoViewModel);
+                }
+                
                 if (solicitudPermisoViewModel.SolicitudPermiso.FechaDesde > solicitudPermisoViewModel.SolicitudPermiso.FechaHasta)
                 {
-                    
-                    mensaje = "La fecha desde debe ser menor que la fecha hasta";
-                    ViewData["Error"] = mensaje;
-                    ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ErrorFechaDesdeHasta}|{"12000"}";
+
+                    await CargarCombos();
 
                     return View(solicitudPermisoViewModel);
                 }
-
+                
                 string fechaDesde = solicitudPermisoViewModel.SolicitudPermiso.FechaDesde.DayOfWeek.ToString();
                 string fechaHasta = solicitudPermisoViewModel.SolicitudPermiso.FechaHasta.DayOfWeek.ToString();
 
-
-                if (fechaDesde.Equals("Saturday") || fechaDesde.Equals("Sunday"))
-                {
-                    mensaje = "La fecha desde no puede ser ni Sábado, ni Domingo";
-                    ViewData["Error"] = mensaje;
-                    ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
-
-                    return View(solicitudPermisoViewModel);
-
-                }
-
-                if (fechaHasta.Equals("Saturday") || fechaHasta.Equals("Sunday"))
-                {
-                    mensaje = "La fecha hasta no puede ser ni Sábado, ni Domingo";
-                    ViewData["Error"] = mensaje;
-                    ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
-
-                    return View(solicitudPermisoViewModel);
-
-                }
-
+                
                 // Diferencia en horas
                 TimeSpan? diferenciaHoras = solicitudPermisoViewModel.SolicitudPermiso.HoraHasta - solicitudPermisoViewModel.SolicitudPermiso.HoraDesde;
 
@@ -266,8 +233,12 @@ namespace bd.webappth.web.Controllers.MVC
                 var solicitudPermiso = new SolicitudPermiso
                 {
                     IdEmpleado = solicitudPermisoViewModel.SolicitudPermiso.Empleado.IdEmpleado,
+                    IdTipoPermiso = solicitudPermisoViewModel.SolicitudPermiso.IdTipoPermiso,
+
                     Motivo = solicitudPermisoViewModel.SolicitudPermiso.Motivo,
-                    IdTipoPermiso = solicitudPermisoViewModel.IdTipoPermiso,
+                    Observacion = solicitudPermisoViewModel.SolicitudPermiso.Observacion,
+                    Estado = solicitudPermisoViewModel.SolicitudPermiso.Estado,
+
                     FechaSolicitud = DateTime.Now,
                     FechaDesde = solicitudPermisoViewModel.SolicitudPermiso.FechaDesde,
                     FechaHasta = solicitudPermisoViewModel.SolicitudPermiso.FechaHasta,
@@ -280,30 +251,18 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    LogEntryTranfer logEntryTranfer = new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado una solicitud permiso",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = "Solicitud Permiso",
-                        ObjectPrevious = "NULL",
-                        ObjectNext = JsonConvert.SerializeObject(response.Resultado),
-                    };
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
-
-                    mensaje = Mensaje.Satisfactorio;
-
-                    return RedirectToAction("IndexEmpleado");
+                    
+                    return this.RedireccionarMensajeTime(
+                            "SolicitudesPermisos",
+                            "IndexEmpleado",
+                            $"{Mensaje.Success}|{response.Message}|{"6000"}"
+                    );
+                    
                 }
-               
 
-                ViewData["Error"] = response.Message;
-                ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
-                ViewData["IdListaEstado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(solicitudPermisoViewModel.EstadoLista, "Id", "Nombre");
+                await CargarCombos();
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"12000"}";
 
                 return View(solicitudPermisoViewModel);
 
@@ -313,6 +272,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+        
 
         public async Task<IActionResult> Edit(string id)
         {
@@ -326,7 +286,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudPermiso>(respuesta.Resultado.ToString());
 
-                    ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+                    await CargarCombos();
                     
                     if (respuesta.IsSuccess)
                     {
@@ -400,9 +360,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                ViewData["Error"] = string.Empty;
-
-                ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
+                await CargarCombos();
      
                 SolicitudPermisoViewModel solicitudPermisoViewModel = await apiServicio.ObtenerElementoAsync1<SolicitudPermisoViewModel>(id, new Uri(WebApp.BaseAddress), "api/SolicitudesPermisos/ObtenerInformacionSolicitudPermiso");
                 
@@ -410,15 +368,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando una solicitud de permiso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
         }
@@ -433,31 +382,50 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    solicitudPermisoViewModel.SolicitudPermiso.Estado = 0;
-                    response = await apiServicio.EditarAsync(id, solicitudPermisoViewModel.SolicitudPermiso, new Uri(WebApp.BaseAddress),
-                                                                 "api/SolicitudesPermisos");
+
+                    if (!ModelState.IsValid)
+                    {
+                        this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}";
+
+                        await CargarCombos();
+                        return View(solicitudPermisoViewModel);
+                    }
+
+                    if (solicitudPermisoViewModel.SolicitudPermiso.FechaDesde > solicitudPermisoViewModel.SolicitudPermiso.FechaHasta)
+                    {
+                        this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ErrorFechaDesdeHasta}|{"12000"}";
+
+                        await CargarCombos();
+
+                        return View(solicitudPermisoViewModel);
+                    }
+
+                    string fechaDesde = solicitudPermisoViewModel.SolicitudPermiso.FechaDesde.DayOfWeek.ToString();
+                    string fechaHasta = solicitudPermisoViewModel.SolicitudPermiso.FechaHasta.DayOfWeek.ToString();
+
+
+                    // Diferencia en horas
+                    TimeSpan? diferenciaHoras = solicitudPermisoViewModel.SolicitudPermiso.HoraHasta - solicitudPermisoViewModel.SolicitudPermiso.HoraDesde;
+
+                    // Diferencia en dìas
+                    TimeSpan? tsDiferenciaDias = solicitudPermisoViewModel.SolicitudPermiso.FechaHasta - solicitudPermisoViewModel.SolicitudPermiso.FechaDesde;
+
+                    
+                    
+                    response = await apiServicio.EditarAsync(id, solicitudPermisoViewModel.SolicitudPermiso, new Uri(WebApp.BaseAddress),"api/SolicitudesPermisos");
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Solicitud de Permiso", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una solicitud de permiso",
-                            UserName = "Usuario 1"
-                        });
-
-                        return RedirectToAction("IndexEmpleado");
+                        return this.RedireccionarMensajeTime(
+                            "SolicitudesPermisos",
+                            "IndexEmpleado",
+                            $"{Mensaje.Success}|{response.Message}|{"6000"}"
+                        );
+                        
                     }
-                    ViewData["Error"] = response.Message;
 
-                  var a=  ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
-
-
-                    ViewData["IdTipoPermiso"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoPermiso>(new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso"), "IdTipoPermiso", "Nombre");
-                    
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"12000"}";
+                    await CargarCombos();
                     return View(solicitudPermisoViewModel.SolicitudPermiso);
 
                 }
@@ -465,21 +433,11 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una solicitud de permiso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
                 return BadRequest();
             }
         }
 
-
+        /*
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AprobarPermisos(string id, SolicitudPermisoViewModel solicitudPermisoViewModel)
@@ -561,36 +519,29 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        
+        */
 
         public async Task<IActionResult> IndexEmpleado()
         {
 
-            var lista = new List<SolicitudPermiso>();
+            var lista = new List<SolicitudPermisoViewModel>();
+
             try
             {
-
 
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
                 var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
                 Empleado empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(NombreUsuario, new Uri(WebApp.BaseAddress), "api/Empleados/EmpleadoSegunNombreUsuario");
                 
-                lista = await apiServicio.Listar<SolicitudPermiso>(empleado, new Uri(WebApp.BaseAddress)
-                                                                    , "api/SolicitudesPermisos/ListarSolicitudesPermisosEmpleado");
+                lista = await apiServicio.Listar<SolicitudPermisoViewModel>(empleado, new Uri(WebApp.BaseAddress)
+                              , "api/SolicitudesPermisos/ListarSolicitudesPermisosEmpleado");
+
                 return View(lista);
+
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando una solicitud de permiso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
         }
@@ -689,5 +640,21 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+        public async Task CargarCombos() { 
+
+            //** Estados de aprobación AprobacionMovimientoInternoViewModel
+            var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/SolicitudesPermisos/ListarEstadosAprobacionEmpleado");
+
+            ViewData["IdListaEstado"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+
+
+            //** Tipos de permisos **
+            var listaTiposPermisos = await apiServicio.Listar<TipoPermiso>(
+                new Uri(WebApp.BaseAddress), "api/TiposPermiso/ListarTiposPermiso");
+
+            ViewData["IdTipoPermiso"] = new SelectList(listaTiposPermisos, "IdTipoPermiso", "Nombre");
+        }
+
     }
 }
