@@ -5,7 +5,7 @@
 }
 
 
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
 
     <div class="col col-10">
@@ -66,8 +66,8 @@
                                 @{await Html.RenderPartialAsync("_PartialViewTiposAccionesPersonales", Model);}
 
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-default" />
-                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                    <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                    <a asp-action="Index" class="btn btn-default" onclick="espera()">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -89,20 +89,35 @@
 <!-- END MAIN CONTENT -->
 @section Scripts {
 
-    
-<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
-<script src='~/lib/select2/dist/js/select2.min.js'></script>
-<script src='~/lib/select2/dist/js/i18n/es.js'></script>
 
-<script src='~/js/site.js'></script>
+    <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
 
-<script type="text/javascript">
-            $(document).ready(function () {
-                Init_Select2();
-    });
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 
-</script>
+    <!-- Estilos waitMe -->
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <!-- Scripts waitMe -->
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
 
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+
+    </script>
+
+    <!-- Script llamada al waitme -->
+    <script type="text/javascript">
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
 
 }

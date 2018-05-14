@@ -6,7 +6,7 @@
 }
 
 
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
 
     <div class="col col-10">
@@ -37,7 +37,7 @@
     </div>
 
     <p></p>
-    <a asp-action="Create">
+    <a asp-action="Create" onclick="espera()">
         <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
@@ -154,7 +154,24 @@
 </div>
 <!-- END MAIN CONTENT -->
 
- @section Scripts {
+@section Scripts {
     <script src='~/js/datatables/init.js'></script>
+
+    <!-- Estilos waitMe -->
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <!-- Scripts waitMe -->
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <!-- Script llamada al waitme -->
+    <script type="text/javascript">
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
 }
 

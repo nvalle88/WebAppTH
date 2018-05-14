@@ -11,30 +11,37 @@ namespace bd.webappth.entidades.Negocio
 
         public int IdEmpleado { get; set; }
 
+        [Display(Name = "Fecha solicitud")]
         public DateTime FechaSolicitud { get; set; }
 
+        [Display(Name = "Fecha desde")]
         public TimeSpan HoraDesde { get; set; }
 
+        [Display(Name = "Fecha hasta")]
         public TimeSpan HoraHasta { get; set; }
 
+        [Display(Name = "Fecha desde")]
         public DateTime FechaDesde { get; set; }
 
+        [Display(Name = "Fecha hasta")]
         public DateTime FechaHasta { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Motivo:")]
-        [StringLength(20, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        [Display(Name = "Motivo")]
         public string Motivo { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Observacion:")]
-        [StringLength(20, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        [Display(Name = "Observación")]
         public string Observacion { get; set; }
+
 
         public int? Estado { get; set; }
 
+        [Display(Name = "Permiso")]
+        [Range(1,double.MaxValue,ErrorMessage = "Seleccione un {0}")]
         public int IdTipoPermiso { get; set; }
 
+        [Display(Name = "Fecha de aprobación")]
         public DateTime? FechaAprobado { get; set; }
         
         public virtual Empleado Empleado { get; set; }

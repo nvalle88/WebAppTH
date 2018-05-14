@@ -6,11 +6,12 @@
 }
 
 <style>
-    .formularioClass {
-        
-    }
-    .formularioClass.form-control {
-
+    .btnClass {
+        width:100px;
+        font-size:15px;
+        font-weight:100;
+        padding-top:4px;
+        padding-bottom:4px;
     }
 </style>
 <!-- MAIN CONTENT -->
@@ -49,8 +50,10 @@
 
                                 <div style="float:right; padding:1%;">
                                     <footer style="background-color:transparent;border:none;">
-                                        <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-default" onclick="espera()" />
-                                        <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.DatosBasicosEmpleadoViewModel.Identificacion" class="btn btn-default" value="Cancelar" onclick="espera()" />
+
+                                        <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.DatosBasicosEmpleadoViewModel.Identificacion" class="btn btn-default btnClass" value="Cancelar" onclick="espera()"/>
+
+                                        <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-default btnClass" onclick="espera()" />
 
                                     </footer>
                                 </div>

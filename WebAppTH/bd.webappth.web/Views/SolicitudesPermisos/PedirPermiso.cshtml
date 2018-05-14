@@ -1,7 +1,7 @@
 @model bd.webappth.entidades.ViewModels.SolicitudPermisoViewModel
 
 @{
-    ViewData["Title"] = "CONTROL DE SALIDA DE PERSONAL EN HORAS DE OFICINA";
+    ViewData["Title"] = "Permisos";
 }
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
@@ -15,7 +15,7 @@
         <!-- START ROW -->
         <div class="row">
             <!-- NEW WIDGET START -->
-            <article class="col-lg-9">
+            <article class="col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false">
                     <!-- widget options:
@@ -33,7 +33,7 @@
                 -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
-                        <h2>Control de Salida de Personal en Horas de Oficina</h2>
+                        <h2>Control de salida de personal en horas de oficina</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -43,27 +43,22 @@
                         </div>
                         <!-- end widget edit box -->
                         <!-- widget content -->
-                        <div class="widget-body">
+                        <footer class="widget-body">
+
                             <form  id="frmSolicitarPermisos"  asp-action="PedirPermiso" class="smart-form" novalidate="novalidate">
                                 <input type="hidden" asp-for="SolicitudPermiso.Empleado.IdEmpleado" />
                                 <input type="hidden" asp-for="NombresApellidosEmpleado" />
                                 <input type="hidden" asp-for="NombreDependencia" />
+
                                 @{await Html.RenderPartialAsync("_PartialViewPedirPermiso", Model);}
-                                <div class="form-actions">
-                                    <div class="row">
-                                       
-                                        <div class="col-lg-12">
-                                            <button class="btn btn-default btn-lg" type="submit">
-                                                Cancelar
-                                            </button>
-                                            <button class="btn btn-primary btn-lg" type="submit" id="btnPedirPermiso">
-                                                <i class="fa fa-edit"></i>
-                                                Pedir Permiso
-                                            </button>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
+
+                                <footer>
+
+                                    <input class="btn btn-default" type="submit" id="btnPedirPermiso" value="Guardar" onclick="espera()">
+                                    <input class="btn btn-default" asp-action="IndexEmpleado" type="submit" value="Cancelar" onclick="espera()">
+
+                                </footer>
+                                
                             </form>
                         </div>
                         <!-- end widget content -->
@@ -87,12 +82,13 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    <script type="text/javascript">
-        <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    
+<script src='~/lib/select2/dist/js/select2.min.js'></script>
 <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 <script src='~/js/site.js'></script>
-<script type="text/javascript">
-            $(document).ready(function () {
+<script>
+
+    $(document).ready(function () {
                 Init_Select2();
     });
 
