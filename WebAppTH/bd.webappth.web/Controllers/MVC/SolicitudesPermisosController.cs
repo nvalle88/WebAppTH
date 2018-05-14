@@ -530,15 +530,23 @@ namespace bd.webappth.web.Controllers.MVC
             {
 
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                Empleado empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(NombreUsuario, new Uri(WebApp.BaseAddress), "api/Empleados/EmpleadoSegunNombreUsuario");
+                if (claim.IsAuthenticated == true)
+                {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    Empleado empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(NombreUsuario, new Uri(WebApp.BaseAddress), "api/Empleados/EmpleadoSegunNombreUsuario");
+
+                    lista = await apiServicio.Listar<SolicitudPermisoViewModel>(empleado, new Uri(WebApp.BaseAddress)
+                                  , "api/SolicitudesPermisos/ListarSolicitudesPermisosEmpleado");
+
+                    return View(lista);
+                }
+                else {
+
+                    return RedirectToAction("Login", "Login");
+                }
                 
-                lista = await apiServicio.Listar<SolicitudPermisoViewModel>(empleado, new Uri(WebApp.BaseAddress)
-                              , "api/SolicitudesPermisos/ListarSolicitudesPermisosEmpleado");
-
-                return View(lista);
-
             }
             catch (Exception ex)
             {
