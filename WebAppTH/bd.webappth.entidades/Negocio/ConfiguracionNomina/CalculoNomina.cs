@@ -21,6 +21,12 @@ namespace bd.webappth.entidades.Negocio
         [StringLength(250, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Descripcion { get; set; }
 
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Url")]
+        [StringLength(250, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        public string Url { get; set; }
+
         [Display(Name = "Automático")]
         public bool Automatico { get; set; }
 

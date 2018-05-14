@@ -46,6 +46,7 @@
   <ItemGroup>
     <PackageReference Include="bd.log.guardar" Version="1.1.1" />
     <PackageReference Include="EnviarCorreo" Version="1.1.8" />
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.3.2" />
     <PackageReference Include="jquery" Version="3.2.1" />
     <PackageReference Include="MailKit" Version="2.0.1" />
@@ -76,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\ConfiguracionGeneral\" />
+    <Folder Include="Views\EjemploVistas\" />
     <Folder Include="Views\Services\" />
     <Folder Include="Views\ActividadesEsenciales\" />
     <Folder Include="Views\AnosExperiencia\" />
@@ -86,6 +88,7 @@
     <Folder Include="Views\DenominacionesCompetencias\" />
     <Folder Include="Views\ConfiguracionesViaticos\" />
     <Folder Include="Views\AccionPersonal\" />
+    <Folder Include="wwwroot\DocumentoNomina\Reportados\" />
     <Folder Include="wwwroot\js\datatables\" />
   </ItemGroup>
   <ItemGroup>
