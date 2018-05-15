@@ -1,0 +1,231 @@
+@model bd.webappth.entidades.ViewModels.SolicitudPermisoViewModel
+
+@{
+    ViewData["Title"] = "Control de Salida de Personal en Horas de Oficina";
+}
+
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+
+<!-- MAIN CONTENT -->
+<div id="content">
+
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <div class="row">
+                &nbsp;
+            </div>
+
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Control de salida en horas de oficina</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="AprobarPermisos" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="SolicitudPermiso.IdSolicitudPermiso" />
+                                <input type="hidden" asp-for="SolicitudPermiso.IdTipoPermiso" />
+                                <input type="hidden" asp-for="SolicitudPermiso.IdEmpleado" />
+
+                                <fieldset>
+
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <label class="input col-lg-12">@Html.DisplayNameFor(m => m.SolicitudPermiso.Estado)</label>
+                                            <label class="input col-lg-4">
+                                                <select asp-for="SolicitudPermiso.Estado" class="form-control" asp-items="ViewBag.IdListaEstado" disabled></select>
+                                                <span asp-validation-for="SolicitudPermiso.Estado" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">
+                                        &nbsp;<br />&nbsp;
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-lg-11">
+                                            <legend> Control de salida de personal en horas de oficina</legend>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">&nbsp;</div>
+
+                                    <div class="row">
+
+                                        <section class="col col-lg-12">
+                                            <label class="input col-lg-12">@Html.DisplayNameFor(m => m.NombresApellidosEmpleado)</label>
+                                            <label class="input col-lg-6">
+                                                <input asp-for="NombresApellidosEmpleado" class="form-control" disabled />
+                                            </label>
+                                        </section>
+
+                                        <section class="col col-lg-12">
+                                            <label class="input col-lg-12">@Html.DisplayNameFor(m => m.NombreDependencia)</label>
+                                            <label class="input col-lg-6">
+                                                <input asp-for="NombreDependencia" class="form-control" disabled />
+                                            </label>
+                                        </section>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-lg-11">
+                                            <legend>Tiempo que Solicita</legend>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">&nbsp;</div>
+
+                                    <div class="row">
+
+                                        <section class="col col-lg-4">
+                                            <label class="input col-lg-12">@Html.DisplayNameFor(m => m.SolicitudPermiso.FechaDesde)</label>
+                                            <label class="input col-lg-12">
+                                                <input asp-for="SolicitudPermiso.FechaDesde" type="text" class="datepicker disabled" data-dateformat='yy-mm-dd' data-msg-required='El campo es requerido' data-rule-required='true' disabled>
+                                            </label>
+
+                                        </section>
+
+                                        <section class="col col-lg-4">
+
+                                            <label class="input col-lg-12">@Html.DisplayNameFor(m => m.SolicitudPermiso.HoraDesde)</label>
+                                            <label class="input col-lg-4">
+                                                <input type="time" asp-for="SolicitudPermiso.HoraDesde" data-msg-required='El campo es requerido' data-rule-required='true' min="08:00" max="17:00" disabled>
+                                            </label>
+
+                                        </section>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <section class="col col-lg-4">
+
+                                            <label class="input col-lg-12">Fecha Hasta</label>
+                                            <label class="input col-lg-12">
+                                                <input asp-for="SolicitudPermiso.FechaHasta" type="text" data-dateformat='dd/mm/yy' class="form-control input datepicker " placeholder="Seleccione Fecha de Fin " data-msg-required='El campo es requerido' data-rule-required='true' disabled>
+                                            </label>
+
+                                        </section>
+
+                                        <section class="col col-lg-4">
+
+                                            <label class="input col-lg-12">Hora Hasta</label>
+                                            <label class="input col-lg-4">
+                                                <input type="time" asp-for="SolicitudPermiso.HoraHasta" data-msg-required='El campo es requerido' data-rule-required='true' min="08:00" max="17:00" disabled>
+                                            </label>
+
+                                        </section>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-lg-11">
+                                            <legend>Permiso</legend>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">&nbsp;</div>
+
+
+                                    <div class="row">
+
+                                        <section class="col col-lg-4">
+
+                                            <label class="input col-lg-12">Tipo de Permiso</label>
+                                            <label class="input col-lg-12">
+                                                <select asp-for="SolicitudPermiso.IdTipoPermiso" class="form-control" asp-items="ViewBag.IdTipoPermiso" disabled>
+                                                    <option value="0">
+                                                        <Seleccione una @Html.DisplayNameFor(model => model.SolicitudPermiso.IdTipoPermiso)>
+                                                    </option>
+                                                </select>
+
+                                                <span asp-validation-for="SolicitudPermiso.IdTipoPermiso" class="text-danger"></span>
+                                            </label>
+
+                                        </section>
+
+                                        <section class="col col-lg-12">
+
+                                            <label class="input col-lg-12">Motivo</label>
+                                            <div class="input col-lg-6">
+                                                <input asp-for="SolicitudPermiso.Motivo" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' disabled />
+                                                <span asp-validation-for="SolicitudPermiso.Motivo" class="text-danger"></span>
+                                            </div>
+
+                                        </section>
+
+                                        <section class="col col-lg-12" hidden>
+
+                                            <div class="input col-lg-6">
+                                                <input asp-for="SolicitudPermiso.Observacion" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' disabled />
+                                            </div>
+
+                                        </section>
+
+                                    </div>
+
+                                </fieldset>
+
+
+                                <footer>
+
+                                    <a asp-action="Index" class="btn btn-default" onclick="espera()">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script>
+        $(document).ready(function () {
+            Init_Select2();
+        });
+
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
+
+
+   
+}

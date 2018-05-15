@@ -5,21 +5,11 @@
     ViewData["Title"] = "Index";
 }
 
+@{await Html.RenderPartialAsync("_PartialViewMenu");}
 
-
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
-
-    <p></p>
-    <a asp-action="PedirPermiso">
-        <button type="button" asp-action="PedirPermiso" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo
-
-        </button>
-    </a>
-    <p> </p>
+    <div class="row">&nbsp;</div>
 
     <!-- widget grid -->
     <section id="widget-grid" class="">
@@ -44,7 +34,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Solicitud Permiso</h2>
+                        <h2>Solicitud permiso</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -61,15 +51,23 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().NombresApellidosEmpleado)
                                         </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.Motivo)
+
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreDependencia)
                                         </th>
+
                                         <th data-hide="phone">
-                                            Tipo de Permiso
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreTipoPermiso)
                                         </th>
+
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.Estado)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.FechaSolicitud)
                                         </th>
+
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreEstadoAprobacion)
+                                        </th>
+
                                         <th data-hide="phone">
                                             Opciones
                                         </th>
@@ -84,7 +82,7 @@
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.SolicitudPermiso.Motivo)
+                                                @Html.DisplayFor(modelItem => item.NombreDependencia)
                                             </td>
 
                                             <td>
@@ -92,12 +90,23 @@
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreEstadoAprobacion)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Editar", "EditarPedirPermiso", new { id = item.SolicitudPermiso.IdSolicitudPermiso })
+
+                                                @(item.SolicitudPermiso.FechaSolicitud.Year + " -" +
+                                                                item.SolicitudPermiso.FechaSolicitud.Month + " -" +
+                                                                item.SolicitudPermiso.FechaSolicitud.Day)
 
                                             </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreEstadoAprobacion)
+                                            </td>
+
+                                            <td>
+                                                
+                                                @Html.ActionLink("Mostrar", "AprobarPermisos", new { id = item.SolicitudPermiso.IdSolicitudPermiso }, new { onclick = "espera()" })
+
+                                            </td>
+
                                         </tr>
                                     }
                                 </tbody>
@@ -118,7 +127,19 @@
 </div>
 <!-- END MAIN CONTENT -->
 
- @section Scripts {
+@section Scripts {
     <script src='~/js/datatables/init.js'></script>
+
+    <script>
+        $("#btn_1").css("background-color", "#3276b1");
+        $("#btn_1").css("color", "white");
+
+
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
 }
 
