@@ -17,7 +17,7 @@ using System.Security.Claims;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class SolicitudViaticosTHController : Controller
+    public class SolicitudViaticosContabilidadController : Controller
     {
         public class ObtenerInstancia
         {
@@ -49,7 +49,7 @@ namespace bd.webappth.web.Controllers.MVC
         private readonly IApiServicio apiServicio;
 
 
-        public SolicitudViaticosTHController(IApiServicio apiServicio)
+        public SolicitudViaticosContabilidadController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
         }
@@ -87,7 +87,7 @@ namespace bd.webappth.web.Controllers.MVC
                 var sol = new SolicitudViatico()
                 {
                     IdSolicitudViatico = id,
-                    Estado = 3
+                    Estado = 2
 
                 };
                 var sol1 = new SolicitudViaticoViewModel()
@@ -119,7 +119,7 @@ namespace bd.webappth.web.Controllers.MVC
                 var sol = new SolicitudViatico()
                 {
                     IdSolicitudViatico = id,
-                    Estado = 5
+                    Estado = 4
 
                 };
                 var sol1 = new SolicitudViaticoViewModel()

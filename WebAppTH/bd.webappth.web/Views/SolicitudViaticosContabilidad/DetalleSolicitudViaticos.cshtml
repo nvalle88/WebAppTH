@@ -116,13 +116,13 @@
                                             }
                                             else if (item.Estado == 2)
                                             {
-                                                Estado = "Aprobado Contabilidad";
+                                                Estado = "Asignado TH";
                                             }
                                             else if (item.Estado == 3)
                                             {
-                                                Estado = "Informe Asignado";
+                                                Estado = "Asignado Informe";
                                             }
-                                            else if (item.Estado == 3)
+                                            else if (item.Estado == 4)
                                             {
                                                 Estado = "Informe Finalizado";
                                             }
@@ -130,11 +130,9 @@
                                                 @Html.DisplayFor(modelItem => Estado)
                                             </td>
                                             <td>
-                                                @if (item.Estado == 2)
+                                                @if (item.Estado == 1)
                                                 {
-                                                    <text>
-                                                        @Html.ActionLink("Activar Informe", "AprobacionSolicitudViatico", new { id = item.IdSolicitudViatico }) |
-                                                    </text>
+                                                    @Html.ActionLink("Activar Viatico", "AprobacionSolicitudViatico", new { id = item.IdSolicitudViatico })
                                                 }
                                                 @if (item.Estado != 1)
                                                 {
