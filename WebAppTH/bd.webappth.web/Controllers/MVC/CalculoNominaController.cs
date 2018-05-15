@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using bd.webappth.entidades.Constantes;
 using bd.webappth.entidades.Negocio;
+using bd.webappth.entidades.ObjectTransfer;
 using bd.webappth.entidades.Utils;
 using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
@@ -31,6 +32,28 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        public async Task<FileResult> Download(string id)
+        {
+
+            try
+            {
+                var targetDirectory = Path.Combine(_hostingEnvironment.WebRootPath, string.Format("{0}/{1}.{2}", "DocumentoNomina/Reportados", id, "xlsx"));
+                var file = new FileStream(targetDirectory, FileMode.Open);
+                byte[] data;
+                using (var br = new BinaryReader(file))
+                    data = br.ReadBytes((int)file.Length);
+                var fileName = $"{id}.xlsx";
+
+                return File(data, "application/xlsx", fileName);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+          
+
+        }
 
         public async Task<IActionResult> ReportadoNomina(string id)
         {
@@ -73,11 +96,13 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var lista = new List<ReportadoNomina>();
+                var listaSalida = new List<ReportadoNomina>();
                 using (ExcelPackage package = new ExcelPackage(file))
                 {
                     StringBuilder sb = new StringBuilder();
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
                     int rowCount = worksheet.Dimension.Rows;
+                    var idCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina;
                     for (int row = 2; row <= rowCount; row++)
                     {
                      var codigoConcepto =worksheet.Cells[row, 1].Value ==null ? "" : worksheet.Cells[row, 1].Value.ToString();
@@ -90,119 +115,83 @@ namespace bd.webappth.web.Controllers.MVC
                         importeStr = importeStr.Replace(",", ",");
                         var cantidad = Convert.ToDouble(cantidadStr);
                         var importe = Convert.ToDouble(importeStr);
-                      
-                            var concepto = new ConceptoNomina { Codigo = codigoConcepto };
-                            var conceptoRequest = await apiServicio.ObtenerElementoAsync1<Response>(concepto, new Uri(WebApp.BaseAddress),
-                                                            "api/ConceptoNomina/ExisteConceptoPorCodigo");
 
-                            var persona = new Persona { Identificacion = identificacionEmpleado };
-                            var empleadoRequest = await apiServicio.ObtenerElementoAsync1<Response>(persona, new Uri(WebApp.BaseAddress),
-                                                            "api/Empleados/ExisteEmpleadoPorIdentificacion");
-
-                        var validar =0;
-                            if (conceptoRequest.IsSuccess==false && empleadoRequest.IsSuccess==false)
-                            {
-                                lista.Add(new ReportadoNomina
-                                {
-                                    CodigoConcepto = codigoConcepto,
-                                    IdentificacionEmpleado = identificacionEmpleado,
-                                    NombreEmpleado = nombreEmpleado,
-                                    Cantidad = cantidad,
-                                    Importe = importe,
-                                    IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina,
-                                    Valido = false,
-                                    MensajeError=Mensaje.ConceptoNoExiste
-
-                                });
-                            validar = -1;
-                        }
-                        if (conceptoRequest.IsSuccess == true && empleadoRequest.IsSuccess == false)
+                        lista.Add(new ReportadoNomina
                         {
-                            lista.Add(new ReportadoNomina
-                            {
-                                CodigoConcepto = codigoConcepto,
-                                IdentificacionEmpleado = identificacionEmpleado,
-                                NombreEmpleado = nombreEmpleado,
-                                Cantidad = cantidad,
-                                Importe = importe,
-                                IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina,
-                                Valido = false,
-                                MensajeError = Mensaje.EmpleadoNoExiste
+                            CodigoConcepto = codigoConcepto,
+                            IdentificacionEmpleado = identificacionEmpleado,
+                            NombreEmpleado = nombreEmpleado,
+                            Cantidad = cantidad,
+                            Importe = importe,
+                            IdCalculoNomina = idCalculoNomina,
+                            Valido = true,
+                        });
 
-                            });
-                            validar = -1;
 
-                        }
-                        if (conceptoRequest.IsSuccess == false && empleadoRequest.IsSuccess == true)
-                        {
-                            lista.Add(new ReportadoNomina
-                            {
-                                CodigoConcepto = codigoConcepto,
-                                IdentificacionEmpleado = identificacionEmpleado,
-                                NombreEmpleado = nombreEmpleado,
-                                Cantidad = cantidad,
-                                Importe = importe,
-                                IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina,
-                                Valido = false,
-                                MensajeError = Mensaje.ConceptoEmpleadoNoExiste
-
-                            });
-                            validar = -1;
-                        }
-
-                        if (validar==0)
-                        {
-                            lista.Add(new ReportadoNomina
-                            {
-                                CodigoConcepto = codigoConcepto,
-                                IdentificacionEmpleado = identificacionEmpleado,
-                                NombreEmpleado = nombreEmpleado,
-                                Cantidad = cantidad,
-                                Importe = importe,
-                                IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina,
-                                Valido = true,
-                            });  
-                        }
                         
+
                     }
-                    return lista;
+
+                     listaSalida = await apiServicio.Listar<ReportadoNomina>(lista, new Uri(WebApp.BaseAddress),
+                                                    "api/ConceptoNomina/VerificarExcel");
+                    
                 }
+                return listaSalida;
+                
             }
             catch (Exception ex)
             {
                 return new List<ReportadoNomina>();            }
         }
 
+        public async Task<IActionResult> MostrarExcel()
+        {
+          return  this.Redireccionar("CalculoNomina", "MostrarExcel");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MostrarExcel(CalculoNomina calculoNomina, List<IFormFile> files)
         {
-            if (files.Count<=0)
+            try
             {
-                return this.Redireccionar("CalculoNomina","ReportadoNomina",new  {id=Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
-            }
+                if (files.Count <= 0)
+                {
+                    return this.Redireccionar("CalculoNomina", "ReportadoNomina", new { id = Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
+                }
 
-           
-            var file= await SubirFichero(files);
-            var lista =await LeerExcel(file);
-            var listaSalvar = lista.Where(x => x.Valido == true).ToList();
-            var reportadoRequest = new Response();
-            if (listaSalvar.Count>0)
-            {
-                 reportadoRequest = await apiServicio.InsertarAsync<Response>(listaSalvar, new Uri(WebApp.BaseAddress),
-                            "api/ConceptoNomina/InsertarReportadoNomina"); 
-            }
-            var listaErrores = lista.Where(x => x.Valido == false).ToList();
-            if (listaErrores.Count>0)
-            {
-                this.TempData["Mensaje"] = $"{Mensaje.Aviso}|{Mensaje.ReportadoConErrores}";
-            }
-            else
-            {
-                this.TempData["Mensaje"] = $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}";
-            }
 
-            return View(lista);
+                var file = await SubirFichero(files);
+                var lista = await LeerExcel(file);
+                if (lista.Count==0)
+                {
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ReportadoNoCumpleFormato}|{"45000"}";
+                    return View(lista);
+                }
+                var listaSalvar = lista.Where(x => x.Valido == true).ToList();
+                var reportadoRequest = new Response();
+                if (listaSalvar.Count > 0)
+                {
+                    reportadoRequest = await apiServicio.InsertarAsync<Response>(listaSalvar, new Uri(WebApp.BaseAddress),
+                               "api/ConceptoNomina/InsertarReportadoNomina");
+                }
+
+                var listaErrores = lista.Where(x => x.Valido == false).ToList();
+                if (listaErrores.Count > 0)
+                {
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{Mensaje.ReportadoConErrores}|{"12000"}";
+                }
+                else
+                {
+                    this.TempData["Mensaje"] = $"{Mensaje.Success}|{Mensaje.Satisfactorio}";
+                }
+
+                return View(lista);
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
+            }
 
         }
 
@@ -224,11 +213,6 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CalculoNomina CalculoNomina)
         {
-            if (!ModelState.IsValid)
-            {
-                 
-                return View(CalculoNomina);
-            }
             Response response = new Response();
             try
             {
@@ -309,12 +293,6 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CalculoNomina CalculoNomina)
         {
-
-            if (!ModelState.IsValid)
-            {
-                 
-                return View(CalculoNomina);
-            }
             Response response = new Response();
             try
             {

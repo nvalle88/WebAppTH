@@ -53,7 +53,7 @@ namespace bd.webappth.web
             services.AddMvc();
 
             
-            //services.AddDistributedMemoryCache();
+            services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddDataProtection()
            .UseCryptographicAlgorithms(
@@ -74,6 +74,7 @@ namespace bd.webappth.web
             services.AddSingleton<IApiServicio, ApiServicio>();
             services.AddSingleton<IMenuServicio, MenuServicio>();
             services.AddSingleton<IConstantesNomina, ConstanteNominaServicio>();
+            services.AddSingleton<IFuncionesNomina, FuncionesNominaServicio>();
 
             services.AddSingleton<IAuthorizationHandler, RolesHandler>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

@@ -1,11 +1,14 @@
 @model bd.webappth.entidades.Negocio.ConceptoNomina
 
 @using bd.webappth.entidades.Negocio
-@inject bd.webappth.servicios.Interfaces.IConstantesNomina ConstanteNomina
+@inject bd.webappth.servicios.Interfaces.IConstantesNomina ConstanteNomina;
+@inject bd.webappth.servicios.Interfaces.IFuncionesNomina FuncionNomina
 @{ var Listaconstantes = new List<ConstanteNomina>();
+    var ListaFunciones = new List<FuncionNomina>();
     @try
     {
         Listaconstantes = await ConstanteNomina.Listar("api/ConstanteNomina/ListarConstanteNomina");
+        ListaFunciones = await FuncionNomina.Listar("api/FuncionNomina/ListarFuncionNomina");
     }
     catch (Exception)
     {
@@ -17,26 +20,53 @@
 <fieldset>
     <div class="row">
 
-        <section class="col col-lg-12">
+        <section class="col col-lg-6">
 
             <div class="panel-group smart-accordion-default" id="accordion-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion-2" href="#collapseOne-1" aria-expanded="false" class="collapsed"> <i class="fa fa-fw fa-plus-circle txt-color-green"></i> <i class="fa fa-fw fa-minus-circle txt-color-red"></i> Constantes </a></h4>
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion-2" href="#collapseOne-2" aria-expanded="false" class="collapsed"> <i class="fa fa-fw fa-plus-circle txt-color-green"></i> <i class="fa fa-fw fa-minus-circle txt-color-red"></i> Constantes </a></h4>
                     </div>
-                    <div id="collapseOne-1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                    <div id="collapseOne-2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
 
                         <div class="panel-body">
                             <br />
                             <div class="row col col-lg-12">
                                 @{ int a = 0;}
                                 @foreach (var item in Listaconstantes)
-                                {
-                                    a = a + 1;
-                                    <div class="ui-menu-item col col-lg-4" style="border-width:2px;">
-                                        <a href="javascript:void(0);" onclick="anadirElememto('@item.Constante')">&bull; @item.Constante :  @item.Descripcion (Valor: @item.Valor)</a>
+                            {
+                                a = a + 1;
+                                <div class="ui-menu-item col col-lg-4" style="border-width:2px;">
+                                    <a href="javascript:void(0);" onclick="anadirElememto('@item.Constante')">&bull; @item.Constante :  @item.Descripcion (Valor: @item.Valor)</a>
 
-                                    </div>
+                                </div>
+                        }
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="col col-lg-6">
+
+            <div class="panel-group smart-accordion-default" id="accordion-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion-1" href="#collapseOne-1" aria-expanded="false" class="collapsed"> <i class="fa fa-fw fa-plus-circle txt-color-green"></i> <i class="fa fa-fw fa-minus-circle txt-color-red"></i> Funciones </a></h4>
+                    </div>
+                    <div id="collapseOne-1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                        <div class="panel-body">
+                            <br />
+                            <div class="row col col-lg-12">
+                                @{ int b = 0;}
+                                @foreach (var item in ListaFunciones)
+                                {
+                                b = b + 1;
+                                <div class="ui-menu-item col col-lg-4" style="border-width:2px;">
+                                    <a href="javascript:void(0);" onclick="anadirElememto('@item.ProcedimientoAlmacenado')">&bull; @item.Descripcion </a>
+
+                                </div>
                                 }
                             </div>
                         </div>
@@ -45,6 +75,7 @@
                 </div>
             </div>
         </section>
+
     </div>
     <div class="row">
         <section class="col col-lg-12"></section>
