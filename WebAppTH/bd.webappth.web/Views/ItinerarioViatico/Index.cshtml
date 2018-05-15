@@ -205,9 +205,9 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().Valor)
                                         </th>
-                                        <th>
+                                        @*<th>
                                             @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().Descripcion)
-                                        </th>
+                                        </th>*@
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -228,9 +228,9 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Valor)
                                             </td>
-                                            <td>
+                                            @*<td>
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>
+                                            </td>*@
 
                                             <td>
                                                 @if (Model.SolicitudViatico.Estado == 0)
