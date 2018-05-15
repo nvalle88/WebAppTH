@@ -28,6 +28,9 @@
                                 <thead>
                                     <tr>
                                         <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoDepencia)
+                                        </th>
+                                        <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().PartidaIndividual)
                                         </th>
                                         <th data-hide="phone">
@@ -60,6 +63,9 @@
                                     {
                                     <tr>
                                         <td>
+                                            @Html.DisplayFor(modelItem => item.CodigoDepencia)
+                                        </td>
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.PartidaIndividual)
                                         </td>
                                         <td>
@@ -81,7 +87,7 @@
                                             @Html.DisplayFor(modelItem => item.EscalaGrado)
                                         </td>
                                         <td data-toggle="toggle" data-placement="right" title=" @item.ManualPuesto">
-                                             @Html.DisplayFor(modelItem => item.Remuneracion)
+                                            @Html.DisplayFor(modelItem => item.Remuneracion)
                                         </td>
 
                                         <td>
