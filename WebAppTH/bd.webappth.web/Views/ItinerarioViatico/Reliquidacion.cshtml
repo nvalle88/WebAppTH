@@ -267,8 +267,8 @@
                                                 @if (Model.SolicitudViatico.Estado == 4)
                                                 {
                                                     <text>
-                                                        @Html.ActionLink("Editar", "EditInforme", new { id = item.IdReliquidacionViatico }) |
-                                                        @Html.ActionLink("Eliminar", "DeleteInforme", new { id = item.IdReliquidacionViatico }, new { onclick = "return confirm('Desea eliminar el itinerario del viático... ?');" })
+                                                        @Html.ActionLink("Editar", "EditReliquidacion", new { id = item.IdReliquidacionViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico }) |
+                                                        @Html.ActionLink("Eliminar", "DeleteReliquidacion", new { id = item.IdReliquidacionViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico }, new { onclick = "return confirm('Desea eliminar el itinerario del viático... ?');" })
                                                     </text>
                                                 }
                                             </td>
