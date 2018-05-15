@@ -402,7 +402,7 @@
                     <div class="row">
                         @if (Model.SolicitudViatico.Estado == 4)
                         {
-                            <form id="wizard-1" asp-action="FinalizarInforme" novalidate="novalidate">
+                            <form id="wizard-1" asp-action="FinalizarReliquidacion" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdSolicitudViatico" />
                                 <input type="hidden" asp-for="IdItinerarioViatico" />

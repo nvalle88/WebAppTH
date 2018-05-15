@@ -287,11 +287,46 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        /// <summary>
+        /// Aqui va el asiento contable de la reliquidacion
+        /// </summary>
+        /// <param name="reliquidacionViatico"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FinalizarReliquidacion(ReliquidacionViatico reliquidacionViatico)
+        {
+            Response response = new Response();
+
+            try
+            {
+                var solicitud = new SolicitudViatico
+                {
+                    IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico
+
+                };
+                response = await apiServicio.ObtenerElementoAsync(solicitud,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ReliquidacionViaticos/ActualizarEstadoReliquidacion");
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("Informe", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico, IdItinerarioViatico = reliquidacionViatico.IdItinerarioViatico });
+                }
+
+                ViewData["Error"] = response.Message;
+                return RedirectToAction("Informe", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico, IdItinerarioViatico = reliquidacionViatico.IdItinerarioViatico });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
 
         #endregion
-        
 
-        
+
+
 
         #region InformeVIaticos
         [HttpPost]
@@ -616,6 +651,11 @@ namespace bd.webappth.web.Controllers.MVC
             return View(itinerarioViatico);
         }
 
+        /// <summary>
+        /// En esta parte va el asiento contable de viatico
+        /// </summary>
+        /// <param name="itinerarioViatico Create"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ItinerarioViatico itinerarioViatico)
