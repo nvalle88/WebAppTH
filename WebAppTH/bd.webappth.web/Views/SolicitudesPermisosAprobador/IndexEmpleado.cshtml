@@ -1,13 +1,13 @@
-@model List<bd.webappth.entidades.Negocio.SolicitudPermiso>
+@model List<bd.webappth.entidades.ViewModels.SolicitudPermisoViewModel>
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Index";
 }
 
+@{await Html.RenderPartialAsync("_PartialViewMenu");}
 
-
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
 
     <p></p>
@@ -59,16 +59,16 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Empleado.Persona.Nombres)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombresApellidosEmpleado)
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Motivo)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.Motivo)
                                         </th>
                                         <th data-hide="phone">
                                             Tipo de Permiso
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.Estado)
                                         </th>
                                         <th data-hide="phone">
                                             Opciones
@@ -80,23 +80,33 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Nombres)
-                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Apellidos)
+                                                @Html.DisplayFor(modelItem => item.NombresApellidosEmpleado)
                                             </td>
-                                            <td>
 
-                                                @Html.DisplayFor(modelItem => item.Motivo)
-                                            </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.TipoPermiso.Nombre)
+                                                @Html.DisplayFor(modelItem => item.SolicitudPermiso.Motivo)
                                             </td>
-                                            <td>
 
-                                               
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreTipoPermiso)
+                                            </td>
 
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreEstadoAprobacion)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Editar", "EditarPedirPermiso", new { id = item.IdSolicitudPermiso })
+                                                @if (
+                                                  item.NombreEstadoAprobacion != "Aprobado"
+                                                  && item.NombreEstadoAprobacion != "Negado"
+                                                  )
+                                                {
+
+                                                    @Html.ActionLink("Editar", "EditarPedirPermiso", new { id = item.SolicitudPermiso.IdSolicitudPermiso }, new { onclick = "espera()" })
+                                                }
+                                                else { 
+
+                                                    @Html.ActionLink("Visualizar", "Visualizar", new { id = item.SolicitudPermiso.IdSolicitudPermiso }, new { onclick = "espera()" })
+                                                }
 
                                             </td>
                                         </tr>
@@ -119,7 +129,18 @@
 </div>
 <!-- END MAIN CONTENT -->
 
- @section Scripts {
+@section Scripts {
     <script src='~/js/datatables/init.js'></script>
+
+    <script>
+        $("#btn_0").css("background-color", "#3276b1");
+        $("#btn_0").css("color", "white");
+
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
 }
 

@@ -1,16 +1,16 @@
-@model List<bd.webappth.entidades.Negocio.SolicitudPermiso>
+@model List<bd.webappth.entidades.ViewModels.SolicitudPermisoViewModel>
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Index";
-
 }
 
+@{await Html.RenderPartialAsync("_PartialViewMenu");}
 
-<p> </p>
-
-			<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
-   
+    <div class="row">&nbsp;</div>
+
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -32,9 +32,9 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Solicitud Permiso</h2>
+                        <h2>Solicitud permiso</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -49,19 +49,27 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Empleado.Persona.Nombres)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombresApellidosEmpleado)
                                         </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Motivo)
+
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreDependencia)
                                         </th>
+
                                         <th data-hide="phone">
-                                            Tipo Permiso
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreTipoPermiso)
                                         </th>
+
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.FechaSolicitud)
                                         </th>
+
                                         <th data-hide="phone">
-                                           Opciones
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreEstadoAprobacion)
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            Opciones
                                         </th>
                                     </tr>
                                 </thead>
@@ -70,42 +78,35 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Nombres)
-                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Apellidos)
+                                                @Html.DisplayFor(modelItem => item.NombresApellidosEmpleado)
                                             </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreDependencia)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreTipoPermiso)
+                                            </td>
+
                                             <td>
 
-                                                @Html.DisplayFor(modelItem => item.Motivo)
-                                            </td>
-                                            <td>
+                                                @(item.SolicitudPermiso.FechaSolicitud.Year + " -" +
+                                                                item.SolicitudPermiso.FechaSolicitud.Month + " -" +
+                                                                item.SolicitudPermiso.FechaSolicitud.Day)
 
-                                                @Html.DisplayFor(modelItem => item.TipoPermiso.Nombre)
                                             </td>
-                                            <td>
 
-                                                @{
-                                                    switch (item.Estado)
-                                                    {
-                                                        case 0:
-                                                            <p>Pendiente</p>
-                                                            break;
-                                                        case 1:
-                                                            <p>Aprobado</p>
-                                                            break;
-                                                        case -1:
-                                                            <p>Denegado</p>
-                                                            break;
-                                                        default:
-                                                            <p>No tiene estado</p>
-                                                            break;
-                                                    }
-                                                }
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreEstadoAprobacion)
+                                            </td>
+
+                                            <td>
                                                 
+                                                @Html.ActionLink("Mostrar", "AprobarPermisos", new { id = item.SolicitudPermiso.IdSolicitudPermiso }, new { onclick = "espera()" })
+
                                             </td>
-                                            <td>
-                                                @Html.ActionLink("Aprobar", "AprobarPermisos", new { id=item.IdSolicitudPermiso }) 
-                                               
-                                            </td>
+
                                         </tr>
                                     }
                                 </tbody>
@@ -115,7 +116,7 @@
                     </div>
                     <!-- end widget div -->
                 </div>
-          
+
             </article>
             <!-- WIDGET END -->
         </div>
@@ -126,7 +127,19 @@
 </div>
 <!-- END MAIN CONTENT -->
 
- @section Scripts {
+@section Scripts {
     <script src='~/js/datatables/init.js'></script>
+
+    <script>
+        $("#btn_1").css("background-color", "#3276b1");
+        $("#btn_1").css("color", "white");
+
+
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
 }
 

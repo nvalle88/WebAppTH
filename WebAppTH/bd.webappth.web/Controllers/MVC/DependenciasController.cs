@@ -77,6 +77,7 @@ namespace bd.webappth.web.Controllers.MVC
                            IdSucursal = dependencia.IdSucursal,
                            IdDependencia= dependencia.IdDependencia,
                            IdProceso = dependencia.IdProceso,
+                           Codigo = dependencia.Codigo
                         };
                         InicializarMensaje(null);
                         await CargarListaComboEdit(ciudad.IdCiudad, dependencia.IdSucursal);

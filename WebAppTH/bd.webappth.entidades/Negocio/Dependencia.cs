@@ -12,7 +12,7 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Dependencia:")]
         [StringLength(60, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Nombre { get; set; }
-
+        public string Codigo { get; set; }
         //Propiedades Virtuales Referencias a otras clases
 
         [Display(Name = "Dependencia padre:")]

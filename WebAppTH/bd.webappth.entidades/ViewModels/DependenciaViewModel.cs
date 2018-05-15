@@ -13,6 +13,7 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "Sucursal")]
         [Range(0, double.MaxValue, ErrorMessage = "Debe seleccionar la {0} ")]
         public int? IdSucursal { get; set; }
+        public string Codigo { get; set; }
 
         [Required(ErrorMessage = "Debe introducir el {0}")]
         [Display(Name = "Proceso")]

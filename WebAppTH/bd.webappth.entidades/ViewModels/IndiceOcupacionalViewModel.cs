@@ -35,6 +35,8 @@ namespace bd.webappth.entidades.ViewModels
         [DisplayName("Nivel")]
         public string Nivel { get; set; }
         public string Sucursal { get; set; }
+        [DisplayName("Codigo dependencia")]
+        public string CodigoDepencia { get; set; }
 
         public int OpcionMenu { get; set; }
     }

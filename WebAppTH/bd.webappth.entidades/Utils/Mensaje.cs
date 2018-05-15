@@ -58,6 +58,6 @@ namespace bd.webappth.entidades.Utils
         public static object ReportadoNoCumpleFormato { get { return "Verifique el formato del archivo seleccionado,Nota: Debe seleccionar un archivo Excel(.xlsx).El cual debe contener el orden de las columnas de la siguiente distribución...1:Código del concepto, 2:Identificación del empleado, 3:Nombre y Apellidos del empleado, 4:Cantidad, 5:Importe"; } }
 
         public static string ErrorFechaDesdeHasta { get { return "La fecha desde debe ser menor que la fecha hasta."; } }
-        
+        public static string AccesoNoAutorizado { get { return "No tiene los permisos necesarios para acceder a este sitio"; } }
     }
 }

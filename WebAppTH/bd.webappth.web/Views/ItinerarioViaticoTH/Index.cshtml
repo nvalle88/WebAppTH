@@ -37,7 +37,7 @@
             <span class="btn-label">
                 <i class="glyphicon glyphicon-plus"></i>
             </span>
-            @Html.ActionLink("Nuevo", "Create", "ItinerarioViatico", new { IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico })
+            @Html.ActionLink("Nuevo", "Create", "ItinerarioViaticoTH", new { IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico })
         </button>
     }
     <!-- widget grid -->
@@ -205,9 +205,9 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().Valor)
                                         </th>
-                                        @*<th>
+                                        <th>
                                             @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().Descripcion)
-                                        </th>*@
+                                        </th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -228,9 +228,9 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Valor)
                                             </td>
-                                            @*<td>
+                                            <td>
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>*@
+                                            </td>
 
                                             <td>
                                                 @if (Model.SolicitudViatico.Estado == 0)
@@ -242,17 +242,10 @@
                                                 }
                                                 @if (Model.SolicitudViatico.Estado != 0)
                                                 {
-                                                    <text>
-                                                        @Html.ActionLink("Informe", "Informe", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico }) |
+                                                <text>
+                                                    @Html.ActionLink("Informe", "Informe", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico })
 
-                                                    </text>
-                                                }
-                                                @if (Model.SolicitudViatico.Estado == 4)
-                                                {
-                                                    <text>
-                                                        @Html.ActionLink("Reliquidacion", "Reliquidacion", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico })
-
-                                                    </text>
+                                                </text>
                                                 }
                                             </td>
                                         </tr>

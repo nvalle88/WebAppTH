@@ -62,11 +62,10 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdItinerarioViatico" />
                                 <input type="hidden" asp-for="IdInformeViatico" />
-                                <input type="hidden" asp-for="IdSolicitudViatico"  value="@ViewBag.IdSolicitud"/>
                                 @{await Html.RenderPartialAsync("_PartialViewInformeItinerarioViatico");}
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Informe" asp-route-IdSolicitudViatico="@ViewBag.IdSolicitud" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico" class="btn btn-default">Cancelar</a>
+                                    <a asp-action="Informe" asp-route-IdItinerario="@Model.IdItinerarioViatico" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
