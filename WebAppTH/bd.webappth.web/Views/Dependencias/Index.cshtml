@@ -60,6 +60,10 @@
                                   
                                     <tr>
                                         <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Codigo)
+
+                                        </th>
+                                        <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().NombreSucursal)
 
                                         </th>
@@ -80,24 +84,27 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NombreSucursal)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NombreDependenciaPadre)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NombreDependencia)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NombreProceso)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdDependencia }) |
-                                                @Html.ActionLink("Deshabilitar", "Delete", new { id = item.IdDependencia }, new { onclick = "return confirm('Desea eliminar la Sucursal... ?');" })
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Codigo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreSucursal)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreDependenciaPadre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreDependencia)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreProceso)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdDependencia }) |
+                                            @Html.ActionLink("Deshabilitar", "Delete", new { id = item.IdDependencia }, new { onclick = "return confirm('Desea eliminar la Sucursal... ?');" })
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

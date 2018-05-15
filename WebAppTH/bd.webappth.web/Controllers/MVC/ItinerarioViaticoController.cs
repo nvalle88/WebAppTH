@@ -325,9 +325,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         #endregion
 
-
-
-
         #region InformeVIaticos
         [HttpPost]
         [ValidateAntiForgeryToken]
