@@ -14,7 +14,7 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Fecha solicitud")]
         public DateTime FechaSolicitud { get; set; }
 
-        [Display(Name = "Fecha desde")]
+        [Display(Name = "Hora desde")]
         public TimeSpan HoraDesde { get; set; }
 
         [Display(Name = "Fecha hasta")]
