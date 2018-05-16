@@ -18,12 +18,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class ItinerarioViaticoTHController : Controller
+    public class ItinerarioViaticoJefeContabilidadController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public ItinerarioViaticoTHController(IApiServicio apiServicio)
+        public ItinerarioViaticoJefeContabilidadController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
         }

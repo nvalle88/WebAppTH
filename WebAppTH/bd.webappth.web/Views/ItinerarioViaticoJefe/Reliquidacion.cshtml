@@ -156,20 +156,7 @@
                     </div>
                 </section>
             </div>
-        <div class="row">
-            @if (Model.SolicitudViatico.Estado == 5)
-            {
-                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <a asp-action="CreateReliquidacion">
-                        <button type="button" asp-action="CreateReliquidacion" class="btn btn-labeled btn-default">
-                            <span class="btn-label">
-                                <i class="glyphicon glyphicon-plus"></i>
-                            </span>Nuevo
-                        </button>
-                    </a>
-                </article>
-            }
-        </div>
+       
 
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -399,28 +386,7 @@
                         <!-- WIDGET END -->
                     </div>*@
 
-                    <div class="row">
-                        @if (Model.SolicitudViatico.Estado == 5)
-                        {
-                            <form id="wizard-1" asp-action="FinalizarReliquidacion" novalidate="novalidate">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdSolicitudViatico" />
-                                <input type="hidden" asp-for="IdItinerarioViatico" />
-                                <div class="row col col-lg-12">
-                                    <section class="col col-lg-11">
-                                        &nbsp;
-                                    </section>
-
-                                    <section class="col col-lg-1">
-                                        <label class="label"></label>
-                                        <div class="form-group">
-                                            <input type="submit" value="Finalizar" class="btn btn-primary" />
-                                        </div>
-                                    </section>
-                                </div>
-                            </form>
-                        }
-                    </div>
+                    
                     <!-- end row -->
                     <!-- end row -->
                 </section>
