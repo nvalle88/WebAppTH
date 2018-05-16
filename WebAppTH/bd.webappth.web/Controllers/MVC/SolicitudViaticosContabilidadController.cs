@@ -61,7 +61,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             ViewData["Error"] = mensaje;
         }
-       
+
 
 
         private async Task CargarCombos()
@@ -81,7 +81,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> AprobacionSolicitudViatico(int id)
         {
-            
+
             try
             {
                 var sol = new SolicitudViatico()
@@ -90,20 +90,28 @@ namespace bd.webappth.web.Controllers.MVC
                     Estado = 2
 
                 };
-                var sol1 = new SolicitudViaticoViewModel()
+
+                var VerificarPresupuesto = await apiServicio.SeleccionarAsync<Response>(id.ToString(), new Uri(WebApp.BaseAddress),
+                                                                  "api/SolicitudViaticos");
+                if (VerificarPresupuesto.IsSuccess)
                 {
-                    SolicitudViatico = sol
-                };
-                
-                var respuestaEmpleado = await apiServicio.EditarAsync<Response>(sol1, new Uri(WebApp.BaseAddress),
-                                                             "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
-                if (respuestaEmpleado.IsSuccess)
-                {
-                    return RedirectToAction("ListadoEmpleadosSolicitudViaticos");
+
+
+                    var sol1 = new SolicitudViaticoViewModel()
+                    {
+                        SolicitudViatico = sol
+                    };
+
+                    var respuestaEmpleado = await apiServicio.EditarAsync<Response>(sol1, new Uri(WebApp.BaseAddress),
+                                                                 "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
+                    if (respuestaEmpleado.IsSuccess)
+                    {
+                        return RedirectToAction("ListadoEmpleadosSolicitudViaticos");
+                    }
                 }
 
-                return BadRequest();
-            }
+                    return BadRequest();
+                }
             catch (Exception ex)
             {
                 return BadRequest();
@@ -274,7 +282,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        
+
 
         public async Task<ListaEmpleadoViewModel> ObtenerEmpleado(string nombreUsuario)
         {
