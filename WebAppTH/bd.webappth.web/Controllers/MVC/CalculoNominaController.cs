@@ -141,12 +141,64 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                return new List<ReportadoNomina>();            }
+                return new List<ReportadoNomina>();
+            }
         }
 
-        public async Task<IActionResult> MostrarExcel()
+        public async Task<IActionResult> LimpiarReportados(string id)
         {
-          return  this.Redireccionar("CalculoNomina", "MostrarExcel");
+            try
+            {
+
+                if (!string.IsNullOrEmpty(id))
+                {
+
+                    var calculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
+                    var response = await apiServicio.ObtenerElementoAsync1<Response>(calculoNomina, new Uri(WebApp.BaseAddress)
+                                                                              , "api/CalculoNomina/LimpiarReportados");
+                    if (response.IsSuccess)
+                    {
+                        return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                    }
+                    return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
+                }
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
+
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.Excepcion}");
+            }
+        }
+
+        public async Task<IActionResult> MostrarExcelBase(string id)
+        {
+            try
+            {
+
+                if (!string.IsNullOrEmpty(id))
+                {
+
+                    if (HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession) != Convert.ToInt32(id))
+                    {
+                        HttpContext.Session.SetInt32(Constantes.IdCalculoNominaSession, Convert.ToInt32(id));
+                    }
+                    var calculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
+                    var lista = await apiServicio.Listar<ReportadoNomina>(calculoNomina, new Uri(WebApp.BaseAddress)
+                                                                              , "api/CalculoNomina/ListarReportados");
+                    if (lista.Count == 0)
+                    {
+                        return this.Redireccionar($"{Mensaje.Error}|{Mensaje.NoExistenRegistros}");
+                    }
+                    return View(lista); 
+                }
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         [HttpPost]

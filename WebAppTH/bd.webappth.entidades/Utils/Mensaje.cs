@@ -4,12 +4,12 @@ using System.Text;
 
 namespace bd.webappth.entidades.Utils
 {
-  public static class Mensaje
+    public static class Mensaje
     {
-        
+
         public static string FormulaNominaInvalida { get { return "La fórmula tiene algún error.Por favor verifique nuevamente."; } }
 
-        public static string  FaltaIngresoDatos { get { return "Debe completar el formulario"; } }
+        public static string FaltaIngresoDatos { get { return "Debe completar el formulario"; } }
         public static string NoExisteModulo { get { return "No se ha encontrado el Módulo"; } }
         public static string Excepcion { get { return "Ha ocurrido una Excepción"; } }
         public static string Obligatorio { get { return "Debe introducir datos en el campo"; } }
@@ -21,9 +21,9 @@ namespace bd.webappth.entidades.Utils
         public static string RegistroNoEncontrado { get { return "El registro solicitado no se ha encontrado"; } }
         public static string ModeloInvalido { get { return "El Módelo es inválido"; } }
         public static string BorradoNoSatisfactorio { get { return "No es posible eliminar el registro, existen relaciones que dependen de él"; } }
-        public static string NoExistenRegistrosPorAsignar { get { return "No existen Registros por agregar"; } }    
+        public static string NoExistenRegistrosPorAsignar { get { return "No existen Registros por agregar"; } }
         public static string GenerandoListas { get { return "Las listas se están cargando"; } }
-        public static string GuardadoSatisfactorio { get {return "Los datos se han guardado correctamente"; } }
+        public static string GuardadoSatisfactorio { get { return "Los datos se han guardado correctamente"; } }
         public static string BorradoSatisfactorio { get { return "El registro se ha eliminado correctamente"; } }
         public static string ErrorFichaEdicion { get { return "Existe una ficha en edición"; } }
         public static string ErrorCargaArchivo { get { return "Se produjo un error al cargar el archivo"; } }
@@ -57,7 +57,10 @@ namespace bd.webappth.entidades.Utils
         public static object ReportadoConErrores { get { return "Verifique la información del los reportados cargados ya que existen errores en su información, la información con errores no fue guardada..."; } }
         public static object ReportadoNoCumpleFormato { get { return "Verifique el formato del archivo seleccionado,Nota: Debe seleccionar un archivo Excel(.xlsx).El cual debe contener el orden de las columnas de la siguiente distribución...1:Código del concepto, 2:Identificación del empleado, 3:Nombre y Apellidos del empleado, 4:Cantidad, 5:Importe"; } }
 
+        public static string NoExistenRegistros { get { return "No existen registros para mostrar"; } }
+
         public static string ErrorFechaDesdeHasta { get { return "La fecha desde debe ser menor que la fecha hasta."; } }
         public static string AccesoNoAutorizado { get { return "No tiene los permisos necesarios para acceder a este sitio"; } }
+
     }
 }

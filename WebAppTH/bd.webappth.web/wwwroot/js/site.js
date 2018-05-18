@@ -78,7 +78,12 @@ function Asignar_Codigo_Barras(idElemento, valor) {
         fontSize: 20
     });
 }
-
+function Init_FileInput(idElemento) {
+    $("#" + idElemento).fileinput({
+        showUpload: false,
+        language: 'es'
+    });
+}
 function obtenerIdAjax(id) {
     try {
         return parseInt(id);
