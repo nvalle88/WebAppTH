@@ -29,6 +29,15 @@
             </span>Cargar archivo
         </button>
     </a>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a asp-action="LimpiarReportados" asp-route-id="@nomina" onclick="cargando()">
+        <button type="button" asp-action="LimpiarReportados" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="fa fa-trash-o"></i>
+            </span>Limpiar
+        </button>
+    </a>
     <p> </p>
     <div class="jarviswidget jarviswidget-sortable" id="wid-id-11" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-custombutton="false" role="widget">
 
