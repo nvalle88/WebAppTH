@@ -15,6 +15,8 @@ namespace bd.webappth.entidades.ViewModels
         public int IdItinerarioViatico { get; set; }
         public int IdSolicitudViatico { get; set; }
         public string Descripcion { get; set; }
+        public decimal ValorReliquidacion { get; set; }
+        public decimal ValorTotalReliquidacion { get; set; }
         //public List<String> ViaticosSeleccionados { get; set; }
     }
 }

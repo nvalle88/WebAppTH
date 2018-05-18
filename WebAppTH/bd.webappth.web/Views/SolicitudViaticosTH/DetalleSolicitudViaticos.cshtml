@@ -16,10 +16,6 @@
         </button>
     </a>
     <p> </p>
-
-
-
-
     <!-- widget grid -->
     <section id="widget-grid" class="">
         <!-- row -->
@@ -137,7 +133,7 @@
                                                 @if (item.Estado == 2)
                                                 {
                                                     <text>
-                                                        @Html.ActionLink("Activar Informe", "AprobacionSolicitudViatico", new { id = item.IdSolicitudViatico }) |
+                                                        @Html.ActionLink("Activar Informe", "AprobacionSolicitudViatico", new { id = item.IdSolicitudViatico, idEmpleado = item.IdEmpleado }) |
                                                     </text>
                                                 }
                                                 @if (item.Estado != 2)
@@ -155,8 +151,8 @@
                                                 @if (item.Estado == 4)
                                                 {
                                                     <text>
-                                                        @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViaticoTH", new { IdSolicitudViatico = item.IdSolicitudViatico, }) |
-                                                        @Html.ActionLink("Activa Reliquidacion", "Reliquidacion", new { id = item.IdSolicitudViatico })
+                                                        @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViaticoTH", new { IdSolicitudViatico = item.IdSolicitudViatico, }) 
+                                                       @* @Html.ActionLink("Activa Reliquidacion", "Reliquidacion", new { id = item.IdSolicitudViatico , IdEmpleado = item.IdEmpleado })*@
                                                     </text>
                                                 }
                                                 @if (item.Estado == 5)

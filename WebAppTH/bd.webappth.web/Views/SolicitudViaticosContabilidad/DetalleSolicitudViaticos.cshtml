@@ -137,7 +137,8 @@
                                                 @if (item.Estado == 1)
                                                 {
                                                     @Html.ActionLink("Activar Viatico", "AprobacionSolicitudViatico", new { id = item.IdSolicitudViatico })
-                                                }
+                                                    @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdSolicitudViatico })*@ 
+}
                                                 @if (item.Estado != 1)
                                                 {
                                                     <text>

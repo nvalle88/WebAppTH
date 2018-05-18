@@ -116,7 +116,7 @@
                                             }
                                             else if (item.Estado == 2)
                                             {
-                                                Estado = "Asignado Contabilidad";
+                                                Estado = "Aprobado Contabilidad";
                                             }
                                             else if (item.Estado == 3)
                                             {
@@ -145,7 +145,7 @@
                                                 {
                                                     <text>
                                                         @Html.ActionLink("Detalle", "Detalle", new { id = item.IdSolicitudViatico }) |
-                                                        @if (item.Estado == 2)
+                                                        @if (item.Estado == 3)
                                                         {
                                                             @Html.ActionLink("Informe", "Index", "ItinerarioViatico", new { IdSolicitudViatico = item.IdSolicitudViatico, })
 
@@ -168,8 +168,8 @@
                                                     @if (item.Estado == 5)
                                                     {
                                                         <text>
-                                                            @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViaticoJefe", new { IdSolicitudViatico = item.IdSolicitudViatico, }) |
-                                                            @Html.ActionLink(" Reliquidacion", "Index", "ItinerarioViaticoJefe", new { IdSolicitudViatico = item.IdSolicitudViatico, })
+                                                            @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViaticoJefe", new { IdSolicitudViatico = item.IdSolicitudViatico, }) 
+                                                            @*@Html.ActionLink(" Reliquidacion", "Index", "ItinerarioViaticoJefe", new { IdSolicitudViatico = item.IdSolicitudViatico, })*@
                                                         </text>
                                                     }
 

@@ -31,6 +31,13 @@
 
         }
     </div>
+    <a asp-action="DetalleSolicitudViaticos" asp-controller="SolicitudViaticos" asp-route-id="@Model.ListaEmpleadoViewModel.IdEmpleado">
+        <button type="button" asp-action="DetalleSolicitudViaticos" asp-controller="SolicitudViaticos" asp-route-id="@Model.ListaEmpleadoViewModel.IdEmpleado" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-arrow-left"></i>
+            </span>Regresar
+        </button>
+    </a>
     @if (Model.SolicitudViatico.Estado == 0)
     {
         <button type="button" class="btn btn-labeled btn-default">
@@ -243,17 +250,17 @@
                                                 @if (Model.SolicitudViatico.Estado != 0)
                                                 {
                                                     <text>
-                                                        @Html.ActionLink("Informe", "Informe", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico }) |
+                                                        @Html.ActionLink("Informe", "Informe", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico }) 
 
                                                     </text>
                                                 }
-                                                @if (Model.SolicitudViatico.Estado == 5)
+                                                @*@if (Model.SolicitudViatico.Estado == 5)
                                                 {
                                                     <text>
                                                         @Html.ActionLink("Reliquidacion", "Reliquidacion", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico })
 
                                                     </text>
-                                                }
+                                                }*@
                                             </td>
                                         </tr>
                                     }

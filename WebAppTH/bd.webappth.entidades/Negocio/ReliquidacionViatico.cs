@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace bd.webappth.entidades.Negocio
 {
     public partial class ReliquidacionViatico
@@ -17,6 +19,14 @@ namespace bd.webappth.entidades.Negocio
         public TimeSpan? HoraSalida { get; set; }
         public string Descripcion { get; set; }
         public decimal? ValorEstimado { get; set; }
+        [NotMapped]
+        public decimal ValorTotalRequlidacion { get; set; }
+        [NotMapped]
+        public decimal ValorRequlidacion { get; set; }
+        [NotMapped]
+        public int IdPresupuesto { get; set; }
+        [NotMapped]
+        public int IdEmpleado { get; set; }
 
         public virtual Ciudad CiudadDestino { get; set; }
         public virtual Ciudad CiudadOrigen { get; set; }
