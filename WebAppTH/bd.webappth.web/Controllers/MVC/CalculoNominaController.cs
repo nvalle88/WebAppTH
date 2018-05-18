@@ -144,9 +144,34 @@ namespace bd.webappth.web.Controllers.MVC
                 return new List<ReportadoNomina>();            }
         }
 
-        public async Task<IActionResult> MostrarExcel()
+        public async Task<IActionResult> MostrarExcelBase(string id)
         {
-          return  this.Redireccionar("CalculoNomina", "MostrarExcel");
+            try
+            {
+
+                if (!string.IsNullOrEmpty(id))
+                {
+
+                    if (HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession) != Convert.ToInt32(id))
+                    {
+                        HttpContext.Session.SetInt32(Constantes.IdCalculoNominaSession, Convert.ToInt32(id));
+                    }
+                    var calculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
+                    var lista = await apiServicio.Listar<ReportadoNomina>(calculoNomina, new Uri(WebApp.BaseAddress)
+                                                                              , "api/CalculoNomina/ListarReportados");
+                    if (lista.Count == 0)
+                    {
+                        return this.Redireccionar($"{Mensaje.Error}|{Mensaje.NoExistenRegistros}");
+                    }
+                    return View(lista); 
+                }
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         [HttpPost]

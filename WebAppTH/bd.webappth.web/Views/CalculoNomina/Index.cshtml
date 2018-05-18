@@ -82,10 +82,11 @@
                                             </td>
                                             <td>
 
-                                                @Html.ActionLink(" Descargar", "Download", new { id = item.IdCalculoNomina }, new { @class = "glyphicon glyphicon-download-alt" })|
-                                                @Html.ActionLink("Cargar reportados (.xlsx)", "ReportadoNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCalculoNomina }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
+                                                @Html.ActionLink(" Descargar archivo (.xlsx)", "Download", new { id = item.IdCalculoNomina }, new { @class = "glyphicon glyphicon-download-alt" })|
+                                                @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdCalculoNomina }, new { onclick = "cargando();", @class = "fa fa-file-excel-o" })|
+                                                @Html.ActionLink(" Cargar reportados", "ReportadoNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();", @class = "fa fa-file-excel-o" })|
+                                                @Html.ActionLink(" Editar", "Edit", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" ,@class = "fa fa-edit" }) |
+                                                @Html.ActionLink(" Eliminar", "Delete", new { id = item.IdCalculoNomina }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" , @class = "fa fa-minus" })
                                             </td>
                                         </tr>
                                     }
