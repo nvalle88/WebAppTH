@@ -1,0 +1,27 @@
+@model bd.webappth.entidades.Negocio.Presupuesto
+
+<fieldset>
+    <div class="row">
+        <section class="col col-6">
+            <label class="label">@Html.DisplayNameFor(model => model.NumeroPartidaPresupuestaria)</label>
+            <label class="input">
+                <input maxlength="20" asp-for="NumeroPartidaPresupuestaria" class="form-control" type="number" />
+                <span asp-validation-for="NumeroPartidaPresupuestaria" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label class="label">@Html.DisplayNameFor(model => model.Valor)</label>
+            <label class="input">
+                <input maxlength="20" asp-for="Valor" class="form-control" type="number"  />
+                <span asp-validation-for="Valor" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label class="label">@Html.DisplayNameFor(model => model.Fecha)</label>
+            <label class="input">
+                <input  asp-for="Fecha" type="text" class="form-control input datepicker " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+</fieldset> 

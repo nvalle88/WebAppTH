@@ -15,15 +15,22 @@
         public int IdConfiguracionViatico { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaSolicitud { get; set; }
+        [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
+        [Display(Name = "Valor estimado")]
         public decimal? ValorEstimado { get; set; }
+        [Display(Name = "Fecha llegada")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaLlegada { get; set; }
+        [Display(Name = "Fecha salida")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaSalida { get; set; }
+        [Display(Name = "Observación")]
         public string Observacion { get; set; }
         public int Estado { get; set; }
+        [Display(Name = "Hora salida")]
         public TimeSpan HoraSalida { get; set; }
+        [Display(Name = "HOra llegada")]
         public TimeSpan HoraLlegada { get; set; }
 
         public virtual ICollection<AprobacionViatico> AprobacionViatico { get; set; }

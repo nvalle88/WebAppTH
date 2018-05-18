@@ -116,37 +116,54 @@
                                             }
                                             else if (item.Estado == 2)
                                             {
-                                                Estado = "Asignado Informe";
+                                                Estado = "Aprobado Contabilidad";
                                             }
                                             else if (item.Estado == 3)
                                             {
+                                                Estado = "Informe Asignado";
+                                            }
+                                            else if (item.Estado == 4)
+                                            {
                                                 Estado = "Informe Finalizado";
+                                            }
+                                            else if (item.Estado == 5)
+                                            {
+                                                Estado = "Asignado Reliquidacion";
                                             }
                                             <td>
                                                 @Html.DisplayFor(modelItem => Estado)
                                             </td>
                                             <td>
-                                                @if (item.Estado == 1)
+                                                @if (item.Estado == 2)
                                                 {
-                                                    @Html.ActionLink("Activar Informe", "AprobacionSolicitudViatico", new { id = item.IdSolicitudViatico })
+                                                    <text>
+                                                        @Html.ActionLink("Activar Informe", "AprobacionSolicitudViatico", new { id = item.IdSolicitudViatico }) |
+                                                    </text>
                                                 }
-                                                @if (item.Estado != 1)
+                                                @if (item.Estado != 2)
                                                 {
                                                     <text>
                                                         @Html.ActionLink("Detalle", "Detalle", new { id = item.IdSolicitudViatico }) |
                                                     </text>
                                                 }
-                                                @if (item.Estado == 2)
+                                                @if (item.Estado == 3)
                                                 {
                                                     <text>
                                                         @Html.ActionLink("Informe", "Index", "ItinerarioViaticoTH", new { IdSolicitudViatico = item.IdSolicitudViatico, })
                                                     </text>
                                                 }
-                                                @if (item.Estado == 3)
+                                                @if (item.Estado == 4)
                                                 {
                                                     <text>
                                                         @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViaticoTH", new { IdSolicitudViatico = item.IdSolicitudViatico, }) |
                                                         @Html.ActionLink("Activa Reliquidacion", "Reliquidacion", new { id = item.IdSolicitudViatico })
+                                                    </text>
+                                                }
+                                                @if (item.Estado == 5)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViaticoTH", new { IdSolicitudViatico = item.IdSolicitudViatico, }) |
+                                                        
                                                     </text>
                                                 }
                                             </td>
