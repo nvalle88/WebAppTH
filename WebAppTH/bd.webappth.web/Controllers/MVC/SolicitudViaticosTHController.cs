@@ -79,7 +79,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task<IActionResult> AprobacionSolicitudViatico(int id)
+        public async Task<IActionResult> AprobacionSolicitudViatico(int id, int idEmpleado)
         {
             
             try
@@ -87,19 +87,15 @@ namespace bd.webappth.web.Controllers.MVC
                 var sol = new SolicitudViatico()
                 {
                     IdSolicitudViatico = id,
-                    Estado = 2
+                    Estado = 3
 
                 };
-                var sol1 = new SolicitudViaticoViewModel()
-                {
-                    SolicitudViatico = sol
-                };
                 
-                var respuestaEmpleado = await apiServicio.EditarAsync<Response>(sol1, new Uri(WebApp.BaseAddress),
+                var respuestaEmpleado = await apiServicio.EditarAsync<Response>(sol, new Uri(WebApp.BaseAddress),
                                                              "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
                 if (respuestaEmpleado.IsSuccess)
                 {
-                    return RedirectToAction("ListadoEmpleadosSolicitudViaticos");
+                    return RedirectToAction("DetalleSolicitudViaticos",new { id =idEmpleado});
                 }
 
                 return BadRequest();
@@ -111,7 +107,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task<IActionResult> Reliquidacion(int id)
+        public async Task<IActionResult> Reliquidacion(int id ,int IdEmpleado)
         {
 
             try
@@ -119,19 +115,14 @@ namespace bd.webappth.web.Controllers.MVC
                 var sol = new SolicitudViatico()
                 {
                     IdSolicitudViatico = id,
-                    Estado = 4
+                    Estado = 5
 
                 };
-                var sol1 = new SolicitudViaticoViewModel()
-                {
-                    SolicitudViatico = sol
-                };
-
-                var respuestaEmpleado = await apiServicio.EditarAsync<Response>(sol1, new Uri(WebApp.BaseAddress),
+                var respuestaEmpleado = await apiServicio.EditarAsync<Response>(sol, new Uri(WebApp.BaseAddress),
                                                              "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
                 if (respuestaEmpleado.IsSuccess)
                 {
-                    return RedirectToAction("ListadoEmpleadosSolicitudViaticos");
+                    return RedirectToAction("DetalleSolicitudViaticos",new { id = IdEmpleado });
                 }
 
                 return BadRequest();

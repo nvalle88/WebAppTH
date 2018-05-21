@@ -8,7 +8,9 @@
     "jquery-validation-unobtrusive": "v3.2.9",
     "select2": "4.0.5",
     "font-awesome": "v4.7.0",
-    "bootstrap-touchspin": "4.2.5"
+    "bootstrap-touchspin": "4.2.5",
+    "bootstrap-fileinput": "v4.4.8",
+    "bootstrap-popover-x": "v1.4.4"
   },
   "resolutions": {
     "jquery": "3.3.1",

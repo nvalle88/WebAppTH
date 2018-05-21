@@ -116,11 +116,19 @@
                                             }
                                             else if (item.Estado == 2)
                                             {
-                                                Estado = "Asignado Informe";
+                                                Estado = "Aprobado Contabilidad";
                                             }
                                             else if (item.Estado == 3)
                                             {
+                                                Estado = "Asignado Informe";
+                                            }
+                                            else if (item.Estado == 4)
+                                            {
                                                 Estado = "Informe Finalizado";
+                                            }
+                                            else if (item.Estado == 5)
+                                            {
+                                                Estado = "Asignado Reliquidacion";
                                             }
                                             <td>
                                                 @Html.DisplayFor(modelItem => Estado)
@@ -137,7 +145,7 @@
                                                 {
                                                     <text>
                                                         @Html.ActionLink("Detalle", "Detalle", new { id = item.IdSolicitudViatico }) |
-                                                        @if (item.Estado == 2)
+                                                        @if (item.Estado == 3)
                                                         {
                                                             @Html.ActionLink("Informe", "Index", "ItinerarioViatico", new { IdSolicitudViatico = item.IdSolicitudViatico, })
 
@@ -146,14 +154,22 @@
                                                     @if (item.Estado == 3)
                                                     {
                                                         <text>
-                                                            @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViatico", new { IdSolicitudViatico = item.IdSolicitudViatico, })
-                                                           
+                                                            @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViaticoJefe", new { IdSolicitudViatico = item.IdSolicitudViatico, })
+
                                                         </text>
                                                     }
                                                     @if (item.Estado == 4)
                                                     {
                                                         <text>
-                                                            @Html.ActionLink(" Reliquidacion", "Index", "ItinerarioViatico", new { IdSolicitudViatico = item.IdSolicitudViatico, })
+                                                            @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViaticoJefe", new { IdSolicitudViatico = item.IdSolicitudViatico, })
+
+                                                        </text>
+                                                    }
+                                                    @if (item.Estado == 5)
+                                                    {
+                                                        <text>
+                                                            @Html.ActionLink(" Ver Informe", "Index", "ItinerarioViaticoJefe", new { IdSolicitudViatico = item.IdSolicitudViatico, }) 
+                                                            @*@Html.ActionLink(" Reliquidacion", "Index", "ItinerarioViaticoJefe", new { IdSolicitudViatico = item.IdSolicitudViatico, })*@
                                                         </text>
                                                     }
 
