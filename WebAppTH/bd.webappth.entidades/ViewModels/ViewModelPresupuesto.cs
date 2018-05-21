@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace bd.webappth.entidades.Negocio
+﻿
+namespace bd.webappth.entidades.ViewModels
 {
-    public partial class Presupuesto
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
+    public class ViewModelPresupuesto
     {
-        [Key]
         public int IdPresupuesto { get; set; }
         [Display(Name = "Numero partida presupuestaria")]
         public string NumeroPartidaPresupuestaria { get; set; }
@@ -16,7 +15,8 @@ namespace bd.webappth.entidades.Negocio
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Fecha { get; set; }
         public int? IdSucursal { get; set; }
-        public virtual ICollection<DetallePresupuesto> DetallePresupuesto { get; set; }
-        public virtual Sucursal Sucursal { get; set; }
+        [Display(Name = "Sucursal")]
+        public string NombreSucursal { get; set; }
+
     }
 }
