@@ -88,6 +88,7 @@
     <Folder Include="Views\DenominacionesCompetencias\" />
     <Folder Include="Views\ConfiguracionesViaticos\" />
     <Folder Include="Views\AccionPersonal\" />
+    <Folder Include="wwwroot\DocumentoCapacitacion\Reportados\" />
     <Folder Include="wwwroot\DocumentoNomina\Reportados\" />
     <Folder Include="wwwroot\js\datatables\" />
   </ItemGroup>

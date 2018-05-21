@@ -55,18 +55,19 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> ReportadoNomina(string id)
+        public async Task<IActionResult> ReportadoCapacitacion(string id)
         {
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    if (HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession) !=Convert.ToInt32(id))
-                    {
-                        HttpContext.Session.SetInt32(Constantes.IdCalculoNominaSession, Convert.ToInt32(id));
-                    }
-                    var CalculoNomina = new CalculoNomina { IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina };
-                    return View(CalculoNomina);
+                    //if (HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession) !=Convert.ToInt32(id))
+                    //{
+                    //    HttpContext.Session.SetInt32(Constantes.IdCalculoNominaSession, Convert.ToInt32(id));
+                    //}
+                    //var Capacitacion = new PlanCapacitacion { IdPlanCapacitacion = ObtenerCalculoNomina().IdCalculoNomina };
+                    var Capacitacion = new PlanCapacitacion { IdPlanCapacitacion = Convert.ToInt32(id) };
+                    return View(Capacitacion);
                 }
 
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
@@ -83,65 +84,67 @@ namespace bd.webappth.web.Controllers.MVC
             using (var br = new BinaryReader(files[0].OpenReadStream()))
                 data = br.ReadBytes((int)files[0].OpenReadStream().Length);
             string sFileName = files[0].FileName;
-            await uploadFileService.UploadFile(data, "DocumentoNomina/Reportados", Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina), ".xlsx");
+            //await uploadFileService.UploadFile(data, "DocumentoNomina/Reportados", Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina), ".xlsx");
+            await uploadFileService.UploadFile(data, "DocumentoCapacitacion/Reportados", "1", ".xlsx");
             string sWebRootFolder = _hostingEnvironment.WebRootPath;
 
-            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, string.Format("{0}/{1}.{2}", "DocumentoNomina/Reportados", ObtenerCalculoNomina().IdCalculoNomina, "xlsx")));
+            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, string.Format("{0}/{1}.{2}", "DocumentoCapacitacion/Reportados", "1", "xlsx")));
             return file;
         }
 
 
-        private async Task<List<ReportadoNomina>> LeerExcel(FileInfo file)
+        private async Task<List<PlanCapacitacion>> LeerExcel(FileInfo file)
         {
             try
             {
-                var lista = new List<ReportadoNomina>();
-                var listaSalida = new List<ReportadoNomina>();
+                var lista = new List<PlanCapacitacion>();
+                var listaSalida = new List<PlanCapacitacion>();
                 using (ExcelPackage package = new ExcelPackage(file))
                 {
                     StringBuilder sb = new StringBuilder();
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
                     int rowCount = worksheet.Dimension.Rows;
-                    var idCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina;
+                    //var idCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina;
                     for (int row = 2; row <= rowCount; row++)
                     {
-                     var codigoConcepto =worksheet.Cells[row, 1].Value ==null ? "" : worksheet.Cells[row, 1].Value.ToString();
-                     var identificacionEmpleado = worksheet.Cells[row, 2].Value==null ? "" : worksheet.Cells[row, 2].Value.ToString();
-                     var nombreEmpleado =worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
-                     var cantidadStr = worksheet.Cells[row, 4].Value == null ? Convert.ToString(0.0) : worksheet.Cells[row, 4].Value.ToString() ;
-                     var importeStr =worksheet.Cells[row, 5].Value == null ? Convert.ToString(0.0) :worksheet.Cells[row, 5].Value.ToString();
+                     var NumeroPartida = worksheet.Cells[row, 1].Value ==null ? "" : worksheet.Cells[row, 1].Value.ToString();
+                     var Institucion = worksheet.Cells[row, 2].Value==null ? "" : worksheet.Cells[row, 2].Value.ToString();
+                     var Pais = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
+                     var Provincia = worksheet.Cells[row, 2].Value == null ? "" : worksheet.Cells[row, 4].Value.ToString();
+                     var Ciudad = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 5].Value.ToString();
+                        //var cantidadStr = worksheet.Cells[row, 4].Value == null ? Convert.ToString(0.0) : worksheet.Cells[row, 4].Value.ToString() ;
+                        //var importeStr =worksheet.Cells[row, 5].Value == null ? Convert.ToString(0.0) :worksheet.Cells[row, 5].Value.ToString();
 
-                        cantidadStr = cantidadStr.Replace(",", ",");
-                        importeStr = importeStr.Replace(",", ",");
-                        var cantidad = Convert.ToDouble(cantidadStr);
-                        var importe = Convert.ToDouble(importeStr);
+                        //cantidadStr = cantidadStr.Replace(",", ",");
+                        //importeStr = importeStr.Replace(",", ",");
+                        //var cantidad = Convert.ToDouble(cantidadStr);
+                        //var importe = Convert.ToDouble(importeStr);
 
-                        lista.Add(new ReportadoNomina
+                        lista.Add(new PlanCapacitacion
                         {
-                            CodigoConcepto = codigoConcepto,
-                            IdentificacionEmpleado = identificacionEmpleado,
-                            NombreEmpleado = nombreEmpleado,
-                            Cantidad = cantidad,
-                            Importe = importe,
-                            IdCalculoNomina = idCalculoNomina,
-                            Valido = true,
+                            NumeroPartidaPresupuestaria = NumeroPartida,
+                            Institucion= Institucion,
+                            Pais = Pais,
+                            Provincia = Provincia,
+                            Ciudad= Ciudad
                         });
 
 
-                        
+
 
                     }
-
-                     listaSalida = await apiServicio.Listar<ReportadoNomina>(lista, new Uri(WebApp.BaseAddress),
-                                                    "api/ConceptoNomina/VerificarExcel");
+                     //listaSalida = await apiServicio.Listar<ReportadoNomina>(lista, new Uri(WebApp.BaseAddress),
+                     //                               "api/ConceptoNomina/VerificarExcel");
                     
                 }
-                return listaSalida;
-                
+                //return listaSalida;
+                return lista;
+
+
             }
             catch (Exception ex)
             {
-                return new List<ReportadoNomina>();
+                return new List<PlanCapacitacion>();
             }
         }
 
@@ -203,13 +206,13 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> MostrarExcel(CalculoNomina calculoNomina, List<IFormFile> files)
+        public async Task<IActionResult> MostrarExcel(PlanCapacitacion planCapacitacion, List<IFormFile> files)
         {
             try
             {
                 if (files.Count <= 0)
                 {
-                    return this.Redireccionar("CalculoNomina", "ReportadoNomina", new { id = Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
+                    return this.Redireccionar("MigracionCapacitaciones", "ReportadoNomina", new { id = Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
                 }
 
 
@@ -220,23 +223,23 @@ namespace bd.webappth.web.Controllers.MVC
                     this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ReportadoNoCumpleFormato}|{"45000"}";
                     return View(lista);
                 }
-                var listaSalvar = lista.Where(x => x.Valido == true).ToList();
-                var reportadoRequest = new Response();
-                if (listaSalvar.Count > 0)
-                {
-                    reportadoRequest = await apiServicio.InsertarAsync<Response>(listaSalvar, new Uri(WebApp.BaseAddress),
-                               "api/ConceptoNomina/InsertarReportadoNomina");
-                }
+                //var listaSalvar = lista.Where(x => x.IdPlanCapacitacion == true).ToList();
+                //var reportadoRequest = new Response();
+                //if (listaSalvar.Count > 0)
+                //{
+                //    reportadoRequest = await apiServicio.InsertarAsync<Response>(listaSalvar, new Uri(WebApp.BaseAddress),
+                //               "api/ConceptoNomina/InsertarReportadoNomina");
+                //}
 
-                var listaErrores = lista.Where(x => x.Valido == false).ToList();
-                if (listaErrores.Count > 0)
-                {
-                    this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{Mensaje.ReportadoConErrores}|{"12000"}";
-                }
-                else
-                {
-                    this.TempData["Mensaje"] = $"{Mensaje.Success}|{Mensaje.Satisfactorio}";
-                }
+                //var listaErrores = lista.Where(x => x.Valido == false).ToList();
+                //if (listaErrores.Count > 0)
+                //{
+                //    this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{Mensaje.ReportadoConErrores}|{"12000"}";
+                //}
+                //else
+                //{
+                //    this.TempData["Mensaje"] = $"{Mensaje.Success}|{Mensaje.Satisfactorio}";
+                //}
 
                 return View(lista);
             }
