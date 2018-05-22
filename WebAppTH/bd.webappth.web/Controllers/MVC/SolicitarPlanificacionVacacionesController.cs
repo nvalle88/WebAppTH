@@ -14,6 +14,7 @@ using bd.webappseguridad.entidades.Enumeradores;
 using System.Security.Claims;
 using bd.webappth.entidades.ViewModels;
 using bd.webappth.servicios.Extensores;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -99,7 +100,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             
             try {
-                var response = await apiServicio.InsertarAsync(
+                var response = await apiServicio.EditarAsync<Response>(
                     modelo,
                     new Uri(WebApp.BaseAddress),
                     "api/SolicitudPlanificacionVacaciones/InsertarSolicitudPlanificacionVacaciones"
@@ -195,7 +196,232 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        
+
+        public async Task<IActionResult> IndexJefe()
+        {
+
+            var modelo = new DependenciaDatosViewModel();
+
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(
+                        NombreUsuario,
+                        new Uri(WebApp.BaseAddress),
+                        "api/Empleados/EmpleadoSegunNombreUsuario");
+
+                    if (empleado.EsJefe == true)
+                    {
+
+                        var enviar = new IdFiltrosViewModel { NombreUsuario = NombreUsuario };
+
+                        modelo = await apiServicio.ObtenerElementoAsync1<DependenciaDatosViewModel>(
+                            enviar,
+                            new Uri(WebApp.BaseAddress),
+                            "api/Dependencias/ObtenerDependenciaDatosViewModelPorUsuarioActual");
+
+                        return View(modelo);
+                    }
+
+                    return this.Redireccionar(
+                            "SolicitarPlanificacionVacaciones",
+                            "Index",
+                            $"{Mensaje.Informacion}|{Mensaje.AccesoNoAutorizado}"
+                         );
+
+
+                }
+
+                return RedirectToAction("Login", "Login");
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> ConsultarDependencia(int id)
+        {
+
+            var modelo = new DependenciaDatosViewModel();
+
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(
+                        NombreUsuario,
+                        new Uri(WebApp.BaseAddress),
+                        "api/Empleados/EmpleadoSegunNombreUsuario");
+
+                    if (empleado.EsJefe == true)
+                    {
+
+                        var enviar = new IdFiltrosViewModel { IdDependencia = id };
+
+                        modelo = await apiServicio.ObtenerElementoAsync1<DependenciaDatosViewModel>(
+                            enviar,
+                            new Uri(WebApp.BaseAddress),
+                            "api/Dependencias/ObtenerDependenciaDatosViewModelPorIdDependencia");
+
+                        return View(modelo);
+                    }
+
+                    return this.Redireccionar(
+                            "SolicitarPlanificacionVacaciones",
+                            "Index",
+                            $"{Mensaje.Informacion}|{Mensaje.AccesoNoAutorizado}"
+                         );
+
+
+                }
+
+                return RedirectToAction("Login", "Login");
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> Solicitudes(int id)
+        {
+
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var enviar = new IdFiltrosViewModel { NombreUsuario = NombreUsuario, IdEmpleado = id };
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                        enviar,
+                        new Uri(WebApp.BaseAddress),
+                        "api/SolicitudPlanificacionVacaciones/ObtenerListaSolicitudPlanificacionVacacionesViewModelPorEmpleado");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        var lista = JsonConvert.DeserializeObject<List<SolicitudPlanificacionVacacionesViewModel>>(respuesta.Resultado.ToString());
+
+                        return View(lista);
+                    }
+
+                    return this.Redireccionar(
+                            "SolicitarPlanificacionVacaciones",
+                            "Index",
+                            $"{Mensaje.Aviso}|{respuesta.Message}"
+                         );
+                }
+
+                return RedirectToAction("Login", "Login");
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+
+        public async Task<IActionResult> Aprobar(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                        id,
+                        new Uri(WebApp.BaseAddress),
+                        "api/SolicitudPlanificacionVacaciones/ObtenerSolicitudPlanificacionVacacionesViewModel");
+
+
+                    if (respuesta.IsSuccess)
+                    {
+                        respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudPlanificacionVacacionesViewModel>(respuesta.Resultado.ToString());
+
+                        await CargarCombosAprobador();
+
+                        return View(respuesta.Resultado);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Aprobar(SolicitudPlanificacionVacacionesViewModel modelo)
+        {
+
+            try
+            {
+                var response = await apiServicio.EditarAsync<Response>(
+                    modelo,
+                    new Uri(WebApp.BaseAddress),
+                    "api/SolicitudPlanificacionVacaciones/AprobarSolicitudPlanificacionVacaciones"
+                    );
+
+                if (response.IsSuccess)
+                {
+
+                    return this.Redireccionar(
+                            "SolicitarPlanificacionVacaciones",
+                            "Solicitudes",
+                           new { id = modelo.DatosBasicosEmpleadoViewModel.IdEmpleado },
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
+                }
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+                return View(modelo);
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+
+        public async Task CargarCombosAprobador()
+        {
+
+            //** Estados de aprobación vacaciones
+            var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/SolicitudPlanificacionVacaciones/ListarEstadosAprobador");
+
+            ViewData["IdListaEstado"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+            
+        }
+
+
+
         /*
         public async Task<IActionResult> Delete(string id)
         {
@@ -236,24 +462,8 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
         */
-        private async Task<Empleado> ObtenerEmpleadoLogueado(string nombreUsuario)
-        {
-            try
-            {
-                var empleado = new Empleado
-                {
-                    NombreUsuario = nombreUsuario,
-                };
-                var usuariologueado = await apiServicio.ObtenerElementoAsync1<Empleado>(empleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerEmpleadoLogueado");
-                return usuariologueado;
-            }
-            catch (Exception)
-            {
-                return new Empleado();
-            }
 
-        }
-        
+
 
     }
 }

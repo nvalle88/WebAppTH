@@ -1,21 +1,16 @@
-@model List<bd.webappth.entidades.ViewModels.EmpleadoSolicitudViewModel>
+@model List<bd.webappth.entidades.ViewModels.SolicitudPlanificacionVacacionesViewModel>
+<link href="~/css/tabla/table.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Index";
 }
 <!-- MAIN CONTENT -->
+
+@{await Html.RenderPartialAsync("_PartialViewMenu");}
+
 <div id="content">
 
     <p></p>
-    @*<a asp-action="Create">
-            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
-                <span class="btn-label">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </span>Nueva Solicitud Planificaci&oacute;n Vacaciones
-
-            </button>
-        </a>*@
-    <p> </p>
 
     <!-- widget grid -->
     <section id="widget-grid" class="">
@@ -38,9 +33,18 @@
                     data-widget-sortable="false"
 
                     -->
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Empleados con planificaci&oacute;n de vacaciones</h2>
+                        <h2>Solicitudes de planificaci&oacute;n de vacaciones
+                        
+                        @if(Model.FirstOrDefault() != null) { 
+
+                            <text>
+                                : &nbsp;@Model.FirstOrDefault().DatosBasicosEmpleadoViewModel.Nombres @Model.FirstOrDefault().DatosBasicosEmpleadoViewModel.Apellidos
+                            </text>
+                        }
+
+                        </h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -53,34 +57,23 @@
                         <div class="widget-body no-padding">
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
-                                    <tr>
-                                        <th class="hasinput">
-                                            <input type="text" class="form-control" placeholder="Buscar" />
-                                        </th>
-                                        <th class="hasinput">
-                                            <input type="text" class="form-control" placeholder="Buscar" />
-                                        </th>
-                                        <th class="hasinput">
-                                            <input type="text" class="form-control" placeholder="Buscar" />
-                                        </th>
-                                        <th class="hasinput">
-                                            <input type="text" class="form-control" placeholder="Buscar" />
-                                        </th>
-                                        <th></th>
-                                    </tr>
+
                                     <tr>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreApellido)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaSolicitud)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Identificacion)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaDesde)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().HaSolicitado)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaHasta)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Aprobado)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Observaciones)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -89,24 +82,33 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreApellido)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.HaSolicitado)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Aprobado)
+                                                @Html.DisplayFor(modelItem => item.FechaSolicitud)
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Detalle", "DetallePlanificacionVacaciones", new { id = item.IdEmpleado })
-                                                @*@Html.ActionLink("Eliminar", "Delete", new { id = item.IdSolicitudPlanificacionVacaciones }, new { onclick = "return confirm('Desea eliminar  la solicitud de planificacion de vacaciones... ?');" })*@
+                                                @Html.DisplayFor(modelItem => item.FechaDesde)
                                             </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaHasta)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NombreEstado)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Observaciones)
+                                            </td>
+
+                                            <td>
+                                                @*@if (String.IsNullOrEmpty(item.Observaciones))
+                                                {*@
+                                                    @Html.ActionLink("Aprobar/Cambiar de estado", "Aprobar", new { id = item.IdSolicitudPlanificacionVacaciones })
+                                                @*}*@
+                                            </td>
+
                                         </tr>
                                     }
                                 </tbody>
@@ -129,10 +131,17 @@
 
 @section Scripts {
     <script src='~/js/datatables/init.js'></script>
+
+    <script>
+        $("#btn_1").css("background-color", "#3276b1");
+        $("#btn_1").css("color", "white");
+
+
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
 }
-
-
-
-
-
 
