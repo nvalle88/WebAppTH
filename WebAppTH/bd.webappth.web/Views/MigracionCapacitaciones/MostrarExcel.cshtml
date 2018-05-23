@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.ReportadoNomina>
+@model List<bd.webappth.entidades.Negocio.PlanCapacitacion>
 @using Microsoft.AspNetCore.Http;
 @using Microsoft.AspNetCore.Mvc;
 @using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,17 +18,17 @@
         <button type="button" asp-action="Index" onclick="cargando()" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-arrow-left"></i>
-            </span>Listado C&aacute;lculo de N&oacute;mina
+            </span>Atras
         </button>
     </a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a asp-action="ReportadoNomina" asp-route-id="@nomina" onclick="cargando()">
-        <button type="button" asp-action="ReportadoNomina" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
+    @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a asp-action="ReportadoCapacitacion" asp-route-id="@nomina" onclick="cargando()">
+        <button type="button" asp-action="ReportadoCapacitacion" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-upload"></i>
             </span>Cargar archivo
         </button>
-    </a>
+    </a>*@
     <p> </p>
     <div class="jarviswidget jarviswidget-sortable" id="wid-id-11" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-custombutton="false" role="widget">
 
@@ -84,19 +84,19 @@
                                                     <thead>
                                                         <tr>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoConcepto)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cedula)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().IdentificacionEmpleado)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().ApellidoNombre)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreEmpleado)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreCiudad)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().DenominacionPuesto)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Importe)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().TemaCapacitacion)
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -105,20 +105,21 @@
                                                         {
                                                             <tr>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.CodigoConcepto)
+                                                                    @Html.DisplayFor(modelItem => item.Cedula)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
+                                                                    @Html.DisplayFor(modelItem => item.ApellidoNombre)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.NombreEmpleado)
+                                                                    @Html.DisplayFor(modelItem => item.NombreCiudad)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Cantidad)
+                                                                    @Html.DisplayFor(modelItem => item.DenominacionPuesto)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Importe)
+                                                                    @Html.DisplayFor(modelItem => item.TemaCapacitacion)
                                                                 </td>
+                                                               
                                                             </tr>
                                                         }
                                                     </tbody>
@@ -148,23 +149,30 @@
                                                     <thead>
                                                         <tr>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoConcepto)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cedula)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().IdentificacionEmpleado)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().ApellidoNombre)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreEmpleado)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreCiudad)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().DenominacionPuesto)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Importe)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().TemaCapacitacion)
                                                             </th>
                                                             <th data-class="expand">
                                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().MensajeError)
                                                             </th>
+                                                            @* <th data-class="expand">
+                                                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
+                                                                </th>
+                                                                <th data-class="expand">
+                                                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Importe)
+                                                                </th>
+                                                            *@
 
                                                         </tr>
                                                     </thead>
@@ -173,23 +181,32 @@
                                                         {
                                                             <tr>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.CodigoConcepto)
+                                                                    @Html.DisplayFor(modelItem => item.Cedula)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
+                                                                    @Html.DisplayFor(modelItem => item.ApellidoNombre)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.NombreEmpleado)
+                                                                    @Html.DisplayFor(modelItem => item.NombreCiudad)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Cantidad)
+                                                                    @Html.DisplayFor(modelItem => item.DenominacionPuesto)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Importe)
+                                                                    @Html.DisplayFor(modelItem => item.TemaCapacitacion)
                                                                 </td>
                                                                 <td>
                                                                     @Html.DisplayFor(modelItem => item.MensajeError)
                                                                 </td>
+                                                                @*  <td>
+                                                                        @Html.DisplayFor(modelItem => item.Cantidad)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Importe)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.MensajeError)
+                                                                    </td>*@
 
                                                             </tr>
                                                         }

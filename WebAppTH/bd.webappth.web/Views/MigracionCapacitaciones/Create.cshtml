@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.Negocio.CalculoNomina
+@model bd.webappth.entidades.Negocio.GestionPlanCapacitacion
 
 @{
     ViewData["Title"] = "CalculoNomina";
@@ -8,11 +8,11 @@
 <div id="content">
     <section id="" class="">
         <div class="row">
-            <article class="col-sm-12 col-md-12 col-lg-7">
+            <article class="col-sm-12 col-md-12 col-lg-12">
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Crear c&aacute;lculo de n&oacute;mina</h2>
+                        <h2>Gesti&oacute;n Capacitaciones</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -20,7 +20,9 @@
                         <div class="widget-body no-padding">
                             <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                @{await Html.RenderPartialAsync("_PartialViewCalculoNomina", Model);}
+                                <input type="hidden" asp-for="Anio" value="@DateTime.Now.Year" />
+                                <input type="hidden" asp-for="Estado" value="1" />
+                                @{await Html.RenderPartialAsync("_PartialViewGestionPlanCapacitacion", Model);}
                                 <footer>
                                     <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
                                     <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>

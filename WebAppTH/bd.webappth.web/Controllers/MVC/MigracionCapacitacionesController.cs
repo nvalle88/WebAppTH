@@ -8,6 +8,7 @@ using bd.webappth.entidades.Constantes;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.ObjectTransfer;
 using bd.webappth.entidades.Utils;
+using bd.webappth.entidades.ViewModels;
 using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
 using Microsoft.AspNetCore.Hosting;
@@ -37,7 +38,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                var targetDirectory = Path.Combine(_hostingEnvironment.WebRootPath, string.Format("{0}/{1}.{2}", "DocumentoNomina/Reportados", id, "xlsx"));
+                var targetDirectory = Path.Combine(_hostingEnvironment.WebRootPath, string.Format("{0}/{1}.{2}", "DocumentoCapacitacion/Reportados", id, "xlsx"));
                 var file = new FileStream(targetDirectory, FileMode.Open);
                 byte[] data;
                 using (var br = new BinaryReader(file))
@@ -61,12 +62,11 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    //if (HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession) !=Convert.ToInt32(id))
-                    //{
-                    //    HttpContext.Session.SetInt32(Constantes.IdCalculoNominaSession, Convert.ToInt32(id));
-                    //}
-                    //var Capacitacion = new PlanCapacitacion { IdPlanCapacitacion = ObtenerCalculoNomina().IdCalculoNomina };
-                    var Capacitacion = new PlanCapacitacion { IdPlanCapacitacion = Convert.ToInt32(id) };
+                    if (HttpContext.Session.GetInt32(Constantes.IdCapacitacionSession ) !=Convert.ToInt32(id))
+                    {
+                        HttpContext.Session.SetInt32(Constantes.IdCapacitacionSession, Convert.ToInt32(id));
+                    }
+                    var Capacitacion = new PlanCapacitacion { IdPlanCapacitacion = ObtenerIdCapacitacion().IdGestionPlanCapacitacion };
                     return View(Capacitacion);
                 }
 
@@ -84,11 +84,9 @@ namespace bd.webappth.web.Controllers.MVC
             using (var br = new BinaryReader(files[0].OpenReadStream()))
                 data = br.ReadBytes((int)files[0].OpenReadStream().Length);
             string sFileName = files[0].FileName;
-            //await uploadFileService.UploadFile(data, "DocumentoNomina/Reportados", Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina), ".xlsx");
-            await uploadFileService.UploadFile(data, "DocumentoCapacitacion/Reportados", "1", ".xlsx");
+            await uploadFileService.UploadFile(data, "DocumentoCapacitacion/Reportados", Convert.ToString(ObtenerIdCapacitacion().IdGestionPlanCapacitacion), ".xlsx");
             string sWebRootFolder = _hostingEnvironment.WebRootPath;
-
-            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, string.Format("{0}/{1}.{2}", "DocumentoCapacitacion/Reportados", "1", "xlsx")));
+            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, string.Format("{0}/{1}.{2}", "DocumentoCapacitacion/Reportados", Convert.ToString(ObtenerIdCapacitacion().IdGestionPlanCapacitacion), "xlsx")));
             return file;
         }
 
@@ -104,41 +102,75 @@ namespace bd.webappth.web.Controllers.MVC
                     StringBuilder sb = new StringBuilder();
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
                     int rowCount = worksheet.Dimension.Rows;
-                    //var idCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina;
+                    var idGestionCapacitaciones = ObtenerIdCapacitacion().IdGestionPlanCapacitacion;
+                    DateTime? Fecha = new DateTime();
                     for (int row = 2; row <= rowCount; row++)
                     {
-                     var NumeroPartida = worksheet.Cells[row, 1].Value ==null ? "" : worksheet.Cells[row, 1].Value.ToString();
-                     var Institucion = worksheet.Cells[row, 2].Value==null ? "" : worksheet.Cells[row, 2].Value.ToString();
-                     var Pais = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
-                     var Provincia = worksheet.Cells[row, 2].Value == null ? "" : worksheet.Cells[row, 4].Value.ToString();
-                     var Ciudad = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 5].Value.ToString();
+                        var NumeroPartida = worksheet.Cells[row, 1].Value == null ? "" : worksheet.Cells[row, 1].Value.ToString();
+                        var Institucion = worksheet.Cells[row, 2].Value == null ? "" : worksheet.Cells[row, 2].Value.ToString();
+                        var Pais = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
+                        var Provincia = worksheet.Cells[row, 4].Value == null ? "" : worksheet.Cells[row, 4].Value.ToString();
+                        var Ciudad = worksheet.Cells[row, 5].Value == null ? "" : worksheet.Cells[row, 5].Value.ToString();
+                        var NivelDesconcentracion = worksheet.Cells[row, 6].Value == null ? "" : worksheet.Cells[row, 6].Value.ToString();
+                        var UnidadAdministrativa = worksheet.Cells[row, 7].Value == null ? "" : worksheet.Cells[row, 7].Value.ToString();
+                        var Cedula = worksheet.Cells[row, 8].Value == null ? "" : worksheet.Cells[row, 8].Value.ToString();
+                        var NombreApellido = worksheet.Cells[row, 9].Value == null ? "" : worksheet.Cells[row, 9].Value.ToString();
+                        var Sexo = worksheet.Cells[row, 10].Value == null ? "" : worksheet.Cells[row, 10].Value.ToString();
+                        var GrupoOcupacional = worksheet.Cells[row, 11].Value == null ? "" : worksheet.Cells[row, 11].Value.ToString();
+                        var DenominacionPuesto = worksheet.Cells[row, 12].Value == null ? "" : worksheet.Cells[row, 12].Value.ToString();
+                        var RegimenLaboral = worksheet.Cells[row, 13].Value == null ? "" : worksheet.Cells[row, 13].Value.ToString();
+                        var ModalidadLaboral = worksheet.Cells[row, 14].Value == null ? "" : worksheet.Cells[row, 14].Value.ToString();
+                        var TemaCapacitacion = worksheet.Cells[row, 15].Value == null ? "" : worksheet.Cells[row, 15].Value.ToString();
+                        var ClasificacionTema = worksheet.Cells[row, 16].Value == null ? "" : worksheet.Cells[row, 16].Value.ToString();
+                        var ProductoFinal = worksheet.Cells[row, 17].Value == null ? "" : worksheet.Cells[row, 17].Value.ToString();
+                        var ModalidadPlanificada = worksheet.Cells[row, 18].Value == null ? "" : worksheet.Cells[row, 18].Value.ToString();
+                        var Duracion = worksheet.Cells[row, 19].Value == null ? "0" : worksheet.Cells[row, 19].Value.ToString();
+                        var Presupuesto = worksheet.Cells[row, 20].Value == null ? "0" : worksheet.Cells[row, 20].Value.ToString();
+                        Fecha = Convert.ToDateTime( worksheet.Cells[row, 21].Value == null ? null :  worksheet.Cells[row, 21].Value).Date;
+                        var TipoPlanificacion = worksheet.Cells[row, 22].Value == null ? "" : worksheet.Cells[row, 22].Value.ToString();
+
                         //var cantidadStr = worksheet.Cells[row, 4].Value == null ? Convert.ToString(0.0) : worksheet.Cells[row, 4].Value.ToString() ;
                         //var importeStr =worksheet.Cells[row, 5].Value == null ? Convert.ToString(0.0) :worksheet.Cells[row, 5].Value.ToString();
 
                         //cantidadStr = cantidadStr.Replace(",", ",");
                         //importeStr = importeStr.Replace(",", ",");
-                        //var cantidad = Convert.ToDouble(cantidadStr);
-                        //var importe = Convert.ToDouble(importeStr);
+                        var DuracionCapacitacion = Convert.ToInt32(Duracion);
+                        var ValorPresupuesto = Convert.ToDecimal(Presupuesto);
 
                         lista.Add(new PlanCapacitacion
                         {
+                            IdGestionPlanCapacitacion = idGestionCapacitaciones,
                             NumeroPartidaPresupuestaria = NumeroPartida,
                             Institucion= Institucion,
                             Pais = Pais,
                             Provincia = Provincia,
-                            Ciudad= Ciudad
+                            NombreCiudad= Ciudad,
+                            NivelDesconcentracion= NivelDesconcentracion,
+                            UnidadAdministrativa= UnidadAdministrativa,
+                            Cedula= Cedula,
+                            ApellidoNombre = NombreApellido,
+                            Sexo= Sexo,
+                            GrupoOcupacional= GrupoOcupacional,
+                            DenominacionPuesto= DenominacionPuesto,
+                            RegimenLaboral= RegimenLaboral,
+                            ModalidadLaboral= ModalidadLaboral,
+                            TemaCapacitacion= TemaCapacitacion,
+                            ClasificacionTema= ClasificacionTema,
+                            ProductoFinal= ProductoFinal,
+                            Modalidad= ModalidadPlanificada,
+                            Duracion= DuracionCapacitacion,
+                            PresupuestoIndividual= ValorPresupuesto,
+                            FechaCapacitacionPlanificada= Fecha,
+                            TipoCapacitacion = TipoPlanificacion
                         });
 
-
-
-
                     }
-                     //listaSalida = await apiServicio.Listar<ReportadoNomina>(lista, new Uri(WebApp.BaseAddress),
-                     //                               "api/ConceptoNomina/VerificarExcel");
+                     listaSalida = await apiServicio.Listar<PlanCapacitacion>(lista, new Uri(WebApp.BaseAddress),
+                                                "api/MigracionCapacitaciones/VerificarExcel");
                     
                 }
-                //return listaSalida;
-                return lista;
+               return listaSalida;
+               // return lista;
 
 
             }
@@ -156,9 +188,9 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
 
-                    var calculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
-                    var response = await apiServicio.ObtenerElementoAsync1<Response>(calculoNomina, new Uri(WebApp.BaseAddress)
-                                                                              , "api/CalculoNomina/LimpiarReportados");
+                    var envia = new GestionPlanCapacitacion { IdGestionPlanCapacitacion = Convert.ToInt32(id) };
+                    var response = await apiServicio.ObtenerElementoAsync1<Response>(envia, new Uri(WebApp.BaseAddress)
+                                                                              , "api/MigracionCapacitaciones/LimpiarReportados");
                     if (response.IsSuccess)
                     {
                         return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
@@ -182,13 +214,13 @@ namespace bd.webappth.web.Controllers.MVC
                 if (!string.IsNullOrEmpty(id))
                 {
 
-                    if (HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession) != Convert.ToInt32(id))
+                    if (HttpContext.Session.GetInt32(Constantes.IdCapacitacionSession) != Convert.ToInt32(id))
                     {
-                        HttpContext.Session.SetInt32(Constantes.IdCalculoNominaSession, Convert.ToInt32(id));
+                        HttpContext.Session.SetInt32(Constantes.IdCapacitacionSession, Convert.ToInt32(id));
                     }
-                    var calculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
-                    var lista = await apiServicio.Listar<ReportadoNomina>(calculoNomina, new Uri(WebApp.BaseAddress)
-                                                                              , "api/CalculoNomina/ListarReportados");
+                    var envia = new GestionPlanCapacitacion { IdGestionPlanCapacitacion = Convert.ToInt32(id) };
+                    var lista = await apiServicio.Listar<PlanCapacitacion>(envia, new Uri(WebApp.BaseAddress)
+                                                                              , "api/MigracionCapacitaciones/ListarReportados");
                     if (lista.Count == 0)
                     {
                         return this.Redireccionar($"{Mensaje.Error}|{Mensaje.NoExistenRegistros}");
@@ -212,7 +244,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (files.Count <= 0)
                 {
-                    return this.Redireccionar("MigracionCapacitaciones", "ReportadoNomina", new { id = Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
+                    return this.Redireccionar("MigracionCapacitaciones", "ReportadoNomina", new { id = Convert.ToString(ObtenerIdCapacitacion().IdGestionPlanCapacitacion) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
                 }
 
 
@@ -223,27 +255,27 @@ namespace bd.webappth.web.Controllers.MVC
                     this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ReportadoNoCumpleFormato}|{"45000"}";
                     return View(lista);
                 }
+                var listaSalvar = lista.Where(x => x.Valido == true).ToList();
                 //var listaSalvar = lista.Where(x => x.IdPlanCapacitacion == true).ToList();
-                //var reportadoRequest = new Response();
-                //if (listaSalvar.Count > 0)
-                //{
-                //    reportadoRequest = await apiServicio.InsertarAsync<Response>(listaSalvar, new Uri(WebApp.BaseAddress),
-                //               "api/ConceptoNomina/InsertarReportadoNomina");
-                //}
-
-                //var listaErrores = lista.Where(x => x.Valido == false).ToList();
-                //if (listaErrores.Count > 0)
-                //{
-                //    this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{Mensaje.ReportadoConErrores}|{"12000"}";
-                //}
-                //else
-                //{
-                //    this.TempData["Mensaje"] = $"{Mensaje.Success}|{Mensaje.Satisfactorio}";
-                //}
+                var reportadoRequest = new Response();
+                if (listaSalvar.Count > 0)
+                {
+                    reportadoRequest = await apiServicio.InsertarAsync<Response>(listaSalvar, new Uri(WebApp.BaseAddress),
+                              "api/MigracionCapacitaciones/InsertarReportadoPlanificacion");
+                }
+                var listaErrores = lista.Where(x => x.Valido == false).ToList();
+                if (listaErrores.Count > 0)
+                {
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{Mensaje.ReportadoConErrores}|{"12000"}";
+                }
+                else
+                {
+                    this.TempData["Mensaje"] = $"{Mensaje.Success}|{Mensaje.Satisfactorio}";
+                }
 
                 return View(lista);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
             }
@@ -253,35 +285,29 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create(string mensaje)
         {
-            await CargarComboxProcesoPeriodo();
-            var vista = new CalculoNomina { Automatico = false, Reportado = false,EmpleadoActivo=true,EmpleadoPasivo=false };
-            return View(vista);
+            return View();
         }
 
-        public async Task CargarComboxProcesoPeriodo()
-        {
-            ViewData["Procesos"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ProcesoNomina>(new Uri(WebApp.BaseAddress), "api/ProcesoNomina/ListarProcesoNomina"), "IdProceso", "Descripcion");
-            ViewData["Periodos"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<PeriodoNomina>(new Uri(WebApp.BaseAddress), "api/PeriodoNomina/ListarPeriodoNomina"), "IdPeriodo", "Descripcion");
-        }
+       
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CalculoNomina CalculoNomina)
+        public async Task<IActionResult> Create(GestionPlanCapacitacion gestionPlanCapacitacion)
         {
             Response response = new Response();
+          
             try
             {
-                response = await apiServicio.InsertarAsync(CalculoNomina,
+                response = await apiServicio.InsertarAsync(gestionPlanCapacitacion,
                                                              new Uri(WebApp.BaseAddress),
-                                                             "api/CalculoNomina/InsertarCalculoNomina");
+                                                             "api/GestionCapacitaciones/InsertarGestionCapacitaciones");
                 if (response.IsSuccess)
                 {
                     return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
-                await CargarComboxProcesoPeriodo();
-                return View(CalculoNomina);
+                return View(gestionPlanCapacitacion);
 
             }
             catch (Exception)
@@ -289,7 +315,60 @@ namespace bd.webappth.web.Controllers.MVC
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
         }
+        public async Task<IActionResult> CreatePlanCapacitacion(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    ViewData["IdPresupuesto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ViewModelPresupuesto>(new Uri(WebApp.BaseAddress), "api/Presupuesto/ListarPresupuestoCapacitaciones"), "IdPresupuesto", "NumeroPartidaPresupuestaria");
+                    ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosActivos"), "IdEmpleado", "NombreApellido");
+                    //var envia = new GestionPlanCapacitacion { IdGestionPlanCapacitacion = Convert.ToInt32(id) };
+                    //var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(envia, new Uri(WebApp.BaseAddress),
+                    //                                              "api/GestionCapacitaciones/ObtenerCalculoNomina");
+                    //if (respuesta.IsSuccess)
+                    //{
 
+                    //    var vista = JsonConvert.DeserializeObject<GestionPlanCapacitacion>(respuesta.Resultado.ToString());
+                    //    return View(vista);
+                    //}
+                    return View();
+                }
+
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
+            }
+        }
+        public async Task<IActionResult> EditPlanCapacitacion(string id)
+        {
+            var respuesta = new Response();
+            try
+            {
+                
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var envia = new PlanCapacitacion { IdPlanCapacitacion = Convert.ToInt32(id) };
+                    respuesta = await apiServicio.ObtenerElementoAsync1<Response>(envia, new Uri(WebApp.BaseAddress),
+                                                                  "api/MigracionCapacitaciones/ObtenerDatosPlanCapacitaciones");
+                    if (respuesta.IsSuccess)
+                    {
+                        ViewData["IdPresupuesto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ViewModelPresupuesto>(new Uri(WebApp.BaseAddress), "api/Presupuesto/ListarPresupuestoCapacitaciones"), "IdPresupuesto", "NumeroPartidaPresupuestaria");
+                        ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosActivos"), "IdEmpleado", "NombreApellido");
+                        var vista = JsonConvert.DeserializeObject<PlanCapacitacion>(respuesta.Resultado.ToString());
+                        return View(vista);
+                    }
+                }
+
+                return this.Redireccionar($"{Mensaje.Error}|{respuesta.Message}");
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{respuesta.Message}");
+            }
+        }
 
 
         public async Task<IActionResult> Edit(string id)
@@ -298,14 +377,13 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    var CalculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
-                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(CalculoNomina, new Uri(WebApp.BaseAddress),
-                                                                  "api/CalculoNomina/ObtenerCalculoNomina");
+                    var envia = new GestionPlanCapacitacion { IdGestionPlanCapacitacion = Convert.ToInt32(id) };
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(envia, new Uri(WebApp.BaseAddress),
+                                                                  "api/GestionCapacitaciones/ObtenerCalculoNomina");
                     if (respuesta.IsSuccess)
                     {
                          
-                        var vista = JsonConvert.DeserializeObject<CalculoNomina>(respuesta.Resultado.ToString());
-                        await CargarComboxProcesoPeriodo();
+                        var vista = JsonConvert.DeserializeObject<GestionPlanCapacitacion>(respuesta.Resultado.ToString());
                         return View(vista);
                     }
                 }
@@ -328,10 +406,10 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     return this.Redireccionar($"{Mensaje.Error}|{Mensaje.RegistroNoExiste}");
                 }
-                var calculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
+                var envia = new GestionPlanCapacitacion { IdGestionPlanCapacitacion = Convert.ToInt32(id) };
 
-                var response = await apiServicio.EliminarAsync(calculoNomina, new Uri(WebApp.BaseAddress)
-                                                               , "api/CalculoNomina/EliminarCalculoNomina");
+                var response = await apiServicio.EliminarAsync(envia, new Uri(WebApp.BaseAddress)
+                                                               , "api/GestionCapacitaciones/EliminarCalculoNomina");
                 if (response.IsSuccess)
                 {
                     return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
@@ -346,14 +424,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(CalculoNomina CalculoNomina)
+        public async Task<IActionResult> Edit(GestionPlanCapacitacion gestionPlanCapacitacion)
         {
             Response response = new Response();
             try
             {
                 
-                    response = await apiServicio.EditarAsync<Response>(CalculoNomina, new Uri(WebApp.BaseAddress),
-                                                                 "api/CalculoNomina/EditarCalculoNomina");
+                    response = await apiServicio.EditarAsync<Response>(gestionPlanCapacitacion, new Uri(WebApp.BaseAddress),
+                                                                 "api/GestionCapacitaciones/EditarCalculoNomina");
 
                     if (response.IsSuccess)
                     {
@@ -361,8 +439,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
-                    await CargarComboxProcesoPeriodo();
-                    return View(CalculoNomina);
+                    return View(gestionPlanCapacitacion);
             }
             catch (Exception)
             {
@@ -375,8 +452,8 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 
-                var lista = await apiServicio.Listar<CalculoNomina>(new Uri(WebApp.BaseAddress)
-                                                                     , "api/MigracionCapacitaciones/ListarCalculoNomina");
+                var lista = await apiServicio.Listar<GestionPlanCapacitacion>(new Uri(WebApp.BaseAddress)
+                                                                     , "api/GestionCapacitaciones/ListarGestionPlanCapacitaciones");
                 return View(lista);
             }
             catch (Exception)
@@ -410,11 +487,11 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public CalculoNomina ObtenerCalculoNomina()
+        public GestionPlanCapacitacion ObtenerIdCapacitacion()
         {
-            var gastoPersonal = new CalculoNomina
+            var gastoPersonal = new GestionPlanCapacitacion
             {
-                IdCalculoNomina = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession)),
+                IdGestionPlanCapacitacion = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.IdCapacitacionSession)),
             };
             return gastoPersonal;
         }

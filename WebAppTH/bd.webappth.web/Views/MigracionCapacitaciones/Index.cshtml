@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.CalculoNomina>
+@model List<bd.webappth.entidades.Negocio.GestionPlanCapacitacion>
 
 @{
     ViewData["Title"] = "Index";
@@ -30,26 +30,15 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                                        </th>
+                                        <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdPeriodo)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Anio)
                                         </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdProceso)
-                                        </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Automatico)
-                                        </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Reportado)
-                                        </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EmpleadoActivo)
-                                        </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EmpleadoPasivo)
-                                        </th>
+                                        
                                         <th>
                                             Opciones
                                         </th>
@@ -60,32 +49,20 @@
                                     {
                                         <tr>
                                             <td>
+                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                            </td>
+                                            <td>
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.PeriodoNomina.Descripcion)
-                                            </td>
+                                                @Html.DisplayFor(modelItem => item.Anio)
+                                            </td>                                            
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Automatico)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Reportado)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EmpleadoActivo)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EmpleadoPasivo)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink(" Descargar archivo", "Download", new { id = item.IdCalculoNomina })|
-                                                @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
-                                                @Html.ActionLink(" Cargar reportados", "ReportadoCapacitacion", new { id = item.IdCalculoNomina }, new { onclick = "cargando();"})|
-                                                @Html.ActionLink(" Editar", "Edit", new { id = item.IdCalculoNomina }, new { onclick = "cargando();"}) |
-                                                @Html.ActionLink(" Eliminar", "Delete", new { id = item.IdCalculoNomina }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
+                                                @Html.ActionLink(" Descargar archivo", "Download", new { id = item.IdGestionPlanCapacitacion })|
+                                                @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();" })|
+                                                @Html.ActionLink(" Cargar reportados", "ReportadoCapacitacion", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();"})|
+                                                @Html.ActionLink(" Editar", "Edit", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();"}) |
+                                                @Html.ActionLink(" Eliminar", "Delete", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
                                             </td>
                                         </tr>
                                     }

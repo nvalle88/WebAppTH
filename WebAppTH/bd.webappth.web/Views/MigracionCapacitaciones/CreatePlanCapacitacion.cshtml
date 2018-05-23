@@ -1,7 +1,7 @@
 @model bd.webappth.entidades.Negocio.GestionPlanCapacitacion
 
 @{
-    ViewData["Title"] = "brigadasSSO";
+    ViewData["Title"] = "CalculoNomina";
 }
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
@@ -10,18 +10,20 @@
         <div class="row">
             <article class="col-sm-12 col-md-12 col-lg-12">
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
-                    <header>
+                    <header id="table">
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Editar gesti&oacute;n Capacitaciones</h2>
+                        <h2>Gesti&oacute;n Capacitaciones</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="CreatePlanCapacitacion" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdGestionPlanCapacitacion" />
-                                @{await Html.RenderPartialAsync("_PartialViewGestionPlanCapacitacion");}
+                                <input type="hidden" asp-for="IdGestionPlanCapacitacion" value="@DateTime.Now.Year" />
+                                <input type="hidden" asp-for="Anio" value="@DateTime.Now.Year" />
+                                <input type="hidden" asp-for="Estado" value="1" />
+                                @{await Html.RenderPartialAsync("_PartialViewPlanCapacitacion", Model);}
                                 <footer>
                                     <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
                                     <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>
@@ -35,6 +37,7 @@
     </section>
 </div>
 @section Scripts {
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script src='~/lib/select2/dist/js/select2.min.js'></script>
@@ -44,25 +47,22 @@
         $(document).ready(function () {
             Init_Select2();
         });
-    </script>
 
-        <script type="text/javascript">
+        function OcultarSuma() {
 
-            function OcultarSuma() {
-
-                if ($("#Suma").prop('checked')) {
+            if ($("#Suma").prop('checked')) {
                 $("#Suma").prop("checked", false);
             }
 
-            }
-            function OcultarResta() {
+        }
+        function OcultarResta() {
 
-                if ($("#Resta").prop('checked')) {
+            if ($("#Resta").prop('checked')) {
                 $("#Resta").prop("checked", false);
             }
 
 
-            }
-    </script>
+        }
 
+    </script>
 }
