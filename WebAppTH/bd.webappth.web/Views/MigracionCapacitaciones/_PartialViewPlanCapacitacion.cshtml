@@ -1,0 +1,205 @@
+@model bd.webappth.entidades.Negocio.PlanCapacitacion
+<fieldset>
+    <div class="row">
+        <section class="col col-3">
+            <label>Numero Partida Presupuestaria</label>
+            <div class="input">
+                <select asp-for="IdPresupuesto" asp- class="form-control" asp-items="ViewBag.IdPresupuesto">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdPresupuesto" class="text-danger"></span>
+            </div>
+        </section>
+        <section class="col col-3">
+            <label>Instituci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="Institucion" class="form-control" />
+                <span asp-validation-for="Institucion" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-3">
+            <label>Empleado</label>
+            <div class="input">
+                <select asp-for="IdEmpleado" asp- class="form-control" asp-items="ViewBag.IdEmpleado">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdEmpleado" class="text-danger"></span>
+            </div>
+        </section>
+        <section class="col col-3">
+            <label>Pais</label>
+            <label class="input">
+                <input maxlength="250" asp-for="Pais" class="form-control" />
+                <span asp-validation-for="Pais" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-3">
+            <label>Provincia</label>
+            <label class="input">
+                <input maxlength="250" asp-for="Provincia" class="form-control" />
+                <span asp-validation-for="Provincia" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-3">
+            <label>Ciudad</label>
+            <label class="input">
+                <input maxlength="250" asp-for="NombreCiudad" class="form-control" />
+                <span asp-validation-for="NombreCiudad" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-3">
+            <label>Nivel desconcentraci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="NivelDesconcentracion" class="form-control" />
+                <span asp-validation-for="NivelDesconcentracion" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-3">
+            <label>Unidad administrativa</label>
+            <label class="input">
+                <input maxlength="250" asp-for="UnidadAdministrativa" class="form-control" />
+                <span asp-validation-for="UnidadAdministrativa" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Cedula</label>
+            <label class="input">
+                <input maxlength="250" asp-for="Cedula" class="form-control" />
+                <span asp-validation-for="Cedula" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Nombre y apellido</label>
+            <label class="input">
+                <input maxlength="250" asp-for="ApellidoNombre" class="form-control" />
+                <span asp-validation-for="ApellidoNombre" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Sexo</label>
+            <label class="input">
+                <input maxlength="250" asp-for="Sexo" class="form-control" />
+                <span asp-validation-for="Sexo" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Grupo ocupacional</label>
+            <label class="input">
+                <input maxlength="250" asp-for="GrupoOcupacional" class="form-control" />
+                <span asp-validation-for="GrupoOcupacional" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Denominaci&oacute;n puesto</label>
+            <label class="input">
+                <input maxlength="250" asp-for="DenominacionPuesto" class="form-control" />
+                <span asp-validation-for="DenominacionPuesto" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Regimen laboral</label>
+            <label class="input">
+                <input maxlength="250" asp-for="RegimenLaboral" class="form-control" />
+                <span asp-validation-for="RegimenLaboral" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Modalidad laboral</label>
+            <label class="input">
+                <input maxlength="250" asp-for="ModalidadLaboral" class="form-control" />
+                <span asp-validation-for="ModalidadLaboral" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Tema capacitaci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="TemaCapacitacion" class="form-control" />
+                <span asp-validation-for="TemaCapacitacion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Clasificaci&oacute;n tema</label>
+            <label class="input">
+                <input maxlength="250" asp-for="ClasificacionTema" class="form-control" />
+                <span asp-validation-for="ClasificacionTema" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Producto final</label>
+            <label class="input">
+                <input maxlength="250" asp-for="ProductoFinal" class="form-control" />
+                <span asp-validation-for="ProductoFinal" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Modalidad planificada</label>
+            <label class="input">
+                <input maxlength="250" asp-for="Modalidad" class="form-control" />
+                <span asp-validation-for="Modalidad" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Duraci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="Duracion" class="form-control" />
+                <span asp-validation-for="Duracion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Presupuesto Individual</label>
+            <label class="input">
+                <input maxlength="250" asp-for="PresupuestoIndividual" class="form-control" />
+                <span asp-validation-for="PresupuestoIndividual" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Fecha capacitacion planificada</label>
+            <label class="input">
+                <input maxlength="250" asp-for="FechaCapacitacionPlanificada" class="form-control" />
+                <span asp-validation-for="FechaCapacitacionPlanificada" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Tipo capacitacion</label>
+            <label class="input">
+                <input maxlength="250" asp-for="TipoCapacitacion" class="form-control" />
+                <span asp-validation-for="TipoCapacitacion" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Estado evento</label>
+            <label class="input">
+                <input maxlength="250" asp-for="EstadoEvento" class="form-control" />
+                <span asp-validation-for="EstadoEvento" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+</fieldset>
+<br />

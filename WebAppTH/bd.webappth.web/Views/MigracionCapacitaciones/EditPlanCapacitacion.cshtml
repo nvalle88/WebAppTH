@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.Negocio.GestionPlanCapacitacion
+@model bd.webappth.entidades.Negocio.PlanCapacitacion
 
 @{
     ViewData["Title"] = "brigadasSSO";
@@ -21,9 +21,9 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdGestionPlanCapacitacion" />
-                                @{await Html.RenderPartialAsync("_PartialViewGestionPlanCapacitacion");}
+                                @{await Html.RenderPartialAsync("_PartialViewPlanCapacitacion");}
                                 <footer>
-                                    <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
+                                    <button type="submit" class="btn btn-default" id="btn-guardar">Actualizar</button>
                                     <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>

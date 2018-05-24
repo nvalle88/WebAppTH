@@ -1,11 +1,11 @@
-@model List<bd.webappth.entidades.Negocio.ReportadoNomina>
+@model List<bd.webappth.entidades.Negocio.PlanCapacitacion>
 @using Microsoft.AspNetCore.Http;
 @using Microsoft.AspNetCore.Mvc;
 @using Microsoft.AspNetCore.Mvc.Rendering;
 @using bd.webappth.entidades.Constantes;
 
 @{
-    var nomina = @Context.Session.GetInt32(Constantes.IdCalculoNominaSession);
+    var nomina = @Context.Session.GetInt32(Constantes.IdCapacitacionSession);
 }
 @{
     ViewData["Title"] = "Index";
@@ -18,12 +18,20 @@
         <button type="button" asp-action="Index" onclick="cargando()" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-arrow-left"></i>
-            </span>Listado C&aacute;lculo de N&oacute;mina
+            </span>Atras
         </button>
     </a>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a asp-action="ReportadoNomina" asp-route-id="@nomina" onclick="cargando()">
-        <button type="button" asp-action="ReportadoNomina" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
+    <a asp-action="CreatePlanCapacitacion" asp-route-id="@Model.FirstOrDefault().IdGestionPlanCapacitacion" onclick="cargando()">
+        <button type="button" asp-action="CreatePlanCapacitacion" asp-route-id="@Model.FirstOrDefault().IdGestionPlanCapacitacion" onclick="cargando()" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo
+        </button>
+    </a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a asp-action="ReportadoCapacitacion" asp-route-id="@nomina" onclick="cargando()">
+        <button type="button" asp-action="ReportadoCapacitacion" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-upload"></i>
             </span>Cargar archivo
@@ -75,42 +83,55 @@
                                                     <thead>
                                                         <tr>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoConcepto)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cedula)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().IdentificacionEmpleado)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().ApellidoNombre)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreEmpleado)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreCiudad)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NumeroPartidaPresupuestaria)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Importe)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().DenominacionPuesto)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().TemaCapacitacion)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                Opciones
                                                             </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach (var item in Model)
                                                         {
-                                                            <tr>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.CodigoConcepto)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.NombreEmpleado)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Cantidad)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Importe)
-                                                                </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Cedula)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.ApellidoNombre)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.NombreCiudad)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.NumeroPartidaPresupuestaria)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.DenominacionPuesto)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.TemaCapacitacion)
+                                                            </td>
+                                                            <td>
+                                                                @Html.ActionLink("Editar", "EditPlanCapacitacion", new { id = item.IdPlanCapacitacion }) |
+                                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdPlanCapacitacion }, new { onclick = "return confirm('Desea eliminar la Ciudad... ?');" })
+                                                            </td>
+                                                        </tr>
                                                         }
                                                     </tbody>
                                                 </table>
