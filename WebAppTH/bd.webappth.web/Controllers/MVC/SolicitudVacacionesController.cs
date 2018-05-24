@@ -15,6 +15,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using bd.webappth.entidades.Enumeradores;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -33,11 +34,23 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<ActionResult> ListadoEmpleadosSolicitudVacaciones()
         {
-            var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-            var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-            var listadoEmpleados = await ListarEmpleadosPertenecientesaDependenciaconVacaciones(NombreUsuario);
-            ViewData["IdPersona"] = new SelectList(await apiServicio.Listar<Persona>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosdeJefe"), "IdPersona", "Nombres");
-            return View(listadoEmpleados);
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                var listadoEmpleados = await ListarEmpleadosPertenecientesaDependenciaconVacaciones(NombreUsuario);
+
+                ViewData["IdPersona"] = new SelectList(await apiServicio.Listar<Persona>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosdeJefe"), "IdPersona", "Nombres");
+
+                return View(listadoEmpleados);
+
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
         }
 
 
@@ -139,15 +152,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
         }
@@ -167,15 +171,6 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Solicitud Planificación Vacaciones", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un Solicitud Planificación Vacaciones",
-                            UserName = "Usuario 1"
-                        });
 
                         return RedirectToAction("Index");
                     }
@@ -188,15 +183,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
 
                 return BadRequest();
             }
@@ -212,78 +198,23 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 solicitudVacaciones.FechaRespuesta = DateTime.Now;
-                response = await apiServicio.EditarAsync(solicitudVacaciones.IdEmpleado.ToString(), solicitudVacaciones, new Uri(WebApp.BaseAddress),
-                                                             "api/SolicitudVacaciones");
+                response = await apiServicio.EditarAsync(solicitudVacaciones.IdEmpleado.ToString(), solicitudVacaciones, new Uri(WebApp.BaseAddress),"api/SolicitudVacaciones");
 
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Solicitud Planificación Vacaciones", id),
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        Message = "Se ha actualizado un Solicitud Planificación Vacaciones",
-                        UserName = "Usuario 1"
-                    });
-
-                    if (solicitudVacaciones.Estado == 1)
-                    {
-
-                        var accionPersonal = new AccionPersonal
-                        {
-                            IdEmpleado = solicitudVacaciones.IdEmpleado,
-                            IdTipoAccionPersonal = Convert.ToInt32(AccionPersonalEnum.vacaciones),
-                            Fecha = solicitudVacaciones.FechaSolicitud,
-                            Numero = null,
-                            Solicitud = null,
-                            Explicacion = null,
-                            FechaRige = solicitudVacaciones.FechaDesde,
-                            FechaRigeHasta = solicitudVacaciones.FechaHasta.Date,
-                            NoDias = (solicitudVacaciones.FechaHasta.Date - solicitudVacaciones.FechaDesde.Date).Days,
-                            Estado = 0
-                        };
-                        response = await apiServicio.InsertarAsync(accionPersonal,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/AccionesPersonal/InsertarAccionPersonal");
-                        if (response.IsSuccess)
-                        {
-
-                            var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                            {
-                                ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                                ExceptionTrace = null,
-                                Message = "Se ha creado una acción de persona de vacaciones",
-                                UserName = "Usuario 1",
-                                LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                                LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                                EntityID = string.Format("{0} {1}", "Acción de personal:", accionPersonal.IdAccionPersonal),
-                            });
-                        }
-                    }
-
-
-                    return RedirectToAction("DetalleSolicitudVacaciones", new { id = solicitudVacaciones.IdEmpleado });
+                    return this.Redireccionar(
+                            "SolicitudVacaciones",
+                            "DetalleSolicitudVacaciones",
+                            new { id = solicitudVacaciones.IdEmpleado },
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
+                    
                 }
-                ViewData["Error"] = response.Message;
-                //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
-                return View(solicitudVacaciones);
-
-
+                
                 return BadRequest();
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
                 return BadRequest();
             }
         }

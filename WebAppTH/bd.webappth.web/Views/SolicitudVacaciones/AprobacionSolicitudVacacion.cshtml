@@ -46,21 +46,18 @@
                                         <section class="col col-4">
                                             <label>Fecha solicitud:</label>
                                             <label class="input">
-                                                <i class="icon-append fa fa-calendar"></i>
                                                 <input value="@ViewData["FechaSolicitud"]" disabled="disabled" type="text" placeholder="Seleccione fecha de solicitud" class="datepicker" data-dateformat='dd/mm/yy'>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label>Fecha desde:</label>
                                             <label class="input">
-                                                <i class="icon-append fa fa-calendar"></i>
                                                 <input value="@ViewData["FechaDesde"]" disabled="disabled" type="text" placeholder="Seleccione fecha desde" class="datepicker" data-dateformat='dd/mm/yy'>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label>Fecha hasta:</label>
                                             <label class="input">
-                                                <i class="icon-append fa fa-calendar"></i>
                                                 <input value="@ViewData["FechaHasta"]" disabled="disabled" type="text" placeholder="Seleccione fecha hasta" class="datepicker" data-dateformat='dd/mm/yy'>
                                             </label>
                                         </section>
@@ -74,19 +71,19 @@
                                             <div class="col col-8">
                                                 <div class="col-md-2">
                                                     <label class="radio radio-inline">
-                                                        <input type="radio" name="Estado" value="-1" class="radiobox">
+                                                        <input type="radio" asp-for="Estado" value="1" class="radiobox">
                                                         <span>Negado</span>
                                                     </label>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="radio radio-inline">
-                                                        <input type="radio" name="Estado" value="0" class="radiobox" checked="checked">
+                                                        <input type="radio" asp-for="Estado" value="3" class="radiobox">
                                                         <span>Pendiente</span>
                                                     </label>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="radio radio-inline">
-                                                        <input type="radio" name="Estado" value="1" class="radiobox">
+                                                        <input type="radio" asp-for="Estado" value="6" class="radiobox">
                                                         <span>Aprobado</span>
                                                     </label>
                                                 </div>
@@ -95,8 +92,8 @@
 
                                         <section class="col col-4">
                                             <label class="checkbox">
-                                                <input type="checkbox" asp-for="PlanAnual" class="form-control">
-                                                <i></i>Contemplado en Plan Anual ?
+                                                <input type="checkbox" asp-for="PlanAnual" class="form-control" disabled>
+                                                <i></i>Contemplado en Plan Anual ?<input />
                                                 <span asp-validation-for="PlanAnual" class="text-danger"></span>
                                             </label>
                                         </section>
@@ -106,7 +103,6 @@
                                         <label>Observaciones:</label>
                                         <label class="label"></label>
                                         <label class="textarea">
-                                            <i class="icon-append fa fa-comment"></i>
                                             <textarea maxlength="150" asp-for="Observaciones" rows="4" placeholder="@Html.DisplayNameFor(model=>model.Observaciones)"></textarea>
                                             <span asp-validation-for="Observaciones" class="text-danger"></span>
                                         </label>
