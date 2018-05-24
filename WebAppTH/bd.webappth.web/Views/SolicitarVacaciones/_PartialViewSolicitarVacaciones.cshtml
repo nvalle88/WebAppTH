@@ -1,0 +1,224 @@
+@model bd.webappth.entidades.ViewModels.SolicitudVacacionesViewModel
+
+<fieldset>
+    <input asp-for="IdSolicitudVacaciones" hidden />
+    <input id="maxDias" asp-for="VacacionesAcumuladas" hidden />
+    <input asp-for="DatosBasicosEmpleadoViewModel.IdEmpleado" hidden />
+    <input asp-for="Estado" hidden />
+    <input type="text" asp-for="Observaciones" hidden />
+    <input type="text" asp-for="IdSolicitudPlanificacionVacaciones" id="idPlan" hidden/>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+
+        <section class="col col-lg-12">
+            <legend class="input col col-lg-12">Las vacaciones se hallan en la planificaci&oacute;n?</legend>
+        </section>
+
+        <section class="col col-lg-4">
+            <div class="input col-lg-12">
+                @Html.RadioButtonFor(x => x.PlanAnual, false, new { onClick = "validarPlan(this)", @id = "rdbFalse" })&nbsp;No
+            </div>
+        </section>
+
+        <section class="col col-lg-4">
+            <div class="input col-lg-12">
+                @Html.RadioButtonFor(x => x.PlanAnual, true, new { onClick = "validarPlan(this)", @id = "rdbTrue" })&nbsp;Si
+            </div>
+            <input asp-for="PlanAnual" type="text" hidden />
+        </section>
+
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row smart-form" id="seccionEditar">
+        <section class="col col-5">
+            <label>@Html.DisplayNameFor(item => item.FechaDesde)</label>
+            <label class="input">
+                <input id="txtFechaDesde" asp-for="FechaDesde" type="text" onchange="validarDias()" class="datepicker" data-dateformat='yy-mm-dd'>
+            </label>
+        </section>
+
+        <section class="col col-5">
+            <label>@Html.DisplayNameFor(item => item.FechaHasta)</label>
+            <label class="input">
+                <input id="txtFechaHasta" asp-for="FechaHasta" type="text" onchange="validarDias()" class="datepicker" data-dateformat='yy-mm-dd'>
+            </label>
+        </section>
+
+        <section class="col col-2">
+            <label>Cantidad de d&iacute;as</label>
+            <label class="input">
+                <input type="number" id="txtTotalDias" readonly>
+            </label>
+        </section>
+
+    </div>
+
+    <div class="row" id="seccionTabla">
+
+        <section class="col col-lg-12">
+
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Solicitudes planificaci&oacute;n de vacaciones aprobadas</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+
+                                    <tr>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.ListaPLanificacionVacaciones.FirstOrDefault().FechaSolicitud)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ListaPLanificacionVacaciones.FirstOrDefault().FechaDesde)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ListaPLanificacionVacaciones.FirstOrDefault().FechaHasta)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ListaPLanificacionVacaciones.FirstOrDefault().Observaciones)
+                                        </th>
+                                        <th>Seleccione</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    @foreach (var item in Model.ListaPLanificacionVacaciones)
+                                    {
+
+
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(model => item.FechaSolicitud)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.FechaDesde)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.FechaHasta)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.Observaciones)
+                                            </td>
+
+                                            <td>
+                                                @Html.RadioButtonFor(x => x.IdSolicitudPlanificacionVacaciones, item.IdSolicitudPlanificacionVacaciones, new { onClick = "setIdPlan(this)", @id = "Id" + item.IdSolicitudPlanificacionVacaciones })
+
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+
+            </article>
+        </section>
+
+    </div>
+
+
+
+</fieldset>
+
+<script>
+
+    function mostrarSeccionTabla() { 
+        document.getElementById("seccionTabla").style.height = "auto";
+        document.getElementById("seccionTabla").style.visibility = "visible";
+        document.getElementById("seccionTabla").style.overflow = "initial";
+    }
+
+    function ocultarSeccionTabla() { 
+        
+        document.getElementById("seccionTabla").style.height = "0px";
+        document.getElementById("seccionTabla").style.visibility = "hidden";
+        document.getElementById("seccionTabla").style.overflow  = "scroll";
+    }
+
+    function mostrarSeccionEditar() {
+        document.getElementById("seccionEditar").style.height = "auto";
+        document.getElementById("seccionEditar").style.visibility = "visible";
+        document.getElementById("seccionEditar").style.overflow = "initial";
+    }
+
+    function ocultarSeccionEditar() {
+
+        document.getElementById("seccionEditar").style.height = "0px";
+        document.getElementById("seccionEditar").style.visibility = "hidden";
+        document.getElementById("seccionEditar").style.overflow = "scroll";
+    }
+
+    function validarPlan(element) {
+
+        if (element.value == "True") {
+            mostrarSeccionTabla();
+            ocultarSeccionEditar();
+        }
+
+        else if (element.value == "False") {
+            ocultarSeccionTabla();
+            mostrarSeccionEditar();
+        }
+    }
+
+    function setIdPlan(element) {
+
+        document.getElementById("idPlan").value = element.value;
+    }
+    
+    @if (Model.PlanAnual == true)
+        {
+        <text>
+            mostrarSeccionTabla();
+            ocultarSeccionEditar();
+        
+            document.getElementById("Id"+@Model.IdSolicitudPlanificacionVacaciones).disabled = true;
+        </text>
+        }
+        else if (Model.PlanAnual == false)
+        {
+        <text>
+            ocultarSeccionTabla();
+            mostrarSeccionEditar();
+        </text>
+            }
+        
+</script>
