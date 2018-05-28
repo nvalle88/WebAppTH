@@ -20,7 +20,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Solicitud Vacaciones</h2>
+                        <h2>Solicitud vacaciones</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -46,19 +46,19 @@
                                         <section class="col col-4">
                                             <label>Fecha solicitud:</label>
                                             <label class="input">
-                                                <input value="@ViewData["FechaSolicitud"]" disabled="disabled" type="text" placeholder="Seleccione fecha de solicitud" class="datepicker" data-dateformat='dd/mm/yy'>
+                                                <input value="@ViewData["FechaSolicitud"]" disabled="disabled" type="text" placeholder="Seleccione fecha de solicitud" class="datepicker" data-dateformat='dd-MM-yy'>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label>Fecha desde:</label>
                                             <label class="input">
-                                                <input value="@ViewData["FechaDesde"]" disabled="disabled" type="text" placeholder="Seleccione fecha desde" class="datepicker" data-dateformat='dd/mm/yy'>
+                                                <input value="@ViewData["FechaDesde"]" disabled="disabled" type="text" placeholder="Seleccione fecha desde" class="datepicker" data-dateformat='dd-MM-yy'>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label>Fecha hasta:</label>
                                             <label class="input">
-                                                <input value="@ViewData["FechaHasta"]" disabled="disabled" type="text" placeholder="Seleccione fecha hasta" class="datepicker" data-dateformat='dd/mm/yy'>
+                                                <input value="@ViewData["FechaHasta"]" disabled="disabled" type="text" placeholder="Seleccione fecha hasta" class="datepicker" data-dateformat='dd-MM-yy'>
                                             </label>
                                         </section>
 
@@ -103,14 +103,14 @@
                                         <label>Observaciones:</label>
                                         <label class="label"></label>
                                         <label class="textarea">
-                                            <textarea maxlength="150" asp-for="Observaciones" rows="4" placeholder="@Html.DisplayNameFor(model=>model.Observaciones)"></textarea>
+                                            <textarea maxlength="150" asp-for="Observaciones" rows="4"></textarea>
                                             <span asp-validation-for="Observaciones" class="text-danger"></span>
                                         </label>
                                     </section>
                                     <span class="text-danger">@ViewData["Error"]</span>
                                 </fieldset>
                                 <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <input type="submit" value="Guardar" class="btn btn-default" />
                                     <a asp-action="DetalleSolicitudVacaciones" asp-route-id="@Model.IdEmpleado" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>

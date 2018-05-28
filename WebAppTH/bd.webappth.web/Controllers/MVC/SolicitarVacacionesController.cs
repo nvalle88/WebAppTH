@@ -264,7 +264,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-
+        
 
 
         public async Task<Empleado> ObtenerEmpleadoLogueado(string nombreUsuario)
