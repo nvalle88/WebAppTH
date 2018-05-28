@@ -3,8 +3,7 @@ namespace bd.webappth.entidades.Negocio
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-     
-     
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class SolicitudVacaciones
     {
@@ -44,6 +43,9 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "¿Contemplado en Plan de Vacaciones?")]
         public bool PlanAnual { get; set; }
+
+        [NotMapped]
+        public int DiasVacaciones { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 
