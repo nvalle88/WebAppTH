@@ -74,8 +74,17 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Evaluacion", "Evaluacion", new { id = item.IdPlanCapacitacion })
-                                                @*@Html.ActionLink("Eliminar", "Delete", new { id = item.IdEtnia }, new { onclick = "return confirm('Desea eliminar Etnia... ?');" })*@
+                                                @if (item.Estado == 2)
+                                                {
+                                                    @Html.ActionLink("Evaluacion", "Evaluacion", new { id = item.IdPlanCapacitacion })
+                                                }
+                                                else
+                                                {
+                                                    <text>
+                                                        Realizado
+                                                    </text>
+                                                    @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdPlanCapacitacion })*@
+                                                }
                                             </td>
                                         </tr>
                                     }

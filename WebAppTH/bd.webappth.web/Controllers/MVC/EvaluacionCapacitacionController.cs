@@ -53,126 +53,13 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        public async Task<IActionResult> AsignarEmpleadoFAO()
-        {
-            try
-            {
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-                var lista = new List<DocumentoFAOViewModel>();
-
-                var usuario = new DocumentoFAOViewModel
-                {
-                    NombreUsuario = NombreUsuario
-
-                };
-                lista = await apiServicio.Listar<DocumentoFAOViewModel>(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ListarEmpleadosSinFAO");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-        public async Task<IActionResult> Asignados()
-        {
-            try
-            {
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-                var lista = new List<DocumentoFAOViewModel>();
-
-                var usuario = new DocumentoFAOViewModel
-                {
-                    NombreUsuario = NombreUsuario
-
-                };
-                lista = await apiServicio.Listar<DocumentoFAOViewModel>(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ListarEmpleadosConFAO");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-        public async Task<IActionResult> ServidoresNuevoPuesto()
-        {
-            try
-            {
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-                var lista = new List<DocumentoFAOViewModel>();
-
-                var usuario = new DocumentoFAOViewModel
-                {
-                    NombreUsuario = NombreUsuario
-
-                };
-                lista = await apiServicio.Listar<DocumentoFAOViewModel>(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ListarEmpleadosCambioPuestoFao");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-        public async Task<IActionResult> ServidoreSinCambioPuesto()
-        {
-            try
-            {
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-                var lista = new List<DocumentoFAOViewModel>();
-
-                var usuario = new DocumentoFAOViewModel
-                {
-                    NombreUsuario = NombreUsuario
-
-                };
-                lista = await apiServicio.Listar<DocumentoFAOViewModel>(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ListarEmpleadosSinCambioPuestoFao");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-        public async Task<IActionResult> Historicos()
-        {
-            try
-            {
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-
-                var lista = new List<DocumentoFAOViewModel>();
-
-                var usuario = new DocumentoFAOViewModel
-                {
-                    NombreUsuario = NombreUsuario
-
-                };
-                lista = await apiServicio.Listar<DocumentoFAOViewModel>(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ListarEmpleadosHistoricoFao");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
+       
+        
         public async Task<IActionResult> Evaluacion(int id)
         {
             try
             {
-
+                var a = new ViewModelEvaluacionCapacitaciones();
                 var envia = new ViewModelEvaluacionCapacitaciones
                 {
                     IdPlanCapacitacion = id,
@@ -182,7 +69,22 @@ namespace bd.webappth.web.Controllers.MVC
                                                                     , "api/EvaluacionCapacitacion/ObtenerDatosEvaluacion");
                 if (datos != null)
                 {
-                    return View(datos);
+                    a.ListaPreguntaEvaluacionFacilitador = datos.ListaPreguntaEvaluacionEvento.Where(x => x.Facilitador == true).ToList();
+                    a.ListaPreguntaOrganizador = datos.ListaPreguntaEvaluacionEvento.Where(x => x.Organizador == true).ToList();
+                    a.ListaPreguntaEvaluacionConocimiento = datos.ListaPreguntaEvaluacionEvento.Where(x => x.ConocimientoObtenidos == true).ToList();
+                    var recibe = new ViewModelEvaluacionCapacitaciones
+                    {
+                        ListaPreguntaEvaluacionFacilitador = a.ListaPreguntaEvaluacionFacilitador,
+                        ListaPreguntaOrganizador = a.ListaPreguntaOrganizador,
+                        ListaPreguntaEvaluacionConocimiento = a.ListaPreguntaEvaluacionConocimiento,
+                        ListaPreguntaEvaluacionEvento = datos.ListaPreguntaEvaluacionEvento,
+                        IdPlanCapacitacion = id,
+                        NombreEvento = datos.NombreEvento,
+                        Institucion = datos.Institucion,
+                        LugarFecha = datos.LugarFecha
+                    };
+
+                    return View(recibe);
                 }
                 return View();
             }
@@ -197,165 +99,51 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
 
-                //var envia = new ViewModelEvaluacionCapacitaciones
-                //{
-                //    IdPlanCapacitacion = id,
-
-                //};
-                //var datos = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluacionCapacitaciones>(envia, new Uri(WebApp.BaseAddress)
-                //                                                    , "api/EvaluacionCapacitacion/ObtenerDatosEvaluacion");
-                //if (datos != null)
-                //{
-                //    return View(datos);
-                //}
-                return View();
+                var response = await apiServicio.InsertarAsync(viewModelEvaluacionCapacitaciones, new Uri(WebApp.BaseAddress)
+                                                                    , "api/EvaluacionCapacitacion/InsertarEvaluacion");
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View(viewModelEvaluacionCapacitaciones);
             }
             catch (Exception ex)
             {
                 return BadRequest();
             }
         }
-        public async Task<IActionResult> DetalleJefe(int id, int IdActividad)
+        public async Task<IActionResult> Detalle(int id)
         {
             try
             {
-                var usuario = new DocumentoFAOViewModel
+                var a = new ViewModelEvaluacionCapacitaciones();
+                var envia = new ViewModelEvaluacionCapacitaciones
                 {
-                    IdEmpleado = id,
-                    IdFormularioAnalisisOcupacional = IdActividad
+                    IdPlanCapacitacion = id,
 
                 };
-                var response = await apiServicio.ObtenerElementoAsync(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/InformeFinalFAO");
-                if (response.IsSuccess)
+                var datos = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluacionCapacitaciones>(envia, new Uri(WebApp.BaseAddress)
+                                                                    , "api/EvaluacionCapacitacion/ObtenerDatosEvaluacionEvento");
+                if (datos != null)
                 {
-                    var empleado = JsonConvert.DeserializeObject<DocumentoFAOViewModel>(response.Resultado.ToString());
-                    ViewData["IdManualPuesto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList((empleado.ListasManualPuesto), "IdManualPuesto", "Nombre");
-                    return View(empleado);
+                    a.ListaPreguntaEvaluacionFacilitador = datos.ListaPreguntaEvaluacionEvento.Where(x => x.Facilitador == true).ToList();
+                    a.ListaPreguntaOrganizador = datos.ListaPreguntaEvaluacionEvento.Where(x => x.Organizador == true).ToList();
+                    a.ListaPreguntaEvaluacionConocimiento = datos.ListaPreguntaEvaluacionEvento.Where(x => x.ConocimientoObtenidos == true).ToList();
+                    var recibe = new ViewModelEvaluacionCapacitaciones
+                    {
+                        ListaPreguntaEvaluacionFacilitador = a.ListaPreguntaEvaluacionFacilitador,
+                        ListaPreguntaOrganizador = a.ListaPreguntaOrganizador,
+                        ListaPreguntaEvaluacionConocimiento = a.ListaPreguntaEvaluacionConocimiento,
+                        ListaPreguntaEvaluacionEvento = datos.ListaPreguntaEvaluacionEvento,
+                        IdPlanCapacitacion = id,
+                        NombreEvento = datos.NombreEvento,
+                        Institucion = datos.Institucion,
+                        LugarFecha = datos.LugarFecha
+                    };
 
+                    return View(recibe);
                 }
-                ViewData["Error"] = response.Message;
                 return View();
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-        public async Task<IActionResult> EmpleadoFAOAsignar(int id)
-        {
-
-            if (!ModelState.IsValid)
-            {
-
-                return View(id);
-
-            }
-            Response response = new Response();
-            var empleadoid = new FormularioAnalisisOcupacional
-            {
-                IdEmpleado = id,
-                InternoMismoProceso = false,
-                InternoOtroProceso = false,
-                ExternosCiudadania = false,
-                ExtPersJuridicasPubNivelNacional = false,
-                FechaRegistro = DateTime.Now,
-                Anio = DateTime.Now.Year,
-                MisionPuesto = "Debe Introducir misión del puesto",
-                Estado = -1
-
-            };
-
-            response = await apiServicio.InsertarAsync(empleadoid,
-                                                         new Uri(WebApp.BaseAddress),
-                                                         "api/FormularioAnalisisOcupacional/InsertarFormularioAnalisisOcupacional");
-            if (response.IsSuccess)
-            {
-
-                return RedirectToAction("AsignarEmpleadoFAO");
-            }
-
-            //ViewData["Error"] = response.Message;
-            return View();
-
-        }
-        public async Task<IActionResult> Create(int id, int IdActividad)
-        {
-            try
-            {
-
-                var usuario = new DocumentoFAOViewModel
-                {
-                    IdEmpleado = id,
-                    IdFormularioAnalisisOcupacional = IdActividad
-
-                };
-                var response = await apiServicio.ObtenerElementoAsync(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ObtenerEncabezadoEmpleadosFaoValidarConExepciones");
-
-                if (response.IsSuccess)
-                {
-                    var empleado = JsonConvert.DeserializeObject<DocumentoFAOViewModel>(response.Resultado.ToString());
-                    return View(empleado);
-                }
-                ViewData["Error"] = response.Message;
-                return View();
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-
-        }
-        public async Task<IActionResult> ValidarTalentoHumano(DocumentoFAOViewModel documentoFAOViewModel)
-        {
-            try
-            {
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-                var usuario = new DocumentoFAOViewModel
-                {
-                    NombreUsuario = NombreUsuario,
-                    ListaRolPUesto = documentoFAOViewModel.ListaRolPUesto,
-                    Descripcionpuesto = documentoFAOViewModel.Descripcionpuesto,
-                    Cumple = documentoFAOViewModel.Cumple,
-                    aplicapolitica = documentoFAOViewModel.aplicapolitica,
-                    IdEmpleado = documentoFAOViewModel.IdEmpleado
-                };
-                
-                var response = await apiServicio.ObtenerElementoAsync(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/FormularioAnalisisOcupacional/InsertarAdministracionTalentoHumano");
-
-                if (response.IsSuccess)
-                {
-                    
-                    return RedirectToAction("Asignados");
-                }
-
-                ViewData["Error"] = response.Message;
-                return View();
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-
-        }
-        public async Task<IActionResult> Delete(string id)
-        {
-
-            try
-            {
-                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "api/FormularioAnalisisOcupacional");
-                if (response.IsSuccess)
-                {
-                    return RedirectToAction("Asignados");
-                }
-                return BadRequest();
             }
             catch (Exception ex)
             {

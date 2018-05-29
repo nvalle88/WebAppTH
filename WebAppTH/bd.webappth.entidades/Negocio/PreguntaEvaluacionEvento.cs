@@ -15,6 +15,8 @@ namespace bd.webappth.entidades.Negocio
         public bool? ConocimientoObtenidos { get; set; }
         [NotMapped]
         public int? Calificacion { get; set; }
+        [NotMapped]
+        public bool Conocimiento { get; set; }
         public virtual ICollection<DetalleEvaluacionEvento> DetalleEvaluacionEvento { get; set; }
     }
 }

@@ -290,7 +290,6 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(GestionPlanCapacitacion gestionPlanCapacitacion)
@@ -349,9 +348,10 @@ namespace bd.webappth.web.Controllers.MVC
                                                               "api/MigracionCapacitaciones/InsertarPlanCapacitacion");
                 if (respuesta.IsSuccess)
                 {
-                    await cargarCombox();
-                    var vista = JsonConvert.DeserializeObject<PlanCapacitacion>(respuesta.Resultado.ToString());
-                    return View(vista);
+                    //await cargarCombox();
+                    //var vista = JsonConvert.DeserializeObject<PlanCapacitacion>(respuesta.Resultado.ToString());
+                    //return View(vista);
+                    return RedirectToAction("MostrarExcelBase", new { id = planCapacitacion.IdGestionPlanCapacitacion });
                 }
 
 
@@ -362,6 +362,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return this.Redireccionar($"{Mensaje.Error}|{respuesta.Message}");
             }
         }
+
         public async Task<JsonResult> ObterDatosEmpleado(int idEmpleado)
         {
             var envia = new PlanCapacitacion { IdEmpleado = idEmpleado };
@@ -410,9 +411,10 @@ namespace bd.webappth.web.Controllers.MVC
                                                               "api/MigracionCapacitaciones/EditarPlanCapacitacion");
                 if (respuesta.IsSuccess)
                 {
-                    await cargarCombox();
-                    var vista = JsonConvert.DeserializeObject<PlanCapacitacion>(respuesta.Resultado.ToString());
-                    return View(vista);
+                    //await cargarCombox();
+                    //var vista = JsonConvert.DeserializeObject<PlanCapacitacion>(respuesta.Resultado.ToString());
+                    //return View(vista);
+                    return RedirectToAction("MostrarExcelBase",new {id = planCapacitacion.IdGestionPlanCapacitacion });
                 }
 
 
@@ -538,31 +540,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
         }
-
-        public async Task<IActionResult> ConceptoConjunto(string id)
-        {
-
-            try
-            {
-                if (string.IsNullOrEmpty(id))
-                {
-                    return this.Redireccionar($"{Mensaje.Error}|{Mensaje.RegistroNoExiste}");
-                }
-                var tipoConjuntoEliminar = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
-
-                var response = await apiServicio.EliminarAsync(tipoConjuntoEliminar, new Uri(WebApp.BaseAddress)
-                                                               , "api/CalculoNomina/EliminarCalculoNomina");
-                if (response.IsSuccess)
-                {
-                    return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
-                }
-                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
-            }
-            catch (Exception)
-            {
-                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
-            }
-        }
+        
 
         public GestionPlanCapacitacion ObtenerIdCapacitacion()
         {

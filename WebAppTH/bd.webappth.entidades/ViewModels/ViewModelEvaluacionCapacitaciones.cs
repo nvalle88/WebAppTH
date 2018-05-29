@@ -18,7 +18,10 @@ namespace bd.webappth.entidades.ViewModels
         public string Institucion { get; set; }
         [DisplayName("Lugar y Fecha")]
         public string LugarFecha { get; set; }
+        [DisplayName("Comentarios y Sugerencias")]
+        public string ComentarioSugerencia { get; set; }
         //LIstas
+        public List<DetalleEvaluacionEvento> ListaDetalleEvaluacionEvento { get; set; }
         public List<PlanCapacitacion> ListaPlanCapacitacion { get; set; }
         public List<PreguntaEvaluacionEvento> ListaPreguntaEvaluacionEvento { get; set; }
         public List<PreguntaEvaluacionEvento> ListaPreguntaEvaluacionFacilitador { get; set; }
