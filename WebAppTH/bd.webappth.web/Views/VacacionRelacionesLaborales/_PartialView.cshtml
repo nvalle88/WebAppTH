@@ -1,0 +1,53 @@
+@model bd.webappth.entidades.Negocio.VacacionRelacionLaboral
+<fieldset>
+    <input type="number" asp-for="IdVacacionRelacionLaboral"  hidden/>
+
+    <div class="row">
+        <section class="col col-lg-3">
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.IdRelacionLaboral)</label>
+            <label class="input">
+                <select id="SelectAccion" asp-for="IdRelacionLaboral" class="form-control" asp-items="ViewBag.RelacionLaboral">
+                    <option value="0" selected>Seleccione</option>
+                </select>
+
+                <span asp-validation-for="IdRelacionLaboral" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+    <div class="row">
+
+        <section class="col col-lg-3">
+            <label>@Html.DisplayNameFor(x => x.MinAcumulacionDias)</label>
+            <label class="input">
+                <input type="number" asp-for="MinAcumulacionDias" class="form-control" />
+                <span asp-validation-for="MinAcumulacionDias" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-3">
+            <label>@Html.DisplayNameFor(x => x.MaxAcumulacionDias)</label>
+            <label class="input">
+                <input type="number" asp-for="MaxAcumulacionDias" class="form-control" />
+                <span asp-validation-for="MaxAcumulacionDias" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-3">
+            <label>@Html.DisplayNameFor(x => x.IncrementoDiasPorPeriodoFiscal)</label>
+            <label class="input">
+                <input type="number" asp-for="IncrementoDiasPorPeriodoFiscal" class="form-control" />
+                <span asp-validation-for="IncrementoDiasPorPeriodoFiscal" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-3">
+            <label>@Html.DisplayNameFor(x => x.IncrementoApartirPeriodoFiscal)</label>
+            <label class="input">
+                <input type="number" asp-for="IncrementoApartirPeriodoFiscal" class="form-control" />
+                <span asp-validation-for="IncrementoApartirPeriodoFiscal" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+</fieldset>

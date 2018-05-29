@@ -47,6 +47,7 @@ namespace bd.webappth.entidades.Utils
         public static string ErrorDesactivar { get { return "Ha ocurrido un error al desactivar el registro."; } }
 
         public static string SeleccioneIndice { get { return "Debe seleccionar un índice en: situación propuesta."; } }
+        public static string SeleccioneSolicitudPlanificacionVacaciones { get { return "Seleccione una solicitud de planificacion"; } }
 
         public static string ConceptoNoExiste { get { return "El concepto no existe."; } }
         public static string EmpleadoNoExiste { get { return "Identificación del empleado no existe."; } }

@@ -166,7 +166,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                var response = await apiServicio.InsertarAsync(
+                var response = await apiServicio.EditarAsync<Response>(
                     modelo,
                     new Uri(WebApp.BaseAddress),
                     "api/SolicitudPlanificacionVacaciones/EditarSolicitudPlanificacionVacaciones"

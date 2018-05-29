@@ -66,7 +66,7 @@ namespace bd.webappth.web.Controllers.MVC
                         );
                     }
 
-                    this.TempData["MensajeTime"] = $"{Mensaje.Error}|{response.Message}|{"12000"}";
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"12000"}";
 
                     await CargarCombos();
 
