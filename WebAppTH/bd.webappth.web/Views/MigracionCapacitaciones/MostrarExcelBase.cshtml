@@ -29,21 +29,21 @@
             </span>Nuevo
         </button>
     </a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a asp-action="ReportadoCapacitacion" asp-route-id="@nomina" onclick="cargando()">
-        <button type="button" asp-action="ReportadoCapacitacion" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-upload"></i>
-            </span>Cargar archivo
-        </button>
-    </a>
+    @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a asp-action="ReportadoCapacitacion" asp-route-id="@nomina" onclick="cargando()">
+            <button type="button" asp-action="ReportadoCapacitacion" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-upload"></i>
+                </span>Cargar archivo
+            </button>
+        </a>*@
 
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a asp-action="LimpiarReportados" asp-route-id="@nomina" onclick="cargando()">
         <button type="button" asp-action="LimpiarReportados" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="fa fa-trash-o"></i>
-            </span>Limpiar
+            </span>Eliminar todos
         </button>
     </a>
     <p> </p>
@@ -108,30 +108,48 @@
                                                     <tbody>
                                                         @foreach (var item in Model)
                                                         {
-                                                        <tr>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Cedula)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.ApellidoNombre)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.NombreCiudad)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.NumeroPartidaPresupuestaria)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.DenominacionPuesto)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.TemaCapacitacion)
-                                                            </td>
-                                                            <td>
-                                                                @Html.ActionLink("Editar", "EditPlanCapacitacion", new { id = item.IdPlanCapacitacion }) |
-                                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdPlanCapacitacion }, new { onclick = "return confirm('Desea eliminar la Ciudad... ?');" })
-                                                            </td>
-                                                        </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Cedula)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.ApellidoNombre)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.NombreCiudad)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.NumeroPartidaPresupuestaria)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.DenominacionPuesto)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.TemaCapacitacion)
+                                                                </td>
+                                                                <td>
+                                                                    @if (item.Estado == 0)
+                                                                    {
+                                                                        <text>
+                                                                            Desactivado
+                                                                        </text>
+                                                                    }
+                                                                    @if (item.Estado == 2)
+                                                                    {
+                                                                        <text>
+                                                                            Finalizado
+                                                                        </text>
+                                                                    }
+                                                                    else
+                                                                    {
+
+                                                                        <text>
+                                                                            @Html.ActionLink("Editar", "EditPlanCapacitacion", new { id = item.IdPlanCapacitacion }) |
+                                                                            @Html.ActionLink("Desactivar", "Desactivar", new { id = item.IdPlanCapacitacion }, new { onclick = "return confirm('Desea descativar... ?');" })
+                                                                        </text>
+                                                                    }
+                                                                </td>
+                                                            </tr>
                                                         }
                                                     </tbody>
                                                 </table>

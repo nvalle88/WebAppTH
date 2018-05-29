@@ -1,6 +1,7 @@
 ﻿namespace bd.webappth.entidades.Negocio
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class PlanCapacitacion
@@ -27,6 +28,8 @@
         public string Modalidad { get; set; }
         public int? Duracion { get; set; }
         public decimal? PresupuestoIndividual { get; set; }
+        [Display(Name = "Fecha capacitacion planificada")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaCapacitacionPlanificada { get; set; }
         public string TipoCapacitacion { get; set; }
         public string EstadoEvento { get; set; }
@@ -36,13 +39,18 @@
         public int? IdProveedorCapacitaciones { get; set; }
         public int? DuracionEvento { get; set; }
         public int? Anio { get; set; }
+        [Display(Name = "Fecha inicio")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaInicio { get; set; }
+        [Display(Name = "Fecha fin")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaFin { get; set; }
         public decimal? ValorReal { get; set; }
         public int? IdCiudad { get; set; }
         public string TipoEvaluacion { get; set; }
         public string Ubicacion { get; set; }
         public string Observacion { get; set; }
+        public int? Estado { get; set; }
 
         public virtual Ciudad Ciudad { get; set; }
         public virtual GestionPlanCapacitacion GestionPlanCapacitacion { get; set; }
