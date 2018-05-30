@@ -17,6 +17,6 @@ namespace bd.webappth.entidades.Negocio
 
         //Propiedades Virtuales Referencias a otras clases
 
-        public virtual ICollection<EvaluacionConocimientoDetalle> EvaluacionConocimientoDetalle { get; set; }
+        public virtual ICollection<EvaluacionConocimiento> EvaluacionConocimiento { get; set; }
     }
 }
