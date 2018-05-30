@@ -202,6 +202,35 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        public async Task<IActionResult> TrabajoEquipoIniciativaLiderazgo(int idEval001)
+        {
+
+            try
+            {
+                if (idEval001 != 0)
+                {
+                    HttpContext.Session.SetInt32(Constantes.idEval011Session, idEval001);
+
+                }
+
+                var filtro = new IdFiltrosViewModel { IdEval001 = idEval001 };
+
+                var lista = await apiServicio.Listar<EvaluacionTrabajoEquipoIniciativaLiderazgo>(
+                        filtro,
+                        new Uri(WebApp.BaseAddress),
+                        "api/EvaluacionDesempeno/ListarTrabajoEquipoIniciativaLiderazgoPorEval001");
+
+
+                return View(lista);
+
+            }
+            catch (Exception ex)
+            {
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SessionCaducada}|{"10000"}";
+                return RedirectToAction("Index");
+            }
+        }
+
 
         public async Task<IActionResult> Observaciones(int idEval001)
         {
