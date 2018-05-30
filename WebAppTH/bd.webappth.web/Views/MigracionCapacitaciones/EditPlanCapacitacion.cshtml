@@ -12,19 +12,21 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Editar gesti&oacute;n Capacitaciones</h2>
+                        <h2>Editar gesti&oacute;n plan de capacitaci&oacute;n</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            <form asp-action="EditPlanCapacitacion" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="IdPlanCapacitacion" />
                                 <input type="hidden" asp-for="IdGestionPlanCapacitacion" />
+                                <input type="hidden" asp-for="Anio" value="@DateTime.Now.Year" />
                                 @{await Html.RenderPartialAsync("_PartialViewPlanCapacitacion");}
                                 <footer>
-                                    <button type="submit" class="btn btn-default" id="btn-guardar">Actualizar</button>
-                                    <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>
+                                    <button type="submit" class="btn btn-default" id="btn-guardar">Finalizar</button>
+                                    <a asp-action="MostrarExcelBase" asp-route-id="@Model.IdGestionPlanCapacitacion" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -45,24 +47,60 @@
             Init_Select2();
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
 
-        <script type="text/javascript">
+            $("#IdEmpleado").change(function () {
+                mostrarLoadingPanel("content", "Cargando...")
+               // $("#IdEmpleado").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ObterDatosEmpleado", "MigracionCapacitaciones")',
+                    dataType: 'json',
+                    data: { idEmpleado: $("#IdEmpleado").val() },
+                    success: function (data) {
+                        $("#Institucion").val(data.institucion);
+                        $("#Pais").val(data.pais);
+                        $("#Provincia").val(data.provincia);
+                        $("#NombreCiudad").val(data.nombreCiudad);
+                        $("#Cedula").val(data.cedula);
+                        $("#ApellidoNombre").val(data.apellidoNombre);
+                        $("#Sexo").val(data.sexo);
+                        $("#GrupoOcupacional").val(data.grupoOcupacional);
+                        $("#ModalidadLaboral").val(data.modalidadLaboral);
+                        $("#RegimenLaboral").val(data.regimenLaboral);
+                        $("#DenominacionPuesto").val(data.denominacionPuesto);
+                        $("#UnidadAdministrativa").val(data.unidadAdministrativa);
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
 
-            function OcultarSuma() {
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+            })
+        })
+    </script>
 
-                if ($("#Suma").prop('checked')) {
+    <script type="text/javascript">
+
+        function OcultarSuma() {
+
+            if ($("#Suma").prop('checked')) {
                 $("#Suma").prop("checked", false);
             }
 
-            }
-            function OcultarResta() {
+        }
+        function OcultarResta() {
 
-                if ($("#Resta").prop('checked')) {
+            if ($("#Resta").prop('checked')) {
                 $("#Resta").prop("checked", false);
             }
 
 
-            }
+        }
     </script>
 
 }

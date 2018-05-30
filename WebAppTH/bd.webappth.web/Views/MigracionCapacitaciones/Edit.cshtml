@@ -21,9 +21,11 @@
                             <form asp-action="Edit" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdGestionPlanCapacitacion" />
+                                <input type="hidden" asp-for="Anio" value="@DateTime.Now.Year" />
+                                <input type="hidden" asp-for="Estado" value="1" />
                                 @{await Html.RenderPartialAsync("_PartialViewGestionPlanCapacitacion");}
                                 <footer>
-                                    <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
+                                    <button type="submit" class="btn btn-default" id="btn-guardar">Actualizar</button>
                                     <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>

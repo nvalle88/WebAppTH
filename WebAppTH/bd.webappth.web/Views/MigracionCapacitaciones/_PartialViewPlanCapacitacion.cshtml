@@ -13,7 +13,7 @@
         <section class="col col-3">
             <label>Instituci&oacute;n</label>
             <label class="input">
-                <input maxlength="250" asp-for="Institucion" class="form-control" />
+                <input maxlength="250" asp-for="Institucion" disabled="" class="form-control" />
                 <span asp-validation-for="Institucion" class="text-danger"></span>
             </label>
         </section>
@@ -29,7 +29,7 @@
         <section class="col col-3">
             <label>Pais</label>
             <label class="input">
-                <input maxlength="250" asp-for="Pais" class="form-control" />
+                <input maxlength="250" asp-for="Pais" class="form-control" disabled="" />
                 <span asp-validation-for="Pais" class="text-danger"></span>
             </label>
         </section>
@@ -38,14 +38,14 @@
         <section class="col col-3">
             <label>Provincia</label>
             <label class="input">
-                <input maxlength="250" asp-for="Provincia" class="form-control" />
+                <input maxlength="250" asp-for="Provincia" class="form-control" disabled="" />
                 <span asp-validation-for="Provincia" class="text-danger"></span>
             </label>
         </section>
         <section class="col col-3">
             <label>Ciudad</label>
             <label class="input">
-                <input maxlength="250" asp-for="NombreCiudad" class="form-control" />
+                <input maxlength="250" asp-for="NombreCiudad" class="form-control" disabled="" />
                 <span asp-validation-for="NombreCiudad" class="text-danger"></span>
             </label>
         </section>
@@ -60,7 +60,7 @@
         <section class="col col-3">
             <label>Unidad administrativa</label>
             <label class="input">
-                <input maxlength="250" asp-for="UnidadAdministrativa" class="form-control" />
+                <input maxlength="250" asp-for="UnidadAdministrativa" class="form-control" disabled="" />
                 <span asp-validation-for="UnidadAdministrativa" class="text-danger"></span>
             </label>
         </section>
@@ -69,7 +69,7 @@
         <section class="col col-6">
             <label>Cedula</label>
             <label class="input">
-                <input maxlength="250" asp-for="Cedula" class="form-control" />
+                <input maxlength="250" asp-for="Cedula" class="form-control" disabled="" />
                 <span asp-validation-for="Cedula" class="text-danger"></span>
             </label>
         </section>
@@ -77,7 +77,7 @@
         <section class="col col-6">
             <label>Nombre y apellido</label>
             <label class="input">
-                <input maxlength="250" asp-for="ApellidoNombre" class="form-control" />
+                <input maxlength="250" asp-for="ApellidoNombre" class="form-control" disabled="" />
                 <span asp-validation-for="ApellidoNombre" class="text-danger"></span>
             </label>
         </section>
@@ -86,7 +86,7 @@
         <section class="col col-6">
             <label>Sexo</label>
             <label class="input">
-                <input maxlength="250" asp-for="Sexo" class="form-control" />
+                <input maxlength="250" asp-for="Sexo" class="form-control" disabled="" />
                 <span asp-validation-for="Sexo" class="text-danger"></span>
             </label>
         </section>
@@ -94,7 +94,7 @@
         <section class="col col-6">
             <label>Grupo ocupacional</label>
             <label class="input">
-                <input maxlength="250" asp-for="GrupoOcupacional" class="form-control" />
+                <input maxlength="250" asp-for="GrupoOcupacional" class="form-control" disabled="" />
                 <span asp-validation-for="GrupoOcupacional" class="text-danger"></span>
             </label>
         </section>
@@ -103,7 +103,7 @@
         <section class="col col-6">
             <label>Denominaci&oacute;n puesto</label>
             <label class="input">
-                <input maxlength="250" asp-for="DenominacionPuesto" class="form-control" />
+                <input maxlength="250" asp-for="DenominacionPuesto" class="form-control" disabled="" />
                 <span asp-validation-for="DenominacionPuesto" class="text-danger"></span>
             </label>
         </section>
@@ -111,7 +111,7 @@
         <section class="col col-6">
             <label>Regimen laboral</label>
             <label class="input">
-                <input maxlength="250" asp-for="RegimenLaboral" class="form-control" />
+                <input maxlength="250" asp-for="RegimenLaboral" class="form-control" disabled="" />
                 <span asp-validation-for="RegimenLaboral" class="text-danger"></span>
             </label>
         </section>
@@ -120,7 +120,7 @@
         <section class="col col-6">
             <label>Modalidad laboral</label>
             <label class="input">
-                <input maxlength="250" asp-for="ModalidadLaboral" class="form-control" />
+                <input maxlength="250" asp-for="ModalidadLaboral" class="form-control" disabled="" />
                 <span asp-validation-for="ModalidadLaboral" class="text-danger"></span>
             </label>
         </section>
@@ -179,11 +179,17 @@
         <section class="col col-6">
             <label>Fecha capacitacion planificada</label>
             <label class="input">
-                <input maxlength="250" asp-for="FechaCapacitacionPlanificada" class="form-control" />
+                <input maxlength="250" asp-for="FechaCapacitacionPlanificada" type="text" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true' />
                 <span asp-validation-for="FechaCapacitacionPlanificada" class="text-danger"></span>
             </label>
         </section>
     </div>
+    <div class="row">
+        <section class="col col-lg-12">
+            <legend>Agregar informaci&oacute;n</legend>
+        </section>
+    </div>
+
     <div class="row">
         <section class="col col-6">
             <label>Tipo capacitacion</label>
@@ -198,6 +204,115 @@
             <label class="input">
                 <input maxlength="250" asp-for="EstadoEvento" class="form-control" />
                 <span asp-validation-for="EstadoEvento" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Ambito de la capacitacion</label>
+            <label class="input">
+                <input maxlength="250" asp-for="AmbitoCapacitacion" class="form-control" />
+                <span asp-validation-for="AmbitoCapacitacion" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Nombre del evento</label>
+            <label class="input">
+                <input maxlength="250" asp-for="NombreEvento" class="form-control" />
+                <span asp-validation-for="NombreEvento" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Tipo evento</label>
+            <label class="input">
+                <input maxlength="250" asp-for="TipoEvento" class="form-control" />
+                <span asp-validation-for="TipoEvento" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Nombre proveedor / Capacitador</label>
+            <div class="input">
+                <select asp-for="IdProveedorCapacitaciones" asp- class="form-control" asp-items="ViewBag.IdProveedorCapacitaciones">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdProveedorCapacitaciones" class="text-danger"></span>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Duraci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="DuracionEvento" type="number" class="form-control" />
+                <span asp-validation-for="DuracionEvento" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label>Fecha inicio capacitaci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="FechaInicio" readonly="" type="text" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true' />
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Fecha fin capacitaci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="FechaFin" readonly="" type="text" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true' />
+                <span asp-validation-for="FechaFin" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label>Costo real del curso</label>
+            <label class="input">
+                <input maxlength="250" asp-for="ValorReal" type="number" class="form-control" />
+                <span asp-validation-for="ValorReal" class="text-danger"></span>
+
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Ciudad</label>
+            <div class="input">
+                <select asp-for="IdCiudad" asp- class="form-control" asp-items="ViewBag.IdCiudad">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdCiudad" class="text-danger"></span>
+            </div>
+        </section>
+        <section class="col col-6">
+            <label>Tipo evaluaci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="TipoEvaluacion" type="text" class="form-control" />
+                <span asp-validation-for="TipoEvaluacion" class="text-danger"></span>
+
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label>Ubicaci&oacute;n</label>
+            <div class="input">
+                <select asp-for="Ubicacion" asp- class="form-control">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                    <option value="Nacional" selected="selected">Nacional</option>
+                    <option value="Internacional" selected="selected">Internacional</option>
+                </select>
+                <span asp-validation-for="Ubicacion" class="text-danger"></span>
+            </div>
+        </section>
+        <section class="col col-6">
+            <label>Observaci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="Observacion" type="text" class="form-control" />
+                <span asp-validation-for="Observacion" class="text-danger"></span>
+
             </label>
         </section>
     </div>

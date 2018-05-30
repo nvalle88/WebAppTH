@@ -38,7 +38,7 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Anio)
                                         </th>
-                                        
+
                                         <th>
                                             Opciones
                                         </th>
@@ -56,13 +56,25 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Anio)
-                                            </td>                                            
+                                            </td>
                                             <td>
-                                                @Html.ActionLink(" Descargar archivo", "Download", new { id = item.IdGestionPlanCapacitacion })|
-                                                @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();" })|
-                                                @Html.ActionLink(" Cargar reportados", "ReportadoCapacitacion", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();"})|
-                                                @Html.ActionLink(" Editar", "Edit", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();"}) |
-                                                @Html.ActionLink(" Eliminar", "Delete", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
+                                                @if (item.Anio == DateTime.Now.Year)
+                                                {<text>
+                                                        @*@Html.ActionLink(" Descargar archivo", "Download", new { id = item.IdGestionPlanCapacitacion })|*@
+                                                        @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();" }) |
+                                                        @Html.ActionLink(" Cargar reportados", "ReportadoCapacitacion", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();" }) |
+                                                        @Html.ActionLink(" Editar", "Edit", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();" }) |
+                                                        @Html.ActionLink(" Eliminar", "Delete", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
+                                                </text>
+                                            }
+                                            else
+                                            {
+                                                <text>
+                                                    @*@Html.ActionLink(" Descargar archivo", "Download", new { id = item.IdGestionPlanCapacitacion })|*@
+                                                    @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();" }) |
+                                                </text>
+
+                                            }
                                             </td>
                                         </tr>
                                     }
@@ -75,7 +87,7 @@
         </div>
     </section>
 </div>
- @section Scripts {
-   <script src='~/js/datatables/init.js'></script>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
 }
 
