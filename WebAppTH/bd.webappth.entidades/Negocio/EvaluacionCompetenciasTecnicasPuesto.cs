@@ -15,11 +15,7 @@ namespace bd.webappth.entidades.Negocio
 
         //Propiedades Virtuales Referencias a otras clases
 
-        public virtual ICollection<Eval001> Eval001 { get; set; }
-
-        public virtual ICollection<EvaluacionCompetenciasTecnicasPuestoFactor> EvaluacionCompetenciasTecnicasPuestoFactor { get; set; }
-
-        public virtual ICollection<EvaluacionCompetenciasTecnicasPuestoDetalle> EvaluacionCompetenciasTecnicasPuestoDetalle { get; set; }
+        public virtual ICollection<Eval001> Eval001 { get; set; }        
 
         public virtual ComportamientoObservable ComportamientoObservable { get; set; }
         
