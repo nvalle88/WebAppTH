@@ -4,7 +4,7 @@
 @{await Html.RenderPartialAsync("_PartialViewMenu");}
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Actividades esenciales";
 }
 
 @{
@@ -191,6 +191,14 @@
         $("#btn_1").css("background-color", "#3276b1");
         $("#btn_1").css("color", "white");
 
+    </script>
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    
+    <script type="text/javascript">
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
     </script>
 
 }

@@ -126,7 +126,7 @@
                                             </label>
                                         </label>
                                     </section>
-                                    
+
                                 </div>
 
                                 <div>&nbsp;</div>
@@ -235,5 +235,11 @@
 @section Scripts {
     <script src='~/js/datatables/init.js'></script>
 
-
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+    </script>
 }
