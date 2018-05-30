@@ -25,12 +25,14 @@ namespace bd.webappth.entidades.ViewModels
         public string Titulo { get; set; }
         [Display(Name = "Apellido y nombres jefe inmediato:")]
         public string DatosJefe { get; set; }
-
+        
         [Display(Name = "Fecha inicio:")]
+        [Required]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Desde { get; set; }
 
         [Display(Name = "Fecha hasta:")]
+        [Required]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Hasta { get; set; }
 

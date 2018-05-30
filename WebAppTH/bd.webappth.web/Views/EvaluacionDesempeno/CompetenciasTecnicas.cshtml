@@ -73,32 +73,32 @@
                                             </thead>
                                             <tbody>
                                                 @foreach (var item in Model.ListaCompetenciasTecnicas)
-                {
-                                <tr>
-                                    <td hidden="hidden">
-                                        <input value="@item.IdComportamientoObservable" name="IdComportamientoObervable" type="hidden" asp- class="form-control" />
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NombreDenominacionCompetencia)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NombreNivel)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Descripcion)
-                                    </td>
-                                    <td>
-                                        <select asp-for="IdNivelDesarrollo" name="IdNivelDesarrollos" class="form-control" id="IdNivelConocimiento" asp-items="ViewBag.IdNivelDesarrollo">
-                                            <option value="0" selected="selected" disabled=""></option>
-                                        </select>
-                                    </td>
+                                                {
+                                                    <tr>
+                                                        <td hidden="hidden">
+                                                            <input value="@item.IdComportamientoObservable" name="IdComportamientoObervable" type="hidden" asp- class="form-control" />
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.NombreDenominacionCompetencia)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.NombreNivel)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                                        </td>
+                                                        <td>
+                                                            <select asp-for="IdNivelDesarrollo" name="IdNivelDesarrollos" class="form-control" id="IdNivelConocimiento" asp-items="ViewBag.IdNivelDesarrollo">
+                                                                <option value="0" selected="selected" disabled=""></option>
+                                                            </select>
+                                                        </td>
 
-                                </tr>
-}
+                                                    </tr>
+                                                }
                                             </tbody>
                                         </table>
-                                        </section>
-                                </div> 
+                                    </section>
+                                </div>
 
                                 <div class="smart-form">
                                     <footer>
@@ -124,7 +124,6 @@
             mostrarLoadingPanel("content", "")
         }
     </script>
-
-    <script src='~/js/datatables/init.js'></script>
+   
 }
 

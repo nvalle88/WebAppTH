@@ -159,6 +159,27 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+        public async Task<IActionResult> CompetenciasTecnicas(int idEval001)
+        {
 
+            try
+            {
+
+                var filtro = new IdFiltrosViewModel { IdEval001 = idEval001 };
+
+                var lista = await apiServicio.Listar<EvaluacionCompetenciasTecnicasPuesto>(
+                        filtro,
+                        new Uri(WebApp.BaseAddress),
+                        "api/EvaluacionDesempeno/ListarEvaluacionCompetenciasTecnicasPuestoPorEval001");
+
+
+                return View(lista);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
