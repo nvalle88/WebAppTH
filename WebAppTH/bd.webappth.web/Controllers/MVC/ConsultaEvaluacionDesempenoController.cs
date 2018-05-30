@@ -136,8 +136,6 @@ namespace bd.webappth.web.Controllers.MVC
                 return RedirectToAction("Index");
             }
         }
-
-
         public async Task<IActionResult> ConocimientosEsenciales(int idEval001)
         {
 
@@ -160,6 +158,40 @@ namespace bd.webappth.web.Controllers.MVC
                         filtro,
                         new Uri(WebApp.BaseAddress),
                         "api/EvaluacionDesempeno/ListarEvaluacionConocimientoPorEval001");
+
+
+                return View(lista);
+
+            }
+            catch (Exception ex)
+            {
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SessionCaducada}|{"10000"}";
+                return RedirectToAction("Index");
+            }
+        }
+
+        public async Task<IActionResult> CompetenciasTecnicas(int idEval001)
+        {
+
+            try
+            {
+
+                if (idEval001 != 0)
+                {
+                    HttpContext.Session.SetInt32(Constantes.idEval011Session, idEval001);
+
+                }
+                else
+                {
+                    idEval001 = Convert.ToInt32(Constantes.idEval011Session);
+                }
+
+                var filtro = new IdFiltrosViewModel { IdEval001 = idEval001 };
+
+                var lista = await apiServicio.Listar<EvaluacionCompetenciasTecnicasPuesto>(
+                        filtro,
+                        new Uri(WebApp.BaseAddress),
+                        "api/EvaluacionDesempeno/ListarEvaluacionCompetenciasTecnicasPuestoPorEval001");
 
 
                 return View(lista);
