@@ -99,7 +99,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SessionCaducada}|{"10000"}";
                 return RedirectToAction("Index");
             }
         }
@@ -132,7 +132,8 @@ namespace bd.webappth.web.Controllers.MVC
 
             } catch (Exception ex)
             {
-                return BadRequest();
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SessionCaducada}|{"10000"}";
+                return RedirectToAction("Index");
             }
         }
 
@@ -142,7 +143,17 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                
+
+                if (idEval001 != 0)
+                {
+                    HttpContext.Session.SetInt32(Constantes.idEval011Session, idEval001);
+
+                }
+                else
+                {
+                    idEval001 = Convert.ToInt32(Constantes.idEval011Session);
+                }
+
                 var filtro = new IdFiltrosViewModel { IdEval001 = idEval001 };
 
                 var lista = await apiServicio.Listar<EvaluacionConocimiento>(
@@ -156,21 +167,29 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SessionCaducada}|{"10000"}";
+                return RedirectToAction("Index");
             }
         }
-        public async Task<IActionResult> CompetenciasTecnicas(int idEval001)
+
+
+        public async Task<IActionResult> CompetenciasUniversales(int idEval001)
         {
 
             try
             {
+                if (idEval001 != 0)
+                {
+                    HttpContext.Session.SetInt32(Constantes.idEval011Session, idEval001);
+
+                }
 
                 var filtro = new IdFiltrosViewModel { IdEval001 = idEval001 };
 
-                var lista = await apiServicio.Listar<EvaluacionCompetenciasTecnicasPuesto>(
+                var lista = await apiServicio.Listar<EvaluacionCompetenciasUniversales>(
                         filtro,
                         new Uri(WebApp.BaseAddress),
-                        "api/EvaluacionDesempeno/ListarEvaluacionCompetenciasTecnicasPuestoPorEval001");
+                        "api/EvaluacionDesempeno/ListarCompetenciasUniversalesPorEval001");
 
 
                 return View(lista);
@@ -178,8 +197,76 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SessionCaducada}|{"10000"}";
+                return RedirectToAction("Index");
             }
         }
+
+
+        public async Task<IActionResult> Observaciones(int idEval001)
+        {
+
+            try
+            {
+                if (idEval001 != 0)
+                {
+                    HttpContext.Session.SetInt32(Constantes.idEval011Session, idEval001);
+
+                }
+
+                var filtro = new IdFiltrosViewModel { IdEval001 = idEval001 };
+
+                var modelo = await apiServicio.ObtenerElementoAsync1<Eval001>(
+                        filtro,
+                        new Uri(WebApp.BaseAddress),
+                        "api/EvaluacionDesempeno/ObtenerEval001");
+
+
+                return View(modelo);
+
+            }
+            catch (Exception ex)
+            {
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SessionCaducada}|{"10000"}";
+                return RedirectToAction("Index");
+            }
+        }
+
+        public async Task<IActionResult> CalificacionFinal(int idEval001)
+        {
+            try
+            {
+                if (idEval001 != 0)
+                {
+                    HttpContext.Session.SetInt32(Constantes.idEval011Session, idEval001);
+
+                    var envio = new ViewModelEvaluador()
+                    {
+                        IdEval001 = idEval001
+
+                    };
+
+                    var modelo = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluador>(envio, new Uri(WebApp.BaseAddress), "api/EvaluacionDesempeno/CalcularTotales");
+
+                    return View(modelo);
+
+                }
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SessionCaducada}|{"10000"}";
+                return RedirectToAction("Index");
+
+
+            }
+            catch (Exception ex)
+            {
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SessionCaducada}|{"10000"}";
+                return RedirectToAction("Index");
+            }
+
+
+        }
+
+
+
     }
 }

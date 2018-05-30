@@ -54,7 +54,17 @@ namespace bd.webappth.web
 
             
             services.AddDistributedMemoryCache();
-            services.AddSession();
+
+
+            Session.TiempoSessionMinutos = Convert.ToInt32( Configuration.GetSection("TiempoSessionMinutos").Value);
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromMinutes(Session.TiempoSessionMinutos);
+                //options.Cookie.HttpOnly = true;
+            });
+
             services.AddDataProtection()
            .UseCryptographicAlgorithms(
            new AuthenticatedEncryptionSettings()

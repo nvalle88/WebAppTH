@@ -63,5 +63,6 @@ namespace bd.webappth.entidades.Utils
         public static string ErrorFechaDesdeHasta { get { return "La fecha desde debe ser menor que la fecha hasta."; } }
         public static string AccesoNoAutorizado { get { return "No tiene los permisos necesarios para acceder a este sitio"; } }
 
+        public static string SessionCaducada { get { return "La sesión ha caducado, ha sido devuelto a la página principal del proceso"; } }
     }
 }

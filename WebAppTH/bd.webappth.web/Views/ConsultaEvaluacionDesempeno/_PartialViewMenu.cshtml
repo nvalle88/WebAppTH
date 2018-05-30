@@ -11,23 +11,36 @@
 }
 <div class="btn-group btn-group-justified">
 
-    <a asp-action="InformacionGeneral" id="btn_0" asp-route-idempleado="@idEmpleado" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default">
+    <a asp-action="InformacionGeneral" id="btn_0" asp-route-idempleado="@idEmpleado" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default" onclick="cargando()">
         Informaci&oacute;n <br />general<br />
     </a>
 
-    <a asp-action="ActividadesEsenciales" id="btn_1" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default">
+    <a asp-action="ActividadesEsenciales" id="btn_1" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default" onclick="cargando()">
         Actividades <br />esenciales<br />
     </a>
 
-    <a asp-action="ConocimientosEsenciales" id="btn_2" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default">
+    <a asp-action="ConocimientosEsenciales" id="btn_2" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default" onclick="cargando()">
         Conocimientos <br />esenciales<br />
     </a>
     <a asp-action="CompetenciasTecnicas" id="btn_3" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default">
         Competencias <br />tecnicas del <br /> puesto<br />
     </a>
 
-    <a asp-action="ActividadesEsenciales" id="itemMenu1" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default">
+    <a asp-action="CompetenciasUniversales" id="btn_4" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default" onclick="cargando()">
+        Competencias <br />universales
+    </a>
+
+    <a asp-action="ActividadesEsenciales" id="itemMenu1" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default" onclick="cargando()">
         Trabajo<br /> Iniciativa <br />Liderazgo
     </a>
+
+    <a asp-action="Observaciones" id="btn_6" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default" onclick="cargando()">
+        Observaciones
+    </a>
+
+    <a asp-action="CalificacionFinal" id="btn_7" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default" onclick="cargando()">
+        Calificaci&oacute;n<br />final
+    </a>
+
 </div>
     
