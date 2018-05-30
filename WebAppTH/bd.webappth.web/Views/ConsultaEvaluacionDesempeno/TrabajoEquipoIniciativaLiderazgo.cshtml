@@ -1,7 +1,7 @@
 @model bd.webappth.entidades.ViewModels.ViewModelEvaluador
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 @using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelEvaluador { OpcionMenu = 3 }; }
+@{ var modelo = new ViewModelEvaluador { OpcionMenu = 5 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
@@ -44,13 +44,13 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Competencias tecnicas del puesto</h2>
+                        <h2>Trabajo Iniciativa Liderazgo</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            <form asp-action="CompetenciasTecnicas" id="ejemplo" class="" novalidate="novalidate">
+                            <form asp-action="TrabajoEquipoIniciativaLiderazgo" id="ejemplo" class="smart-form" novalidate="novalidate">
                                 <div class="row">
                                     <section class="col col-lg-12">
                                         <br />
@@ -67,46 +67,45 @@
                                                         Comportamiento observable
                                                     </th>
                                                     <th data-hide="phone">
-                                                        NIvel de desarrollo
+                                                        Frecuencia de Aplicacion
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (var item in Model.ListaCompetenciasTecnicas)
-                {
-                                <tr>
-                                    <td hidden="hidden">
-                                        <input value="@item.IdComportamientoObservable" name="IdComportamientoObervable" type="hidden" asp- class="form-control" />
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NombreDenominacionCompetencia)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NombreNivel)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Descripcion)
-                                    </td>
-                                    <td>
-                                        <select asp-for="IdNivelDesarrollo" name="IdNivelDesarrollos" class="form-control" id="IdNivelConocimiento" asp-items="ViewBag.IdNivelDesarrollo">
-                                            <option value="0" selected="selected" disabled=""></option>
-                                        </select>
-                                    </td>
+                                                @foreach (var item in Model.ListaEquipoLiderazgo)
+                                                {
+                                                    <tr>
+                                                        <td hidden="hidden">
+                                                            <input value="@item.IdComportamientoObservable" name="IdComportamientoObervable" type="hidden" asp- class="form-control" />
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.NombreDenominacionCompetencia)
 
-                                </tr>
-}
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.NombreNivel)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                                        </td>
+                                                        <td>
+                                                            <select asp-for="IdFrecuenciaAplicacion" name="IdFrecuenciaAplicaciones" class="form-control" id="IdNivelConocimiento" asp-items="ViewBag.IdFrecuenciaAplicacion">
+                                                                <option value="0" selected="selected" disabled=""></option>
+                                                            </select>
+                                                        </td>
+
+                                                    </tr>
+                                                }
                                             </tbody>
                                         </table>
-                                        </section>
-                                </div> 
-
-                                <div class="smart-form">
-                                    <footer>
-                                        <input type="submit" value="Guardar" class="btn btn-primary" />
-                                        <a asp-action="Index" class="btn btn-default">Cancelar</a>
-                                    </footer>
-                                    <!-- end widget content -->
+                                    </section>
                                 </div>
+                                <!-- end widget content -->
+                                <footer>
+                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                </footer>
                             </form>
                         </div>
                     </div>

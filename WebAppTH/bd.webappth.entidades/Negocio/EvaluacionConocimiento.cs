@@ -5,6 +5,7 @@ namespace bd.webappth.entidades.Negocio
 
     public partial class EvaluacionConocimiento
     {
+        /*
         [Key]
         public int IdEvaluacionConocimiento { get; set; }
 
@@ -20,5 +21,15 @@ namespace bd.webappth.entidades.Negocio
         public virtual ICollection<EvaluacionConocimientoFactor> EvaluacionConocimientoFactor { get; set; }
 
         public virtual ICollection<EvaluacionConocimientoDetalle> EvaluacionConocimientoDetalle { get; set; }
+        */
+        [Key]
+        public int IdEvaluacionConocimiento { get; set; }
+        public int? IdNivelConocimiento { get; set; }
+        public int? IdEval001 { get; set; }
+        public int? IdAreaConocimiento { get; set; }
+
+        public virtual AreaConocimiento AreaConocimiento { get; set; }
+        public virtual Eval001 Eval001 { get; set; }
+        public virtual NivelConocimiento NivelConocimiento { get; set; }
     }
 }

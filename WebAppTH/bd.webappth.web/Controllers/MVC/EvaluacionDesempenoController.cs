@@ -121,10 +121,11 @@ namespace bd.webappth.web.Controllers.MVC
             }
             if (idIndiceOcupacional != 0)
             {
-                var usuario = new VIewCompetencias
+                var usuario = new ViewModelEvaluador
                 {
                     IdIndiceOcupacional = idIndiceOcupacional
                 };
+
                 var lista = await apiServicio.ObtenerElementoAsync1<ViewModelEvaluador>(usuario, new Uri(WebApp.BaseAddress)
                                                                        , "api/EvaluacionDesempeno/Actividades");
 

@@ -17,20 +17,20 @@ namespace bd.webappth.entidades.ViewModels
         public int IdFrecuenciaAplicacion { get; set; }
         public int OpcionMenu { get; set; }
 
-        [Display(Name = "Apellido y Nombres:")]
+        [Display(Name = "Apellido y nombres:")]
         public string NombreApellido { get; set; }
         [Display(Name = "Puesto")]
         public string Puesto { get; set; }
-        [Display(Name = "Titulo o Profesión:")]
+        [Display(Name = "Título o profesión:")]
         public string Titulo { get; set; }
-        [Display(Name = "Apellido y Nombres Jefe Inmediato:")]
+        [Display(Name = "Apellido y nombres jefe inmediato:")]
         public string DatosJefe { get; set; }
 
         [Display(Name = "Fecha inicio:")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Desde { get; set; }
 
-        [Display(Name = "Fecha Hasta:")]
+        [Display(Name = "Fecha hasta:")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Hasta { get; set; }
 

@@ -1,0 +1,239 @@
+@model bd.webappth.entidades.ViewModels.EmpleadoListaEval001ViewModel
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+    .et {
+        border-width: 0px;
+        font-weight: 600;
+    }
+
+    .vl {
+        border-width: 2px;
+    }
+</style>
+
+<div id="content">
+
+
+    <!-- widget grid -->
+    <section id="" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Datos generales</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <fieldset>
+
+                                <div class="row">&nbsp;</div>
+
+                                <div class="row">
+
+                                    <section class="col col-lg-12">
+
+                                        <label class="input col col-lg-3">
+                                            <label class="form-control et">
+                                                @Html.DisplayNameFor(model => model.EmpleadoEvaluado.NombresApellidos)
+                                            </label>
+                                        </label>
+
+                                        <label class="input col col-lg-6">
+                                            <label class="form-control vl">
+                                                @Html.DisplayFor(model => model.EmpleadoEvaluado.NombresApellidos)
+                                            </label>
+                                        </label>
+
+                                    </section>
+
+                                    <section class="col col-lg-12">
+
+                                        <label class="input col col-lg-3">
+                                            <label class="form-control et">
+                                                @Html.DisplayNameFor(model => model.EmpleadoEvaluado.NombrePuesto)
+                                            </label>
+                                        </label>
+
+                                        <label class="input col col-lg-6">
+                                            <label class="form-control vl">
+                                                @Html.DisplayFor(model => model.EmpleadoEvaluado.NombrePuesto)
+                                            </label>
+                                        </label>
+
+                                    </section>
+
+                                    <section class="col col-lg-12">
+
+                                        <label class="input col col-lg-12">
+                                            <label class="form-control et">
+                                                @Html.DisplayNameFor(model => model.EmpleadoEvaluado.ListaTituloProfesion)
+                                            </label>
+                                        </label>
+
+                                        @foreach (var item0 in Model.EmpleadoEvaluado.ListaTituloProfesion)
+                                        {
+
+                                            <label class="input col col-lg-3">
+                                                <label class="form-control et">
+                                                    &nbsp;
+                                                </label>
+                                            </label>
+
+                                            <label class="input col col-lg-6">
+                                                <label class="form-control vl">
+                                                    @Html.DisplayFor(model => item0.NombreTitulo)
+                                                </label>
+                                            </label>
+
+                                        }
+
+                                    </section>
+
+
+                                </div>
+
+
+                                <div class="row">
+
+                                    <section class="col col-lg-12">
+
+                                        <label class="input col col-lg-3">
+                                            <label class="form-control et">
+                                                Evaluador
+                                            </label>
+                                        </label>
+
+                                        <label class="input col col-lg-6">
+                                            <label class="form-control vl">
+                                                @(Model.EmpleadoEvaluador.Persona.Nombres + " " + Model.EmpleadoEvaluador.Persona.Apellidos)
+                                            </label>
+                                        </label>
+                                    </section>
+                                    
+                                </div>
+
+                                <div>&nbsp;</div>
+
+                            </fieldset>
+
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Evaluaciones</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.ListaEval001.FirstOrDefault().IdEval001)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.ListaEval001.FirstOrDefault().FechaRegistro)
+                                        </th>
+
+                                        <th data-class="">
+                                            @Html.DisplayNameFor(model => model.ListaEval001.FirstOrDefault().FechaEvaluacionDesde)
+                                        </th>
+
+                                        <th data-class="">
+                                            @Html.DisplayNameFor(model => model.ListaEval001.FirstOrDefault().FechaEvaluacionHasta)
+                                        </th>
+
+                                        <th>
+                                            <i class="fa fa-cog "></i>
+                                            Opciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ListaEval001)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IdEval001)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaRegistro)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaEvaluacionDesde)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaEvaluacionHasta)
+                                            </td>
+
+
+                                            <td>
+                                                @Html.ActionLink("Mostrar", "ActividadesEsenciales", new { IdEval001 = item.IdEval001 }, new { onclick = "cargando()" })
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+</div>
+
+
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+
+
+}

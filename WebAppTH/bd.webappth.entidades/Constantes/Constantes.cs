@@ -37,7 +37,7 @@ namespace bd.webappth.entidades.Constantes
 
 
         /// <summary>
-        /// Constantes para las secciones de la configutración de la nómina 
+        /// Constantes para las secciones de la configuración de la nómina 
         /// Conceptos 
         /// </summary>
         public const string idConceptoNominaSession = "idConceptoNominaSession";

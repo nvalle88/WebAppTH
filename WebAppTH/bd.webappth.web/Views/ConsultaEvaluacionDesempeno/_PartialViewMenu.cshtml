@@ -1,0 +1,30 @@
+
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+
+@{
+    var idEmpleado = @Context.Session.GetInt32(Constantes.idEmpleadoSession);
+    var idEval001 = @Context.Session.GetInt32(Constantes.idEval011Session);
+
+}
+<div class="btn-group btn-group-justified">
+
+    <a asp-action="InformacionGeneral" id="btn_0" asp-route-idempleado="@idEmpleado" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default">
+        Informaci&oacute;n <br />general<br />
+    </a>
+
+    <a asp-action="ActividadesEsenciales" id="btn_1" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default">
+        Actividades <br />esenciales<br />
+    </a>
+
+    <a asp-action="ConocimientosEsenciales" id="btn_2" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default">
+        Conocimientos <br />esenciales<br />
+    </a>
+
+    <a asp-action="ActividadesEsenciales" id="itemMenu1" asp-route-idEval001="@idEval001" asp-controller="ConsultaEvaluacionDesempeno" class="btn btn-default">
+        Trabajo<br /> Iniciativa <br />Liderazgo
+    </a>
+</div>
+    
