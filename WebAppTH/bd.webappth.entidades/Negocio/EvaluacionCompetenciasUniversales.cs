@@ -7,18 +7,12 @@ namespace bd.webappth.entidades.Negocio
     {
         [Key]
         public int IdEvaluacionCompetenciasUniversales { get; set; }
+        public int? IdFrecuenciaAplicacion { get; set; }
+        public int? IdEval001 { get; set; }
+        public int? IdComportamientoObservable { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Nombre:")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
-        public string Nombre { get; set; }
-
-        //Propiedades Virtuales Referencias a otras clases
-
-        public virtual ICollection<Eval001> Eval001 { get; set; }
-
-        public virtual ICollection<EvaluacionCompetenciasUniversalesFactor> EvaluacionCompetenciasUniversalesFactor { get; set; }
-
-        public virtual ICollection<EvaluacionCompetenciasUniversalesDetalle> EvaluacionCompetenciasUniversalesDetalle { get; set; }
+        public virtual ComportamientoObservable ComportamientoObservable { get; set; }
+        public virtual Eval001 Eval001 { get; set; }
+        public virtual FrecuenciaAplicacion FrecuenciaAplicacion { get; set; }
     }
 }

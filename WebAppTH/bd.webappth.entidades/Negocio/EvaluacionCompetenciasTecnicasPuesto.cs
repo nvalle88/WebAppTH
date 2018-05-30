@@ -20,5 +20,9 @@ namespace bd.webappth.entidades.Negocio
         public virtual ICollection<EvaluacionCompetenciasTecnicasPuestoFactor> EvaluacionCompetenciasTecnicasPuestoFactor { get; set; }
 
         public virtual ICollection<EvaluacionCompetenciasTecnicasPuestoDetalle> EvaluacionCompetenciasTecnicasPuestoDetalle { get; set; }
+
+        public virtual ComportamientoObservable ComportamientoObservable { get; set; }
+        
+        public virtual NivelDesarrollo NivelDesarrollo { get; set; }
     }
 }

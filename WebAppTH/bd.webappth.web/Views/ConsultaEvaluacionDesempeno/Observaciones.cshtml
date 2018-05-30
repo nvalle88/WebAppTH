@@ -1,37 +1,13 @@
-@model bd.webappth.entidades.ViewModels.ViewModelEvaluador
-@using bd.webappth.entidades.ViewModels
-@{ var modelo = new ViewModelEvaluador { OpcionMenu = 6 }; }
+@model bd.webappth.entidades.Negocio.Eval001
 
-@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+
+@{await Html.RenderPartialAsync("_PartialViewMenu");}
 @{
-    ViewData["Title"] = "Pais";
+    ViewData["Title"] = "Observaciones";
 }
 
 <!-- MAIN CONTENT -->
 <div id="content">
-    <div class="col col-10">
-        @if (@ViewData["Error"].ToString() != "")
-
-        {
-            <div class="col-lg-7">
-                <div class="alert alert-block alert-dismissable">
-
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-
-                    <p>
-
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        }
-    </div>
 
     <!-- widget grid -->
     <section id="widget-grid" class="">
@@ -60,25 +36,14 @@
 
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Observaciones" id="checkout-form" class="smart-form">
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-lg-12">
-                                            <label class="textarea">
-                                                <textarea  asp-for="Observaciones" rows="5"></textarea>
-                                                <span asp-validation-for="Observaciones" class="text-danger"></span>
-                                            </label>
-                                        </section>
+                            <div class="row">
+                                <section class="col col-lg-12">
+                                    <div style="padding:2%;">
+                                        <textarea class="form-control" asp-for="Observaciones" rows="5"></textarea>
                                     </div>
+                                </section>
+                            </div>
 
-                                </fieldset>
-
-                                <footer>
-
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
-                                </footer>
-                            </form>
                         </div>
                         <!-- end widget content -->
                     </div>
@@ -97,5 +62,11 @@
 </div>
 <!-- END MAIN CONTENT -->
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $("#btn_6").css("background-color", "#3276b1");
+        $("#btn_6").css("color", "white");
+
+    </script>
+
 }
