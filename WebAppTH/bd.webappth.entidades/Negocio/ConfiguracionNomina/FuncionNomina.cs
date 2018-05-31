@@ -11,5 +11,6 @@ namespace bd.webappth.entidades.Negocio
         public int IdFuncion { get; set; }
         public string Descripcion { get; set; }
         public string ProcedimientoAlmacenado { get; set; }
+        public string Variable { get; set; }
     }
 }

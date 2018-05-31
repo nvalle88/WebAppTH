@@ -11,7 +11,7 @@
             </label>
         </section>
     </div>
-        <div class="row" >
+    <div class="row">
         <section class="col col-3">
             <label>C&oacute;digo</label>
             <label class="input">
@@ -19,6 +19,16 @@
                 <span asp-validation-for="Codigo" class="text-danger"></span>
             </label>
         </section>
+        <section class="col col-9">
+            <label>Alias</label>
+            <label class="input">
+                <input maxlength="5" asp-for="AliasConcepto" class="form-control" />
+                <span asp-validation-for="AliasConcepto" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+    <div class="row">
         <section class="col col-9">
             <label>Descripci&oacute;n</label>
             <label class="input">

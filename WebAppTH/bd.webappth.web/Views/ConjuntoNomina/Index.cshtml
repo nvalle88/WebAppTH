@@ -37,6 +37,9 @@
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Codigo)
                                         </th>
                                         <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().AliasConcepto)
+                                        </th>
+                                        <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
                                         </th>
                                         <th>
@@ -47,21 +50,24 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TipoConjuntoNomina.Descripcion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Codigo)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdConjunto },new {onclick="cargando();" }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdConjunto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoConjuntoNomina.Descripcion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Codigo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AliasConcepto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdConjunto }, new { onclick = "cargando();" }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdConjunto }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

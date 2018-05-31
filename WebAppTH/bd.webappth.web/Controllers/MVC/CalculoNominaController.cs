@@ -55,6 +55,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        public async Task<IActionResult> CalcularDetalleNomina(int id)
+        {
+
+            var calculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
+            var response = await apiServicio.ObtenerElementoAsync1<Response>(calculoNomina, new Uri(WebApp.BaseAddress)
+                                                                      , "api/CalculoNomina/CalcularDetalleNomina");
+            return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+        }
+
         public async Task<IActionResult> ReportadoNomina(string id)
         {
             try
