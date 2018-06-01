@@ -75,6 +75,7 @@ namespace bd.webappth.web
             services.AddSingleton<IMenuServicio, MenuServicio>();
             services.AddSingleton<IConstantesNomina, ConstanteNominaServicio>();
             services.AddSingleton<IFuncionesNomina, FuncionesNominaServicio>();
+            services.AddSingleton<IConjuntoNomina, ConjuntoNominaServicio>();
 
             services.AddSingleton<IAuthorizationHandler, RolesHandler>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
