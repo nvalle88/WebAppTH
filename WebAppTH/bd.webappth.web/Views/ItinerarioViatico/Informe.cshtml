@@ -301,7 +301,7 @@
                                             </td>
 
                                             <td>
-                                                @if (Model.SolicitudViatico.Estado == 2)
+                                                @if (Model.SolicitudViatico.Estado == 3)
                                                 {
                                                     <text>
                                                         @Html.ActionLink("Editar", "EditInforme", new { id = item.IdInformeViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico }) |
@@ -407,7 +407,7 @@
                                                         </td>
 
                                                         <td>
-                                                            @if (Model.SolicitudViatico.Estado == 2)
+                                                            @if (Model.SolicitudViatico.Estado == 3)
                                                             {
                                                                 <text>
                                                                     @Html.ActionLink("Editar", "Edit", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico }, new { onclick = "espera()" }) |

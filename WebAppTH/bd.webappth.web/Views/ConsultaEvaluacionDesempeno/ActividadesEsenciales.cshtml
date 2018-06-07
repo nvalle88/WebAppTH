@@ -1,0 +1,204 @@
+@model List<bd.webappth.entidades.ViewModels.ActividadesEsencialesPorEval001ViewModel>
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+
+@{await Html.RenderPartialAsync("_PartialViewMenu");}
+
+@{
+    ViewData["Title"] = "Actividades esenciales";
+}
+
+@{
+    Double suma = 0;
+}
+
+<div id="content">
+
+    <div class="row">
+
+        <article class="col-sm-12 col-md-12 col-lg-12">
+
+            <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                    <h2>Actividades</h2>
+                </header>
+
+                <div>
+
+                    <div class="widget-body no-padding">
+
+                        <div class="row">
+
+                            <section class="col col-lg-12">
+                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th data-hide="phone">
+                                                Actividades
+                                            </th>
+                                            <th data-hide="phone">
+                                                Indicadores
+                                            </th>
+                                            <th data-hide="phone">
+                                                Meta periodo evaluado
+                                            </th>
+                                            <th data-hide="phone">
+                                                Cumplidos
+                                            </th>
+                                            <th data-hide="phone">
+                                                % Cumplimiento
+                                            </th>
+                                            <th data-hide="phone">
+                                                Nivel cumplimiento
+                                            </th>
+
+
+
+                                        </tr>
+                                    </thead>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(model => item.NombreActividadEsencial)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.NombreIndicador)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.MetaPeriodo)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.ActividadesCumplidas)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.PorcentajeCumplimiento)
+                                                @{
+                                                    suma = suma + Convert.ToDouble(item.PorcentajeCumplimiento);
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.NivelCumplimiento)
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </table>
+                            </section>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <section class="col col-lg-6">
+                            <label class="input col col-lg-12">
+                                &iquest; A mas de cumplimiento de la totalidad de metas y objetivos se adelant&oacute;
+                                y cumpli&oacute; con objetivos y metas previstas para el siguiente per&iacute;odo de evaluaci&oacute;n
+                            </label>
+                        </section>
+
+                        <section class="col col-lg-3">
+
+                            <label class="input col col-lg-12">
+                                Aplica el + 4 %
+                            </label>
+
+                            <label class="input col col-lg-12">
+
+                                <label class="input">
+                                    <select style="width:100px;" onChange="habilitarAumento()" id="aumento" disabled>
+
+                                        @if (Model.FirstOrDefault().Aumento > 0)
+                                        {
+                                            <option id="si" value="true">SI</option>
+                                        }
+                                        else
+                                        {
+
+                                            <option id="no" value="false">NO</option>
+                                        }
+
+                                    </select>
+                                </label>
+
+                            </label>
+
+                        </section>
+
+                        <section class="col col-lg-3">
+
+                            <label class="input"> % de aumento</label>
+
+                            <div class="col col-lg-12">
+                                <label class="input">
+                                    @(Model.FirstOrDefault().Aumento)
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">&nbsp;</div>
+
+                    <div class="row">
+
+                        <section class="col col-lg-12">
+
+                            <label class="col col-lg-3">
+                                <label class="input">
+                                    Total actividades esenciales:
+                                </label>
+                            </label>
+
+                            <label class="col col-lg-3">
+                                <label class="input">
+                                    @(suma)
+                                </label>
+                            </label>
+
+                        </section>
+
+                    </div>
+
+                    <div class="row">&nbsp;</div>
+
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+
+@section Scripts {
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
+
+    <script>
+        $("#btn_1").css("background-color", "#3276b1");
+        $("#btn_1").css("color", "white");
+
+    </script>
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    
+    <script type="text/javascript">
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+    </script>
+
+}

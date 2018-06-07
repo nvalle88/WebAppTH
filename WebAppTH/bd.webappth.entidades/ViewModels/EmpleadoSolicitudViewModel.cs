@@ -11,7 +11,10 @@ namespace bd.webappth.entidades.ViewModels
         public string Identificacion { get; set; }
         [Display(Name = "Revisado")]
         public bool Aprobado { get; set; }
+
+        [Display(Name = "Solicitudes nuevas?")]
         public bool HaSolicitado { get; set; }
+
         public int IdEmpleado { get; set; }
     }
 }

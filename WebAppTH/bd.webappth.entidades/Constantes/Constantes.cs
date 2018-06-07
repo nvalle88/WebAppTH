@@ -37,7 +37,7 @@ namespace bd.webappth.entidades.Constantes
 
 
         /// <summary>
-        /// Constantes para las secciones de la configutración de la nómina 
+        /// Constantes para las secciones de la configuración de la nómina 
         /// Conceptos 
         /// </summary>
         public const string idConceptoNominaSession = "idConceptoNominaSession";
@@ -69,5 +69,10 @@ namespace bd.webappth.entidades.Constantes
         /// Variables de sección para calculo de Nomina 
         /// </summary>
         public const string IdCalculoNominaSession = "IdCalculoNominaSession";
+
+        /// <summary>
+        /// Variables de sección para Capacitaciones
+        /// </summary>
+        public const string IdCapacitacionSession = "IdCapacitacionSession";
     }
 }

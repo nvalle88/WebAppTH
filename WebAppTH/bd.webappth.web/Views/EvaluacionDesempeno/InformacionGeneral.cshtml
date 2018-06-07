@@ -109,21 +109,17 @@
                                         </section>
                                         <section class="col col-3">
                                             <label>Desde:</label>
-                                            <div class="form-group">
-                                                <label class="input-group">
-                                                    <input asp-for="Desde"  readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy'>
+                                                <label class="input">
+                                                    <input maxlength="250" asp-for="Desde" type="text" readonly="readonly" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true' />
+                                                    <span asp-validation-for="Desde" class="text-danger"></span>
                                                 </label>
-                                                <span asp-validation-for="Desde" class="text-danger"></span>
-                                            </div>
                                         </section>
                                         <section class="col col-3">
                                             <label>Hasta:</label>
-                                            <div class="form-group">
-                                                <label class="input-group">
-                                                    <input asp-for="Hasta"  readonly="readonly" class=" form-control datepicker" data-dateformat='dd/mm/yy'>
+                                                <label class="input">
+                                                    <input maxlength="250" asp-for="Hasta" type="text" readonly="readonly" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true' />
+                                                    <span asp-validation-for="Hasta" class="text-danger"></span>
                                                 </label>
-                                                <span asp-validation-for="Hasta" class="text-danger"></span>
-                                            </div>
                                         </section>
                                     </div>
                                 </fieldset>

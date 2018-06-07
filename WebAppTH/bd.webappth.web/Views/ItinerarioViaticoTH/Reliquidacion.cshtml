@@ -36,7 +36,7 @@
         <button type="button" asp-action="Index" asp-route-IdSolicitudViatico="@Model.SolicitudViatico.IdSolicitudViatico" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-arrow-left"></i>
-            </span>Atras
+            </span>Regresar
         </button>
     </a>
     <!-- widget grid -->
@@ -146,17 +146,30 @@
                     </section>*@
             </article>
         </div>
-            <div class="row">
-                <section class="col col-lg-12">
-                    <label class="label"></label>
-                    <div class="form-group">
-                        <label>Informe de actividades y productos alcanzados:</label>
-                        <textarea maxlength="250" class="form-control" asp-for="Descripcion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Descripcion)"></textarea>
-                        <span asp-validation-for="Descripcion" class="text-danger"></span>
-                    </div>
-                </section>
-            </div>
-       
+        <div class="row">
+            <section class="col col-lg-12">
+                <label class="label"></label>
+                <div class="form-group">
+                    <label>Informe de actividades y productos alcanzados:</label>
+                    <textarea maxlength="250" class="form-control" asp-for="Descripcion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Descripcion)"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            @if (Model.SolicitudViatico.Estado == 4)
+            {
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <a asp-action="CreateReliquidacion">
+                        <button type="button" asp-action="CreateReliquidacion" class="btn btn-labeled btn-default">
+                            <span class="btn-label">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </span>Nuevo
+                        </button>
+                    </a>
+                </article>
+            }
+        </div>
 
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -261,142 +274,68 @@
                                             </td>
                                         </tr>
                                     }
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
 
-                                    <!-- end widget content -->
-                                </div>
-                                <!-- end widget div -->
-                            </div>
-
-                        </article>
-                        <!-- WIDGET END -->
+                        <!-- end widget content -->
                     </div>
+                    <!-- end widget div -->
+                </div>
 
-                    @*<div class="row">
-                        @if (Model.SolicitudViatico.Estado == 4)
-                        {
-                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <a asp-action="Create" asp-controller="FacturaViatico" asp-route-IdSolicitudViatico="@Model.SolicitudViatico.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico">
-                                    <button type="button" asp-action="Create" asp-controller="FacturaViatico" asp-route-IdSolicitudViatico="@Model.SolicitudViatico.IdSolicitudViatico" class="btn btn-labeled btn-default">
-                                        <span class="btn-label">
-                                            <i class="glyphicon glyphicon-plus"></i>
-                                        </span>Nuevo
-                                    </button>
-                                </a>
-                            </article>
-                        }
-                    </div>
-                    <br />
-                    <div class="row">
-                        <!-- NEW WIDGET START -->
-                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <!-- Widget ID (each widget will need unique ID)-->
-                            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                                <!-- widget options:
-                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                                data-widget-colorbutton="false"
-                                data-widget-editbutton="false"
-                                data-widget-togglebutton="false"
-                                data-widget-deletebutton="false"
-                                data-widget-fullscreenbutton="false"
-                                data-widget-custombutton="false"
-                                data-widget-collapsed="true"
-                                data-widget-sortable="false"
-
-                                -->
-                                <header id="table">
-                                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                                    <h2>Facturas</h2>
-                                </header>
-                                <!-- widget div-->
-                                <div>
-                                    <!-- widget edit box -->
-                                    <div class="jarviswidget-editbox">
-                                        <!-- This area used as dropdown edit box -->
-                                    </div>
-                                    <!-- end widget edit box -->
-                                    <!-- widget content -->
-                                    <div class="widget-body no-padding">
-                                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-
-                                                <tr>
-                                                    <th data-class="expand">
-                                                        @Html.DisplayNameFor(model => model.FacturaViatico.FirstOrDefault().NumeroFactura)
-                                                    </th>
-
-                                                    <th data-class="expand">
-                                                        @Html.DisplayNameFor(model => model.FacturaViatico.FirstOrDefault().FechaFactura)
-                                                    </th>
-
-                                                    <th data-class="expand">
-                                                        @Html.DisplayNameFor(model => model.FacturaViatico.FirstOrDefault().ValorTotalFactura)
-                                                    </th>
-
-                                                    <th>Opciones</th>
-                                                </tr>
-
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in Model.FacturaViatico)
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.NumeroFactura)
-                                                        </td>
-
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.FechaFactura)
-                                                        </td>
-
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.ValorTotalFactura)
-                                                        </td>
-
-                                                        <td>
-                                                            @if (Model.SolicitudViatico.Estado == 4)
-                                                            {
-                                                                <text>
-                                                                    @Html.ActionLink("Editar", "Edit", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico }, new { onclick = "espera()" }) |
-                                                                    @Html.ActionLink("Eliminar", "Delete", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico, IdItinerarioViatico = Model.IdItinerarioViatico }, new { onclick = "return confirm('Desea eliminar el registro ?');" }) |
-                                                                </text>
-                                                            }
-                                                            @if (item.Url != null)
-                                                            {
-                                                                @Html.ActionLink("Descargar", "Download", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico, IdItinerarioViatico = Model.IdItinerarioViatico })
-
-                                                            }
+            </article>
+            <!-- WIDGET END -->
+        </div>
 
 
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- end widget content -->
-                                </div>
-                                <!-- end widget div -->
-                            </div>
+        <div class="row">
+            @if (Model.SolicitudViatico.Estado == 4)
+            {
+            <form id="wizard-1" asp-action="FinalizarReliquidacion" novalidate="novalidate">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="IdSolicitudViatico" />
+                <input type="hidden" asp-for="IdItinerarioViatico" />
+                <input type="hidden" asp-for="ReliquidacionViatico.FirstOrDefault().IdEmpleado" value="@Model.ListaEmpleadoViewModel.IdEmpleado" />
+                <input type="hidden" asp-for="ReliquidacionViatico.FirstOrDefault().ValorRequlidacion" value="@Model.ValorReliquidacion" />
+                <input type="hidden" asp-for="ReliquidacionViatico.FirstOrDefault().ValorTotalRequlidacion" value="@Model.ValorTotalReliquidacion" />
+                <div class="row col col-lg-12">
+                    <section class="col col-lg-6">
+                        <div class="form-group">
+                            <label>Partida Presupuestaria:</label>
+                            <select asp-for="ReliquidacionViatico.FirstOrDefault().IdPresupuesto" class="form-control input" asp-items="ViewBag.IdPresupuesto" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                <option value="0" selected="" disabled="">Seleccione</option>
+                            </select>
+                        </div>
+                    </section>
+                    <section class="col col-lg-6">
+                        <div class="form-group">
+                            <label>Valor reliquidacion:</label>
+                            <input asp-for="ValorReliquidacion" disabled="disabled" type="text" class="form-control">
+                        </div>
+                    </section>
+                </div>
+                <div class="row col col-lg-12">
+                    <section class="col col-lg-11">
+                        &nbsp;
+                    </section>
 
-                        </article>
-                        <!-- WIDGET END -->
-                    </div>*@
-
-                    
-                    <!-- end row -->
-                    <!-- end row -->
-                </section>
-                <!-- end widget grid -->
-            </div>
-            <!-- END MAIN CONTENT -->
-
-            @section Scripts {
-                <script src='~/js/datatables/init.js'></script>
+                    <section class="col col-lg-1">
+                        <label class="label"></label>
+                        <div class="form-group">
+                            <input type="submit" value="Finalizar" class="btn btn-primary" />
+                        </div>
+                    </section>
+                </div>
+            </form>
             }
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
 
-
-
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+}

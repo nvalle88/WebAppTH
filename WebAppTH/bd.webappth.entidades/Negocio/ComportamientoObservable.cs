@@ -25,10 +25,12 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Denominación de la competencia:")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int? IdDenominacionCompetencia { get; set; }
+        public virtual ICollection<EvaluacionCompetenciasTecnicasPuesto> EvaluacionCompetenciasTecnicasPuesto { get; set; }
+        public virtual ICollection<EvaluacionCompetenciasUniversales> EvaluacionCompetenciasUniversales { get; set; }
+        public virtual ICollection<EvaluacionTrabajoEquipoIniciativaLiderazgo> EvaluacionTrabajoEquipoIniciativaLiderazgo { get; set; }
+        public virtual ICollection<IndiceOcupacionalComportamientoObservable> IndiceOcupacionalComportamientoObservable { get; set; }
         public virtual DenominacionCompetencia DenominacionCompetencia { get; set; }
 
-
-        public virtual ICollection<IndiceOcupacionalComportamientoObservable> IndiceOcupacionalComportamientoObservable { get; set; }
 
   
     }

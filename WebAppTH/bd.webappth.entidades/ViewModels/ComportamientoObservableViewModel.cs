@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bd.webappth.entidades.Negocio;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -24,5 +25,6 @@ namespace bd.webappth.entidades.ViewModels
         public string DefinicionDenominacionCompetencia { get; set; }
 
         public bool CompetenciaTecnicaDenominacionCompetencia { get; set; }
+        public List<TrabajoEquipoIniciativaLiderazgo> LIstaTrabajoEquipoIniciativaLiderazgo { get; set; }
     }
 }

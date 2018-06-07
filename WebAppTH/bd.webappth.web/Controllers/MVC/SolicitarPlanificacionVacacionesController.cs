@@ -12,6 +12,9 @@ using bd.log.guardar.ObjectTranfer;
 using bd.log.guardar.Enumeradores;
 using bd.webappseguridad.entidades.Enumeradores;
 using System.Security.Claims;
+using bd.webappth.entidades.ViewModels;
+using bd.webappth.servicios.Extensores;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -25,95 +28,122 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-        private void InicializarMensaje(string mensaje)
-        {
-            if (mensaje == null)
-            {
-                mensaje = "";
-            }
-            ViewData["Error"] = mensaje;
-        }
 
-        public async Task<IActionResult> Create(string mensaje)
+        public async Task<IActionResult> Index()
         {
-            InicializarMensaje(mensaje);
-            return View();
-        }
+            
+            var lista = new List<SolicitudPlanificacionVacacionesViewModel>();
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SolicitudPlanificacionVacaciones solicitudPlanificacionVacaciones)
-        {
-            if (ModelState.IsValid)
-            {
-                InicializarMensaje(null);
-                return View(solicitudPlanificacionVacaciones);
-            }
-            Response response = new Response();
             try
             {
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-                var empleadoJson = ObtenerEmpleadoLogueado(NombreUsuario);
-                //var empleado = JsonConvert.DeserializeObject<Empleado>(empleadoJson.ToString());
-                solicitudPlanificacionVacaciones.IdEmpleado = empleadoJson.Result.IdEmpleado;
-                solicitudPlanificacionVacaciones.FechaSolicitud = DateTime.Now;
-                response = await apiServicio.InsertarAsync(solicitudPlanificacionVacaciones,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/SolicitudPlanificacionVacaciones/InsertarSolicitudPlanificacionVacaciones");
-                if (response.IsSuccess)
+
+                if (claim.IsAuthenticated == true)
                 {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un Solicitud Planificación Vacaciones",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Solicitud Planificación Vacaciones:", solicitudPlanificacionVacaciones.IdSolicitudPlanificacionVacaciones),
-                    });
+                    var enviar = new IdFiltrosViewModel { NombreUsuario = NombreUsuario};
 
-                    return RedirectToAction("Index");
+                    lista = await apiServicio.Listar<SolicitudPlanificacionVacacionesViewModel>(
+                        enviar,
+                        new Uri(WebApp.BaseAddress),
+                        "api/SolicitudPlanificacionVacaciones/ListarSolicitudesPlanificacionesVacaciones");
+
+                    return View(lista);
+
                 }
 
-                ViewData["Error"] = response.Message;
-                //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
-                return View(solicitudPlanificacionVacaciones);
+                return RedirectToAction("Login", "Login");
 
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
 
                 return BadRequest();
             }
         }
 
+        
+        public async Task<IActionResult> Create()
+        {
+            try {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var enviar = new IdFiltrosViewModel { NombreUsuario = NombreUsuario };
+
+                    var modelo = await apiServicio.ObtenerElementoAsync1<SolicitudPlanificacionVacacionesViewModel>(
+                        enviar,
+                        new Uri(WebApp.BaseAddress),
+                        "api/SolicitudPlanificacionVacaciones/CrearSolicitudesPlanificacionesVacaciones");
+
+                    return View(modelo);
+
+                }
+
+                return RedirectToAction("Login", "Login");
+
+            } catch (Exception ex)
+            {
+                return BadRequest();
+            }
+            
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(SolicitudPlanificacionVacacionesViewModel modelo)
+        {
+            
+            try {
+                var response = await apiServicio.EditarAsync<Response>(
+                    modelo,
+                    new Uri(WebApp.BaseAddress),
+                    "api/SolicitudPlanificacionVacaciones/InsertarSolicitudPlanificacionVacaciones"
+                    );
+
+                if (response.IsSuccess) {
+
+                    return this.Redireccionar(
+                            "SolicitarPlanificacionVacaciones",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
+                }
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+                return View(modelo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+
+
+        
         public async Task<IActionResult> Edit(string id)
         {
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/SolicitudPlanificacionVacaciones");
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                        id,
+                        new Uri(WebApp.BaseAddress),
+                        "api/SolicitudPlanificacionVacaciones/ObtenerSolicitudPlanificacionVacacionesViewModel");
 
-
-                    respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudPlanificacionVacaciones>(respuesta.Resultado.ToString());
-                    ViewData["FechaDesde"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+                    
                     if (respuesta.IsSuccess)
                     {
-                        InicializarMensaje(null);
+                        respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudPlanificacionVacacionesViewModel>(respuesta.Resultado.ToString());
+
                         return View(respuesta.Resultado);
                     }
 
@@ -125,97 +155,274 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 return BadRequest();
             }
+            
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(SolicitudPlanificacionVacacionesViewModel modelo)
+        {
+
+            try
+            {
+                var response = await apiServicio.EditarAsync<Response>(
+                    modelo,
+                    new Uri(WebApp.BaseAddress),
+                    "api/SolicitudPlanificacionVacaciones/EditarSolicitudPlanificacionVacaciones"
+                    );
+
+                if (response.IsSuccess)
+                {
+
+                    return this.Redireccionar(
+                            "SolicitarPlanificacionVacaciones",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
+                }
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+                return View(modelo);
+
+
+            }
+            catch (Exception ex)
+            {
+                
+                return BadRequest();
+            }
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, SolicitudPlanificacionVacaciones solicitudPlanificacionVacaciones)
+
+        public async Task<IActionResult> IndexJefe()
         {
-            Response response = new Response();
+
+            var modelo = new DependenciaDatosViewModel();
+
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(
+                        NombreUsuario,
+                        new Uri(WebApp.BaseAddress),
+                        "api/Empleados/EmpleadoSegunNombreUsuario");
+
+                    if (empleado.EsJefe == true)
+                    {
+
+                        var enviar = new IdFiltrosViewModel { NombreUsuario = NombreUsuario };
+
+                        modelo = await apiServicio.ObtenerElementoAsync1<DependenciaDatosViewModel>(
+                            enviar,
+                            new Uri(WebApp.BaseAddress),
+                            "api/Dependencias/ObtenerDependenciaDatosViewModelPorUsuarioActual");
+
+                        return View(modelo);
+                    }
+
+                    return this.Redireccionar(
+                            "SolicitarPlanificacionVacaciones",
+                            "Index",
+                            $"{Mensaje.Informacion}|{Mensaje.AccesoNoAutorizado}"
+                         );
+
+
+                }
+
+                return RedirectToAction("Login", "Login");
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> ConsultarDependencia(int id)
+        {
+
+            var modelo = new DependenciaDatosViewModel();
+
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(
+                        NombreUsuario,
+                        new Uri(WebApp.BaseAddress),
+                        "api/Empleados/EmpleadoSegunNombreUsuario");
+
+                    if (empleado.EsJefe == true)
+                    {
+
+                        var enviar = new IdFiltrosViewModel { IdDependencia = id };
+
+                        modelo = await apiServicio.ObtenerElementoAsync1<DependenciaDatosViewModel>(
+                            enviar,
+                            new Uri(WebApp.BaseAddress),
+                            "api/Dependencias/ObtenerDependenciaDatosViewModelPorIdDependencia");
+
+                        return View(modelo);
+                    }
+
+                    return this.Redireccionar(
+                            "SolicitarPlanificacionVacaciones",
+                            "Index",
+                            $"{Mensaje.Informacion}|{Mensaje.AccesoNoAutorizado}"
+                         );
+
+
+                }
+
+                return RedirectToAction("Login", "Login");
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> Solicitudes(int id)
+        {
+
+            try
+            {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var enviar = new IdFiltrosViewModel { NombreUsuario = NombreUsuario, IdEmpleado = id };
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                        enviar,
+                        new Uri(WebApp.BaseAddress),
+                        "api/SolicitudPlanificacionVacaciones/ObtenerListaSolicitudPlanificacionVacacionesViewModelPorEmpleado");
+
+                    if (respuesta.IsSuccess)
+                    {
+                        var lista = JsonConvert.DeserializeObject<List<SolicitudPlanificacionVacacionesViewModel>>(respuesta.Resultado.ToString());
+
+                        return View(lista);
+                    }
+
+                    return this.Redireccionar(
+                            "SolicitarPlanificacionVacaciones",
+                            "Index",
+                            $"{Mensaje.Aviso}|{respuesta.Message}"
+                         );
+                }
+
+                return RedirectToAction("Login", "Login");
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+
+        public async Task<IActionResult> Aprobar(string id)
+        {
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    solicitudPlanificacionVacaciones.FechaSolicitud = DateTime.Now;
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                        id,
+                        new Uri(WebApp.BaseAddress),
+                        "api/SolicitudPlanificacionVacaciones/ObtenerSolicitudPlanificacionVacacionesViewModel");
 
-                    response = await apiServicio.EditarAsync(id, solicitudPlanificacionVacaciones, new Uri(WebApp.BaseAddress),
-                                                                 "api/SolicitudPlanificacionVacaciones");
 
-                    if (response.IsSuccess)
+                    if (respuesta.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Solicitud Planificación Vacaciones", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un Solicitud Planificación Vacaciones",
-                            UserName = "Usuario 1"
-                        });
+                        respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudPlanificacionVacacionesViewModel>(respuesta.Resultado.ToString());
 
-                        return RedirectToAction("Index");
+                        await CargarCombosAprobador();
+
+                        return View(respuesta.Resultado);
                     }
-                    ViewData["Error"] = response.Message;
-                    //ViewData["IdBrigadaSSO"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
-                    return View(solicitudPlanificacionVacaciones);
 
                 }
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
 
                 return BadRequest();
             }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
         }
 
-
-        public async Task<IActionResult> Index()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Aprobar(SolicitudPlanificacionVacacionesViewModel modelo)
         {
 
-            var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-            var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-            var empleadoJson = ObtenerEmpleadoLogueado(NombreUsuario);
-            var idEmpleado = empleadoJson.Result.IdEmpleado;
-
-            var empleado = new Empleado()
-            {
-                IdEmpleado = idEmpleado
-            };
-
-            var lista = new List<SolicitudPlanificacionVacaciones>();
             try
             {
-                lista = await apiServicio.Listar<SolicitudPlanificacionVacaciones>(empleado, new Uri(WebApp.BaseAddress)
-                                                                    , "api/SolicitudPlanificacionVacaciones/ListarSolicitudesPlanificacionesVacaciones");
-                InicializarMensaje(null);
-                return View(lista);
+                var response = await apiServicio.EditarAsync<Response>(
+                    modelo,
+                    new Uri(WebApp.BaseAddress),
+                    "api/SolicitudPlanificacionVacaciones/AprobarSolicitudPlanificacionVacaciones"
+                    );
+
+                if (response.IsSuccess)
+                {
+
+                    return this.Redireccionar(
+                            "SolicitarPlanificacionVacaciones",
+                            "Solicitudes",
+                           new { id = modelo.DatosBasicosEmpleadoViewModel.IdEmpleado },
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
+                }
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+                return View(modelo);
+
+
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando Solicitud Planificación Vacaciones",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+
                 return BadRequest();
             }
         }
 
+
+        public async Task CargarCombosAprobador()
+        {
+
+            //** Estados de aprobación vacaciones
+            var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/SolicitudPlanificacionVacaciones/ListarEstadosAprobador");
+
+            ViewData["IdListaEstado"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+            
+        }
+
+
+
+        /*
         public async Task<IActionResult> Delete(string id)
         {
 
@@ -254,23 +461,9 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+        */
 
-        public async Task<Empleado> ObtenerEmpleadoLogueado(string nombreUsuario)
-        {
-            try
-            {
-                var empleado = new Empleado
-                {
-                    NombreUsuario = nombreUsuario,
-                };
-                var usuariologueado = await apiServicio.ObtenerElementoAsync1<Empleado>(empleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerEmpleadoLogueado");
-                return usuariologueado;
-            }
-            catch (Exception)
-            {
-                return new Empleado();
-            }
 
-        }
+
     }
 }
