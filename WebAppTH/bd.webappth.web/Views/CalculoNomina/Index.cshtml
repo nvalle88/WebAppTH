@@ -81,7 +81,8 @@
                                                 @Html.DisplayFor(modelItem => item.EmpleadoPasivo)
                                             </td>
                                             <td>
-                                                @Html.ActionLink(" Calcular nómina", "CalcularDetalleNomina", new { id = item.IdCalculoNomina })|
+                                                @Html.ActionLink(" Calcular nómina", "CalcularDetalleNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
+                                                @Html.ActionLink(" Ver reporte", "ReporteNomina", "Report", new { idNomina = item.IdCalculoNomina }, new { onclick = "cargando();" })|
                                                 @Html.ActionLink(" Descargar archivo", "Download", new { id = item.IdCalculoNomina })|
                                                 @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
                                                 @Html.ActionLink(" Cargar reportados", "ReportadoNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
