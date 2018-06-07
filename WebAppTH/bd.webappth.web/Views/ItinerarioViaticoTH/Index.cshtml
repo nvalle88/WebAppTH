@@ -212,9 +212,9 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().Valor)
                                         </th>
-                                        <th>
+                                        @*<th>
                                             @Html.DisplayNameFor(model => model.ItinerarioViatico.FirstOrDefault().Descripcion)
-                                        </th>
+                                        </th>*@
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -235,9 +235,9 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Valor)
                                             </td>
-                                            <td>
+                                            @*<td>
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>
+                                            </td>*@
 
                                             <td>
                                                 @if (Model.SolicitudViatico.Estado == 0)
@@ -257,7 +257,14 @@
                                                 @if (Model.Reliquidacion == 1)
                                                 {
                                                     <text>
-                                                        @Html.ActionLink("Reliquidacion", "Reliquidacion", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico })
+                                                        @Html.ActionLink("Reliquidacion a Favor", "Reliquidacion", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico })
+
+                                                    </text>
+                                                }
+                                                @if (Model.Reliquidacion == -1)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink("Reliquidacion Encontra", "Reliquidacion", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico })
 
                                                     </text>
                                                 }

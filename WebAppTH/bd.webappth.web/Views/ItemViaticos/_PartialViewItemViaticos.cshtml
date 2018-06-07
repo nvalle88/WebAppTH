@@ -8,6 +8,14 @@
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </label>
         </section>
+        <section class="col col-2">
+            <label class="label">@Html.DisplayNameFor(model => model.Reliquidacion)</label>
+            <label class="checkbox">
+                <input type="checkbox" asp-for="Reliquidacion" />
+                <input type="hidden" name="Automatico" value="false" checked="checked" />
+                <i></i>
+            </label>
+        </section>
     </div>
-
+    
 </fieldset>

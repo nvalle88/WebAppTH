@@ -58,21 +58,28 @@ namespace bd.webappth.web.Controllers.MVC
                 InicializarMensaje(null);
                 return View(itinerarioViatico);
             }
+            var solicitudViatico = new SolicitudViatico
+            {
+                IdSolicitudViatico = itinerarioViatico.IdSolicitudViatico
+            };
             Response response = new Response();
 
             try
             {
+                var solicitud = await apiServicio.ObtenerElementoAsync1<SolicitudViatico>(solicitudViatico, new Uri(WebApp.BaseAddress)
+                                                                  , "api/SolicitudViaticos/ListarSolicitudesViaticosPorId");
+
+                itinerarioViatico.FechaDesde = solicitud.FechaSalida;
+                itinerarioViatico.HoraSalida = solicitud.HoraSalida;
+                itinerarioViatico.FechaHasta = solicitud.FechaLlegada;
+                itinerarioViatico.HoraLlegada = solicitud.HoraLlegada;
+
+
                 response = await apiServicio.InsertarAsync(itinerarioViatico,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/ItinerarioViatico/InsertarItinerarioViatico");
                 if (response.IsSuccess)
                 {
-
-                    var solicitudViatico = new SolicitudViatico
-                    {
-                        IdSolicitudViatico = itinerarioViatico.IdSolicitudViatico
-                    };
-
                     response = await apiServicio.InsertarAsync(solicitudViatico, new Uri(WebApp.BaseAddress),
                                                                 "api/SolicitudViaticos/ActualizarValorTotalViatico");
 
@@ -169,29 +176,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        //public async Task<IActionResult> Informe(int IdItinerario, string mensaje)
-        //{
 
-        //    var informe = new InformeViatico()
-        //    {
-        //        IdItinerarioViatico = IdItinerario
-
-        //    };
-        //    var lista = new List<InformeViatico>();
-        //    try
-        //    {
-        //        lista = await apiServicio.Listar<InformeViatico>(informe, new Uri(WebApp.BaseAddress)
-        //                                                            , "api/InformeViaticos/ListarInformeViaticos");
-        //        HttpContext.Session.SetInt32(Constantes.IdItinerario, IdItinerario);
-
-        //        InicializarMensaje(null);
-        //        return View(lista);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
         public async Task<IActionResult> Informe(int IdSolicitudViatico, int IdItinerarioViatico, string mensaje)
         {
 
@@ -616,8 +601,6 @@ namespace bd.webappth.web.Controllers.MVC
                             var ciudad = JsonConvert.DeserializeObject<Ciudad>(respuestaCiudad.Resultado.ToString());
 
 
-
-                            // ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
                             ViewData["Pais"] = pais.Nombre;
                             ViewData["Provincia"] = provincia.Nombre;
                             ViewData["Ciudad"] = ciudad.Nombre;
@@ -625,7 +608,6 @@ namespace bd.webappth.web.Controllers.MVC
                             return View(solicitudViaticoViewModel);
                         }
                     }
-                    //return RedirectToAction("Index", new { mensaje = respuestaEmpleado.Message });
                 }
                 return BadRequest();
             }
@@ -648,7 +630,8 @@ namespace bd.webappth.web.Controllers.MVC
                     return this.RedireccionarMensajeTime("ItinerarioViaticoTH", "Reliquidacion", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico, IdItinerarioViatico = reliquidacionViatico.IdItinerarioViatico }, $"{Mensaje.Error}|{"El valor supera al valor total de la reliquidacion"}|{"25000"}");
 
                 }
-                if(reliquidacionViatico.ValorTotalRequlidacion < reliquidacionViatico.ValorRequlidacion) {
+                if (reliquidacionViatico.ValorTotalRequlidacion < reliquidacionViatico.ValorRequlidacion)
+                {
                     return this.RedireccionarMensajeTime("ItinerarioViaticoTH", "Reliquidacion", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico, IdItinerarioViatico = reliquidacionViatico.IdItinerarioViatico }, $"{Mensaje.Error}|{"El valor es inferior al valor de la reliquidacion"}|{"25000"}");
                 }
                 var presupuesto = new Presupuesto
@@ -666,7 +649,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     Presupuesto = presupuesto,
                     Valor = reliquidacionViatico.ValorTotalRequlidacion,
-                    SolicitudViatico = solicitudViatico                    
+                    SolicitudViatico = solicitudViatico
                 };
 
                 response = await apiServicio.ObtenerElementoAsync1<Response>(solicitudViaticoViewModel, new Uri(WebApp.BaseAddress),
@@ -814,7 +797,7 @@ namespace bd.webappth.web.Controllers.MVC
                             ///Informe
                             var informeViatico = new InformeViatico
                             {
-                                IdItinerarioViatico = lista.FirstOrDefault().IdItinerarioViatico
+                                IdItinerarioViatico = IdItinerarioViatico
                             };
 
                             var listaintforme = await apiServicio.ObtenerElementoAsync1<List<InformeViatico>>(informeViatico, new Uri(WebApp.BaseAddress)
@@ -825,7 +808,7 @@ namespace bd.webappth.web.Controllers.MVC
                             ///total facturas
                             var facturas = new FacturaViatico()
                             {
-                                IdItinerarioViatico = lista.FirstOrDefault().IdItinerarioViatico
+                                IdItinerarioViatico = IdItinerarioViatico
 
                             };
                             var listaFacruras = await apiServicio.Listar<FacturaViatico>(facturas, new Uri(WebApp.BaseAddress)
@@ -838,10 +821,6 @@ namespace bd.webappth.web.Controllers.MVC
                             var ValorReliquidacion = calculos(Convert.ToDecimal(valortotaInforme), valortotalfacturas, valorCalculo, valortotalVIaticos);
 
 
-                            //if ((listaFacruras.Count() > 0 || listaintforme.Count > 0) && sol.Estado == 4)
-                            //{
-
-                            //}
 
                             HttpContext.Session.SetInt32(Constantes.IdItinerario, IdItinerarioViatico);
                             HttpContext.Session.SetInt32(Constantes.IdSolicitudtinerario, IdSolicitudViatico);
@@ -913,6 +892,7 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
             ViewData["IdCiudadDestino"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
             ViewData["IdCiudadOrigen"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
+            ViewData["IdItemViatico"] = new SelectList(await apiServicio.Listar<ItemViatico>(new Uri(WebApp.BaseAddress), "api/ItemViaticos/ListarItemViaticosConReliquidacion"), "IdItemViatico", "Descripcion");
             var itinerarioViatico = new ReliquidacionViatico
             {
                 IdItinerarioViatico = Convert.ToInt32(idIrininario),
@@ -1039,36 +1019,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
             var solicitudViaticoViewModel = new SolicitudViaticoViewModel();
 
-            decimal ValorReportado = 0;
-            int estado = 0;
 
-
-            if (valortotaInforme == valortotalfacturas)
-            {
-                ValorReportado = Convert.ToDecimal(valortotalfacturas);
-            }
-            if (valortotaInforme > valortotalfacturas)
-            {
-                ValorReportado = Convert.ToDecimal(valortotaInforme - valortotalfacturas);
-            }
-            if (valortotaInforme < valortotalfacturas)
-            {
-                ValorReportado = Convert.ToDecimal(valortotalfacturas - valortotaInforme);
-            }
-            ///  
-            if (ValorReportado >= valorCalculo && ValorReportado <= valortotalVIaticos)
+            if (valorCalculo >= valortotaInforme && valorCalculo >= valortotalfacturas)
             {
                 solicitudViaticoViewModel.Reliquidacion = 0;
             }
-            if (ValorReportado <= valorCalculo)
+            else if (valortotalfacturas > valortotaInforme)
             {
-                solicitudViaticoViewModel.Valor = valorCalculo - ValorReportado;
                 solicitudViaticoViewModel.Reliquidacion = 1;
+                solicitudViaticoViewModel.Valor = valortotalfacturas - valortotaInforme;
             }
-            if (ValorReportado > valortotalVIaticos)
+            else if (valortotaInforme < valorCalculo && valortotalfacturas < valorCalculo)
             {
-                solicitudViaticoViewModel.Valor = ValorReportado - valortotalVIaticos;
-                solicitudViaticoViewModel.Reliquidacion = 2;
+                solicitudViaticoViewModel.Reliquidacion = -1;
+                solicitudViaticoViewModel.Valor = valortotalfacturas - valortotaInforme;
             }
 
             return solicitudViaticoViewModel;

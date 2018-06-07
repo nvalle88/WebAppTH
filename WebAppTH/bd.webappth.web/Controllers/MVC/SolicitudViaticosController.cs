@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -325,61 +326,55 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SolicitudViaticoViewModel solicitudViaticoViewModel)
         {
-            if (ModelState.IsValid)
-            {
-                InicializarMensaje(null);
-                return View(solicitudViaticoViewModel);
-            }
-            Response response = new Response();
             try
             {
-
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-                var empleado = await ObtenerEmpleado(NombreUsuario);
-
-                solicitudViaticoViewModel.SolicitudViatico.IdEmpleado = empleado.IdEmpleado;
-                solicitudViaticoViewModel.SolicitudViatico.IdConfiguracionViatico = empleado.IdConfiguracionViatico;
-                solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud = DateTime.Now.Date;
-
-                response = await apiServicio.InsertarAsync(solicitudViaticoViewModel,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/SolicitudViaticos/InsertarSolicitudViatico");
-
-                var respuesta = JsonConvert.DeserializeObject<SolicitudViatico>(response.Resultado.ToString());
-
-                if (response.IsSuccess)
+                Response response = new Response();
+                var lista = new List<TipoViatico>();
+                if (solicitudViaticoViewModel.SolicitudViatico.FechaSalida <= solicitudViaticoViewModel.SolicitudViatico.FechaLlegada)
                 {
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                    if (ModelState.IsValid)
                     {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un solicitud viático",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Solicitud Viático:", solicitudViaticoViewModel.SolicitudViatico.IdSolicitudViatico),
-                    });
+                        InicializarMensaje(null);
+                        return View(solicitudViaticoViewModel);
+                    }
+                    
+                    var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+                    var empleado = await ObtenerEmpleado(NombreUsuario);
 
-                    return RedirectToAction("Create","ItinerarioViatico", new { IdSolicitudViatico=respuesta.IdSolicitudViatico });
+                    solicitudViaticoViewModel.SolicitudViatico.IdEmpleado = empleado.IdEmpleado;
+                    solicitudViaticoViewModel.SolicitudViatico.IdConfiguracionViatico = empleado.IdConfiguracionViatico;
+                    solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud = DateTime.Now.Date;
+
+                    response = await apiServicio.InsertarAsync(solicitudViaticoViewModel,
+                                                                 new Uri(WebApp.BaseAddress),
+                                                                 "api/SolicitudViaticos/InsertarSolicitudViatico");
+                    if (response.IsSuccess)
+                    {
+                        var respuesta = JsonConvert.DeserializeObject<SolicitudViatico>(response.Resultado.ToString());                    
+                        return RedirectToAction("Create", "ItinerarioViatico", new { IdSolicitudViatico = respuesta.IdSolicitudViatico });
+                    }
+                    
+                    lista = await apiServicio.Listar<TipoViatico>(new Uri(WebApp.BaseAddress)
+                                                                           , "api/TiposDeViatico/ListarTiposDeViatico");
+                    solicitudViaticoViewModel.ListaTipoViatico = lista;
+                    await CargarCombos();
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                    return View(solicitudViaticoViewModel);
+
+
                 }
-
-                ViewData["Error"] = response.Message;
+                lista = new List<TipoViatico>();
+                await CargarCombos();
+                lista = await apiServicio.Listar<TipoViatico>(new Uri(WebApp.BaseAddress)
+                                                                       , "api/TiposDeViatico/ListarTiposDeViatico");
+                solicitudViaticoViewModel.ListaTipoViatico = lista;
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{"Fechas Incorrectas"}";
                 return View(solicitudViaticoViewModel);
-
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Solicitud Viático",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
+
 
                 return BadRequest();
             }
@@ -410,7 +405,7 @@ namespace bd.webappth.web.Controllers.MVC
                             IdSolicitudViatico = Convert.ToInt32(id)
                         };
 
-                        listaSolicitudTiposViaticos = await apiServicio.ObtenerElementoAsync1<List<SolicitudTipoViatico>>(solicitudTipoViatico,new Uri(WebApp.BaseAddress)
+                        listaSolicitudTiposViaticos = await apiServicio.ObtenerElementoAsync1<List<SolicitudTipoViatico>>(solicitudTipoViatico, new Uri(WebApp.BaseAddress)
                                                                               , "api/TiposDeViatico/ListarSolicitudesTiposViaticos");
 
                         var SolicitudViaticoViewModel = new SolicitudViaticoViewModel
@@ -436,8 +431,8 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<ListaEmpleadoViewModel> ObtenerEmpleado(string nombreUsuario)
         {
-         
-           
+
+
 
             try
             {
@@ -454,7 +449,7 @@ namespace bd.webappth.web.Controllers.MVC
                     //respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudViatico>(respuesta.Resultado.ToString());
                     //if (respuesta.IsSuccess)
                     //{
-                        return empleado;
+                    return empleado;
                     //}
 
                 }
@@ -542,29 +537,40 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
-                
-                    response = await apiServicio.InsertarAsync(solicitudViaticoViewModel, new Uri(WebApp.BaseAddress),
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+                var empleado = await ObtenerEmpleado(NombreUsuario);
+
+                var soli = new SolicitudViatico
+                {
+                    Estado = solicitudViaticoViewModel.SolicitudViatico.Estado,
+                    IdSolicitudViatico = solicitudViaticoViewModel.SolicitudViatico.IdSolicitudViatico,
+                    IdEmpleadoAprobador = empleado.IdEmpleado
+                };
+
+                response = await apiServicio.InsertarAsync(soli, new Uri(WebApp.BaseAddress),
                                                                  "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
 
-                    if (response.IsSuccess)
+                if (response.IsSuccess)
+                {
+                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", solicitudViaticoViewModel.SolicitudViatico.IdSolicitudViatico),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un solicitud viático",
-                            UserName = "Usuario 1"
-                        });
+                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                        EntityID = string.Format("{0} : {1}", "Sistema", solicitudViaticoViewModel.SolicitudViatico.IdSolicitudViatico),
+                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
+                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
+                        Message = "Se ha actualizado un solicitud viático",
+                        UserName = "Usuario 1"
+                    });
 
-                        return RedirectToAction("DetalleSolicitudViaticos", new { id = solicitudViaticoViewModel.SolicitudViatico.IdEmpleado });
-                    }
-                    ViewData["Error"] = response.Message;
-                    return View(solicitudViaticoViewModel);
+                    return RedirectToAction("DetalleSolicitudViaticos", new { id = solicitudViaticoViewModel.SolicitudViatico.IdEmpleado });
+                }
+                ViewData["Error"] = response.Message;
+                return View(solicitudViaticoViewModel);
 
-                
-                
+
+
             }
             catch (Exception ex)
             {
@@ -639,8 +645,9 @@ namespace bd.webappth.web.Controllers.MVC
                     });
                     return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
-                // return BadRequest();
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}", "Index");
+                //return RedirectToAction("Index", new { mensaje = response.Message });
+                
             }
             catch (Exception ex)
             {

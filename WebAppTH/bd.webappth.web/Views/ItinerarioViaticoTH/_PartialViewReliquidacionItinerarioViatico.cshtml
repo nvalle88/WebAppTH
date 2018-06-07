@@ -13,7 +13,7 @@
                 <div class="row">
                     <article class="col-lg-12">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <label>Tipo de transporte:</label>
                                 <div class="form-group">
                                     <select id="IdTipoTransporte" asp-for="IdTipoTransporte" class="form-control input " asp-items="ViewBag.IdTipoTransporte" data-msg-required='El campo es requerido' data-rule-required='true'>
@@ -21,71 +21,52 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Nombre Trasporte:</label>
-                                    <input  asp-for="NombreTransporte" type="text" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                    <input asp-for="NombreTransporte" type="text" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true'>
                                     <span asp-validation-for="NombreTransporte" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Fecha de salida:</label>
-                                    <input id="FechaSalida" asp-for="FechaSalida" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
-                                    <span asp-validation-for="FechaSalida" class="text-danger"></span>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Hora de salida:</label>
-                                    <input type="time" asp-for="HoraSalida" class="form-control input  " data-msg-required='El campo es requerido' data-rule-required='true'>
-                                    <span asp-validation-for="HoraSalida" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Fecha de llegada:</label>
-                                    <input id="FechaLlegada" asp-for="FechaLlegada" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
-                                    <span asp-validation-for="FechaLlegada" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Hora de llegada:</label>
-                                    <input type="time" asp-for="HoraLlegada" class="form-control input  " data-msg-required='El campo es requerido' data-rule-required='true'>
-                                    <span asp-validation-for="HoraLlegada" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <section class="col col-lg-4">
-                                <div class="form-group">
-                                    <label>Valor:</label>
-                                    <input id="Valor" asp-for="ValorEstimado" class="form-control input " placeholder="Valor" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                    <span asp-validation-for="ValorEstimado" class="text-danger"></span>
-                                </div>
-                            </section>
-                            <section class="col col-lg-4">
+                            <section class="col col-lg-6">
                                 <label>Ciudad de Origen:</label>
                                 <div class="form-group">
-                                    <select  asp-for="IdCiudadDestino" class="form-control input" asp-items="ViewBag.IdCiudadDestino" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                    <select asp-for="IdCiudadDestino" class="form-control input" asp-items="ViewBag.IdCiudadDestino" data-msg-required='El campo es requerido' data-rule-required='true'>
                                         <option value="0" selected="" disabled="">Seleccione</option>
                                     </select>
                                 </div>
                             </section>
-                            <section class="col col-lg-4">
+                            <section class="col col-lg-6">
                                 <label>Ciudad de Destino:</label>
                                 <div class="form-group">
-                                    <select  asp-for="IdCiudadOrigen" class="form-control input" asp-items="ViewBag.IdCiudadOrigen" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                    <select asp-for="IdCiudadOrigen" class="form-control input" asp-items="ViewBag.IdCiudadOrigen" data-msg-required='El campo es requerido' data-rule-required='true'>
                                         <option value="0" selected="" disabled="">Seleccione</option>
                                     </select>
                                 </div>
                             </section>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Viatico:</label>
+                                <div class="form-group">
+                                    <select id="IdTipoTransporte" asp-for="IdTipoTransporte" class="form-control input " asp-items="ViewBag.IdItemViatico" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                        <option value="0" selected="" disabled="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Valor:</label>
+                                    <input id="Valor" asp-for="ValorEstimado" type="number" class="form-control input " placeholder="Valor" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                    <span asp-validation-for="ValorEstimado" class="text-danger"></span>
+                                </div>
+
+                            </div>
                         </div>
                     </article>
                 </div>
             </div>
+        </div>
     </div>
-</div>

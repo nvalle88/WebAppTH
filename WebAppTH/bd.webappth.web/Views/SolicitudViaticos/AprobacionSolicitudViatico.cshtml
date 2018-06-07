@@ -124,14 +124,14 @@
                                                 <div class="form-group">
                                                     <label>Fecha de llegada:</label>
                                                     <input asp-for="SolicitudViatico.FechaLlegada" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label>Hora de llegada:</label>
                                                     <input class="form-control" asp-for="SolicitudViatico.HoraLlegada" disabled="disabled" id="timepicker2" type="text" placeholder="Seleccione la hora">
-                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <section>
@@ -139,16 +139,16 @@
                                             <div class="form-group">
                                                 <label>Descripci&oacute;n de las actividades a ejecutarse:</label>
                                                 <textarea maxlength="250" class="form-control" asp-for="SolicitudViatico.Descripcion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Descripcion)"></textarea>
-                                                    <span asp-validation-for="SolicitudViatico.Descripcion" class="text-danger"></span>
-                                                </div>
+                                                <span asp-validation-for="SolicitudViatico.Descripcion" class="text-danger"></span>
+                                            </div>
                                         </section>
                                         <section>
                                             <label class="label"></label>
                                             <div class="form-group">
                                                 <label>Observaci&oacute;n:</label>
                                                 <textarea maxlength="250" class="form-control" asp-for="SolicitudViatico.Observacion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Observacion)"></textarea>
-                                                    <span asp-validation-for="SolicitudViatico.Observacion" class="text-danger"></span>
-                                                </div>
+                                                <span asp-validation-for="SolicitudViatico.Observacion" class="text-danger"></span>
+                                            </div>
                                         </section>
                                     </article>
 
@@ -244,34 +244,7 @@
                                     </section>
                                     <!-- end widget grid -->
                                 </div>
-                                @*<div class="row">
-                                    <article class="col-lg-12">
-                                        <legend>Datos para transferencia</legend>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="checkbox">
-                                                        <label>&iquest; Cuenta de Ahorros ?</label>
-                                                        <input type="checkbox" disabled="disabled" asp-for="ListaEmpleadoViewModel.TipoCuenta" class="form-control" />
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label>No. de Cuenta:</label>
-                                                        <input asp-for="ListaEmpleadoViewModel.NoCuenta" disabled="disabled" class="form-control input " placeholder="No. de Cuenta" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                    </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label>Nombre del Banco:</label>
-                                                    <input asp-for="ListaEmpleadoViewModel.InstitucionBancaria" disabled="disabled" class="form-control input " placeholder="Instituci&oacute;n Bancaria" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>*@
+                              
                                 <br />
                                 <div class="row">
 

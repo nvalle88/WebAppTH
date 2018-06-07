@@ -17,6 +17,7 @@ namespace bd.webappth.entidades.ViewModels
         public ReliquidacionViatico ReliquidacionViatico { get; set; }
         public Decimal Valor { get; set; }
         public int Reliquidacion { get; set; }
+        public int IdEmpleadoAprobador { get; set; }
 
     }
 }
