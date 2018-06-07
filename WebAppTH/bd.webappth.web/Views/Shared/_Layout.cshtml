@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     @RenderSection("css", false)
+
 </head>
 <body class="@ViewBag.PageClass @Settings.Value.CurrentTheme">
     <header id="header">
@@ -57,6 +58,7 @@
     @{ await Html.RenderPartialAsync("_Scripts"); }
     @{RenderSection("Scripts", required: false);}
     @*@Html.PageScripts()*@
+
 
 </body>
 </html>

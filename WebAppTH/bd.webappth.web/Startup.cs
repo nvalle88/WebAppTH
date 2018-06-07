@@ -48,7 +48,7 @@ namespace bd.webappth.web
 
 
             var appSettings = Configuration.GetSection("AppSettings");
-
+            //services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
 
@@ -85,6 +85,7 @@ namespace bd.webappth.web
             services.AddSingleton<IMenuServicio, MenuServicio>();
             services.AddSingleton<IConstantesNomina, ConstanteNominaServicio>();
             services.AddSingleton<IFuncionesNomina, FuncionesNominaServicio>();
+            services.AddSingleton<IConjuntoNomina, ConjuntoNominaServicio>();
 
             services.AddSingleton<IAuthorizationHandler, RolesHandler>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -104,6 +105,23 @@ namespace bd.webappth.web
 
 
             WebApp.BaseAddressWebAppLogin = Configuration.GetSection("HostWebAppLogin").Value;
+
+            ///Configuración del servidor de roportes
+            ///--------------------------------------
+            ReportConfig.DefaultNetworkCredentials = Convert.ToBoolean(Configuration.GetSection("DefaultNetworkCredentials").Value);
+
+            if (!ReportConfig.DefaultNetworkCredentials)
+            {
+                ReportConfig.UserName = Configuration.GetSection("UserNameReport").Value;
+                ReportConfig.Password = Configuration.GetSection("PasswordReport").Value;
+                ReportConfig.CustomDomain = Configuration.GetSection("CustomDomain").Value;
+            }
+            ReportConfig.ReportServerUrl = Configuration.GetSection("ReportServerUrl").Value;
+            ReportConfig.ReportFolderPath = Configuration.GetSection("ReportFolderPath").Value;
+
+            ///--------------------------------------
+
+
             WebApp.NombreAplicacion = Configuration.GetSection("NombreAplicacion").Value;
 
             WebApp.BaseAddress = Configuration.GetSection("HostServiciosTalentoHumano").Value;

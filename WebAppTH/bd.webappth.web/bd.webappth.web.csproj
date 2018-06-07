@@ -16,15 +16,19 @@
     <Compile Remove="Controllers\API\**" />
     <Compile Remove="Views - Copia\**" />
     <Compile Remove="Views\CapacitacionesProveedores}\**" />
+    <Compile Remove="Views\Reportes\**" />
     <Content Remove="Controllers\API\**" />
     <Content Remove="Views - Copia\**" />
     <Content Remove="Views\CapacitacionesProveedores}\**" />
+    <Content Remove="Views\Reportes\**" />
     <EmbeddedResource Remove="Controllers\API\**" />
     <EmbeddedResource Remove="Views - Copia\**" />
     <EmbeddedResource Remove="Views\CapacitacionesProveedores}\**" />
+    <EmbeddedResource Remove="Views\Reportes\**" />
     <None Remove="Controllers\API\**" />
     <None Remove="Views - Copia\**" />
     <None Remove="Views\CapacitacionesProveedores}\**" />
+    <None Remove="Views\Reportes\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -91,6 +95,7 @@
     <Folder Include="wwwroot\DocumentoCapacitacion\Reportados\" />
     <Folder Include="wwwroot\DocumentoNomina\Reportados\" />
     <Folder Include="wwwroot\js\datatables\" />
+    <Folder Include="wwwroot\lib\jquery-report\dist\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\FondoFinanciamiento\Create.cshtml" />
@@ -98,6 +103,7 @@
     <None Include="Views\FondoFinanciamiento\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AlanJuden.MvcReportViewer.NetCore\AlanJuden.MvcReportViewer.NetCore.csproj" />
     <ProjectReference Include="..\bd.sw.externos\bd.sw.externos.csproj" />
     <ProjectReference Include="..\bd.webappth.entidades\bd.webappth.entidades.csproj" />
     <ProjectReference Include="..\bd.webappth.servicios\bd.webappth.servicios.csproj" />

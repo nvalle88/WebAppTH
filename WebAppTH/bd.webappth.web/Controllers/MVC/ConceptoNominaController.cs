@@ -283,14 +283,14 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Formula(ConceptoNomina ConceptoNomina)
         {
-            var validacion =await ValidarFormulaGuardar(ConceptoNomina.FormulaCalculo);
+            //var validacion =await ValidarFormulaGuardar(ConceptoNomina.FormulaCalculo);
 
-            if (validacion==false)
-            {
-                this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.FormulaNominaInvalida}";
-                // ModelState.AddModelError("FormulaCalculo", "Debe ingresar la fórmula de cálculo");
-                return View(ConceptoNomina);
-            }
+            //if (validacion==false)
+            //{
+            //    this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.FormulaNominaInvalida}";
+            //    // ModelState.AddModelError("FormulaCalculo", "Debe ingresar la fórmula de cálculo");
+            //    return View(ConceptoNomina);
+            //}
             if (string.IsNullOrEmpty(ConceptoNomina.FormulaCalculo))
             {
                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.FaltaIngresoDatos}" ;

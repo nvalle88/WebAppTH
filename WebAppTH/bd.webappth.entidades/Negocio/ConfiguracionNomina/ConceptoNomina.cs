@@ -42,7 +42,12 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Abreviatura")]
         public string Abreviatura { get; set; }
-        
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Prioridad")]
+        [Range(1,int.MaxValue,ErrorMessage ="La {0} no puede ser menor que {1} ni mayor que {2}")]
+        public int Prioridad { get; set; }
+
         public string FormulaCalculo { get; set; }
 
         public virtual ICollection<ConceptoConjuntoNomina> ConceptoConjuntoNomina { get; set; }
