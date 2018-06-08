@@ -83,6 +83,9 @@ namespace bd.webappth.web.Controllers.MVC
                         ViewData["FechaSolicitud"] = a.FechaSolicitud;
                         ViewData["NombresApellidos"] = empleado.NombreApellido;
                         ViewData["Identificacion"] = empleado.Identificacion;
+
+                        await CargarCombos();
+
                         return View(a);
                     }
 
@@ -197,6 +200,19 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
+                if (
+                    solicitudVacaciones.RequiereReemplazo == true 
+                    && solicitudVacaciones.IdEmpleadoReemplazo < 1
+                    )
+                {
+                    return this.Redireccionar(
+                            "SolicitudVacaciones",
+                            "AprobacionSolicitudVacacion",
+                            new { id = solicitudVacaciones.IdSolicitudVacaciones},
+                            $"{Mensaje.Error}|{Mensaje.EscogerEmpleadoReemplazo}"
+                         );
+                }
+
                 solicitudVacaciones.FechaRespuesta = DateTime.Now;
                 response = await apiServicio.EditarAsync(solicitudVacaciones.IdEmpleado.ToString(), solicitudVacaciones, new Uri(WebApp.BaseAddress),"api/SolicitudVacaciones");
 
@@ -217,6 +233,31 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 return BadRequest();
             }
+        }
+
+
+        public async Task CargarCombos()
+        {
+            var listaEmpleados = new List<DatosBasicosEmpleadoViewModel>();
+
+            var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+            if (claim.IsAuthenticated == true)
+            {
+                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                var enviar = new IdFiltrosViewModel { NombreUsuario = NombreUsuario };
+
+                listaEmpleados = await apiServicio.Listar<DatosBasicosEmpleadoViewModel>(enviar, new Uri(WebApp.BaseAddress), "api/Empleados/ListarMisEmpleados");
+
+                foreach (var item in listaEmpleados)
+                {
+                    item.Nombres = item.Nombres + " " + item.Apellidos;
+                }
+            }
+
+            ViewData["EmpleadoReemplazo"] = new SelectList(listaEmpleados, "IdEmpleado", "Nombres");
+
         }
 
 

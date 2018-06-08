@@ -2,7 +2,9 @@ namespace bd.webappth.entidades.Negocio
 {
     using bd.webappth.entidades.Utils;
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class AccionPersonal
     {
@@ -49,6 +51,9 @@ namespace bd.webappth.entidades.Negocio
 
         public int Estado { get; set; }
 
+        public bool Bloquear { get; set; }
+        public bool Ejecutado { get; set; }
+
         //Referencias a tablas
 
         [Display(Name = "Empleado")]
@@ -59,9 +64,15 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdTipoAccionPersonal { get; set; }
 
+        [NotMapped]
+        public string NombreUsuario { get; set; }
+
         //Propiedades Virtuales
         public virtual Empleado Empleado { get; set; }
 
         public virtual TipoAccionPersonal TipoAccionPersonal { get; set; }
+
+        public virtual ICollection<EmpleadoMovimiento> EmpleadoMovimiento { get; set; }
+        public virtual ICollection<AprobacionAccionPersonal> AprobacionAccionPersonal { get; set; }
     }
 }

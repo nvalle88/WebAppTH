@@ -70,10 +70,22 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Cambio de estado")]
         public int IdEstadoTipoAccionPersonal { get; set; }
 
+        public int MesesMaximo { get; set; }
+        public int YearsMaximo { get; set; }
+        public bool DesactivarCargo { get; set; }
+        public bool Definitivo { get; set; }
+        public bool DesactivarEmpleado { get; set; }
+        public bool ModalidadContratacion { get; set; }
+
         public virtual EstadoTipoAccionPersonal EstadoTipoAccionPersonal { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 
         public virtual ICollection<AccionPersonal> AccionPersonal { get; set; }
+        
+        public virtual ICollection<FlujoAprobacion> FlujoAprobacion { get; set; }
+
+        public virtual ICollection<PieFirma> PieFirma { get; set; }
+
     }
 }

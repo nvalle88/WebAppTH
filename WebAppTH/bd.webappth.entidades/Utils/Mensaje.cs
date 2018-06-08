@@ -48,6 +48,7 @@ namespace bd.webappth.entidades.Utils
 
         public static string SeleccioneIndice { get { return "Debe seleccionar un índice en: situación propuesta."; } }
         public static string SeleccioneSolicitudPlanificacionVacaciones { get { return "Seleccione una solicitud de planificacion"; } }
+        public static string MotivoSolicitudVacacionNoPlanificada { get { return "Escriba un motivo"; } }
 
         public static string ConceptoNoExiste { get { return "El concepto no existe."; } }
         public static string EmpleadoNoExiste { get { return "Identificación del empleado no existe."; } }
@@ -64,5 +65,7 @@ namespace bd.webappth.entidades.Utils
         public static string AccesoNoAutorizado { get { return "No tiene los permisos necesarios para acceder a este sitio"; } }
 
         public static string SessionCaducada { get { return "La sesión ha caducado, ha sido devuelto a la página principal del proceso"; } }
+
+        public static string EscogerEmpleadoReemplazo { get { return "Seleccione un reemplazo"; } }
     }
 }

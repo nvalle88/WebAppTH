@@ -38,5 +38,14 @@ namespace bd.webappth.entidades.ViewModels
         public bool ModificaDistributivo { get; set; }
 
         public int IdEstadoTipoAccionPersonal { get; set; }
+        
+
+        public int MesesMaximo { get; set; }
+        public int YearsMaximo { get; set; }
+        public bool DesactivarCargo { get; set; }
+        public bool Definitivo { get; set; }
+        public bool DesactivarEmpleado { get; set; }
+        public bool ModalidadContratacion { get; set; }
+
     }
 }

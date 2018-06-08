@@ -44,8 +44,14 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "¿Contemplado en Plan de Vacaciones?")]
         public bool PlanAnual { get; set; }
 
+        [Display(Name = "Empleado reemplazo")]
+        public int? IdEmpleadoReemplazo { get; set; }
+
         [NotMapped]
         public int DiasVacaciones { get; set; }
+
+        [Display(Name = "Requiere reemplazo")]
+        public bool RequiereReemplazo { get; set; }
 
         //Propiedades Virtuales Referencias a otras clases
 
