@@ -17,6 +17,15 @@ namespace bd.webappth.web.Controllers.MVC
             string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath,"RepNomina&IdCalculoNomina=", Convert.ToString(id));
             return Redirect(url);
         }
+        public ActionResult ReporteSolicitudPagoReliquidacion(int idReliquidacionViatico)
+        {
+            var model = this.GetReportViewerModel(Request);
+            model.ReportPath = ReportPath("RepSolicitudPagoReliquidacion");
+            model.AddParameter("IdReliquidacionViatico", Convert.ToString(idReliquidacionViatico));
+            //model.AddParameter("Parameter2", namedParameter2);
+
+            return View("ReportViewer", model);
+        }
     }
 }
 

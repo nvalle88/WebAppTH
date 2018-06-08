@@ -17,5 +17,6 @@ namespace bd.webappth.entidades.Negocio
         //Propiedades Virtuales Referencias a otras clases
 
         public virtual ICollection<FacturaViatico> FacturaViatico { get; set; }
+        public virtual ICollection<ReliquidacionViatico> ReliquidacionViatico { get; set; }
     }
 }

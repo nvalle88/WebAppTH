@@ -824,6 +824,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                             HttpContext.Session.SetInt32(Constantes.IdItinerario, IdItinerarioViatico);
                             HttpContext.Session.SetInt32(Constantes.IdSolicitudtinerario, IdSolicitudViatico);
+                            HttpContext.Session.SetInt32(Constantes.ValorReliquidacion, Convert.ToInt32(ValorReliquidacion.Valor));
 
                             //busca las actividades del informe
                             var actividades = new InformeViatico
@@ -852,6 +853,7 @@ namespace bd.webappth.web.Controllers.MVC
                                 IdSolicitudViatico = sol.IdSolicitudViatico,
                                 Descripcion = descri,
                                 ValorReliquidacion = ValorReliquidacion.Valor,
+                                EstadoReliquidacion = ValorReliquidacion.Reliquidacion,
                                 ValorTotalReliquidacion = Convert.ToDecimal(valortotaReliquidacion)
                             };
 
@@ -889,6 +891,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             var idIrininario = HttpContext.Session.GetInt32(Constantes.IdItinerario);
             var IdSolicitudtinerario = HttpContext.Session.GetInt32(Constantes.IdSolicitudtinerario);
+            var ValorRequlidacion = HttpContext.Session.GetInt32(Constantes.ValorReliquidacion);
             ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
             ViewData["IdCiudadDestino"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
             ViewData["IdCiudadOrigen"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
@@ -896,8 +899,8 @@ namespace bd.webappth.web.Controllers.MVC
             var itinerarioViatico = new ReliquidacionViatico
             {
                 IdItinerarioViatico = Convert.ToInt32(idIrininario),
-                IdSolicitudViatico = Convert.ToInt32(IdSolicitudtinerario)
-
+                IdSolicitudViatico = Convert.ToInt32(IdSolicitudtinerario),
+                ValorRequlidacion = Convert.ToInt32(ValorRequlidacion)
             };
             InicializarMensaje(null);
             return View(itinerarioViatico);
@@ -907,22 +910,42 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateReliquidacion(ReliquidacionViatico reliquidacionViatico)
         {
-            Response response = new Response();
-
             try
             {
-                response = await apiServicio.InsertarAsync(reliquidacionViatico,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/ReliquidacionViaticos/InsertarReliquidacionViatico");
-                if (response.IsSuccess)
+                if (reliquidacionViatico.ValorRequlidacion == reliquidacionViatico.ValorEstimado)
                 {
-                    return RedirectToAction("Reliquidacion", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico, IdItinerarioViatico = reliquidacionViatico.IdItinerarioViatico });
-                }
 
+                    Response response = new Response();
+                    var solicitudViatico = new SolicitudViatico
+                    {
+                        IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico
+                    };
+
+
+                    var solicitud = await apiServicio.ObtenerElementoAsync1<SolicitudViatico>(solicitudViatico, new Uri(WebApp.BaseAddress)
+                                                                      , "api/SolicitudViaticos/ListarSolicitudesViaticosPorId");
+                    if (solicitud != null)
+                    {
+                        reliquidacionViatico.FechaSalida = solicitud.FechaSalida;
+                        reliquidacionViatico.HoraSalida = solicitud.HoraSalida;
+                        reliquidacionViatico.FechaLlegada = solicitud.FechaLlegada;
+                        reliquidacionViatico.HoraLlegada = solicitud.HoraLlegada;
+
+                        response = await apiServicio.InsertarAsync(reliquidacionViatico,
+                                                                     new Uri(WebApp.BaseAddress),
+                                                                     "api/ReliquidacionViaticos/InsertarReliquidacionViatico");
+                        if (response.IsSuccess)
+                        {
+                            return RedirectToAction("Reliquidacion", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico, IdItinerarioViatico = reliquidacionViatico.IdItinerarioViatico });
+                        }
+                    }
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}";
+                }
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{"El valor ingresado es incorrecto al valor de la reliquidacion"}";
                 ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
                 ViewData["IdCiudadDestino"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
                 ViewData["IdCiudadOrigen"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
-                ViewData["Error"] = response.Message;
+                ViewData["IdItemViatico"] = new SelectList(await apiServicio.Listar<ItemViatico>(new Uri(WebApp.BaseAddress), "api/ItemViaticos/ListarItemViaticosConReliquidacion"), "IdItemViatico", "Descripcion");
                 return View(reliquidacionViatico);
             }
             catch (Exception ex)

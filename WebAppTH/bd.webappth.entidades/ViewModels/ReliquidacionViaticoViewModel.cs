@@ -17,6 +17,7 @@ namespace bd.webappth.entidades.ViewModels
         public string Descripcion { get; set; }
         public decimal ValorReliquidacion { get; set; }
         public decimal ValorTotalReliquidacion { get; set; }
+        public decimal EstadoReliquidacion { get; set; }
         //public List<String> ViaticosSeleccionados { get; set; }
     }
 }
