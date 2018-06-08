@@ -52,6 +52,15 @@ namespace bd.webappth.web.Controllers.MVC
 
             return View("ReportViewer", model);
         }
+        public ActionResult ReporteSolicitudPagoReliquidacion(int idReliquidacionViatico)
+        {
+            var model = this.GetReportViewerModel(Request);
+            model.ReportPath = ReportPath("RepSolicitudPagoReliquidacion");
+            model.AddParameter("IdReliquidacionViatico", Convert.ToString(idReliquidacionViatico));
+            //model.AddParameter("Parameter2", namedParameter2);
+
+            return View("ReportViewer", model);
+        }
     }
 }
 

@@ -274,8 +274,8 @@
                                                 @if (Model.EstadoReliquidacion == 1)
                                                 {
                                                     <text>
-                                                        @Html.ActionLink("Solicitud Pago", "EditReliquidacion", new { id = item.IdReliquidacionViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico })
-                                                        
+                                                        @Html.ActionLink("Solicitud Pago", "ReporteSolicitudPagoReliquidacion", "Report", new { idReliquidacionViatico = item.IdReliquidacionViatico }, new { onclick = "cargando();" })
+
                                                     </text>
                                                 }
                                             </td>
