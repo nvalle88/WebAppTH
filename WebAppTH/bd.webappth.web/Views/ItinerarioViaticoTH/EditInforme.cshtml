@@ -57,17 +57,16 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-
-                            <form id="wizard-1" asp-action="EditInforme" novalidate="novalidate">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="IdItinerarioViatico" />
-                                <input type="hidden" asp-for="IdInformeViatico" />
-                                @{await Html.RenderPartialAsync("_PartialViewInformeItinerarioViatico");}
-                                <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Informe" asp-route-IdItinerario="@Model.IdItinerarioViatico" class="btn btn-default">Cancelar</a>
-                                </footer>
-                            </form>
+                            <form asp-action="EditInforme" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="IdItinerarioViatico" />
+                                    <input type="hidden" asp-for="IdInformeViatico" />
+                                    @{await Html.RenderPartialAsync("_PartialViewInformeItinerarioViatico");}
+                                    <footer>
+                                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                                        <a asp-action="Informe" asp-route-IdItinerario="@Model.IdItinerarioViatico" class="btn btn-default">Cancelar</a>
+                                    </footer>
+                                </form>
                         </div>
                         <!-- end widget content -->
                     </div>

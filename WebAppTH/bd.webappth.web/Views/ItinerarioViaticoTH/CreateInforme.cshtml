@@ -56,16 +56,15 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-
-                            <form id="wizard-1" asp-action="CreateInforme" novalidate="novalidate">
-                                <input type="hidden" asp-for="IdItinerarioViatico" />
-                                <input type="hidden" asp-for="IdSolicitudViatico" />
-                                @{await Html.RenderPartialAsync("_PartialViewInformeItinerarioViatico", Model);}
-                                <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Informe"  asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico"  class="btn btn-default">Cancelar</a>
-                                </footer>
-                            </form>
+                            <form asp-action="CreateInforme" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                    <input type="hidden" asp-for="IdItinerarioViatico" />
+                                    <input type="hidden" asp-for="IdSolicitudViatico" />
+                                    @{await Html.RenderPartialAsync("_PartialViewInformeItinerarioViatico", Model);}
+                                    <footer>
+                                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                                        <a asp-action="Informe" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico" class="btn btn-default">Cancelar</a>
+                                    </footer>
+                                </form>
                         </div>
                         <!-- end widget content -->
                     </div>

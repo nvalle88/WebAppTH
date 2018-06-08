@@ -93,10 +93,6 @@ namespace bd.webappth.web
 
 
 
-            
-
-         
-
             services.AddMvc().Services.AddAuthorization(options=>
             {
                 options.AddPolicy("EstaAutorizado",
