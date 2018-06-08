@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bd.webappth.servicios", "bd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bd.webappth.entidades", "bd.webappth.entidades\bd.webappth.entidades.csproj", "{87DCEF31-74E2-4974-A7AF-B05D4E9C2B77}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlanJuden.MvcReportViewer.NetCore", "AlanJuden.MvcReportViewer.NetCore\AlanJuden.MvcReportViewer.NetCore.csproj", "{308A1DB4-0586-4279-BA33-6E8B1586254F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bd.sw.externos", "bd.sw.externos\bd.sw.externos.csproj", "{EE22D8B9-5437-4457-84FD-251EC7C3A656}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{87DCEF31-74E2-4974-A7AF-B05D4E9C2B77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87DCEF31-74E2-4974-A7AF-B05D4E9C2B77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87DCEF31-74E2-4974-A7AF-B05D4E9C2B77}.Release|Any CPU.Build.0 = Release|Any CPU
-		{308A1DB4-0586-4279-BA33-6E8B1586254F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{308A1DB4-0586-4279-BA33-6E8B1586254F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{308A1DB4-0586-4279-BA33-6E8B1586254F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{308A1DB4-0586-4279-BA33-6E8B1586254F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE22D8B9-5437-4457-84FD-251EC7C3A656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE22D8B9-5437-4457-84FD-251EC7C3A656}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE22D8B9-5437-4457-84FD-251EC7C3A656}.Release|Any CPU.ActiveCfg = Release|Any CPU

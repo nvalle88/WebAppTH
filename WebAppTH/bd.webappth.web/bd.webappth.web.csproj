@@ -103,7 +103,6 @@
     <None Include="Views\FondoFinanciamiento\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AlanJuden.MvcReportViewer.NetCore\AlanJuden.MvcReportViewer.NetCore.csproj" />
     <ProjectReference Include="..\bd.sw.externos\bd.sw.externos.csproj" />
     <ProjectReference Include="..\bd.webappth.entidades\bd.webappth.entidades.csproj" />
     <ProjectReference Include="..\bd.webappth.servicios\bd.webappth.servicios.csproj" />

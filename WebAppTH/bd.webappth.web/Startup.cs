@@ -147,7 +147,7 @@ namespace bd.webappth.web
                 RequestCultureProviders = new List<IRequestCultureProvider> { }
             });
 
-            //app.UseExceptionHandler("/Home/Error");
+            app.UseExceptionHandler("/Home/Error");
            
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -165,27 +165,27 @@ namespace bd.webappth.web
             Log.Logger = logger;
             loggerFactory.AddSerilog();
 
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //    app.UseBrowserLink();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
 
 
-            //    using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-            //    .CreateScope())
-            //    {
-                    
-            //        //serviceScope.ServiceProvider.GetService<LogDbContext>()
-            //        //         .Database.Migrate();
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+                {
 
-            //       // serviceScope.ServiceProvider.GetService<InicializacionServico>().InicializacionAsync();
-            //    }
+                    //serviceScope.ServiceProvider.GetService<LogDbContext>()
+                    //         .Database.Migrate();
 
-            //}
-            //else
-            //{
-                
-            //}
+                    // serviceScope.ServiceProvider.GetService<InicializacionServico>().InicializacionAsync();
+                }
+
+            }
+            else
+            {
+
+            }
 
             app.UseStaticFiles();
             app.UseCookieAuthentication(new CookieAuthenticationOptions
