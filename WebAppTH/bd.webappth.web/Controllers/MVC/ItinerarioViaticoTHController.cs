@@ -853,6 +853,7 @@ namespace bd.webappth.web.Controllers.MVC
                                 IdSolicitudViatico = sol.IdSolicitudViatico,
                                 Descripcion = descri,
                                 ValorReliquidacion = ValorReliquidacion.Valor,
+                                EstadoReliquidacion = ValorReliquidacion.Reliquidacion,
                                 ValorTotalReliquidacion = Convert.ToDecimal(valortotaReliquidacion)
                             };
 
