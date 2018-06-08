@@ -118,6 +118,7 @@ namespace bd.webappth.web
             }
             ReportConfig.ReportServerUrl = Configuration.GetSection("ReportServerUrl").Value;
             ReportConfig.ReportFolderPath = Configuration.GetSection("ReportFolderPath").Value;
+            ReportConfig.CompletePath = string.Format("{0}{1}", ReportConfig.ReportServerUrl, ReportConfig.ReportFolderPath);
 
             ///--------------------------------------
 
@@ -150,7 +151,7 @@ namespace bd.webappth.web
                 RequestCultureProviders = new List<IRequestCultureProvider> { }
             });
 
-            app.UseExceptionHandler("/Home/Error");
+            //app.UseExceptionHandler("/Home/Error");
            
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -168,27 +169,27 @@ namespace bd.webappth.web
             Log.Logger = logger;
             loggerFactory.AddSerilog();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //    app.UseBrowserLink();
 
 
-                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
-                {
+            //    using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+            //    .CreateScope())
+            //    {
                     
-                    //serviceScope.ServiceProvider.GetService<LogDbContext>()
-                    //         .Database.Migrate();
+            //        //serviceScope.ServiceProvider.GetService<LogDbContext>()
+            //        //         .Database.Migrate();
 
-                   // serviceScope.ServiceProvider.GetService<InicializacionServico>().InicializacionAsync();
-                }
+            //       // serviceScope.ServiceProvider.GetService<InicializacionServico>().InicializacionAsync();
+            //    }
 
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 
-            }
+            //}
 
             app.UseStaticFiles();
             app.UseCookieAuthentication(new CookieAuthenticationOptions

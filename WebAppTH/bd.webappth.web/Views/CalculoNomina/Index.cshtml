@@ -82,7 +82,9 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink(" Calcular nómina", "CalcularDetalleNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
-                                                @Html.ActionLink(" Ver reporte", "ReporteNomina", "Report", new { idNomina = item.IdCalculoNomina }, new { onclick = "cargando();" })|
+                                                <a href='@Url.Action("ReporteNomina", "Report", new { id = item.IdCalculoNomina})' target="_blank">
+                                                    Ver reporte
+                                                </a>
                                                 @Html.ActionLink(" Descargar archivo", "Download", new { id = item.IdCalculoNomina })|
                                                 @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
                                                 @Html.ActionLink(" Cargar reportados", "ReportadoNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|

@@ -10,9 +10,9 @@ namespace AlanJuden.MvcReportViewer
 	{
 		private static System.ServiceModel.HttpBindingBase _initializeHttpBinding(string url, ReportViewerModel model)
 		{
-			if (url.ToLower().StartsWith("https"))
+			if (url.ToLower().StartsWith("http"))
 			{
-				var binding = new System.ServiceModel.BasicHttpsBinding(System.ServiceModel.BasicHttpsSecurityMode.Transport);
+				var binding = new System.ServiceModel.BasicHttpBinding(System.ServiceModel.BasicHttpSecurityMode.Transport);
 				binding.Security.Transport.ClientCredentialType = model.ClientCredentialType;
 				binding.MaxReceivedMessageSize = int.MaxValue;
 				if (model.Timeout.HasValue)
