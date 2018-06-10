@@ -1,7 +1,7 @@
 @model bd.webappth.entidades.ViewModels.TipoAccionPersonalViewModel
 
 @{
-    Char[] charsNoPermitidos = {':'};
+    Char[] charsNoPermitidos = { ':' };
 
 }
 
@@ -27,7 +27,16 @@
     <div class="row">
 
         <section class="col col-2">
-            <input id="rdbtnIndefinido" type="radio" name="grp_tiempo_minimo" value="definitivo" onclick="getRdbtnMinSelected()" @if (Model.TipoAccionPersonal.NHorasMaximo < 1 && Model.TipoAccionPersonal.NDiasMaximo < 1) { <text> checked</text>} />&nbsp;Definitivo
+            <input id="rdbtnIndefinido" type="radio" name="grp_tiempo_minimo" value="definitivo" onclick="getRdbtnMinSelected()" @if (
+                    Model.TipoAccionPersonal.NHorasMaximo < 1 
+                    && Model.TipoAccionPersonal.NHorasMinimo < 1
+                    && Model.TipoAccionPersonal.NDiasMaximo < 1
+                    && Model.TipoAccionPersonal.MesesMaximo < 1
+                    && Model.TipoAccionPersonal.YearsMaximo < 1
+                ) {
+                <text> checked</text>
+                } />&nbsp;Definitivo
+            
         </section>
 
         <section class="col col-2">
@@ -56,29 +65,7 @@
             <section class="col col-2">
                 <label>D&iacute;as</label>
                 <label class="input">
-                    <input type="number" min="0" max="364" maxlength="20" id="txt_min_dias" value="0" class="form-control" onchange="calcularDias()" />
-                </label>
-            </section>
-
-            <section class="col col-2">
-                <label>Meses</label>
-                <label class="input">
-                    <input type="number" min="0" max="11" maxlength="20" id="txt_min_meses" value="0" class="form-control" onchange="calcularDias()" />
-                </label>
-            </section>
-
-            <section class="col col-2">
-                <label>A&ntilde;os</label>
-                <label class="input">
-                    <input type="number" min="0" max="100" maxlength="20" id="txt_min_years" value="0" class="form-control" onchange="calcularDias()" />
-                </label>
-            </section>
-
-            <section class="col col-4">
-                <label>Total m&iacute;nimo de n&uacute;mero d&iacute;as permitido</label>
-                <label class="input col-9">
-                    <input maxlength="20" id="txt_min_total_dias" asp-for="TipoAccionPersonal.NDiasMinimo" class="form-control" readonly/>
-                    <span asp-validation-for="TipoAccionPersonal.NDiasMinimo" class="text-danger"></span>
+                    <input type="number" min="0" max="364" maxlength="20" id="txt_min_dias"  class="form-control" asp-for="TipoAccionPersonal.NDiasMinimo" onchange="resetHoras()" />
                 </label>
             </section>
 
@@ -86,7 +73,7 @@
 
     </div>
 
-    
+
 
     <div class="row">
         <section class="col col-9">
@@ -94,13 +81,13 @@
         </section>
     </div>
 
-    <div class="row" >
+    <div class="row">
 
-        <div  id="rowHorasMax" style="visibility: hidden">
+        <div id="rowHorasMax" style="visibility: hidden">
 
             <section class="col col-2">
 
-                <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.NDiasMaximo)</label>
+                <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.NHorasMaximo)</label>
                 <label class="input">
                     <input type="number" id="txt_max_horas" onchange="validarHoras()" maxlength="20" asp-for="TipoAccionPersonal.NHorasMaximo" class="form-control" />
                     <span asp-validation-for="TipoAccionPersonal.NHorasMaximo" class="text-danger"></span>
@@ -114,31 +101,24 @@
             <section class="col col-2">
                 <label>D&iacute;as</label>
                 <label class="input">
-                    <input type="number" min="0" max="364" maxlength="20" id="txt_max_dias" value="0" class="form-control" onchange="calcularDiasMax()" />
+                    <input type="number" min="0" max="364" maxlength="20" id="txt_max_dias"  class="form-control"  asp-for="TipoAccionPersonal.NDiasMaximo" onchange="resetHoras()" />
                 </label>
             </section>
 
             <section class="col col-2">
                 <label>Meses</label>
                 <label class="input">
-                    <input type="number" min="0" max="11" maxlength="20" id="txt_max_meses" value="0" class="form-control" onchange="calcularDiasMax()" />
+                    <input type="number" min="0" max="11" maxlength="20" id="txt_max_meses"  class="form-control" asp-for="TipoAccionPersonal.MesesMaximo" onchange="resetHoras()" />
                 </label>
             </section>
 
             <section class="col col-2">
                 <label>A&ntilde;os</label>
                 <label class="input">
-                    <input type="number" min="0" max="100" maxlength="20" id="txt_max_years" value="0" class="form-control" onchange="calcularDiasMax()" />
+                    <input type="number" min="0" max="100" maxlength="20" id="txt_max_years"  class="form-control" asp-for="TipoAccionPersonal.YearsMaximo" onchange="resetHoras()" />
                 </label>
             </section>
 
-            <section class="col col-4">
-                <label>Total m&aacute;ximo de n&uacute;mero d&iacute;as permitido</label>
-                <label class="input col-9">
-                    <input maxlength="20" id="txt_max_total_dias" asp-for="TipoAccionPersonal.NDiasMaximo" class="form-control" readonly/>
-                    <span asp-validation-for="TipoAccionPersonal.NDiasMaximo" class="text-danger"></span>
-                </label>
-            </section>
         </div>
     </div>
 
@@ -191,21 +171,53 @@
         </section>
 
     </div>
+
+    <div class="row">
+
+        <section class="col col-4">
+            <label class="checkbox">
+                <input type="checkbox" asp-for="TipoAccionPersonal.DesactivarCargo" class="form-control">
+                <i></i>Se desactiva el cargo ?
+                <span asp-validation-for="TipoAccionPersonal.DesactivarCargo" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-lg-12">
+            <label class="col-lg-12">
+                <b>Estado al que cambia?</b>
+            </label>
+        </section>
+
+        <section class="col col-lg-4">
+            <div class=" col-lg-12">
+                @Html.RadioButtonFor(model =>model.empleadoCambio, 0)&nbsp;N/A
+
+            </div>
+        </section>
+
+        <section class="col col-lg-4">
+            <div class=" col-lg-12">
+                @Html.RadioButtonFor(model => model.empleadoCambio, 1)&nbsp;Modalidad contrataci&oacute;n
+            </div>
+        </section>
+
+        <section class="col col-lg-4">
+            <div class=" col-lg-12">
+                @Html.RadioButtonFor(model => model.empleadoCambio, 2)&nbsp;Pasivo
+            </div>
+        </section>
+    </div>
+
     <div class="row">
 
         <section class="col col-4">
             <label class="input">
-                <select asp-for="TipoAccionPersonal.Matriz" class="form-control" asp-items="ViewBag.IdMatriz">
-                </select>
+                <select asp-for="TipoAccionPersonal.Matriz" class="form-control" asp-items="ViewBag.IdMatriz"></select>
                 <span asp-validation-for="TipoAccionPersonal.Matriz" class="text-danger"></span>
-            </label>
-        </section>
-
-        <section class="col col-4">
-            <label class="input">
-                <select asp-for="TipoAccionPersonal.IdEstadoTipoAccionPersonal" class="form-control" asp-items="ViewBag.IdEstadoTipoAccionPersonal">
-                </select>
-                <span asp-validation-for="TipoAccionPersonal.IdEstadoTipoAccionPersonal" class="text-danger"></span>
             </label>
         </section>
 
@@ -303,59 +315,7 @@
 
     }
 
-    function calcularDiasMax() {
-
-        validarMayoresCero();
-        resetHoras();
-
-        var varDiasTxt = document.getElementById('txt_max_dias').value;
-        var varMesesTxt = document.getElementById('txt_max_meses').value;
-        var varYearsTxt = document.getElementById('txt_max_years').value;
-
-        var varTotalDias = 0;
-
-        if (varDiasTxt > 0) {
-            varTotalDias = varTotalDias + (varDiasTxt * 1);
-        }
-
-        if (varMesesTxt > 0) {
-            varTotalDias = varTotalDias + (varMesesTxt * 30);
-        }
-
-        if (varYearsTxt > 0) {
-
-            var numEntero = 0;
-            var numDecimal = 0;
-
-            var posicionPunto = varYearsTxt.toString().indexOf(".");
-            var posicionComa = varYearsTxt.toString().indexOf(",");
-
-            if (posicionPunto > 0) {
-
-                numEntero = varYearsTxt.toString().substring(0, (posicionPunto));
-                numDecimal = varYearsTxt.toString().substring((posicionPunto + 1), varYearsTxt.length);
-                
-                varTotalDias = varTotalDias + (numEntero * 365);
-
-            }
-
-            else if (posicionComa > 0) {
-                numEntero = varYearsTxt.toString().substring(0, (posicionComa));
-                numDecimal = varYearsTxt.toString().substring((posicionComa + 1), varYearsTxt.length);
-                
-                varTotalDias = varTotalDias + (numEntero * 365);
-            }
-
-            else {
-                varTotalDias = varTotalDias + (varYearsTxt * 365);
-            }
-
-        }
-
-        document.getElementById('txt_max_total_dias').value = varTotalDias;
-
-    }
-
+  
     function getRdbtnMinSelected() {
 
         var varRdbtn = document.getElementsByName("grp_tiempo_minimo");
@@ -490,12 +450,8 @@
     }
 
     function resetDias() { 
-        document.getElementById('txt_min_total_dias').value = 0;
-        document.getElementById('txt_max_total_dias').value = 0;
 
         document.getElementById('txt_min_dias').value = 0;
-        document.getElementById('txt_min_meses').value = 0;
-        document.getElementById('txt_min_years').value = 0;
 
         document.getElementById('txt_max_dias').value = 0;
         document.getElementById('txt_max_meses').value = 0;

@@ -342,8 +342,8 @@
         </section>
 
         <section class="col col-lg-4">
-
-            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.FechaRigeHasta)</label>
+            
+            <label class="input col-lg-12" id="lbl_date_Fecha2">@Html.DisplayNameFor(model => Model.FechaRigeHasta)</label>
             <label class="input col-lg-12">
                 <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" />
                 <span asp-validation-for="FechaRigeHasta" class="text-danger"></span>
@@ -355,7 +355,7 @@
 
     <div class="row">&nbsp;</div>
 
-    <div class="row">
+    <div class="row" id="txt_ver_dias">
 
         <section class="col col-lg-4">
 

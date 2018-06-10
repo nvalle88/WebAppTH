@@ -18,5 +18,11 @@ namespace bd.webappth.entidades.ViewModels
 
         public List<Matriz> MatrizLista { get; set; }
 
+        // 0 = n/a || 1 = Modalidad contratación || 2 = desactivar empleado
+        public int empleadoCambio { get; set; }
+
+        // Obtiene el valor del radio buton para validar si es definitivo o no
+        public string grp_tiempo_minimo { get; set; }
+
     }
 }

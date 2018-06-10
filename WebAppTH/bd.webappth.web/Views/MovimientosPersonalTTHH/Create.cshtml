@@ -178,7 +178,19 @@
 
                         maxDias = data.nDiasMaximo;
 
-                        alert("El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias);
+                        if (data.definitivo == true) {
+                            alert("Esta acci\u00F3n es de tiempo indefinido");
+                            document.getElementById("date_Fecha2").style.visibility = "hidden"; 
+                            document.getElementById("lbl_date_Fecha2").style.visibility = "hidden"; 
+                            document.getElementById("txt_ver_dias").style.visibility = "hidden";
+
+                        } else { 
+                            alert("El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias);
+                            document.getElementById("date_Fecha2").style.visibility = "visible";
+                            document.getElementById("lbl_date_Fecha2").style.visibility = "visible";
+                            document.getElementById("txt_ver_dias").style.visibility = "visible";
+                        }
+                        
 
                         }, complete: function (data) {
                         $("#content").waitMe("hide");

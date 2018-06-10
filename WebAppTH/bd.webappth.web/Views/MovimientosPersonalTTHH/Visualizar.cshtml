@@ -53,8 +53,8 @@
                                     <div class="row">
                                         <section class="" style="margin-left:2%;">
                                             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Estado)</label>
-                                            <label class="input">
-                                                <select asp-for="Estado" class="form-control input col col-lg-12" asp-items="ViewBag.Estados" readonly>
+                                            <label class="">
+                                                <select asp-for="Estado" class="form-control input col col-lg-12" asp-items="ViewBag.Estados" disabled>
                                                     <option value="0" selected>Seleccione</option>
                                                 </select>
 
@@ -97,7 +97,7 @@
                                         <section class="col-lg-4">
                                             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.TipoAccionPersonalViewModel)</label>
                                             <label class="input" style="padding-right:15px;">
-                                                <select asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones" readonly>
+                                                <select asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones" disabled>
                                                     <option value="0" selected>Seleccione</option>
                                                 </select>
 
