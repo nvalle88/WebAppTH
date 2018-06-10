@@ -63,6 +63,7 @@ namespace bd.webappth.entidades.Constantes
         /// </summary>
         public const string IdItinerario = "IdItinerario";
         public const string IdSolicitudtinerario = "IdSolicitudtinerario";
+        public const string ValorReliquidacion = "ValorReliquidacion";
 
 
         /// <summary>

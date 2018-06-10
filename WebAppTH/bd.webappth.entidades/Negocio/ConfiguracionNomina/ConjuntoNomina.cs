@@ -28,6 +28,11 @@ namespace bd.webappth.entidades.Negocio
         [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Descripcion { get; set; }
 
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Alias")]
+        [StringLength(5, MinimumLength = 5, ErrorMessage = "El {0} debe tener {1} caracteres")]
+        public string AliasConcepto { get; set; }
+
         public virtual ICollection<ConceptoConjuntoNomina> ConceptoConjuntoNomina { get; set; }
         public virtual TipoConjuntoNomina TipoConjuntoNomina { get; set; }
        

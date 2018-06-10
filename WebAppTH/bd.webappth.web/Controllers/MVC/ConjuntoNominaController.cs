@@ -80,6 +80,12 @@ namespace bd.webappth.web.Controllers.MVC
                          
                         var vista = JsonConvert.DeserializeObject<ConjuntoNomina>(respuesta.Resultado.ToString());
                         await CargarCombox();
+
+                        if (!string.IsNullOrEmpty(vista.AliasConcepto))
+                        {
+                            vista.AliasConcepto = vista.AliasConcepto.Remove(0, 1);
+                        }
+                        
                         return View(vista);
                     }
                 }

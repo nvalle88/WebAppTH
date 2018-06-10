@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using bd.webappth.entidades.Constantes;
 using Microsoft.AspNetCore.Http;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -155,7 +156,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
                     var idIrininario = HttpContext.Session.GetInt32(Constantes.IdItinerario);
-                    return RedirectToAction("Reliquidacion", new { IdSolicitudViatico=IdSolicitudViatico, IdItinerarioViatico = idIrininario });
+                    return RedirectToAction("Reliquidacion", new { IdSolicitudViatico = IdSolicitudViatico, IdItinerarioViatico = idIrininario });
                 }
                 return RedirectToAction("Reliquidacion", new { mensaje = response.Message });
             }
@@ -170,7 +171,7 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Reliquidacion(int IdSolicitudViatico, int IdItinerarioViatico, string mensaje)
         {
 
-           SolicitudViatico sol = new SolicitudViatico();
+            SolicitudViatico sol = new SolicitudViatico();
             ListaEmpleadoViewModel empleado = new ListaEmpleadoViewModel();
             List<ReliquidacionViatico> lista = new List<ReliquidacionViatico>();
             try
@@ -382,7 +383,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-       
+
         public async Task<IActionResult> Informe(int IdSolicitudViatico, int IdItinerarioViatico, string mensaje)
         {
 
@@ -442,8 +443,8 @@ namespace bd.webappth.web.Controllers.MVC
 
                             };
 
-                           var  listaFacruras = await apiServicio.Listar<FacturaViatico>(facturas, new Uri(WebApp.BaseAddress)
-                                                                    , "api/FacturaViatico/ListarFacturas");
+                            var listaFacruras = await apiServicio.Listar<FacturaViatico>(facturas, new Uri(WebApp.BaseAddress)
+                                                                     , "api/FacturaViatico/ListarFacturas");
                             HttpContext.Session.SetInt32(Constantes.IdItinerario, IdItinerarioViatico);
                             HttpContext.Session.SetInt32(Constantes.IdSolicitudtinerario, IdSolicitudViatico);
 
@@ -459,7 +460,8 @@ namespace bd.webappth.web.Controllers.MVC
                             {
                                 descri = "";
                             }
-                            else {
+                            else
+                            {
                                 descri = Actividades.Descripcion;
                             }
                             var informeViaticoViewModel = new InformeViaticoViewModel
@@ -491,7 +493,7 @@ namespace bd.webappth.web.Controllers.MVC
                             return View(informeViaticoViewModel);
                         }
                     }
-                    
+
                 }
                 InicializarMensaje(null);
                 return View();
@@ -502,7 +504,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-       
+
 
         public async Task<IActionResult> CreateInforme()
         {
@@ -535,7 +537,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/InformeViaticos/InsertarInformeViatico");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Informe", new { IdSolicitudViatico  = informeViatico.IdSolicitudViatico, IdItinerarioViatico = informeViatico.IdItinerarioViatico  });
+                    return RedirectToAction("Informe", new { IdSolicitudViatico = informeViatico.IdSolicitudViatico, IdItinerarioViatico = informeViatico.IdItinerarioViatico });
                 }
 
                 ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
@@ -551,7 +553,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> EditInforme(string id,int  IdSolicitudViatico)
+        public async Task<IActionResult> EditInforme(string id, int IdSolicitudViatico)
         {
             try
             {
@@ -637,15 +639,39 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create(int IdSolicitudViatico)
         {
-
-
-            ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
-            var itinerarioViatico = new ItinerarioViatico
+            try
             {
-                IdSolicitudViatico = IdSolicitudViatico
-            };
-            InicializarMensaje(null);
-            return View(itinerarioViatico);
+                ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
+
+                var solicitudViatico = new SolicitudViatico
+                {
+                    IdSolicitudViatico = IdSolicitudViatico
+                };
+                var itinerarioViatico = new ItinerarioViatico();
+
+                var solicitud = await apiServicio.ObtenerElementoAsync1<SolicitudViatico>(solicitudViatico, new Uri(WebApp.BaseAddress)
+                                                                    , "api/SolicitudViaticos/ListarSolicitudesViaticosPorId");
+                if (solicitud != null)
+                {
+
+                    itinerarioViatico.IdSolicitudViatico = IdSolicitudViatico;
+                    itinerarioViatico.FechaDesde = solicitud.FechaSalida;
+                    itinerarioViatico.HoraSalida = solicitud.HoraSalida;
+                    itinerarioViatico.FechaHasta = solicitud.FechaLlegada;
+                    itinerarioViatico.HoraLlegada = solicitud.HoraLlegada;
+                    itinerarioViatico.Valor = Convert.ToDecimal(solicitud.ValorEstimado);
+
+                    InicializarMensaje(null);
+                    return View(itinerarioViatico);
+                }
+                itinerarioViatico.IdSolicitudViatico = IdSolicitudViatico;
+                InicializarMensaje(null);
+                return View(itinerarioViatico);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -662,21 +688,29 @@ namespace bd.webappth.web.Controllers.MVC
                 InicializarMensaje(null);
                 return View(itinerarioViatico);
             }
+            var solicitudViatico = new SolicitudViatico
+            {
+                IdSolicitudViatico = itinerarioViatico.IdSolicitudViatico
+            };
             Response response = new Response();
 
             try
             {
+                var solicitud = await apiServicio.ObtenerElementoAsync1<SolicitudViatico>(solicitudViatico, new Uri(WebApp.BaseAddress)
+                                                                   , "api/SolicitudViaticos/ListarSolicitudesViaticosPorId");
+
+                itinerarioViatico.FechaDesde = solicitud.FechaSalida;
+                itinerarioViatico.HoraSalida = solicitud.HoraSalida;
+                itinerarioViatico.FechaHasta = solicitud.FechaLlegada;
+                itinerarioViatico.HoraLlegada = solicitud.HoraLlegada;
+                itinerarioViatico.Valor = Convert.ToDecimal(solicitud.ValorEstimado);
+
                 response = await apiServicio.InsertarAsync(itinerarioViatico,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/ItinerarioViatico/InsertarItinerarioViatico");
                 if (response.IsSuccess)
                 {
-
-                    var solicitudViatico = new SolicitudViatico
-                    {
-                        IdSolicitudViatico = itinerarioViatico.IdSolicitudViatico
-                    };
-
+                
                     response = await apiServicio.InsertarAsync(solicitudViatico, new Uri(WebApp.BaseAddress),
                                                                 "api/SolicitudViaticos/ActualizarValorTotalViatico");
 
@@ -901,7 +935,8 @@ namespace bd.webappth.web.Controllers.MVC
                     return RedirectToAction("Index", new { IdSolicitudViatico = itinerario.IdSolicitudViatico });
                 }
                 //return BadRequest();
-                return RedirectToAction("Index", new { mensaje = response.Message });
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}","Index");
+                // this.RedirectToAction("Index");
             }
             catch (Exception ex)
             {

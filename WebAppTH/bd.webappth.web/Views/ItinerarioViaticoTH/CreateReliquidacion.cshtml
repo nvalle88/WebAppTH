@@ -5,34 +5,8 @@
 }
 <!-- MAIN CONTENT -->
 <div id="content">
-    <div class="col col-10">
-
-        @if (@ViewData["Error"].ToString() != "")
-
-        {
-
-            <div class="col-lg-12">
-
-                <div class="alert alert-block alert-dismissable">
-
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-
-                    <p>
-
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        }
-    </div>
     <!-- widget grid -->
-    <section id="widget-grid" class="">
+    <section id="" class="">
 
         <!-- START ROW -->
         <div class="row">
@@ -43,7 +17,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Transporte Utilizado</h2>
+                        <h2>Reliquidaci&oacute;n viatico</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -57,21 +31,24 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form id="wizard-1" asp-action="CreateReliquidacion" novalidate="novalidate">
+                            <form asp-action="CreateReliquidacion" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <input type="hidden" asp-for="IdItinerarioViatico" />
                                 <input type="hidden" asp-for="IdSolicitudViatico" />
+                                <input type="hidden" asp-for="ValorRequlidacion" />
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 @{await Html.RenderPartialAsync("_PartialViewReliquidacionItinerarioViatico", Model);}
+
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Informe"  asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico"  class="btn btn-default">Cancelar</a>
+                                    <a asp-action="Reliquidacion" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
+                            <!-- end widget content -->
                         </div>
-                        <!-- end widget content -->
+                        <!-- end widget div -->
                     </div>
-                    <!-- end widget div -->
+                    <!-- end widget -->
                 </div>
-                <!-- end widget -->
 
             </article>
 
@@ -83,10 +60,9 @@
 
 </div>
 <!-- END MAIN CONTENT -->
-
-
 @section Scripts {
- 
+    <script type="text/javascript">
 
 
+    </script>
 }

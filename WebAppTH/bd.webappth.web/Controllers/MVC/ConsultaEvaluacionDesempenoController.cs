@@ -172,14 +172,11 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> CompetenciasTecnicas(int idEval001)
         {
-
             try
             {
-
                 if (idEval001 != 0)
                 {
                     HttpContext.Session.SetInt32(Constantes.idEval011Session, idEval001);
-
                 }
                 else
                 {

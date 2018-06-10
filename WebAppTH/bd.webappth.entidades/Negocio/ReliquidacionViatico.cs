@@ -8,6 +8,8 @@ namespace bd.webappth.entidades.Negocio
     {
         public int IdReliquidacionViatico { get; set; }
         public int IdItinerarioViatico { get; set; }
+        public int? IdItemViatico { get; set; }
+        [NotMapped]
         public int IdSolicitudViatico { get; set; }
         public int? IdTipoTransporte { get; set; }
         public string NombreTransporte { get; set; }
@@ -32,5 +34,6 @@ namespace bd.webappth.entidades.Negocio
         public virtual Ciudad CiudadOrigen { get; set; }
         public virtual ItinerarioViatico ItinerarioViatico { get; set; }
         public virtual TipoTransporte TipoTransporte { get; set; }
+        public virtual ItemViatico ItemViatico { get; set; }
     }
 }

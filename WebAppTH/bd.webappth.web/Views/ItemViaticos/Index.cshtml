@@ -82,22 +82,28 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
                                         </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Reliquidacion)
+                                        </th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Reliquidacion)
+                                        </td>
 
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdItemViatico }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdItemViatico }, new { onclick = "return confirm('Desea eliminar el item viático... ?');" })
-                                            </td>
-                                        </tr>
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdItemViatico }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdItemViatico }, new { onclick = "return confirm('Desea eliminar el item viático... ?');" })
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
