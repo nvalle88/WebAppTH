@@ -81,8 +81,8 @@
                                                 else
                                                 {
                                                     <text>
-                                                       @* @Html.ActionLink("Informe", "ReporteSolicitudPagoReliquidacion", "Report", new { idEvento = item.IdPlanCapacitacion ,Idebtificacion = item.Cedula }, new { onclick = "cargando();" })*@
-                                                        Realizado
+                                                       @Html.ActionLink("Informe", "ReporteSolicitudPagoReliquidacion", "Report", new { idEvento = item.IdPlanCapacitacion ,Identificacion = item.Cedula }, new { onclick = "cargando();" })
+                                                        @*Realizado*@
                                                     </text>
                                                     @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdPlanCapacitacion })*@
                                                 }
