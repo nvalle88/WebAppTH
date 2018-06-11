@@ -20,32 +20,11 @@ using OfficeOpenXml;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class CalculoNominaController: AlanJuden.MvcReportViewer.ReportController
+    public class CalculoNominaController: Controller
     {
         private IHostingEnvironment _hostingEnvironment;
         private readonly IApiServicio apiServicio;
         private readonly IUploadFileService uploadFileService;
-
-        protected override ICredentials NetworkCredentials
-        {
-            get
-            {
-                //Custom Domain authentication (be sure to pull the info from a config file)
-                return new System.Net.NetworkCredential("prepoduccion", "Digital_2018", "domain");
-
-                //Default domain credentials (windows authentication)
-                //return System.Net.CredentialCache.DefaultNetworkCredentials;
-            }
-        }
-
-        protected override string ReportServerUrl
-        {
-            get
-            {
-                //You don't want to put the full API path here, just the path to the report server's ReportServer directory that it creates (you should be able to access this path from your browser: https://YourReportServerUrl.com/ReportServer/ReportExecution2005.asmx )
-                return "http://52.224.8.198/ReportServer";
-            }
-        }
 
         public CalculoNominaController(IApiServicio apiServicio, IHostingEnvironment _hostingEnvironment, IUploadFileService uploadFileService)
         {
@@ -53,16 +32,6 @@ namespace bd.webappth.web.Controllers.MVC
             this._hostingEnvironment = _hostingEnvironment;
             this.uploadFileService = uploadFileService;
 
-        }
-
-        public ActionResult MyReport(string namedParameter1, string namedParameter2)
-        {
-            var model = this.GetReportViewerModel(Request);
-            model.ReportPath = "/ReporteGTH/repNomina";
-            // model.AddParameter("Parameter1", namedParameter1);
-            // model.AddParameter("Parameter2", namedParameter2);
-
-            return View("ReportViewer", model);
         }
 
         public async Task<FileResult> Download(string id)
