@@ -15,7 +15,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         public ActionResult ReporteNomina(int id)
         {
-            var de = new class2();
             
             string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath,"RepNomina&IdCalculoNomina=", Convert.ToString(id));
             return Redirect(url);
