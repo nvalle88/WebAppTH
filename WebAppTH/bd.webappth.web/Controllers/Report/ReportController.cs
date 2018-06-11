@@ -1,11 +1,7 @@
 ﻿using bd.webappth.entidades.Utils;
 using Microsoft.AspNetCore.Mvc;
-using ReportServiceWCF;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace bd.webappth.web.Controllers.MVC
 {
