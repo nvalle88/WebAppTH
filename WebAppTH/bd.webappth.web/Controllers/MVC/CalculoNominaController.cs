@@ -34,9 +34,10 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+
         public async Task<FileResult> Download(string id)
         {
-
+            
             try
             {
                 var targetDirectory = Path.Combine(_hostingEnvironment.WebRootPath, string.Format("{0}/{1}.{2}", "DocumentoNomina/Reportados", id, "xlsx"));

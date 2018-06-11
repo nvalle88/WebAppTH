@@ -1,6 +1,5 @@
 ﻿using bd.webappth.entidades.Utils;
 using Microsoft.AspNetCore.Mvc;
-using ReportServiceWCF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +9,10 @@ using System.Threading.Tasks;
 namespace bd.webappth.web.Controllers.MVC
 {
     public class ReportController : Controller
-    {
-      
+    {      
 
         public ActionResult ReporteNomina(int id)
         {
-            var de = new class2();
-            
             string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath,"RepNomina&IdCalculoNomina=", Convert.ToString(id));
             return Redirect(url);
         }
@@ -26,6 +22,18 @@ namespace bd.webappth.web.Controllers.MVC
             string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepSolicitudPagoReliquidacion&IdReliquidacionViatico=", Convert.ToString(idReliquidacionViatico));
             return Redirect(url);
             
+        }
+        public ActionResult ReportePlanCapacitaciones()
+        {
+            string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepPlanCapacitaciones");
+            return Redirect(url);
+
+        }
+        public ActionResult ReporteViaticos()
+        {
+            string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepViaticos");
+            return Redirect(url);
+
         }
     }
 }
