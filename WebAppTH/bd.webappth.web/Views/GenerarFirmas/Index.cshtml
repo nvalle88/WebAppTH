@@ -1,0 +1,70 @@
+
+@{
+    ViewData["Title"] = "Index";
+}
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <p></p>
+    @*<a asp-action="Create">
+            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nueva Solicitud Planificaci&oacute;n Vacaciones
+
+            </button>
+        </a>*@ 
+    <p> </p>
+
+        
+    
+    <form asp-action="SeleccionFirmas" novalidate="novalidate">
+        
+        <div class="row">
+
+            <section class="col col-lg-4">
+                <label class="input col-lg-12">Tipo de documento</label>
+                <label class="input col col-lg-12">
+                    <select name="Documento" class="smart-form">
+                        <option value="SolicitudVacaciones">Solicitud de vacaciones</option>
+                    </select>
+                </label>
+            </section>
+
+        </div>
+        
+        <div class="row">
+
+            <section class="col col-lg-3">
+                <label>N&uacute;mero de Firmas</label>
+                <label class="input">
+                    <input name="NumeroFirmas" type="Number" class="form-control" value="3" />
+                </label>
+            </section>
+
+            <section class="col col-lg-3">
+                <label>IdSucursal</label>
+                <label class="input">
+                    <input name="IdSucursal" type="Number" class="form-control" value="2" />
+                </label>
+            </section>
+
+        </div>
+
+        <footer>
+            <input type="submit" value="Guardar" class="btn btn-default" />
+            <a asp-action="Index" class="btn btn-default">Cancelar</a>
+        </footer>
+
+    </form>
+
+</div>
+<!-- END MAIN CONTENT -->
+
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+
+}
+
+
+

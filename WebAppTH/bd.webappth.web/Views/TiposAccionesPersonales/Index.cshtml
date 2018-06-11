@@ -96,9 +96,6 @@
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
                                         </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EstadoTipoAccionPersonal.Nombre)
-                                        </th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -126,10 +123,6 @@
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
                                             </td>
 
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.EstadoTipoAccionPersonal.Nombre)
-                                            </td>
                                             <td>
                                                 @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoAccionPersonal }) |
                                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoAccionPersonal }, new { onclick = "return confirm('Desea eliminar el tipo de accion personal... ?');" })

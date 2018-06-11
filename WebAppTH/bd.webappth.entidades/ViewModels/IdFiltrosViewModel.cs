@@ -18,5 +18,7 @@ namespace bd.webappth.entidades.ViewModels
 
         public int IdEval001 { get; set; }
 
+        public int NumeroFirmas { get; set; }
+
     }
 }

@@ -48,6 +48,7 @@ namespace bd.webappth.entidades.ViewModels
         public int NoDias { get; set; }
 
         // Campos que no pertenecen a la tabla
+        [Display(Name = "Mi aprobación")]
         public string EstadoDirector { get; set; }
         public string EstadoValidacionTTHH { get; set; }
 
@@ -66,5 +67,7 @@ namespace bd.webappth.entidades.ViewModels
         public int IdIndiceOcupacionalModalidadPartidaPropuesta { get; set; }
 
         public List<IndicesOcupacionalesModalidadPartidaViewModel> ListaIndicesOcupacionalesModalidadPartida { get; set; }
+
+        public string NombreUsuarioAprobador { get; set; }
     }
 }

@@ -58,7 +58,7 @@
         <section class="col-lg-4">
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.TipoAccionPersonalViewModel)</label>
             <label class="input" style="padding-right:15px;">
-                <select asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones" readonly>
+                <select asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones" disabled>
                     <option value="0" selected>Seleccione</option>
                 </select>
 

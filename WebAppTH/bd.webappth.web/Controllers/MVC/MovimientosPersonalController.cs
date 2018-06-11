@@ -74,46 +74,58 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
 
-                var modelo = new AccionPersonalViewModel { IdAccionPersonal = id };
-
-                var respuesta = await apiServicio.ObtenerElementoAsync<AccionPersonalViewModel>(
-                    modelo,
-                    new Uri(WebApp.BaseAddress),
-                    "api/AccionesPersonal/ObtenerAccionPersonalViewModel");
-
-                if (respuesta.IsSuccess)
+                if (claim.IsAuthenticated == true)
                 {
-                    modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
-                    
-                    await InicializarCombos();
 
-                    
-                    var situacionActualViewModel = new SituacionActualEmpleadoViewModel { IdEmpleado = modelo.DatosBasicosEmpleadoViewModel.IdEmpleado };
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                    var situacionActualEmpleadoViewModelResponse = await apiServicio.ObtenerElementoAsync<SituacionActualEmpleadoViewModel>(situacionActualViewModel, new Uri(WebApp.BaseAddress),
-                    "api/Empleados/ObtenerSituacionActualEmpleadoViewModel");
+                    var modelo = new AccionPersonalViewModel { IdAccionPersonal = id, NombreUsuarioAprobador = NombreUsuario };
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync<AccionPersonalViewModel>(
+                        modelo,
+                        new Uri(WebApp.BaseAddress),
+                        "api/AccionesPersonal/ObtenerAccionPersonalViewModel");
 
                     if (respuesta.IsSuccess)
                     {
-                        situacionActualViewModel = JsonConvert.DeserializeObject<SituacionActualEmpleadoViewModel>(situacionActualEmpleadoViewModelResponse.Resultado.ToString());
+                        modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
+
+                        await InicializarCombos();
+
+
+                        var situacionActualViewModel = new SituacionActualEmpleadoViewModel { IdEmpleado = modelo.DatosBasicosEmpleadoViewModel.IdEmpleado };
+
+                        var situacionActualEmpleadoViewModelResponse = await apiServicio.ObtenerElementoAsync<SituacionActualEmpleadoViewModel>(situacionActualViewModel, new Uri(WebApp.BaseAddress),
+                        "api/Empleados/ObtenerSituacionActualEmpleadoViewModel");
+
+                        if (respuesta.IsSuccess)
+                        {
+                            situacionActualViewModel = JsonConvert.DeserializeObject<SituacionActualEmpleadoViewModel>(situacionActualEmpleadoViewModelResponse.Resultado.ToString());
+                        }
+
+                        modelo.SituacionActualEmpleadoViewModel = situacionActualViewModel;
+
+
+                        var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+                        new Uri(WebApp.BaseAddress),
+                        "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
+
+                        modelo.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
+
+
+                        return View(modelo);
+
                     }
 
-                    modelo.SituacionActualEmpleadoViewModel = situacionActualViewModel;
-
-
-                    var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
-                    new Uri(WebApp.BaseAddress),
-                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
-
-                    modelo.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
-
-
-                    return View(modelo);
+                    return BadRequest();
+                }
+                else {
+                    return RedirectToAction("Login", "Login");
 
                 }
-
-                return BadRequest();
+                
 
             }
             catch (Exception)
@@ -131,33 +143,49 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                
-                var modeloEnviar = new AccionPersonal
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
                 {
-                    IdAccionPersonal = accionPersonalViewModel.IdAccionPersonal,
-                    IdEmpleado = accionPersonalViewModel.DatosBasicosEmpleadoViewModel.IdEmpleado,
-                    
-                    Estado = accionPersonalViewModel.Estado,
 
-                };
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                var respuesta = await apiServicio.InsertarAsync<AccionesPersonalPorEmpleadoViewModel>(
+
+                    var modeloEnviar = new AccionPersonal
+                    {
+                        IdAccionPersonal = accionPersonalViewModel.IdAccionPersonal,
+                        IdEmpleado = accionPersonalViewModel.DatosBasicosEmpleadoViewModel.IdEmpleado,
+
+                        Estado = accionPersonalViewModel.Estado,
+                        NombreUsuario = NombreUsuario
+
+                    };
+
+                    var respuesta = await apiServicio.EditarAsync<AccionesPersonalPorEmpleadoViewModel>(
                             modeloEnviar,
                             new Uri(WebApp.BaseAddress),
                             "api/AccionesPersonal/EditarAccionPersonal");
 
-                if (respuesta.IsSuccess)
-                {
+                    if (respuesta.IsSuccess)
+                    {
 
-                    return this.RedireccionarMensajeTime(
-                            "MovimientosPersonal",
-                            "Index",
-                             new { identificacion = respuesta.Resultado },
-                            $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
-                         );
+                        return this.RedireccionarMensajeTime(
+                                "MovimientosPersonal",
+                                "Index",
+                                 new { identificacion = respuesta.Resultado },
+                                $"{Mensaje.Success}|{respuesta.Message}|{"10000"}"
+                             );
+                    }
+
+                    return View(accionPersonalViewModel);
+
+                }
+                else {
+                    return RedirectToAction("Login", "Login");
+
                 }
 
-                return View(accionPersonalViewModel);
 
             }
             catch (Exception)

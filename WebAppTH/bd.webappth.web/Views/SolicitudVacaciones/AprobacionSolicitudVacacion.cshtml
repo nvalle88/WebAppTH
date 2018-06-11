@@ -49,20 +49,21 @@
                                 <input type="hidden" asp-for="FechaSolicitud" />
                                 <fieldset>
                                     <div class="row">
+
                                         <section class="col col-4">
-                                            <label>Fecha solicitud:</label>
+                                            <label>Fecha solicitud</label>
                                             <label class="input">
                                                 <input value="@ViewData["FechaSolicitud"]" disabled="disabled" type="text" placeholder="Seleccione fecha de solicitud" class="datepicker" data-dateformat='dd-MM-yy'>
                                             </label>
                                         </section>
                                         <section class="col col-4">
-                                            <label>Fecha desde:</label>
+                                            <label>Fecha desde</label>
                                             <label class="input">
                                                 <input value="@ViewData["FechaDesde"]" disabled="disabled" type="text" placeholder="Seleccione fecha desde" class="datepicker" data-dateformat='dd-MM-yy'>
                                             </label>
                                         </section>
                                         <section class="col col-4">
-                                            <label>Fecha hasta:</label>
+                                            <label>Fecha hasta</label>
                                             <label class="input">
                                                 <input value="@ViewData["FechaHasta"]" disabled="disabled" type="text" placeholder="Seleccione fecha hasta" class="datepicker" data-dateformat='dd-MM-yy'>
                                             </label>
@@ -106,15 +107,54 @@
                                     </div>
 
                                     <section>
-                                        <label>Observaciones:</label>
+                                        <label>Observaciones</label>
                                         <label class="label"></label>
                                         <label class="textarea">
                                             <textarea maxlength="150" asp-for="Observaciones" rows="4"></textarea>
                                             <span asp-validation-for="Observaciones" class="text-danger"></span>
                                         </label>
                                     </section>
+
+                                    <section class="col-lg-3">
+
+                                        <label>@Html.DisplayNameFor(model => Model.RequiereReemplazo)</label><br />
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" asp-for="RequiereReemplazo" value="false" class="radiobox">
+                                                    <span>No</span>
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="col-lg-6">
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" asp-for="RequiereReemplazo" value="true" class="radiobox">
+                                                    <span>Si</span>
+                                                </label>
+                                            </div>
+
+                                            
+                                        </div>
+                                    </section>
+
+                                    <section class="col col-lg-12">&nbsp;</section>
+
+                                    <section class="col-4">
+
+                                        <label>@Html.DisplayNameFor(model => Model.IdEmpleadoReemplazo)</label>
+                                        <label class="input">
+                                            <select asp-for="IdEmpleadoReemplazo" class="form-control" asp-items="ViewBag.EmpleadoReemplazo">
+                                                <option value="0" selected>Ninguno</option>
+                                            </select>
+
+                                            <span asp-validation-for="IdEmpleadoReemplazo" class="text-danger"></span>
+                                        </label>
+                                    </section>
+
                                     <span class="text-danger">@ViewData["Error"]</span>
+
                                 </fieldset>
+
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-default" />
                                     <a asp-action="DetalleSolicitudVacaciones" asp-route-id="@Model.IdEmpleado" class="btn btn-default">Cancelar</a>

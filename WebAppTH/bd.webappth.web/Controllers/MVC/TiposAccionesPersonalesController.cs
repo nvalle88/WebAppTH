@@ -60,8 +60,7 @@ namespace bd.webappth.web.Controllers.MVC
               
                 }
             };
-
-            ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
+            
             ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
 
 
@@ -70,7 +69,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TipoAccionPersonal tipoAccionPersonal)
+        public async Task<IActionResult> Create(TipoAccionPersonalViewModel tipoAccionPersonalViewModel)
         {
 
             
@@ -78,62 +77,64 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
-
-                var model = new TipoAccionPersonalViewModel
-                {
-
-                    MatrizLista = new List<Matriz>
+                var MatrizLista = new List<Matriz>
                             {
                                 new Matriz {Id = "Matriz", Nombre = "Matriz"},
                                 new Matriz {Id ="Regional", Nombre = "Regional"},
                                 new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
-                            },
-                    TipoAccionPersonal = tipoAccionPersonal
-                    
+                            };
 
-                };
+                // Obtener el valor de empleadoCambio y setear la variable del modelo a la que equivale 
+                // 0 = n/a || 1 = Modalidad contratación || 2 = desactivar empleado
+                switch (tipoAccionPersonalViewModel.empleadoCambio)
+                {
+                    case 0:
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = false;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = false;
+                        break;
+
+                    case 1:
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = false;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = true;
+                        break;
+
+                    case 2:
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = true;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = false;
+                        break;
+
+                    default:
+                    break;
+                }
+
+                // Obtener el valor de grp_tiempo_minimo y setear la variable del modelo a la que equivale
+                if (tipoAccionPersonalViewModel.grp_tiempo_minimo == "definitivo")
+                {
+                    tipoAccionPersonalViewModel.TipoAccionPersonal.Definitivo = true;
+                }
+                else {
+                    tipoAccionPersonalViewModel.TipoAccionPersonal.Definitivo = false;
+                }
+
 
                 if (!ModelState.IsValid)
                 {
 
-                    ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(model.MatrizLista, "Id", "Nombre");
-
-                    var listaEstadoTipoAccionPersonal = await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal");
-
-                    ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(
-                        listaEstadoTipoAccionPersonal, "IdEstadoTipoAccionPersonal", "Nombre");
+                    ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(MatrizLista, "Id", "Nombre");
                     
-
                     InicializarMensaje(Mensaje.ModeloInvalido);
 
-                    return View(model);
+                    return View(tipoAccionPersonalViewModel);
                 }
+           
 
 
-
-                response = await apiServicio.InsertarAsync(tipoAccionPersonal,
+                response = await apiServicio.InsertarAsync(tipoAccionPersonalViewModel.TipoAccionPersonal,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/TiposAccionesPersonales/InsertarTipoAccionPersonal");
 
-                var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
-                {
-
-                    MatrizLista = new List<Matriz>
-                            {
-                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
-                                new Matriz {Id ="Regional", Nombre = "Regional"},
-                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
-                            },
-                    TipoAccionPersonal = new TipoAccionPersonal
-                    {
-                        NDiasMaximo = 0,
-                        NDiasMinimo = 0,
-                        NHorasMaximo = 0,
-                        NHorasMinimo = 0
-
-                    }
-
-                };
+                tipoAccionPersonalViewModel.MatrizLista = MatrizLista;
+                
 
 
 
@@ -142,10 +143,13 @@ namespace bd.webappth.web.Controllers.MVC
                     return RedirectToAction("Index", new { mensaje = response.Message});
                 }
                 
-                ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
-                ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
+               
+                ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewModel.MatrizLista, "Id", "Nombre");
 
-                return View(tipoAccionPersonalViewmodel);
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+                InicializarMensaje("");
+
+                return View(tipoAccionPersonalViewModel);
 
             }
             catch (Exception ex)
@@ -169,7 +173,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<TipoAccionPersonal>(respuesta.Resultado.ToString());
 
-                    var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
+                    var tipoAccionPersonalViewModel = new TipoAccionPersonalViewModel
                     {
 
                         MatrizLista = new List<Matriz>
@@ -183,13 +187,41 @@ namespace bd.webappth.web.Controllers.MVC
                         TipoAccionPersonal = (TipoAccionPersonal)respuesta.Resultado
                     };
 
-                    ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
-                    ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
+                    ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewModel.MatrizLista, "Id", "Nombre");
+                   
 
 
                     if (respuesta.IsSuccess)
                     {
-                        return View(tipoAccionPersonalViewmodel);
+
+                        // Obtener el valor de empleadoCambio a la que equivale 
+                        // 0 = n/a || 1 = Modalidad contratación || 2 = desactivar empleado
+                        
+                        if (    
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado == false
+                            && tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion == false
+                        ) {
+                            tipoAccionPersonalViewModel.empleadoCambio = 0;
+                        }
+
+                        else if (
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado == false
+                            && tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion == true
+                        )
+                        {
+                            tipoAccionPersonalViewModel.empleadoCambio = 1;
+                        }
+
+                        else if (
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado == true
+                            && tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion == false
+                        )
+                        {
+                            tipoAccionPersonalViewModel.empleadoCambio = 2;
+                        }
+
+
+                        return View(tipoAccionPersonalViewModel);
                     }
 
                 }
@@ -204,28 +236,57 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, TipoAccionPersonal TipoAccionPersonal)
+        public async Task<IActionResult> Edit(string id, TipoAccionPersonalViewModel tipoAccionPersonalViewModel)
         {
             Response response = new Response();
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    
-                    var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
-                    {
-
-                        MatrizLista = new List<Matriz>
+                    var MatrizLista = new List<Matriz>
                             {
                                 new Matriz {Id = "Matriz", Nombre = "Matriz"},
                                 new Matriz {Id ="Regional", Nombre = "Regional"},
                                 new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
-                            },
-                        
-                    };
+                            };
 
-                    response = await apiServicio.EditarAsync(id, TipoAccionPersonal, new Uri(WebApp.BaseAddress),
-                                                                 "api/TiposAccionesPersonales");
+
+                    // Obtener el valor de empleadoCambio y setear la variable del modelo a la que equivale 
+                    // 0 = n/a || 1 = Modalidad contratación || 2 = desactivar empleado
+                    switch (tipoAccionPersonalViewModel.empleadoCambio)
+                    {
+                        case 0:
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = false;
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = false;
+                            break;
+
+                        case 1:
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = false;
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = true;
+                            break;
+
+                        case 2:
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = true;
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = false;
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    // Obtener el valor de grp_tiempo_minimo y setear la variable del modelo a la que equivale
+                    if (tipoAccionPersonalViewModel.grp_tiempo_minimo == "definitivo")
+                    {
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.Definitivo = true;
+                    }
+                    else
+                    {
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.Definitivo = false;
+                    }
+
+
+
+                    response = await apiServicio.EditarAsync(id, tipoAccionPersonalViewModel.TipoAccionPersonal, new Uri(WebApp.BaseAddress),"api/TiposAccionesPersonales");
                     
 
                     if (response.IsSuccess)
@@ -233,14 +294,15 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return RedirectToAction("Index", new { mensaje = response.Message});
                     }
+
                     ViewData["Error"] = response.Message;
 
 
-                    ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
-                    ViewData["IdEstadoTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<EstadoTipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/EstadosTiposAccionPersonal/ListarEstadosTiposAccionPersonal"), "IdEstadoTipoAccionPersonal", "Nombre");
+                    ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(MatrizLista, "Id", "Nombre");
+                    
 
 
-                    return View(tipoAccionPersonalViewmodel);
+                    return View(tipoAccionPersonalViewModel);
 
                 }
                 return BadRequest();

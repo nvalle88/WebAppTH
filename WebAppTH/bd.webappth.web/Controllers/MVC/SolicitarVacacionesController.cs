@@ -14,6 +14,7 @@ using bd.log.guardar.Servicios;
 using System.Security.Claims;
 using bd.webappth.entidades.ViewModels;
 using bd.webappth.servicios.Extensores;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -69,9 +70,18 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                if (modelo.PlanAnual == true && modelo.IdSolicitudPlanificacionVacaciones < 1) {
 
-                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SeleccioneSolicitudPlanificacionVacaciones}|{"10000"}";
+                var modeloValido = 0;
+
+                if (modelo.PlanAnual == true && modelo.IdSolicitudPlanificacionVacaciones < 1)
+                {
+                    modeloValido = 1;
+                }
+                else if(modelo.PlanAnual == false && String.IsNullOrEmpty(modelo.RazonNoPlanificado)){
+                    modeloValido = 2;
+                }
+
+                if( modeloValido > 0){
 
                     var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
 
@@ -86,10 +96,23 @@ namespace bd.webappth.web.Controllers.MVC
                             new Uri(WebApp.BaseAddress),
                             "api/SolicitudVacaciones/CrearSolicitudesVacaciones");
 
+                        if (modeloValido == 1)
+                        {
+                            this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SeleccioneSolicitudPlanificacionVacaciones}|{"10000"}";
+                            modelo.PlanAnual = true;
+                        }
+
+                        else if (modeloValido == 2)
+                        {
+                            this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.MotivoSolicitudVacacionNoPlanificada}|{"12000"}";
+
+                            modelo.PlanAnual = false;
+                        }
+
                         return View(modelo);
 
                     }
-
+                    
                     return RedirectToAction("Login", "Login");
                 }
 
@@ -213,7 +236,18 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
+                var modeloValido = 0;
+
                 if (modelo.PlanAnual == true && modelo.IdSolicitudPlanificacionVacaciones < 1)
+                {
+                    modeloValido = 1;
+                }
+                else if (modelo.PlanAnual == false && String.IsNullOrEmpty(modelo.RazonNoPlanificado))
+                {
+                    modeloValido = 2;
+                }
+
+                if (modeloValido > 0)
                 {
 
                     this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SeleccioneSolicitudPlanificacionVacaciones}|{"10000"}";
@@ -224,12 +258,35 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                        var enviar = new IdFiltrosViewModel { NombreUsuario = NombreUsuario};
+                        var ids = modelo.IdSolicitudVacaciones;
 
-                        modelo = await apiServicio.ObtenerElementoAsync1<SolicitudVacacionesViewModel>(
-                            enviar,
+                        var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                            ids,
                             new Uri(WebApp.BaseAddress),
                             "api/SolicitudVacaciones/ObtenerSolicitudVacacionesViewModel");
+
+                        if (respuesta.IsSuccess)
+                        {
+                            modelo = JsonConvert.DeserializeObject<SolicitudVacacionesViewModel>(respuesta.Resultado.ToString());
+                        }
+                        else {
+                            return BadRequest();
+                        }
+                        
+
+                        if (modeloValido == 1)
+                        {
+                            this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SeleccioneSolicitudPlanificacionVacaciones}|{"10000"}";
+                            modelo.PlanAnual = true;
+                        }
+
+                        else if (modeloValido == 2)
+                        {
+                            this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.MotivoSolicitudVacacionNoPlanificada}|{"12000"}";
+
+                            modelo.PlanAnual = false;
+                        }
+
 
                         return View(modelo);
 
@@ -284,7 +341,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
-
+        
 
     }
 }
