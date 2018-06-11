@@ -31,6 +31,11 @@ namespace bd.webappth.entidades.ViewModels
         //public List<string> PreguntaOrganizador { get; set; }
         //public List<string> PreguntaConocimiento { get; set; }
 
+        //CARGAR EL DETALLE
+        public List<ViewModelEvaluacionEventoDetalle> ListaPreguntaEvaluacionFacilitadorDetalle { get; set; }
+        public List<ViewModelEvaluacionEventoDetalle> ListaPreguntaOrganizadorDetalle { get; set; }
+        public List<ViewModelEvaluacionEventoDetalle> ListaPreguntaEvaluacionConocimientoDetalle { get; set; }
+
 
     }
 }

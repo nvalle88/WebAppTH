@@ -126,15 +126,11 @@ namespace bd.webappth.web.Controllers.MVC
                                                                     , "api/EvaluacionCapacitacion/ObtenerDatosEvaluacionEvento");
                 if (datos != null)
                 {
-                    a.ListaPreguntaEvaluacionFacilitador = datos.ListaPreguntaEvaluacionEvento.Where(x => x.Facilitador == true).ToList();
-                    a.ListaPreguntaOrganizador = datos.ListaPreguntaEvaluacionEvento.Where(x => x.Organizador == true).ToList();
-                    a.ListaPreguntaEvaluacionConocimiento = datos.ListaPreguntaEvaluacionEvento.Where(x => x.ConocimientoObtenidos == true).ToList();
                     var recibe = new ViewModelEvaluacionCapacitaciones
                     {
-                        ListaPreguntaEvaluacionFacilitador = a.ListaPreguntaEvaluacionFacilitador,
-                        ListaPreguntaOrganizador = a.ListaPreguntaOrganizador,
-                        ListaPreguntaEvaluacionConocimiento = a.ListaPreguntaEvaluacionConocimiento,
-                        ListaPreguntaEvaluacionEvento = datos.ListaPreguntaEvaluacionEvento,
+                        ListaPreguntaEvaluacionFacilitadorDetalle = a.ListaPreguntaEvaluacionFacilitadorDetalle,
+                        ListaPreguntaOrganizadorDetalle = a.ListaPreguntaOrganizadorDetalle,
+                        ListaPreguntaEvaluacionConocimientoDetalle = a.ListaPreguntaEvaluacionConocimientoDetalle,
                         IdPlanCapacitacion = id,
                         NombreEvento = datos.NombreEvento,
                         Institucion = datos.Institucion,
