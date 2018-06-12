@@ -12,6 +12,7 @@ using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -33,6 +34,61 @@ namespace bd.webappth.web.Controllers.MVC
             }
             ViewData["Error"] = mensaje;
         }
+
+
+        public async Task<IActionResult> Index()
+        {
+
+            var lista = new List<FlujoAprobacion>();
+            try
+            {
+                lista = await apiServicio.Listar<FlujoAprobacion>(new Uri(WebApp.BaseAddress)
+                                                                    , "api/FlujosAprobacion/ListarFlujosAprobacion");
+                InicializarMensaje(null);
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
+                                                                  "api/FlujosAprobacion");
+
+
+                    respuesta.Resultado = JsonConvert.DeserializeObject<FlujoAprobacion>(respuesta.Resultado.ToString());
+
+                    
+                    if (respuesta.IsSuccess)
+                    {
+                        InicializarMensaje(null);
+
+                        await InicializarCombos();
+                        return View(respuesta.Resultado);
+                    }
+
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        /*
+
         public async Task<IActionResult> Create()
         {
             InicializarMensaje(null);
@@ -100,37 +156,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Edit(string id)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/FlujosAprobacion");
-
-
-                    respuesta.Resultado = JsonConvert.DeserializeObject<FlujoAprobacion>(respuesta.Resultado.ToString());
-
-                    ViewData["IdTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales"), "IdTipoAccionPersonal", "Nombre");
-                    ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
-
-
-                    if (respuesta.IsSuccess)
-                    {
-                        InicializarMensaje(null);
-                        return View(respuesta.Resultado);
-                    }
-
-                }
-
-                return BadRequest();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -185,31 +211,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index()
-        {
-
-            var lista = new List<FlujoAprobacion>();
-            try
-            {
-                lista = await apiServicio.Listar<FlujoAprobacion>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/FlujosAprobacion/ListarFlujosAprobacion");
-                InicializarMensaje(null);
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando un flujo de aprobación",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-                return BadRequest();
-            }
-        }
+        
 
         public async Task<IActionResult> Delete(string id)
         {
@@ -250,6 +252,61 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+        */
+
+
+        public async Task InicializarCombos()
+        {
+
+            try
+            {
+                // Combo de sucursales
+                var listaSucursal = await apiServicio.Listar<Sucursal>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/Sucursal/ListarSucursal");
+                
+                ViewData["Sucursal"] = new SelectList(listaSucursal, "IdSucursal", "Nombre");
+
+
+                // Combo de sucursales
+                var listaTipoAccionPersonal = await apiServicio.Listar<TipoAccionPersonal>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+
+                ViewData["TipoAccionPersonal"] = new SelectList(listaTipoAccionPersonal, "IdTipoAccionPersonal", "Nombre");
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+        public async Task<IActionResult> ObtenerManualPuestosPorSucursal(int IdSucursal)
+        {
+
+            var lista = new List<ManualPuesto>();
+
+            try
+            {
+                var filtro = new IdFiltrosViewModel { IdSucursal = IdSucursal };
+
+                lista = await apiServicio.ObtenerElementoAsync1<List<ManualPuesto>>(
+                    filtro,
+                    new Uri(WebApp.BaseAddress),
+                    "api/ManualPuestos/ListarManualPuestoPorSucursal");
+
+                return Json(lista);
+            }
+            catch (Exception)
+            {
+
+                return Json(lista);
+            }
+
+        }
+
 
     }
 }

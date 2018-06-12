@@ -83,30 +83,39 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().TipoAccionPersonal.Nombre)
                                         </th>
+
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Empleado.Persona.Nombres)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Sucursal.Nombre)
                                         </th>
+
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ManualPuesto.Nombre)
+                                        </th>
+
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TipoAccionPersonal.Nombre)
-                                            </td>
-                                            <td>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoAccionPersonal.Nombre)
+                                        </td>
 
-                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Nombres)
-                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Apellidos)
-                                            </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Sucursal.Nombre)
+                                        </td>
 
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdFlujoAprobacion }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFlujoAprobacion }, new { onclick = "return confirm('Desea eliminar el flujo de aprobacion... ?');" })
-                                            </td>
-                                        </tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ManualPuesto.Nombre)
+                                        </td>
+
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdFlujoAprobacion }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFlujoAprobacion }, new { onclick = "return confirm('Desea eliminar el flujo de aprobacion... ?');" })
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

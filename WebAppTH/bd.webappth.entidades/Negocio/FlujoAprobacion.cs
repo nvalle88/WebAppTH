@@ -8,15 +8,17 @@ namespace bd.webappth.entidades.Negocio
     {
         [Key]
         public int IdFlujoAprobacion { get; set; }
-
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Tipo Accion Personal:")]
         public int IdTipoAccionPersonal { get; set; }
-        public virtual TipoAccionPersonal TipoAccionPersonal { get; set; }
+        public int IdSucursal { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Empleado:")]
-        public int IdEmpleado { get; set; }
-        public virtual Empleado Empleado { get; set; }
+        [Display(Name = "Puesto responsable de aprobación")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        public int IdManualPuesto { get; set; }
+
+        public virtual ManualPuesto ManualPuesto { get; set; }
+        public virtual Sucursal Sucursal { get; set; }
+        public virtual TipoAccionPersonal TipoAccionPersonal { get; set; }
+        public virtual ICollection<AprobacionAccionPersonal> AprobacionAccionPersonal { get; set; }
     }
 }

@@ -59,18 +59,23 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().FechaSolicitud)
                                         </th>
+
                                         <th>
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().FechaDesde)
                                         </th>
+
                                         <th>
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().FechaHasta)
                                         </th>
+
                                         <th>
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
                                         </th>
+
                                         <th>
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Observaciones)
                                         </th>
+
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -84,28 +89,34 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.FechaSolicitud)
                                             </td>
+
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.FechaDesde)
                                             </td>
+
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.FechaHasta)
                                             </td>
 
+
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.NombreEstado)
                                             </td>
+
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Observaciones)
                                             </td>
-
+                                            <td>
                                             @if (item.Estado != 6)
                                             {
-                                                <td>
-                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdSolicitudVacaciones }) |
+                                                
+                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdSolicitudVacaciones }) 
+                                                    <text>|</text>
                                                     
                                                     @Html.ActionLink("Eliminar", "Delete", new { id = item.IdSolicitudVacaciones }, new { onclick = "return confirm('Desea eliminar la solicitud de vacaciones... ?');" })
-                                                </td>
+                                                
                                             }
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
