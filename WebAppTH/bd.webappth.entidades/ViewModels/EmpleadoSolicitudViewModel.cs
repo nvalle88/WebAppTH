@@ -16,5 +16,6 @@ namespace bd.webappth.entidades.ViewModels
         public bool HaSolicitado { get; set; }
 
         public int IdEmpleado { get; set; }
+        public int IdSolicitud { get; set; }
     }
 }
