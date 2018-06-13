@@ -45,6 +45,12 @@ namespace bd.webappth.web.Controllers.MVC
             return Redirect(url);
 
         }
+        public ActionResult ReporteSolicitudViaticosMDT(int IdEmpleado,string IdSolicitud)
+        {
+            string url = string.Format("{0}{1}{2}{3}{4}", ReportConfig.CompletePath, "RepSolicitudViaticoFormatoMDT&IdEmpleado=", Convert.ToString(IdEmpleado), "&IdSolicitud=", Convert.ToString(IdSolicitud));
+            return Redirect(url);
+
+        }
     }
 }
 
