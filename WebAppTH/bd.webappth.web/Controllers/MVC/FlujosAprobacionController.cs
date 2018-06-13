@@ -13,6 +13,7 @@ using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -26,14 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-        private void InicializarMensaje(string mensaje)
-        {
-            if (mensaje == null)
-            {
-                mensaje = "";
-            }
-            ViewData["Error"] = mensaje;
-        }
+        
 
 
         public async Task<IActionResult> Index()
@@ -42,9 +36,9 @@ namespace bd.webappth.web.Controllers.MVC
             var lista = new List<FlujoAprobacion>();
             try
             {
-                lista = await apiServicio.Listar<FlujoAprobacion>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/FlujosAprobacion/ListarFlujosAprobacion");
-                InicializarMensaje(null);
+                lista = await apiServicio.Listar<FlujoAprobacion>(
+                    new Uri(WebApp.BaseAddress), "api/FlujosAprobacion/ListarFlujosAprobacion");
+                
                 return View(lista);
             }
             catch (Exception ex)
@@ -53,8 +47,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-
-
+        
         public async Task<IActionResult> Edit(string id)
         {
             try
@@ -65,15 +58,27 @@ namespace bd.webappth.web.Controllers.MVC
                                                                   "api/FlujosAprobacion");
 
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<FlujoAprobacion>(respuesta.Resultado.ToString());
+                    var modelo = JsonConvert.DeserializeObject<FlujoAprobacion>(respuesta.Resultado.ToString());
 
                     
                     if (respuesta.IsSuccess)
                     {
-                        InicializarMensaje(null);
-
+                        
                         await InicializarCombos();
-                        return View(respuesta.Resultado);
+
+
+                        var filtro = new IdFiltrosViewModel { IdSucursal = modelo.IdSucursal };
+
+                        var lista = await apiServicio.ObtenerElementoAsync1<List<ManualPuesto>>(
+                            filtro,
+                            new Uri(WebApp.BaseAddress),
+                            "api/ManualPuestos/ListarManualPuestoPorSucursal");
+
+                        ViewData["ManualPuesto"] = new SelectList(lista, "IdManualPuesto", "Nombre");
+
+
+
+                        return View(modelo);
                     }
 
                 }
@@ -87,76 +92,6 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        /*
-
-        public async Task<IActionResult> Create()
-        {
-            InicializarMensaje(null);
-            ViewData["IdTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales"), "IdTipoAccionPersonal", "Nombre");
-            ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
-
-
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(FlujoAprobacion FlujoAprobacion)
-        {
-            if (!ModelState.IsValid)
-            {
-                InicializarMensaje(null);
-                return View(FlujoAprobacion);
-
-            }
-            Response response = new Response();
-            try
-            {
-                response = await apiServicio.InsertarAsync(FlujoAprobacion,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/FlujosAprobacion/InsertarFlujoAprobacion");
-                if (response.IsSuccess)
-                {
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un flujo de aprobación",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "flujo de Aprobación:", FlujoAprobacion.IdFlujoAprobacion),
-                    });
-
-                    return RedirectToAction("Index");
-                }
-
-                ViewData["Error"] = response.Message;
-                ViewData["IdTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales"), "IdTipoAccionPersonal", "Nombre");
-                ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
-
-
-                return View(FlujoAprobacion);
-
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando un flujo de aprobación",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
-
-                return BadRequest();
-            }
-        }
-
-        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -165,6 +100,26 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}|{"10000"}";
+
+                    // Se vuelven a cargar los combos para generar la vista
+                    await InicializarCombos();
+                    var filtro = new IdFiltrosViewModel { IdSucursal = FlujoAprobacion.IdSucursal };
+
+                    var lista = await apiServicio.ObtenerElementoAsync1<List<ManualPuesto>>(
+                        filtro,
+                        new Uri(WebApp.BaseAddress),
+                        "api/ManualPuestos/ListarManualPuestoPorSucursal");
+
+                    ViewData["ManualPuesto"] = new SelectList(lista, "IdManualPuesto", "Nombre");
+
+
+                    return View(FlujoAprobacion);
+                }
+
+
                 if (!string.IsNullOrEmpty(id))
                 {
                     response = await apiServicio.EditarAsync(id, FlujoAprobacion, new Uri(WebApp.BaseAddress),
@@ -172,47 +127,125 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Flujo de Aprobación", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un flujo de aprobación",
-                            UserName = "Usuario 1"
-                        });
-
-                        return RedirectToAction("Index");
+                        return this.Redireccionar(
+                            "FlujosAprobacion",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
+                        
                     }
-                    ViewData["Error"] = response.Message;
 
-                    ViewData["IdTipoAccionPersonal"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales"), "IdTipoAccionPersonal", "Nombre");
-                    ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleados"), "IdEmpleado", "NombreApellido");
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+                    // Se vuelven a cargar los combos para generar la vista
+                    await InicializarCombos();
+                    var filtro = new IdFiltrosViewModel { IdSucursal = FlujoAprobacion.IdSucursal };
+
+                    var lista = await apiServicio.ObtenerElementoAsync1<List<ManualPuesto>>(
+                        filtro,
+                        new Uri(WebApp.BaseAddress),
+                        "api/ManualPuestos/ListarManualPuestoPorSucursal");
+
+                    ViewData["ManualPuesto"] = new SelectList(lista, "IdManualPuesto", "Nombre");
 
 
                     return View(FlujoAprobacion);
 
                 }
+                
                 return BadRequest();
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un flujo de aprobación",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+                return BadRequest();
+            }
+        }
 
+
+        
+
+        public async Task<IActionResult> Create()
+        {
+
+            await InicializarCombos();
+
+            return View(new FlujoAprobacion());
+        }
+
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(FlujoAprobacion FlujoAprobacion)
+        {
+            
+            try
+            {
+                Response response = new Response();
+
+                if (!ModelState.IsValid)
+                {
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}|{"10000"}";
+                    await InicializarCombos();
+
+                    if (FlujoAprobacion.IdSucursal > 0) {
+
+                        var filtro = new IdFiltrosViewModel { IdSucursal = FlujoAprobacion.IdSucursal };
+
+                        var lista = await apiServicio.ObtenerElementoAsync1<List<ManualPuesto>>(
+                            filtro,
+                            new Uri(WebApp.BaseAddress),
+                            "api/ManualPuestos/ListarManualPuestoPorSucursal");
+
+                        ViewData["ManualPuesto"] = new SelectList(lista, "IdManualPuesto", "Nombre");
+                    }
+                    
+
+                    return View(FlujoAprobacion);
+
+                }
+
+                response = await apiServicio.InsertarAsync(FlujoAprobacion,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/FlujosAprobacion/InsertarFlujoAprobacion");
+                if (response.IsSuccess)
+                {
+                    return this.Redireccionar(
+                            "FlujosAprobacion",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
+                }
+
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+                await InicializarCombos();
+
+                if (FlujoAprobacion.IdSucursal > 0)
+                {
+
+                    var filtro = new IdFiltrosViewModel { IdSucursal = FlujoAprobacion.IdSucursal };
+
+                    var lista = await apiServicio.ObtenerElementoAsync1<List<ManualPuesto>>(
+                        filtro,
+                        new Uri(WebApp.BaseAddress),
+                        "api/ManualPuestos/ListarManualPuestoPorSucursal");
+
+                    ViewData["ManualPuesto"] = new SelectList(lista, "IdManualPuesto", "Nombre");
+                }
+
+                return View(FlujoAprobacion);
+
+            }
+            catch (Exception ex)
+            {
                 return BadRequest();
             }
         }
 
         
-
+        
         public async Task<IActionResult> Delete(string id)
         {
 
@@ -222,37 +255,28 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/FlujosAprobacion");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de un flujo de aprobación",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+
+                    return this.Redireccionar(
+                            "FlujosAprobacion",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
                 }
-                //return BadRequest();
-                return RedirectToAction("Index", new { mensaje = response.Message });
+
+                return this.Redireccionar(
+                            "FlujosAprobacion",
+                            "Index",
+                            $"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}"
+                         );
 
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar un flujo de aprobación",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
 
                 return BadRequest();
             }
         }
-        */
+        
 
 
         public async Task InicializarCombos()
@@ -275,6 +299,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 ViewData["TipoAccionPersonal"] = new SelectList(listaTipoAccionPersonal, "IdTipoAccionPersonal", "Nombre");
                 
+
             }
             catch (Exception ex)
             {

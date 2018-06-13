@@ -8,12 +8,20 @@ namespace bd.webappth.entidades.Negocio
     {
         [Key]
         public int IdFlujoAprobacion { get; set; }
+
+        [Required(ErrorMessage = "Debe seleccionar {0}")]
+        [Display(Name = "Tipo de movimiento")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdTipoAccionPersonal { get; set; }
+
+        [Required(ErrorMessage = "Debe seleccionar {0}")]
+        [Display(Name = "Sucursal")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar la {0} ")]
         public int IdSucursal { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Required(ErrorMessage = "Debe seleccionar {0}")]
         [Display(Name = "Puesto responsable de aprobación")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdManualPuesto { get; set; }
 
         public virtual ManualPuesto ManualPuesto { get; set; }
