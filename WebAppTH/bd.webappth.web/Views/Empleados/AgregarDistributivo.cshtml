@@ -5,7 +5,7 @@
 <script src='~/js/site.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 @*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -108,19 +108,19 @@
 
 
                                             @*<div class="widget-body">
-                                                    <div class="tree smart-form">
-                                                        <ul>
-                                                            <li>
-                                                                <span><i class="fa fa-lg fa-folder-open"></i> @Model.Dependencia.Nombre</span>
-                                                                @{await Html.RenderPartialAsync("_PartialViewDependenciasHijos", Model.Dependencia);}
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                <div class="tree smart-form">
+                                                    <ul>
+                                                        <li>
+                                                            <span><i class="fa fa-lg fa-folder-open"></i> @Model.Dependencia.Nombre</span>
+                                                            @{await Html.RenderPartialAsync("_PartialViewDependenciasHijos", Model.Dependencia);}
+                                                        </li>
+                                                    </ul>
+                                                </div>
 
-                                                </div>*@
+                                            </div>*@
                                         </div>
-                                        <input class="form-control input" type="hidden" id="iddependencia" asp-for="IndiceOcupacional.IdDependencia">
-
+                                       <input class="form-control input" type="hidden" id="iddependencia" asp-for="IndiceOcupacional.IdDependencia">
+                                           
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-4">
@@ -150,9 +150,9 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                                        
                                     </div>
-                                    <div class="row">
+                                    <div class="row"> 
                                         <div class="col-sm-4">
                                             <label>Modalidad Partida:</label>
                                             <div class="form-group">
@@ -161,7 +161,7 @@
                                                     <select id="modalidadpartida" asp-for="IndiceOcupacional.IdModalidadPartida" asp-items="ViewBag.IdModalidadPartida" class="form-control input "></select>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>  
                                         <div class="col-sm-4">
                                             <label>Fondo de Financimiento:</label>
                                             <div class="form-group">
@@ -182,16 +182,8 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="col-sm-2">
-                                            <div class="form-group">
-                                                <label>&nbsp;&nbsp;</label>
-                                                <label class="checkbox-inline">
-                                                    <label>&iquest; Salario Real ?</label>
-                                                    <input type="checkbox" asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control" />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2" id="IdSalarioReal">
                                             <div class="form-group">
                                                 <label>Salario Real:</label>
                                                 <div class="input-group">
@@ -200,7 +192,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                       
                                     </div>
                                     <footer>
                                         <input type="submit" value="Guardar" class="btn btn-primary" />
@@ -208,8 +200,8 @@
                                     </footer>
                                     <br />
                                 </article>
-
-
+                               
+                                       
                             </form>
                         </div>
                         <!-- end widget content -->
@@ -243,14 +235,6 @@
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
-        $("#IndiceOcupacionalModalidadPartida.SalarioReal").change(function () {
-            if (!$(this).prop('checked')) {
-                $('#IdSalarioReal').hide();
-            } else {
-                $('#IdSalarioReal').show();
-            }
-
-        })
         $(document).ready(function () {
 
             //Bootstrap Wizard Validations
@@ -416,8 +400,8 @@
 
     <script src='~/lib/waitMe/waitMe.min.js'></script>
     <script src='~/js/site.js'></script>
-    @*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
+@*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
 
 
     <script type="text/javascript">
@@ -482,7 +466,7 @@
                 return false;
            })
 
-
+ 
 
 
                         $("#manualpuesto").change(function () {
@@ -750,8 +734,8 @@
     </script>
 
 
-
-
+    
+         
 
 
 
