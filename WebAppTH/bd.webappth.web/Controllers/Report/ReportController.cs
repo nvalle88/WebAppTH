@@ -21,6 +21,14 @@ namespace bd.webappth.web.Controllers.MVC
             return Redirect(url);
             
         }
+
+        public ActionResult RepMatr05PlanificacionTH()
+        {
+            string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepMatr05PlanificacionTH");
+            return Redirect(url);
+
+        }
+
         public ActionResult ReportePlanCapacitaciones()
         {
             string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepPlanCapacitaciones");
