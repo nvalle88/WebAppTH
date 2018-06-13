@@ -142,7 +142,8 @@ namespace bd.webappth.web.Controllers.MVC
                         FechaRigeHasta = DateTime.Now,
                         SituacionActualEmpleadoViewModel = situacionActualViewModel,
                         GeneraMovimientoPersonal = false,
-                        ListaIndicesOcupacionalesModalidadPartida = listaIOMP
+                        ListaIndicesOcupacionalesModalidadPartida = listaIOMP,
+                        IdIndiceOcupacionalModalidadPartidaPropuesta = situacionActualViewModel.IdIndiceOcupacionalModalidadPartida
                     };
 
 

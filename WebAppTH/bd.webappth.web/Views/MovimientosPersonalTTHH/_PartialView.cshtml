@@ -220,6 +220,7 @@
                         </tr>
 
                         <tr>
+
                             <th data-class="expand">
                                 @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().IndiceOcupacionalViewModel.PartidaIndividual)
                             </th>
@@ -265,6 +266,7 @@
                         {
                             <tr>
 
+
                                 <td>
                                     @Html.DisplayFor(modelItem => item.IndiceOcupacionalViewModel.PartidaIndividual)
                                 </td>
@@ -302,7 +304,15 @@
                                         @Html.ActionLink("Seleccionar", "SeleccionIndice", new { id = item.IdIndiceOcupacionalModalidadPartida }, new { onclick = "espera()" })
                                     *@
 
-                                    @Html.RadioButtonFor(x => x.IdIndiceOcupacionalModalidadPartidaPropuesta, item.IdIndiceOcupacionalModalidadPartida)
+                                    @if (item.IdIndiceOcupacionalModalidadPartida == Model.IdIndiceOcupacionalModalidadPartidaPropuesta)
+                                    {
+                                        @Html.RadioButtonFor(x => x.IdIndiceOcupacionalModalidadPartidaPropuesta, item.IdIndiceOcupacionalModalidadPartida,new {  @checked = "true"})
+                                    }
+                                    else { 
+                                        @Html.RadioButtonFor(x => x.IdIndiceOcupacionalModalidadPartidaPropuesta, item.IdIndiceOcupacionalModalidadPartida)
+                                    }
+                                    
+                                    
                                 </td>
 
                             </tr>
