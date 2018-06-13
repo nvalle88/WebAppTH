@@ -27,5 +27,7 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "RMU")]
         public decimal Remuneracion { get; set; }
 
+        public int IdIndiceOcupacionalModalidadPartida { get; set; }
+
     }
 }

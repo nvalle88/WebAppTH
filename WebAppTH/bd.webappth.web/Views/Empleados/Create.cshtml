@@ -8,32 +8,6 @@
 
 
 <div id="content">
-    <div class="col col-10">
-
-        @if (@ViewData["Error"].ToString() != "")
-
-        {
-
-            <div class="col-lg-12">
-
-                <div class="alert alert-block alert-dismissable">
-
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-
-                    <p>
-
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        }
-    </div>
     <section id="widget-grid" class="">
         <div class="row">
             <article class="col-sm-12 col-md-12 col-lg-12">
@@ -394,8 +368,8 @@
                                     </div>
                                 </fieldset>
                                 <footer>
-                                    <input type="submit" id="GuardarForm" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="IndexEmpleadoFamiliar" class="btn btn-default">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
+                                    <a asp-action="IndexEmpleadoFamiliar" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
@@ -417,21 +391,13 @@
 
 @section Scripts {
 
-
-   
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     
     <!-- PAGE RELATED PLUGIN(S) -->
-    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
 
     <script src='~/lib/select2/dist/js/select2.min.js'></script>
     <script src='~/lib/select2/dist/js/i18n/es.js'></script>
-    <script src='~/lib/waitMe/waitMe.min.js'></script>
-    <script src='~/js/site.js'></script>
 
-    <script src='~/lib/waitMe/waitMe.min.js'></script>
-    <script src='~/js/site.js'></script>
 
     <script type="text/javascript">
         $(document).ready(function () {

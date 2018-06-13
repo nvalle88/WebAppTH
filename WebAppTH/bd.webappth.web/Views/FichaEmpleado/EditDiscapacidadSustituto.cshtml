@@ -32,7 +32,7 @@
                                 <input type="hidden" asp-for="IdPersonaSustituto" />
                                 @{await Html.RenderPartialAsync("_PartialViewDiscapacidadSustituto");}
                                 <footer>
-                                    <input type="submit" id="GuardarForm" onclick="cargando()" value="Guardar" class="btn btn-primary" />
+                                    <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
                                     <a asp-action="IndexDiscapacidadSustituto" asp-route-id="@Model.IdPersonaSustituto" onclick="cargando()" class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
@@ -54,6 +54,7 @@
 </div>
 
 @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>

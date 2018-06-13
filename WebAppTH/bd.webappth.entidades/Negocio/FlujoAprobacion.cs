@@ -9,14 +9,24 @@ namespace bd.webappth.entidades.Negocio
         [Key]
         public int IdFlujoAprobacion { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Tipo Accion Personal:")]
+        [Required(ErrorMessage = "Debe seleccionar {0}")]
+        [Display(Name = "Tipo de movimiento")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdTipoAccionPersonal { get; set; }
-        public virtual TipoAccionPersonal TipoAccionPersonal { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Empleado:")]
-        public int IdEmpleado { get; set; }
-        public virtual Empleado Empleado { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar {0}")]
+        [Display(Name = "Sucursal")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar la {0} ")]
+        public int IdSucursal { get; set; }
+
+        [Required(ErrorMessage = "Debe seleccionar {0}")]
+        [Display(Name = "Puesto responsable de aprobación")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        public int IdManualPuesto { get; set; }
+
+        public virtual ManualPuesto ManualPuesto { get; set; }
+        public virtual Sucursal Sucursal { get; set; }
+        public virtual TipoAccionPersonal TipoAccionPersonal { get; set; }
+        public virtual ICollection<AprobacionAccionPersonal> AprobacionAccionPersonal { get; set; }
     }
 }
