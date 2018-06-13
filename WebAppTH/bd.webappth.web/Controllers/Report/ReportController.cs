@@ -21,6 +21,14 @@ namespace bd.webappth.web.Controllers.MVC
             return Redirect(url);
             
         }
+
+        public ActionResult RepMatr05PlanificacionTH()
+        {
+            string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepMatr05PlanificacionTH");
+            return Redirect(url);
+
+        }
+
         public ActionResult ReportePlanCapacitaciones()
         {
             string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepPlanCapacitaciones");
@@ -30,6 +38,24 @@ namespace bd.webappth.web.Controllers.MVC
         public ActionResult ReporteViaticos()
         {
             string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepViaticos");
+            return Redirect(url);
+
+        }
+        //public ActionResult ReporteEvaluacionCapacitacion(int idEvento,string Identificacion)
+        //{
+        //    string url = string.Format("{0}{1}{2}{3}{4}", ReportConfig.CompletePath, "RepEvaluacionEvento&IdPlanCapacitacion=", Convert.ToString(idEvento), "&Identificacion=", Convert.ToString(Identificacion));
+        //    return Redirect(url);
+
+        //}
+        public ActionResult ReporteEvaluacionCapacitacion()
+        {
+            string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepEvaluacionEvento");
+            return Redirect(url);
+
+        }
+        public ActionResult ReporteSolicitudViaticosMDT(int IdEmpleado,string IdSolicitud)
+        {
+            string url = string.Format("{0}{1}{2}{3}{4}", ReportConfig.CompletePath, "RepSolicitudViaticoFormatoMDT&IdEmpleado=", Convert.ToString(IdEmpleado), "&IdSolicitud=", Convert.ToString(IdSolicitud));
             return Redirect(url);
 
         }

@@ -1,17 +1,27 @@
-@model bd.webappth.entidades.ViewModels.ViewModelEvaluacionCapacitaciones
+@model List<bd.webappth.entidades.Negocio.SolicitudViatico>
 <link href="~/css/tabla/table.css" rel="stylesheet" />
-
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Index";
 }
-
-
+<!-- MAIN CONTENT -->
 <div id="content">
+
     <p></p>
+    <a asp-action="ListadoEmpleadosSolicitudViaticos">
+        <button type="button" asp-action="ListadoEmpleadosSolicitudViaticos" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="fa fa-arrow-left"></i>
+            </span>Regresar
+
+        </button>
+    </a>
+    <p> </p>
+
+
+
 
     <!-- widget grid -->
-    <section id="" class="">
+    <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -33,7 +43,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Calificaci&oacute;n evaluacion</h2>
+                        <h2>Detalle Solicitud Vi&aacute;ticos</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -44,48 +54,53 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
+
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaPlanCapacitacion.FirstOrDefault().Cedula)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaSalida)
                                         </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaPlanCapacitacion.FirstOrDefault().ApellidoNombre)
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaLlegada)
                                         </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaPlanCapacitacion.FirstOrDefault().NombreEvento)
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ValorEstimado)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Observacion)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.ListaPlanCapacitacion)
+                                    @foreach (var item in Model)
                                     {
+                                        var Estado = "";
                                         <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Cedula)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ApellidoNombre)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NombreEvento)
-                                            </td>
 
                                             <td>
-                                                @if (item.Estado == 2)
-                                                {
-                                                    @Html.ActionLink("Evaluacion", "Evaluacion", new { id = item.IdPlanCapacitacion })
-                                                }
-                                                else
-                                                {
-                                                    <text>
-                                                       @Html.ActionLink("Informe", "ReporteSolicitudPagoReliquidacion", "Report", new { idEvento = item.IdPlanCapacitacion ,Identificacion = item.Cedula }, new { onclick = "cargando();" })
-                                                        @*Realizado*@
-                                                    </text>
-                                                    @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdPlanCapacitacion })*@
-                                                }
+                                                @Html.DisplayFor(modelItem => item.FechaSalida)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaLlegada)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ValorEstimado)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Observacion)
+                                            </td>
+                                            <td>
+                                                <a href='@Url.Action("ReporteSolicitudViaticosMDT", "Report", new { IdEmpleado = item.IdEmpleado, IdSolicitud = item.IdSolicitudViatico})' target="_blank">
+                                                    Ver reporte
+                                                </a>
                                             </td>
                                         </tr>
                                     }
@@ -105,9 +120,10 @@
     </section>
     <!-- end widget grid -->
 </div>
-
-
+<!-- END MAIN CONTENT -->
 
 @section Scripts {
     <script src='~/js/datatables/init.js'></script>
 }
+
+

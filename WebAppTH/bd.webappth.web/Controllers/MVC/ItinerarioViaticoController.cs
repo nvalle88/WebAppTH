@@ -729,7 +729,7 @@ namespace bd.webappth.web.Controllers.MVC
                     return RedirectToAction("Index", new { IdSolicitudViatico = itinerarioViatico.IdSolicitudViatico });
 
                 }
-
+                ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
                 ViewData["Error"] = response.Message;
                 return View(itinerarioViatico);
 

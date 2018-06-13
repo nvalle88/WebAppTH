@@ -30,13 +30,13 @@ namespace bd.webappth.entidades.ViewModels
         public int? IdDependenciaPadre { get; set; }
 
         [Required(ErrorMessage = "Debe introducir la {0}")]
-        [Display(Name = "Dependencia")]
+        [Display(Name = "Áreas Usuarias")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "La {0} no puede tener más de {1} y menos de {2}")]
         public string NombreDependencia { get; set; }
 
         [Display(Name = "Sucursal")]
         public string NombreSucursal { get; set; }
-        [Display(Name = "Nivel Jerárquico Superior ")]
+        [Display(Name = "Área padre ")]
         public string NombreDependenciaPadre { get; set; }
         [Display(Name = "Proceso")]
         public string NombreProceso { get; set; }
