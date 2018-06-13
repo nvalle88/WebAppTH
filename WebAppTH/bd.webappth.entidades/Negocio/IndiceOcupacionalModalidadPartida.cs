@@ -3,6 +3,7 @@ namespace bd.webappth.entidades.Negocio
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class IndiceOcupacionalModalidadPartida
     {
@@ -41,11 +42,13 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int? IdTipoNombramiento { get; set; }
         public virtual TipoNombramiento TipoNombramiento { get; set; }
-
+        
         public virtual ICollection<EmpleadoMovimiento> EmpleadoMovimiento { get; set; }
 
         public virtual ICollection<PartidasFase> PartidasFase { get; set; }
 
+        [NotMapped]
+        public int IdDependecia { get; set; }
 
     }
 }

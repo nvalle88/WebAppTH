@@ -62,7 +62,7 @@
                                                 {<text>
                                                         @*@Html.ActionLink(" Descargar archivo", "Download", new { id = item.IdGestionPlanCapacitacion })|*@
                                                         @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();" }) |
-                                                        @Html.ActionLink(" Cargar reportados", "ReportadoCapacitacion", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();" }) |
+                                                        @Html.ActionLink(" Subir archivo", "ReportadoCapacitacion", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();" }) |
                                                         @Html.ActionLink(" Editar", "Edit", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "cargando();" }) |
                                                         @Html.ActionLink(" Eliminar", "Delete", new { id = item.IdGestionPlanCapacitacion }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
                                                 </text>

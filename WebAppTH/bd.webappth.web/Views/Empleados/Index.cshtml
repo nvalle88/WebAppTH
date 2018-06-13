@@ -124,8 +124,8 @@
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Ficha del empleado", "Detalle", "FichaEmpleado", new { idEmpleado = item.IdEmpleado, idPersona = item.IdPersona }, new { onclick = "cargando()" })<br />
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdEmpleado })<br />
+                                                @Html.ActionLink("Ficha del empleado", "Detalle", "FichaEmpleado", new { idEmpleado = item.IdEmpleado, idPersona = item.IdPersona }, new { onclick = "cargando()" })<br /> |
+                                                @Html.ActionLink("Agregar a Distributivo", "AgregarDistributivo", new { IdEmpleado = item.IdEmpleado })<br />
                                                
 
                                             </td>
