@@ -42,7 +42,7 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Error"] = mensaje;
 
         }
-        [Authorize(Policy = "EstaAutorizado")]
+       [Authorize(Policy = "EstaAutorizado")]
         public IActionResult Create(string mensaje)
         {
             InicializarMensaje(mensaje);
