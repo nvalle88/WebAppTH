@@ -60,6 +60,35 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
+        public async Task<IActionResult> DetalleSolicitudViaticos(int id)
+        {
+            var empleado = new Empleado()
+            {
+                IdEmpleado = id
+            };
+
+            var lista = new List<SolicitudViatico>();
+            try
+            {
+                lista = await apiServicio.Listar<SolicitudViatico>(empleado, new Uri(WebApp.BaseAddress)
+                                                                    , "api/SolicitudViaticos/ListarSolicitudesViaticosPorEmpleado");
+
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
+                {
+                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
+                    Message = "Listando Solicitud Planificación Vacaciones",
+                    ExceptionTrace = ex.Message,
+                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
+                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
+                    UserName = "Usuario APP webappth"
+                });
+                return BadRequest();
+            }
+        }
     }
 
 }
