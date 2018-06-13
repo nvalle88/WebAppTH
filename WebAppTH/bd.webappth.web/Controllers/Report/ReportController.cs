@@ -33,6 +33,18 @@ namespace bd.webappth.web.Controllers.MVC
             return Redirect(url);
 
         }
+        //public ActionResult ReporteEvaluacionCapacitacion(int idEvento,string Identificacion)
+        //{
+        //    string url = string.Format("{0}{1}{2}{3}{4}", ReportConfig.CompletePath, "RepEvaluacionEvento&IdPlanCapacitacion=", Convert.ToString(idEvento), "&Identificacion=", Convert.ToString(Identificacion));
+        //    return Redirect(url);
+
+        //}
+        public ActionResult ReporteEvaluacionCapacitacion()
+        {
+            string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepEvaluacionEvento");
+            return Redirect(url);
+
+        }
     }
 }
 
