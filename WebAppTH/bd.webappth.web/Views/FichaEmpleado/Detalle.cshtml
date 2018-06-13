@@ -15,34 +15,6 @@
 <div id="content">
     @{await Html.RenderPartialAsync("_PartialViewBotonIndexEmpleado");}
     <section id="widget-grid" class="">
-        <div class="col col-10">
-
-            @if (@ViewData["Error"].ToString() != "")
-
-            {
-
-                <div class="col-lg-12">
-
-                    <div class="alert alert-block alert-dismissable">
-
-                        <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-
-                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-
-                        <p>
-
-                            <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-            }
-
-
-        </div>
         <div class="row">
             <article class="col-sm-12 col-md-12 col-lg-12">
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
@@ -302,7 +274,7 @@
                                                 </section>
                                                 <section class="col col-2">
                                                     <label>Meses al IESS</label>
-                                                    <input asp-for="MesesImposiciones" class="form-control"  type="number" />
+                                                    <input asp-for="MesesImposiciones" class="form-control" type="number" />
                                                     <span asp-validation-for="MesesImposiciones" class="text-danger"></span>
                                                 </section>
                                                 <section class="col col-2">
@@ -410,7 +382,7 @@
                                     </div>
                                 </fieldset>
                                 <footer>
-                                    <input type="submit" id="GuardarForm" value="Guardar" onclick="cargando()" class="btn btn-primary" />
+                                    <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
 
                                 </footer>
                             </form>
@@ -432,6 +404,7 @@
 </div>
 
 @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
@@ -449,7 +422,7 @@
                 $('#IdIngresoOtraActividad').show();
             }
 
-      
+
         $(document).ready(function () {
 
             $("#IdEtnia").change(function () {
@@ -480,7 +453,7 @@
                 return false;
         })
 
-          
+
                 $("#OtrosIngresos").change(function () {
                     if (!$(this).prop('checked')) {
                         $('#IdIngresoOtraActividad').hide();
@@ -490,7 +463,7 @@
 
                 })
 
-           
+
 
         $("#IdBrigadaSSO").change(function () {
             mostrarLoadingPanel("content","Cargando...")

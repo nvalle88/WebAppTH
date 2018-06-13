@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using bd.webappth.entidades.Constantes;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -106,11 +107,11 @@ namespace bd.webappth.web.Controllers.MVC
                         EntityID = string.Format("{0} {1}", "Persona Estudio:", personaEstudio.IdPersonaEstudio),
                     });
 
-                    return RedirectToAction("IndexPersonaEstudio");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaEstudio", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
                 ViewData["IdEstudio"] = new SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
-                ViewData["Error"] = response.Message;
+                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 return View(viewModelPersonaEstudio);
 
             }
@@ -126,7 +127,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP WebAppTh"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -165,11 +166,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -209,13 +210,13 @@ namespace bd.webappth.web.Controllers.MVC
                             UserName = "Usuario 1"
                         });
 
-                        return RedirectToAction("IndexPersonaEstudio");
+                        return this.Redireccionar("FichaEmpleado", "IndexPersonaEstudio", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                    ViewData["Error"] = response.Message;
+                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     return View(viewModelPersonaEstudio);
 
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -229,7 +230,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -254,7 +255,7 @@ namespace bd.webappth.web.Controllers.MVC
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
                 });
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -276,9 +277,10 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
-                    return RedirectToAction("IndexPersonaEstudio");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaEstudio", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -292,7 +294,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -347,11 +349,10 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         EntityID = string.Format("{0} {1}", "Trayectoria Laboral:", trayectoriaLaboral.IdTrayectoriaLaboral),
                     });
-
-                    return RedirectToAction("IndexTrayectoriaLaboral");
+                    return this.Redireccionar("FichaEmpleado", "IndexTrayectoriaLaboral", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
-                ViewData["Error"] = response.Message;
+                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 return View(viewModelTrayectoriaLaboral);
 
             }
@@ -367,7 +368,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP WebAppTh"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -407,11 +408,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -460,14 +461,13 @@ namespace bd.webappth.web.Controllers.MVC
                             Message = "Se ha actualizado una trayectoria laboral",
                             UserName = "Usuario 1"
                         });
-
-                        return RedirectToAction("IndexTrayectoriaLaboral");
+                        return this.Redireccionar("FichaEmpleado", "IndexTrayectoriaLaboral", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                    ViewData["Error"] = response.Message;
+                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     return View(viewModelTrayectoriaLaboral);
 
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -481,7 +481,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -508,7 +508,7 @@ namespace bd.webappth.web.Controllers.MVC
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
                 });
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -530,9 +530,10 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
-                    return RedirectToAction("IndexTrayectoriaLaboral");
+                    return this.Redireccionar("FichaEmpleado", "IndexTrayectoriaLaboral", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -546,7 +547,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -678,7 +679,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
                     var empleadoRespuesta = JsonConvert.DeserializeObject<EmpleadoFamiliarViewModel>(response.Resultado.ToString());
-                    return RedirectToAction("IndexEmpleadoFamiliar");
+                    return this.Redireccionar("FichaEmpleado", "IndexEmpleadoFamiliar", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
                 await CargarCombos(empleadoFamiliarViewModel);
                 return View(empleadoFamiliarViewModel);
@@ -732,11 +733,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -772,15 +773,14 @@ namespace bd.webappth.web.Controllers.MVC
                             Message = "Se ha actualizado un familiar de empleado",
                             UserName = "Usuario 1"
                         });
-
-                        return RedirectToAction("IndexEmpleadoFamiliar");
+                        return this.Redireccionar("FichaEmpleado", "IndexEmpleadoFamiliar", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                    ViewData["Error"] = response.Message;
+                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     await CargarCombos(empleadoFamiliarViewModel);
                     return View(empleadoFamiliarViewModel);
 
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -794,7 +794,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -821,7 +821,7 @@ namespace bd.webappth.web.Controllers.MVC
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
                 });
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -843,9 +843,10 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
-                    return RedirectToAction("IndexEmpleadoFamiliar");
+                    return this.Redireccionar("FichaEmpleado", "IndexEmpleadoFamiliar", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                    
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -859,7 +860,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -890,7 +891,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexPersonaDiscapacidad");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaDiscapacidad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
                 ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                 return View(personaDiscapacidad);
@@ -925,11 +926,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -958,14 +959,13 @@ namespace bd.webappth.web.Controllers.MVC
                             Message = "Se ha actualizado una discapacidad de empleado",
                             UserName = "Usuario 1"
                         });
-
-                        return RedirectToAction("IndexPersonaDiscapacidad");
+                        return this.Redireccionar("FichaEmpleado", "IndexPersonaDiscapacidad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
                     ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                     return View(personaDiscapacidad);
 
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -979,7 +979,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1006,7 +1006,7 @@ namespace bd.webappth.web.Controllers.MVC
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
                 });
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1028,9 +1028,10 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
-                    return RedirectToAction("IndexPersonaDiscapacidad");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaDiscapacidad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                    
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -1044,7 +1045,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1064,7 +1065,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             if (id == null)
             {
-                return RedirectToAction("IndexDiscapacidadSustituto");
+                return this.Redireccionar("FichaEmpleado", "IndexDiscapacidadSustituto", $"{Mensaje.Error}|{Mensaje.Error}");
             }
             ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
             var discapacidadSustituto = new DiscapacidadSustitutoRequest { IdPersonaSustituto = Convert.ToInt32(id) };
@@ -1087,9 +1088,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexDiscapacidadSustituto", new { id = discapacidadSustitutoRequest.IdPersonaSustituto });
+                    return this.Redireccionar("FichaEmpleado", "IndexDiscapacidadSustituto", new { id = discapacidadSustitutoRequest.IdPersonaSustituto }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                ViewData["Error"] = response.Message;
+                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                 return View(discapacidadSustitutoRequest);
             }
@@ -1106,7 +1107,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             if (id==null)
             {
-                return RedirectToAction("IndexEnfermedadSustituto");
+                return this.Redireccionar("FichaEmpleado", "IndexEnfermedadSustituto", $"{Mensaje.Error}|{Mensaje.Error}");
             }
             ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
             var enfermedadSustituto = new EnfermedadSustitutoRequest { IdPersonaSustituto =Convert.ToInt32(id)};
@@ -1129,9 +1130,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexEnfermedadSustituto",new {id=enfermedadSustitutoRequest.IdPersonaSustituto });
+                    return this.Redireccionar("FichaEmpleado", "IndexEnfermedadSustituto", new { id = enfermedadSustitutoRequest.IdPersonaSustituto }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                ViewData["Error"] = response.Message;
+                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
                 return View(enfermedadSustitutoRequest);
             }
@@ -1162,9 +1163,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexPersonaEnfermedad");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaEnfermedad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                ViewData["Error"] = response.Message;
+                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
                 return View(personaEnfermedad);
             }
@@ -1197,11 +1198,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1223,15 +1224,15 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        return RedirectToAction("IndexEnfermedadSustituto",new {id=enfermedadSustitutoRequest.IdPersonaSustituto });
+                    return this.Redireccionar("FichaEmpleado", "IndexEnfermedadSustituto", new { id = enfermedadSustitutoRequest.IdPersonaSustituto }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                    ViewData["Error"] = response.Message;
+                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
                     return View(enfermedadSustitutoRequest);
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1256,11 +1257,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1282,15 +1283,15 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexDiscapacidadSustituto", new { id = discapacidadSustitutoRequest.IdPersonaSustituto });
+                    return this.Redireccionar("FichaEmpleado", "IndexDiscapacidadSustituto", new { id = discapacidadSustitutoRequest.IdPersonaSustituto }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                ViewData["Error"] = response.Message;
+                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                 return View(discapacidadSustitutoRequest);
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1316,11 +1317,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1355,15 +1356,14 @@ namespace bd.webappth.web.Controllers.MVC
                             Message = "Se ha actualizado una enfermedad del empleado",
                             UserName = "Usuario 1"
                         });
-
-                        return RedirectToAction("IndexPersonaEnfermedad");
+                        return this.Redireccionar("FichaEmpleado", "IndexPersonaEnfermedad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                    ViewData["Error"] = response.Message;
+                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
                     return View(personaEnfermedad);
 
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -1377,7 +1377,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1404,7 +1404,7 @@ namespace bd.webappth.web.Controllers.MVC
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
                 });
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1426,9 +1426,10 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
-                    return RedirectToAction("IndexPersonaEnfermedad");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaEnfermedad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -1442,7 +1443,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1472,9 +1473,10 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexDatoBancario");
+                    return this.Redireccionar("FichaEmpleado", "IndexDatoBancario", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+
                 }
-                ViewData["Error"] = response.Message;
+                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera", "Nombre");
                 return View(datosBancarios);
             }
@@ -1508,11 +1510,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1547,15 +1549,14 @@ namespace bd.webappth.web.Controllers.MVC
                             Message = "Se ha actualizado un dato bancario del empleado",
                             UserName = "Usuario 1"
                         });
-
-                        return RedirectToAction("IndexDatoBancario");
+                        return this.Redireccionar("FichaEmpleado", "IndexDatoBancario", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                    ViewData["Error"] = response.Message;
+                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera", "Nombre");
                     return View(datosBancarios);
 
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -1569,7 +1570,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1610,7 +1611,7 @@ namespace bd.webappth.web.Controllers.MVC
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
                 });
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1632,9 +1633,10 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
-                    return RedirectToAction("IndexDatoBancario");
+                    return this.Redireccionar("FichaEmpleado", "IndexDatoBancario", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                    
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -1648,7 +1650,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1679,9 +1681,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexEmpleadoContactoEmergencia");
+                    return this.Redireccionar("FichaEmpleado", "IndexEmpleadoContactoEmergencia", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                ViewData["Error"] = response.Message;
+                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdParentesco"] = new SelectList(await apiServicio.Listar<Parentesco>(new Uri(WebApp.BaseAddress), "api/Parentescos/ListarParentescos"), "IdParentesco", "Nombre");
                 return View(contactoEmergenciaViewModel);
             }
@@ -1717,11 +1719,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1747,28 +1749,21 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        return RedirectToAction("IndexEmpleadoContactoEmergencia");
+                        return this.Redireccionar("FichaEmpleado", "IndexEmpleadoContactoEmergencia", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+
                     }
                     ViewData["IdParentesco"] = new SelectList(await apiServicio.Listar<Parentesco>(new Uri(WebApp.BaseAddress), "api/Parentescos/ListarParentescos"), "IdParentesco", "Nombre");
-                    ViewData["Error"] = response.Message;
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     return View(contactoEmergenciaViewModel);
 
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una trayectoria laboral",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+               
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1795,7 +1790,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1867,7 +1862,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(Mensaje.CorregirFormulario);
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.CorregirFormulario}";
                 await CargarCombosEmpleado(datosBasicosEmpleado);
                 return View(datosBasicosEmpleado);
             }
@@ -1882,10 +1877,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Detalle",new { mensaje = Mensaje.GuardadoSatisfactorio, idEmpleado = HttpContext.Session.GetInt32(Constantes.idEmpleadoSession) });
+                    return this.Redireccionar("FichaEmpleado", "Detalle", new {idEmpleado = HttpContext.Session.GetInt32(Constantes.idEmpleadoSession) }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                    
                 }
                 await CargarCombosEmpleado(datosBasicosEmpleado);
-                ViewData["Error"] = Mensaje.ExisteEmpleado;
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.ExisteEmpleado}";
                 return View(datosBasicosEmpleado);
             }
             catch (Exception ex)
@@ -1920,7 +1916,7 @@ namespace bd.webappth.web.Controllers.MVC
                 await CargarCombosEmpleado(empleadoRespuesta);
                 return View(empleadoRespuesta);
             }
-            return BadRequest();
+            return  this.RedireccionarMensajeTime("Empleados", "Index", $"{Mensaje.Aviso}|{Mensaje.NoAsignadoDistrivutibo}|{"16000"}");
         }
 
         public async Task<IActionResult> DeleteEmpleadoContactoEmergencia(string id)
@@ -1936,15 +1932,16 @@ namespace bd.webappth.web.Controllers.MVC
                     var response = await apiServicio.EliminarAsync(contactoEmergencia, new Uri(WebApp.BaseAddress)
                                                                , "api/EmpleadosContactosEmergencias/EliminarContactoEmergencia");
                     if (response.IsSuccess)
-                    {   
-                        return RedirectToAction("IndexEmpleadoContactoEmergencia");
+                    {
+                        return this.Redireccionar("FichaEmpleado", "IndexEmpleadoContactoEmergencia", new { mensaje = Mensaje.GuardadoSatisfactorio }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                       
                     }
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -1982,8 +1979,8 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    //var empleadoRespuesta = JsonConvert.DeserializeObject<EmpleadoSustitutoViewModel>(response.Resultado.ToString());
-                    return RedirectToAction("IndexPersonaSustituto");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                   
                 }
                 await CargarCombosPersonaSustituto();
                 return View(viewModelEmpleadoSustituto);
@@ -2015,11 +2012,11 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2045,18 +2042,20 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        return RedirectToAction("IndexPersonaSustituto");
+                        return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                       
                     }
-                    ViewData["Error"] = response.Message;
+                    
+                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     await CargarCombosPersonaSustituto();
                     return View(viewModel);
 
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2067,7 +2066,8 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (id==null)
                 {
-                    return RedirectToAction("IndexPersonaSustituto");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Error}|{Mensaje.Error}");
+                    
                 }
                 var personaSustitutoActual = new EnfermedadSustitutoRequest { IdPersonaSustituto =Convert.ToInt32(id) };
                 var response = await apiServicio.ObtenerElementoAsync1<Response>(personaSustitutoActual, new Uri(WebApp.BaseAddress),
@@ -2078,11 +2078,11 @@ namespace bd.webappth.web.Controllers.MVC
                     var enfermedadRequest = JsonConvert.DeserializeObject<EnfermedadSustitutoRequest>(response.Resultado.ToString());
                     return View(enfermedadRequest);
                 }
-                return RedirectToAction("IndexPersonaSustituto");
+                return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2093,7 +2093,9 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (id == null)
                 {
-                    return RedirectToAction("IndexPersonaSustituto");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Error}|{Mensaje.Error}");
+
+                   
                 }
                 var personaSustitutoActual = new DiscapacidadSustitutoRequest { IdPersonaSustituto = Convert.ToInt32(id) };
                 var response = await apiServicio.ObtenerElementoAsync1<Response>(personaSustitutoActual, new Uri(WebApp.BaseAddress),
@@ -2104,11 +2106,11 @@ namespace bd.webappth.web.Controllers.MVC
                     var discapacidadRequest = JsonConvert.DeserializeObject<DiscapacidadSustitutoRequest>(response.Resultado.ToString());
                     return View(discapacidadRequest);
                 }
-                return RedirectToAction("IndexPersonaSustituto");
+                return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2126,7 +2128,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2139,7 +2141,8 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(idDiscapacidad))
                 {
-                    return RedirectToAction("IndexPersonaSustituto");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Error}|{Mensaje.Error}");
+                   
                 }
 
                 var enfermedadSustitutoEliminar = new DiscapacidadSustitutoRequest { IdDiscapacidadSustituto = Convert.ToInt32(idDiscapacidad) };
@@ -2147,9 +2150,10 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/PersonaSustituto/EliminarDiscapacidadSustituto");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexDiscapacidadSustituto", new { id });
+                    return this.Redireccionar("FichaEmpleado", "IndexDiscapacidadSustituto", new { id }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                    
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -2163,7 +2167,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2176,7 +2180,8 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(idEnfermedad))
                 {
-                    return RedirectToAction("IndexPersonaSustituto");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                   
                 }
 
                 var enfermedadSustitutoEliminar = new EnfermedadSustitutoRequest { IdEnfermedadSustituto = Convert.ToInt32(idEnfermedad) };
@@ -2184,9 +2189,11 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/PersonaSustituto/EliminarEnfermedadeSustituto");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexEnfermedadSustituto",new {id });
+                    return this.Redireccionar("FichaEmpleado", "IndexEnfermedadSustituto", new { id }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                   
+
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -2200,7 +2207,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2212,7 +2219,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (string.IsNullOrEmpty(id))
                 {
-                    return RedirectToAction("IndexPersonaSustituto");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Error}|{Mensaje.Error}");
                 }
 
                 var personaSustitutoEliminar = new ViewModelEmpleadoSustituto { IdPersonaSustituto = Convert.ToInt32(id) };
@@ -2220,9 +2227,9 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/PersonaSustituto/EliminarPersonasSustitutos");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexPersonaSustituto");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                return BadRequest();
+                return this.Redireccionar("FichaEmpleado", "IndexPersonaSustituto", $"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
             }
             catch (Exception ex)
             {
@@ -2236,7 +2243,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2265,7 +2272,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("IndexPersonaDiscapacidad");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaDiscapacidad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
                 ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                 return View(personaDiscapacidad);
@@ -2300,11 +2307,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception)
             {
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2333,15 +2340,15 @@ namespace bd.webappth.web.Controllers.MVC
                             Message = "Se ha actualizado una discapacidad de empleado",
                             UserName = "Usuario 1"
                         });
+                        return this.Redireccionar("FichaEmpleado", "IndexPersonaDiscapacidad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
 
-                        return RedirectToAction("IndexPersonaDiscapacidad");
                     }
-                    ViewData["Error"] = response.Message;
+                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                     return View(personaDiscapacidad);
 
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -2355,7 +2362,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2382,7 +2389,7 @@ namespace bd.webappth.web.Controllers.MVC
                     LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
                     UserName = "Usuario APP webappth"
                 });
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
@@ -2404,9 +2411,9 @@ namespace bd.webappth.web.Controllers.MVC
                         LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
                         UserName = "Usuario APP webappth"
                     });
-                    return RedirectToAction("IndexPersonaDiscapacidad");
+                    return this.Redireccionar("FichaEmpleado", "IndexPersonaDiscapacidad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
@@ -2420,7 +2427,7 @@ namespace bd.webappth.web.Controllers.MVC
                     UserName = "Usuario APP webappth"
                 });
 
-                return BadRequest();
+                return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
 
