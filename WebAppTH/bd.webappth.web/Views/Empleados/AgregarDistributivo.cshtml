@@ -5,7 +5,7 @@
 <script src='~/js/site.js'></script>
 <script src='~/lib/waitMe/waitMe.min.js'></script>
 @*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -69,6 +69,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-bank fa  fa-fw"></i></span>
                                                     <select id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control input "></select>
+                                                    <span asp-validation-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,6 +92,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
                                                     <select id="sucursal" asp-for="Dependencia.Sucursal.IdSucursal  " class="form-control input "></select>
+                                                    <span asp-validation-for="Dependencia.Sucursal.IdSucursal" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -108,19 +110,20 @@
 
 
                                             @*<div class="widget-body">
-                                                <div class="tree smart-form">
-                                                    <ul>
-                                                        <li>
-                                                            <span><i class="fa fa-lg fa-folder-open"></i> @Model.Dependencia.Nombre</span>
-                                                            @{await Html.RenderPartialAsync("_PartialViewDependenciasHijos", Model.Dependencia);}
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                    <div class="tree smart-form">
+                                                        <ul>
+                                                            <li>
+                                                                <span><i class="fa fa-lg fa-folder-open"></i> @Model.Dependencia.Nombre</span>
+                                                                @{await Html.RenderPartialAsync("_PartialViewDependenciasHijos", Model.Dependencia);}
+                                                            </li>
+                                                        </ul>
+                                                    </div>
 
-                                            </div>*@
+                                                </div>*@
                                         </div>
-                                       <input class="form-control input" type="hidden" id="iddependencia" asp-for="IndiceOcupacional.IdDependencia">
-                                           
+                                        <input class="form-control input" type="hidden" id="iddependencia" asp-for="IndiceOcupacional.IdDependencia">
+                                        <span asp-validation-for="IndiceOcupacional.IdDependencia" class="text-danger"></span>
+
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-4">
@@ -129,6 +132,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
                                                     <select id="manualpuesto" asp-for="IndiceOcupacional.IdManualPuesto" class="form-control input "></select>
+                                                    <span asp-validation-for="IndiceOcupacional.IdManualPuesto" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,6 +142,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
                                                     <select id="rolpuesto" asp-for="IndiceOcupacional.IdRolPuesto" class="form-control input "></select>
+                                                    <span asp-validation-for="IndiceOcupacional.IdRolPuesto" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -147,21 +152,23 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
                                                     <select id="escalagrados" asp-for="IndiceOcupacional.IdEscalaGrados" class="form-control input "></select>
+                                                    <span asp-validation-for="IndiceOcupacional.IdEscalaGrados" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
-                                                        
+
                                     </div>
-                                    <div class="row"> 
+                                    <div class="row">
                                         <div class="col-sm-4">
                                             <label>Modalidad Partida:</label>
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
                                                     <select id="modalidadpartida" asp-for="IndiceOcupacional.IdModalidadPartida" asp-items="ViewBag.IdModalidadPartida" class="form-control input "></select>
+                                                    <span asp-validation-for="IndiceOcupacional.IdModalidadPartida" class="text-danger"></span>
                                                 </div>
                                             </div>
-                                        </div>  
+                                        </div>
                                         <div class="col-sm-4">
                                             <label>Fondo de Financimiento:</label>
                                             <div class="form-group">
@@ -170,6 +177,7 @@
                                                     <select asp-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdFondoFinanciamiento">
                                                         <option value="0" selected="" disabled="">Seleccione</option>
                                                     </select>
+                                                    <span asp-validation-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -179,10 +187,22 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                     <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                    <span asp-validation-for="IndiceOcupacionalModalidadPartida.Fecha" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>&nbsp;&nbsp;</label>
+                                                <label class="checkbox-inline">
+                                                    <label>&iquest; Saldo Real ?</label>
+                                                    <input type="checkbox" asp-for="SalarioReal" class="form-control" />
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2" id="IdsalarioReal">
                                             <div class="form-group">
                                                 <label>Salario Real:</label>
                                                 <div class="input-group">
@@ -191,7 +211,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                       
                                     </div>
                                     <footer>
                                         <input type="submit" value="Guardar" class="btn btn-primary" />
@@ -199,8 +218,8 @@
                                     </footer>
                                     <br />
                                 </article>
-                               
-                                       
+
+
                             </form>
                         </div>
                         <!-- end widget content -->
@@ -225,15 +244,30 @@
 
 
 @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
     <script src='~/js/vistasmodales/modal.js'></script>
 
+
     <script type="text/javascript">
 
+        if (!$("#SalarioReal").prop('checked')) {
+            $('#IdsalarioReal').hide();
+        } else {
+            $('#IdsalarioReal').show();
+        }
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
+        $("#SalarioReal").change(function () {
+            if (!$(this).prop('checked')) {
+                $('#IdsalarioReal').hide();
+            } else {
+                $('#IdsalarioReal').show();
+            }
+
+        })
         $(document).ready(function () {
 
             //Bootstrap Wizard Validations
@@ -399,8 +433,8 @@
 
     <script src='~/lib/waitMe/waitMe.min.js'></script>
     <script src='~/js/site.js'></script>
-@*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
+    @*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
 
 
     <script type="text/javascript">
@@ -465,7 +499,7 @@
                 return false;
            })
 
- 
+
 
 
                         $("#manualpuesto").change(function () {
@@ -733,8 +767,8 @@
     </script>
 
 
-    
-         
+
+
 
 
 

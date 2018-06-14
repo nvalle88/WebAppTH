@@ -5,6 +5,7 @@ using bd.webappseguridad.entidades.Enumeradores;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.webappth.entidades.ViewModels;
+using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
 using EnviarCorreo;
 using Microsoft.AspNetCore.Mvc;
@@ -220,10 +221,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
                     var empleado = JsonConvert.DeserializeObject<Empleado>(response.Resultado.ToString());
-                    return RedirectToAction("AgregarDistributivo",new {IdEmpleado=empleado.IdEmpleado });
+                    return this.RedireccionarMensajeTime("Empleados", "AgregarDistributivo", new { empleado.IdEmpleado }, $"{Mensaje.Informacion}|{Mensaje.AgregandoEmpleadoDistrivutibo}|{"30000"}");
                 }
                 await CargarCombos(datosBasicosEmpleado);
-                ViewData["Error"] = Mensaje.ExisteEmpleado;
+                this.TempData["Mensaje"] = $"{Mensaje.Aviso}|{Mensaje.ExisteEmpleado}";
                 return View(datosBasicosEmpleado);
             }
             catch (Exception ex)
@@ -1335,8 +1336,10 @@ namespace bd.webappth.web.Controllers.MVC
                     IdFondoFinanciamiento = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento,
                     IdTipoNombramiento = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdTipoNombramiento,
                     Fecha = empleadoViewModel.IndiceOcupacionalModalidadPartida.Fecha,
-                    SalarioReal  = empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal,
-                    IdEmpleado=empleadoViewModel.Empleado.IdEmpleado
+                    SalarioReal  = empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal == null ? 0 : empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal,
+                    IdEmpleado=empleadoViewModel.Empleado.IdEmpleado,
+                    IdDependecia = empleadoViewModel.IndiceOcupacional.IdDependencia
+
                 };
 
 

@@ -67,5 +67,11 @@ namespace bd.webappth.entidades.Utils
         public static string SessionCaducada { get { return "La sesión ha caducado, ha sido devuelto a la página principal del proceso"; } }
 
         public static string EscogerEmpleadoReemplazo { get { return "Seleccione un reemplazo"; } }
+
+        public static object NoAsignadoDistrivutibo { get { return "El empleado seleccionado no está asignado al distrivitibo, debe asignar el empleado al distributivo para editar su ficha..."; } }
+
+        public static object NoProcesarSolicitud { get { return "No se ha podido porcesar la solicitud realizada "; } }
+
+        public static object AgregandoEmpleadoDistrivutibo { get { return "El empleado se ha insertado satisfactoriamente, complete el Formulario y presione Guardar para agregar el empleado al distrivutibo, en caso contrario Cancelar."; } }
     }
 }
