@@ -82,11 +82,11 @@
                             <div class="widget-body no-padding">
 
                                 <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-
                                     <thead>
-
-
                                         <tr>
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().GrupoOcupacional)
+                                            </th>
                                             <th data-class="expand">
                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().NombreDependencia)
                                             </th>
@@ -106,21 +106,23 @@
 
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(model => item.GrupoOcupacional)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(model => item.NombreDependencia)
+                                            </td>
 
-                                                <td>
-                                                    @Html.DisplayFor(model => item.NombreDependencia)
-                                                </td>
+                                            <td>
+                                                @Html.DisplayFor(model => item.NombreRolPuesto)
+                                            </td>
 
-                                                <td>
-                                                    @Html.DisplayFor(model => item.NombreRolPuesto)
-                                                </td>
+                                            <td>
+                                                @Html.DisplayFor(model => item.NombreModalidadPartida)
+                                            </td>
 
-                                                <td>
-                                                    @Html.DisplayFor(model => item.NombreModalidadPartida)
-                                                </td>
-
-                                            </tr>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>
