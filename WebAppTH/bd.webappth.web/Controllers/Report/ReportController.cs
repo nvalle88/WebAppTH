@@ -1,7 +1,11 @@
 ﻿using bd.webappth.entidades.Utils;
+using bd.webappth.entidades.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -59,6 +63,28 @@ namespace bd.webappth.web.Controllers.MVC
             return Redirect(url);
 
         }
+
+        public ActionResult ReporteConPiePagina(GenerarFirmasViewModel modelo)
+        {
+            var UrlReporte = modelo.UrlReporte;
+
+            var maxFirmasReporte = 5;
+            var idFirmas = "";
+
+
+
+            for (int i = 0;i<modelo.ListaIdEmpleados.Count && i<maxFirmasReporte ;i++)
+            {
+                idFirmas = idFirmas + "&IdEF"+ (i+1) +"="+ modelo.ListaIdEmpleados.Where(w=>w.Prioridad == (i+1) ).FirstOrDefault().IdEmpleado;
+                
+            }
+            
+            string url = string.Format("{0}{1}", ReportConfig.CompletePath, UrlReporte + idFirmas);
+            return Redirect(url);
+            
+        }
+
+
     }
 }
 

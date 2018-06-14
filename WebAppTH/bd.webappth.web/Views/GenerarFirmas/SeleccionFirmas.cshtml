@@ -6,6 +6,8 @@
 
     int firmas = Convert.ToInt32(ViewData["NumeroFirmas"]);
     GenerarFirmasViewModel modelo = new GenerarFirmasViewModel();
+    
+
 }
 <!-- MAIN CONTENT -->
 <div id="content" style="height:1000px;">
@@ -21,43 +23,70 @@
         </a>*@
     <p> </p>
 
-    <form asp-action="EnviarDatosReporte" class="" novalidate="novalidate">
+    <form asp-action="ReporteConPiePagina" asp-controller="Report" class="smart-form" novalidate="novalidate">
 
-        <input type="number" asp-for="@modelo.CantidadFirmas" value="@firmas"/>
+        <input type="number" asp-for="@modelo.CantidadFirmas" value="@firmas" hidden />
 
-        @for (int i = 0; i < firmas; i++)
-    {
-        <div class="row">
 
-            <section class="col col-lg-4">
-                <label class="input col-lg-12">Unidad administrativa / dependencia</label>
-                <label class="input col col-lg-12">
-                    <select id="@(i)" class="smart-form" asp-items="ViewBag.Dependencia" onchange="SeleccionCombo(this)" style="width:100%;"></select>
-                </label>
-            </section>
+        <fieldset>
 
-            <section id="seccion@(i)" class="col col-lg-4">
-                <label class="input col-lg-12">Empleado</label>
-                <label class="input col col-lg-12">
-                    <select id="e@(i)" asp-for="@modelo.ListaIdEmpleado"  onchange="validarGuardar(this)" style="width:100%;"></select>
-                </label>
-            </section>
+            <div class="row">
+                <section class="col col-lg-12">
+                    <label>Reporte</label>
+                    <label class="input">
+                        <input asp-for="@modelo.UrlReporte" type="text" value="@ViewData["UrlReporte"]" readonly />
+                    </label>
+                </section>
+            </div>
 
-            <section class="col col-lg-12">
-                &nbsp;
-            </section>
 
-        </div>
-}
+            @for (int i = 0; i < firmas; i++)
+            {
+            <div class="row">
 
-        <div class="row">
-            <section class="col col-lg-3"></section>
-        </div>
+                <section class="col col-1">
+                    <label>Prioridad</label>
+                    <label class="input">
+                        <input asp-for="@modelo.ListaIdEmpleados[i].Prioridad" type="text" value="@(i+1)" readonly />
+                    </label>
+                </section>
+
+                <section class="col col-lg-4">
+                    <label class="input col-lg-12">Unidad administrativa / dependencia</label>
+                    <label class="input col-lg-12">
+                        <select id="@(i)" class="smart-form" asp-items="ViewBag.Dependencia" onchange="SeleccionCombo(this)" style="width:100%;"></select>
+                    </label>
+                </section>
+
+
+                <section id="seccion@(i)" class="col col-lg-4">
+                    <label class="input col-lg-12">Empleado</label>
+                    <label class="input">
+                        <select id="e@(i)" class="form-control" asp-for="@modelo.ListaIdEmpleados[i].IdEmpleado"></select>
+                    </label>
+                </section>
+
+
+                <section class="col col-lg-12">
+                    &nbsp;
+                </section>
+
+            </div>
+            }
+
+            <div class="row">
+                <section class="col col-lg-3"></section>
+            </div>
+
+        </fieldset>
+
+
 
         <footer>
             <input type="submit" value="Guardar" class="btn btn-default" />
             <a asp-action="Index" class="btn btn-default">Cancelar</a>
         </footer>
+
 
     </form>
 
@@ -116,15 +145,7 @@
             CargarCombosEmpleados(NumeroCombo,IdDependencia);
         }
 
-        function validarGuardar(element) { 
-
-            var id = element.id;
-            var idcomparador = "e"+@(firmas-1);
-
-            if (idcomparador == id) {
-                
-            }
-        }
+        
 
     </script>
 
