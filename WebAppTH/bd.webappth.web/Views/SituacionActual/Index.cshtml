@@ -2,7 +2,7 @@
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 
 @{
-    ViewData["Title"] = "Planificación de puestos";
+    ViewData["Title"] = "Situaci&oacute;n actual";
 }
 
 <style>
@@ -85,9 +85,6 @@
                                     <thead>
                                         <tr>
                                             <th data-class="expand">
-                                                @Html.DisplayNameFor(model => model.FirstOrDefault().GrupoOcupacional)
-                                            </th>
-                                            <th data-class="expand">
                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().NombreDependencia)
                                             </th>
 
@@ -96,9 +93,28 @@
                                             </th>
 
                                             <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreManualPuesto)
+                                            </th>
+
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Grado)
+                                            </th>
+
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().RMU)
+                                            </th>
+
+                                            <th data-class="expand">
                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().NombreModalidadPartida)
                                             </th>
 
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().PartidaIndividual)
+                                            </th>
+
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CantidadEmpleados)
+                                            </th>
                                         </tr>
 
                                     </thead>
@@ -108,9 +124,6 @@
                                         {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(model => item.GrupoOcupacional)
-                                            </td>
-                                            <td>
                                                 @Html.DisplayFor(model => item.NombreDependencia)
                                             </td>
 
@@ -119,7 +132,27 @@
                                             </td>
 
                                             <td>
+                                                @Html.DisplayFor(model => item.NombreManualPuesto)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.Grado)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.RMU)
+                                            </td>
+
+                                            <td>
                                                 @Html.DisplayFor(model => item.NombreModalidadPartida)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.PartidaIndividual)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => item.CantidadEmpleados)
                                             </td>
 
                                         </tr>
