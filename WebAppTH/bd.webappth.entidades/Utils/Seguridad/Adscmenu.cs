@@ -28,7 +28,6 @@ namespace bd.webappth.entidades.Utils.Seguridad
 
        
         [Display(Name = "Menú padre")]
-        
         public string AdmePadre { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]

@@ -16,5 +16,7 @@ namespace bd.webappth.entidades.Utils
 
         public static string NombreAplicacion { get; set; }
 
+        public static int NivelesMenu { get; set; }
+
     }
 }

@@ -3,17 +3,13 @@ using bd.webappth.entidades.Utils;
 using bd.webappth.servicios.Interfaces;
 using bd.webappth.servicios.Servicios;
 using bd.webappth.web.Models;
-using bd.webappth.web.Services;
-using EnviarCorreo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -93,15 +89,15 @@ namespace bd.webappth.web
 
 
 
-            services.AddMvc().Services.AddAuthorization(options =>
-            {
-                options.AddPolicy("EstaAutorizado",
-                                  policy => policy.Requirements.Add(new RolesRequirement()));
-            });
+            //services.AddMvc().Services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("EstaAutorizado",
+            //                      policy => policy.Requirements.Add(new RolesRequirement()));
+            //});
 
 
             ///Filtro para la seguridad GENERAL
-            //services.AddMvc(options=>
+            //services.AddMvc(options =>
             //{
             //    options.Filters.Add(new Filtro());
             //});
@@ -123,7 +119,7 @@ namespace bd.webappth.web
             ReportConfig.CompletePath = string.Format("{0}{1}", ReportConfig.ReportServerUrl, ReportConfig.ReportFolderPath);
 
             ///--------------------------------------
-
+            WebApp.NivelesMenu = Convert.ToInt32(Configuration.GetSection("NivelMenu").Value);
 
             WebApp.NombreAplicacion = Configuration.GetSection("NombreAplicacion").Value;
 

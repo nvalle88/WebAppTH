@@ -69,6 +69,7 @@ namespace bd.webappth.web.Models
 
                 if (!respuestaToken.Result.IsSuccess)
                 {
+                    context.HttpContext.Authentication.SignOutAsync("Cookies");
                     var result = new ViewResult { ViewName = "SeccionCerrada" };
                     context.Result = result;
                 }
