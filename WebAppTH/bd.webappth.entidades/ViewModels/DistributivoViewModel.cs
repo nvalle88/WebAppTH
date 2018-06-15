@@ -21,8 +21,14 @@ namespace bd.webappth.entidades.ViewModels
 
         [Display(Name = "Modalidad")]
         public string NombreModalidadPartida { get; set; }
+        
         [Display(Name = "Grupo ocupacional")]
         public string GrupoOcupacional { get; set; }
+
+        [Display(Name = "RMU")]
+        public decimal? RMU { get; set; }
+        
+        public int Grado { get; set; }
 
     }
 }
