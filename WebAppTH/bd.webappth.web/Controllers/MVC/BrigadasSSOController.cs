@@ -42,7 +42,7 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Error"] = mensaje;
 
         }
-       [Authorize(Policy = "EstaAutorizado")]
+      // [Authorize(Policy = "EstaAutorizado")]
         public IActionResult Create(string mensaje)
         {
             InicializarMensaje(mensaje);
@@ -51,7 +51,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "EstaAutorizado")]
+       // [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Create(BrigadaSSO brigadaSSO)
         {
             if (!ModelState.IsValid)
@@ -101,7 +101,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        [Authorize(Policy = "EstaAutorizado")]
+       // [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Edit(string id)
         {
             try
@@ -131,7 +131,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "EstaAutorizado")]
+       // [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Edit(string id, BrigadaSSO brigadaSSO)
         {
             Response response = new Response();
@@ -177,7 +177,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        [Authorize(Policy = "EstaAutorizado")]
+        //[Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Index()
         {
 
@@ -202,7 +202,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        [Authorize(Policy = "EstaAutorizado")]
+       // [Authorize(Policy = "EstaAutorizado")]
         public async Task<IActionResult> Delete(string id)
         {
 
