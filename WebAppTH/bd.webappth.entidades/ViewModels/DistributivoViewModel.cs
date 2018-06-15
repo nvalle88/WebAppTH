@@ -21,6 +21,8 @@ namespace bd.webappth.entidades.ViewModels
 
         [Display(Name = "Modalidad")]
         public string NombreModalidadPartida { get; set; }
-        
+        [Display(Name = "Grupo ocupacional")]
+        public string GrupoOcupacional { get; set; }
+
     }
 }

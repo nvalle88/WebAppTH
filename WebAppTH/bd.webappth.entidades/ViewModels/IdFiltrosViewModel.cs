@@ -20,5 +20,7 @@ namespace bd.webappth.entidades.ViewModels
 
         public int NumeroFirmas { get; set; }
 
+        public int Prioridad { get; set; }
+
     }
 }

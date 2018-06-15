@@ -13,6 +13,7 @@ using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -26,15 +27,38 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> AgregarPiePagina(string NombreReporteConParametros)
         {
 
             try
             {
-                var IdSucursal = 2;
-                @ViewData["DependenciaActual"] = IdSucursal;
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
 
-                return View();
+                if (claim.IsAuthenticated == true)
+                {
+
+                    // Obtención de la sucursal actual del usuario
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var filtro = new IdFiltrosViewModel { NombreUsuario = NombreUsuario};
+
+                    var sucursal = await apiServicio.ObtenerElementoAsync1<Sucursal>(
+                    filtro,
+                    new Uri(WebApp.BaseAddress),
+                    "api/Sucursal/ObtenerSucursalPorEmpleado");
+                    
+                    
+                    // Redireccionar a selección de firmas con la IdSucursal actual
+                    return RedirectToAction("SeleccionFirmas",
+                        new {
+                            IdSucursal = sucursal.IdSucursal,
+                            UrlReporte = NombreReporteConParametros
+                        });
+
+                }
+
+                return RedirectToAction("Login", "Login");
+                
 
             }
             catch (Exception ex)
@@ -44,10 +68,12 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> SeleccionFirmas(int NumeroFirmas,int IdSucursal)
+        public async Task<IActionResult> SeleccionFirmas(int IdSucursal,string UrlReporte)
         {
 
             try {
+
+                int NumeroFirmas = 5;
 
                 var filtro = new IdFiltrosViewModel { IdSucursal = IdSucursal };
 
@@ -58,6 +84,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 ViewData["Dependencia"] = new SelectList(lista, "IdDependencia", "Nombre");
                 ViewData["NumeroFirmas"] = NumeroFirmas;
+                ViewData["UrlReporte"] = UrlReporte;
 
                 return View();
 
@@ -91,12 +118,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> EnviarDatosReporte(GenerarFirmasViewModel modelo)
-        {
-            return View();
-
-        }
-
+        
 
     }
 }

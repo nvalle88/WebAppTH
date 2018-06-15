@@ -1336,7 +1336,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdFondoFinanciamiento = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento,
                     IdTipoNombramiento = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdTipoNombramiento,
                     Fecha = empleadoViewModel.IndiceOcupacionalModalidadPartida.Fecha,
-                    SalarioReal  = empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal,
+                    SalarioReal  = empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal == null ? 0 : empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal,
                     IdEmpleado=empleadoViewModel.Empleado.IdEmpleado,
                     IdDependecia = empleadoViewModel.IndiceOcupacional.IdDependencia
 
