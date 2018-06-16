@@ -156,6 +156,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
                     await HttpContext.Authentication.SignOutAsync("Cookies");
+                    foreach (var cookie in HttpContext.Request.Cookies.Keys)
+                    {
+                        HttpContext.Response.Cookies.Delete(cookie);
+                    }
                     var responseLog = new EntradaLog
                     {
                         ExceptionTrace = null,
@@ -171,6 +175,10 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception)
             {
+                foreach (var cookie in HttpContext.Request.Cookies.Keys)
+                {
+                    HttpContext.Response.Cookies.Delete(cookie);
+                }
                 return RedirectToAction(nameof(LoginController.Index), "Login");
             }
 

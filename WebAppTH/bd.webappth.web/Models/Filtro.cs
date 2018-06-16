@@ -70,6 +70,10 @@ namespace bd.webappth.web.Models
                 if (!respuestaToken.Result.IsSuccess)
                 {
                     context.HttpContext.Authentication.SignOutAsync("Cookies");
+                    foreach (var cookie in context.HttpContext.Request.Cookies.Keys)
+                    {
+                        context.HttpContext.Response.Cookies.Delete(cookie);
+                    }
                     var result = new ViewResult { ViewName = "SeccionCerrada" };
                     context.Result = result;
                 }
@@ -90,12 +94,11 @@ namespace bd.webappth.web.Models
             }
             catch (Exception ex)
             {
-
-                //RedirectToActionResult a = new RedirectToActionResult("Index","Login","");
-                //context.Result = a;
-
                 var result = new RedirectResult(WebApp.BaseAddressWebAppLogin);
-               
+                foreach (var cookie in context.HttpContext.Request.Cookies.Keys)
+                {
+                    context.HttpContext.Response.Cookies.Delete(cookie);
+                }
                 context.Result = result;
 
             }

@@ -97,10 +97,10 @@ namespace bd.webappth.web
 
 
             ///Filtro para la seguridad GENERAL
-            //services.AddMvc(options =>
-            //{
-            //    options.Filters.Add(new Filtro());
-            //});
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new Filtro());
+            });
 
             WebApp.BaseAddressWebAppLogin = Configuration.GetSection("HostWebAppLogin").Value;
 
