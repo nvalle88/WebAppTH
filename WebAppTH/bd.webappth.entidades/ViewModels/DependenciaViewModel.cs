@@ -13,6 +13,7 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "Sucursal")]
         [Range(0, double.MaxValue, ErrorMessage = "Debe seleccionar la {0} ")]
         public int? IdSucursal { get; set; }
+        [Display(Name = "Orden ")]
         public string Codigo { get; set; }
 
         [Required(ErrorMessage = "Debe introducir el {0}")]
@@ -25,12 +26,11 @@ namespace bd.webappth.entidades.ViewModels
         [Range(0, double.MaxValue, ErrorMessage = "Debe seleccionar la {0} ")]
         public int? IdCiudad { get; set; }
 
-        [Display(Name = "Dependencia Padre")]
         [Range(0, double.MaxValue, ErrorMessage = "Debe seleccionar la {0} ")]
         public int? IdDependenciaPadre { get; set; }
 
         [Required(ErrorMessage = "Debe introducir la {0}")]
-        [Display(Name = "Áreas Usuarias")]
+        [Display(Name = "Áreas Usuarias / Unidad administrativa")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "La {0} no puede tener más de {1} y menos de {2}")]
         public string NombreDependencia { get; set; }
 
@@ -40,5 +40,7 @@ namespace bd.webappth.entidades.ViewModels
         public string NombreDependenciaPadre { get; set; }
         [Display(Name = "Proceso")]
         public string NombreProceso { get; set; }
+        [Display(Name = "Ciudad")]
+        public string Ciudad { get; set; }
     }
 }

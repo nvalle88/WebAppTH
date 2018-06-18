@@ -31,6 +31,21 @@
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().apellido)
                                         </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Dependencia)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().UnidadAdministrativa)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Puesto)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Modalidad)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().TipoNombramiento)
+                                        </th>
 
                                         <th>Opciones</th>
                                     </tr>
@@ -49,9 +64,23 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.apellido)
                                         </td>
-
                                         <td>
-                                            @Html.ActionLink("Asignar", "EmpleadoFAOAsignar", new { id = item.IdEmpleado }) 
+                                            @Html.DisplayFor(modelItem => item.Dependencia)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Puesto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Modalidad)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoNombramiento)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Asignar", "EmpleadoFAOAsignar", new { id = item.IdEmpleado })
                                             @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado }) |*@
                                             @* @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEmpleado }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })*@
                                         </td>

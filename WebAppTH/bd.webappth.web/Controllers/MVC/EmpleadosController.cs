@@ -1370,11 +1370,10 @@ namespace bd.webappth.web.Controllers.MVC
                         EntityID = string.Format("{0} {1}", "Estado Civil:", empleadoViewModel.IndiceOcupacionalModalidadPartida.IdIndiceOcupacional),
                     });
                     }
-                    return RedirectToAction("Index");
+                    return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}"); 
                 }
 
-                ViewData["Error"] = response.Message;
-                return RedirectToAction("Index");
+                return this.Redireccionar($"{Mensaje.Error}|{response.Message}");
 
             }
             catch (Exception ex)
