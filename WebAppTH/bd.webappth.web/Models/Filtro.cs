@@ -65,14 +65,26 @@ namespace bd.webappth.web.Models
                 /// </summary>
                 /// <returns></returns>
                 ApiServicio a = new ApiServicio();
-                var respuesta = a.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermiso");
+                var respuestaToken = a.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/ExisteToken");
 
-                //respuesta.Result.IsSuccess = true;
-                if (!respuesta.Result.IsSuccess)
+                if (!respuestaToken.Result.IsSuccess)
                 {
-                    var result = new ViewResult { ViewName = "AccesoDenegado" };
+                    var result = new ViewResult { ViewName = "SeccionCerrada" };
                     context.Result = result;
                 }
+                else
+                {
+                    var respuesta = a.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermiso");
+
+                    //respuesta.Result.IsSuccess = true;
+                    if (!respuesta.Result.IsSuccess)
+                    {
+                        var result = new ViewResult { ViewName = "AccesoDenegado" };
+                        context.Result = result;
+                    }
+                }
+
+               
 
             }
             catch (Exception ex)

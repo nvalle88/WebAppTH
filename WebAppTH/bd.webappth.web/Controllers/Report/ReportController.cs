@@ -84,6 +84,14 @@ namespace bd.webappth.web.Controllers.MVC
             
         }
 
+        public ActionResult ReporteCertificadoInduccion(int IdEmpleado)
+        {
+            string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepCertificadoInduccion&IdEmpleado=", Convert.ToString(IdEmpleado));
+
+            return Redirect(url);
+
+        }
+
 
     }
 }
