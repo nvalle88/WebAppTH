@@ -209,13 +209,15 @@
         function Calcular(id) {
 
             var porcentaje = document.getElementById("totalactividades").value
-            var num1 = document.getElementById("totalRealizar" + id).value;
-            var num2 = document.getElementById("totalRealizado" + id).value;
-            if (num2 > num1) {
+            var num1 = parseInt( document.getElementById("totalRealizar" + id).value);
+            var num2 = parseInt(document.getElementById("totalRealizado" + id).value);
+
+            if (num2 >= num1) {
                 num2 = num1;
             }
             var a = num2 / num1;
             var b = parseFloat(a.toFixed(2) * 100);
+            //var b = parseFloat(a.toFixed(2));
             if (b <= 60) {
                 document.getElementById("Nivelcumplimiento" + id).value = "1";
             }
@@ -232,7 +234,7 @@
                 document.getElementById("Nivelcumplimiento" + id).value = "5";
             }
             if (b == 100) {
-                var valorporcentaje = 60 / porcentaje;
+                var valorporcentaje = 100 / porcentaje;
                 document.getElementById("porcentaje" + id).value = valorporcentaje;
 
                 var total = 0;
@@ -250,8 +252,8 @@
 
             }
             else {
-                var valorporcentaje = (b * 60) / 100;
-                document.getElementById("porcentaje" + id).value = valorporcentaje / 2;
+                var valorporcentaje = (b * 100) / 100;
+                document.getElementById("porcentaje" + id).value = valorporcentaje / porcentaje;
                 var total = 0;
                 for (var i = 0; i < porcentaje; i++) {
                     var vppm = 0;
@@ -260,8 +262,8 @@
                         vppm = document.getElementsByName("PorcentajeCumplido")[i].value;
                     }
 
-                    total = parseInt(total) + parseInt(vppm);
-                    document.getElementById("TotalActividades").value = parseInt(total);
+                    total = parseFloat(total) + parseFloat(vppm);
+                    document.getElementById("TotalActividades").value = parseFloat(total);
                 }
 
             }

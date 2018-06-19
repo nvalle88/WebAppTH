@@ -63,7 +63,12 @@ namespace bd.webappth.web.Controllers.MVC
             return Redirect(url);
 
         }
+        public ActionResult ReporteInformeViaticosMDT(string IdSolicitud)
+        {
+            string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepInformeViaticoFormatoMDT&IdSolicitud=", Convert.ToString(IdSolicitud));
+            return Redirect(url);
 
+        }
         public ActionResult ReporteConPiePagina(GenerarFirmasViewModel modelo)
         {
             var UrlReporte = modelo.UrlReporte;
