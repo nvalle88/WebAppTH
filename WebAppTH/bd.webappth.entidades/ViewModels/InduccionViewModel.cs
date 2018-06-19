@@ -18,6 +18,12 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "Estado")]
         public string EstadoInduccion { get; set; }
 
+        [Display(Name = "Rol")]
+        public string NombreRol { get; set; }
+
+        [Display(Name = "Unidad administrativa")]
+        public string NombreDependencia { get; set; }
+
         public string ValorCompletado { get; set; }
     }
 }

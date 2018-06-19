@@ -260,6 +260,12 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        public async Task<IActionResult> ReporteSolicitudVacacionesAprobadas()
+        {
+
+            return RedirectToAction("AgregarPiePagina", "GenerarFirmas", new { NombreReporteConParametros = "RepSolicitudVacacion" });
+           
+        }
 
     }
 }
