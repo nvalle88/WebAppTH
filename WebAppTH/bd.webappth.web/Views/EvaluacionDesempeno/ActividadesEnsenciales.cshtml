@@ -234,6 +234,7 @@
                 document.getElementById("Nivelcumplimiento" + id).value = "5";
             }
             if (b == 100) {
+                //se asigan el valor total de la actividad ejm:100
                 var valorporcentaje = 100 / porcentaje;
                 document.getElementById("porcentaje" + id).value = valorporcentaje;
 
@@ -252,6 +253,7 @@
 
             }
             else {
+                //se asigan el valor total de la actividad ejm:100
                 var valorporcentaje = (b * 100) / 100;
                 document.getElementById("porcentaje" + id).value = valorporcentaje / porcentaje;
                 var total = 0;
