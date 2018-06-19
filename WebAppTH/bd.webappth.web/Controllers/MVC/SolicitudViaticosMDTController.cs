@@ -51,7 +51,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
 
               var   lista = await apiServicio.Listar<EmpleadoSolicitudViewModel>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ListarEmpleadosdeJefeconSolucitudesViaticosMDT");                
+                                                                    , "api/Empleados/ListarEmpleadosSolucitudesViaticosMDT");                
                 return lista;
             }
             catch (Exception)

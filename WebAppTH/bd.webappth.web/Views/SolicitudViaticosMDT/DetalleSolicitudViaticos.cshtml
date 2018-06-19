@@ -79,7 +79,6 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        var Estado = "";
                                         <tr>
 
                                             <td>
@@ -99,7 +98,11 @@
                                             </td>
                                             <td>
                                                 <a href='@Url.Action("ReporteSolicitudViaticosMDT", "Report", new { IdEmpleado = item.IdEmpleado, IdSolicitud = item.IdSolicitudViatico})' target="_blank">
-                                                    Ver reporte
+                                                    Solicitud |
+                                                </a>
+
+                                                <a href='@Url.Action("AgregarPiePagina", "GenerarFirmas", new { NombreReporteConParametros = "RepInformeViaticoFormatoMDT&IdSolicitud=" + item.IdSolicitudViatico })' target="_blank">
+                                                    Informe
                                                 </a>
                                             </td>
                                         </tr>

@@ -27,7 +27,7 @@
                     <th data-class="expand">
                         @Html.DisplayNameFor(model => model.ListasPersonaEstudio.FirstOrDefault().Titulo)
                     </th>
-                    <th>
+                    <th data-hide="phone">
                         @Html.DisplayNameFor(model => model.ListasPersonaEstudio.FirstOrDefault().NoSenecity)
                     </th>
                 </tr>
@@ -58,17 +58,17 @@
                     <th data-class="expand">
                         @Html.DisplayNameFor(model => model.ListasCanditadoExperiencia.FirstOrDefault().Institucion)
                     </th>
-                    <th>
+                    <th data-hide="phone">
                         @Html.DisplayNameFor(model => model.ListasCanditadoExperiencia.FirstOrDefault().FechaInicio)
                     </th>
-                    <th>
+                    <th data-hide="phone">
                         @Html.DisplayNameFor(model => model.ListasCanditadoExperiencia.FirstOrDefault().FechaFin)
                     </th>
-                    <th>
+                    <th data-hide="phone">
                         Total Dias
                     </th>
-                    <th>
-                        Año, mes, dias
+                    <th data-hide="phone">
+                        A&ntilde;0, mes, dias
                     </th>
                 </tr>
             </thead>
@@ -107,10 +107,10 @@
                     <th data-class="expand">
                         Resultados obtenidos
                     </th>
-                    <th>
+                    <th data-hide="phone">
                         Requerimientos
                     </th>
-                    <th>
+                    <th data-hide="phone">
                         Total cumplimiento
                     </th>
                 </tr>
