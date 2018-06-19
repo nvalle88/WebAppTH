@@ -68,5 +68,12 @@ namespace bd.webappth.web.Controllers.MVC
 
             }
         }
+
+
+        public async Task<IActionResult> ReporteParticipacionInduccion()
+        {
+
+            return RedirectToAction("ReporteParticipacionEventosInduccion","Report");
+        }
     }
 }

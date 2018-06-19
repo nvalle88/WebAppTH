@@ -6,11 +6,23 @@ using System.Collections.Generic;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using bd.webappth.servicios.Extensores;
+using System.Security.Claims;
+using bd.webappth.entidades.Negocio;
+using bd.webappth.servicios.Interfaces;
 
 namespace bd.webappth.web.Controllers.MVC
 {
     public class ReportController : Controller
-    {      
+    {
+
+        private readonly IApiServicio apiServicio;
+
+        public ReportController(IApiServicio apiServicio)
+        {
+            this.apiServicio = apiServicio;
+        }
+
 
         public ActionResult ReporteNomina(int id)
         {
@@ -90,6 +102,43 @@ namespace bd.webappth.web.Controllers.MVC
 
             return Redirect(url);
 
+        }
+
+        public ActionResult ReporteParticipacionEventosInduccion()
+        {
+            try {
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    var nombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    var filtros = new IdFiltrosViewModel{ NombreUsuario = nombreUsuario};
+
+                    var sucursal = apiServicio.ObtenerElementoAsync1<Sucursal>(
+                            filtros,
+                            new Uri(WebApp.BaseAddress),
+                            "api/Sucursal/ObtenerSucursalPorEmpleado").Result;
+
+
+                    string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepParticipacionEventoInduccion&IdSucursal=", Convert.ToString(sucursal.IdSucursal));
+
+                    return Redirect(url);
+
+
+                }
+
+                return RedirectToAction("Login", "Login");
+                
+            } catch (Exception ex) {
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}|{"10000"}";
+
+                return BadRequest();
+
+            }
+            
         }
 
 
