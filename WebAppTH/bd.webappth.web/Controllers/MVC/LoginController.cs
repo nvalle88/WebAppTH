@@ -54,27 +54,27 @@ namespace bd.webappth.web.Controllers.MVC
        {
             try
             {
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+                //var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+                //var token = claim.Claims.Where(c => c.Type == ClaimTypes.SerialNumber).FirstOrDefault().Value;
+                //var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                var permiso = new PermisoUsuario
-                {
-                    Contexto = HttpContext.Request.Path,
-                    Token = token,
-                    Usuario = NombreUsuario,
-                };
+                //var permiso = new PermisoUsuario
+                //{
+                //    Contexto = HttpContext.Request.Path,
+                //    Token = token,
+                //    Usuario = NombreUsuario,
+                //};
 
-                /// <summary>
-                /// Se valida que la información del usuario actual tenga permiso para acceder al path solicitado... 
-                /// </summary>
-                /// <returns></returns>
-                var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermiso");
+                ///// <summary>
+                ///// Se valida que la información del usuario actual tenga permiso para acceder al path solicitado... 
+                ///// </summary>
+                ///// <returns></returns>
+                //var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermiso");
 
-                if (!respuesta.Result.IsSuccess)
-                {
-                    return Redirect(WebApp.BaseAddressWebAppLogin);
-                }
+                //if (!respuesta.Result.IsSuccess)
+                //{
+                //    return Redirect(WebApp.BaseAddressWebAppLogin);
+                //}
 
                 if (Request.Query.Count != 2)
                 {
@@ -156,6 +156,10 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
                     await HttpContext.Authentication.SignOutAsync("Cookies");
+                    foreach (var cookie in HttpContext.Request.Cookies.Keys)
+                    {
+                        HttpContext.Response.Cookies.Delete(cookie);
+                    }
                     var responseLog = new EntradaLog
                     {
                         ExceptionTrace = null,
@@ -171,6 +175,10 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception)
             {
+                foreach (var cookie in HttpContext.Request.Cookies.Keys)
+                {
+                    HttpContext.Response.Cookies.Delete(cookie);
+                }
                 return RedirectToAction(nameof(LoginController.Index), "Login");
             }
 
