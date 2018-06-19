@@ -22,23 +22,34 @@
                             <thead>
                                 <tr>
                                     <th data-hide="phone">
+                                        @Html.DisplayNameFor(model => model.FirstOrDefault().Partida)
+                                    </th>
+                                    <th data-hide="phone">
                                         @Html.DisplayNameFor(model => model.FirstOrDefault().Identificacion)
                                     </th>
                                     <th data-hide="phone">
-                                        @Html.DisplayNameFor(model => model.FirstOrDefault().nombre)
-                                    </th>
-                                    <th data-hide="phone">
-                                        @Html.DisplayNameFor(model => model.FirstOrDefault().apellido)
+                                        @Html.DisplayNameFor(model => model.FirstOrDefault().NombreApellido)
                                     </th>
                                     <th data-hide="phone">
                                         @Html.DisplayNameFor(model => model.FirstOrDefault().PuestoActual)
                                     </th>
                                     <th data-hide="phone">
+                                        @Html.DisplayNameFor(model => model.FirstOrDefault().GrupoOcupacional)
+                                    </th>
+                                    <th data-hide="phone">
+                                        @Html.DisplayNameFor(model => model.FirstOrDefault().Remuneracion)
+                                    </th>
+                                    <th data-hide="phone">
                                         @Html.DisplayNameFor(model => model.FirstOrDefault().NuevoPuesto)
                                     </th>
                                     <th data-hide="phone">
+                                        @Html.DisplayNameFor(model => model.FirstOrDefault().GrupoOcupacionalPropuesta)
+                                    </th>
+                                    <th data-hide="phone">
+                                        @Html.DisplayNameFor(model => model.FirstOrDefault().RemuneracionPropuesta)
+                                    </th>
+                                    <th data-hide="phone">
                                         @Html.DisplayNameFor(model => model.FirstOrDefault().Anio)
-
                                     </th>
                                     <th>Opciones</th>
                                 </tr>
@@ -49,30 +60,42 @@
                                 {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Identificacion)
+                                        @Html.DisplayFor(modelItem => item.Partida)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.nombre)
+                                        @Html.DisplayFor(modelItem => item.Identificacion) 
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.apellido)
-                                    </td>
+                                        @Html.DisplayFor(modelItem => item.nombre)  @Html.DisplayFor(modelItem => item.apellido)
+                                    </td>                                    
                                     <td>
                                         @Html.DisplayFor(modelItem => item.PuestoActual)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GrupoOcupacional)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Remuneracion)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.NuevoPuesto)
                                     </td>
                                     <td>
+                                        @Html.DisplayFor(modelItem => item.GrupoOcupacionalPropuesta)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RemuneracionPropuesta)
+                                    </td>
+                                    <td>
                                         @Html.DisplayFor(modelItem => item.Anio)
                                     </td>
                                     @if (item.estado == 3)
-                                        {
-                                <td>
-                                    @Html.ActionLink("Detalle", "DetalleJefe",  new { id = item.IdEmpleado, IdActividad = item.IdFormularioAnalisisOcupacional })
-                                </td>
+                                    {
+                                        <td>
+                                            @Html.ActionLink("Detalle", "DetalleJefe", new { id = item.IdEmpleado, IdActividad = item.IdFormularioAnalisisOcupacional })
+                                        </td>
 
-                                        }
+                                    }
 
 
                                 </tr>

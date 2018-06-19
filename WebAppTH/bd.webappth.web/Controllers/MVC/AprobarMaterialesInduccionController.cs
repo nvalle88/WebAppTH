@@ -140,7 +140,7 @@ namespace bd.webappth.web.Controllers.MVC
                     if (response.IsSuccess)
                     {
 
-                        return RedirectToAction("Certificado");
+                        return RedirectToAction("ReporteCertificadoInduccion", "Report",new { IdEmpleado = induccionEmpleado.IdEmpleado });
 
                     }
 

@@ -10,20 +10,38 @@ namespace bd.webappth.entidades.ViewModels
     public class DocumentoFAOViewModel
     {
         public int IdEmpleado { get; set; }
-        [DisplayName("Nombres")]
+        [DisplayName("Remuneración propuesta")]
+        public decimal RemuneracionPropuesta { get; set; }
+        [DisplayName("Grado propuesto")]
+        public string GradoPropuesto { get; set; }
+        [DisplayName("Grupo ocupacional propuesto")]
+        public string GrupoOcupacionalPropuesta { get; set; }
+
+        [DisplayName("Nombre")]
         public string nombre { get; set; }
         [DisplayName("Apellido")]
         public string apellido { get; set; }
-        [DisplayName("Número de Cédula")]
+        [DisplayName("Identificación")]
         public string Identificacion { get; set; }
+        [DisplayName("Grupo ocupacional")]
+        public string GrupoOcupacional { get; set; }
         public int OpcionMenu { get; set; }
         public string NombreUsuario { get; set; }
+        [DisplayName("Partida")]
+        public string Partida { get; set; }
         public int idDependencia { get; set; }
+        [DisplayName("Remuneración")]
+        public decimal Remuneracion { get; set; }
+        [DisplayName("Dependencia")]
+        public string Dependencia { get; set; }
         public int idsucursal { get; set; }
         public int? estado { get; set; }
+        public string Modalidad { get; set; }
+        [DisplayName("Tipo nombramiento")]
+        public string TipoNombramiento { get; set; }        
         [DisplayName("Institución")]
         public string Institucion { get; set; }
-        [DisplayName("Unidad Administrativa")]
+        [DisplayName("Unidad administrativa")]
         public string UnidadAdministrativa { get; set; }
         [DisplayName("Puesto")]
         public string Puesto { get; set; }
@@ -62,7 +80,7 @@ namespace bd.webappth.entidades.ViewModels
         public int IdAdministracionTalentoHumano { get; set; }
         [DisplayName("Puesto Actual")]
         public string PuestoActual { get; set; }
-        [DisplayName("Revisión Puesto")]
+        [DisplayName("Puesto propuesto")]
         public string NuevoPuesto { get; set; }
 
     }

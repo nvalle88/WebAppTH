@@ -118,9 +118,7 @@
 
                                         <td>
                                             @if(item.EstadoInduccion == item.ValorCompletado){
-                                             <text>
-                                                Certificado ??
-                                             </text>
+                                             @Html.ActionLink("Ver certificado", "ReporteCertificadoInduccion", "Report", new { IdEmpleado = item.IdEmpleado })
                                             }
                                             
                                         </td>

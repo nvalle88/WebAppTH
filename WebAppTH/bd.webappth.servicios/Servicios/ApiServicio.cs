@@ -315,8 +315,7 @@ namespace bd.webappth.servicios.Servicios
 
                 }
 
-            }
-            catch (Exception ex)
+            }catch (Exception ex)
             {
                 return null;
             }
