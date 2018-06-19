@@ -18,8 +18,13 @@ namespace bd.webappth.web.Models
 
     public class Filtro : IActionFilter
     {
+        private readonly IApiServicio apiServicio;
 
-      
+        public Filtro(IApiServicio apiServicio)
+        {
+            this.apiServicio = apiServicio;
+        }
+
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
@@ -64,8 +69,7 @@ namespace bd.webappth.web.Models
                 /// Se valida que la información del usuario actual tenga permiso para acceder al path solicitado... 
                 /// </summary>
                 /// <returns></returns>
-                ApiServicio a = new ApiServicio();
-                var respuestaToken = a.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/ExisteToken");
+                var respuestaToken = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/ExisteToken");
 
                 if (!respuestaToken.Result.IsSuccess)
                 {
@@ -79,7 +83,7 @@ namespace bd.webappth.web.Models
                 }
                 else
                 {
-                    var respuesta = a.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermiso");
+                    var respuesta = apiServicio.ObtenerElementoAsync1<Response>(permiso, new Uri(WebApp.BaseAddressSeguridad), "api/Adscpassws/TienePermiso");
 
                     //respuesta.Result.IsSuccess = true;
                     if (!respuesta.Result.IsSuccess)
