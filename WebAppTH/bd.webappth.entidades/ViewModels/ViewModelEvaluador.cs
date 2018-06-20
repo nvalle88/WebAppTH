@@ -43,6 +43,8 @@ namespace bd.webappth.entidades.ViewModels
         [Required(ErrorMessage = "Debe introducir {0}")]
         public List<string> ListaIndicadores{ get; set; }
         [Required(ErrorMessage = "Debe introducir {0}")]
+        public List<string> ListaObservacion { get; set; }
+        [Required(ErrorMessage = "Debe introducir {0}")]
         public List<string> ListaMetaPeriodo { get; set; }
         [Required(ErrorMessage = "Debe introducir {0}")]
         public List<string> ListaActividadescumplidos { get; set; }
