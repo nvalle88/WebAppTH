@@ -147,6 +147,15 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
+        public ActionResult ReporteEstadisticasIngreso()
+        {
+            string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepEstadisticasIngresoPersonalPeriodoCorte");
+
+            return Redirect(url);
+
+        }
+
+
     }
 }
 
