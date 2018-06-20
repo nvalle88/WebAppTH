@@ -79,33 +79,37 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
+                                    <tr>
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FechaSalida)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FechaLlegada)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ValorEstimado)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Observacion)
-                                            </td>
-                                            <td>
-                                                <a href='@Url.Action("ReporteSolicitudViaticosMDT", "Report", new { IdEmpleado = item.IdEmpleado, IdSolicitud = item.IdSolicitudViatico})' target="_blank">
-                                                    Solicitud |
-                                                </a>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FechaSalida)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FechaLlegada)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ValorEstimado)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Observacion)
+                                        </td>
+                                        
+                                        <td>
+                                            <a href='@Url.Action("AgregarPiePagina", "GenerarFirmas", new { NombreReporteConParametros = "RepSolicitudViaticoFormatoMDT&IdSolicitud=" + item.IdSolicitudViatico })' target="_blank">
+                                                Solicitud |
+                                            </a>
+                                            @*<a href='@Url.Action("ReporteSolicitudViaticosMDT", "Report", new { IdEmpleado = item.IdEmpleado, IdSolicitud = item.IdSolicitudViatico})' target="_blank">
+                                                Solicitud |
+                                            </a>*@
 
-                                                <a href='@Url.Action("AgregarPiePagina", "GenerarFirmas", new { NombreReporteConParametros = "RepInformeViaticoFormatoMDT&IdSolicitud=" + item.IdSolicitudViatico })' target="_blank">
-                                                    Informe
-                                                </a>
-                                            </td>
-                                        </tr>
+                                            <a href='@Url.Action("AgregarPiePagina", "GenerarFirmas", new { NombreReporteConParametros = "RepInformeViaticoFormatoMDT&IdSolicitud=" + item.IdSolicitudViatico })' target="_blank">
+                                                Informe
+                                            </a>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
