@@ -68,7 +68,7 @@ namespace bd.webappth.entidades.Utils
 
         public static string EscogerEmpleadoReemplazo { get { return "Seleccione un reemplazo"; } }
 
-        public static object NoAsignadoDistrivutibo { get { return "El empleado seleccionado no está asignado al distrivitibo, debe asignar el empleado al distributivo para editar su ficha..."; } }
+        public static object NoAsignadoDistrivutibo { get { return "El empleado seleccionado no está asignado al distributivo, debe asignar el empleado al distributivo para editar su ficha..."; } }
 
         public static object NoProcesarSolicitud { get { return "No se ha podido porcesar la solicitud realizada "; } }
 

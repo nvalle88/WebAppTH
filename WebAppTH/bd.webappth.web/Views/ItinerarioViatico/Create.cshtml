@@ -4,7 +4,7 @@
     ViewData["Title"] = "ItinerarioViatico";
 }
 <!-- MAIN CONTENT -->
-<div id="content">
+<div id="content" style="height:1000px;">
     <div class="col col-10">
 
         @if (@ViewData["Error"].ToString() != "")
@@ -57,9 +57,12 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form id="wizard-1" asp-action="Create" novalidate="novalidate">
+                            <form id="wizard-1" asp-action="Create" novalidate="novalidate" class="smart-form">
                                 <input type="hidden" asp-for="IdSolicitudViatico" />
-                                @{await Html.RenderPartialAsync("_PartialViewItinerarioViatico", Model);}
+                                <fieldset>
+                                    <legend>Itinerario</legend>
+                                    @{await Html.RenderPartialAsync("_PartialViewItinerarioViatico", Model);}
+                                </fieldset>
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-default">Cancelar</a>
@@ -83,13 +86,13 @@
 </div>
 <!-- END MAIN CONTENT -->
 
-
-
-
-
 @section Scripts {
- 
 
-
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
 
 }

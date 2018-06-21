@@ -83,6 +83,14 @@
                                         </th>
 
                                         <th data-class="expand">
+                                            @Html.DisplayNameFor(model => Model.FirstOrDefault().NombreRol)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => Model.FirstOrDefault().NombreDependencia)
+                                        </th>
+
+                                        <th data-class="expand">
                                             @Html.DisplayNameFor(model => Model.FirstOrDefault().FechaIngreso)
                                         </th>
 
@@ -104,8 +112,15 @@
                                     <tr>
 
                                         <td>
-
                                             @Html.DisplayFor(modelItem => item.Nombres)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreRol)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreDependencia)
                                         </td>
 
                                         <td>
@@ -117,10 +132,11 @@
                                         </td>
 
                                         <td>
-                                            @if(item.EstadoInduccion == item.ValorCompletado){
-                                             @Html.ActionLink("Ver certificado", "ReporteCertificadoInduccion", "Report", new { IdEmpleado = item.IdEmpleado })
-                                            }
-                                            
+                                            @if (item.EstadoInduccion == item.ValorCompletado)
+        {
+                                    @Html.ActionLink("Ver certificado", "ReporteCertificadoInduccion", "Report", new { IdEmpleado = item.IdEmpleado })
+}
+
                                         </td>
 
                                     </tr>

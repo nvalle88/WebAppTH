@@ -607,6 +607,7 @@ namespace bd.webappth.web.Controllers.MVC
                 lista = await apiServicio.Listar<SolicitudViatico>(empleado, new Uri(WebApp.BaseAddress)
                                                                     , "api/SolicitudViaticos/ListarSolicitudesViaticosPorEmpleado");
 
+
                 InicializarMensaje(null);
                 return View(lista);
             }
