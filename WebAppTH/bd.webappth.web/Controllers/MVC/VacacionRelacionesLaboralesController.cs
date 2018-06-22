@@ -214,10 +214,10 @@ namespace bd.webappth.web.Controllers.MVC
 
                 var lista = await apiServicio.Listar<RelacionLaboral>(
                     new Uri(WebApp.BaseAddress),
-                    "api/RelacionesLaborales/ListarRelacionesLaborales");
+                    "api/RegimenesLaborales/ListarRegimenesLaborales");
 
 
-                ViewData["RelacionLaboral"] = new SelectList(lista, "IdRelacionLaboral", "Nombre");
+                ViewData["RegimenLaboral"] = new SelectList(lista, "IdRegimenLaboral", "Nombre");
 
             } catch (Exception ex)
             {

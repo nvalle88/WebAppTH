@@ -20,9 +20,7 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdRegimenLaboral { get; set; }
         public virtual RegimenLaboral RegimenLaboral { get; set; }
-
-        public virtual ICollection<ModalidadPartida> ModalidadPartida { get; set; }
-
+        
         public virtual ICollection<TipoNombramiento> TipoNombramiento { get; set; }
     }
 }

@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace bd.webappth.web.Controllers.MVC
@@ -83,23 +84,28 @@ namespace bd.webappth.web.Controllers.MVC
             var lista = new List<ListaEmpleadoViewModel>();
             try
             {
-                lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ListarEmpleados");
 
-                InicializarMensaje(null);
-                return View(lista);
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    lista = await apiServicio.ObtenerElementoAsync1<List<ListaEmpleadoViewModel>>(
+                            NombreUsuario
+                            , new Uri(WebApp.BaseAddress)
+                            , "api/Empleados/ListarEmpleadosIndiceOcupacionalModalidadPartida");
+
+                    InicializarMensaje(null);
+                    return View(lista);
+                }
+
+                return RedirectToAction("Login", "Login");
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando empleados",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+                
                 return BadRequest();
             }
         }

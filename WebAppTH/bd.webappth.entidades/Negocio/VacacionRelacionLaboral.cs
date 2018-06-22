@@ -11,7 +11,7 @@ namespace bd.webappth.entidades.Negocio
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Relación laboral")]
         [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar {0} ")]
-        public int IdRelacionLaboral { get; set; }
+        public int IdRegimenLaboral { get; set; }
 
         [Display(Name = "Mínimo de días")]
         public int MinAcumulacionDias { get; set; }
@@ -24,7 +24,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Incrementar a partir del año")]
         public int IncrementoApartirPeriodoFiscal { get; set; }
-
-        public virtual RelacionLaboral RelacionLaboral { get; set; }
+        
+        public virtual RegimenLaboral RegimenLaboral { get; set; }
     }
 }
