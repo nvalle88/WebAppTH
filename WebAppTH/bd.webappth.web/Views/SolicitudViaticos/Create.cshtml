@@ -8,7 +8,7 @@
 
 <!-- MAIN CONTENT -->
 <div id="content">
-        <!-- widget grid -->
+    <!-- widget grid -->
     <section id="widget-grid" class="">
 
         <!-- START ROW -->
@@ -34,29 +34,38 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="Create" asp-controller="SolicitudViaticos" novalidate="novalidate">
+                            <form asp-action="Create" asp-controller="SolicitudViaticos" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="SolicitudViatico.FechaSolicitud" />
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend>Tipo Vi&aacute;tico</legend>
+                                            <div class="row">
+                                                <br />
+                                                @foreach (var item in Model.ListaTipoViatico)
+                                                {
+                                                    @*<div class="col-md-6">
+                                                        <div class="checkbox-inline">*@
+                                                    <section class="col col-lg-6">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   name="ViaticosSeleccionados"
+                                                                   value="@item.IdTipoViatico" /> @item.Descripcion
+                                                            </label>
+                                                            @*</div>
 
-                                <div class="row">
-                                    <section class="col col-lg-12">
-                                        <legend>Tipo Vi&aacute;tico</legend>
-                                        @foreach (var item in Model.ListaTipoViatico)
-                                        {
-                                            <div class="col-md-6">
-                                                <div class="checkbox-inline">
-                                                    <label>
-                                                        <input type="checkbox"
-                                                               name="ViaticosSeleccionados"
-                                                               value="@item.IdTipoViatico" /> @item.Descripcion
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            }
+                                                                </div>*@
+                                                        </section>
 
-                                    </section>
-                                </div>
-                                @{await Html.RenderPartialAsync("_PartialViewSolicitudViaticos", Model);}
+
+                                                    }
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    @{await Html.RenderPartialAsync("_PartialViewSolicitudViaticos", Model);}
+                                </fieldset>
                                 <footer>
                                     <input type="submit" value="Guardar y Continuar" class="btn btn-primary" />
                                     <a asp-action="Index" class="btn btn-default">Cancelar</a>
@@ -89,6 +98,11 @@
     <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="~/js/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
     <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
     <script type="text/javascript">
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!

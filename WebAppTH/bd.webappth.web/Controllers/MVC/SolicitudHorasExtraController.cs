@@ -28,8 +28,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        
-
         public async Task<ActionResult> ListadoEmpleadosSolicitudHorasExtra()
         {
             var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
@@ -39,8 +37,7 @@ namespace bd.webappth.web.Controllers.MVC
             return View(listadoEmpleados);
         }
 
-
-        public async Task<IActionResult> AprobacionSolicitudHorasExtra(int id)
+  public async Task<IActionResult> AprobacionSolicitudHorasExtra(int id)
         {
             try
             {
