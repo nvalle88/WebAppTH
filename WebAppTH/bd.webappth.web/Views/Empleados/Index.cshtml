@@ -58,21 +58,30 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Nombres y Apellidos
+                                            @Html.DisplayNameFor(model=>model.FirstOrDefault().Identificacion)
                                         </th>
+
                                         <th data-class="expand">
-                                            Identificaci&oacuten
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreApellido)
                                         </th>
+
                                         <th data-hide="phone">
-                                            Tel&eacutefono Privado
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreRelacionLaboral)
                                         </th>
+
                                         <th data-hide="phone">
-                                            Correo Privado
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Dependencia)
                                         </th>
+
                                         <th data-hide="phone">
-                                            &Aacute;rea administrativa
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ManualPuesto)
                                         </th>
-                                        <th>
+
+                                        <th >
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().PartidaIndividual)
+                                        </th>
+
+                                        <th data-class="expand">
                                             <i class="fa fa-cog "></i>
                                             Opciones
                                         </th>
@@ -81,30 +90,38 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NombreApellido)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TelefonoPrivado)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CorreoPrivado)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Dependencia)
-                                            </td>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Identificacion)
+                                        </td>
 
-                                            <td>
-                                                @Html.ActionLink("Ficha del empleado", "Detalle", "FichaEmpleado", new { idEmpleado = item.IdEmpleado, idPersona = item.IdPersona }, new { onclick = "cargando()" })<br /> |
-                                                @Html.ActionLink("Agregar a Distributivo", "AgregarDistributivo", new { IdEmpleado = item.IdEmpleado })<br />
-                                               
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreApellido)
+                                        </td>
 
-                                            </td>
-                                        </tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreRelacionLaboral)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Dependencia)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ManualPuesto)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PartidaIndividual)
+                                        </td>
+
+                                        <td>
+                                            @Html.ActionLink("Ficha del empleado", "Detalle", "FichaEmpleado", new { idEmpleado = item.IdEmpleado, idPersona = item.IdPersona }, new { onclick = "cargando()" })<br /> |
+                                            @Html.ActionLink("Agregar a Distributivo", "AgregarDistributivo", new { IdEmpleado = item.IdEmpleado })<br />
+
+
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

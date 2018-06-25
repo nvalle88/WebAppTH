@@ -4,13 +4,13 @@
 
     <div class="row">
         <section class="col col-lg-3">
-            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.IdRelacionLaboral)</label>
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.IdRegimenLaboral)</label>
             <label class="input">
-                <select id="SelectAccion" asp-for="IdRelacionLaboral" class="form-control" asp-items="ViewBag.RelacionLaboral">
+                <select id="SelectAccion" asp-for="IdRegimenLaboral" class="form-control" asp-items="ViewBag.RegimenLaboral">
                     <option value="0" selected>Seleccione</option>
                 </select>
 
-                <span asp-validation-for="IdRelacionLaboral" class="text-danger"></span>
+                <span asp-validation-for="IdRegimenLaboral" class="text-danger"></span>
             </label>
         </section>
     </div>

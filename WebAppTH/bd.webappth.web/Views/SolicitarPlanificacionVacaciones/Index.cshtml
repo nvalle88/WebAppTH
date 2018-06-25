@@ -103,7 +103,7 @@
                                             </td>
 
                                             <td>
-                                                @if (String.IsNullOrEmpty(item.Observaciones))
+                                                @if (String.IsNullOrEmpty(item.Observaciones) && ( item.Estado == 3) )
                                                 {
                                                     @Html.ActionLink("Editar", "Edit", new { id = item.IdSolicitudPlanificacionVacaciones })
                                                 }
