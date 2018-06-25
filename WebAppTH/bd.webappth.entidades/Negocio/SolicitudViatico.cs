@@ -7,12 +7,9 @@
 
     public partial class SolicitudViatico
     {
-        [Key]
+        [Key]      
         public int IdSolicitudViatico { get; set; }
         public int IdEmpleado { get; set; }
-        public int? IdEmpleadoAprobador { get; set; }
-        public int IdPais { get; set; }
-        public int IdProvincia { get; set; }
         public int IdCiudad { get; set; }
         public int IdConfiguracionViatico { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
@@ -20,7 +17,7 @@
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
         [Display(Name = "Valor estimado")]
-        public decimal? ValorEstimado { get; set; }
+        public decimal ValorEstimado { get; set; }
         [Display(Name = "Fecha llegada")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaLlegada { get; set; }
@@ -32,17 +29,19 @@
         public int Estado { get; set; }
         [Display(Name = "Hora salida")]
         public TimeSpan HoraSalida { get; set; }
-        [Display(Name = "HOra llegada")]
+        [Display(Name = "Hora llegada")]
         public TimeSpan HoraLlegada { get; set; }
+        public int? IdEmpleadoAprobador { get; set; }
+        public int IdFondoFinanciamiento { get; set; }
 
         public virtual ICollection<AprobacionViatico> AprobacionViatico { get; set; }
+        public virtual ICollection<DetallePresupuesto> DetallePresupuesto { get; set; }
         public virtual ICollection<ItinerarioViatico> ItinerarioViatico { get; set; }
         public virtual ICollection<SolicitudTipoViatico> SolicitudTipoViatico { get; set; }
         public virtual Ciudad Ciudad { get; set; }
-        public virtual Pais Pais { get; set; }
-        public virtual Provincia Provincia { get; set; }
-        [NotMapped]
-        public decimal? valorItinerario { get; set; }
+        public virtual ConfiguracionViatico ConfiguracionViatico { get; set; }
+        public virtual Empleado Empleado { get; set; }
+        public virtual FondoFinanciamiento FondoFinanciamiento { get; set; }
 
     }
 }
