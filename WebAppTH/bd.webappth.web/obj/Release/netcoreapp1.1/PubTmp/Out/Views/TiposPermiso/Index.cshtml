@@ -1,0 +1,79 @@
+﻿@model List<bd.webappth.entidades.Negocio.TipoPermiso>
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div id="content">
+
+
+    <p></p>
+    <a asp-action="Create" onclick="espera()">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo
+
+        </button>
+    </a>
+    <p> </p>
+
+
+    <section id="widget-grid" class="">
+        <div class="row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Tipo de Permiso</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox"></div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" style="width:100%;">
+                                <thead>
+
+                                    <tr>
+                                        <th>
+                                            Nombre
+                                        </th>
+                                        <th>Opciones</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                            </td>
+
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdTipoPermiso, onClick ="espera()"}) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTipoPermiso}, new { onclick = "return confirm('Desea eliminar el Tipo de Permiso... ?');" })
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+    <script>
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
+}

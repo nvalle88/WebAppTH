@@ -1,0 +1,213 @@
+@model bd.webappth.entidades.ViewModels.AccionPersonalViewModel
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+    .btnClass {
+        width:100px;
+        font-size:15px;
+        font-weight:100;
+        padding-top:4px;
+        padding-bottom:4px;
+    }
+</style>
+<!-- MAIN CONTENT -->
+<div id="content" style="height:2000px;">
+
+
+    <!-- widget grid -->
+    <section id="" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Movimiento personal</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="Create" id="checkout-form" class="formularioClass" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @{await Html.RenderPartialAsync("_PartialView", Model);}
+
+                                <div style="float:right; padding:1%;">
+                                    <footer style="background-color:transparent;border:none;">
+
+                                        <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.DatosBasicosEmpleadoViewModel.Identificacion" class="btn btn-default btnClass" value="Cancelar" onclick="espera()"/>
+
+                                        <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-default btnClass" onclick="espera()" />
+
+                                    </footer>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row">&nbsp;</div>
+                            </form>
+
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+    <script src='~/js/datatables/init.js'></script>
+
+    <script src="~/js/moment.min.js"></script>
+
+
+    <!-- Estilos waitMe -->
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <!-- Scripts waitMe -->
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <!-- Scripts comboBox -->
+
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+
+    <script>
+
+        var maxDias = 999999999;
+
+        function calcularDias() {
+
+
+            var fecha1 = moment(document.getElementById("date_Fecha1").value);
+            var fecha2 = moment(document.getElementById("date_Fecha2").value);
+
+            var valNumDiasTxt = fecha2.diff(fecha1, 'days');
+
+            if (valNumDiasTxt > 0) {
+
+                document.getElementById("txt_dias").value = valNumDiasTxt;
+                document.getElementById("txt_Numero").value = valNumDiasTxt;
+
+                if (valNumDiasTxt > maxDias && maxDias > 0) {
+
+                    alert("El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias);
+                    document.getElementById("btnGuardar").disabled = true;
+
+                } else { 
+                    document.getElementById("btnGuardar").disabled = false; 
+                }
+                
+            } else {
+                document.getElementById("txt_dias").value = 0;
+                document.getElementById("txt_Numero").value = 0;
+            }
+
+
+
+        }
+        
+
+    </script>
+
+    <!-- Script llamada al waitme -->
+    <script type="text/javascript">
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
+
+    <script>
+        
+        
+        $(document).ready(function () {
+            
+            $("#SelectAccion").change(function () {
+                
+                
+                if ($("#SelectAccion").val() > 0) { 
+                    
+                    mostrarLoadingPanel("content", "Cargando...");
+
+                    $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("VerTipoAccion", "MovimientosPersonalTTHH")',
+                    dataType: 'json',
+                    data: { idAccion: $("#SelectAccion").val() },
+                    success: function (data) {
+                        
+                        if (data.generaAccionPersonal == true) {
+                            document.getElementById("rdbTrue").checked = true
+                            document.getElementById("txtGenerarMovimiento").value = true;
+                            MostrarMovimientoPersonal();
+                        }
+                        else if (data.generaAccionPersonal == false) { 
+                            document.getElementById("rdbFalse").checked = true;
+                            document.getElementById("txtGenerarMovimiento").value = false;
+
+                            OcultarMovimientoPersonal();
+                        }
+
+                        maxDias = data.nDiasMaximo;
+
+                        if (data.definitivo == true) {
+                            alert("Esta acci\u00F3n es de tiempo indefinido");
+                            document.getElementById("date_Fecha2").style.visibility = "hidden"; 
+                            document.getElementById("lbl_date_Fecha2").style.visibility = "hidden"; 
+                            document.getElementById("txt_ver_dias").style.visibility = "hidden";
+
+                        } else { 
+                            alert("El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias);
+                            document.getElementById("date_Fecha2").style.visibility = "visible";
+                            document.getElementById("lbl_date_Fecha2").style.visibility = "visible";
+                            document.getElementById("txt_ver_dias").style.visibility = "visible";
+                        }
+                        
+
+                        }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                
+                }
+
+            }); // Fin change
+            
+
+        }); // fin ready
+    </script>
+
+}

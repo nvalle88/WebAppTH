@@ -1,0 +1,8 @@
+C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.sw.externos\bin\Debug\netcoreapp1.1\bd.sw.externos.deps.json
+C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.sw.externos\bin\Debug\netcoreapp1.1\bd.sw.externos.dll
+C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.sw.externos\bin\Debug\netcoreapp1.1\bd.sw.externos.pdb
+C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.sw.externos\obj\Debug\netcoreapp1.1\bd.sw.externos.csproj.CoreCompileInputs.cache
+C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.sw.externos\obj\Debug\netcoreapp1.1\bd.sw.externos.AssemblyInfoInputs.cache
+C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.sw.externos\obj\Debug\netcoreapp1.1\bd.sw.externos.AssemblyInfo.cs
+C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.sw.externos\obj\Debug\netcoreapp1.1\bd.sw.externos.dll
+C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.sw.externos\obj\Debug\netcoreapp1.1\bd.sw.externos.pdb

@@ -1,0 +1,12 @@
+@model bd.webappth.entidades.Negocio.TipoIdentificacion
+<fieldset>
+    <div class="row">
+        <section class="col col-10">
+            <label class="input">
+                <i class="icon-append fa fa-check"></i>
+                <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+</fieldset>

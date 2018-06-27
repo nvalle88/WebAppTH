@@ -1,0 +1,14 @@
+@model bd.webappth.entidades.Negocio.GrupoOcupacional
+
+<fieldset>
+    <div class="row">
+        <section class="col col-8">
+            <label class="label">@Html.DisplayNameFor(model => model.TipoEscala)</label>
+            <label class="input">
+                <input maxlength="32" asp-for="TipoEscala" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.TipoEscala)" />
+                <span asp-validation-for="TipoEscala" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+</fieldset>

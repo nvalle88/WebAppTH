@@ -240,17 +240,10 @@
                                                 @if (Model.Estado != 0)
                                                 {
                                                     <text>
-                                                        @Html.ActionLink("Informe", "Informe", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico }) 
+                                                        @Html.ActionLink("Informe", "Informe", new { IdSolicitudViatico = Model.IdSolicitudViatico }) 
 
                                                     </text>
                                                 }
-                                                @*@if (Model.SolicitudViatico.Estado == 5)
-                                                {
-                                                    <text>
-                                                        @Html.ActionLink("Reliquidacion", "Reliquidacion", new { IdSolicitudViatico = item.IdSolicitudViatico, IdItinerarioViatico = item.IdItinerarioViatico })
-
-                                                    </text>
-                                                }*@
                                             </td>
                                         </tr>
                                     }

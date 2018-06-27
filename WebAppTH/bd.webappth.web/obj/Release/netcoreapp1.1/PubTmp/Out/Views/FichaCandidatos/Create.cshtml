@@ -1,0 +1,110 @@
+@model bd.webappth.entidades.ViewModels.FichaCandidatoViewModel
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+<div id="content">
+    <section id="widget-grid" class="">
+        <div class="col col-10">
+
+            @if (@ViewData["Error"].ToString() != "")
+
+            {
+
+            <div class="col-lg-12">
+
+                <div class="alert alert-block alert-dismissable">
+
+                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                    <p>
+                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                    </p>
+                </div>
+            </div>
+            }
+        </div>
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Datos del candidato</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form asp-action="Detalle" method="post" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="IdCandidato" readonly />
+                                <input type="hidden" asp-for="IdPersona" readonly />
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label>CI / Pasaporte </label>
+                                            <input asp-for="Identificacion" readonly class="form-control input " placeholder="Identificacion" type="text" />
+                                            <span asp-validation-for="Identificacion" class="text-danger"></span>
+                                            <span id="idIdentificacion" class="text-danger"></span>
+                                        </section>
+                                       
+                                    </div>
+                                    <div class="row">
+                                        <article class="col col-lg-12">
+                                            <div class="row">
+                                                <section class="col col-4">
+                                                    <label>Nombres</label>
+                                                    <input asp-for="Nombres" readonly class="form-control input " placeholder="Nombres" type="text" />
+                                                    <span asp-validation-for="Nombres" class="text-danger"></span>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label>Apellidos </label>
+                                                    <input asp-for="Apellidos" readonly class="form-control input " placeholder="Apellidos" type="text" />
+                                                    <span asp-validation-for="Apellidos" class="text-danger"></span>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <section class="col col-4">
+                                                    <label>Correo Privado </label>
+                                                    <input asp-for="CorreoPrivado" readonly class="form-control input " placeholder="Correo Privado" data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto" />
+                                                    <span asp-validation-for="CorreoPrivado" class="text-danger"></span>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label>Tel&eacute;fono de Privado </label>
+                                                    <input asp-for="TelefonoPrivado" readonly class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text" />
+                                                    <span asp-validation-for="TelefonoPrivado" class="text-danger"></span>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label>Tel&eacute;fono de Casa </label>
+                                                    <input asp-for="TelefonoCasa" readonly class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text" />
+                                                    <span asp-validation-for="TelefonoCasa" class="text-danger"></span>
+                                                </section>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </fieldset>
+                                <br />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+
+    </script>
+
+}

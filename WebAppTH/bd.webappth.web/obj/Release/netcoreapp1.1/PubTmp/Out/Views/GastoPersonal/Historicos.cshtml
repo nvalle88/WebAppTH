@@ -1,0 +1,120 @@
+@model bd.webappth.entidades.Negocio.GastoPersonal
+
+@{
+    ViewData["Title"] = "BrigadasSSO";
+}
+
+@using Microsoft.AspNetCore.Http;
+@using bd.webappth.entidades.Constantes;
+
+@{
+    var a = @Context.Session.GetInt32(Constantes.IdEmpleadoGastoPersonal);
+}
+
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+@using bd.webappth.entidades.Utils
+@{ var modelo = new MenuConceptoNomina { OpcionMenu = 1 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+<div id="content">
+    @{await Html.RenderPartialAsync("_PartialViewBotonIndex");}
+    @{await Html.RenderPartialAsync("_PartialViewInformacion");}
+    <section id="" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Gastos personales host&oacute;ricos</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form asp-action="CreateGastoPersonal" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @{await Html.RenderPartialAsync("_PartialViewHistorico", Model);}
+                                <fieldset>
+                                    <div class="row">
+                                        <section id="divtipogasto" class="col col-lg-6">Tipo de gasto <legend></legend></section>
+                                        <section id="divvalor" class="col col-lg-6">Valor <legend></legend> </section><br />
+                                       
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script type="text/javascript">
+
+       function BuscarHistoricos() {
+
+           if ($("#Ano").val() == 0) {
+               return alert("Debe seleccionar el año ")
+           }
+           else
+           {
+               $.ajax({
+                   type: 'POST',
+                   url: '@Url.Action("BuscarHistorico")',
+                   dataType: 'json',
+                   data: { ano: $("#Ano").val() },
+                   success: function (data) {
+                       if (data == false) {
+                           return alert("Ha ocurrido un error inesperado ")
+                       } else {
+                           
+                           var tipo = document.getElementById("divtipogasto");
+                           var valordiv = document.getElementById("divvalor");
+                           tipo.innerHTML="HOla"
+                           tipo.innerHTML = null;
+                           valordiv.innerHTML = null;
+
+                          
+                           $.each(data, function (i, data) {
+                               var tipogasto = document.createElement("p");
+                               var valor = document.createElement("p");
+
+                               tipogasto.innerHTML = "</br><b>"+ data.tipoDeGastoPersonal.descripcion+"</b> </br>";
+                               valor.innerHTML = "</br><b>$ " + data.valor +"</b></br>";
+                               tipo.appendChild(tipogasto);
+                               valordiv.appendChild(valor);
+
+                           });
+                          
+                        }
+                       
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+           }
+
+       }
+
+</script>
+    <script src='~/js/site.js'></script>
+
+    <script src='~/lib/select2/dist/js/select2.min.js'></script>
+    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+
+    </script>
+
+}

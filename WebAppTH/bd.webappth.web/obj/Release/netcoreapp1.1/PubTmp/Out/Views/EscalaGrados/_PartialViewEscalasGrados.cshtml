@@ -1,0 +1,38 @@
+@model bd.webappth.entidades.Negocio.EscalaGrados
+
+<fieldset>
+    <div class="row">
+        <section class="col col-4">
+            <label class="input">@Html.DisplayNameFor(model=>model.Grado)</label>
+                <label class="input">
+                    <input maxlength="2" onkeypress="return checkIt(event)" asp-for="Grado" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Grado)" />
+                    <span asp-validation-for="Grado" class="text-danger"></span>
+                </label>
+        </section>
+        <section class="col col-4">
+            <label class="input">@Html.DisplayNameFor(model => model.Remuneracion)</label>
+            <label class="input">
+                <input asp-for="Remuneracion" onkeypress="return NumCheck(event,this)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Remuneracion)" />
+                <span asp-validation-for="Remuneracion" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label class="input">@Html.DisplayNameFor(model => model.IndiceOcupacional.FirstOrDefault().EscalaGrados.GrupoOcupacional.TipoEscala)</label>
+            <label class="input">
+                <select asp-for="IdGrupoOcupacional" class="form-control" asp-items="ViewBag.IdGrupoOcupacional">
+                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdGrupoOcupacional)></option>
+                </select>
+                <span asp-validation-for="IdGrupoOcupacional" class="text-danger"></span>
+            </label>
+        </section>
+</div>
+        <div class="row">
+            <section class="col col-4">
+                <label class="input">@Html.DisplayNameFor(model => model.Nombre)</label>
+                <label class="input">
+                    <input asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </label>
+            </section>
+        </div>
+</fieldset> 

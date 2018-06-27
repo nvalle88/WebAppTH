@@ -1,0 +1,155 @@
+@*@model List<bd.webappth.entidades.Negocio.Dependencia>*@
+@using bd.webappth.entidades.ViewModels;
+
+@{
+    ViewData["Title"] = "Index";
+
+    int firmas = Convert.ToInt32(ViewData["NumeroFirmas"]);
+    GenerarFirmasViewModel modelo = new GenerarFirmasViewModel();
+    
+
+}
+<!-- MAIN CONTENT -->
+<div id="content" style="height:1000px;">
+
+    <p></p>
+    @*<a asp-action="Create">
+            <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nueva Solicitud Planificaci&oacute;n Vacaciones
+
+            </button>
+        </a>*@
+    <p> </p>
+
+    <form asp-action="ReporteConPiePagina" asp-controller="Report" class="smart-form" novalidate="novalidate">
+
+        <input type="number" asp-for="@modelo.CantidadFirmas" value="@firmas" hidden />
+
+
+        <fieldset>
+
+            <div class="row" hidden>
+                <section class="col col-lg-12">
+                    <label>Reporte</label>
+                    <label class="input">
+                        <input asp-for="@modelo.UrlReporte" type="text" value="@ViewData["UrlReporte"]" readonly />
+                    </label>
+                </section>
+            </div>
+
+
+            @for (int i = 0; i < firmas; i++)
+            {
+            <div class="row">
+
+                <section class="col col-1">
+                    <label>Prioridad</label>
+                    <label class="input">
+                        <input asp-for="@modelo.ListaIdEmpleados[i].Prioridad" type="text" value="@(i+1)" readonly />
+                    </label>
+                </section>
+
+                <section class="col col-lg-4">
+                    <label class="input col-lg-12">Unidad administrativa / dependencia</label>
+                    <label class="input col-lg-12">
+                        <select id="@(i)" class="smart-form" asp-items="ViewBag.Dependencia" onchange="SeleccionCombo(this)" style="width:100%;"></select>
+                    </label>
+                </section>
+
+
+                <section id="seccion@(i)" class="col col-lg-4">
+                    <label class="input col-lg-12">Empleado</label>
+                    <label class="input">
+                        <select id="e@(i)" class="form-control" asp-for="@modelo.ListaIdEmpleados[i].IdEmpleado"></select>
+                    </label>
+                </section>
+
+
+                <section class="col col-lg-12">
+                    &nbsp;
+                </section>
+
+            </div>
+            }
+
+            <div class="row">
+                <section class="col col-lg-3"></section>
+            </div>
+
+        </fieldset>
+
+
+
+        <footer>
+            <input type="submit" value="Guardar" class="btn btn-default" />
+            <a asp-action="Index" class="btn btn-default">Cancelar</a>
+        </footer>
+
+
+    </form>
+
+</div>
+<!-- END MAIN CONTENT -->
+
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+
+
+    <script>
+        Init_Select2();
+    </script>
+
+    <script>
+
+        function CargarCombosEmpleados( NumeroCombo,NumeroDependencia) {
+
+            mostrarLoadingPanel("content", "Cargando...");
+            $("#e" + NumeroCombo).empty();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ObtenerEmpleadosPorDependencia", "GenerarFirmas")',
+                dataType: 'json',
+                data: { IdDependencia: NumeroDependencia},
+                success: function (data) {
+
+                    $("#e" + NumeroCombo).append('<option value="0" selected="" disabled="">Seleccione</option>');
+                    $.each(data, function (i, data) {
+                        $("#e" + NumeroCombo).append('<option value="'
+                            + data.idEmpleado + '">'
+                            + data.empleado.persona.nombres + ' '
+                            + data.empleado.persona.apellidos+ ' '
+                            + "'"+data.indiceOcupacional.manualPuesto.nombre+"'"
+                            + '</option>');
+
+                    });
+                    
+
+                }, complete: function (data) {
+                    $("#content").waitMe("hide");
+                },
+
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+
+        }
+        
+        function SeleccionCombo(element) { 
+            var NumeroCombo = element.id;
+            var IdDependencia = element.value;
+
+            CargarCombosEmpleados(NumeroCombo,IdDependencia);
+        }
+
+        
+
+    </script>
+
+}
+
+
+

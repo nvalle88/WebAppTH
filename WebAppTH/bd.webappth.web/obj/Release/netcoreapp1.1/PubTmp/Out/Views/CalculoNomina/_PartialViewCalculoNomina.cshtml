@@ -1,0 +1,86 @@
+@model bd.webappth.entidades.Negocio.CalculoNomina
+<fieldset>
+    <div class="row">
+        <section class="col col-6">
+            <label>Procesos</label>
+            <label class="input">
+                <select asp-for="IdProceso" class="form-control" asp-items="ViewBag.Procesos">
+                    <option value="0" selected="selected">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdProceso" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Periodos</label>
+            <label class="input">
+                <select asp-for="IdPeriodo" class="form-control" asp-items="ViewBag.Periodos">
+                    <option value="0" selected="selected">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdPeriodo" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+    <br />
+    <div class="row">
+        <section class="col col-lg-12">
+            <label>Descripci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <label>Operaciones</label>
+    <hr />
+    <br />
+    <div class="row">
+        <section class="col col-6">
+            <label>Autom&aacute;tico</label>
+            <label class="checkbox">
+                <input type="checkbox" asp-for="Automatico" />
+                <input type="hidden" name="Automatico" value="false" checked="checked" />
+                <i></i>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Reportado</label>
+            <label class="checkbox">
+                <input type="checkbox" asp-for="Reportado" />
+                <input type="hidden" name="Reportado" value="false" checked="checked" />
+                <i></i>
+            </label>
+        </section>
+
+    </div>
+
+
+    <br />
+    <label>Empleados</label>
+    <hr />
+    <br />
+    <div class="row">
+        <section class="col col-6">
+            <label>Activos</label>
+            <label class="checkbox">
+                <input type="checkbox" asp-for="EmpleadoActivo" />
+                <input type="hidden" name="EmpleadoActivo" value="false" checked="checked" />
+                <i></i>
+            </label>
+        </section>
+
+        <section class="col col-6">
+            <label>Pasivos</label>
+            <label class="checkbox">
+                <input type="checkbox" asp-for="EmpleadoPasivo" />
+                <input type="hidden" name="EmpleadoPasivo" value="false" checked="checked" />
+                <i></i>
+            </label>
+        </section>
+
+    </div>
+
+</fieldset>
+<br />

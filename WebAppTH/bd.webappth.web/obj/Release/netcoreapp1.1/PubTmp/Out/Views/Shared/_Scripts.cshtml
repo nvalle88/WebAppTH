@@ -1,0 +1,27 @@
+﻿<!-- IMPORTANT: jQuery -->
+<script src="~/js/libs/jquery-2.1.1.min.js"></script>
+<script src="~/js/libs/jquery-ui-1.10.3.min.js"></script>
+@if (User.Identity.IsAuthenticated)
+{
+    <script src="~/js/demo.min.js"></script>
+}
+<script src="~/js/smartadmin.js"></script>
+<script src="~/js/speech/voicecommand.min.js"></script>
+<script src="~/js/smart-chat.js"></script>
+<script src="~/js/smart-datatables.js"></script>
+<script src="~/js/smart-jq-grid.js"></script>
+<script src="~/js/plugin/jquery-form/jquery-form.min.js"></script>
+<script src="~/js/smart-charts.js"></script>
+<script src="~/js/smart-vector.js"></script>
+<script src="~/js/smart-calendar.js"></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+<script src="~/js/site.js"></script>
+<script>
+    $(document).ready(function () {
+        pageSetUp();
+        drawBreadCrumb();
+        Gestionar_Msg();
+        initLoadingForm();
+         $.sound_path = "@Url.Content("~/sound/")";
+   });
+</script>

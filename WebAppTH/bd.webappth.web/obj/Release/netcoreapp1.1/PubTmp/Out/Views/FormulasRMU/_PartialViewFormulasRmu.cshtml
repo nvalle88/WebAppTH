@@ -1,0 +1,13 @@
+@model bd.webappth.entidades.Negocio.FormulasRMU
+<fieldset>
+    <div class="row">
+        <section class="col col-8">
+            <label class="label">@Html.DisplayNameFor(model => model.Formula)</label>
+            <label class="input">
+                <input maxlength="32" asp-for="Formula" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Formula)" />
+                <span asp-validation-for="Formula" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+</fieldset>

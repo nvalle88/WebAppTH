@@ -1,0 +1,102 @@
+
+
+@model List<bd.webappth.entidades.ViewModels.ActividadesEsencialesViewModel>
+@using bd.webappth.entidades.ViewModels
+
+@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional,OpcionMenu= 1}; }
+@{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional", modelo);}
+
+<!-- MAIN CONTENT -->
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+<div id="content">
+    <p></p>
+    <a asp-action="NuevoActividadEsencial" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional">
+        <button type="button" asp-action="NuevoActividadEsencial" asp-route-id="@Model.FirstOrDefault().IdIndiceOcupacional" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Adicionar
+
+        </button>
+    </a>
+    <p> </p>
+    <section id="" class="">
+        <div class="row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Actividades esenciales</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                               @if (Model.FirstOrDefault().IdActividadesEsenciales != -1)
+                                {
+                                    <tr>
+                                        <th class="hasinput">
+                                            <input type="text" class="form-control" placeholder="Buscar" />
+                                        </th>
+                                        <th></th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>
+                                            Actividades esenciales
+                                        </th>
+                                        <th>
+                                            <i></i>
+                                            Opciones
+                                        </th>
+                                    </tr>
+
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <th data-class="">
+                                            Observaciones
+                                        </th>
+                                    </tr>
+                                }
+                                </thead>
+                                <tbody>
+                                    @if (Model.FirstOrDefault().IdActividadesEsenciales != -1)
+                                    {
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                                </td>
+                                                <td>
+                                                    @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalActividadesEsenciales", "ActividadesEsenciales", new { IdActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.FirstOrDefault().IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>
+                                                <p>No existen resultados</p>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+}
+
+

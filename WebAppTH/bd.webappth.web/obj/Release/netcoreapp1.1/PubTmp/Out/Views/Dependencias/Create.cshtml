@@ -1,0 +1,147 @@
+@model bd.webappth.entidades.ViewModels.DependenciaViewModel
+
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/js/site.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+<div id="content">
+    <section id="" class="">
+        <div class="row">
+            <div class="col col-10">
+
+                @if (@ViewData["Error"].ToString() != "")
+
+            {
+
+                <div class="col-lg-12">
+
+                    <div class="alert alert-block alert-dismissable">
+
+                        <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                        <p>
+
+                            <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+        }
+            </div>
+        </div>
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Áreas Usuarias</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form asp-action="Create" id="ejemplo" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @{await Html.RenderPartialAsync("_PartialViewDependencias", Model);}
+                                <footer>
+                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+
+   <script src='~/lib/select2/dist/js/select2.min.js'></script>
+<script src='~/lib/select2/dist/js/i18n/es.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+<script src='~/js/site.js'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Init_Select2();
+    });
+</script>
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $("#ciudad").change(function () {
+            mostrarLoadingPanel("content", "Cargando...")
+            $("#sucursal").empty();
+            $("#dependencia").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListarSucursalesPorCiudad", "CeseFunciones")',
+                    dataType: 'json',
+                    data: { idciudad: $("#ciudad").val() },
+                    success: function (data) {
+                        $("#sucursal").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#sucursal").append('<option value="'
+                                + data.idSucursal + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+            })
+
+
+            $("#sucursal").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#dependencia").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarDependenciasPorSucursal", "CeseFunciones")',
+                    dataType: 'json',
+                    data: { idsucursal: $("#sucursal").val() },
+                    success: function (data) {
+                        $("#dependencia").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#dependencia").append('<option value="'
+                                + data.idDependencia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+        });
+</script>
+
+}
+
+
+
+

@@ -1,0 +1,144 @@
+@model bd.webappth.entidades.Negocio.ConceptoNomina
+<fieldset>
+    <div class="row">
+        <section class="col col-lg-7">
+            <label >Procesos</label>
+            <label class="input">
+                <select asp-for="IdProceso" class="form-control" asp-items="ViewBag.IdProceso">
+                    <option value="0" selected="selected">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdProceso" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-lg-3">
+            <label >Estatus</label>
+            <label class="input">
+                <select asp-for="Estatus" class="form-control">
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+                <span asp-validation-for="Estatus" class="text-danger"></span>
+                </label>
+        </section>
+        <section class="col col-2">
+            <label >Abreviatura</label>
+            <label class="input">
+                <input maxlength="10" asp-for="Abreviatura" class="form-control" />
+                <span asp-validation-for="Abreviatura" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-3">
+            <label>C&oacute;digo</label>
+            <label class="input">
+                <input maxlength="10" asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-3">
+            <label>Prioridad</label>
+            <label class="input">
+                <input maxlength="100" asp-for="Prioridad" class="form-control" />
+                <span asp-validation-for="Prioridad" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label>Descripci&oacute;</label>
+            <label class="input">
+                <input maxlength="100" asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-3">
+            <label class="label"> <b> Tipo de concepto</b></label>
+            <hr />
+            <label class="label"></label>
+            <label class="radio">
+                Percepci&oacute;n <input name="TipoConcepto" type="radio" value="percepcion" asp-for="TipoConcepto" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Deducci&oacute;n <input name="TipoConcepto" type="radio" value="deduccion" asp-for="TipoConcepto" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Provis&oacute;n <input name="TipoConcepto" type="radio" value="provision" asp-for="TipoConcepto" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Trabajo<input name="TipoConcepto" type="radio" value="trabajo" asp-for="TipoConcepto" />
+                <i></i>
+            </label>
+        </section>
+
+        <section class="col col-3">
+            <label class="label"> <b>Tipo de c&aacute;lculo </b></label>
+            <hr />
+            <label class="label"></label>
+            <label class="radio">
+                Autom&aacute;tico <input name="TipoCalculo" type="radio" value="automatico" asp-for="TipoCalculo" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Reportado <input name="TipoCalculo" type="radio" value="reportado" asp-for="TipoCalculo" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Dependiente <input name="TipoCalculo" type="radio" value="dependiente" asp-for="TipoCalculo" />
+                <i></i>
+            </label>
+            <br />
+        </section>
+
+        <section class="col col-3">
+            <label class="label"> <b>Nivel de acumulaci&oacute;n </b></label>
+            <hr />
+            <label class="label"></label>
+            <label class="radio">
+                Periodo<input name="NivelAcumulacion" type="radio" value="periodo" asp-for="NivelAcumulacion" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Mensual<input name="NivelAcumulacion" type="radio" value="mensual" asp-for="NivelAcumulacion" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Anual<input name="NivelAcumulacion" type="radio" value="anual" asp-for="NivelAcumulacion" />
+                <i></i>
+            </label>
+            <label class="radio">
+                No Acumulable<input name="NivelAcumulacion" type="radio" value="noacumulable" asp-for="NivelAcumulacion" />
+                <i></i>
+            </label>
+        </section>
+
+        <section class="col col-3">
+            <label class="label"> <b> Registro en </b></label>
+            <hr />
+            <label class="label"></label>
+            <label class="radio">
+                D&iacute;as<input name="RegistroEn" type="radio" value="dias" asp-for="RegistroEn" />
+                <i></i>
+            </label>
+            <label class="radio">
+                Horas<input name="RegistroEn" type="radio" value="horas" asp-for="RegistroEn" />
+                <i></i>
+            </label>
+        </section>
+        
+
+    </div>
+    @*<div class="row">
+        <section class="col col-lg-12">
+            <label class="label">Formula de c&aacute;lculo</label>
+            <label class="textarea">
+                <textarea maxlength="50" asp-for="FormulaCalculo" rows="10"></textarea>
+                <span asp-validation-for="FormulaCalculo" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>*@
+</fieldset>   

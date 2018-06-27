@@ -1,0 +1,102 @@
+@model List<bd.webappth.entidades.ViewModels.DocumentoFAOViewModel>
+@using bd.webappth.entidades.ViewModels
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+@{ var modelo = new DocumentoFAOViewModel { OpcionMenu = 1 }; }
+@{await Html.RenderPartialAsync("_PartialViewIDocumentoFAO", modelo);}
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <p> </p>
+    <section id="" class="">
+        <div class="row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Asignar Servidores FAO</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Identificacion)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().nombre)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().apellido)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Dependencia)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().UnidadAdministrativa)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Puesto)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Modalidad)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().TipoNombramiento)
+                                        </th>
+
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Identificacion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.nombre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.apellido)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Dependencia)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Puesto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Modalidad)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoNombramiento)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Asignar", "EmpleadoFAOAsignar", new { id = item.IdEmpleado })
+                                            @*@Html.ActionLink("Detalle", "Detalle", new { id = item.IdEmpleado }) |*@
+                                            @* @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEmpleado }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })*@
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+
+}
+

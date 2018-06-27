@@ -1,0 +1,157 @@
+@model bd.webappth.entidades.Negocio.ConceptoNomina
+
+@using bd.webappth.entidades.Negocio
+@inject bd.webappth.servicios.Interfaces.IConstantesNomina ConstanteNomina;
+@inject bd.webappth.servicios.Interfaces.IFuncionesNomina FuncionNomina;
+@inject bd.webappth.servicios.Interfaces.IConjuntoNomina ConjuntoNomina
+@{ var Listaconstantes = new List<ConstanteNomina>();
+    var ListaFunciones = new List<FuncionNomina>();
+    var ListaConjuntos = new List<ConjuntoNomina>();
+    @try
+    {
+        Listaconstantes = await ConstanteNomina.Listar("api/ConstanteNomina/ListarConstanteNomina");
+        ListaFunciones = await FuncionNomina.Listar("api/FuncionNomina/ListarFuncionNomina");
+        ListaConjuntos = await ConjuntoNomina.Listar("api/ConjuntoNomina/ListarConjuntoNomina");
+    }
+    catch (Exception)
+    {
+
+        Url.Action("Index", "Login");
+    }
+}
+
+<fieldset>
+    <div class="row">
+        <section class="col col-lg-12">
+
+            <div class="panel-group smart-accordion-default" id="accordion-0">
+                <div class="panel panel-default">
+                    <div class="panel-heading bg-color-lighten">
+                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion-0" href="#collapseOne-0" aria-expanded="false" class="collapsed"> <i class="fa fa-fw fa-plus-circle txt-color-green"></i> <i class="fa fa-fw fa-minus-circle txt-color-red"></i> Conjuntos </a></h4>
+                    </div>
+                    <div id="collapseOne-0" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                        <div class="panel-body">
+                            <br />
+                            <div class="row col col-lg-12">
+                                @{ int c = 0;}
+                                @foreach (var item in ListaConjuntos)
+                                {
+                                    c = c + 1;
+                                    <div class="ui-menu-item col col-lg-4" style="border-width:2px;">
+                                        <a href="javascript:void(0);" onclick="anadirElememto('@item.AliasConcepto')">&bull; @item.AliasConcepto: @item.Descripcion &nbsp; C&oacute;digo: @item.Codigo </a>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <div class="row">
+
+
+        <section class="col col-lg-12">
+
+            <div class="panel-group smart-accordion-default" id="accordion-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title bg-color-lighten"><a data-toggle="collapse" data-parent="#accordion-2" href="#collapseOne-2" aria-expanded="false" class="collapsed"> <i class="fa fa-fw fa-plus-circle txt-color-green"></i> <i class="fa fa-fw fa-minus-circle txt-color-red"></i> Constantes </a></h4>
+                    </div>
+                    <div id="collapseOne-2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+
+                        <div class="panel-body">
+                            <br />
+                            <div class="row col col-lg-12">
+                                @{ int a = 0;}
+                                @foreach (var item in Listaconstantes)
+                                {
+                                    a = a + 1;
+                                    <div class="ui-menu-item col col-lg-4" style="border-width:2px;">
+                                        <a href="javascript:void(0);" onclick="anadirElememto('@item.Constante')">&bull; @item.Constante :  @item.Descripcion (Valor: @item.Valor)</a>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+    <div class="row">
+
+        <section class="col col-lg-12">
+
+            <div class="panel-group smart-accordion-default" id="accordion-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title  bg-color-lighten"><a data-toggle="collapse" data-parent="#accordion-1" href="#collapseOne-1" aria-expanded="false" class="collapsed"> <i class="fa fa-fw fa-plus-circle txt-color-green"></i> <i class="fa fa-fw fa-minus-circle txt-color-red"></i> Funciones </a></h4>
+                    </div>
+                    <div id="collapseOne-1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                        <div class="panel-body">
+                            <br />
+                            <div class="row col col-lg-12">
+                                @{ int b = 0;}
+                                @foreach (var item in ListaFunciones)
+                                {
+                                    b = b + 1;
+                                    <div class="ui-menu-item col col-lg-4" style="border-width:2px;">
+                                        <a href="javascript:void(0);" onclick="anadirElememto('@item.Variable')">&bull; @item.Variable: @item.Descripcion </a>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+
+    
+
+
+    <div class="row">
+        <section class="col col-lg-12"></section>
+        <section id="FormulaVista" class="col col-lg-12">
+            <label class="label">F&oacute;rmula de c&aacute;lculo</label>
+            <label class="textarea">
+                <textarea maxlength="500" asp-for="FormulaCalculo" rows="10"></textarea>
+                <span asp-validation-for="FormulaCalculo" class="text-danger"></span>
+            </label>
+        </section>
+
+        @*onclick="validarformula()"*@
+        <section class="col col-lg-2">
+            <a href="javascript:void(0);" class="btn btn-primary btn-default btn-sm"><i class="glyphicon glyphicon-ok"></i>&nbsp;  Validar f&oacute;rmula</a>
+        </section>
+        <section class="col col-lg-10">
+            <div id="resultadoformula" class="alert alert-info fade in">
+                <i class="glyphicon glyphicon-ok"></i>
+                <strong>Resultado:</strong><label id="resultadovalor"></label>
+            </div>
+        </section>
+
+
+    </div>
+
+
+    <div id="mensajeSatisfactorio" class="alert alert-info fade in">
+        <i class="fa-fw fa fa-info"></i>
+        <strong>Informaci&oacute;n!</strong> La f&oacute;rmula es v&aacute;lida.
+    </div>
+
+    <div id="mensajeError" class="alert alert-danger fade in">
+        <i class="fa-fw fa fa-times"></i>
+        <strong>Error!</strong>   La f&oacute;rmula tiene alg&uacute;n error. Por favor verifique nuevamente  .
+    </div>
+
+</fieldset>

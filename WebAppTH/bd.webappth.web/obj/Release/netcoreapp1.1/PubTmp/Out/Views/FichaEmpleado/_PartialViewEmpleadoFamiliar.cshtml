@@ -1,0 +1,146 @@
+@model bd.webappth.entidades.ViewModels.EmpleadoFamiliarViewModel
+
+<fieldset>
+    <div class="row">
+        <section class="col col-3">
+            <label>Tipo de Identificaci&oacute;n </label>
+            <div class="form-group">
+                <div class="input">
+                    <select asp-for="IdTipoIdentificacion" asp- class="form-control" asp-items="ViewBag.IdTipoIdentificacion">
+                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                    </select>
+                    <span asp-validation-for="IdTipoIdentificacion" class="text-danger"></span>
+                </div>
+            </div>
+        </section>
+        <section class="col col-3">
+            <div class="form-group">
+                <label>CI / Pasaporte </label>
+                <div class="">
+                    <input asp-for="Identificacion" onchange="validar()" class="form-control input " placeholder="Identificacion" type="text">
+                </div>
+                <span asp-validation-for="Identificacion" class="text-danger"></span>
+                <span id="idIdentificacion" class="text-danger"></span>
+            </div>
+        </section>
+        <section class="col col-3">
+            <div class="form-group">
+                <label>Nombres </label>
+                <div class="">
+                    <input asp-for="Nombres" class="form-control input "  type="text">
+                </div>
+                <span asp-validation-for="Nombres" class="text-danger"></span>
+            </div>
+        </section>
+        <section class="col col-3">
+            <div class="form-group">
+                <label>Apellidos </label>
+                <div class="">
+                    <input asp-for="Apellidos" class="form-control input " placeholder="Apellidos" type="text">
+                </div>
+                <span asp-validation-for="Apellidos" class="text-danger"></span>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-4">
+            <label>Sexo </label>
+            <div class="form-group">
+                <div class="input">
+                    <select asp-for="IdSexo" asp- class="form-control input " asp-items="ViewBag.IdSexo">
+                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                    </select>
+                    <span asp-validation-for="IdSexo" class="text-danger"></span>
+                </div>
+            </div>
+        </section>
+        <section class="col col-4">
+            <label>G&eacute;nero </label>
+            <div class="form-group">
+                <div class="input">
+                    <select asp-for="IdGenero" asp- class="form-control input " asp-items="ViewBag.IdGenero">
+                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                    </select>
+                    <span asp-validation-for="IdGenero" class="text-danger"></span>
+                </div>
+            </div>
+        </section>
+        <section class="col col-4">
+            <label>Estado Civil </label>
+            <div class="form-group">
+                <div class="input">
+                    <select asp-for="IdEstadoCivil" asp- class="form-control input " asp-items="ViewBag.IdEstadoCivil">
+                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                    </select>
+                    <span asp-validation-for="IdEstadoCivil" class="text-danger"></span>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-3">
+            <label>Fecha de nacimiento</label>
+            <label class="input">
+                <input asp-for="FechaNacimiento" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
+                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-3">
+            <label>Tel&eacute;fono de Privado</label>
+            <div class="form-group">
+                <div class="">
+                    <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text">
+                </div>
+                <span asp-validation-for="TelefonoPrivado" class="text-danger"></span>
+            </div>
+        </section>
+
+        <section class="col col-3">
+            <label>Tel&eacute;fono de casa</label>
+            <div class="form-group">
+                <div class="">
+                    <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text">
+                </div>
+                <span asp-validation-for="TelefonoCasa" class="text-danger"></span>
+            </div>
+        </section>
+
+        <section class="col col-3">
+            <label>Parentesco </label>
+            <div class="form-group">
+                <div class="input">
+                    <select asp-for="IdParentesco" asp- class="form-control input " asp-items="ViewBag.IdParentesco">
+                        <option value="0" selected="selected" disabled="">Seleccione</option>
+                    </select>
+                    <span asp-validation-for="IdParentesco" class="text-danger"></span>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-6">
+            <div class="form-group">
+                <label>Lugar de Trabajo </label>
+                <div class="">
+                    <input asp-for="LugarTrabajo" class="form-control input " type="text">
+                </div>
+                <span asp-validation-for="LugarTrabajo" class="text-danger"></span>
+            </div>
+        </section>
+        <section class="col col-6">
+            <label>Profeci&oacute;n / Ocupaci&oacute;n</label>
+            <div class="form-group">
+                <div class="">
+                    <input asp-for="Ocupacion" class="form-control input "  type="text">
+                </div>
+                <span asp-validation-for="Ocupacion" class="text-danger"></span>
+            </div>
+        </section>
+    </div>
+   
+    <span class="text-danger">@ViewData["Error"]</span>
+</fieldset>

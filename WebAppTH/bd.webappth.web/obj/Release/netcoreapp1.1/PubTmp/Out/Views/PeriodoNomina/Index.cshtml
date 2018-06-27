@@ -1,0 +1,108 @@
+@model List<bd.webappth.entidades.Negocio.PeriodoNomina>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+<div id="content">
+    <p></p>
+    <a asp-action="Create" onclick="cargando()">
+        <button type="button" asp-action="Create" onclick="cargando()" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo
+        </button>
+    </a>
+    <p> </p>
+
+    <section id="" class="">
+        <div class="row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Periodos</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaInicio)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().FechaFin)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Abierto)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Mes)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Ano)
+                                        </th>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
+                                        </th>
+                                        <th>
+                                            Opciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FechaInicio)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FechaFin)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Abierto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Mes)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Ano)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Estado)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdPeriodo }, new { onclick = "cargando();" })
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+    <script type="text/javascript">
+
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+
+    </script>
+}
+

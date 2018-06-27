@@ -49,7 +49,6 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["IdCiudadOrigen"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
             var itinerarioViatico = new ReliquidacionViatico
             {
-                IdItinerarioViatico = Convert.ToInt32(idIrininario),
                 IdSolicitudViatico = Convert.ToInt32(IdSolicitudtinerario)
 
             };
@@ -70,7 +69,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/ReliquidacionViaticos/InsertarReliquidacionViatico");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Reliquidacion", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico, IdItinerarioViatico = reliquidacionViatico.IdItinerarioViatico });
+                    return RedirectToAction("Reliquidacion", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico });
                 }
 
                 ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
@@ -131,7 +130,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        return RedirectToAction("Informe", new { IdSolicitudViatico = reliquidacion.IdSolicitudViatico, IdItinerarioViatico = reliquidacion.IdItinerarioViatico });
+                        return RedirectToAction("Informe", new { IdSolicitudViatico = reliquidacion.IdSolicitudViatico });
                     }
                     ViewData["Error"] = response.Message;
                     return View(reliquidacion);
@@ -168,7 +167,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Reliquidacion(int IdSolicitudViatico, int IdItinerarioViatico, string mensaje)
+        public async Task<IActionResult> Reliquidacion(int IdSolicitudViatico, string mensaje)
         {
 
             SolicitudViatico sol = new SolicitudViatico();
@@ -208,7 +207,7 @@ namespace bd.webappth.web.Controllers.MVC
                             var itinerarioViatico = new ReliquidacionViatico
                             {
                                 //IdSolicitudViatico = sol.IdSolicitudViatico
-                                IdItinerarioViatico = IdItinerarioViatico
+                                IdSolicitudViatico = IdSolicitudViatico
                             };
                             lista = await apiServicio.ObtenerElementoAsync1<List<ReliquidacionViatico>>(itinerarioViatico, new Uri(WebApp.BaseAddress)
                                                                      , "api/ReliquidacionViaticos/ListarReliquidaciones");
@@ -229,13 +228,13 @@ namespace bd.webappth.web.Controllers.MVC
 
                             var listaFacruras = await apiServicio.Listar<FacturaViatico>(facturas, new Uri(WebApp.BaseAddress)
                                                                      , "api/FacturaViatico/ListarFacturas");
-                            HttpContext.Session.SetInt32(Constantes.IdItinerario, IdItinerarioViatico);
+                            
                             HttpContext.Session.SetInt32(Constantes.IdSolicitudtinerario, IdSolicitudViatico);
 
                             //busca las actividades del informe
                             var informeViatico = new InformeViatico
                             {
-                                IdSolicitudViatico = IdItinerarioViatico
+                                IdSolicitudViatico = IdSolicitudViatico
                             };
                             var Actividades = await apiServicio.ObtenerElementoAsync1<InformeActividadViatico>(informeViatico, new Uri(WebApp.BaseAddress)
                                                                      , "api/InformeViaticos/ObtenerActividades");
@@ -254,7 +253,7 @@ namespace bd.webappth.web.Controllers.MVC
                                 ListaEmpleadoViewModel = empleado,
                                 ReliquidacionViatico = lista,
                                 FacturaViatico = listaFacruras,
-                                IdItinerarioViatico = IdItinerarioViatico,
+                                IdItinerarioViatico = IdSolicitudViatico,
                                 IdSolicitudViatico = sol.IdSolicitudViatico,
                                 Descripcion = descri
                             };
@@ -311,11 +310,11 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/ReliquidacionViaticos/ActualizarEstadoReliquidacion");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Informe", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico, IdItinerarioViatico = reliquidacionViatico.IdItinerarioViatico });
+                    return RedirectToAction("Informe", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico });
                 }
 
                 ViewData["Error"] = response.Message;
-                return RedirectToAction("Informe", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico, IdItinerarioViatico = reliquidacionViatico.IdItinerarioViatico });
+                return RedirectToAction("Informe", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico });
             }
             catch (Exception ex)
             {
@@ -438,24 +437,9 @@ namespace bd.webappth.web.Controllers.MVC
                         var Actividades = await apiServicio.ObtenerElementoAsync1<InformeActividadViatico>(informeViatico, new Uri(WebApp.BaseAddress)
                                                                  , "api/InformeViaticos/ObtenerActividades");
 
-                       
-                        //var descri = "";
-                        //var Observa = "";
-                        //if (Actividades.Descripcion == null && Actividades.Observacion == null)
-                        //{
-                        //    descri = "";
-                        //    Observa = "";
-                        //}
-                        //else
-                        //{
-                        //    descri = Actividades.Descripcion;
-                        //    Observa = Actividades.Observacion;
-                        //}
                         respuestaSolicitudViatico.ListaInformeViatico = lista;
                         respuestaSolicitudViatico.ListaFacturaViatico = listaFacruras;
                         respuestaSolicitudViatico.InformeActividadViatico = Actividades;
-                        //respuestaSolicitudViatico.InformeActividadViatico.Descripcion = descri;
-                        //respuestaSolicitudViatico.InformeActividadViatico.Observacion = Observa;
                         InicializarMensaje(mensaje);
                         return View(respuestaSolicitudViatico);
                     }

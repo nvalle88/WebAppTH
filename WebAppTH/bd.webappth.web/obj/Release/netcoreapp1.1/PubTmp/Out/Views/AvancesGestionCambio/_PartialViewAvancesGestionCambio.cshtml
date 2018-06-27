@@ -1,0 +1,23 @@
+@model bd.webappth.entidades.Negocio.AvanceGestionCambio
+<fieldset>
+   
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">@Html.DisplayNameFor(model => model.Fecha)</label>
+                <label class="input">
+                    <input maxlength="20" asp-for="Fecha" class="datepicker" type="text" placeholder="@Html.DisplayNameFor(model=>model.Fecha)" data-dateformat='dd/mm/yy' />
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                </label>
+        </section>
+    </div>
+    
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">@Html.DisplayNameFor(model => model.Indicadorreal)</label>
+            <label class="input">
+                <input maxlength="9" asp-for="Indicadorreal" onKeyPress="return checkIt(event)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Indicadorreal)" />
+                <span asp-validation-for="Indicadorreal" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+</fieldset>

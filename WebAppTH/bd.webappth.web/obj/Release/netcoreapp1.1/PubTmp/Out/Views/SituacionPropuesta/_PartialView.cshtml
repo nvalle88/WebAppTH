@@ -1,0 +1,57 @@
+﻿@model bd.webappth.entidades.ViewModels.RequerimientoRolPorGrupoOcupacionalViewModel
+
+<input type="hidden" asp-for="IdGrupoOcupacional" />
+<input type="hidden" asp-for="NombreGrupoOcupacional" />
+<fieldset>
+
+    <div class="row">
+        
+                @for(int i = 0; i<Model.ListaRolesRequeridos.Count; i++)
+            {
+
+        <section class="col col-lg-12">
+
+
+            <label class="col-lg-12">
+                <input class="form-control" style="border:none;background-color:transparent;" readonly asp-for="@Model.ListaRolesRequeridos[i].NombreRolPuesto" />
+                <input type="hidden" asp-for="@Model.ListaRolesRequeridos[i].IdRolPuesto" />
+
+            </label>
+
+            <label class="input col-lg-1">
+                <input type="number" asp-for="@Model.ListaRolesRequeridos[i].Cantidad" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.ListaRolesRequeridos.FirstOrDefault().Cantidad)" onchange="validarNumero(this)" />
+                <span asp-validation-for="@Model.ListaRolesRequeridos[i].Cantidad" class="text-danger"></span>
+            </label>
+
+            <label class="col" style="width:5px;padding:0px;">&nbsp;</label>
+
+            <label class="input col-lg-6">
+
+                <input type="text" asp-for="@Model.ListaRolesRequeridos[i].Descripcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.ListaRolesRequeridos.FirstOrDefault().Descripcion)" />
+                <span asp-validation-for="@Model.ListaRolesRequeridos[i].Descripcion" class="text-danger"></span>
+            </label>
+
+            <label class="col-lg-12">&nbsp;</label>
+
+        </section>
+
+
+
+        }
+
+    </div>
+
+
+
+    </fieldset>
+
+    <script>
+        function validarNumero(element) {
+
+            if (element.value < 0) {
+                element.value = 0;
+            }
+            
+        }
+
+    </script>

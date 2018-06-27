@@ -35,7 +35,10 @@
         public int IdFondoFinanciamiento { get; set; }
 
         public virtual ICollection<AprobacionViatico> AprobacionViatico { get; set; }
+        public virtual ICollection<InformeActividadViatico> InformeActividadViatico { get; set; }
+        public virtual ICollection<FacturaViatico> FacturaViatico { get; set; }
         public virtual ICollection<DetallePresupuesto> DetallePresupuesto { get; set; }
+        public virtual ICollection<InformeViatico> InformeViatico { get; set; }
         public virtual ICollection<ItinerarioViatico> ItinerarioViatico { get; set; }
         public virtual ICollection<SolicitudTipoViatico> SolicitudTipoViatico { get; set; }
         public virtual Ciudad Ciudad { get; set; }

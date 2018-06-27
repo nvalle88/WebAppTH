@@ -1,0 +1,90 @@
+@model bd.webappth.entidades.ViewModels.IndiceOcupacionalViewModel
+<div class="btn-group btn-group-justified">
+    @if (Model.OpcionMenu == 0)
+    {
+        <a asp-action="Detalle" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default"> Datos de <br /> Identificaci&oacute;n <br />del puesto </a>
+    }
+    else
+    {
+        <a asp-action="Detalle" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default"> Datos de <br /> Identificaci&oacute;n <br />del puesto </a>
+    }
+
+
+    @if (Model.OpcionMenu == 4)
+    {
+        <a asp-action="Estudios" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Instrucci&oacute;n <br />formal requerida</a>
+
+    }
+    else
+    {
+        <a asp-action="Estudios" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Instrucci&oacute;n <br />formal requerida</a>
+    }
+
+    @if (Model.OpcionMenu == 2)
+    {
+        <a asp-action="AreaConocimiento" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">&Aacute;reas  <br /> de  <br />conocimiento</a>
+
+    }
+    else
+    {
+        <a asp-action="AreaConocimiento" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">&Aacute;reas  <br /> de  <br />conocimiento</a>
+
+    }
+
+
+    @if (Model.OpcionMenu == 7)
+    {
+        <a asp-action="ExperienciaLaboralRequerida" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Experienca laboral <br /> requerida</a>
+    }
+    else
+    {
+        <a asp-action="ExperienciaLaboralRequerida" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Experienca laboral <br /> requerida</a>
+    }
+
+
+    @if (Model.OpcionMenu == 3)
+    {
+        <a asp-action="Capacitaciones" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Capacitaci&oacute;n <br /> requerida <br /> para el puesto</a>
+
+    }
+    else
+    {
+        <a asp-action="Capacitaciones" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Capacitaci&oacute;n <br />  requerida <br /> para el puesto</a>
+
+    }
+
+    @if (Model.OpcionMenu == 1)
+    {
+        <a asp-action="ActividadesEsenciales" style="background-color:#3276b1;color:white;" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Actividades  <br /> esenciales</a>
+    }
+    else
+    {
+        <a asp-action="ActividadesEsenciales" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Actividades <br /> esenciales</a>
+
+    }
+
+    @if (Model.OpcionMenu == 6)
+    {
+        <a asp-action="ConocimientosAdicionales" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Conocimientos <br /> adicionales</a>
+
+    }
+    else
+    {
+        <a asp-action="ConocimientosAdicionales" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default"> Conocimientos <br />adicionales</a>
+
+    }
+
+    @if (Model.OpcionMenu == 5)
+    {
+        <a asp-action="ComportamientoObservable" asp-controller="IndicesOcupacionales" style="background-color:#3276b1;color:white;" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Competencias</a>
+    }
+    else
+    {
+        <a asp-action="ComportamientoObservable" asp-controller="IndicesOcupacionales" asp-route-id="@Model.IdIndiceOcupacional" class="btn btn-default">Competencias</a>
+    }
+
+
+
+
+
+</div>

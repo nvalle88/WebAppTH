@@ -1,0 +1,21 @@
+@model bd.webappth.entidades.Negocio.InstitucionFinanciera
+<fieldset>
+    <div class="row">
+        <section class="col col-8">
+            <label class="input">
+                <label class="label">@Html.DisplayNameFor(model => model.Nombre)</label>
+                <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-8">
+            <label class="label">@Html.DisplayNameFor(model => model.SPI)</label>
+            <label class="input">
+                <input maxlength="32" asp-for="SPI" onKeyPress="return checkIt(event)" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.SPI)" />
+                <span asp-validation-for="SPI" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+</fieldset>

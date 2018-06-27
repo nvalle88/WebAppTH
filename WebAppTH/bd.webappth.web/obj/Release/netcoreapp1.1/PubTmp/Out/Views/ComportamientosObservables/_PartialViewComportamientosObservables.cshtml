@@ -1,0 +1,31 @@
+@model bd.webappth.entidades.Negocio.ComportamientoObservable
+
+<fieldset>
+    <div class="row">
+        <section class="col col-6">
+            <label class="label">@Html.DisplayNameFor(model => model.Nivel.Nombre)</label>
+            <label class="input">
+                <select asp-for="IdNivel" class="form-control" asp-items="ViewBag.IdNivel">
+                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdNivel)></option>
+                </select>
+                <span asp-validation-for="IdNivel" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label class="label">@Html.DisplayNameFor(model => model.DenominacionCompetencia)</label>
+            <label class="input">
+                <select asp-for="IdDenominacionCompetencia" class="form-control" asp-items="ViewBag.IdDenominacionCompetencia">
+                    <option id="0"><Seleccione una @Html.DisplayNameFor(model => model.IdDenominacionCompetencia)></option>
+                </select>
+                <span asp-validation-for="IdDenominacionCompetencia" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <section>
+        <label class="label">@Html.DisplayNameFor(model => model.Descripcion)</label>
+        <label class="textarea">
+            <textarea maxlength="252" asp-for="Descripcion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
+        </label>
+    </section>
+</fieldset> 

@@ -1,0 +1,185 @@
+@model bd.webappth.entidades.Negocio.SolicitudVacaciones
+
+@{
+    ViewData["Title"] = "SolicitudVacaciones";
+}
+
+
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <div class="alert alert-info">
+        <b>Aviso</b>
+
+        <br>
+        El empleado dispone de <b>@(Model.DiasVacaciones) d&iacute;as de vacaciones</b> acumuladas
+    </div>
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Solicitud vacaciones</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="AprobarSolicitudVacaciones" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="IdEmpleado" />
+                                <input type="hidden" asp-for="IdSolicitudVacaciones" />
+                                <input type="hidden" asp-for="FechaDesde" />
+                                <input type="hidden" asp-for="FechaHasta" />
+                                <input type="hidden" asp-for="FechaSolicitud" />
+                                <fieldset>
+                                    <div class="row">
+
+                                        <section class="col col-4">
+                                            <label>Fecha solicitud</label>
+                                            <label class="input">
+                                                <input value="@ViewData["FechaSolicitud"]" disabled="disabled" type="text" placeholder="Seleccione fecha de solicitud" class="datepicker" data-dateformat='dd-MM-yy'>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Fecha desde</label>
+                                            <label class="input">
+                                                <input value="@ViewData["FechaDesde"]" disabled="disabled" type="text" placeholder="Seleccione fecha desde" class="datepicker" data-dateformat='dd-MM-yy'>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Fecha hasta</label>
+                                            <label class="input">
+                                                <input value="@ViewData["FechaHasta"]" disabled="disabled" type="text" placeholder="Seleccione fecha hasta" class="datepicker" data-dateformat='dd-MM-yy'>
+                                            </label>
+                                        </section>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="form-group">
+                                            @*<label class="col-md-1 control-label">Estado</label>*@
+                                            <div class="col col-8">
+                                                <div class="col-md-2">
+                                                    <label class="radio radio-inline">
+                                                        <input type="radio" asp-for="Estado" value="1" class="radiobox">
+                                                        <span>Negado</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="radio radio-inline">
+                                                        <input type="radio" asp-for="Estado" value="3" class="radiobox">
+                                                        <span>Pendiente</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="radio radio-inline">
+                                                        <input type="radio" asp-for="Estado" value="6" class="radiobox">
+                                                        <span>Aprobado</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <section class="col col-4">
+                                            <label class="checkbox">
+                                                <input type="checkbox" asp-for="PlanAnual" class="form-control" disabled>
+                                                <i></i>Contemplado en Plan Anual ?<input />
+                                                <span asp-validation-for="PlanAnual" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+
+                                    <section>
+                                        <label>Observaciones</label>
+                                        <label class="label"></label>
+                                        <label class="textarea">
+                                            <textarea maxlength="150" asp-for="Observaciones" rows="4"></textarea>
+                                            <span asp-validation-for="Observaciones" class="text-danger"></span>
+                                        </label>
+                                    </section>
+
+                                    <section class="col-lg-3">
+
+                                        <label>@Html.DisplayNameFor(model => Model.RequiereReemplazo)</label><br />
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" asp-for="RequiereReemplazo" value="false" class="radiobox">
+                                                    <span>No</span>
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="col-lg-6">
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" asp-for="RequiereReemplazo" value="true" class="radiobox">
+                                                    <span>Si</span>
+                                                </label>
+                                            </div>
+
+                                            
+                                        </div>
+                                    </section>
+
+                                    <section class="col col-lg-12">&nbsp;</section>
+
+                                    <section class="col-4">
+
+                                        <label>@Html.DisplayNameFor(model => Model.IdEmpleadoReemplazo)</label>
+                                        <label class="input">
+                                            <select asp-for="IdEmpleadoReemplazo" class="form-control" asp-items="ViewBag.EmpleadoReemplazo">
+                                                <option value="0" selected>Ninguno</option>
+                                            </select>
+
+                                            <span asp-validation-for="IdEmpleadoReemplazo" class="text-danger"></span>
+                                        </label>
+                                    </section>
+
+                                    <span class="text-danger">@ViewData["Error"]</span>
+
+                                </fieldset>
+
+                                <footer>
+                                    <input type="submit" value="Guardar" class="btn btn-default" />
+                                    <a asp-action="DetalleSolicitudVacaciones" asp-route-id="@Model.IdEmpleado" class="btn btn-default">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    <script type="text/javascript">
+
+
+    </script>
+}

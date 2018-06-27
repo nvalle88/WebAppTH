@@ -1,0 +1,84 @@
+@model List<bd.webappth.entidades.Negocio.GastoPersonal>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@using bd.webappth.entidades.Utils
+@{ var modelo = new MenuConceptoNomina { OpcionMenu = 0 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+<!-- MAIN CONTENT -->
+<div id="content">
+    @*@{await Html.RenderPartialAsync("_PartialViewBotonIndexConceptoNomina");}
+    @{await Html.RenderPartialAsync("_PartialViewConceptoInformacion");}*@
+
+
+    <section id="" class="">
+        @{await Html.RenderPartialAsync("_PartialViewBotonIndex");}
+        @{await Html.RenderPartialAsync("_PartialViewInformacion");}
+
+        <p></p>
+        <a asp-action="CreateGastoPersonal" onclick="cargando()">
+            <button type="button" asp-action="CreateGastoPersonal" onclick="cargando()" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nuevo
+            </button>
+        </a>
+        <p> </p>
+        <div class="row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Proyecci&oacute;n de gastos</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-class="expand">
+                                            Gastos proyectados
+                                        </th>
+                                        <th data-class="">
+                                            Valor
+                                        </th>
+                                        <th>
+                                            <i class="fa fa-cog "></i>
+                                            Opciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoDeGastoPersonal.Descripcion)
+                                        </td>
+                                        <td>
+                                           $ @Html.DisplayFor(modelItem => item.Valor)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editar", "EditGastoPersonal", "GastoPersonal", new { id = item.IdGastoPersonal }, new { onclick = "cargando()" })<br />
+                                            @Html.ActionLink("Eliminar", "DeleteConceptoConjunto", "GastoPersonal", new { id = item.IdGastoPersonal }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })<br />
+
+                                        </td>
+                                    </tr>
+                            }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+}
+

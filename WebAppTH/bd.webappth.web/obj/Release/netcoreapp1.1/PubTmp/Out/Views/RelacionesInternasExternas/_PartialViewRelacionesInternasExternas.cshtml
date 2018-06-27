@@ -1,0 +1,24 @@
+@model bd.webappth.entidades.Negocio.RelacionesInternasExternas
+<fieldset>
+    <div class="row">
+        <section class="col col-10">
+            <label class="input">
+                <i class="icon-prepend fa fa-user"></i>
+                <input maxlength="100" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section>
+            <label class="col col-10">
+                <label class="label"></label>
+                <label class="textarea">
+                    <i class="icon-append fa fa-comments"></i>
+                    <textarea rows="8" asp-for="Descripcion" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </label>
+            </label>
+        </section>
+    </div>
+</fieldset>

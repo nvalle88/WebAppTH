@@ -1,0 +1,82 @@
+﻿@model bd.webappth.entidades.ViewModels.RequerimientoRolPorDependenciaViewModel
+
+
+
+<div class="btn-group btn-group-justified" id="menu">
+    <!--
+    <a style="background-color:#3276b1;color:white;" class="btn btn-default" href="/SituacionPropuesta/Index">
+        <i class="fa fa-institution"> </i>
+        <br />Datos Generales
+    </a>
+    -->
+    <a id="btn_0" asp-action="Index" asp-controller="SituacionPropuesta" asp-route-id="@Model.IdDependencia" class="btn btn-default" onclick="espera()">
+        Inicio
+    </a>
+
+    <a id="btn_1" asp-action="CrearRolesNivelSuperior" asp-controller="SituacionPropuesta" asp-route-id="@Model.IdDependencia" class="btn btn-default" onclick="espera()">
+        &nbsp;<br />Puestos nivel jerárquico superior<br />&nbsp;
+    </a>
+
+    <a id="btn_2" asp-action="CrearRolesNivelOperativo" asp-controller="SituacionPropuesta" asp-route-id="@Model.IdDependencia" class="btn btn-default" onclick="espera()">
+        &nbsp;<br />Puestos nivel operativo<br />&nbsp;
+    </a>
+
+
+
+
+
+</div>
+
+<script>
+
+    @*
+
+    if (@Model.IdPersona == 0) {
+
+        alert("idPersona: " +@Model.IdPersona+ " / idFIchaMedica: "+ @Model.IdFichaMedica );
+    } else {
+        alert("idPersona: " +@Model.IdPersona+ " / idFIchaMedica: "+ @Model.IdFichaMedica );
+
+    }
+    *@
+
+
+
+    function deshabilitarBotones() {
+
+        var numMenus = document.getElementById("menu").getElementsByTagName("a").length;
+
+        for (var i = 1; i < numMenus; i++) {
+
+            document.getElementById("menu").getElementsByTagName("a")[i].style.visibility = "hidden";
+
+        }
+
+    }
+
+    function habilitarBotones() {
+
+        var numMenus = document.getElementById("menu").getElementsByTagName("a").length;
+
+        for (var i = 1; i < numMenus; i++) {
+
+            document.getElementById("menu").getElementsByTagName("a")[i].style.visibility = "visible";
+
+        }
+
+    }
+
+
+    function espera() {
+
+        mostrarLoadingPanel("content", "Cargando...");
+    }
+
+    function listo() {
+        $("#content").waitMe("hide");
+    }
+
+    
+
+
+</script>

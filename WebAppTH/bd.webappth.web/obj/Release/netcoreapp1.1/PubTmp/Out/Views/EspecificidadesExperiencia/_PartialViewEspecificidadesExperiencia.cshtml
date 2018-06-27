@@ -1,0 +1,11 @@
+@model bd.webappth.entidades.Negocio.EspecificidadExperiencia
+
+<fieldset>
+    <section>
+        <label class="label">@Html.DisplayNameFor(model => model.Descripcion)</label>
+        <label class="textarea">
+            <textarea maxlength="200" asp-for="Descripcion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
+        </label>
+    </section>
+</fieldset>

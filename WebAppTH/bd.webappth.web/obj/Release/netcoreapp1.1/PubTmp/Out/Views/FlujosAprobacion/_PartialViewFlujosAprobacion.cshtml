@@ -1,0 +1,38 @@
+@model bd.webappth.entidades.Negocio.FlujoAprobacion
+<fieldset>
+
+    <div class="row">
+
+        <section class="col col-lg-4">
+            <label class="label">@Html.DisplayNameFor(model => model.TipoAccionPersonal.Nombre)</label>
+            <label class="input">
+                <select asp-for="IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAccionPersonal">
+                    <option value="0">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdTipoAccionPersonal" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-4">
+            <label class="label">@Html.DisplayNameFor(model => model.Sucursal.Nombre)</label>
+            <label class="input">
+                <select asp-for="IdSucursal" class="form-control" asp-items="ViewBag.Sucursal" onchange="SeleccionComboManualPuesto(this)">
+                    <option value="0">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdSucursal" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-4">
+            <label class="label">@Html.DisplayNameFor(model => model.IdManualPuesto)</label>
+            <label class="input">
+                <select id="cb_ManualPuesto" asp-for="IdManualPuesto" class="form-control" asp-items="ViewBag.ManualPuesto">
+                    <option value="0">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdManualPuesto" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+
+</fieldset>

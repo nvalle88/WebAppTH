@@ -1,0 +1,111 @@
+﻿@model bd.webappth.entidades.Negocio.FichaMedica
+
+
+
+<div class="btn-group btn-group-justified" id="menuFichaMedica">
+    <!--
+    <a style="background-color:#3276b1;color:white;" class="btn btn-default" href="/FichasMedicas/Index">
+        <i class="fa fa-institution"> </i>
+        <br />Datos Generales
+    </a>
+    -->
+    <a id="btn_7" asp-action="Menu" asp-controller="FichasMedicas" asp-route-idPersona="@Model.IdPersona" asp-route-idFichaMedica="@Model.IdFichaMedica" asp-route-idMenu="7" class="btn btn-default" onclick="espera()">
+        Inicio
+    </a>
+
+    <a id="btn_0" asp-action="Menu" asp-controller="FichasMedicas" asp-route-idPersona="@Model.IdPersona" asp-route-idFichaMedica="@Model.IdFichaMedica" asp-route-idMenu="0" class="btn btn-default" onclick="espera()">
+        Datos Generales
+    </a>
+
+    <a id="btn_1" asp-action="Menu" asp-controller="FichasMedicas" asp-route-idPersona="@Model.IdPersona" asp-route-idFichaMedica="@Model.IdFichaMedica" asp-route-idMenu="1" class="btn btn-default" onclick="espera()">
+        Antecedentes <br />profesionales
+    </a>
+
+    <a id="btn_2" asp-action="Menu" asp-controller="FichasMedicas" asp-route-idPersona="@Model.IdPersona" asp-route-idFichaMedica="@Model.IdFichaMedica" asp-route-idMenu="2" class="btn btn-default" onclick="espera()">
+        Antecedentes <br />laborales
+    </a>
+
+    <a id="btn_3" asp-action="Menu" asp-controller="FichasMedicas" asp-route-idPersona="@Model.IdPersona" asp-route-idFichaMedica="@Model.IdFichaMedica" asp-route-idMenu="3" class="btn btn-default" onclick="espera()">
+        Antecedentes <br />familiares
+    </a>
+
+    <a id="btn_4" asp-action="Menu" asp-controller="FichasMedicas" asp-route-idPersona="@Model.IdPersona" asp-route-idFichaMedica="@Model.IdFichaMedica" asp-route-idMenu="4" class="btn btn-default" onclick="espera()">
+        Antecedentes <br />personales <br /> y hábitos
+    </a>
+
+    <a id="btn_5" asp-action="Menu" asp-controller="FichasMedicas" asp-route-idPersona="@Model.IdPersona" asp-route-idFichaMedica="@Model.IdFichaMedica" asp-route-idMenu="5" class="btn btn-default" onclick="espera()">
+        Datos médicos
+    </a>
+
+    <a id="btn_6" asp-action="Menu" asp-controller="FichasMedicas" asp-route-idPersona="@Model.IdPersona" asp-route-idFichaMedica="@Model.IdFichaMedica" asp-route-idMenu="6" class="btn btn-default" onclick="espera()">
+        Exámenes <br />complementarios
+    </a>
+
+
+
+
+
+</div>
+
+<script>
+
+    @*
+
+    if (@Model.IdPersona == 0) {
+
+        alert("idPersona: " +@Model.IdPersona+ " / idFIchaMedica: "+ @Model.IdFichaMedica );
+    } else {
+        alert("idPersona: " +@Model.IdPersona+ " / idFIchaMedica: "+ @Model.IdFichaMedica );
+
+    }
+    *@
+
+
+
+    function deshabilitarBotones() {
+
+        var numMenus = document.getElementById("menuFichaMedica").getElementsByTagName("a").length;
+
+        for (var i = 1; i < numMenus; i++) {
+
+            document.getElementById("menuFichaMedica").getElementsByTagName("a")[i].style.visibility = "hidden";
+
+        }
+
+    }
+
+    function habilitarBotones() {
+
+        var numMenus = document.getElementById("menuFichaMedica").getElementsByTagName("a").length;
+
+        for (var i = 1; i < numMenus; i++) {
+
+            document.getElementById("menuFichaMedica").getElementsByTagName("a")[i].style.visibility = "visible";
+
+        }
+
+    }
+
+
+    function espera() {
+
+        mostrarLoadingPanel("content", "Cargando...");
+    }
+
+    function listo() {
+        $("#content").waitMe("hide");
+    }
+
+
+    if (@Model.IdPersona > 0) {
+        
+
+        //habilitarBotones();
+
+    } else {
+
+        //deshabilitarBotones();
+    }
+
+
+</script>

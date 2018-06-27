@@ -1,0 +1,12 @@
+@model bd.webappth.entidades.Negocio.Factor
+<fieldset>
+    <div class="row">
+        <section class="col col-8">
+            <label class="label">@Html.DisplayNameFor(model => model.Porciento)</label>
+            <label class="input">
+                <input maxlength="32" asp-for="Porciento" onkeypress="return NumCheck(event, this)" onchange="handleChange(this);" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Porciento)" />
+                <span asp-validation-for="Porciento" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+</fieldset>
