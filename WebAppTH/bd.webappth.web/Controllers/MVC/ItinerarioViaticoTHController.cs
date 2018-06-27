@@ -462,7 +462,38 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     var respuestaSolicitudViatico = await apiServicio.ObtenerElementoAsync1<ViewModelsSolicitudViaticos>(sol, new Uri(WebApp.BaseAddress),
                                                                  "api/SolicitudViaticos/ObtenerSolicitudesViaticosporId");
+                    //total informe
+                    var informeViatico = new InformeViatico
+                    {
+                        IdSolicitudViatico = IdSolicitudViatico
+                    };
 
+                    var listaintforme = await apiServicio.ObtenerElementoAsync1<List<InformeViatico>>(informeViatico, new Uri(WebApp.BaseAddress)
+                                                              , "api/InformeViaticos/ListarInformeViaticos");
+                    ///Valor total de informe
+
+                    var valortotaInforme = listaintforme.Sum(x => x.ValorEstimado);
+                    ///total facturas
+                    var facturas = new FacturaViatico()
+                    {
+                        IdSolicitudViatico = IdSolicitudViatico
+
+                    };
+                    var listaFacruras = await apiServicio.Listar<FacturaViatico>(facturas, new Uri(WebApp.BaseAddress)
+                                                             , "api/FacturaViatico/ListarFacturas");
+
+                    //calculo de reliquidacion
+
+                    var valortotalfacturas = listaFacruras.Sum(x => x.ValorTotalFactura);
+
+                    var valorCalculo = (respuestaSolicitudViatico.ValorEstimado * 70) / 100;
+
+                    var EstadoReliquidacion = new SolicitudViaticoViewModel();
+
+                    if ((listaFacruras.Count() > 0 || respuestaSolicitudViatico.ListaInformeViatico.Count > 0) && sol.Estado == 4)
+                    {
+                        EstadoReliquidacion = calculos(Convert.ToDecimal(valortotaInforme), valortotalfacturas, Convert.ToDecimal(valorCalculo), Convert.ToDecimal(respuestaSolicitudViatico.ValorEstimado));
+                    }
                     
                     InicializarMensaje(mensaje);
                     return View(respuestaSolicitudViatico);
