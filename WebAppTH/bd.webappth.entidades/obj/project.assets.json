@@ -9043,11 +9043,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH\\WebAppTH\\bd.webappth.entidades\\bd.webappth.entidades.csproj",
+      "projectUniqueName": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH2\\WebAppTH\\bd.webappth.entidades\\bd.webappth.entidades.csproj",
       "projectName": "bd.webappth.entidades",
-      "projectPath": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH\\WebAppTH\\bd.webappth.entidades\\bd.webappth.entidades.csproj",
+      "projectPath": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH2\\WebAppTH\\bd.webappth.entidades\\bd.webappth.entidades.csproj",
       "packagesPath": "C:\\Users\\Adriano\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH\\WebAppTH\\bd.webappth.entidades\\obj\\",
+      "outputPath": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH2\\WebAppTH\\bd.webappth.entidades\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Adriano\\AppData\\Roaming\\NuGet\\NuGet.Config",

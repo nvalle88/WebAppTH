@@ -1,9 +1,0 @@
-C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.webappth.entidades\bin\Release\netcoreapp1.1\bd.webappth.entidades.deps.json
-C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.webappth.entidades\bin\Release\netcoreapp1.1\bd.webappth.entidades.dll
-C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.webappth.entidades\bin\Release\netcoreapp1.1\bd.webappth.entidades.pdb
-C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.webappth.entidades\obj\Release\netcoreapp1.1\bd.webappth.entidades.csproj.CoreCompileInputs.cache
-C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.webappth.entidades\obj\Release\netcoreapp1.1\bd.webappth.entidades.AssemblyInfoInputs.cache
-C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.webappth.entidades\obj\Release\netcoreapp1.1\bd.webappth.entidades.AssemblyInfo.cs
-C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.webappth.entidades\obj\Release\netcoreapp1.1\bd.webappth.entidades.dll
-C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.webappth.entidades\obj\Release\netcoreapp1.1\bd.webappth.entidades.pdb
-C:\Users\Adriano\source\repos\WebAppTH\WebAppTH\bd.webappth.entidades\obj\Release\netcoreapp1.1\bd.webappth.entidades.csprojAssemblyReference.cache

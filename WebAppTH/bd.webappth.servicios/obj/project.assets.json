@@ -10693,11 +10693,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Adriano\\source\\repos\\WebAppTH\\WebAppTH\\bd.webappth.servicios\\bd.webappth.servicios.csproj",
+      "projectUniqueName": "C:\\Users\\Adriano\\source\\repos\\WebAppTH2\\WebAppTH\\bd.webappth.servicios\\bd.webappth.servicios.csproj",
       "projectName": "bd.webappth.servicios",
-      "projectPath": "C:\\Users\\Adriano\\source\\repos\\WebAppTH\\WebAppTH\\bd.webappth.servicios\\bd.webappth.servicios.csproj",
+      "projectPath": "C:\\Users\\Adriano\\source\\repos\\WebAppTH2\\WebAppTH\\bd.webappth.servicios\\bd.webappth.servicios.csproj",
       "packagesPath": "C:\\Users\\Adriano\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Adriano\\source\\repos\\WebAppTH\\WebAppTH\\bd.webappth.servicios\\obj\\",
+      "outputPath": "C:\\Users\\Adriano\\source\\repos\\WebAppTH2\\WebAppTH\\bd.webappth.servicios\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Adriano\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -10715,11 +10715,11 @@
       "frameworks": {
         "netcoreapp1.1": {
           "projectReferences": {
-            "C:\\Users\\Adriano\\source\\repos\\WebAppTH\\WebAppTH\\bd.sw.externos\\bd.sw.externos.csproj": {
-              "projectPath": "C:\\Users\\Adriano\\source\\repos\\WebAppTH\\WebAppTH\\bd.sw.externos\\bd.sw.externos.csproj"
+            "C:\\Users\\Adriano\\source\\repos\\WebAppTH2\\WebAppTH\\bd.sw.externos\\bd.sw.externos.csproj": {
+              "projectPath": "C:\\Users\\Adriano\\source\\repos\\WebAppTH2\\WebAppTH\\bd.sw.externos\\bd.sw.externos.csproj"
             },
-            "C:\\Users\\Adriano\\source\\repos\\WebAppTH\\WebAppTH\\bd.webappth.entidades\\bd.webappth.entidades.csproj": {
-              "projectPath": "C:\\Users\\Adriano\\source\\repos\\WebAppTH\\WebAppTH\\bd.webappth.entidades\\bd.webappth.entidades.csproj"
+            "C:\\Users\\Adriano\\source\\repos\\WebAppTH2\\WebAppTH\\bd.webappth.entidades\\bd.webappth.entidades.csproj": {
+              "projectPath": "C:\\Users\\Adriano\\source\\repos\\WebAppTH2\\WebAppTH\\bd.webappth.entidades\\bd.webappth.entidades.csproj"
             }
           }
         }

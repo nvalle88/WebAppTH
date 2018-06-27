@@ -8548,11 +8548,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH\\WebAppTH\\bd.sw.externos\\bd.sw.externos.csproj",
+      "projectUniqueName": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH2\\WebAppTH\\bd.sw.externos\\bd.sw.externos.csproj",
       "projectName": "bd.sw.externos",
-      "projectPath": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH\\WebAppTH\\bd.sw.externos\\bd.sw.externos.csproj",
+      "projectPath": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH2\\WebAppTH\\bd.sw.externos\\bd.sw.externos.csproj",
       "packagesPath": "C:\\Users\\Adriano\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH\\WebAppTH\\bd.sw.externos\\obj\\",
+      "outputPath": "C:\\Users\\Adriano\\Source\\Repos\\WebAppTH2\\WebAppTH\\bd.sw.externos\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Adriano\\AppData\\Roaming\\NuGet\\NuGet.Config",
