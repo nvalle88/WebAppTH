@@ -38,7 +38,7 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "Cargo")]
         public string ManualPuesto { get; set; }
 
-        [Display(Name = "Partida individual")]
+        [Display(Name = "Partida individual / Código")]
         public string PartidaIndividual { get; set; }
     }
 }

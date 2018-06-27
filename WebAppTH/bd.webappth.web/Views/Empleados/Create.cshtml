@@ -26,7 +26,7 @@
                                     <legend>Datos Personales</legend>
                                     <div class="row">
                                         <section class="col col-3">
-                                            <label>Tipo de Identificaci&oacute;n:</label>
+                                            <label>Tipo de Identificaci&oacute;n</label>
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdTipoIdentificacion" asp- class="form-control" asp-items="ViewBag.IdTipoIdentificacion">
@@ -36,32 +36,30 @@
                                                 </div>
                                             </div>
                                         </section>
-                                        <section class="col col-3">
-                                            <div class="form-group">
-                                                <label>CI o Pasaporte:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-list-alt fa fa-fw"></i></span>
-                                                    <input asp-for="Identificacion" onchange="validar()" class="form-control input " placeholder="Identificacion" type="text">
-                                                </div>
+                                        <section class="col-lg-3">
+                                            <label class="input">
+                                                <label class="input col col-lg-12">CI o Pasaporte</label>
+                                                <label class="input col col-lg-12">
+                                                    <input asp-for="Identificacion" onchange="validar()" class="form-control input" type="text">
+                                                </label>
                                                 <span asp-validation-for="Identificacion" class="text-danger"></span>
                                                 <span id="idIdentificacion" class="text-danger"></span>
-                                            </div>
+                                            </label>
                                         </section>
-                                        <section class="col col-lg-4">
+                                        <section class="col-lg-3">
                                             <label class="input">
-                                                <label>Nombres:</label>
+                                                <label class="input col col-lg-12">Nombres</label>
                                                 <label class="input col col-lg-12">
-                                                    <input asp-for="Nombres" class="form-control input " placeholder="Nombres" type="text">
+                                                    <input asp-for="Nombres" class="form-control input" type="text">
                                                 </label>
                                                 <span asp-validation-for="Nombres" class="text-danger"></span>
                                             </label>
                                         </section>
-                                        <section class="col col-3">
+                                        <section class="col-lg-3">
                                             <div class="form-group">
-                                                <label>Apellidos:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-user fa  fa-fw"></i></span>
-                                                    <input asp-for="Apellidos" class="form-control input " placeholder="Apellidos" type="text">
+                                                <label class="input col col-lg-12">Apellidos</label>
+                                                <div class="input col col-lg-12">
+                                                    <input asp-for="Apellidos" class="form-control input " type="text">
                                                 </div>
                                                 <span asp-validation-for="Apellidos" class="text-danger"></span>
                                             </div>
@@ -69,7 +67,7 @@
                                     </div>
                                     <div class="row">
                                         <section class="col col-3">
-                                            <label>Sexo:</label>
+                                            <label>Sexo</label>
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdSexo" asp- class="form-control input " asp-items="ViewBag.IdSexo">
@@ -80,7 +78,7 @@
                                             </div>
                                         </section>
                                         <section class="col col-3">
-                                            <label>G&eacute;nero:</label>
+                                            <label>G&eacute;nero</label>
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdGenero" asp- class="form-control input " asp-items="ViewBag.IdGenero">
@@ -91,7 +89,7 @@
                                             </div>
                                         </section>
                                         <section class="col col-3">
-                                            <label>Estado Civil:</label>
+                                            <label>Estado Civil</label>
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdEstadoCivil" asp- class="form-control input " asp-items="ViewBag.IdEstadoCivil">
@@ -102,7 +100,7 @@
                                             </div>
                                         </section>
                                         <section class="col col-3">
-                                            <label>Tipo de Sangre:</label>
+                                            <label>Tipo de Sangre</label>
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdTipoSangre" asp- class="form-control input " asp-items="ViewBag.IdTipoSangre">
@@ -115,7 +113,7 @@
                                     </div>
                                     <div class="row">
                                         <section class="col col-3">
-                                            <label>Nacionalidad:</label>
+                                            <label>Nacionalidad</label>
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdNacionalidad" asp- class="form-control input " asp-items="ViewBag.IdNacionalidad">
@@ -126,7 +124,7 @@
                                             </div>
                                         </section>
                                         <section class="col col-3">
-                                            <label>Autoidentificaci&oacute;n &eacute;tnica:</label>
+                                            <label>Autoidentificaci&oacute;n &eacute;tnica</label>
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdEtnia" asp- class="form-control input " asp-items="ViewBag.IdEtnia">
@@ -137,43 +135,40 @@
                                             </div>
                                         </section>
                                         <section class="col col-3">
-                                            <label>Nacionalidad Ind&iacute;gena:</label>
+                                            <label>Nacionalidad Ind&iacute;gena</label>
                                             <div class="form-group">
                                                 <div class="input">
                                                     <select asp-for="IdNacionalidadIndigena" asp- class="form-control input " asp-items="ViewBag.IdNacionalidadIndigena"></select>
                                                 </div>
                                             </div>
                                         </section>
-                                        <section class="col col-3">
-                                            <label>Correo Privado:</label>
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-envelope fa  fa-fw"></i></span>
-                                                    <input asp-for="CorreoPrivado" class="form-control input " placeholder="Correo Privado" data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
-                                                </div>
+                                        <section class="col-lg-3">
+                                            <label class="input col col-lg-12">Correo Privado</label>
+                                            <label class="input col col-lg-12">
+                                                <label class="input">
+                                                    <input asp-for="CorreoPrivado" class="form-control input " data-rule-email="true" data-msg-email="Debe ingresar un correo en el formato correcto">
+                                                </label>
                                                 <span asp-validation-for="CorreoPrivado" class="text-danger"></span>
-                                            </div>
+                                            </label>
                                         </section>
                                     </div>
                                     <div class="row">
-                                        <section class="col col-3">
+                                        <section class="col-lg-3">
 
-                                            <label>Fecha de Nacimiento:</label>
-                                            <div class="form-group">
-                                                <label class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input asp-for="FechaNacimiento" asp- class="form-control" placeholder="Seleccione la Fecha de Inicio">
+                                            <label class="input col col-lg-12">Fecha de Nacimiento</label>
+                                            <label class="input col col-lg-12">
+                                                <label class="input">
+                                                    <input asp-for="FechaNacimiento" asp- class="form-control">
                                                 </label>
                                                 <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
-                                            </div>
+                                            </label>
                                         </section>
 
-                                        <section class="col col-9">
+                                        <section class="col-lg-9">
                                             <div class="form-group">
-                                                <label>Lugar de Trabajo:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-institution fa  fa-fw"></i></span>
-                                                    <input asp-for="LugarTrabajo" class="form-control input " placeholder="Lugar de Trabajo" type="text">
+                                                <label class="input col col-lg-12">Lugar de Trabajo</label>
+                                                <div class="input col col-lg-12">
+                                                    <input asp-for="LugarTrabajo" class="form-control input" type="text">
                                                 </div>
                                                 <span asp-validation-for="LugarTrabajo" class="text-danger"></span>
                                             </div>
@@ -186,7 +181,7 @@
                                             <br />
                                             <section class="row">
                                                 <div class="col col-6">
-                                                    <label>Pa&iacute;s:</label>
+                                                    <label>Pa&iacute;s</label>
                                                     <div class="form-group">
                                                         <div class="input">
                                                             <select asp-for="IdPaisLugarNacimiento" class="form-control input " asp-items="ViewBag.IdPaisLugarNacimiento">
@@ -197,7 +192,7 @@
                                                     </div>
                                                 </div>
                                                 <section class="col col-6">
-                                                    <label>Ciudad:</label>
+                                                    <label>Ciudad</label>
                                                     <div class="form-group">
                                                         <div class="input">
                                                             <select class="form-control input" asp-for="IdCiudadLugarNacimiento" asp-items="ViewBag.IdCiudadLugarNacimiento"></select>
@@ -212,7 +207,7 @@
                                             <br />
                                             <div class="row">
                                                 <section class="col col-6">
-                                                    <label>Pa&iacute;s:</label>
+                                                    <label>Pa&iacute;s</label>
                                                     <div class="form-group">
                                                         <div class="input">
                                                             <select asp-for="IdPaisLugarSufragio" class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio">
@@ -223,7 +218,7 @@
                                                     </div>
                                                 </section>
                                                 <section class="col col-6">
-                                                    <label>Provincia:</label>
+                                                    <label>Provincia</label>
                                                     <div class="form-group">
                                                         <div class="input">
                                                             <select asp-for="IdProvinciaLugarSufragio" class="form-control input " asp-items="ViewBag.IdProvinciaLugarSufragio">
@@ -240,7 +235,7 @@
                                             <br />
                                             <div class="row">
                                                 <section class="col col-3">
-                                                    <label>Pa&iacute;s:</label>
+                                                    <label>Pa&iacute;s</label>
                                                     <div class="form">
                                                         <div class="input">
                                                             <select asp-for="IdPaisLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdPaisLugarSufragio">
@@ -252,7 +247,7 @@
                                                 </section>
 
                                                 <section class="col col-3">
-                                                    <label>Provincia:</label>
+                                                    <label>Provincia</label>
                                                     <div class="form">
                                                         <div class="input">
                                                             <select asp-for="IdProvinciaLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdProvinciaLugarPersona">
@@ -263,7 +258,7 @@
                                                     </div>
                                                 </section>
                                                 <section class="col col-3">
-                                                    <label>Ciudad:</label>
+                                                    <label>Ciudad</label>
                                                     <div class="form">
                                                         <div class="input">
                                                             <select asp-for="IdCiudadLugarPersona" asp- class="form-control input " asp-items="ViewBag.IdCiudadLugarPersona">
@@ -274,7 +269,7 @@
                                                     </div>
                                                 </section>
                                                 <section class="col col-3">
-                                                    <label>Parroquia:</label>
+                                                    <label>Parroquia</label>
                                                     <div class="form-group">
                                                         <div class="input">
                                                             <select asp-for="IdParroquia" class="form-control input" asp-items="ViewBag.IdParroquia">
@@ -285,78 +280,78 @@
                                                     </div>
                                                 </section>
                                             </div>
+
                                             <div class="row">
-                                                <section class="col col-6">
-                                                    <label>Calle Principal:</label>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                            <input asp-for="CallePrincipal" class="form-control input " placeholder="Calle Principal" type="text">
-                                                        </div>
+                                                <section class="col-lg-6">
+                                                    <label class="input col col-lg-12">Calle Principal</label>
+                                                    <label class="input col col-lg-12">
+                                                        <label class="input">
+                                                            <input asp-for="CallePrincipal" class="form-control input" type="text">
+                                                        </label>
                                                         <span asp-validation-for="CallePrincipal" class="text-danger"></span>
-                                                    </div>
+                                                    </label>
                                                 </section>
 
-                                                <section class="col col-6">
-                                                    <label>Calle Secundaria:</label>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                            <input asp-for="CalleSecundaria" class="form-control input " placeholder="Calle Secundaria" type="text">
-                                                        </div>
+                                                <section class="col-lg-6">
+                                                    <label class="input col col-lg-12">Calle Secundaria</label>
+                                                    <label class="input col col-lg-12">
+                                                        <label class="input">
+                                                            <input asp-for="CalleSecundaria" class="form-control input "  type="text">
+                                                        </label>
                                                         <span asp-validation-for="CalleSecundaria" class="text-danger"></span>
-                                                    </div>
+                                                    </label>
                                                 </section>
                                             </div>
 
                                             <div class="row">
-                                                <section class="col col-6">
-                                                    <label>Referencia:</label>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                            <input asp-for="Referencia" class="form-control input " placeholder="Referencia" type="text">
-                                                        </div>
+                                                <section class="col-lg-6">
+                                                    <label class="input col col-lg-12">Referencia</label>
+                                                    <label class="input col col-lg-12">
+                                                        <label class="input">
+                                                            
+                                                            <input asp-for="Referencia" class="form-control input" type="text">
+                                                        </label>
                                                         <span asp-validation-for="Referencia" class="text-danger"></span>
-                                                    </div>
+                                                    </label>
                                                 </section>
-                                                <section class="col col-6">
-                                                    <label>Ocupaci&oacute;n:</label>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-map-marker fa  fa-fw"></i></span>
-                                                            <input asp-for="Ocupacion" class="form-control input " placeholder="Ocupaci&oacute;n" type="text">
+
+                                                <section class="col-lg-6" hidden>
+                                                    <label class="input col col-lg-12" >Ocupaci&oacute;n</label>
+                                                    <div class="input col col-lg-12">
+                                                        <div class="input">
+                                                            
+                                                            <input asp-for="Ocupacion" class="form-control input " type="text">
                                                         </div>
                                                         <span asp-validation-for="Ocupacion" class="text-danger"></span>
                                                     </div>
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-4">
-                                                    <label>No. de Domicilio:</label>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-slack fa  fa-fw"></i></span>
-                                                            <input asp-for="Numero" class="form-control input " placeholder="Numero del Domicilio" onKeyPress="return checkIt(event)">
+                                                <section class="col-lg-4">
+                                                    <label class="input col col-lg-12">No. de Domicilio</label>
+                                                    <div class="input col col-lg-12">
+                                                        <div class="input">
+                                                            
+                                                            <input asp-for="Numero" class="form-control input " onKeyPress="return checkIt(event)">
                                                         </div>
                                                         <span asp-validation-for="Numero" class="text-danger"></span>
                                                     </div>
                                                 </section>
-                                                <section class="col col-4">
-                                                    <label>Tel&eacute;fono de Privado:</label>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-mobile fa  fa-fw"></i></span>
+                                                <section class="col-lg-4">
+                                                    <label class="input col col-lg-12">Tel&eacute;fono de Privado</label>
+                                                    <div class="input col col-lg-12">
+                                                        <div class="input">
                                                             <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text">
                                                         </div>
                                                         <span asp-validation-for="TelefonoPrivado" class="text-danger"></span>
                                                     </div>
                                                 </section>
-                                                <section class="col col-4">
-                                                    <label>Tel&eacute;fono de Casa:</label>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-phone fa  fa-fw"></i></span>
+
+                                                <section class="col-lg-4">
+                                                    <label class="input col col-lg-12">Tel&eacute;fono de Casa</label>
+                                                    <div class="input col col-lg-12">
+                                                        <div class="input">
+                                                            
                                                             <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="02-2222222" type="text">
                                                         </div>
                                                         <span asp-validation-for="TelefonoCasa" class="text-danger"></span>
@@ -412,6 +407,7 @@
                     dataType: 'json',
                     data: { etnia: $("#IdEtnia").val() },
                     success: function (data) {
+                        $("#IdNacionalidadIndigena").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
                             $("#IdNacionalidadIndigena").append('<option value="'
                                 + data.idNacionalidadIndigena + '">'
