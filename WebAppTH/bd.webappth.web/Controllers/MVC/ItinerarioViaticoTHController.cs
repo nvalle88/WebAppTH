@@ -471,7 +471,6 @@ namespace bd.webappth.web.Controllers.MVC
                     var listaintforme = await apiServicio.ObtenerElementoAsync1<List<InformeViatico>>(informeViatico, new Uri(WebApp.BaseAddress)
                                                               , "api/InformeViaticos/ListarInformeViaticos");
                     ///Valor total de informe
-
                     var valortotaInforme = listaintforme.Sum(x => x.ValorEstimado);
                     ///total facturas
                     var facturas = new FacturaViatico()
@@ -481,7 +480,6 @@ namespace bd.webappth.web.Controllers.MVC
                     };
                     var listaFacruras = await apiServicio.Listar<FacturaViatico>(facturas, new Uri(WebApp.BaseAddress)
                                                              , "api/FacturaViatico/ListarFacturas");
-
                     //calculo de reliquidacion
 
                     var valortotalfacturas = listaFacruras.Sum(x => x.ValorTotalFactura);
