@@ -486,13 +486,14 @@ namespace bd.webappth.web.Controllers.MVC
 
                     var valorCalculo = (respuestaSolicitudViatico.ValorEstimado * 70) / 100;
 
-                    var EstadoReliquidacion = new SolicitudViaticoViewModel();
+                    var EstadoReliquidacion = new ViewModelsSolicitudViaticos();
 
-                    if ((listaFacruras.Count() > 0 || respuestaSolicitudViatico.ListaInformeViatico.Count > 0) && sol.Estado == 4)
+                    if ((listaFacruras.Count() > 0 || respuestaSolicitudViatico.ListaInformeViatico.Count > 0) && respuestaSolicitudViatico.Estado == 4)
                     {
                         EstadoReliquidacion = calculos(Convert.ToDecimal(valortotaInforme), valortotalfacturas, Convert.ToDecimal(valorCalculo), Convert.ToDecimal(respuestaSolicitudViatico.ValorEstimado));
                     }
-                    
+                    respuestaSolicitudViatico.Reliquidacion= EstadoReliquidacion.Reliquidacion;
+                    respuestaSolicitudViatico.Valor = EstadoReliquidacion.Valor;
                     InicializarMensaje(mensaje);
                     return View(respuestaSolicitudViatico);
 
@@ -920,24 +921,41 @@ namespace bd.webappth.web.Controllers.MVC
         }
         #endregion
 
-        SolicitudViaticoViewModel calculos(decimal valortotaInforme, decimal valortotalfacturas, decimal valorCalculo, decimal valortotalVIaticos)
+        ViewModelsSolicitudViaticos calculos(decimal valortotaInforme, decimal valortotalfacturas, decimal valorCalculo, decimal valortotalVIaticos)
         {
-            var solicitudViaticoViewModel = new SolicitudViaticoViewModel();
+            var solicitudViaticoViewModel = new ViewModelsSolicitudViaticos();
 
 
-            if (valorCalculo >= valortotaInforme && valorCalculo >= valortotalfacturas)
+            if (valortotaInforme >= valorCalculo && valortotalfacturas  >= valorCalculo)
             {
                 solicitudViaticoViewModel.Reliquidacion = 0;
             }
             else if (valortotalfacturas > valortotaInforme)
             {
                 solicitudViaticoViewModel.Reliquidacion = 1;
-                solicitudViaticoViewModel.Valor = valortotalfacturas - valortotaInforme;
+                var cal = valortotalfacturas - valortotaInforme;
+                if (cal == 0)
+                {
+                    solicitudViaticoViewModel.Valor = Convert.ToDecimal(valorCalculo - valortotalfacturas);
+                }
+                else
+                {
+                    solicitudViaticoViewModel.Valor = Convert.ToDecimal(valorCalculo - cal); 
+                }
+                
             }
             else if (valortotaInforme < valorCalculo && valortotalfacturas < valorCalculo)
             {
                 solicitudViaticoViewModel.Reliquidacion = -1;
-                solicitudViaticoViewModel.Valor = valortotalfacturas - valortotaInforme;
+                var cal = valortotalfacturas - valortotaInforme;
+                if (cal == 0)
+                {
+                    solicitudViaticoViewModel.Valor = Convert.ToDecimal(valorCalculo - valortotalfacturas);
+                }
+                else
+                {
+                    solicitudViaticoViewModel.Valor = Convert.ToDecimal(valorCalculo - cal);
+                }
             }
 
             return solicitudViaticoViewModel;

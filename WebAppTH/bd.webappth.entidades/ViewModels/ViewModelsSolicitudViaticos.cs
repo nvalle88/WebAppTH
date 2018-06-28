@@ -53,6 +53,8 @@ namespace bd.webappth.entidades.ViewModels
         public string Dependencia { get; set; }
         [Display(Name = "Puesto:")]
         public string Puesto { get; set; }
+        public int Reliquidacion { get; set; }
+        public decimal Valor { get; set; }
 
         public List<TipoViatico> ListaTipoViatico { get; set; }
         public List<ViewModelsItinerarioViaticos> ListaItinerarioViatico { get; set; }

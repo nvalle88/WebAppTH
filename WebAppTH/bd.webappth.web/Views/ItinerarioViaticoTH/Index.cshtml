@@ -242,7 +242,28 @@
                                                         @Html.ActionLink("Informe", "Informe", new { IdSolicitudViatico = Model.IdSolicitudViatico }) |
 
                                                     </text>
-                                                }                                                
+                                                }
+                                                @if (Model.Reliquidacion == 1)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink("Reliquidacion a favor", "Reliquidacion", new { IdSolicitudViatico = Model.IdSolicitudViatico})
+
+                                                    </text>
+                                                }
+                                                @if (Model.Reliquidacion == -1)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink("Reliquidacion en contra", "Reliquidacion", new { IdSolicitudViatico = Model.IdSolicitudViatico })
+
+                                                    </text>
+                                                }
+                                                @if (Model.Estado == 5)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink("Reliquidacion", "Reliquidacion", new { IdSolicitudViatico = Model.IdSolicitudViatico })
+
+                                                    </text>
+                                                }
                                             </td>
                                         </tr>
                                     }
