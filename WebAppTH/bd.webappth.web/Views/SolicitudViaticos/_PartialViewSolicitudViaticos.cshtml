@@ -1,27 +1,35 @@
-@model bd.webappth.entidades.ViewModels.SolicitudViaticoViewModel
+@model bd.webappth.entidades.ViewModels.ViewModelsSolicitudViaticos
 
 <legend>Datos Generales</legend>
 <div class="row">
-    <section class="col col-lg-4">
+    <section class="col col-lg-3">
         <label>Pa&iacute;s de comisi&oacute;n:</label>
         <div class="form-group">
-            <select id="paisLugarPersona" asp-for="SolicitudViatico.IdPais" class="form-control" asp-items="ViewBag.IdPais" data-msg-required='El campo es requerido' data-rule-required='true'>
+            <select id="paisLugarPersona"  class="form-control" asp-items="ViewBag.IdPais" data-msg-required='El campo es requerido' data-rule-required='true'>
                 <option value="0" selected="" disabled="">Seleccione</option>
             </select>
         </div>
     </section>
-    <section class="col col-lg-4">
+    <section class="col col-lg-3">
         <label>Provincia de comisi&oacute;n:</label>
         <div class="form-group">
-            <select id="provinciaLugarPersona" asp-for="SolicitudViatico.IdProvincia" class="form-control input" asp-items="ViewBag.IdProvincia" data-msg-required='El campo es requerido' data-rule-required='true'>
+            <select id="provinciaLugarPersona" class="form-control input" asp-items="ViewBag.IdProvincia" data-msg-required='El campo es requerido' data-rule-required='true'>
                 <option value="0" selected="" disabled="">Seleccione</option>
             </select>
         </div>
     </section>
-    <section class="col col-lg-4">
+    <section class="col col-lg-3">
         <label>Ciudad de comisi&oacute;n:</label>
         <div class="form-group">
-            <select id="idciudadLugarPersona" asp-for="SolicitudViatico.IdCiudad" class="form-control input" asp-items="ViewBag.IdCiudad" data-msg-required='El campo es requerido' data-rule-required='true'>
+            <select id="idciudadLugarPersona" asp-for="IdCiudad" class="form-control input" asp-items="ViewBag.IdCiudad" data-msg-required='El campo es requerido' data-rule-required='true'>
+                <option value="0" selected="" disabled="">Seleccione</option>
+            </select>
+        </div>
+    </section>
+    <section class="col col-lg-3">
+        <label>Fondo financiamiento:</label>
+        <div class="form-group">
+            <select  asp-for="IdFondoFinanciamiento" class="form-control input" asp-items="ViewBag.IdFondoFinanciamiento" data-msg-required='El campo es requerido' data-rule-required='true'>
                 <option value="0" selected="" disabled="">Seleccione</option>
             </select>
         </div>
@@ -31,30 +39,30 @@
     <section class="col col-lg-3">
         <div class="form-group">
             <label>Fecha de salida:</label>
-            <input asp-for="SolicitudViatico.FechaSalida" type="text" readonly="readonly" class=" form-control datepicker" data-dateformat='dd/mm/yy'>
-            <span asp-validation-for="SolicitudViatico.FechaSalida" class="text-danger"></span>
+            <input asp-for="FechaSalida" type="text" readonly="readonly" class=" form-control datepicker" placeholder="@DateTime.Now" data-dateformat='dd/mm/yy'>
+            <span asp-validation-for="FechaSalida" class="text-danger"></span>
         </div>
     </section>
     <section class="col col-lg-3">
         <label>Hora de salida:</label>
         <div class="form-group">
-            <input type="time" asp-for="SolicitudViatico.HoraSalida" class="form-control input  " data-msg-required='El campo es requerido' data-rule-required='true'>
-            <span asp-validation-for="SolicitudViatico.HoraSalida" class="text-danger"></span>
+            <input type="time" asp-for="HoraSalida" class="form-control input  " data-msg-required='El campo es requerido' data-rule-required='true'>
+            <span asp-validation-for="HoraSalida" class="text-danger"></span>
         </div>
     </section>
     <section class="col col-lg-3">
         <div class="form-group">
             <label>Fecha de llegada:</label>
-            <input asp-for="SolicitudViatico.FechaLlegada" type="text" readonly="readonly" class=" form-control datepicker" data-dateformat='dd/mm/yy'>
-            <span asp-validation-for="SolicitudViatico.FechaLlegada" class="text-danger"></span>
+            <input asp-for="FechaLlegada" type="text" readonly="readonly" class=" form-control datepicker" data-dateformat='dd/mm/yy'>
+            <span asp-validation-for="FechaLlegada" class="text-danger"></span>
 
         </div>
     </section>
     <section class="col col-lg-3">
         <label>Hora de llegada:</label>
         <div class="form-group">
-            <input type="time" asp-for="SolicitudViatico.HoraLlegada" class="form-control input  " data-msg-required='El campo es requerido' data-rule-required='true'>
-            <span asp-validation-for="SolicitudViatico.HoraLlegada" class="text-danger"></span>
+            <input type="time" asp-for="HoraLlegada" class="form-control input  " data-msg-required='El campo es requerido' data-rule-required='true'>
+            <span asp-validation-for="HoraLlegada" class="text-danger"></span>
         </div>
     </section>
 </div>
@@ -63,8 +71,8 @@
         <label class="label"></label>
         <div class="form-group">
             <label>Descripci&oacute;n de las actividades a ejecutarse:</label>
-            <textarea maxlength="250" class="form-control" asp-for="SolicitudViatico.Descripcion" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Descripcion)"></textarea>
-            <span asp-validation-for="SolicitudViatico.Descripcion" class="text-danger"></span>
+            <textarea maxlength="250" class="form-control" asp-for="Descripcion" rows="3" ></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
         </div>
     </section>
 </div>
@@ -73,8 +81,8 @@
         <label class="label"></label>
         <div class="form-group">
             <label>Observaci&oacute;n:</label>
-            <textarea maxlength="250" class="form-control" asp-for="SolicitudViatico.Observacion" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Observacion)"></textarea>
-            <span asp-validation-for="SolicitudViatico.Observacion" class="text-danger"></span>
+            <textarea maxlength="250" class="form-control" asp-for="Observacion" rows="3" ></textarea>
+            <span asp-validation-for="Observacion" class="text-danger"></span>
         </div>
     </section>
 </div>

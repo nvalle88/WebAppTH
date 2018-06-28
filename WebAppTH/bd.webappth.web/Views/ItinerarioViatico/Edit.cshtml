@@ -58,11 +58,13 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form id="wizard-1" asp-action="Edit" novalidate="novalidate">
+                            <form id="wizard-1" asp-action="Edit" novalidate="novalidate" class="smart-form">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="IdItinerarioViatico" />
                                 <input type="hidden" asp-for="IdSolicitudViatico" />
-                                @{await Html.RenderPartialAsync("_PartialViewItinerarioViatico");}
+                                <fieldset>
+                                    @{await Html.RenderPartialAsync("_PartialViewItinerarioViatico");}
+                                </fieldset>
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-default">Cancelar</a>
@@ -85,9 +87,124 @@
 
 </div>
 <!-- END MAIN CONTENT -->
-@section Scripts {
-    <script type="text/javascript">
 
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Init_Select2();
+        });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+           $("#paisorigen").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+               $("#provinciaorigen").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarProvinciaPorPais")',
+                    dataType: 'json',
+                    data: { pais: $("#paisorigen").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#provinciaorigen").append('<option value="'
+                                + data.idProvincia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+            $("#paisdestino").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+                $("#provinciadestino").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarProvinciaPorPais")',
+                    dataType: 'json',
+                    data: { pais: $("#paisdestino").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#provinciadestino").append('<option value="'
+                                + data.idProvincia + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+
+
+            $("#provinciaorigen").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#ciudadorigen").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarCiudadPorProvincia")',
+                    dataType: 'json',
+                    data: { provincia: $("#provinciaorigen").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#ciudadorigen").append('<option value="'
+                                + data.idCiudad + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+            })
+
+         $("#provinciadestino").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#ciudaddestino").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarCiudadPorProvincia")',
+                    dataType: 'json',
+                    data: { provincia: $("#provinciadestino").val() },
+                    success: function (data) {
+                        $.each(data, function (i, data) {
+                            $("#ciudaddestino").append('<option value="'
+                                + data.idCiudad + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+        });
 
     </script>
+
 }
