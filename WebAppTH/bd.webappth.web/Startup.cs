@@ -106,6 +106,8 @@ namespace bd.webappth.web
 
 
 
+
+
             WebApp.BaseAddressWebAppLogin = Configuration.GetSection("HostWebAppLogin").Value;
 
             ///Configuración del servidor de roportes
