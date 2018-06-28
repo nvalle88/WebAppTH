@@ -1881,7 +1881,7 @@ namespace bd.webappth.web.Controllers.MVC
                     
                 }
                 await CargarCombosEmpleado(datosBasicosEmpleado);
-                this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.ExisteEmpleado}";
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 return View(datosBasicosEmpleado);
             }
             catch (Exception ex)

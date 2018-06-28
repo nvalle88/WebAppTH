@@ -138,31 +138,49 @@
 
                                                     @if (item.IdDocumentosIngreso == item2.IdDocumentosIngreso)
                                                     {
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-11">
                                                             <div class="checkbox-inline">
                                                                 <label>
+                                                                    @item.Descripcion
+                                                                 </label>
+                                                             </div>
+                                                         </div>
+
+                                                         <div class="col-lg-1">
+                                                            <div class="checkbox-inline">
+                                                                <label>
+
                                                                     <input type="checkbox"
                                                                            name="DocumentosSeleccionados"
-                                                                           value="@item.IdDocumentosIngreso" checked="checked" onclick="return false;" /> @item.Descripcion
+                                                                           value="@item.IdDocumentosIngreso" checked="checked" onclick="return false;" />
 
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            bandera = true;
+                                                                 </label>
+                                                             </div>
+                                                         </div>
+
+                                                         bandera = true;
                                                         }
 
                                                 }
                                                 if (!bandera)
                                                 {
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-11">
+                                                        <div class="checkbox-inline">
+                                                            <label>
+                                                                @item.Descripcion
+                                                            </label>
+                                                         </div>
+                                                     </div>
+
+                                                      <div class="col-lg-1">
                                                         <div class="checkbox-inline">
                                                             <label>
                                                                 <input type="checkbox"
                                                                        name="DocumentosSeleccionados"
-                                                                       value="@item.IdDocumentosIngreso" /> @item.Descripcion
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                                       value="@item.IdDocumentosIngreso" /> 
+                                                             </label>
+                                                         </div>
+                                                       </div>
                                                     }
                                                 }
                                         </div>

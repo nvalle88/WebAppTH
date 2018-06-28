@@ -50,5 +50,10 @@ namespace bd.webappth.entidades.Negocio
         [NotMapped]
         public int IdDependecia { get; set; }
 
+        [NotMapped]
+        public int IdModalidadPartida { get; set; }
+
+        [NotMapped]
+        public string NumeroPartidaIndividual { get; set; }
     }
 }

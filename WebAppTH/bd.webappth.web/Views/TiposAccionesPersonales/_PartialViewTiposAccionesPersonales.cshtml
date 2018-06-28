@@ -12,7 +12,7 @@
         <section class="col col-6">
             <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.Nombre).ToString().TrimEnd(charsNoPermitidos)</label>
             <label class="input">
-                <input maxlength="20" asp-for="TipoAccionPersonal.Nombre" class="form-control" />
+                <input maxlength="100" asp-for="TipoAccionPersonal.Nombre" class="form-control" />
                 <span asp-validation-for="TipoAccionPersonal.Nombre" class="text-danger"></span>
             </label>
         </section>
@@ -128,13 +128,22 @@
         </section>
     </div>
 
+    <div class="row">
+        <div class="alert alert-info col col-lg-12">
+            <b>Aviso</b>
+
+            <br>
+            MARCAR CON VISTO SI CUMPLE CON LA CONDICI&Oacute;N INDICADA
+        </div>
+        <p></p>
+    </div>
 
     <div class="row">
 
         <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.DiasHabiles" class="form-control">
-                <i></i>Es d&iacute;a habil ?
+                <i></i>Es d&iacute;a habil 
                 <span asp-validation-for="TipoAccionPersonal.DiasHabiles" class="text-danger"></span>
             </label>
         </section>
@@ -144,7 +153,7 @@
         <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.ImputableVacaciones" class="form-control">
-                <i></i>Es imputable vacaciones ?
+                <i></i>Es imputable vacaciones 
                 <span asp-validation-for="TipoAccionPersonal.ImputableVacaciones" class="text-danger"></span>
             </label>
         </section>
@@ -154,7 +163,7 @@
         <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.ProcesoNomina" class="form-control">
-                <i></i>Es proceso n&oacute;mina ?
+                <i></i>Es proceso n&oacute;mina 
                 <span asp-validation-for="TipoAccionPersonal.ProcesoNomina" class="text-danger"></span>
             </label>
         </section>
@@ -165,7 +174,7 @@
         <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.EsResponsableTH" class="form-control">
-                <i></i>Es responsable de Talento Humano ?
+                <i></i>Es responsable de Talento Humano 
                 <span asp-validation-for="TipoAccionPersonal.EsResponsableTH" class="text-danger"></span>
             </label>
         </section>
@@ -177,7 +186,7 @@
         <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.DesactivarCargo" class="form-control">
-                <i></i>Se desactiva el cargo ?
+                <i></i>Se desactiva el cargo 
                 <span asp-validation-for="TipoAccionPersonal.DesactivarCargo" class="text-danger"></span>
             </label>
         </section>
@@ -188,7 +197,7 @@
 
         <section class="col col-lg-12">
             <label class="col-lg-12">
-                <b>Estado al que cambia?</b>
+                <b>Estado al que cambia</b>
             </label>
         </section>
 
@@ -239,7 +248,7 @@
         <section class="col col-4">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.GeneraAccionPersonal" class="form-control">
-                <i></i>Genera  Acci&oacute;n Personal ?
+                <i></i>Genera  Acci&oacute;n Personal 
                 <span asp-validation-for="TipoAccionPersonal.GeneraAccionPersonal" class="text-danger"></span>
             </label>
         </section>
@@ -250,7 +259,7 @@
         <section class="col col-lg-12">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.ModificaDistributivo" class="form-control">
-                <i></i>Modifica Distributivo / genera movimiento de personal ?
+                <i></i>Modifica Distributivo / genera movimiento de personal 
                 <span asp-validation-for="TipoAccionPersonal.ModificaDistributivo" class="text-danger"></span>
             </label>
         </section>
