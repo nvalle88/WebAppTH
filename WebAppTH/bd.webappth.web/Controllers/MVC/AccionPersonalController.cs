@@ -20,7 +20,6 @@ namespace bd.webappth.web.Controllers.MVC
     {
         private readonly IApiServicio apiServicio;
 
-
         public AccionPersonalController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
