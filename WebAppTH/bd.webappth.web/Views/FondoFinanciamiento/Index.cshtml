@@ -1,9 +1,14 @@
 @model List<bd.webappth.entidades.Negocio.FondoFinanciamiento>
 
 <div id="content">
-    <p>
-        <a asp-action="Create" class="btn btn-success">Nuevo Fondo de Financiamiento</a>
-    </p>
+    <a asp-action="Create">
+        <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo
+
+        </button>
+    </a>   
     <section id="widget-grid" class="">
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace bd.webappth.web.Controllers.MVC
@@ -83,23 +84,28 @@ namespace bd.webappth.web.Controllers.MVC
             var lista = new List<ListaEmpleadoViewModel>();
             try
             {
-                lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ListarEmpleados");
 
-                InicializarMensaje(null);
-                return View(lista);
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    lista = await apiServicio.ObtenerElementoAsync1<List<ListaEmpleadoViewModel>>(
+                            NombreUsuario
+                            , new Uri(WebApp.BaseAddress)
+                            , "api/Empleados/ListarEmpleadosConYSinIndiceOcupacionalModalidadPartida");
+
+                    InicializarMensaje(null);
+                    return View(lista);
+                }
+
+                return RedirectToAction("Login", "Login");
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando empleados",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+                
                 return BadRequest();
             }
         }
@@ -261,23 +267,18 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             await CargarCombosDistributivo();
-            //var sucursal = new Sucursal()
-            //{
-            //    IdSucursal= 1
-            //};
-            //var dependenciasporsucursal = await apiServicio.ObtenerElementoAsync1<Dependencia>(sucursal,new Uri(WebApp.BaseAddress)
-            //                                                      , "/api/Dependencias/ListarDependenciaporSucursalPadreHijo");
+            
 
-            //var empleadoViewModel = new EmpleadoViewModel()
-            //{
-            //    Dependencia = dependenciasporsucursal
-            //};
+
+            var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(IdEmpleado, new Uri(WebApp.BaseAddress), "/api/Empleados/ObtenerEmpleadoDistributivo");
+
+
 
             var empleado = new Empleado
             {
                 IdEmpleado = IdEmpleado
             };
-         
+
 
             var empleadoViewModel = new EmpleadoViewModel()
             {
@@ -285,6 +286,46 @@ namespace bd.webappth.web.Controllers.MVC
             };
 
 
+            if (respuesta.IsSuccess == true)
+            {
+
+                empleadoViewModel = JsonConvert.DeserializeObject<EmpleadoViewModel>(respuesta.Resultado.ToString());
+
+                if (empleadoViewModel.IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida > 0) {
+
+                    await CargarRelacionLaboralPorRegimen(empleadoViewModel.IndiceOcupacionalModalidadPartida.TipoNombramiento.RelacionLaboral.IdRegimenLaboral);
+
+                    await CargarTipoNombramientoPorRelacion
+                        (empleadoViewModel.IndiceOcupacionalModalidadPartida.TipoNombramiento.IdRelacionLaboral);
+
+                    await CargarSucursalesPorCiudad
+                        (empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.Dependencia.Sucursal.IdCiudad);
+
+                    await CargarPerfilPuestoPorDependencia(
+                            empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdDependencia,
+                            empleadoViewModel.IndiceOcupacional.IdManualPuesto
+                          );
+
+                    await CargarRolPuestoPorManualPuesto(
+                            empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdManualPuesto,
+                            empleadoViewModel.IndiceOcupacional.IdDependencia,
+                            empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto
+                          );
+
+                    await CargarEscalaGradosPorRolPuesto(
+                            empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto,
+                            empleadoViewModel.IndiceOcupacional.IdManualPuesto,
+                            empleadoViewModel.IndiceOcupacional.IdDependencia
+                          );
+
+                    await CargarFondoFinanciamento(
+                            (int) (empleadoViewModel.IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento)
+                        );
+
+                }
+            }
+            
+            
             return View(empleadoViewModel);
         }
 
@@ -1332,14 +1373,20 @@ namespace bd.webappth.web.Controllers.MVC
 
                 var indiceOcupacionalModalidadPartida = new IndiceOcupacionalModalidadPartida
                 {
-                    IdIndiceOcupacional= respuestaIndiceOcupacional.IdIndiceOcupacional,
+                    IdIndiceOcupacionalModalidadPartida = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida,
+
+                    IdIndiceOcupacional = respuestaIndiceOcupacional.IdIndiceOcupacional,
+
                     IdFondoFinanciamiento = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento,
                     IdTipoNombramiento = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdTipoNombramiento,
                     Fecha = empleadoViewModel.IndiceOcupacionalModalidadPartida.Fecha,
-                    SalarioReal  = empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal == null ? 0 : empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal,
-                    IdEmpleado=empleadoViewModel.Empleado.IdEmpleado,
-                    IdDependecia = empleadoViewModel.IndiceOcupacional.IdDependencia
-
+                    SalarioReal = empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal == null ? 0 : empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal,
+                    IdEmpleado = empleadoViewModel.Empleado.IdEmpleado,
+                    IdDependecia = empleadoViewModel.IndiceOcupacional.IdDependencia,
+                    IdModalidadPartida = (int)(empleadoViewModel.IndiceOcupacional.IdModalidadPartida),
+                    NumeroPartidaIndividual = empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.NumeroPartidaIndividual
+                    
+                    
                 };
 
 
@@ -1348,46 +1395,20 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/IndicesOcupacionalesModalidadPartida/InsertarIndiceOcupacionalModalidadPartida");
                 if (response.IsSuccess)
                 {
-                    Response respuesta = new Response();
-                    var indiceOcupacional = new IndiceOcupacional
-                    {
-                        IdIndiceOcupacional = respuestaIndiceOcupacional.IdIndiceOcupacional,
-                        IdModalidadPartida = empleadoViewModel.IndiceOcupacional.IdModalidadPartida
                     
-                    };
-                    respuesta = await apiServicio.ObtenerElementoAsync1<Response>( indiceOcupacional, new Uri(WebApp.BaseAddress),
-                                                               "api/IndicesOcupacionales/ActualizarModalidadPartida");
-
-                    if (respuesta.IsSuccess) { 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un estado civil",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Estado Civil:", empleadoViewModel.IndiceOcupacionalModalidadPartida.IdIndiceOcupacional),
-                    });
-                    }
-                    return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}"); 
+                    return this.Redireccionar(
+                            "Empleados",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
                 }
 
-                return this.Redireccionar($"{Mensaje.Error}|{response.Message}");
+                this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{response.Message}|{"10000"}";
+                return BadRequest(response.Message);
 
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Estado Civil",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
-
                 return BadRequest();
             }
         }
@@ -1530,9 +1551,163 @@ namespace bd.webappth.web.Controllers.MVC
             //execute the method Send Mail or SendMailAsync
             var a = Emails.SendEmailAsync(mail);
         }
+
+        public async Task CargarRelacionLaboralPorRegimen(int IdRegimenLaboral) {
+            try {
+                var regimenLaboral = new RegimenLaboral
+                {
+                    IdRegimenLaboral = IdRegimenLaboral,
+                };
+
+                var listarelacionesLaborales = await apiServicio.Listar<RelacionLaboral>(regimenLaboral, new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaboralesPorRegimen");
+
+                ViewData["IdRelacionLaboral"] = new SelectList(listarelacionesLaborales, "IdRelacionLaboral", "Nombre");
+
+            } catch (Exception ex) { }
+        }
+
+
+        public async Task CargarTipoNombramientoPorRelacion(int IdRelacionLaboral)
+        {
+            try
+            {
+                var relacionLaboral = new RelacionLaboral
+                {
+                    IdRelacionLaboral = IdRelacionLaboral,
+                };
+                var listarTipoNombramientos = await apiServicio.Listar<TipoNombramiento>(relacionLaboral, new Uri(WebApp.BaseAddress), "api/TiposDeNombramiento/ListarTiposDeNombramientoPorRelacion");
+
+                ViewData["IdTipoNombramiento"] = new SelectList(listarTipoNombramientos, "IdTipoNombramiento", "Nombre");
+
+            }
+            catch (Exception ex) { }
+        }
+
+
+        public async Task CargarSucursalesPorCiudad(int IdCiudad)
+        {
+            try
+            {
+                var ciudad = new Ciudad
+                {
+                    IdCiudad = IdCiudad,
+                };
+                var listarsucursales = await apiServicio.Listar<Sucursal>(ciudad, new Uri(WebApp.BaseAddress), "api/Sucursal/ListarSucursalporCiudad");
+
+                ViewData["IdSucursal"] = new SelectList(listarsucursales, "IdSucursal", "Nombre");
+
+            }
+            catch (Exception ex) { }
+        }
+
+        public async Task CargarPerfilPuestoPorDependencia(int IdDependencia,int IdManualPuesto)
+        {
+            try
+            {
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdDependencia = IdDependencia,
+                };
+                var listarmanualespuestos = await apiServicio.Listar<IndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarManualPuestoporDependenciaTodosEstados");
+
+                var mostrarLista = new List<ManualPuesto>();
+
+                foreach (var item in listarmanualespuestos) {
+                    if (item.IdManualPuesto == IdManualPuesto) {
+                        mostrarLista.Add(new ManualPuesto { IdManualPuesto = item.ManualPuesto.IdManualPuesto, Nombre = item.ManualPuesto.Nombre });
+                        break;
+                    }
+                }
+
+                ViewData["IdManualPuesto"] = new SelectList(mostrarLista, "IdManualPuesto", "Nombre");
+
+            }
+            catch (Exception ex) { }
+        }
+
+        public async Task CargarRolPuestoPorManualPuesto(int IdManualPuesto, int IdDependencia, int IdRolPuesto)
+        {
+            try
+            {
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdManualPuesto = IdManualPuesto,
+                    IdDependencia = IdDependencia
+                };
+                var listarrolespuestos = await apiServicio.Listar<IndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarRolPuestoporManualPuesto");
+
+                var mostrarLista = new List<RolPuesto>();
+
+                foreach (var item in listarrolespuestos)
+                {
+                    if (item.IdRolPuesto == IdRolPuesto)
+                    {
+                        mostrarLista.Add(new RolPuesto { IdRolPuesto = item.RolPuesto.IdRolPuesto, Nombre = item.RolPuesto.Nombre });
+                        break;
+                    }
+                }
+
+
+                ViewData["IdRolPuesto"] = new SelectList(mostrarLista, "IdRolPuesto", "Nombre");
+
+            }
+            catch (Exception ex) { }
+        }
+
+
+        public async Task CargarEscalaGradosPorRolPuesto(int IdRolPuesto,int IdManualPuesto,int IdDependencia)
+        {
+            try
+            {
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdManualPuesto = IdManualPuesto,
+                    IdDependencia = IdDependencia,
+                    IdRolPuesto = IdRolPuesto
+
+                };
+                var listarrolespuestos = await apiServicio.Listar<IndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarEscalaGradosPorRolPuesto");
+
+                var mostrarLista = new List<EscalaGrados>();
+
+                foreach (var item in listarrolespuestos)
+                {
+                    if (item.IdRolPuesto == IdRolPuesto)
+                    {
+                        mostrarLista.Add(new EscalaGrados {
+                            IdEscalaGrados = item.EscalaGrados.IdEscalaGrados,
+                            Nombre = 
+                                item.EscalaGrados.Nombre +
+                                " (GRADO "+item.EscalaGrados.Grado+") QUE PERCIBE $"+
+                                item.EscalaGrados.Remuneracion
+                        });
+
+                        break;
+                    }
+                }
+
+
+                ViewData["IdEscala"] = new SelectList(mostrarLista, "IdEscalaGrados", "Nombre");
+
+            }
+            catch (Exception ex) { }
+        }
+
+
+        public async Task CargarFondoFinanciamento(int IdFondoFinanciamiento)
+        {
+            try
+            {
+                
+                var lista = await apiServicio.Listar<FondoFinanciamiento>(
+                    new Uri(WebApp.BaseAddressRM), "api/FondoFinanciamiento/ListarFondoFinanciamiento");
+                
+                ViewData["IdFondoFinanciamiento"] = new SelectList(lista, "IdFondoFinanciamiento", "Nombre");
+
+            }
+            catch (Exception ex) { }
+        }
         
-
-
 
     }
 }

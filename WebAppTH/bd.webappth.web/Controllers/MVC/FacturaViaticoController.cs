@@ -74,14 +74,13 @@ namespace bd.webappth.web.Controllers.MVC
                 };
             }
         }
-        public async Task<IActionResult> Create(int IdSolicitudViatico, int IdItinerarioViatico)
+        public async Task<IActionResult> Create(int IdSolicitudViatico)
         {
             ViewData["ItemViatico"] = new SelectList(await apiServicio.Listar<ItemViatico>(new Uri(WebApp.BaseAddress), "api/ItemViaticos/ListarItemViaticos"), "IdItemViatico", "Descripcion");
             var facturaViatico = new FacturaViatico
             {
                 IdSolicitudViatico = IdSolicitudViatico,
-                IdItinerarioViatico = IdItinerarioViatico
-
+               
             };
             InicializarMensaje(null);
             return View(facturaViatico);
@@ -112,6 +111,7 @@ namespace bd.webappth.web.Controllers.MVC
                         ValorTotalFactura = viewModelFacturaViatico.ValorTotalFactura,
                         Observaciones = viewModelFacturaViatico.Observaciones,
                         Url = viewModelFacturaViatico.Url,
+                        IdSolicitudViatico = viewModelFacturaViatico.IdSolicitudViatico,
                         Fichero = data,
                     };
                     var respuesta = await CreateFichero(documenttransfer);
@@ -180,7 +180,7 @@ namespace bd.webappth.web.Controllers.MVC
                         {
                             IdSolicitudViatico = facturaViatico.IdSolicitudViatico
                         };
-                        return RedirectToAction("Informe", "ItinerarioViatico", new { IdSolicitudViatico = facturaViatico.IdSolicitudViatico, IdItinerarioViatico = facturaViatico.IdItinerarioViatico });
+                        return RedirectToAction("Informe", "ItinerarioViatico", new { IdSolicitudViatico = facturaViatico.IdSolicitudViatico });
                     }
                     ViewData["Error"] = response.Message;
                     return View(facturaViatico);
@@ -205,9 +205,9 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
 
-                    return RedirectToAction("Informe", "ItinerarioViatico", new { IdSolicitudViatico = IdSolicitudViatico, IdItinerarioViatico = IdItinerarioViatico });
+                    return RedirectToAction("Informe", "ItinerarioViatico", new { IdSolicitudViatico = IdSolicitudViatico });
                 }
-                return RedirectToAction("Informe", "ItinerarioViatico", new { IdSolicitudViatico = IdSolicitudViatico, IdItinerarioViatico = IdItinerarioViatico, mensaje = response.Message });
+                return RedirectToAction("Informe", "ItinerarioViatico", new { IdSolicitudViatico = IdSolicitudViatico, mensaje = response.Message });
             }
             catch (Exception ex)
             {

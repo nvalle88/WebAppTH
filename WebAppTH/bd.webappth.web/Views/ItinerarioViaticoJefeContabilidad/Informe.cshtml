@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.ViewModels.InformeViaticoViewModel
+@model bd.webappth.entidades.ViewModels.ViewModelsSolicitudViaticos
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 @{
     ViewData["Title"] = "Index";
@@ -32,8 +32,8 @@
         }
     </div>
 
-    <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.SolicitudViatico.IdSolicitudViatico">
-        <button type="button" asp-action="Index" asp-route-IdSolicitudViatico="@Model.SolicitudViatico.IdSolicitudViatico" class="btn btn-labeled btn-default">
+    <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico">
+        <button type="button" asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-arrow-left"></i>
             </span>Atras
@@ -49,13 +49,13 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Fecha de solicitud:</label>
-                            <input asp-for="SolicitudViatico.FechaSolicitud" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="FechaSolicitud" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Fondo de Financiamiento:</label>
-                            <input asp-for="ListaEmpleadoViewModel.FondoFinanciamiento" disabled="disabled" class="form-control input " placeholder="FondoFinanciamiento" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="FondoFinanciamiento" disabled="disabled" class="form-control input " placeholder="FondoFinanciamiento" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
                 </div>
@@ -67,19 +67,19 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Nombres - Apellidos del Servidor:</label>
-                            <input asp-for="ListaEmpleadoViewModel.NombreApellido" disabled="disabled" class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="Servidor" disabled="disabled" class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Nombre de la unidad del servidor:</label>
-                            <input asp-for="ListaEmpleadoViewModel.Dependencia" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="Dependencia" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Puesto:</label>
-                            <input asp-for="ListaEmpleadoViewModel.RolPuesto" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="Puesto" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                     <div class="col-sm-4">
                         <label>Pa&iacute;s de comisi&oacute;n:</label>
                         <div class="form-group">
-                            <input value="@ViewData["Pais"]" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input value="@Model.Pais" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
 
@@ -95,7 +95,7 @@
                         <label>Provincia de comisi&oacute;n:</label>
                         <div class="form-group">
                             <div class="form-group">
-                                <input value="@ViewData["Provincia"]" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                <input value="@Model.Provincia" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                         <label>Ciudad de comisi&oacute;n:</label>
                         <div class="form-group">
                             <div class="form-group">
-                                <input value="@ViewData["Ciudad"]" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                <input value="@Model.Ciudad" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                             </div>
                         </div>
                     </div>
@@ -112,55 +112,109 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Fecha de salida:</label>
-                            <input asp-for="SolicitudViatico.FechaSalida" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="FechaSalida" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
 
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Hora de salida:</label>
-                            <input class="form-control" asp-for="SolicitudViatico.HoraSalida" disabled="disabled" id="timepicker1" type="text" placeholder="Seleccione la hora">
+                            <input class="form-control" asp-for="HoraSalida" disabled="disabled" id="timepicker1" type="text" placeholder="Seleccione la hora">
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Fecha de llegada:</label>
-                            <input asp-for="SolicitudViatico.FechaLlegada" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="FechaLlegada" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
 
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Hora de llegada:</label>
-                            <input class="form-control" asp-for="SolicitudViatico.HoraLlegada" disabled="disabled" id="timepicker2" type="text" placeholder="Seleccione la hora">
+                            <input class="form-control" asp-for="HoraLlegada" disabled="disabled" id="timepicker2" type="text" placeholder="Seleccione la hora">
                         </div>
                     </div>
                 </div>
-                @*<section>
-                        <label class="label"></label>
-                        <div class="form-group">
-                            <label>Informe de actividades y productos alcanzados:</label>
-                            <textarea maxlength="250" class="form-control" asp-for="Descripcion" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Descripcion)"></textarea>
-                            <span asp-validation-for="Descripcion" class="text-danger"></span>
-                        </div>
-                    </section>*@
+
             </article>
         </div>
-       
-       
+        @if (Model.Estado == 3)
+        {
+            <div class="row col-lg-12">
+                <form asp-action="Actividades" novalidate="novalidate">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="IdSolicitudViatico" />
+                    <div class="row">
+                        <section class="col col-lg-12">
+                            <label class="label"></label>
+                            <div class="form-group">
+                                <label>Descripci&oacute;n:</label>
+                                <textarea maxlength="250" class="form-control" asp-for="InformeActividadViatico.Descripcion" rows="3"></textarea>
+                                <span asp-validation-for="InformeActividadViatico.Descripcion" class="text-danger"></span>
+                            </div>
+                        </section>
+                        <section class="col col-lg-12">
+                            <label class="label"></label>
+                            <div class="form-group">
+                                <label>Observaci&oacute;n:</label>
+                                <textarea maxlength="250" class="form-control" asp-for="InformeActividadViatico.Observacion" rows="3"></textarea>
+                                <span asp-validation-for="InformeActividadViatico.Observacion" class="text-danger"></span>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row col col-lg-12">
+                        <section class="col col-lg-11">
+                            &nbsp;
+                        </section>
+
+                        <section class="col col-lg-1">
+                            <label class="label"></label>
+                            <div class="form-group">
+                                <input type="submit" value="Agregar" class="btn btn-primary" />
+                            </div>
+                        </section>
+                    </div>
+                </form>
+
+            </div>
+        }
+        @if (Model.Estado == 4)
+        {
             <div class="row">
                 <section class="col col-lg-12">
                     <label class="label"></label>
                     <div class="form-group">
-                        <label>Informe de actividades y productos alcanzados:</label>
-                        <textarea maxlength="250" class="form-control" asp-for="Descripcion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Descripcion)"></textarea>
-                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                        <label>Descripci&oacute;n:</label>
+                        <textarea maxlength="250" class="form-control" asp-for="InformeActividadViatico.Descripcion" disabled="disabled" rows="3"></textarea>
+                        <span asp-validation-for="InformeActividadViatico.Descripcion" class="text-danger"></span>
+                    </div>
+                </section>
+                <section class="col col-lg-12">
+                    <label class="label"></label>
+                    <div class="form-group">
+                        <label>Observaci&oacute;n:</label>
+                        <textarea maxlength="250" class="form-control" asp-for="InformeActividadViatico.Observacion" disabled="disabled" rows="3"></textarea>
+                        <span asp-validation-for="InformeActividadViatico.Observacion" class="text-danger"></span>
                     </div>
                 </section>
             </div>
-       
+        }
 
-        
+        <div class="row">
+            @if (Model.Estado == 3)
+            {
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <a asp-action="CreateInforme">
+                        <button type="button" asp-action="CreateInforme" class="btn btn-labeled btn-default">
+                            <span class="btn-label">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </span>Nuevo
+                        </button>
+                    </a>
+                </article>
+            }
+        </div>
 
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -198,34 +252,34 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.InformeViatico.FirstOrDefault().TipoTransporte.Descripcion)
+                                            @Html.DisplayNameFor(model => model.ListaInformeViatico.FirstOrDefault().TipoTransporte.Descripcion)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.InformeViatico.FirstOrDefault().NombreTransporte)
+                                            @Html.DisplayNameFor(model => model.ListaInformeViatico.FirstOrDefault().NombreTransporte)
                                         </th>
                                         <th>
                                             Ruta
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.InformeViatico.FirstOrDefault().FechaSalida)
+                                            @Html.DisplayNameFor(model => model.ListaInformeViatico.FirstOrDefault().FechaSalida)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.InformeViatico.FirstOrDefault().HoraSalida)
+                                            @Html.DisplayNameFor(model => model.ListaInformeViatico.FirstOrDefault().HoraSalida)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.InformeViatico.FirstOrDefault().FechaLlegada)
+                                            @Html.DisplayNameFor(model => model.ListaInformeViatico.FirstOrDefault().FechaLlegada)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.InformeViatico.FirstOrDefault().HoraLlegada)
+                                            @Html.DisplayNameFor(model => model.ListaInformeViatico.FirstOrDefault().HoraLlegada)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.InformeViatico.FirstOrDefault().ValorEstimado)
+                                            @Html.DisplayNameFor(model => model.ListaInformeViatico.FirstOrDefault().ValorEstimado)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.InformeViatico)
+                                    @foreach (var item in Model.ListaInformeViatico)
                                     {
                                         <tr>
 
@@ -255,137 +309,172 @@
                                             </td>
 
                                             <td>
-                                                @if (Model.SolicitudViatico.Estado == 2)
+                                                @if (Model.Estado == 3)
                                                 {
                                                     <text>
-                                                        @Html.ActionLink("Editar", "EditInforme", new { id = item.IdInformeViatico }) |
-                                                        @Html.ActionLink("Eliminar", "DeleteInforme", new { id = item.IdInformeViatico }, new { onclick = "return confirm('Desea eliminar el itinerario del viático... ?');" })
+                                                        @Html.ActionLink("Editar", "EditInforme", new { id = item.IdInformeViatico, IdSolicitudViatico = Model.IdSolicitudViatico }) |
+                                                        @Html.ActionLink("Eliminar", "DeleteInforme", new { id = item.IdInformeViatico, IdSolicitudViatico = Model.IdSolicitudViatico }, new { onclick = "return confirm('Desea eliminar el itinerario del viático... ?');" })
                                                     </text>
                                                 }
                                             </td>
                                         </tr>
                                     }
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
 
-                                    <!-- end widget content -->
-                                </div>
-                                <!-- end widget div -->
-                            </div>
-
-                        </article>
-                        <!-- WIDGET END -->
+                        <!-- end widget content -->
                     </div>
+                    <!-- end widget div -->
+                </div>
 
-                    <div class="row">
-                        <!-- NEW WIDGET START -->
-                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <!-- Widget ID (each widget will need unique ID)-->
-                            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                                <!-- widget options:
-                                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+            </article>
+            <!-- WIDGET END -->
+        </div>
 
-                                data-widget-colorbutton="false"
-                                data-widget-editbutton="false"
-                                data-widget-togglebutton="false"
-                                data-widget-deletebutton="false"
-                                data-widget-fullscreenbutton="false"
-                                data-widget-custombutton="false"
-                                data-widget-collapsed="true"
-                                data-widget-sortable="false"
-
-                                -->
-                                <header id="table">
-                                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                                    <h2>Facturas</h2>
-                                </header>
-                                <!-- widget div-->
-                                <div>
-                                    <!-- widget edit box -->
-                                    <div class="jarviswidget-editbox">
-                                        <!-- This area used as dropdown edit box -->
-                                    </div>
-                                    <!-- end widget edit box -->
-                                    <!-- widget content -->
-                                    <div class="widget-body no-padding">
-                                        <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                            <thead>
-
-                                                <tr>
-                                                    <th data-class="expand">
-                                                        @Html.DisplayNameFor(model => model.FacturaViatico.FirstOrDefault().NumeroFactura)
-                                                    </th>
-
-                                                    <th data-class="expand">
-                                                        @Html.DisplayNameFor(model => model.FacturaViatico.FirstOrDefault().FechaFactura)
-                                                    </th>
-
-                                                    <th data-class="expand">
-                                                        @Html.DisplayNameFor(model => model.FacturaViatico.FirstOrDefault().ValorTotalFactura)
-                                                    </th>
-
-                                                    <th>Opciones</th>
-                                                </tr>
-
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in Model.FacturaViatico)
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.NumeroFactura)
-                                                        </td>
-
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.FechaFactura)
-                                                        </td>
-
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.ValorTotalFactura)
-                                                        </td>
-
-                                                        <td>
-                                                            @if (Model.SolicitudViatico.Estado == 2)
-                                                            {
-                                                                <text>
-                                                                    @Html.ActionLink("Editar", "Edit", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico }, new { onclick = "espera()" }) |
-                                                                    @Html.ActionLink("Eliminar", "Delete", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico, IdItinerarioViatico = Model.IdItinerarioViatico }, new { onclick = "return confirm('Desea eliminar el registro ?');" }) |
-                                                                </text>
-                                                            }
-                                                            @if (item.Url != null)
-                                                            {
-                                                                @Html.ActionLink("Descargar", "Download", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico, IdItinerarioViatico = Model.IdItinerarioViatico })
-
-                                                            }
-
-
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- end widget content -->
-                                </div>
-                                <!-- end widget div -->
-                            </div>
-
-                        </article>
-                        <!-- WIDGET END -->
-                    </div>
-
-                    
-                    <!-- end row -->
-                    <!-- end row -->
-                </section>
-                <!-- end widget grid -->
-            </div>
-            <!-- END MAIN CONTENT -->
-
-            @section Scripts {
-                <script src='~/js/datatables/init.js'></script>
+        <div class="row">
+            @if (Model.Estado == 3)
+            {
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <a asp-action="Create" asp-controller="FacturaViatico" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico">
+                        <button type="button" asp-action="Create" asp-controller="FacturaViatico" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-labeled btn-default">
+                            <span class="btn-label">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </span>Nuevo
+                        </button>
+                    </a>
+                </article>
             }
+        </div>
+        <br />
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Facturas</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+
+                                    <tr>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.ListaFacturaViatico.FirstOrDefault().NumeroFactura)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.ListaFacturaViatico.FirstOrDefault().FechaFactura)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.ListaFacturaViatico.FirstOrDefault().ValorTotalFactura)
+                                        </th>
+
+                                        <th>Opciones</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ListaFacturaViatico)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NumeroFactura)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FechaFactura)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ValorTotalFactura)
+                                            </td>
+
+                                            <td>
+                                                @if (Model.Estado == 3)
+                                                {
+                                                    <text>
+                                                        @Html.ActionLink("Editar", "Edit", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.IdSolicitudViatico }, new { onclick = "espera()" }) |
+                                                        @Html.ActionLink("Eliminar", "Delete", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.IdSolicitudViatico }, new { onclick = "return confirm('Desea eliminar el registro ?');" }) |
+                                                    </text>
+                                                }
+                                                @if (item.Url != null)
+                                                {
+                                                    @Html.ActionLink("Descargar", "Download", "FacturaViatico", new { id = item.IdFacturaViatico, IdSolicitudViatico = Model.IdSolicitudViatico })
+
+                                                }
+
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+
+            </article>
+            <!-- WIDGET END -->
+        </div>
+
+        <div class="row">
+            @if (Model.Estado == 3)
+            {
+                <form id="wizard-1" asp-action="FinalizarInforme" novalidate="novalidate">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="IdSolicitudViatico" />
+                    <div class="row col col-lg-12">
+                        <section class="col col-lg-11">
+                            &nbsp;
+                        </section>
+
+                        <section class="col col-lg-1">
+                            <label class="label"></label>
+                            <div class="form-group">
+                                <input type="submit" value="Finalizar" class="btn btn-primary" />
+                            </div>
+                        </section>
+                    </div>
+                </form>
+            }
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+}
 
 
 

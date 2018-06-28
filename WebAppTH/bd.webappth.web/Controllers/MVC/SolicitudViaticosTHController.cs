@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -81,32 +82,65 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> AprobacionSolicitudViatico(int id, int idEmpleado)
         {
-            
+            var sol = new ViewModelsSolicitudViaticos
+            {
+                IdSolicitudViatico = id
+            };
             try
             {
-                var sol = new SolicitudViatico()
+                await CargarCombos();
+                if (id.ToString() != null)
                 {
-                    IdSolicitudViatico = id,
-                    Estado = 3
+                    var respuestaSolicitudViatico = await apiServicio.ObtenerElementoAsync1<ViewModelsSolicitudViaticos>(sol, new Uri(WebApp.BaseAddress),
+                                                                 "api/SolicitudViaticos/ObtenerSolicitudesViaticosporId");
 
-                };
-                
-                var respuestaEmpleado = await apiServicio.EditarAsync<Response>(sol, new Uri(WebApp.BaseAddress),
-                                                             "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
-                if (respuestaEmpleado.IsSuccess)
-                {
-                    return RedirectToAction("DetalleSolicitudViaticos",new { id =idEmpleado});
+
+                    return View(respuestaSolicitudViatico);
+
                 }
-
                 return BadRequest();
+
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AprobacionSolicitudViatico(ViewModelsSolicitudViaticos viewModelsSolicitudViaticos)
+        {
+
+            try
+            {
+                var VerificarPresupuesto = await apiServicio.ObtenerElementoAsync1<Response>(viewModelsSolicitudViaticos, new Uri(WebApp.BaseAddress),
+                                                                 "api/Presupuesto/ObtenerPresupuesto");
+
+                if (VerificarPresupuesto.IsSuccess)
+                {
+
+                    var sol = new SolicitudViatico()
+                    {
+                        IdSolicitudViatico = viewModelsSolicitudViaticos.IdSolicitudViatico,
+                        Estado = 3
+
+                    };
+
+                    var respuestaEmpleado = await apiServicio.EditarAsync<Response>(sol, new Uri(WebApp.BaseAddress),
+                                                                 "api/SolicitudViaticos/ActualizarEstadoSolicitudViatico");
+                    if (respuestaEmpleado.IsSuccess)
+                    {
+                        return RedirectToAction("DetalleSolicitudViaticos", new { id = viewModelsSolicitudViaticos.IdEmpleado });
+                    }
+                }
+                return this.RedireccionarMensajeTime("SolicitudViaticosTH", "AprobacionSolicitudViatico", new { id = viewModelsSolicitudViaticos.IdSolicitudViatico }, $"{Mensaje.Error}|{VerificarPresupuesto.Message}|{"25000"}");
+
             }
             catch (Exception ex)
             {
                 return BadRequest();
             }
         }
-
-
         public async Task<IActionResult> Reliquidacion(int id ,int IdEmpleado)
         {
 
@@ -187,22 +221,22 @@ namespace bd.webappth.web.Controllers.MVC
                         };
 
 
-                        var respuestaPais = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdPais.ToString(), new Uri(WebApp.BaseAddress),
-                                                                 "api/Pais");
-                        var pais = JsonConvert.DeserializeObject<Pais>(respuestaPais.Resultado.ToString());
-                        var respuestaProvincia = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdProvincia.ToString(), new Uri(WebApp.BaseAddress),
-                                                                 "api/Provincia");
-                        var provincia = JsonConvert.DeserializeObject<Provincia>(respuestaProvincia.Resultado.ToString());
-                        var respuestaCiudad = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdCiudad.ToString(), new Uri(WebApp.BaseAddress),
-                                                                 "api/Ciudad");
-                        var ciudad = JsonConvert.DeserializeObject<Ciudad>(respuestaCiudad.Resultado.ToString());
+                        //var respuestaPais = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdPais.ToString(), new Uri(WebApp.BaseAddress),
+                        //                                         "api/Pais");
+                        //var pais = JsonConvert.DeserializeObject<Pais>(respuestaPais.Resultado.ToString());
+                        //var respuestaProvincia = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdProvincia.ToString(), new Uri(WebApp.BaseAddress),
+                        //                                         "api/Provincia");
+                        //var provincia = JsonConvert.DeserializeObject<Provincia>(respuestaProvincia.Resultado.ToString());
+                        //var respuestaCiudad = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdCiudad.ToString(), new Uri(WebApp.BaseAddress),
+                        //                                         "api/Ciudad");
+                        //var ciudad = JsonConvert.DeserializeObject<Ciudad>(respuestaCiudad.Resultado.ToString());
 
 
 
-                        //ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
-                        ViewData["Pais"] = pais.Nombre;
-                        ViewData["Provincia"] = provincia.Nombre;
-                        ViewData["Ciudad"] = ciudad.Nombre;
+                        ////ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
+                        //ViewData["Pais"] = pais.Nombre;
+                        //ViewData["Provincia"] = provincia.Nombre;
+                        //ViewData["Ciudad"] = ciudad.Nombre;
 
                         return View(solicitudViaticoViewModel);
                     }

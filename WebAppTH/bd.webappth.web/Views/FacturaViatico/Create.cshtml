@@ -57,13 +57,12 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form id="wizard-1" asp-action="Create" novalidate="novalidate" enctype="multipart/form-data">
+                            <form id="wizard-1" asp-action="Create" novalidate="novalidate" enctype="multipart/form-data" class="smart-form">
                                 <input type="hidden" asp-for="IdSolicitudViatico" />
-                                <input type="hidden" asp-for="IdItinerarioViatico" />
                                 @{await Html.RenderPartialAsync("_PartialViewIFacturaViatico", Model);}
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Informe" asp-controller="ItinerarioViatico" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico"  class="btn btn-default">Cancelar</a>
+                                    <a asp-action="Informe" asp-controller="ItinerarioViatico" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico"  class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                         </div>
