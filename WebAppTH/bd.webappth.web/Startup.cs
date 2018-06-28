@@ -96,6 +96,8 @@ namespace bd.webappth.web
             //});
 
 
+
+
             ///Filtro para la seguridad GENERAL
             //services.AddMvc(options =>
             //{
