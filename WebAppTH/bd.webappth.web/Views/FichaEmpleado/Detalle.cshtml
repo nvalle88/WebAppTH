@@ -127,18 +127,17 @@
                                             </label>
                                         </section>
 
-                                        <section class="col col-3">
-                                            <label>Ocupaci&oacute;n </label>
-                                            <input asp-for="Ocupacion" class="form-control input " type="text" />
-                                            <span asp-validation-for="Ocupacion" class="text-danger"></span>
-                                        </section>
-
                                         <section class="col col-6">
                                             <label>Lugar de Trabajo </label>
                                             <input asp-for="LugarTrabajo" class="form-control input " placeholder="Lugar de Trabajo" type="text" />
                                             <span asp-validation-for="LugarTrabajo" class="text-danger"></span>
                                         </section>
 
+                                        <section class="col col-3" hidden>
+                                            <label>Ocupaci&oacute;n </label>
+                                            <input asp-for="Ocupacion" class="form-control input " type="text" />
+                                            <span asp-validation-for="Ocupacion" class="text-danger"></span>
+                                        </section>
                                     </div>
                                     <div class="row">
                                         <article class="col col-6">
@@ -438,6 +437,8 @@
                     dataType: 'json',
                     data: { etnia: $("#IdEtnia").val() },
                     success: function (data) {
+                        $("#IdNacionalidadIndigena").append('<option value="0" selected="selected" disabled="">Seleccione</option>');
+
                         $.each(data, function (i, data) {
                             $("#IdNacionalidadIndigena").append('<option value="'
                                 + data.idNacionalidadIndigena + '">'

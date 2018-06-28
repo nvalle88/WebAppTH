@@ -126,17 +126,19 @@ namespace bd.webappth.web.Controllers.MVC
                 //if (!respuesta.IsSuccess)
                 //{
                 listaDocumentos = await apiServicio.Listar<DocumentosIngreso>(new Uri(WebApp.BaseAddress)
-                                                                                  , "api/DocumentosIngreso/ListarDocumentosIngreso");
-                listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleadoConsulta, new Uri(WebApp.BaseAddress)
-                                                                                  , "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
+                                     , "api/DocumentosIngreso/ListarDocumentosIngreso");
+
+                listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleadoConsulta, new Uri(WebApp.BaseAddress), "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
 
                 documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado
                 {
                     empleadoViewModel = emp,
-                    listadocumentosingreso = listaDocumentos,
-                    listadocumentosingresoentregado = listaDocumentosEntregados
+                    listadocumentosingreso = listaDocumentos.OrderBy(o=>o.IdDocumentosIngreso).ToList(),
+                    listadocumentosingresoentregado = listaDocumentosEntregados.OrderBy(o => o.IdDocumentosIngreso).ToList()
 
                 };
+
+
 
                 return View(documentoingresoViewModel);
                 //}
