@@ -535,13 +535,14 @@
                 return false;
                 })
 
-
-                         @*$("#escalagrados").change(function () {
+            @*
+            $("#escalagrados").change(function () {
+               
             mostrarLoadingPanel("content","Cargando...")
             $("#modalidadpartida").empty();
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("ListarModalidadesPartidaPorEscalaGrados")',
+                    url: '@Url.Action("ObtenerIndice")',
                     dataType: 'json',
                     data: {
                         idmanualpuesto: $("#manualpuesto").val(),
@@ -550,13 +551,16 @@
                         idescalagrados: $("#escalagrados").val(),
                         },
                     success: function (data) {
-                        $("#modalidadpartida").append('<option value="0" selected="" disabled="">Seleccione</option>');
-                        $.each(data, function (i, data) {
-                            $("#modalidadpartida").append('<option value="'
-                                + data.modalidadPartida.idModalidadPartida + '">'
-                                + data.modalidadPartida.nombre + '</option>');
 
-                        });
+                        //$("#modalidadpartida").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        //$.each(data, function (i, data) {
+                        //    $("#modalidadpartida").append('<option value="'
+                        //        + data.modalidadPartida.idModalidadPartida + '">'
+                        //        + data.modalidadPartida.nombre + '</option>');
+
+                        //});
+                        
+
                     }, complete: function (data) {
                         $("#content").waitMe("hide");
                     },
@@ -566,7 +570,9 @@
                     }
                 });
                 return false;
-                })*@
+                
+                })
+        *@
 
         $("#IdRegimenLaboral").change(function () {
             mostrarLoadingPanel("content","Cargando...")
