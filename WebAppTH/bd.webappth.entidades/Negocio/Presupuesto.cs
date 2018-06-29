@@ -17,6 +17,7 @@ namespace bd.webappth.entidades.Negocio
         public DateTime? Fecha { get; set; }
         public int? IdSucursal { get; set; }
         public virtual ICollection<DetallePresupuesto> DetallePresupuesto { get; set; }
+        public virtual ICollection<ReliquidacionViatico> ReliquidacionViatico { get; set; }
         public virtual Sucursal Sucursal { get; set; }
     }
 }

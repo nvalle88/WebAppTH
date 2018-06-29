@@ -207,34 +207,34 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ListaReliquidacionViatico.FirstOrDefault().TipoTransporte.Descripcion)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().TipoTransporte.Descripcion)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ListaReliquidacionViatico.FirstOrDefault().NombreTransporte)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().NombreTransporte)
                                         </th>
                                         <th>
                                             Ruta
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ListaReliquidacionViatico.FirstOrDefault().FechaSalida)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().FechaSalida)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ListaReliquidacionViatico.FirstOrDefault().HoraSalida)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().HoraSalida)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ListaReliquidacionViatico.FirstOrDefault().FechaLlegada)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().FechaLlegada)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ListaReliquidacionViatico.FirstOrDefault().HoraLlegada)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().HoraLlegada)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ListaReliquidacionViatico.FirstOrDefault().ValorEstimado)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().ValorEstimado)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.ListaReliquidacionViatico)
+                                    @foreach (var item in Model.ListaDetalleReliquidacionViatico)
                                     {
                                         <tr>
 
@@ -298,40 +298,32 @@
         <div class="row">
             @if (Model.Estado == 4)
             {
-            <form id="wizard-1" asp-action="FinalizarReliquidacion" novalidate="novalidate">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="IdSolicitudViatico" />               
-                <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorRequlidacion" value="@Model.ListaReliquidacionViatico" />
-                <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorTotalRequlidacion" value="@Model.ListaReliquidacionViatico" />
-                <div class="row col col-lg-12">
-                    <section class="col col-lg-6">
-                        <div class="form-group">
-                            <label>Partida Presupuestaria:</label>
-                            <select asp-for="ListaReliquidacionViatico.FirstOrDefault().IdPresupuesto" class="form-control input" asp-items="ViewBag.IdPresupuesto" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                <option value="0" selected="" disabled="">Seleccione</option>
-                            </select>
-                        </div>
-                    </section>
-                    <section class="col col-lg-6">
-                        <div class="form-group">
-                            <label>Valor reliquidacion:</label>
-                            <input asp-for="Valor" disabled="disabled" type="text" class="form-control">
-                        </div>
-                    </section>
-                </div>
-                <div class="row col col-lg-12">
-                    <section class="col col-lg-11">
-                        &nbsp;
-                    </section>
-
-                    <section class="col col-lg-1">
-                        <label class="label"></label>
-                        <div class="form-group">
-                            <input type="submit" value="Finalizar" class="btn btn-primary" />
-                        </div>
-                    </section>
-                </div>
-            </form>
+                <form id="wizard-1" asp-action="FinalizarReliquidacionEnContra" novalidate="novalidate" class="smart-form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().IdSolicitudViatico" value="@Model.IdSolicitudViatico" />
+                    <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorEstimado" value="@Model.Valor" />
+                    <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().Estado" value="true" />
+                    <div class="row col col-lg-12">
+                        <section class="col col-lg-6">
+                            <div class="form-group">
+                                <label>Partida Presupuestaria:</label>
+                                <select asp-for="ListaReliquidacionViatico.FirstOrDefault().IdPresupuesto" class="form-control input" asp-items="ViewBag.IdPresupuesto" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                    <option value="0" selected="" disabled="">Seleccione</option>
+                                </select>
+                            </div>
+                        </section>
+                        <section class="col col-lg-6">
+                            <div class="form-group">
+                                <label>Valor reliquidacion:</label>
+                                <input asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorEstimado" value="@Model.Valor" disabled="disabled" type="text" class="form-control">
+                            </div>
+                        </section>
+                    </div>
+                    <footer>
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                        <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-default">Cancelar</a>
+                    </footer>
+                </form>
             }
         </div>
         <!-- end row -->
