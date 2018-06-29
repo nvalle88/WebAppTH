@@ -1668,19 +1668,13 @@ namespace bd.webappth.web.Controllers.MVC
                 };
                 var listarrolespuestos = await apiServicio.Listar<IndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarEscalaGradosPorRolPuesto");
 
-                var mostrarLista = new List<EscalaGrados>();
+                var mostrarLista = new List<IndiceOcupacional>();
 
                 foreach (var item in listarrolespuestos)
                 {
                     if (item.IdRolPuesto == IdRolPuesto)
                     {
-                        mostrarLista.Add(new EscalaGrados {
-                            IdEscalaGrados = item.EscalaGrados.IdEscalaGrados,
-                            Nombre = 
-                                item.EscalaGrados.Nombre +
-                                " (GRADO "+item.EscalaGrados.Grado+") QUE PERCIBE $"+
-                                item.EscalaGrados.Remuneracion
-                        });
+                        mostrarLista.Add(item);
 
                         break;
                     }
