@@ -61,5 +61,6 @@ namespace bd.webappth.entidades.ViewModels
         public List<InformeViatico> ListaInformeViatico { get; set; }
         public InformeActividadViatico InformeActividadViatico { get; set; }
         public List<FacturaViatico> ListaFacturaViatico { get; set; }
+        public List<ReliquidacionViatico> ListaReliquidacionViatico { get; set; }
     }
 }

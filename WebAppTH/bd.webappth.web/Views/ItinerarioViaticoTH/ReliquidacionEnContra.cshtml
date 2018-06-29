@@ -1,0 +1,186 @@
+@model bd.webappth.entidades.ViewModels.ViewModelsSolicitudViaticos
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+@{
+    ViewData["Title"] = "Index";
+}
+<!-- MAIN CONTENT -->
+<div id="content">
+    <div class="col col-10">
+
+        @if (@ViewData["Error"].ToString() != "")
+
+        {
+
+        <div class="col-lg-12">
+
+            <div class="alert alert-block alert-dismissable">
+
+                <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+
+                <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+
+                <p>
+
+                    <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+
+                </p>
+
+            </div>
+
+        </div>
+
+        }
+    </div>
+
+    <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico">
+        <button type="button" asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-arrow-left"></i>
+            </span>Regresar
+        </button>
+    </a>
+    <!-- widget grid -->
+    <section id="" class="">
+        <!-- row -->
+        <div class="row">
+            <article class="col-lg-12">
+                <legend>Reliquidaci&oacute;n Vi&aacute;tico en contra</legend>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Fecha de solicitud:</label>
+                            <input asp-for="FechaSolicitud" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Fondo de Financiamiento:</label>
+                            <input asp-for="FondoFinanciamiento" disabled="disabled" class="form-control input " placeholder="FondoFinanciamiento" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article class="col-lg-12">
+                <legend>Datos Generales</legend>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Nombres - Apellidos del Servidor:</label>
+                            <input asp-for="Servidor" disabled="disabled" class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Nombre de la unidad del servidor:</label>
+                            <input asp-for="Dependencia" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Puesto:</label>
+                            <input asp-for="Puesto" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Pa&iacute;s de comisi&oacute;n:</label>
+                        <div class="form-group">
+                            <input value="@Model.Pais" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label>Provincia de comisi&oacute;n:</label>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input value="@Model.Provincia" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Ciudad de comisi&oacute;n:</label>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input value="@Model.Ciudad" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Fecha de salida:</label>
+                            <input asp-for="FechaSalida" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Hora de salida:</label>
+                            <input class="form-control" asp-for="HoraSalida" disabled="disabled" id="timepicker1" type="text" placeholder="Seleccione la hora">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Fecha de llegada:</label>
+                            <input asp-for="FechaLlegada" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Hora de llegada:</label>
+                            <input class="form-control" asp-for="HoraLlegada" disabled="disabled" id="timepicker2" type="text" placeholder="Seleccione la hora">
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div class="row">
+            <section class="col col-lg-12">
+                <label class="label"></label>
+                <div class="form-group">
+                    <label>Informe de actividades y productos alcanzados:</label>
+                    <textarea maxlength="250" class="form-control" asp-for="Descripcion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            @if (Model.Estado == 4)
+            {
+            <form id="wizard-1" asp-action="FinalizarReliquidacion" novalidate="novalidate">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="IdSolicitudViatico" />
+                <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorRequlidacion" value="@Model.ListaReliquidacionViatico" />
+                <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorTotalRequlidacion" value="@Model.ListaReliquidacionViatico" />
+                <div class="row col col-lg-12">
+                    <section class="col col-lg-6">
+                        <label>Valor reliquidacion:</label>
+                        <input asp-for="Valor" disabled="disabled" type="text" class="form-control">
+                    </section>
+                    <section class="col col-lg-5">
+                        &nbsp;
+                    </section>
+
+                    <section class="col col-lg-1">
+                        <label class="label"> &nbsp;</label>
+                        <input type="submit" value="Notificar" class="btn btn-primary" />
+
+                    </section>
+                </div>
+            </form>
+            }
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+}
