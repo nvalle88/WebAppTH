@@ -32,7 +32,6 @@
                         <div class="widget-body no-padding">
 
                             <form asp-action="CreateReliquidacion" id="checkout-form" class="smart-form" novalidate="novalidate">
-                                <input type="hidden" asp-for="IdItinerarioViatico" />
                                 <input type="hidden" asp-for="IdSolicitudViatico" />
                                 <input type="hidden" asp-for="ValorRequlidacion" />
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -40,7 +39,7 @@
 
                                 <footer>
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
-                                    <a asp-action="Reliquidacion" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" asp-route-IdItinerarioViatico="@Model.IdItinerarioViatico" class="btn btn-default">Cancelar</a>
+                                    <a asp-action="Reliquidacion" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico"  class="btn btn-default">Cancelar</a>
                                 </footer>
                             </form>
                             <!-- end widget content -->
