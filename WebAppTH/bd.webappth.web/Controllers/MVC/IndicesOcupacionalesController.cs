@@ -13,6 +13,7 @@ using bd.log.guardar.Enumeradores;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using bd.webappth.entidades.ViewModels;
 using bd.webappth.entidades.Constantes;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -548,15 +549,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP Seguridad"
-                });
 
                 return BadRequest();
             }
@@ -783,56 +775,44 @@ namespace bd.webappth.web.Controllers.MVC
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IndiceOcupacional indiceOcupacional)
+        public async Task<IActionResult> Create(IndiceOcupacionalModalidadPartida indiceOcupacionalModalidadPartida)
         {
             Response response = new Response();
             try
             {
-                if (ModelState.IsValid)
+                if (indiceOcupacionalModalidadPartida.IndiceOcupacional.Nivel == "0")
                 {
-                    if (indiceOcupacional.Nivel == "0")
-                    {
-                        indiceOcupacional.Nivel = Constantes.NivelProfesional;
-                    }
-                    else { indiceOcupacional.Nivel = Constantes.NivelNoProfesional; }
-                    response = await apiServicio.InsertarAsync(indiceOcupacional,
-                                                                 new Uri(WebApp.BaseAddress),
-                                                                 "api/IndicesOcupacionales/InsertarIndiceOcupacional");
-                    if (response.IsSuccess)
-                    {
-
-                        var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            ExceptionTrace = null,
-                            Message = "Se ha creado un indice ocupacional",
-                            UserName = "Usuario 1",
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            EntityID = string.Format("{0} {1}", "Indice Ocupacional:", indiceOcupacional.IdIndiceOcupacional),
-                        });
-
-                        return RedirectToAction("Index");
-                    }
+                    indiceOcupacionalModalidadPartida.IndiceOcupacional.Nivel = Constantes.NivelProfesional;
                 }
-                await CargarListaCombox();
-                InicializarMensaje(response.Message);
-                var indiceDetalle = new IndiceOcupacionalDetalle { IndiceOcupacional = indiceOcupacional };
-                return View(indiceDetalle);
+                else { indiceOcupacionalModalidadPartida.IndiceOcupacional.Nivel = Constantes.NivelNoProfesional; }
+                
 
+                response = await apiServicio.InsertarAsync(
+                        indiceOcupacionalModalidadPartida.IndiceOcupacional,
+                        new Uri(WebApp.BaseAddress),
+                        "api/IndicesOcupacionales/InsertarIndiceOcupacional"
+                );
+
+                if (response.IsSuccess)
+                {
+
+                    return RedirectToAction("Index");
+                }
+
+
+                await CargarListaCombox();
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+
+                var indiceDetalle = new IndiceOcupacionalDetalle
+                {
+                    IndiceOcupacionalModalidadPartida = indiceOcupacionalModalidadPartida
+                };
+                
+                return View(indiceDetalle);
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP Seguridad"
-                });
-
                 return BadRequest();
             }
         }
@@ -847,13 +827,17 @@ namespace bd.webappth.web.Controllers.MVC
             return View("Create",Singleton.Instance);
         }
 
+
         public async Task<IActionResult> Index()
         {
             var lista = new List<IndiceOcupacionalViewModel>();
             try
             {
-                lista = await apiServicio.Listar<IndiceOcupacionalViewModel>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/IndicesOcupacionales/ListarIndicesOcupaciones");
+                lista = await apiServicio.Listar<IndiceOcupacionalViewModel>(
+                    new Uri(WebApp.BaseAddress)
+                    , "api/IndicesOcupacionales/ListarIndicesOcupacionesViewModel"
+                );
+
                 return View(lista);
             }
             catch (Exception ex)
@@ -978,7 +962,8 @@ namespace bd.webappth.web.Controllers.MVC
 
             var IndiOcupacionalDetalle = new IndiceOcupacionalDetalle
             {
-                IndiceOcupacional=indiceOcupacional,
+                IndiceOcupacionalModalidadPartida = new IndiceOcupacionalModalidadPartida
+                { IndiceOcupacional = indiceOcupacional },
             };
 
             var indiceOcupacionalDetalle = await apiServicio.ObtenerElementoAsync1<IndiceOcupacionalDetalle>(IndiOcupacionalDetalle, new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/DetalleIndiceOcupacional");
@@ -986,6 +971,30 @@ namespace bd.webappth.web.Controllers.MVC
             return View(indiceOcupacionalDetalle);
         }
 
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            
+            var respuesta = await apiServicio.EliminarAsync(
+                id.ToString(),
+                new Uri(WebApp.BaseAddress), 
+                "api/IndicesOcupacionales/"
+            );
+
+            if (respuesta.IsSuccess == true) {
+                return this.Redireccionar(
+                            "IndicesOcupacionales",
+                            "Index",
+                            $"{Mensaje.Success}|{respuesta.Message}"
+                         );
+            }
+
+            return this.Redireccionar(
+                            "IndicesOcupacionales",
+                            "Index",
+                            $"{Mensaje.Aviso}|{respuesta.Message}"
+                         );
+        }
 
     }
 }

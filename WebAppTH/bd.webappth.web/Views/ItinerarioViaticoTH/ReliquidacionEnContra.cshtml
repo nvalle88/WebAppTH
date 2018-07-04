@@ -151,26 +151,31 @@
         <div class="row">
             @if (Model.Estado == 4)
             {
-            <form id="wizard-1" asp-action="FinalizarReliquidacion" novalidate="novalidate">
+            <form id="wizard-1" asp-action="FinalizarReliquidacionEnContra" novalidate="novalidate" class="smart-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="IdSolicitudViatico" />
-                <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorRequlidacion" value="@Model.ListaReliquidacionViatico" />
-                <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorTotalRequlidacion" value="@Model.ListaReliquidacionViatico" />
+                <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().IdSolicitudViatico" value="@Model.IdSolicitudViatico" />
+                <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorEstimado" value="@Model.Valor" />
+                <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().Estado" value="false" />
                 <div class="row col col-lg-12">
                     <section class="col col-lg-6">
-                        <label>Valor reliquidacion:</label>
-                        <input asp-for="Valor" disabled="disabled" type="text" class="form-control">
+                        <div class="form-group">
+                            <label>Partida Presupuestaria:</label>
+                            <select asp-for="ListaReliquidacionViatico.FirstOrDefault().IdPresupuesto" class="form-control input" asp-items="ViewBag.IdPresupuesto" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                <option value="0" selected="" disabled="">Seleccione</option>
+                            </select>
+                        </div>
                     </section>
-                    <section class="col col-lg-5">
-                        &nbsp;
-                    </section>
-
-                    <section class="col col-lg-1">
-                        <label class="label"> &nbsp;</label>
-                        <input type="submit" value="Notificar" class="btn btn-primary" />
-
+                    <section class="col col-lg-6">
+                        <div class="form-group">
+                            <label>Valor reliquidacion:</label>
+                            <input asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorEstimado" value="@Model.Valor" disabled="disabled" type="text" class="form-control">
+                        </div>
                     </section>
                 </div>
+                <footer>
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                    <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-default">Cancelar</a>
+                </footer>
             </form>
             }
         </div>

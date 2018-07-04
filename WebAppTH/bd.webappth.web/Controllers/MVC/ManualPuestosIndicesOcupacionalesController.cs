@@ -188,7 +188,8 @@ namespace bd.webappth.web.Controllers.MVC
 
             var IndiOcupacionalDetalle = new IndiceOcupacionalDetalle
             {
-                IndiceOcupacional=indiceOcupacional,
+                IndiceOcupacionalModalidadPartida = new IndiceOcupacionalModalidadPartida
+                { IndiceOcupacional = indiceOcupacional},
             };
 
             var indiceOcupacionalDetalle = await apiServicio.ObtenerElementoAsync1<IndiceOcupacionalDetalle>(IndiOcupacionalDetalle, new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/DetalleIndiceOcupacional");
