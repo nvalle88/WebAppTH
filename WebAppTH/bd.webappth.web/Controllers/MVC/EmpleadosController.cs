@@ -303,14 +303,13 @@ namespace bd.webappth.web.Controllers.MVC
                     await CargarTipoNombramientoPorRelacion
                         (empleadoViewModel.IndiceOcupacionalModalidadPartida.TipoNombramiento.IdRelacionLaboral);
 
-                    await CargarSucursalesPorCiudad
-                        (empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.Dependencia.Sucursal.IdCiudad);
+                    await CargarSucursalesPorCiudad(empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.Dependencia.Sucursal.IdCiudad);
 
                     await CargarPerfilPuestoPorDependencia(
                             empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdDependencia,
                             empleadoViewModel.IndiceOcupacional.IdManualPuesto
                           );
-
+                    /*
                     await CargarRolPuestoPorManualPuesto(
                             empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdManualPuesto,
                             empleadoViewModel.IndiceOcupacional.IdDependencia,
@@ -322,11 +321,11 @@ namespace bd.webappth.web.Controllers.MVC
                             empleadoViewModel.IndiceOcupacional.IdManualPuesto,
                             empleadoViewModel.IndiceOcupacional.IdDependencia
                           );
-
+                          */
                     await CargarFondoFinanciamento(
                             (int) (empleadoViewModel.IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento)
                         );
-
+                    
                 }
             }
             
@@ -426,7 +425,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdDependencia = iddependencia,
                     IdRelacionLaboral = idRelacionLaboral
                 };
-                var listarmanualespuestos = await apiServicio.Listar<IndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarManualPuestoporDependenciaYRelacionLaboral");
+                var listarmanualespuestos = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarManualPuestoporDependenciaYRelacionLaboral");
                 return Json(listarmanualespuestos);
             }
             catch (Exception)
@@ -446,7 +445,13 @@ namespace bd.webappth.web.Controllers.MVC
                     IdDependencia = iddependencia,
                     IdRelacionLaboral = idrelacionLaboral
                 };
-                var listarrolespuestos = await apiServicio.Listar<IndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarRolPuestoporManualPuestoYRelacionLaboral");
+
+                var listarrolespuestos = await apiServicio.ObtenerElementoAsync1<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    indiceOcupacional, 
+                    new Uri(WebApp.BaseAddress), 
+                    "api/Empleados/ListarRolPuestoporManualPuestoYRelacionLaboral"
+                );
+
                 return Json(listarrolespuestos);
             }
             catch (Exception)
@@ -1351,21 +1356,12 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una empleado",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
+               
                 return BadRequest();
             }
         }
 
-        /*
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AgregarADistributivo(EmpleadoViewModel empleadoViewModel)
@@ -1373,28 +1369,28 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
-                var respuestaIndiceOcupacional = await ObtenerIndiceOcupacion(
-                    empleadoViewModel.IndiceOcupacional.IdDependencia,
-                    empleadoViewModel.IndiceOcupacional.IdManualPuesto,
-                    empleadoViewModel.IndiceOcupacional.IdRolPuesto,
-                    empleadoViewModel.IndiceOcupacional.IdEscalaGrados.Value);
 
                 var indiceOcupacionalModalidadPartida = new IndiceOcupacionalModalidadPartida
                 {
                     IdIndiceOcupacionalModalidadPartida = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida,
 
-                    IdIndiceOcupacional = respuestaIndiceOcupacional.IdIndiceOcupacional,
+                    IdIndiceOcupacional = empleadoViewModel.IndiceOcupacional.IdIndiceOcupacional,
 
                     IdFondoFinanciamiento = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento,
+
                     IdTipoNombramiento = empleadoViewModel.IndiceOcupacionalModalidadPartida.IdTipoNombramiento,
+
                     Fecha = empleadoViewModel.IndiceOcupacionalModalidadPartida.Fecha,
+
                     SalarioReal = empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal == null ? 0 : empleadoViewModel.IndiceOcupacionalModalidadPartida.SalarioReal,
+
                     IdEmpleado = empleadoViewModel.Empleado.IdEmpleado,
-                    IdDependecia = empleadoViewModel.IndiceOcupacional.IdDependencia,
+
                     IdModalidadPartida = (int)(empleadoViewModel.IndiceOcupacional.IdModalidadPartida),
-                    NumeroPartidaIndividual = empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.NumeroPartidaIndividual
-                    
-                    
+                    NumeroPartidaIndividual = empleadoViewModel.IndiceOcupacionalModalidadPartida.NumeroPartidaIndividual,
+
+                    IdDependencia = empleadoViewModel.IndiceOcupacional.IdDependencia
+
                 };
 
 
@@ -1420,7 +1416,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        */
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]

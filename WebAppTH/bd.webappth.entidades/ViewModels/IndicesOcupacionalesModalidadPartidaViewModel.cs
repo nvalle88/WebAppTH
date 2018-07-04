@@ -44,6 +44,7 @@ namespace bd.webappth.entidades.ViewModels
 
 
         public string NombreModalidadPartida { get; set; }
+        
 
     }
 }

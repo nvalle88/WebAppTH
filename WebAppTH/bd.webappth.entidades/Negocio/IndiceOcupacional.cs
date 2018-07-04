@@ -55,6 +55,9 @@ namespace bd.webappth.entidades.Negocio
         [NotMapped]
         public int IdRelacionLaboral { get; set; }
 
+        [NotMapped]
+        public int IdModalidadPartida { get; set; }
+
         //public string FullName { get {return Dependencia.Nombre +"/ "+ ManualPuesto.Nombre +"/ "+ManualPuesto.Nombre +"/ "+ RolPuesto.Nombre+"/"+ "("+ EscalaGrados.Grado+")" + EscalaGrados.Remuneracion; } set {; } }
 
 
