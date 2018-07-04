@@ -16,12 +16,12 @@ using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class HabilitarConcursoContratoController : Controller
+    public class HabilitarConcursoController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public HabilitarConcursoContratoController(IApiServicio apiServicio)
+        public HabilitarConcursoController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
