@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.ViewModels.IndiceOcupacionalViewModel>
+@model List<bd.webappth.entidades.Negocio.IndiceOcupacionalModalidadPartida>
 
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 
@@ -12,7 +12,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Indices ocupacionales</h2>
+                        <h2>Distributivo</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -22,25 +22,29 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().PartidaIndividual)
+                                            Identificai&oacute;n
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Dependencia)
+                                            Nombres y Apellidos
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ManualPuesto)
+                                            Unidad administrativa
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().RolPuesto)
+                                            Denominaci&oacute;n del puesto
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nivel)
+                                            Rol del puesto
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Ambito)
+                                            &Aacute;mbito
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EscalaGrado)
+                                            Grupo ocupacional
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            Remuneraci&oacute;n
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -51,25 +55,40 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.PartidaIndividual)
+                                            @Html.DisplayFor(modelItem => item.Empleado.Persona.Identificacion)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Dependencia)
+                                            
+                                       @(item.Empleado.Persona.Nombres + " " + item.Empleado.Persona.Apellidos)
+                                            
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ManualPuesto)
+                                            @Html.DisplayFor(modelItem => item.IndiceOcupacional.Dependencia.Nombre)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.RolPuesto)
+                                            @Html.DisplayFor(modelItem => item.IndiceOcupacional.ManualPuesto.Nombre)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Nivel)
+                                            @Html.DisplayFor(modelItem => item.IndiceOcupacional.RolPuesto.Nombre)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Ambito)
+                                            @Html.DisplayFor(modelItem => item.IndiceOcupacional.Ambito.Nombre)
                                         </td>
-                                        <td data-toggle="toggle" data-placement="right" title="@item.EscalaGrado  @item.ManualPuesto">
-                                            @Html.DisplayFor(modelItem => item.EscalaGrado)
+                                        <td >
+                                            @Html.DisplayFor(modelItem => item.IndiceOcupacional.EscalaGrados.Nombre)
+                                        </td>
+                                        <td>
+                                            @{
+                                                if (item.SalarioReal != null && item.SalarioReal > 0)
+                                                {
+                                                    <text>$@item.SalarioReal</text>
+                                                }
+                                                else
+                                                {
+                                                    <text>$@item.IndiceOcupacional.EscalaGrados.Remuneracion</text>
+                                                }
+
+                                            }
                                         </td>
 
                                         <td>

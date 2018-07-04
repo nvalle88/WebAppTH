@@ -61,11 +61,15 @@ namespace bd.webappth.web.Controllers.MVC
         
         public async Task<IActionResult> Index()
         {
-            var lista = new List<IndiceOcupacionalViewModel>();
+            var lista = new List<IndiceOcupacionalModalidadPartida>();
+
             try
             {
-                lista = await apiServicio.Listar<IndiceOcupacionalViewModel>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/IndicesOcupacionales/ListarIndicesOcupaciones");
+                lista = await apiServicio.Listar<IndiceOcupacionalModalidadPartida>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/MostrarDistributivo"
+                 );
+
                 return View(lista);
             }
             catch (Exception ex)
