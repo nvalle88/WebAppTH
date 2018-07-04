@@ -16,12 +16,12 @@ using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class HabilitarConcursoController : Controller
+    public class HabilitarConcursoContratoController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public HabilitarConcursoController(IApiServicio apiServicio)
+        public HabilitarConcursoContratoController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -54,7 +54,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ViewModelPartidaFase>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/HabilitarConcurso/ListarConcursosVacantes");
+                                                                    , "api/HabilitarConcurso/ListarConcursosVacantesContrato");
                 InicializarMensaje(null);
                 return View(lista);
             }
@@ -152,32 +152,12 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        public async Task<IActionResult> Delete(string id)
-        {
 
-            try
-            {
-                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "api/Sexos");
-                if (response.IsSuccess)
-                {
-
-                    return RedirectToAction("Index");
-                }
-                return RedirectToAction("Index", new { mensaje = response.Message });
-                //return BadRequest();
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest();
-            }
-        }
         public async Task Cargarcombos()
         {
             try
             {
-                ViewData["IdIndiceOcupacional"] = new SelectList(await apiServicio.Listar<ViewModelPartidaFase>(new Uri(WebApp.BaseAddress), "api/HabilitarConcurso/ListarPuestoVacantes"), "Idindiceocupacional", "PuestoInstitucional");
+                ViewData["IdIndiceOcupacional"] = new SelectList(await apiServicio.Listar<ViewModelPartidaFase>(new Uri(WebApp.BaseAddress), "api/HabilitarConcurso/ListarPuestoVacantesContrato"), "Idindiceocupacional", "PuestoInstitucional");
                 ViewData["IdTipoConcurso"] = new SelectList(await apiServicio.Listar<TipoConcurso>(new Uri(WebApp.BaseAddress), "api/TiposConcurso/ListarTiposConcurso"), "IdTipoConcurso", "Nombre");
 
             }

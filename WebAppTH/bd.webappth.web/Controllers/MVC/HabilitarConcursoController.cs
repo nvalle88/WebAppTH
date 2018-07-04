@@ -16,12 +16,12 @@ using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class HabilitarConcursoContratoController : Controller
+    public class HabilitarConcursoController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public HabilitarConcursoContratoController(IApiServicio apiServicio)
+        public HabilitarConcursoController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -79,19 +79,19 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
-                if (partidasFase.VacantesCredo <= partidasFase.Vacantes)
+                //if (partidasFase.VacantesCredo <= partidasFase.Vacantes)
+                //{
+                response = await apiServicio.InsertarAsync(partidasFase,
+                                                                     new Uri(WebApp.BaseAddress),
+                                                                     "api/HabilitarConcurso/InsertarHabilitarConsurso");
+                if (response.IsSuccess)
                 {
-                    response = await apiServicio.InsertarAsync(partidasFase,
-                                                                         new Uri(WebApp.BaseAddress),
-                                                                         "api/HabilitarConcurso/InsertarHabilitarConsurso");
-                    if (response.IsSuccess)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    await Cargarcombos();
+                    return RedirectToAction("Index");
                 }
                 await Cargarcombos();
-                ViewData["Error"] = "Numero de Vancante superior";
+                //}
+                await Cargarcombos();
+                //ViewData["Error"] = "Numero de Vancante superior";
                 return View(partidasFase);
 
             }
@@ -152,27 +152,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        public async Task<IActionResult> Delete(string id)
-        {
 
-            try
-            {
-                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "api/Sexos");
-                if (response.IsSuccess)
-                {
-
-                    return RedirectToAction("Index");
-                }
-                return RedirectToAction("Index", new { mensaje = response.Message });
-                //return BadRequest();
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest();
-            }
-        }
         public async Task Cargarcombos()
         {
             try

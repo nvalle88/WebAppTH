@@ -36,7 +36,7 @@
                             <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="Idindiceocupacional" />
-                                <input type="hidden" asp-for="Vacantes" />
+                                <input type="hidden" asp-for="Contrato" value="true" />
                                 @{await Html.RenderPartialAsync("_PartialViewHabilitarConcurso", Model);}
 
                                 <footer>
