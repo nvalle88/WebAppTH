@@ -16,12 +16,12 @@ using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
-    public class HabilitarConcursoController : Controller
+    public class HabilitarConcursoContratoController : Controller
     {
         private readonly IApiServicio apiServicio;
 
 
-        public HabilitarConcursoController(IApiServicio apiServicio)
+        public HabilitarConcursoContratoController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
 
@@ -54,7 +54,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 lista = await apiServicio.Listar<ViewModelPartidaFase>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/HabilitarConcurso/ListarConcursosVacantes");
+                                                                    , "api/HabilitarConcurso/ListarConcursosVacantesContrato");
                 InicializarMensaje(null);
                 return View(lista);
             }
@@ -79,19 +79,19 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
-                //if (partidasFase.VacantesCredo <= partidasFase.Vacantes)
-                //{
-                response = await apiServicio.InsertarAsync(partidasFase,
-                                                                     new Uri(WebApp.BaseAddress),
-                                                                     "api/HabilitarConcurso/InsertarHabilitarConsurso");
-                if (response.IsSuccess)
+                if (partidasFase.VacantesCredo <= partidasFase.Vacantes)
                 {
-                    return RedirectToAction("Index");
+                    response = await apiServicio.InsertarAsync(partidasFase,
+                                                                         new Uri(WebApp.BaseAddress),
+                                                                         "api/HabilitarConcurso/InsertarHabilitarConsurso");
+                    if (response.IsSuccess)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    await Cargarcombos();
                 }
                 await Cargarcombos();
-                //}
-                await Cargarcombos();
-                //ViewData["Error"] = "Numero de Vancante superior";
+                ViewData["Error"] = "Numero de Vancante superior";
                 return View(partidasFase);
 
             }
@@ -157,7 +157,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                ViewData["IdIndiceOcupacional"] = new SelectList(await apiServicio.Listar<ViewModelPartidaFase>(new Uri(WebApp.BaseAddress), "api/HabilitarConcurso/ListarPuestoVacantes"), "Idindiceocupacional", "PuestoInstitucional");
+                ViewData["IdIndiceOcupacional"] = new SelectList(await apiServicio.Listar<ViewModelPartidaFase>(new Uri(WebApp.BaseAddress), "api/HabilitarConcurso/ListarPuestoVacantesContrato"), "Idindiceocupacional", "PuestoInstitucional");
                 ViewData["IdTipoConcurso"] = new SelectList(await apiServicio.Listar<TipoConcurso>(new Uri(WebApp.BaseAddress), "api/TiposConcurso/ListarTiposConcurso"), "IdTipoConcurso", "Nombre");
 
             }

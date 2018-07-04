@@ -33,7 +33,7 @@
 
         }
     </div>
-    <p></p>   
+    <p></p>
     <p> </p>
     <!-- widget grid -->
     <section id="" class="">
@@ -58,7 +58,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Postulaci&oacute;n</h2>
+                        <h2>Postulaci&oacute;n contrato</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -83,9 +83,9 @@
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Vacantes)
                                         </th>
 
-                                        @*<th data-hide="phone">
+                                        <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().VacantesCredo)
-                                        </th>*@
+                                        </th>
 
 
                                         <th>Opciones</th>
@@ -94,33 +94,33 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.grupoOcupacional)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PuestoInstitucional)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Vacantes)
-                                        </td>
-                                        @*<td>
-                                            @Html.DisplayFor(modelItem => item.VacantesCredo)
-                                        </td>*@
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.grupoOcupacional)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PuestoInstitucional)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Vacantes)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VacantesCredo)
+                                            </td>
 
-                                        <td>
-                                            @if (item.estado == 0)
-                                      {
-                                    @Html.ActionLink("Abrir postulacion", "Create", new { id = item.Idindiceocupacional , vacante = item.Vacantes })
-                                        }
-                                    else
-                                     {
+                                            <td>
+                                                @if (item.estado == 0)
+                                                {
+                                                    @Html.ActionLink("Abrir postulacion", "Create", new { id = item.Idindiceocupacional, vacante = item.Vacantes })
+                                                }
+                                                else
+                                                {
 
-                                    <label>Cerrado</label>
-                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdPartidaFase })
-                                        }
-                                        </td>
-                                    </tr>
+                                                    <label>Cerrado</label>
+                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdPartidaFase })
+                                                }
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
