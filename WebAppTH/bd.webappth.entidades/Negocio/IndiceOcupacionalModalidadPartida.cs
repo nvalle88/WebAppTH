@@ -55,6 +55,8 @@ namespace bd.webappth.entidades.Negocio
 
 
         [Display(Name = "Fecha fin")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaFin { get; set; }
 
         [NotMapped]

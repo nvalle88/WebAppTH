@@ -1389,7 +1389,9 @@ namespace bd.webappth.web.Controllers.MVC
                     IdModalidadPartida = (int)(empleadoViewModel.IndiceOcupacional.IdModalidadPartida),
                     NumeroPartidaIndividual = empleadoViewModel.IndiceOcupacionalModalidadPartida.NumeroPartidaIndividual,
 
-                    IdDependencia = empleadoViewModel.IndiceOcupacional.IdDependencia
+                    IdDependencia = empleadoViewModel.IndiceOcupacional.IdDependencia,
+
+                    FechaFin = empleadoViewModel.IndiceOcupacionalModalidadPartida.FechaFin
 
                 };
 
