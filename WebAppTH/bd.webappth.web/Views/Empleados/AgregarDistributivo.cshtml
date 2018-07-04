@@ -36,7 +36,7 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form asp-action="AgregarADistributivo" asp-controller="Empleados" class="smart-form" novalidate="novalidate">
+                            <form asp-action="AgregarADistributivo" asp-controller="Empleados" class="smart-form" >
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="Empleado.IdEmpleado" />
                                 
@@ -44,14 +44,6 @@
 
                                     <div class="row" hidden>
                                         <input type="text" asp-for="IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida" />
-                                    </div>
-
-                                    <div class="row">
-                                        <section class="col col-4">
-
-                                            <label>Partida individual / c&oacute;digo</label>
-                                            <input asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.NumeroPartidaIndividual" class="form-control input" id="txt_partida" readonly>
-                                        </section>
                                     </div>
 
                                     <div class="row">
@@ -124,12 +116,20 @@
                                             <span asp-validation-for="IndiceOcupacional.IdEscalaGrados" class="text-danger"></span>
                                         </section>
                                     </div>
+
                                     <div class="row">
-                                        <section class="col col-4" id="s_modalidad">
+                                        @*<section class="col col-4">
+
+                                            <label>Partida individual / c&oacute;digo</label>
+                                            <input asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.NumeroPartidaIndividual" class="form-control input" id="txt_partida" readonly required>
+                                        </section>*@
+
+                                        @*<section class="col col-4" id="s_modalidad">
                                             <label>Modalidad Partida</label>
                                             <select id="modalidadpartida" asp-for="IndiceOcupacional.IdModalidadPartida" asp-items="ViewBag.IdModalidadPartida" class="form-control"></select>
                                             <span asp-validation-for="IndiceOcupacional.IdModalidadPartida" class="text-danger"></span>
-                                        </section>
+                                        </section>*@
+
                                         <section class="col col-4">
                                             <label>Fondo de Financimiento</label>
                                             <select asp-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdFondoFinanciamiento">
@@ -137,16 +137,23 @@
                                             </select>
                                             <span asp-validation-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="text-danger"></span>
                                         </section>
-                                        <section class="col col-4">
-                                            <label>Fecha de ingreso</label>
-                                            <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" type="text" class="form-control datepicker " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
-                                            <span asp-validation-for="IndiceOcupacionalModalidadPartida.Fecha" class="text-danger"></span>
-                                        </section>
+                                    </div>
+
+                                    <div class="row">
+
                                         <section class="col col-4">
                                             <label>Fecha de primer ingreso</label>
                                             <input asp-for="FechaPrimerIngreso" type="text" class="form-control" data-dateformat='dd/mm/yy' data-rule-required='true' readonly>
 
                                         </section>
+
+                                        <section class="col col-4">
+                                            <label>Fecha de ingreso</label>
+                                            <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" type="text" class="form-control datepicker " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                                            <span asp-validation-for="IndiceOcupacionalModalidadPartida.Fecha" class="text-danger"></span>
+                                        </section>
+
+
                                     </div>
 
                                     <div class="row">
@@ -460,6 +467,7 @@
                     data: {
                         idmanualpuesto: $("#manualpuesto").val(),
                         iddependencia: $("#iddependencia").val(),
+                        idrelacionLaboral: $("#IdRelacionLaboral").val()
                         },
                     success: function (data) {
                         $("#rolpuesto").append('<option value="0" selected="" disabled="">Seleccione</option>');
@@ -504,16 +512,7 @@
                                     + data.escalaGrados.idEscalaGrados + '">'
                                     + data.escalaGrados.nombre + " (GRADO " + data.escalaGrados.grado + ")" + " QUE PERCIBE" + " $" + data.escalaGrados.remuneracion +  '</option>');
                             });
-
-
-                        /*
-                            aqui estoy buscando el id que escojo y le quiero ajustar a la modalidad partida
-                            para obtener la modalidad partida del puesto seleccionado
-                        */
-                        /*
-                        document.getElementById("modalidadpartida").selectedIndex = data[0].idModalidadPartida;
-                        document.getElementById("txt_partida").value = data[0].numeroPartidaIndividual;
-                        */
+                        
                         }
                         else {
                             $("#escalagrados").append('<option value="'
@@ -535,30 +534,50 @@
                 return false;
                 })
 
-            @*
+            
             $("#escalagrados").change(function () {
                
             mostrarLoadingPanel("content","Cargando...")
-            $("#modalidadpartida").empty();
+            //$("#modalidadpartida").empty();
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("ObtenerIndice")',
+                    url: '@Url.Action("ObtenerIndicePorDatos")',
                     dataType: 'json',
                     data: {
-                        idmanualpuesto: $("#manualpuesto").val(),
-                        iddependencia: $("#dependencia").val(),
-                        idrolpuesto: $("#rolpuesto").val(),
-                        idescalagrados: $("#escalagrados").val(),
+                        idManualPuesto: $("#manualpuesto").val(),
+                        idRolpuesto: $("#rolpuesto").val(),
+                        idRelacionLaboral: $("#IdRelacionLaboral").val(),
+                        idDependencia: $("#iddependencia").val(),
+                        idEscalaGrados: $("#escalagrados").val()
                         },
                     success: function (data) {
 
-                        //$("#modalidadpartida").append('<option value="0" selected="" disabled="">Seleccione</option>');
-                        //$.each(data, function (i, data) {
-                        //    $("#modalidadpartida").append('<option value="'
-                        //        + data.modalidadPartida.idModalidadPartida + '">'
-                        //        + data.modalidadPartida.nombre + '</option>');
+                        if (data != null) {
 
-                        //});
+                            
+                            document.getElementById("btn-guardar").disabled = false;
+                            
+
+                            if (document.getElementById("s_modalidad").style.visibility.toString() == "hidden") {
+
+                                document.getElementById("txt_partida").value = "";
+                                document.getElementById("txt_partida").readOnly = false;
+                            } else { 
+                                document.getElementById("txt_partida").value = data.numeroPartidaIndividual;
+                                document.getElementById("txt_partida").readOnly = true;
+                                document.getElementById("modalidadpartida").selectedIndex = data.idModalidadPartida;
+                                
+                            }
+
+                            
+                            
+
+                        } else { 
+
+                            mostrarNotificacionTimer("Aviso", "No existe un puesto para esta configuracion", 10000);
+                            document.getElementById("btn-guardar").disabled = true;
+
+                        }
                         
 
                     }, complete: function (data) {
@@ -572,13 +591,16 @@
                 return false;
                 
                 })
-        *@
+        
 
         $("#IdRegimenLaboral").change(function () {
             mostrarLoadingPanel("content","Cargando...")
             $("#IdRelacionLaboral").empty();
             $("#IdModalidadPartida").empty();
             $("#IdTipoNombramiento").empty();
+            $("#rolpuesto").empty();
+            $("#escalagrados").empty();
+            $("#manualpuesto").empty();
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarRelacionesLaboralesPorRegimen")',
@@ -727,7 +749,10 @@
                     type: 'POST',
                     url: '@Url.Action("ListarManualPuestoporDependencia")',
                     dataType: 'json',
-                    data: { iddependencia: dependencia },
+                    data: {
+                        iddependencia: dependencia,
+                        idRelacionLaboral: $("#IdRelacionLaboral").val()
+                    },
                     success: function (data) {
                         $("#manualpuesto").append('<option value="0" selected="" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {

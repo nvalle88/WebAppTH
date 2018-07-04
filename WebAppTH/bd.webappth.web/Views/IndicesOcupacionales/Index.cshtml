@@ -28,32 +28,47 @@
                                 <thead>
                                     <tr>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoDepencia)
+                                            @Html.DisplayNameFor(model =>
+                                                model.FirstOrDefault().CodigoDependencia
+                                            )
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model =>
+                                                model.FirstOrDefault().NombreDependencia
+                                            )
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().PartidaIndividual)
+                                            @Html.DisplayNameFor(model =>
+                                                model.FirstOrDefault().NombreManualPuesto
+                                            )
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Dependencia)
+                                            @Html.DisplayNameFor(model =>
+                                                model.FirstOrDefault().NombreRolPuesto
+                                            )
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ManualPuesto)
+                                            @Html.DisplayNameFor(model =>
+                                                model.FirstOrDefault().Nivel
+                                            )
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().RolPuesto)
+                                            @Html.DisplayNameFor(model =>
+                                                model.FirstOrDefault().NombreAmbito
+                                            )
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nivel)
+                                            @Html.DisplayNameFor(model =>
+                                                model.FirstOrDefault().NombreEscalaGrados
+                                            )
                                         </th>
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Ambito)
+                                            @Html.DisplayNameFor(model =>
+                                                model.FirstOrDefault().Remuneracion
+                                            )
                                         </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EscalaGrado)
-                                        </th>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Remuneracion)
-                                        </th>
+
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -63,37 +78,34 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.CodigoDepencia)
+                                            @Html.DisplayFor(modelItem => item.CodigoDependencia)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.PartidaIndividual)
+                                            @Html.DisplayFor(modelItem => item.NombreDependencia)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Dependencia)
+                                            @Html.DisplayFor(modelItem => item.NombreManualPuesto)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ManualPuesto)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.RolPuesto)
+                                            @Html.DisplayFor(modelItem => item.NombreRolPuesto)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Nivel)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Ambito)
+                                            @Html.DisplayFor(modelItem => item.NombreAmbito)
                                         </td>
-                                        <td data-toggle="toggle" data-placement="right" title="@item.EscalaGrado  @item.ManualPuesto">
-                                            @Html.DisplayFor(modelItem => item.EscalaGrado)
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NombreEscalaGrados)
                                         </td>
-                                        <td data-toggle="toggle" data-placement="right" title=" @item.ManualPuesto">
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.Remuneracion)
                                         </td>
 
                                         <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdIndiceOcupacional }) |
+                                            @*@Html.ActionLink("Editar", "Edit", new { id = item.IdIndiceOcupacional }) |*@
                                             @Html.ActionLink("Detalle", "Detalle", new { id = item.IdIndiceOcupacional }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el indicador... ?');" })
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro?');" })
                                         </td>
                                     </tr>
                                     }

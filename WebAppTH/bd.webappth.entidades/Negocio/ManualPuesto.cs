@@ -13,12 +13,17 @@ namespace bd.webappth.entidades.Negocio
 
         [Required(ErrorMessage = "Debe introducir  {0}")]
         [StringLength(50)]
+
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = "Debe introducir  {0}")]
+        [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
+        [Display(Name = "Misión")]
         public string Mision { get; set; }
+
+        [Display(Name = "Relaciones internas y externas")]
         public int? IdRelacionesInternasExternas { get; set; }
 
         public virtual ICollection<IndiceOcupacional> IndiceOcupacional { get; set; }

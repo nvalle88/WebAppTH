@@ -1,6 +1,6 @@
 @model bd.webappth.entidades.ViewModels.IndiceOcupacionalViewModel
 @using bd.webappth.entidades.ViewModels
-@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.IdIndiceOcupacional, OpcionMenu = 0}; }
+@{ var modelo = new IndiceOcupacionalViewModel { IdIndiceOcupacional = Model.IdIndiceOcupacional, OpcionMenu = 0 }; }
 @{await Html.RenderPartialAsync("_PartialViewIndiceOcupacional", modelo);}
 
 <!-- MAIN CONTENT -->
@@ -23,29 +23,26 @@
                                         <legend>Datos de identificaci&oacute;n del puesto</legend>
                                         <div>
 
-                                            <label><strong>C&oacute;digo:</strong></label>
-                                            <label>@Model.PartidaIndividual</label>
+                                            <label><strong>@Html.DisplayNameFor(Model => Model.NombreManualPuesto):</strong></label>
+                                            <label>@Model.NombreManualPuesto</label>
                                             <br />
-                                            <label><strong>Denominaci&oacute;n del puesto:</strong></label>
-                                            <label>@Model.ManualPuesto</label>
-                                            <br />
-                                            <label><strong>Nivel:</strong></label>
+                                            <label><strong>@Html.DisplayNameFor(Model => Model.Nivel):</strong></label>
                                             <label>@Model.Nivel</label>
                                             <br />
-                                            <label><strong>Unidad administrativa:</strong></label>
-                                            <label>@Model.Dependencia</label>
+                                            <label><strong>@Html.DisplayNameFor(Model => Model.NombreDependencia):</strong></label>
+                                            <label>@Model.NombreDependencia</label>
                                             <br />
-                                            <label><strong>Rol:</strong></label>
-                                            <label>@Model.RolPuesto</label>
+                                            <label><strong>@Html.DisplayNameFor(Model => Model.NombreRolPuesto):</strong></label>
+                                            <label>@Model.NombreRolPuesto</label>
                                             <br />
-                                            <label><strong>Grupo ocupacional:</strong></label>
-                                            <label>@Model.EscalaGrado</label>
+                                            <label><strong>@Html.DisplayNameFor(Model => Model.NombreEscalaGrados):</strong></label>
+                                            <label>@Model.NombreEscalaGrados</label>
                                             <br />
-                                            <label><strong>Grado:</strong></label>
+                                            <label><strong>@Html.DisplayNameFor(Model => Model.Grado):</strong></label>
                                             <label>@Model.Grado</label>
                                             <br />
-                                            <label><strong>&Aacute;mbito:</strong></label>
-                                            <label>@Model.Ambito</label>
+                                            <label><strong>@Html.DisplayNameFor(Model => Model.NombreAmbito)</strong></label>
+                                            <label>@Model.NombreAmbito</label>
                                             <br />
                                         </div>
 
@@ -58,18 +55,18 @@
                             <article class="col-sm-12 col-md-12 col-lg-12">
                                 <article class="col-sm-12 col-md-12 col-lg-6">
                                     <fieldset>
-                                        <legend>Misi&oacute;n</legend>
+                                        <legend>@Html.DisplayNameFor(Model => Model.MisionManualPuesto)</legend>
                                         <p class="text-justify">
-                                            @Model.Mision
+                                            @Model.DescripcionManualPuesto
                                         </p>
                                     </fieldset>
                                 </article>
                                 <article class="col-sm-12 col-md-12 col-lg-6">
                                     <fieldset>
 
-                                        <legend>Relaciones Internas y Externas</legend>
+                                        <legend>@Html.DisplayNameFor(Model => Model.NombreRelacionesInternasExternas)</legend>
                                         <p class="text-justify">
-                                            @Model.RelacionesInternasExternas
+                                            @Model.DescripcionRelacionesInternasExternas
                                         </p>
 
                                     </fieldset>

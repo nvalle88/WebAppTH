@@ -2,6 +2,7 @@ namespace bd.webappth.entidades.Negocio
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class IndiceOcupacional
     {
@@ -10,7 +11,7 @@ namespace bd.webappth.entidades.Negocio
 
         //Propiedades Virtuales Referencias a otras clases
 
-        [Display(Name = "Dependencia")]
+        [Display(Name = "Unidad administrativa")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdDependencia { get; set; }
         public virtual Dependencia Dependencia { get; set; }
@@ -30,14 +31,19 @@ namespace bd.webappth.entidades.Negocio
         public int? IdEscalaGrados { get; set; }
         public virtual EscalaGrados EscalaGrados { get; set; }
 
+        /*
         [Display(Name = "Modalidad de Partida")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int? IdModalidadPartida { get; set; }
         public virtual ModalidadPartida ModalidadPartida { get; set; }
+        */
 
         public int? IdPartidaGeneral { get; set; }
+
+        /*
         public string NumeroPartidaIndividual { get; set; }
         public virtual PartidaGeneral PartidaGeneral { get; set; }
+        */
 
         [Display(Name = "Ámbito")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
@@ -45,6 +51,9 @@ namespace bd.webappth.entidades.Negocio
         public virtual Ambito Ambito { get; set; }
 
         public string Nivel { get; set; }
+
+        [NotMapped]
+        public int IdRelacionLaboral { get; set; }
 
         //public string FullName { get {return Dependencia.Nombre +"/ "+ ManualPuesto.Nombre +"/ "+ManualPuesto.Nombre +"/ "+ RolPuesto.Nombre+"/"+ "("+ EscalaGrados.Grado+")" + EscalaGrados.Remuneracion; } set {; } }
 

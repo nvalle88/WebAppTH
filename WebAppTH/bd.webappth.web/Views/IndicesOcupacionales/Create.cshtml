@@ -8,32 +8,7 @@
 <script src='~/js/site.js'></script>
 
 <!-- MAIN CONTENT -->
-<div class="col col-10">
 
-    @if (@ViewData["Error"].ToString() != "")
-
-    {
-
-        <div class="col-lg-7">
-
-            <div class="alert alert-block alert-dismissable">
-
-                <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-
-                <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-
-                <p>
-
-                    <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-
-                </p>
-
-            </div>
-
-        </div>
-
-    }
-</div>
 <div id="content">
     <!-- widget grid -->
     <section id="" class="">
@@ -58,20 +33,7 @@
                                                 <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
                                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                                     <fieldset>
-                                                        @if (@ViewData["Error"].ToString() != "")
-    {
-
-                                                    <div class="col-lg-12">
-                                                        <div class="alert alert-block  bordered">
-                                                            <a class="close" data-dismiss="alert" href="#"><p><strong> <bold>X</bold></strong></p></a>
-                                                            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-                                                            <p>
-                                                                <span class="text-info"><strong> <bold> @ViewData["Error"]</bold></strong></span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-}
-
+ 
                                                         <div class="row">
                                                             <section class="col col-4">
                                                                 <label>Ciudad:</label>
@@ -88,41 +50,34 @@
                                                                 </label>
                                                             </section>
                                                             <section class="col col-4">
-                                                                <label>Dependencia:</label>
+                                                                <label>Unidad administrativa:</label>
                                                                 <label class="input">
                                                                     <input class="form-control input" type="text" id="dependencia" readonly="readonly">
                                                                 </label>
                                                             </section>
-                                                            @*<section class="col col-4">
-                <label>Dependencia:</label>
-                <label class="input">
-                    <select id="dependencia" class="form-control input " asp-items="ViewBag.IdDependencia">
-                        <option value="0" selected="" disabled="">Seleccione</option>
-                    </select>
-                </label>
-            </section>*@
-                                                            <input class="form-control input" asp-for="IndiceOcupacional.IdDependencia" type="hidden" id="iddependencia">
+                                                           
+                                                            <input class="form-control input" asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdDependencia" type="hidden" id="iddependencia">
 
                                                         </div>
 
                                                         <div class="row">
                                                             <section class="col col-4">
-                                                                <label>Manual de Puesto:</label>
+                                                                <label>Denominaci&oacute;n del puesto:</label>
                                                                 <label class="input">
-                                                                    <select asp-for="IndiceOcupacional.IdManualPuesto" asp- class="form-control" asp-items="ViewBag.IdManualPuesto">
-                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdManualPuesto)</option>
+                                                                    <select asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdManualPuesto" asp- class="form-control" asp-items="ViewBag.IdManualPuesto">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdManualPuesto)</option>
                                                                     </select>
-                                                                    <span asp-validation-for="IndiceOcupacional.IdManualPuesto" class="text-danger"></span>
+                                                                    <span asp-validation-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdManualPuesto" class="text-danger"></span>
                                                                 </label>
                                                             </section>
 
                                                             <section class="col col-4">
                                                                 <label>Rol Puesto:</label>
                                                                 <label class="input">
-                                                                    <select asp-for="IndiceOcupacional.IdRolPuesto" asp- class="form-control" asp-items="ViewBag.IdRolPuesto">
-                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdRolPuesto)</option>
+                                                                    <select asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto" asp- class="form-control" asp-items="ViewBag.IdRolPuesto">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto)</option>
                                                                     </select>
-                                                                    <span asp-validation-for="IndiceOcupacional.IdRolPuesto" class="text-danger"></span>
+                                                                    <span asp-validation-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto" class="text-danger"></span>
                                                                 </label>
                                                             </section>
 
@@ -138,49 +93,49 @@
                                                         </div>
                                                         <div class="row">
                                                             <section class="col col-4">
-                                                                <label>Escala Grado:</label>
+                                                                <label>Grupo ocupacional:</label>
                                                                 <label class="input">
-                                                                    <select asp-for="IndiceOcupacional.IdEscalaGrados" id="idescalagrados" asp- class="form-control">
-                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdEscalaGrados)</option>
+                                                                    <select asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdEscalaGrados" id="idescalagrados" asp- class="form-control">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdEscalaGrados)</option>
                                                                     </select>
-                                                                    <span asp-validation-for="IndiceOcupacional.IdEscalaGrados" class="text-danger"></span>
+                                                                    <span asp-validation-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdEscalaGrados" class="text-danger"></span>
                                                                 </label>
                                                             </section>
-                                                            <section class="col col-4">
+                                                            <section class="col col-4" hidden>
                                                                 <label> Partida General:</label>
                                                                 <label class="input">
-                                                                    <select asp-for="IndiceOcupacional.IdPartidaGeneral" asp- class="form-control" asp-items="ViewBag.IdPartidaGeneral">
-                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdPartidaGeneral)</option>
+                                                                    <select asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdPartidaGeneral" asp- class="form-control" asp-items="ViewBag.IdPartidaGeneral">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdPartidaGeneral)</option>
                                                                     </select>
-                                                                    <span asp-validation-for="IndiceOcupacional.IdPartidaGeneral" class="text-danger"></span>
+                                                                    <span asp-validation-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdPartidaGeneral" class="text-danger"></span>
                                                                 </label>
                                                             </section>
-                                                            <section class="col col-4">
+                                                            <section class="col col-4" hidden>
                                                                 <label>Partida Individual:</label>
                                                                 <label class="input">
-                                                                    <input asp-for="IndiceOcupacional.NumeroPartidaIndividual" class="form-control input " type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                                                    <span asp-validation-for="IndiceOcupacional.NumeroPartidaIndividual" class="text-danger"></span>
+                                                                    <input asp-for="IndiceOcupacionalModalidadPartida.NumeroPartidaIndividual" class="form-control input " type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                                                    <span asp-validation-for="IndiceOcupacionalModalidadPartida.NumeroPartidaIndividual" class="text-danger"></span>
                                                                 </label>
                                                             </section>
                                                         </div>
                                                         <div class="row">
                                                             <section class="col col-6">
-                                                                <label>@Html.DisplayNameFor(model => model.IndiceOcupacional.IdAmbito)</label>
+                                                                <label>@Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdAmbito)</label>
                                                                 <label class="input">
-                                                                    <select asp-for="IndiceOcupacional.IdAmbito"  asp- class="form-control" asp-items="ViewBag.IdAmbito">
-                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacional.IdAmbito)</option>
+                                                                    <select asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdAmbito"  asp- class="form-control" asp-items="ViewBag.IdAmbito">
+                                                                        <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdAmbito)</option>
                                                                     </select>
-                                                                    <span asp-validation-for="IndiceOcupacional.IdAmbito" class="text-danger"></span>
+                                                                    <span asp-validation-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdAmbito" class="text-danger"></span>
                                                                 </label>
                                                             </section>
                                                             <section class="col col-6">
-                                                                <label> @Html.DisplayNameFor(model => model.IndiceOcupacional.Nivel):</label>
+                                                                <label> @Html.DisplayNameFor(model => model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.Nivel):</label>
                                                                 <label class="input">
-                                                                    <select asp-for="IndiceOcupacional.Nivel" asp- class="form-control">
+                                                                    <select asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.Nivel" asp- class="form-control">
                                                                         <option value="0">Profesional</option>
                                                                         <option value="1" >No profesional</option>
                                                                     </select>
-                                                                    <span asp-validation-for="IndiceOcupacional.Nivel" class="text-danger"></span>
+                                                                    <span asp-validation-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.Nivel" class="text-danger"></span>
                                                                 </label>
                                                             </section>
                                                         </div>
@@ -242,7 +197,7 @@
                                                                         </td>
 
                                                                         <td>
-                                                                            @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalEstudios", "Estudios", new { idEstudio = item.IdEstudio, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                                            @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalEstudios", "Estudios", new { idEstudio = item.IdEstudio, idIndiceOcupacional = Model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                                         </td>
                                                                     </tr>
                                                                 }
@@ -367,7 +322,7 @@
                                             <legend>Relaciones Internas y Externas</legend>
                                             @if (Model.ListaRelacionesInternasExternas != null)
                                             {
-                                                @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalRelacionesInternasExternas", "RelacionesInternasExternas", new { idRelacionesInternasExternas = Model.ListaRelacionesInternasExternas.FirstOrDefault().IdRelacionesInternasExternas, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalRelacionesInternasExternas", "RelacionesInternasExternas", new { idRelacionesInternasExternas = Model.ListaRelacionesInternasExternas.FirstOrDefault().IdRelacionesInternasExternas, idIndiceOcupacional = Model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                 <p>
                                                     @Model.ListaRelacionesInternasExternas.FirstOrDefault().Descripcion
                                                 </p>
@@ -442,7 +397,7 @@
 
 
                                                                     <td>
-                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalExperienciaLaboralRequerida", "ExperienciaLaboralRequerida", new { idExperienciaLaboralRequerida = item.IdExperienciaLaboralRequerida, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalExperienciaLaboralRequerida", "ExperienciaLaboralRequerida", new { idExperienciaLaboralRequerida = item.IdExperienciaLaboralRequerida, idIndiceOcupacional = Model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                                     </td>
                                                                 </tr>
                                                             }
@@ -505,7 +460,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalCapacitaciones", "Capacitaciones", new { idCapacitacion = item.IdCapacitacion, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
+                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalCapacitaciones", "Capacitaciones", new { idCapacitacion = item.IdCapacitacion, idIndiceOcupacional = Model.IndiceOcupacionalModalidadPartida.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro ?');" })
                                                                     </td>
                                                                 </tr>
                                                             }
@@ -569,7 +524,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalActividadesEsenciales", "ActividadesEsenciales", new { IdActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
+                                                                        @Html.ActionLink("Eliminar", "EliminarIncideOcupacionalActividadesEsenciales", "ActividadesEsenciales", new { IdActividadesEsenciales = item.IdActividadesEsenciales, idIndiceOcupacional = Model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                                     </td>
                                                                 </tr>
                                                             }
@@ -631,7 +586,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalConocimientosAdicionales", "ConocimientosAdicionales", new { idConocimientosAdicionales = item.IdConocimientosAdicionales, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
+                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalConocimientosAdicionales", "ConocimientosAdicionales", new { idConocimientosAdicionales = item.IdConocimientosAdicionales, idIndiceOcupacional = Model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                                     </td>
                                                                 </tr>
                                                             }
@@ -713,7 +668,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalComportamiemtoObservable", "ComportamientosObservables", new { idComportamientoObservable = item.IdComportamientoObservable, idIndiceOcupacional = Model.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
+                                                                        @Html.ActionLink("Eliminar", "EliminarIndiceOcupacionalComportamiemtoObservable", "ComportamientosObservables", new { idComportamientoObservable = item.IdComportamientoObservable, idIndiceOcupacional = Model.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar registro... ?');" })
                                                                     </td>
                                                                 </tr>
                                                             }
