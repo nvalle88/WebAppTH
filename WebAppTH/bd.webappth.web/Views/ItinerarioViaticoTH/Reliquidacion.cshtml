@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.ViewModels.ReliquidacionViaticoViewModel
+@model bd.webappth.entidades.ViewModels.ViewModelsSolicitudViaticos
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 @{
     ViewData["Title"] = "Index";
@@ -32,8 +32,8 @@
         }
     </div>
 
-    <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.SolicitudViatico.IdSolicitudViatico">
-        <button type="button" asp-action="Index" asp-route-IdSolicitudViatico="@Model.SolicitudViatico.IdSolicitudViatico" class="btn btn-labeled btn-default">
+    <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico">
+        <button type="button" asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-arrow-left"></i>
             </span>Regresar
@@ -49,13 +49,13 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Fecha de solicitud:</label>
-                            <input asp-for="SolicitudViatico.FechaSolicitud" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="FechaSolicitud" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Fondo de Financiamiento:</label>
-                            <input asp-for="ListaEmpleadoViewModel.FondoFinanciamiento" disabled="disabled" class="form-control input " placeholder="FondoFinanciamiento" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="FondoFinanciamiento" disabled="disabled" class="form-control input " placeholder="FondoFinanciamiento" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
                 </div>
@@ -67,19 +67,19 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Nombres - Apellidos del Servidor:</label>
-                            <input asp-for="ListaEmpleadoViewModel.NombreApellido" disabled="disabled" class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="Servidor" disabled="disabled" class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Nombre de la unidad del servidor:</label>
-                            <input asp-for="ListaEmpleadoViewModel.Dependencia" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="Dependencia" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Puesto:</label>
-                            <input asp-for="ListaEmpleadoViewModel.RolPuesto" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="Puesto" disabled="disabled" class="form-control input " placeholder="RolPuesto" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                     <div class="col-sm-4">
                         <label>Pa&iacute;s de comisi&oacute;n:</label>
                         <div class="form-group">
-                            <input value="@ViewData["Pais"]" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input value="@Model.Pais" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
 
@@ -95,7 +95,7 @@
                         <label>Provincia de comisi&oacute;n:</label>
                         <div class="form-group">
                             <div class="form-group">
-                                <input value="@ViewData["Provincia"]" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                <input value="@Model.Provincia" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                         <label>Ciudad de comisi&oacute;n:</label>
                         <div class="form-group">
                             <div class="form-group">
-                                <input value="@ViewData["Ciudad"]" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                <input value="@Model.Ciudad" disabled class="form-control input " placeholder="NombreApellido" type="text" data-msg-required='El campo es requerido' data-rule-required='true'>
                             </div>
                         </div>
                     </div>
@@ -112,27 +112,27 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Fecha de salida:</label>
-                            <input asp-for="SolicitudViatico.FechaSalida" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="FechaSalida" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de salida: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
 
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Hora de salida:</label>
-                            <input class="form-control" asp-for="SolicitudViatico.HoraSalida" disabled="disabled" id="timepicker1" type="text" placeholder="Seleccione la hora">
+                            <input class="form-control" asp-for="HoraSalida" disabled="disabled" id="timepicker1" type="text" placeholder="Seleccione la hora">
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Fecha de llegada:</label>
-                            <input asp-for="SolicitudViatico.FechaLlegada" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                            <input asp-for="FechaLlegada" disabled="disabled" type="text" class="form-control input datepicker " placeholder="Fecha de llegada: " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
                         </div>
                     </div>
 
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Hora de llegada:</label>
-                            <input class="form-control" asp-for="SolicitudViatico.HoraLlegada" disabled="disabled" id="timepicker2" type="text" placeholder="Seleccione la hora">
+                            <input class="form-control" asp-for="HoraLlegada" disabled="disabled" id="timepicker2" type="text" placeholder="Seleccione la hora">
                         </div>
                     </div>
                 </div>
@@ -151,17 +151,17 @@
                 <label class="label"></label>
                 <div class="form-group">
                     <label>Informe de actividades y productos alcanzados:</label>
-                    <textarea maxlength="250" class="form-control" asp-for="Descripcion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.SolicitudViatico.Descripcion)"></textarea>
+                    <textarea maxlength="250" class="form-control" asp-for="Descripcion" disabled="disabled" rows="3" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
                     <span asp-validation-for="Descripcion" class="text-danger"></span>
                 </div>
             </section>
         </div>
         <div class="row">
-            @if (Model.SolicitudViatico.Estado == 4)
+            @if (Model.Estado == 4)
             {
                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <a asp-action="CreateReliquidacion">
-                        <button type="button" asp-action="CreateReliquidacion" class="btn btn-labeled btn-default">
+                    <a asp-action="CreateReliquidacion" asp-route-id="@Model.IdSolicitudViatico">
+                        <button type="button" asp-action="CreateReliquidacion" asp-route-id="@Model.IdSolicitudViatico" class="btn btn-labeled btn-default">
                             <span class="btn-label">
                                 <i class="glyphicon glyphicon-plus"></i>
                             </span>Nuevo
@@ -207,34 +207,34 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.ReliquidacionViatico.FirstOrDefault().TipoTransporte.Descripcion)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().TipoTransporte.Descripcion)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ReliquidacionViatico.FirstOrDefault().NombreTransporte)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().NombreTransporte)
                                         </th>
                                         <th>
                                             Ruta
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ReliquidacionViatico.FirstOrDefault().FechaSalida)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().FechaSalida)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ReliquidacionViatico.FirstOrDefault().HoraSalida)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().HoraSalida)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ReliquidacionViatico.FirstOrDefault().FechaLlegada)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().FechaLlegada)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ReliquidacionViatico.FirstOrDefault().HoraLlegada)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().HoraLlegada)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ReliquidacionViatico.FirstOrDefault().ValorEstimado)
+                                            @Html.DisplayNameFor(model => model.ListaDetalleReliquidacionViatico.FirstOrDefault().ValorEstimado)
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.ReliquidacionViatico)
+                                    @foreach (var item in Model.ListaDetalleReliquidacionViatico)
                                     {
                                         <tr>
 
@@ -264,20 +264,20 @@
                                             </td>
 
                                             <td>
-                                                @if (Model.SolicitudViatico.Estado == 4)
+                                                @if (Model.Estado == 4)
                                                 {
                                                     <text>
-                                                        @Html.ActionLink("Editar", "EditReliquidacion", new { id = item.IdReliquidacionViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico }) |
-                                                        @Html.ActionLink("Eliminar", "DeleteReliquidacion", new { id = item.IdReliquidacionViatico, IdSolicitudViatico = Model.SolicitudViatico.IdSolicitudViatico }, new { onclick = "return confirm('Desea eliminar el itinerario del viático... ?');" })
+                                                        @Html.ActionLink("Editar", "EditReliquidacion", new { id = item.IdReliquidacionViatico, IdSolicitudViatico = Model.IdSolicitudViatico }) |
+                                                        @Html.ActionLink("Eliminar", "DeleteReliquidacion", new { id = item.IdReliquidacionViatico, IdSolicitudViatico = Model.IdSolicitudViatico }, new { onclick = "return confirm('Desea eliminar el itinerario del viático... ?');" })
                                                     </text>
                                                 }
-                                                @if (Model.EstadoReliquidacion == 1)
+                                                @*@if (Model.EstadoReliquidacion == 1)
                                                 {
                                                     <text>
                                                         @Html.ActionLink("Solicitud Pago", "ReporteSolicitudPagoReliquidacion", "Report", new { idReliquidacionViatico = item.IdReliquidacionViatico }, new { onclick = "cargando();" })
 
                                                     </text>
-                                                }
+                                                }*@
                                             </td>
                                         </tr>
                                     }
@@ -296,44 +296,34 @@
 
 
         <div class="row">
-            @if (Model.SolicitudViatico.Estado == 4)
+            @if (Model.Estado == 4)
             {
-            <form id="wizard-1" asp-action="FinalizarReliquidacion" novalidate="novalidate">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="IdSolicitudViatico" />
-                <input type="hidden" asp-for="IdItinerarioViatico" />
-                <input type="hidden" asp-for="ReliquidacionViatico.FirstOrDefault().IdEmpleado" value="@Model.ListaEmpleadoViewModel.IdEmpleado" />
-                <input type="hidden" asp-for="ReliquidacionViatico.FirstOrDefault().ValorRequlidacion" value="@Model.ValorReliquidacion" />
-                <input type="hidden" asp-for="ReliquidacionViatico.FirstOrDefault().ValorTotalRequlidacion" value="@Model.ValorTotalReliquidacion" />
-                <div class="row col col-lg-12">
-                    <section class="col col-lg-6">
-                        <div class="form-group">
-                            <label>Partida Presupuestaria:</label>
-                            <select asp-for="ReliquidacionViatico.FirstOrDefault().IdPresupuesto" class="form-control input" asp-items="ViewBag.IdPresupuesto" data-msg-required='El campo es requerido' data-rule-required='true'>
-                                <option value="0" selected="" disabled="">Seleccione</option>
-                            </select>
-                        </div>
-                    </section>
-                    <section class="col col-lg-6">
-                        <div class="form-group">
-                            <label>Valor reliquidacion:</label>
-                            <input asp-for="ValorReliquidacion" disabled="disabled" type="text" class="form-control">
-                        </div>
-                    </section>
-                </div>
-                <div class="row col col-lg-12">
-                    <section class="col col-lg-11">
-                        &nbsp;
-                    </section>
-
-                    <section class="col col-lg-1">
-                        <label class="label"></label>
-                        <div class="form-group">
-                            <input type="submit" value="Finalizar" class="btn btn-primary" />
-                        </div>
-                    </section>
-                </div>
-            </form>
+                <form id="wizard-1" asp-action="FinalizarReliquidacionEnContra" novalidate="novalidate" class="smart-form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().IdSolicitudViatico" value="@Model.IdSolicitudViatico" />
+                    <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorEstimado" value="@Model.Valor" />
+                    <input type="hidden" asp-for="ListaReliquidacionViatico.FirstOrDefault().Estado" value="true" />
+                    <div class="row col col-lg-12">
+                        <section class="col col-lg-6">
+                            <div class="form-group">
+                                <label>Partida Presupuestaria:</label>
+                                <select asp-for="ListaReliquidacionViatico.FirstOrDefault().IdPresupuesto" class="form-control input" asp-items="ViewBag.IdPresupuesto" data-msg-required='El campo es requerido' data-rule-required='true'>
+                                    <option value="0" selected="" disabled="">Seleccione</option>
+                                </select>
+                            </div>
+                        </section>
+                        <section class="col col-lg-6">
+                            <div class="form-group">
+                                <label>Valor reliquidacion:</label>
+                                <input asp-for="ListaReliquidacionViatico.FirstOrDefault().ValorEstimado" value="@Model.Valor" disabled="disabled" type="text" class="form-control">
+                            </div>
+                        </section>
+                    </div>
+                    <footer>
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                        <a asp-action="Index" asp-route-IdSolicitudViatico="@Model.IdSolicitudViatico" class="btn btn-default">Cancelar</a>
+                    </footer>
+                </form>
             }
         </div>
         <!-- end row -->

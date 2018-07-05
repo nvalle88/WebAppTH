@@ -66,7 +66,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Manual de puestos</h2>
+                        <h2>Nombre del puesto</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -83,14 +83,16 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                                         </th>
+                                        @*
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
                                         </th>
+                                        *@
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Mision)
                                         </th>
                                         <th data-hide="phone">
-                                            Relaci&oacute;n Interna Externa
+                                            Relaci&oacute;n interna y externa
                                         </th>
                                         <th>Opciones</th>
                                     </tr>
@@ -102,9 +104,11 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
+                                            @*
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
                                             </td>
+                                            *@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Mision)
                                             </td>

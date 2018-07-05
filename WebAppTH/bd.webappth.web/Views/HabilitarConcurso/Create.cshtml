@@ -37,6 +37,7 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="Idindiceocupacional" />
                                 <input type="hidden" asp-for="Vacantes" />
+                                <input type="hidden" asp-for="Contrato" value="false" />
                                 @{await Html.RenderPartialAsync("_PartialViewHabilitarConcurso", Model);}
 
                                 <footer>

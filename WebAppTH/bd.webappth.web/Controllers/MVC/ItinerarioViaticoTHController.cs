@@ -486,13 +486,14 @@ namespace bd.webappth.web.Controllers.MVC
 
                     var valorCalculo = (respuestaSolicitudViatico.ValorEstimado * 70) / 100;
 
-                    var EstadoReliquidacion = new SolicitudViaticoViewModel();
+                    var EstadoReliquidacion = new ViewModelsSolicitudViaticos();
 
-                    if ((listaFacruras.Count() > 0 || respuestaSolicitudViatico.ListaInformeViatico.Count > 0) && sol.Estado == 4)
+                    if ((listaFacruras.Count() > 0 || respuestaSolicitudViatico.ListaInformeViatico.Count > 0) && respuestaSolicitudViatico.Estado == 4)
                     {
                         EstadoReliquidacion = calculos(Convert.ToDecimal(valortotaInforme), valortotalfacturas, Convert.ToDecimal(valorCalculo), Convert.ToDecimal(respuestaSolicitudViatico.ValorEstimado));
                     }
-                    
+                    respuestaSolicitudViatico.Reliquidacion = EstadoReliquidacion.Reliquidacion;
+                    respuestaSolicitudViatico.Valor = EstadoReliquidacion.Valor;
                     InicializarMensaje(mensaje);
                     return View(respuestaSolicitudViatico);
 
@@ -505,61 +506,45 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FinalizarReliquidacionEnContra(ReliquidacionViatico reliquidacionViatico)
+        {
+            Response response = new Response();
+            try
+            {
+
+                response = await apiServicio.InsertarAsync(reliquidacionViatico,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ReliquidacionViaticos/InsertarReliquidacionViatico");
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction("Index", "ItinerarioViaticoTH", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico });
+                }
+                ViewData["Error"] = response.Message;
+                return this.RedireccionarMensajeTime("Index", "ItinerarioViaticoTH", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico }, $"{Mensaje.Error}|{response.Message}|{"25000"}");
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> FinalizarReliquidacion(ReliquidacionViatico reliquidacionViatico)
         {
             Response response = new Response();
-
             try
             {
-                if (reliquidacionViatico.ValorTotalRequlidacion > reliquidacionViatico.ValorRequlidacion)
-                {
-                    return this.RedireccionarMensajeTime("ItinerarioViaticoTH", "Reliquidacion", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico }, $"{Mensaje.Error}|{"El valor supera al valor total de la reliquidacion"}|{"25000"}");
-
-                }
-                if (reliquidacionViatico.ValorTotalRequlidacion < reliquidacionViatico.ValorRequlidacion)
-                {
-                    return this.RedireccionarMensajeTime("ItinerarioViaticoTH", "Reliquidacion", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico }, $"{Mensaje.Error}|{"El valor es inferior al valor de la reliquidacion"}|{"25000"}");
-                }
-                var presupuesto = new Presupuesto
-                {
-                    IdPresupuesto = reliquidacionViatico.IdPresupuesto,
-
-                };
-                var solicitudViatico = new SolicitudViatico
-                {
-                    IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico,
-
-                };
-
-                var solicitudViaticoViewModel = new SolicitudViaticoViewModel
-                {
-                    Presupuesto = presupuesto,
-                    Valor = reliquidacionViatico.ValorTotalRequlidacion,
-                    SolicitudViatico = solicitudViatico
-                };
-
-                response = await apiServicio.ObtenerElementoAsync1<Response>(solicitudViaticoViewModel, new Uri(WebApp.BaseAddress),
-                                                                 "api/Presupuesto/ObtenerPresupuesto");
-
+                response = await apiServicio.InsertarAsync(reliquidacionViatico,
+                                                             new Uri(WebApp.BaseAddress),
+                                                             "api/ReliquidacionViaticos/InsertarReliquidacionViatico");
                 if (response.IsSuccess)
                 {
-                    var solicitud = new SolicitudViatico
-                    {
-                        IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico
-
-                    };
-                    response = await apiServicio.ObtenerElementoAsync(solicitud,
-                                                                 new Uri(WebApp.BaseAddress),
-                                                                 "api/ReliquidacionViaticos/ActualizarEstadoReliquidacion");
-                    if (response.IsSuccess)
-                    {
-                        return RedirectToAction("DetalleSolicitudViaticos", "SolicitudViaticosTH", new { id = reliquidacionViatico.IdEmpleado });
-                    }
-                    ViewData["Error"] = response.Message;
-                    return this.RedireccionarMensajeTime("ItinerarioViaticoTH", "Reliquidacion", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico }, $"{Mensaje.Error}|{response.Message}|{"25000"}");
+                    return RedirectToAction("Index", "ItinerarioViaticoTH", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico });
                 }
                 ViewData["Error"] = response.Message;
                 return this.RedireccionarMensajeTime("ItinerarioViaticoTH", "Reliquidacion", new { IdSolicitudViatico = reliquidacionViatico.IdSolicitudViatico }, $"{Mensaje.Error}|{response.Message}|{"25000"}");
@@ -626,169 +611,164 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         #region Reliquidacion
-        public async Task<IActionResult> Reliquidacion(int IdSolicitudViatico, string mensaje)
-        {
 
-            SolicitudViatico sol = new SolicitudViatico();
-            ListaEmpleadoViewModel empleado = new ListaEmpleadoViewModel();
-            List<ReliquidacionViatico> lista = new List<ReliquidacionViatico>();
+        public async Task<IActionResult> ReliquidacionEnContra(int IdSolicitudViatico, string mensaje)
+        {
             try
             {
+                var listaReliquidacion = new List<ReliquidacionViatico>();
 
+                var sol = new ViewModelsSolicitudViaticos
+                {
+                    IdSolicitudViatico = IdSolicitudViatico
+                };
                 if (IdSolicitudViatico.ToString() != null)
                 {
-                    var respuestaSolicitudViatico = await apiServicio.SeleccionarAsync<Response>(IdSolicitudViatico.ToString(), new Uri(WebApp.BaseAddress),
-                                                                  "api/SolicitudViaticos");
-                    //InicializarMensaje(null);
-                    if (respuestaSolicitudViatico.IsSuccess)
+                    var respuestaSolicitudViatico = await apiServicio.ObtenerElementoAsync1<ViewModelsSolicitudViaticos>(sol, new Uri(WebApp.BaseAddress),
+                                                                 "api/SolicitudViaticos/ObtenerSolicitudesViaticosporId");
+
+
+                    var reliquidacionViatico = new ReliquidacionViatico
                     {
-                        sol = JsonConvert.DeserializeObject<SolicitudViatico>(respuestaSolicitudViatico.Resultado.ToString());
-                        var solicitudViatico = new SolicitudViatico
-                        {
-                            IdEmpleado = sol.IdEmpleado,
-                        };
+                        IdSolicitudViatico = IdSolicitudViatico
+                    };
+                    listaReliquidacion = await apiServicio.ObtenerElementoAsync1<List<ReliquidacionViatico>>(reliquidacionViatico, new Uri(WebApp.BaseAddress)
+                                                             , "api/ReliquidacionViaticos/ListarReliquidaciones");
 
-                        var respuestaEmpleado = await apiServicio.SeleccionarAsync<Response>(solicitudViatico.IdEmpleado.ToString(), new Uri(WebApp.BaseAddress),
-                                                                     "api/Empleados");
+                    var valortotaReliquidacion = listaReliquidacion.Sum(x => x.ValorEstimado);
 
-                        if (respuestaEmpleado.IsSuccess)
-                        {
-                            var emp = JsonConvert.DeserializeObject<Empleado>(respuestaEmpleado.Resultado.ToString());
-                            var empleadoEnviar = new Empleado
-                            {
-                                NombreUsuario = emp.NombreUsuario,
-                            };
+                    ///Informe
+                    var informeViatico = new InformeViatico
+                    {
+                        IdSolicitudViatico = IdSolicitudViatico
+                    };
 
-                            empleado = await apiServicio.ObtenerElementoAsync1<ListaEmpleadoViewModel>(empleadoEnviar, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerDatosCompletosEmpleado");
+                    var listaintforme = await apiServicio.ObtenerElementoAsync1<List<InformeViatico>>(informeViatico, new Uri(WebApp.BaseAddress)
+                                                              , "api/InformeViaticos/ListarInformeViaticos");
+                    ///Valor total de informe
+                    var valortotaInforme = listaintforme.Sum(x => x.ValorEstimado);
 
+                    ///total facturas
+                    var facturas = new FacturaViatico()
+                    {
+                        IdSolicitudViatico = IdSolicitudViatico
 
-                            lista = new List<ReliquidacionViatico>();
-                            var reliquidacionViatico = new ReliquidacionViatico
-                            {
-                                IdSolicitudViatico = IdSolicitudViatico
-                            };
-                            lista = await apiServicio.ObtenerElementoAsync1<List<ReliquidacionViatico>>(reliquidacionViatico, new Uri(WebApp.BaseAddress)
-                                                                     , "api/ReliquidacionViaticos/ListarReliquidaciones");
+                    };
+                    var listaFacruras = await apiServicio.Listar<FacturaViatico>(facturas, new Uri(WebApp.BaseAddress)
+                                                             , "api/FacturaViatico/ListarFacturas");
+                    ///Valor total de Itinerario
+                    var valortotalfacturas = listaFacruras.Sum(x => x.ValorTotalFactura);
 
-                            var valortotaReliquidacion = lista.Sum(x => x.ValorEstimado);
-
-                            var ItinerarioViatico = new ItinerarioViatico
-                            {
-                                IdSolicitudViatico = sol.IdSolicitudViatico
-                            };
-
-                            var listaitinirario = await apiServicio.ObtenerElementoAsync1<List<ItinerarioViatico>>(ItinerarioViatico, new Uri(WebApp.BaseAddress)
-                                                                     , "api/ItinerarioViatico/ListarItinerariosViaticos");
-
-                            //}
-                            ///Valor total de Itinerario
-                            var valortotalVIaticos = listaitinirario.Sum(x => x.SolicitudViatico.ValorEstimado);
-                            ///Informe
-                            var informeViatico = new InformeViatico
-                            {
-                                IdSolicitudViatico = IdSolicitudViatico
-                            };
-
-                            var listaintforme = await apiServicio.ObtenerElementoAsync1<List<InformeViatico>>(informeViatico, new Uri(WebApp.BaseAddress)
-                                                                      , "api/InformeViaticos/ListarInformeViaticos");
-                            ///Valor total de informe
-                            var valortotaInforme = listaintforme.Sum(x => x.ValorEstimado);
-
-                            ///total facturas
-                            var facturas = new FacturaViatico()
-                            {
-                                IdSolicitudViatico = IdSolicitudViatico
-
-                            };
-                            var listaFacruras = await apiServicio.Listar<FacturaViatico>(facturas, new Uri(WebApp.BaseAddress)
-                                                                     , "api/FacturaViatico/ListarFacturas");
-                            ///Valor total de Itinerario
-                            var valortotalfacturas = listaFacruras.Sum(x => x.ValorTotalFactura);
-
-                            var valorCalculo = (valortotalVIaticos * 70) / 100;
-
-                            var ValorReliquidacion = calculos(Convert.ToDecimal(valortotaInforme), valortotalfacturas, Convert.ToDecimal(valorCalculo), Convert.ToDecimal(valortotalVIaticos));
-
-
-                            HttpContext.Session.SetInt32(Constantes.IdSolicitudtinerario, IdSolicitudViatico);
-                            HttpContext.Session.SetInt32(Constantes.ValorReliquidacion, Convert.ToInt32(ValorReliquidacion.Valor));
-
-                            //busca las actividades del informe
-                            var actividades = new InformeViatico
-                            {
-                                IdSolicitudViatico = IdSolicitudViatico
-                            };
-                            var Actividades = await apiServicio.ObtenerElementoAsync1<InformeActividadViatico>(actividades, new Uri(WebApp.BaseAddress)
-                                                                     , "api/InformeViaticos/ObtenerActividades");
-                            var descri = "";
-                            if (Actividades == null)
-                            {
-                                descri = "";
-                            }
-                            else
-                            {
-                                descri = Actividades.Descripcion;
-                            }
-
-                            var informeViaticoViewModel = new ReliquidacionViaticoViewModel
-                            {
-                                SolicitudViatico = sol,
-                                ListaEmpleadoViewModel = empleado,
-                                ReliquidacionViatico = lista,
-                                //FacturaViatico = listaFacruras,
-                                IdSolicitudViatico = sol.IdSolicitudViatico,
-                                Descripcion = descri,
-                                ValorReliquidacion = ValorReliquidacion.Valor,
-                                EstadoReliquidacion = ValorReliquidacion.Reliquidacion,
-                                ValorTotalReliquidacion = Convert.ToDecimal(valortotaReliquidacion)
-                            };
-
-                            //var respuestaPais = await apiServicio.SeleccionarAsync<Response>(informeViaticoViewModel.SolicitudViatico.IdPais.ToString(), new Uri(WebApp.BaseAddress),
-                            //                                         "api/Pais");
-                            //var pais = JsonConvert.DeserializeObject<Pais>(respuestaPais.Resultado.ToString());
-                            //var respuestaProvincia = await apiServicio.SeleccionarAsync<Response>(informeViaticoViewModel.SolicitudViatico.IdProvincia.ToString(), new Uri(WebApp.BaseAddress),
-                            //                                         "api/Provincia");
-                            //var provincia = JsonConvert.DeserializeObject<Provincia>(respuestaProvincia.Resultado.ToString());
-                            //var respuestaCiudad = await apiServicio.SeleccionarAsync<Response>(informeViaticoViewModel.SolicitudViatico.IdCiudad.ToString(), new Uri(WebApp.BaseAddress),
-                            //                                         "api/Ciudad");
-                            //var ciudad = JsonConvert.DeserializeObject<Ciudad>(respuestaCiudad.Resultado.ToString());
-                            //ViewData["IdPresupuesto"] = new SelectList(await apiServicio.Listar<Presupuesto>(new Uri(WebApp.BaseAddress), "api/Presupuesto/ListarPresupuesto"), "IdPresupuesto", "NumeroPartidaPresupuestaria");
-
-                            //ViewData["Pais"] = pais.Nombre;
-                            //ViewData["Provincia"] = provincia.Nombre;
-                            //ViewData["Ciudad"] = ciudad.Nombre;
-                            InicializarMensaje(mensaje);
-                            return View(informeViaticoViewModel);
-                        }
+                    var valorCalculo = (respuestaSolicitudViatico.ValorEstimado * 70) / 100;
+                    var EstadoReliquidacion = new ViewModelsSolicitudViaticos();
+                    if ((listaFacruras.Count() > 0 || listaintforme.Count > 0) && respuestaSolicitudViatico.Estado == 4)
+                    {
+                        EstadoReliquidacion = calculos(Convert.ToDecimal(valortotaInforme), valortotalfacturas, Convert.ToDecimal(valorCalculo), Convert.ToDecimal(respuestaSolicitudViatico.ValorEstimado));
                     }
+                    //HttpContext.Session.SetInt32(Constantes.IdSolicitudtinerario, IdSolicitudViatico);
+                    //HttpContext.Session.SetInt32(Constantes.ValorReliquidacion, Convert.ToInt32(ValorReliquidacion.Valor));
 
+                    ViewData["IdPresupuesto"] = new SelectList(await apiServicio.Listar<Presupuesto>(new Uri(WebApp.BaseAddress), "api/Presupuesto/ListarPresupuesto"), "IdPresupuesto", "NumeroPartidaPresupuestaria");
+                    respuestaSolicitudViatico.ListaReliquidacionViatico = listaReliquidacion;
+                    respuestaSolicitudViatico.Reliquidacion = EstadoReliquidacion.Reliquidacion;
+                    respuestaSolicitudViatico.Valor = EstadoReliquidacion.Valor;
+                    InicializarMensaje(mensaje);
+                    return View(respuestaSolicitudViatico);
                 }
-                InicializarMensaje(null);
                 return View();
             }
+
+            catch (Exception exe)
+            {
+                return BadRequest();
+            }
+        }
+        public async Task<IActionResult> Reliquidacion(int IdSolicitudViatico, string mensaje)
+        {
+            try
+            {
+                var listaReliquidacion = new List<ReliquidacionViatico>();
+
+                var sol = new ViewModelsSolicitudViaticos
+                {
+                    IdSolicitudViatico = IdSolicitudViatico
+                };
+                if (IdSolicitudViatico.ToString() != null)
+                {
+                    var respuestaSolicitudViatico = await apiServicio.ObtenerElementoAsync1<ViewModelsSolicitudViaticos>(sol, new Uri(WebApp.BaseAddress),
+                                                                 "api/SolicitudViaticos/ObtenerSolicitudesViaticosporId");
+
+
+                    var reliquidacionViatico = new ReliquidacionViatico
+                    {
+                        IdSolicitudViatico = IdSolicitudViatico
+                    };
+                    listaReliquidacion = await apiServicio.ObtenerElementoAsync1<List<ReliquidacionViatico>>(reliquidacionViatico, new Uri(WebApp.BaseAddress)
+                                                             , "api/ReliquidacionViaticos/ListarReliquidaciones");
+
+                    var valortotaReliquidacion = listaReliquidacion.Sum(x => x.ValorEstimado);
+
+                    ///Informe
+                    var informeViatico = new InformeViatico
+                    {
+                        IdSolicitudViatico = IdSolicitudViatico
+                    };
+
+                    var listaintforme = await apiServicio.ObtenerElementoAsync1<List<InformeViatico>>(informeViatico, new Uri(WebApp.BaseAddress)
+                                                              , "api/InformeViaticos/ListarInformeViaticos");
+                    ///Valor total de informe
+                    var valortotaInforme = listaintforme.Sum(x => x.ValorEstimado);
+
+                    ///total facturas
+                    var facturas = new FacturaViatico()
+                    {
+                        IdSolicitudViatico = IdSolicitudViatico
+
+                    };
+                    var listaFacruras = await apiServicio.Listar<FacturaViatico>(facturas, new Uri(WebApp.BaseAddress)
+                                                             , "api/FacturaViatico/ListarFacturas");
+                    ///Valor total de Itinerario
+                    var valortotalfacturas = listaFacruras.Sum(x => x.ValorTotalFactura);
+
+                    var valorCalculo = (respuestaSolicitudViatico.ValorEstimado * 70) / 100;
+                    var EstadoReliquidacion = new ViewModelsSolicitudViaticos();
+                    if ((listaFacruras.Count() > 0 || listaintforme.Count > 0) && respuestaSolicitudViatico.Estado == 4)
+                    {
+                        EstadoReliquidacion = calculos(Convert.ToDecimal(valortotaInforme), valortotalfacturas, Convert.ToDecimal(valorCalculo), Convert.ToDecimal(respuestaSolicitudViatico.ValorEstimado));
+                    }
+                    //HttpContext.Session.SetInt32(Constantes.IdSolicitudtinerario, IdSolicitudViatico);
+                    //HttpContext.Session.SetInt32(Constantes.ValorReliquidacion, Convert.ToInt32(ValorReliquidacion.Valor));
+
+                    ViewData["IdPresupuesto"] = new SelectList(await apiServicio.Listar<Presupuesto>(new Uri(WebApp.BaseAddress), "api/Presupuesto/ListarPresupuesto"), "IdPresupuesto", "NumeroPartidaPresupuestaria");
+                    respuestaSolicitudViatico.ListaReliquidacionViatico = listaReliquidacion;
+                    respuestaSolicitudViatico.Reliquidacion = EstadoReliquidacion.Reliquidacion;
+                    respuestaSolicitudViatico.Valor = EstadoReliquidacion.Valor;
+                    InicializarMensaje(mensaje);
+                    return View(respuestaSolicitudViatico);
+                }
+                return View();
+            }
+
             catch (Exception exe)
             {
                 return BadRequest();
             }
         }
 
-        public async Task<IActionResult> CreateReliquidacion()
+        public async Task<IActionResult> CreateReliquidacion(int id)
         {
 
-            var idIrininario = HttpContext.Session.GetInt32(Constantes.IdItinerario);
-            var IdSolicitudtinerario = HttpContext.Session.GetInt32(Constantes.IdSolicitudtinerario);
-            var ValorRequlidacion = HttpContext.Session.GetInt32(Constantes.ValorReliquidacion);
             ViewData["IdTipoTransporte"] = new SelectList(await apiServicio.Listar<TipoTransporte>(new Uri(WebApp.BaseAddress), "api/TiposDeTransporte/ListarTiposDeTransporte"), "IdTipoTransporte", "Descripcion");
             ViewData["IdCiudadDestino"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
             ViewData["IdCiudadOrigen"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
             ViewData["IdItemViatico"] = new SelectList(await apiServicio.Listar<ItemViatico>(new Uri(WebApp.BaseAddress), "api/ItemViaticos/ListarItemViaticosConReliquidacion"), "IdItemViatico", "Descripcion");
-            var itinerarioViatico = new ReliquidacionViatico
+            var reliquidacionViatico = new ReliquidacionViatico
             {
-                IdSolicitudViatico = Convert.ToInt32(IdSolicitudtinerario),
-                ValorRequlidacion = Convert.ToInt32(ValorRequlidacion)
+                IdSolicitudViatico = id,
+                //ValorRequlidacion = Convert.ToInt32(ValorRequlidacion)
             };
             InicializarMensaje(null);
-            return View(itinerarioViatico);
+            return View(reliquidacionViatico);
         }
 
         [HttpPost]
@@ -811,10 +791,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                                       , "api/SolicitudViaticos/ListarSolicitudesViaticosPorId");
                     if (solicitud != null)
                     {
-                        reliquidacionViatico.FechaSalida = solicitud.FechaSalida;
-                        reliquidacionViatico.HoraSalida = solicitud.HoraSalida;
-                        reliquidacionViatico.FechaLlegada = solicitud.FechaLlegada;
-                        reliquidacionViatico.HoraLlegada = solicitud.HoraLlegada;
+
 
                         response = await apiServicio.InsertarAsync(reliquidacionViatico,
                                                                      new Uri(WebApp.BaseAddress),
@@ -920,24 +897,41 @@ namespace bd.webappth.web.Controllers.MVC
         }
         #endregion
 
-        SolicitudViaticoViewModel calculos(decimal valortotaInforme, decimal valortotalfacturas, decimal valorCalculo, decimal valortotalVIaticos)
+        ViewModelsSolicitudViaticos calculos(decimal valortotaInforme, decimal valortotalfacturas, decimal valorCalculo, decimal valortotalVIaticos)
         {
-            var solicitudViaticoViewModel = new SolicitudViaticoViewModel();
+            var solicitudViaticoViewModel = new ViewModelsSolicitudViaticos();
 
 
-            if (valorCalculo >= valortotaInforme && valorCalculo >= valortotalfacturas)
+            if (valortotaInforme >= valorCalculo && valortotalfacturas >= valorCalculo)
             {
                 solicitudViaticoViewModel.Reliquidacion = 0;
             }
             else if (valortotalfacturas > valortotaInforme)
             {
                 solicitudViaticoViewModel.Reliquidacion = 1;
-                solicitudViaticoViewModel.Valor = valortotalfacturas - valortotaInforme;
+                var cal = valortotalfacturas - valortotaInforme;
+                if (cal == 0)
+                {
+                    solicitudViaticoViewModel.Valor = Convert.ToDecimal(valorCalculo - valortotalfacturas);
+                }
+                else
+                {
+                    solicitudViaticoViewModel.Valor = Convert.ToDecimal(valorCalculo - cal);
+                }
+
             }
             else if (valortotaInforme < valorCalculo && valortotalfacturas < valorCalculo)
             {
                 solicitudViaticoViewModel.Reliquidacion = -1;
-                solicitudViaticoViewModel.Valor = valortotalfacturas - valortotaInforme;
+                var cal = valortotalfacturas - valortotaInforme;
+                if (cal == 0)
+                {
+                    solicitudViaticoViewModel.Valor = Convert.ToDecimal(valorCalculo - valortotalfacturas);
+                }
+                else
+                {
+                    solicitudViaticoViewModel.Valor = Convert.ToDecimal(valorCalculo - cal);
+                }
             }
 
             return solicitudViaticoViewModel;

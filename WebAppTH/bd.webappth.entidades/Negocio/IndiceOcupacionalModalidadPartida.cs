@@ -21,7 +21,6 @@ namespace bd.webappth.entidades.Negocio
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal? SalarioReal { get; set; }
         
-        //Propiedades Virtuales Referencias a otras clases
 
         [Display(Name = "Índice ocupacional")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
@@ -30,7 +29,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Empleado")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdEmpleado { get; set; }
+        public int? IdEmpleado { get; set; }
         public virtual Empleado Empleado { get; set; }
 
         [Display(Name = "Fondo de financiamiento")]
@@ -43,17 +42,29 @@ namespace bd.webappth.entidades.Negocio
         public int? IdTipoNombramiento { get; set; }
         public virtual TipoNombramiento TipoNombramiento { get; set; }
         
-        public virtual ICollection<EmpleadoMovimiento> EmpleadoMovimiento { get; set; }
+        
+        [Display(Name = "Código")]
+        [Required(ErrorMessage = "El campo {0}, no debe estar vacío")]
+        public string CodigoContrato { get; set; }
 
-        public virtual ICollection<PartidasFase> PartidasFase { get; set; }
+        public int? IdModalidadPartida { get; set; }
+        public virtual ModalidadPartida ModalidadPartida { get; set; }
 
-        [NotMapped]
-        public int IdDependecia { get; set; }
-
-        [NotMapped]
-        public int IdModalidadPartida { get; set; }
-
-        [NotMapped]
+        [Display(Name = "Partida individual")]
         public string NumeroPartidaIndividual { get; set; }
+
+
+        [Display(Name = "Fecha fin")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? FechaFin { get; set; }
+
+        [NotMapped]
+        public int IdDependencia { get; set; }
+
+
+        public virtual ICollection<EmpleadoMovimiento> EmpleadoMovimientoIdIndiceOcupacionalModalidadPartidaDesde { get; set; }
+        public virtual ICollection<EmpleadoMovimiento> EmpleadoMovimientoIdIndiceOcupacionalModalidadPartidaHasta { get; set; }
+
     }
 }

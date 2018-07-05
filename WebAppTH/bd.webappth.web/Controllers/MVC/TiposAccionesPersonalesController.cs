@@ -295,6 +295,7 @@ namespace bd.webappth.web.Controllers.MVC
                         return RedirectToAction("Index", new { mensaje = response.Message});
                     }
 
+                    
                     ViewData["Error"] = response.Message;
 
 

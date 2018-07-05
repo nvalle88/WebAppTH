@@ -33,6 +33,9 @@ namespace bd.webappth.entidades.Negocio
 
         public virtual ICollection<Empleado> Empleado { get; set; }
 
+        public virtual ICollection<DetalleReliquidacionViatico> DetalleReliquidacionViaticoCiudadDestino { get; set; }
+        public virtual ICollection<DetalleReliquidacionViatico> DetalleReliquidacionViaticoCiudadOrigen { get; set; }
+
 
     }
 }

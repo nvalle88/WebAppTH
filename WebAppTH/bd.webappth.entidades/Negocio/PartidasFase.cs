@@ -26,6 +26,7 @@ namespace bd.webappth.entidades.Negocio
         public DateTime? Fecha { get; set; }
         public int Vacantes { get; set; }
         public int Estado { get; set; }
+        public bool Contrato { get; set; }
         public virtual ICollection<CandidatoConcurso> CandidatoConcurso { get; set; }
         public virtual TipoConcurso TipoConcurso { get; set; }
 
