@@ -1,5 +1,8 @@
 @model List<bd.webappth.entidades.ViewModels.ViewModelPartidaFase>
+@using bd.webappth.entidades.ViewModels
+@{ var modelo = new ViewModelPartidaFase { OpcionMenu = 1 }; }
 
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 @{
     ViewData["Title"] = "Concurso";
 }

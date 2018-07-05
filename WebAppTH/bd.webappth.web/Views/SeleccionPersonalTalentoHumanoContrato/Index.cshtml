@@ -1,6 +1,9 @@
 ﻿@model List<bd.webappth.entidades.ViewModels.ViewModelSeleccionPersonal>
 <link href="~/css/tabla/table.css" rel="stylesheet" />
+@using bd.webappth.entidades.ViewModels
+@{ var modelo = new ViewModelSeleccionPersonal { OpcionMenu = 1 }; }
 
+@{await Html.RenderPartialAsync("_PartialViewMenuInicio", modelo);}
 @{
     ViewData["Title"] = "Planificación de puestos";
 }
