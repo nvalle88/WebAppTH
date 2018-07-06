@@ -70,6 +70,7 @@ namespace bd.webappth.entidades.Constantes
         /// Variables de sección para calculo de Nomina 
         /// </summary>
         public const string IdCalculoNominaSession = "IdCalculoNominaSession";
+        public const string DescripcionCalculoNominaSession = "DescripcionCalculoNominaSession";
 
         /// <summary>
         /// Variables de sección para Capacitaciones

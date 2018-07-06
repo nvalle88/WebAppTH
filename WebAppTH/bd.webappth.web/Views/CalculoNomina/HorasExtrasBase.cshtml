@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.ReportadoNomina>
+@model List<bd.webappth.entidades.Negocio.HorasExtrasNomina>
 @using Microsoft.AspNetCore.Http;
 @using Microsoft.AspNetCore.Mvc;
 @using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,27 +12,57 @@
 }
 
 @using bd.webappth.entidades.Utils
-@{ var modelo = new MenuFichaCalculoNomina { OpcionMenu = 1 }; }
+@{ var modelo = new MenuFichaCalculoNomina { OpcionMenu = 2 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 @{ var subMenu = new MenuFichaCalculoNomina { OpcionMenu = 1 }; }
-@{await Html.RenderPartialAsync("_PartialViewSubMenuReportados", subMenu);}
+@{await Html.RenderPartialAsync("_PartialViewSubMenuHorasExtras", subMenu);}
 
 <div id="content">
+
+
     @{await Html.RenderPartialAsync("_PartialViewInformacion");}
+    <div class="row col col-12">
+        <div class="col-xs-6 col-sm-3 col-md-3 col-3">
+            @{await Html.RenderPartialAsync("_PartialViewIndex");}
+        </div>
+        <div class="col-xs-6 col-sm-1 col-md-1 col-1">
+            <a asp-action="LimpiarHorasExtras" asp-route-id="@nomina" onclick="cargando()">
+                <button type="button" asp-action="LimpiarHorasExtras" onclick="cargando()" class="btn btn-labeled btn-default">
+                    <span class="btn-label">
+                        <i class="fa fa-trash-o"></i>
+                    </span>Borrar todo
+                </button>
+            </a>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-3 col-3">
+           
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-5">
+            <ul id="sparks" class="">
+                <li class="sparks-info">
+                    <h5> Total de horas extraordinarias<span class="txt-color-green"><i class="fa fa-check"></i>&nbsp; @Model.Where(x => x.EsExtraordinaria == true).Sum(x => x.CantidadHoras)</span></h5>
+                </li>
+                <li class="sparks-info">
+                    <h5> Total de horas suplementarias<span class="txt-color-yellow"><i class="fa fa-clock-o"></i>&nbsp;@Model.Where(x => x.EsExtraordinaria == false).Sum(x => x.CantidadHoras)</span></h5>
+                </li>
+
+                <li class="sparks-info">
+                    <h5> </h5>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br />
     <p></p>
 
-    @{await Html.RenderPartialAsync("_PartialViewIndex");}
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a asp-action="LimpiarReportados" onclick="cargando()">
-        <button type="button" asp-action="LimpiarReportados" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="fa fa-trash-o"></i>
-            </span>Limpiar
-        </button>
-    </a>
+    
+
+
     <p> </p>
+
+
     <div class="jarviswidget jarviswidget-sortable" id="wid-id-11" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-custombutton="false" role="widget">
 
         <header role="heading" class="ui-sortable-handle">
@@ -40,7 +70,7 @@
 
                 <li class="active">
 
-                    <a data-toggle="tab" href="#hr1" aria-expanded="true"> <i class="fa fa-lg fa-thumbs-o-up"></i><span class="hidden-mobile hidden-tablet"> Datos reportados sin errores </span> <span class="badge bg-color-blue txt-color-white">@Model.Count()</span></a>
+                    <a data-toggle="tab" href="#hr1" aria-expanded="true"> <i class="fa fa-lg fa-thumbs-o-up"></i><span class="hidden-mobile hidden-tablet"> Horas extras </span> <span class="badge bg-color-blue txt-color-white">@Model.Count()</span></a>
 
                 </li>
             </ul>
@@ -69,19 +99,19 @@
                                                     <thead>
                                                         <tr>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoConcepto)
+                                                                Identificaci&oacute;n
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().IdentificacionEmpleado)
+                                                                Nombre y apellido
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreEmpleado)
+                                                                Cantidad de horas
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
+                                                                &iquest; Horas extraordinarias ?
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Importe)
+                                                                Opciones
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -90,19 +120,28 @@
                                                         {
                                                             <tr>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.CodigoConcepto)
-                                                                </td>
-                                                                <td>
                                                                     @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.NombreEmpleado)
+                                                                    @Html.DisplayFor(modelItem => item.Nombres) @Html.DisplayFor(modelItem => item.Apellidos)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Cantidad)
+                                                                    @Html.DisplayFor(modelItem => item.CantidadHoras)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Importe)
+
+                                                                    <span class="onoffswitch">
+                                                                        <input type="checkbox" disabled="disabled" checked="@item.EsExtraordinaria" name="start_interval" class="onoffswitch-checkbox" id="st11(@item.IdHorasExtrasNomina)">
+                                                                        <label class="onoffswitch-label" for="st11(@item.IdHorasExtrasNomina)">
+                                                                            <span class="onoffswitch-inner" data-swchon-text="SI" data-swchoff-text="NO"></span>
+                                                                            <span class="onoffswitch-switch">
+                                                                            </span>
+                                                                        </label>
+                                                                    </span>
+
+                                                                </td>
+                                                                <td>
+                                                                    @Html.ActionLink("Eliminar", "EliminarHoraExtra", new { id = item.IdHorasExtrasNomina }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
                                                                 </td>
                                                             </tr>
                                                         }

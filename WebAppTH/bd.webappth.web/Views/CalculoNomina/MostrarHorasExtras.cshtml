@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.Negocio.ReportadoNomina>
+@model List<bd.webappth.entidades.Negocio.HorasExtrasNomina>
 @using Microsoft.AspNetCore.Http;
 @using Microsoft.AspNetCore.Mvc;
 @using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,12 +12,12 @@
 }
 
 @using bd.webappth.entidades.Utils
-@{ var modelo = new MenuFichaCalculoNomina { OpcionMenu = 1 }; }
+@{ var modelo = new MenuFichaCalculoNomina { OpcionMenu = 2 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 
 @{ var subMenu = new MenuFichaCalculoNomina { OpcionMenu = 0 }; }
-@{await Html.RenderPartialAsync("_PartialViewSubMenuReportados", subMenu);}
+@{await Html.RenderPartialAsync("_PartialViewSubMenuHorasExtras", subMenu);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -31,8 +31,8 @@
         </button>
     </a>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a asp-action="ReportadoNomina" asp-route-id="@nomina" onclick="cargando()">
-        <button type="button" asp-action="ReportadoNomina" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
+    <a asp-action="HorasExtras" asp-route-id="@nomina" onclick="cargando()">
+        <button type="button" asp-action="HorasExtras" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-upload"></i>
             </span>Cargar archivo
@@ -93,19 +93,13 @@
                                                     <thead>
                                                         <tr>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoConcepto)
-                                                            </th>
-                                                            <th data-class="expand">
                                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().IdentificacionEmpleado)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreEmpleado)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CantidadHoras)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
-                                                            </th>
-                                                            <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Importe)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().EsExtraordinaria)
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -114,19 +108,14 @@
                                                         {
                                                             <tr>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.CodigoConcepto)
-                                                                </td>
-                                                                <td>
                                                                     @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
                                                                 </td>
+
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.NombreEmpleado)
+                                                                    @Html.DisplayFor(modelItem => item.CantidadHoras)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Cantidad)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Importe)
+                                                                    @Html.DisplayFor(modelItem => item.EsExtraordinaria)
                                                                 </td>
                                                             </tr>
                                                         }
@@ -157,22 +146,16 @@
                                                     <thead>
                                                         <tr>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoConcepto)
-                                                            </th>
-                                                            <th data-class="expand">
                                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().IdentificacionEmpleado)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreEmpleado)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CantidadHoras)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().EsExtraordinaria)
                                                             </th>
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Importe)
-                                                            </th>
-                                                            <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().MensajeError)
+                                                               Errores
                                                             </th>
 
                                                         </tr>
@@ -182,19 +165,13 @@
                                                         {
                                                             <tr>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.CodigoConcepto)
-                                                                </td>
-                                                                <td>
                                                                     @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.NombreEmpleado)
+                                                                    @Html.DisplayFor(modelItem => item.CantidadHoras)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Cantidad)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Importe)
+                                                                    @Html.DisplayFor(modelItem => item.EsExtraordinaria)
                                                                 </td>
                                                                 <td>
                                                                     @Html.DisplayFor(modelItem => item.MensajeError)

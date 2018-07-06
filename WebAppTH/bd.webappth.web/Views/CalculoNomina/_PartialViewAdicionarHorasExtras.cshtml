@@ -1,0 +1,38 @@
+@model bd.webappth.entidades.Negocio.HorasExtrasNomina
+<fieldset>
+    <div class="row">
+        <section class="col col-lg-7">
+            <label>Empleados</label>
+            <label class="input">
+                <select asp-for="IdEmpleado" class="form-control" asp-items="ViewBag.Empleados">
+                    <option value="0" selected="selected">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdEmpleado" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-lg-2">
+            <label>Cantidad de horas</label>
+            <label class="input">
+                <input type="number" asp-for="CantidadHoras" class="form-control" />
+                <span asp-validation-for="CantidadHoras" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-lg-3">
+            <label > &iquest; Horas extraordinarias ?</label>
+            <br />
+            <span class="onoffswitch">
+                <input type="checkbox" asp-for="EsExtraordinaria" name="start_interval" class="onoffswitch-checkbox" id="st11">
+                <label class="onoffswitch-label" for="st11">
+                    <span class="onoffswitch-inner" data-swchon-text="SI" data-swchoff-text="NO"></span>
+                    <span class="onoffswitch-switch">
+                    </span>
+                </label>
+            </span>
+        </section>
+    </div>
+    <br />
+    <div class="row">
+       
+    </div>
+</fieldset>
+<br />
