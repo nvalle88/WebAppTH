@@ -10,8 +10,8 @@ namespace bd.webappth.entidades.Negocio
         public int IdComportamientoObservable { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Comportamiento observable:")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        [Display(Name = "Comportamiento observable")]
+        [StringLength(1000, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Descripcion { get; set; }
 
 
@@ -22,13 +22,15 @@ namespace bd.webappth.entidades.Negocio
         public int? IdNivel { get; set; }
         public virtual Nivel Nivel { get; set; }
 
-        [Display(Name = "Denominación de la competencia:")]
+        [Display(Name = "Denominación de la competencia")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int? IdDenominacionCompetencia { get; set; }
         public virtual ICollection<EvaluacionCompetenciasTecnicasPuesto> EvaluacionCompetenciasTecnicasPuesto { get; set; }
         public virtual ICollection<EvaluacionCompetenciasUniversales> EvaluacionCompetenciasUniversales { get; set; }
         public virtual ICollection<EvaluacionTrabajoEquipoIniciativaLiderazgo> EvaluacionTrabajoEquipoIniciativaLiderazgo { get; set; }
         public virtual ICollection<IndiceOcupacionalComportamientoObservable> IndiceOcupacionalComportamientoObservable { get; set; }
+
+        [Display(Name = "Denominación de la competencia")]
         public virtual DenominacionCompetencia DenominacionCompetencia { get; set; }
 
 

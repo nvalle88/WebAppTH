@@ -72,6 +72,6 @@ namespace bd.webappth.entidades.Utils
 
         public static object NoProcesarSolicitud { get { return "No se ha podido porcesar la solicitud realizada "; } }
 
-        public static object AgregandoEmpleadoDistrivutibo { get { return "El empleado se ha insertado satisfactoriamente, complete el Formulario y presione Guardar para agregar el empleado al distrivutibo, en caso contrario Cancelar."; } }
+        public static object AgregandoEmpleadoDistrivutibo { get { return "El empleado se ha insertado satisfactoriamente, complete el Formulario y presione Guardar para agregar el empleado al distributivo, en caso contrario Cancelar."; } }
     }
 }

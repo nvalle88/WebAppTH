@@ -131,7 +131,7 @@ namespace bd.webappth.web.Controllers.MVC
                     
                     var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
                     new Uri(WebApp.BaseAddress),
-                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
+                    "api/IndicesOcupacionalesModalidadPartida/ListarIOMPVMCodigosDiferentes");
 
                     var model = new AccionPersonalViewModel
                     {
