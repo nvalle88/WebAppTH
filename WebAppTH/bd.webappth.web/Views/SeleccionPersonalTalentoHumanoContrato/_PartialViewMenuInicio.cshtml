@@ -1,0 +1,27 @@
+@model bd.webappth.entidades.ViewModels.ViewModelSeleccionPersonal
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+
+<div class="btn-group btn-group-justified">
+    
+    @if (Model.OpcionMenu == 0)
+    {
+        <a asp-action="Index" asp-controller="SeleccionPersonalTalentoHumano" style="background-color:#3276b1;color:white;" class="btn btn-default">Nombramiento <br /></a>
+    }
+    else
+    {
+        <a asp-action="Index" asp-controller="SeleccionPersonalTalentoHumano" class="btn btn-default"> Nombramiento <br /> </a>
+    }
+    @if (Model.OpcionMenu == 1)
+    {
+        <a asp-action="Index" asp-controller="SeleccionPersonalTalentoHumanoContrato" style="background-color:#3276b1;color:white;" class="btn btn-default">Contrato <br /> </a>
+
+    }
+    else
+    {
+        <a asp-action="Index" asp-controller="SeleccionPersonalTalentoHumanoContrato" class="btn btn-default">Contrato <br /> </a>
+    }
+
+</div>

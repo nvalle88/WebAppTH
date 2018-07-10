@@ -1,5 +1,8 @@
 @model List<bd.webappth.entidades.ViewModels.ViewModelPartidaFase>
+@using bd.webappth.entidades.ViewModels
+@{ var modelo = new ViewModelPartidaFase { OpcionMenu = 0 }; }
 
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 @{
     ViewData["Title"] = "Concurso";
 }
@@ -33,7 +36,7 @@
 
         }
     </div>
-    <p></p>   
+    <p></p>
     <p> </p>
     <!-- widget grid -->
     <section id="" class="">
@@ -84,8 +87,8 @@
                                         </th>
 
                                         @*<th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().VacantesCredo)
-                                        </th>*@
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().VacantesCredo)
+                                            </th>*@
 
 
                                         <th>Opciones</th>
@@ -94,33 +97,33 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.grupoOcupacional)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PuestoInstitucional)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Vacantes)
-                                        </td>
-                                        @*<td>
-                                            @Html.DisplayFor(modelItem => item.VacantesCredo)
-                                        </td>*@
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.grupoOcupacional)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PuestoInstitucional)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Vacantes)
+                                            </td>
+                                            @*<td>
+                                                    @Html.DisplayFor(modelItem => item.VacantesCredo)
+                                                </td>*@
 
-                                        <td>
-                                            @if (item.estado == 0)
-                                      {
-                                    @Html.ActionLink("Abrir postulacion", "Create", new { id = item.Idindiceocupacional , vacante = item.Vacantes })
-                                        }
-                                    else
-                                     {
+                                            <td>
+                                                @if (item.estado == 0)
+                                                {
+                                                    @Html.ActionLink("Abrir postulacion", "Create", new { id = item.Idindiceocupacional, vacante = item.Vacantes })
+                                                }
+                                                else
+                                                {
 
-                                    <label>Cerrado</label>
-                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdPartidaFase })
-                                        }
-                                        </td>
-                                    </tr>
+                                                    <label>Cerrado</label>
+                                                    @Html.ActionLink("Editar", "Edit", new { id = item.IdPartidaFase })
+                                                }
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

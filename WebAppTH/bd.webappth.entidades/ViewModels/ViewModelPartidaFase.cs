@@ -22,5 +22,6 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "Vacantes creadas:")]
         public int VacantesCredo { get; set; }
         public bool Contrato { get; set; }
+        public int OpcionMenu { get; set; }
     }
 }

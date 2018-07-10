@@ -5,6 +5,11 @@
 }
 
 <link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+
+@using bd.webappth.entidades.Utils
+@{ var modelo = new MenuFichaCalculoNomina { OpcionMenu = 0 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <div id="content">
     <section id="" class="">
         <div class="row">
@@ -46,23 +51,23 @@
         });
     </script>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-            function OcultarSuma() {
+        function OcultarSuma() {
 
-                if ($("#Suma").prop('checked')) {
+            if ($("#Suma").prop('checked')) {
                 $("#Suma").prop("checked", false);
             }
 
-            }
-            function OcultarResta() {
+        }
+        function OcultarResta() {
 
-                if ($("#Resta").prop('checked')) {
+            if ($("#Resta").prop('checked')) {
                 $("#Resta").prop("checked", false);
             }
 
 
-            }
+        }
     </script>
 
 }

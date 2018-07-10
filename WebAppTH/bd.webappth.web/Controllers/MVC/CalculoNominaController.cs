@@ -9,6 +9,7 @@ using bd.webappth.entidades.Constantes;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.ObjectTransfer;
 using bd.webappth.entidades.Utils;
+using bd.webappth.entidades.ViewModels;
 using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
 using Microsoft.AspNetCore.Hosting;
@@ -67,21 +68,12 @@ namespace bd.webappth.web.Controllers.MVC
             return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
         }
 
-        public async Task<IActionResult> ReportadoNomina(string id)
+        public async Task<IActionResult> ReportadoNomina()
         {
             try
             {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    if (HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession) !=Convert.ToInt32(id))
-                    {
-                        HttpContext.Session.SetInt32(Constantes.IdCalculoNominaSession, Convert.ToInt32(id));
-                    }
-                    var CalculoNomina = new CalculoNomina { IdCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina };
-                    return View(CalculoNomina);
-                }
+             return View(await ObtenerCalculoNomina());
 
-                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
             catch (Exception)
             {
@@ -89,19 +81,77 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        private async Task<FileInfo> SubirFichero(List<IFormFile> files)
+        public async Task<IActionResult> HorasExtras()
+        {
+            try
+            {
+                return View(await ObtenerCalculoNomina());
+
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
+            }
+        }
+
+        private async Task<FileInfo> SubirFichero(List<IFormFile> files,string folder)
         {
             byte[] data;
             using (var br = new BinaryReader(files[0].OpenReadStream()))
                 data = br.ReadBytes((int)files[0].OpenReadStream().Length);
             string sFileName = files[0].FileName;
-            await uploadFileService.UploadFile(data, "DocumentoNomina/Reportados", Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina), ".xlsx");
+            await uploadFileService.UploadFile(data, folder, Convert.ToString(ObtenerCalculoNomina().Result.IdCalculoNomina), ".xlsx");
             string sWebRootFolder = _hostingEnvironment.WebRootPath;
 
-            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, string.Format("{0}/{1}.{2}", "DocumentoNomina/Reportados", ObtenerCalculoNomina().IdCalculoNomina, "xlsx")));
+            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, string.Format("{0}/{1}.{2}", folder, ObtenerCalculoNomina().Result.IdCalculoNomina, "xlsx")));
             return file;
         }
 
+        private async Task<List<HorasExtrasNomina>> LeerExcelHorasExtras(FileInfo file)
+        {
+            try
+            {
+                var lista = new List<HorasExtrasNomina>();
+                var listaSalida = new List<HorasExtrasNomina>();
+                using (ExcelPackage package = new ExcelPackage(file))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                    int rowCount = worksheet.Dimension.Rows;
+                    var idCalculoNomina = ObtenerCalculoNomina().Result.IdCalculoNomina;
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        var identificacionEmpleado = worksheet.Cells[row, 1].Value == null ? "" : worksheet.Cells[row, 1].Value.ToString();
+                        var cantidadStr = worksheet.Cells[row, 2].Value == null ? Convert.ToString(0.0) : worksheet.Cells[row, 2].Value.ToString();
+                        var EsExtraordinaria = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
+
+
+                        cantidadStr = cantidadStr.Replace(",", ",");
+                        var cantidad = Convert.ToInt32(cantidadStr);
+                        
+
+                        lista.Add(new HorasExtrasNomina
+                        {
+                            IdCalculoNomina=idCalculoNomina,
+                            CantidadHoras=cantidad,
+                            IdentificacionEmpleado=identificacionEmpleado,
+                            EsExtraordinaria= EsExtraordinaria=="0" ? false:true
+                            
+                        });
+                    }
+
+                    listaSalida = await apiServicio.Listar<HorasExtrasNomina>(lista, new Uri(WebApp.BaseAddress),
+                                                   "api/ConceptoNomina/VerificarExcelHorasExtras");
+
+                }
+                return listaSalida;
+
+            }
+            catch (Exception ex)
+            {
+                return new List<HorasExtrasNomina>();
+            }
+        }
 
         private async Task<List<ReportadoNomina>> LeerExcel(FileInfo file)
         {
@@ -114,7 +164,7 @@ namespace bd.webappth.web.Controllers.MVC
                     StringBuilder sb = new StringBuilder();
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
                     int rowCount = worksheet.Dimension.Rows;
-                    var idCalculoNomina = ObtenerCalculoNomina().IdCalculoNomina;
+                    var idCalculoNomina = ObtenerCalculoNomina().Result.IdCalculoNomina;
                     for (int row = 2; row <= rowCount; row++)
                     {
                      var codigoConcepto =worksheet.Cells[row, 1].Value ==null ? "" : worksheet.Cells[row, 1].Value.ToString();
@@ -157,24 +207,17 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> LimpiarReportados(string id)
+        public async Task<IActionResult> LimpiarReportados()
         {
             try
             {
-
-                if (!string.IsNullOrEmpty(id))
-                {
-
-                    var calculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
-                    var response = await apiServicio.ObtenerElementoAsync1<Response>(calculoNomina, new Uri(WebApp.BaseAddress)
+                    var response = await apiServicio.ObtenerElementoAsync1<Response>(await ObtenerCalculoNomina(), new Uri(WebApp.BaseAddress)
                                                                               , "api/CalculoNomina/LimpiarReportados");
                     if (response.IsSuccess)
                     {
-                        return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                        return this.Redireccionar("CalculoNomina", "ReportadoNomina", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
                     return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
-                }
-                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
 
             }
             catch (Exception)
@@ -183,28 +226,105 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> MostrarExcelBase(string id)
+        public async Task<IActionResult> LimpiarHorasExtras()
         {
             try
             {
-
-                if (!string.IsNullOrEmpty(id))
+                var response = await apiServicio.ObtenerElementoAsync1<Response>(await ObtenerCalculoNomina(), new Uri(WebApp.BaseAddress)
+                                                                          , "api/CalculoNomina/LimpiarHorasExtras");
+                if (response.IsSuccess)
                 {
+                    return this.Redireccionar("CalculoNomina", "HorasExtras",$"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                }
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
 
-                    if (HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession) != Convert.ToInt32(id))
-                    {
-                        HttpContext.Session.SetInt32(Constantes.IdCalculoNominaSession, Convert.ToInt32(id));
-                    }
-                    var calculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
-                    var lista = await apiServicio.Listar<ReportadoNomina>(calculoNomina, new Uri(WebApp.BaseAddress)
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.Excepcion}");
+            }
+        }
+
+
+        private async Task CargarEmpleadosActivos()
+        {
+            ViewData["Empleados"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>( new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosActivos"), "IdEmpleado", "NombreApellido");
+        }
+
+
+        public async Task<IActionResult> AdicionarHorasExtras()
+        {
+            try
+            {
+               
+                await CargarEmpleadosActivos();
+                return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdicionarHorasExtras(HorasExtrasNomina horasExtrasNomina)
+        {
+            try
+            {
+                var a =await ObtenerCalculoNomina();
+                horasExtrasNomina.IdCalculoNomina =a.IdCalculoNomina;
+                var reportadoRequest = await apiServicio.InsertarAsync<Response>(horasExtrasNomina, new Uri(WebApp.BaseAddress),
+                               "api/ConceptoNomina/InsertarHorasExtrasNominaPorEmpleado");
+
+                if (!reportadoRequest.IsSuccess)
+                {
+                    await CargarEmpleadosActivos();
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}|{"45000"}";
+                    return View();
+                }
+                await CargarEmpleadosActivos();
+                this.TempData["MensajeTimer"] = $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}|{"45000"}";
+                return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IActionResult> HorasExtrasBase()
+        {
+            try
+            {
+                var lista = await apiServicio.Listar<HorasExtrasNomina>(await ObtenerCalculoNomina(), new Uri(WebApp.BaseAddress)
+                                                                          , "api/CalculoNomina/ListarHorasExtras");
+                if (lista.Count == 0)
+                {
+                    return this.Redireccionar("CalculoNomina", "HorasExtras", $"{Mensaje.Aviso}|{Mensaje.NoExistenRegistros}");
+                }
+                return View(lista);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IActionResult> MostrarExcelBase()
+        {
+            try
+            {
+                    var lista = await apiServicio.Listar<ReportadoNomina>(await ObtenerCalculoNomina(), new Uri(WebApp.BaseAddress)
                                                                               , "api/CalculoNomina/ListarReportados");
                     if (lista.Count == 0)
                     {
-                        return this.Redireccionar($"{Mensaje.Error}|{Mensaje.NoExistenRegistros}");
+                        return this.Redireccionar("CalculoNomina","ReportadoNomina",$"{Mensaje.Aviso}|{Mensaje.NoExistenRegistros}");
                     }
                     return View(lista); 
-                }
-                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
             catch (Exception)
             {
@@ -221,11 +341,11 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (files.Count <= 0)
                 {
-                    return this.Redireccionar("CalculoNomina", "ReportadoNomina", new { id = Convert.ToString(ObtenerCalculoNomina().IdCalculoNomina) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
+                    return this.Redireccionar("CalculoNomina", "ReportadoNomina", new { id = Convert.ToString(ObtenerCalculoNomina().Result.IdCalculoNomina) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
                 }
 
 
-                var file = await SubirFichero(files);
+                var file = await SubirFichero(files, "DocumentoNomina/Reportados");
                 var lista = await LeerExcel(file);
                 if (lista.Count==0)
                 {
@@ -259,6 +379,50 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MostrarHorasExtras(CalculoNomina calculoNomina, List<IFormFile> files)
+        {
+            try
+            {
+                if (files.Count <= 0)
+                {
+                    return this.Redireccionar("CalculoNomina", "HorasExtras", new { id = Convert.ToString(ObtenerCalculoNomina().Result.IdCalculoNomina) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
+                }
+                var file = await SubirFichero(files, "DocumentoNomina/HorasExtras");
+                var lista = await LeerExcelHorasExtras(file);
+                if (lista.Count == 0)
+                {
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.HorasExtrasNoCumpleFormato}|{"45000"}";
+                    return View(lista);
+                }
+                var listaSalvar = lista.Where(x => x.Valido == true).ToList();
+                var reportadoRequest = new Response();
+                if (listaSalvar.Count > 0)
+                {
+                    reportadoRequest = await apiServicio.InsertarAsync<Response>(listaSalvar, new Uri(WebApp.BaseAddress),
+                               "api/ConceptoNomina/InsertarHorasExtrasNomina");
+                }
+
+                var listaErrores = lista.Where(x => x.Valido == false).ToList();
+                if (listaErrores.Count > 0)
+                {
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{Mensaje.HorasExtrasConErrores}|{"12000"}";
+                }
+                else
+                {
+                    this.TempData["Mensaje"] = $"{Mensaje.Success}|{Mensaje.Satisfactorio}";
+                }
+
+                return View(lista);
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
+            }
+
+        }
 
         public async Task<IActionResult> Create(string mensaje)
         {
@@ -301,14 +465,25 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Detalle(int id)
         {
             try
             {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    var CalculoNomina = new CalculoNomina { IdCalculoNomina = Convert.ToInt32(id) };
-                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(CalculoNomina, new Uri(WebApp.BaseAddress),
+                    if (HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession) != id)
+                    {
+                        HttpContext.Session.SetInt32(Constantes.IdCalculoNominaSession, id);
+
+                        var calculoNomina = new CalculoNomina { IdCalculoNomina = id };
+
+                        var calculoRespuesta = await apiServicio.ObtenerElementoAsync1<Response>(calculoNomina, new Uri(WebApp.BaseAddress),
+                                      "api/CalculoNomina/ObtenerCalculoNomina");
+
+                        var calculoRespuestaD = JsonConvert.DeserializeObject<CalculoNomina>(calculoRespuesta.Resultado.ToString());
+
+                        HttpContext.Session.SetString(Constantes.DescripcionCalculoNominaSession, calculoRespuestaD.Descripcion);
+
+                    }
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(await ObtenerCalculoNomina(), new Uri(WebApp.BaseAddress),
                                                                   "api/CalculoNomina/ObtenerCalculoNomina");
                     if (respuesta.IsSuccess)
                     {
@@ -317,7 +492,6 @@ namespace bd.webappth.web.Controllers.MVC
                         await CargarComboxProcesoPeriodo();
                         return View(vista);
                     }
-                }
 
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
@@ -353,6 +527,33 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+
+        public async Task<IActionResult> EliminarHoraExtra(string id)
+        {
+
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    return this.Redireccionar($"{Mensaje.Error}|{Mensaje.RegistroNoExiste}");
+                }
+
+                var horaExtra = new HorasExtrasNomina { IdHorasExtrasNomina = Convert.ToInt32(id) };
+
+                var response = await apiServicio.EliminarAsync(horaExtra, new Uri(WebApp.BaseAddress)
+                                                               , "api/ConceptoNomina/EliminarHoraExtra");
+                if (response.IsSuccess)
+                {
+                    return this.Redireccionar("CalculoNomina","HorasExtrasBase",$"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                }
+                return this.Redireccionar("CalculoNomina", "HorasExtrasBase",$"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CalculoNomina CalculoNomina)
@@ -367,7 +568,7 @@ namespace bd.webappth.web.Controllers.MVC
                     if (response.IsSuccess)
                     {
 
-                        return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                        return this.Redireccionar("CalculoNomina","Detalle",new { id=ObtenerCalculoNomina().Result.IdCalculoNomina},$"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     await CargarComboxProcesoPeriodo();
@@ -419,13 +620,16 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public CalculoNomina ObtenerCalculoNomina()
+        public async Task<CalculoNomina> ObtenerCalculoNomina()
         {
-            var gastoPersonal = new CalculoNomina
+
+            var calculoNomina = new CalculoNomina
             {
                 IdCalculoNomina = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.IdCalculoNominaSession)),
+                Descripcion = HttpContext.Session.GetString(Constantes.DescripcionCalculoNominaSession),
+
             };
-            return gastoPersonal;
+            return calculoNomina;
         }
 
     }

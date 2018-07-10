@@ -1,0 +1,25 @@
+
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+
+@{
+    var descripcion = @Context.Session.GetString(Constantes.DescripcionCalculoNominaSession);
+}
+<fieldset>
+    <legend>N&oacute;mina</legend>
+    <div class="row col-lg-4">
+            <label>&nbsp; &nbsp; &nbsp; &nbsp;</label>
+            <label><b> Descripci&oacute;n:</b></label>
+            <label><b> @descripcion</b></label>
+    </div>
+</fieldset>
+<br />
+
+
+
+
+
+
+
