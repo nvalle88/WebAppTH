@@ -9,8 +9,8 @@ namespace bd.webappth.entidades.Negocio
         public int IdActividadesEsenciales { get; set; }
 
         [Required(ErrorMessage = "Debe introducir  {0}")]
-        [Display(Name = "Actividades esenciales:")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        [Display(Name = "Actividades esenciales")]
+        [StringLength(255, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Descripcion { get; set; }
 
 

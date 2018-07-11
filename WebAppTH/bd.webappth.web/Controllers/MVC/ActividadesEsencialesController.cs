@@ -11,6 +11,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -63,32 +64,21 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/ActividadesEsenciales/EliminarIndiceOcupacionalActividadesEsenciales");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1} {2} {3}", "Actividad esencial",
-                                                                                        IndiceOcupacionalAreaConocimiento.IdActividadesEsenciales, "Índice Ocupacional", IndiceOcupacionalAreaConocimiento.IdIndiceOcupacional),
-                        Message = "Registro deActividades esenciales",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
+                    /*
                     return RedirectToAction("ActividadesEsenciales", "IndicesOcupacionales", new { id = IndiceOcupacionalAreaConocimiento.IdIndiceOcupacional });
-                }
+                    */
+                    return this.Redireccionar(
+                            "ActividadesEsenciales",
+                            "IndicesOcupacionales",
+                             new { id = IndiceOcupacionalAreaConocimiento.IdIndiceOcupacional},
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
+            }
                 return BadRequest();
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Area de Conocimiento",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
+                
                 return BadRequest();
             }
         }
@@ -117,25 +107,14 @@ namespace bd.webappth.web.Controllers.MVC
                 {
 
 
-                    LogEntryTranfer logEntryTranfer = new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado una actividad esencial",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = "Actividades Esenciales",
-                        ObjectPrevious = "NULL",
-                        ObjectNext = JsonConvert.SerializeObject(response.Resultado),
-                    };
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
-
-                    return RedirectToAction("Index");
+                    return this.Redireccionar(
+                            "ActividadesEsenciales",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
                 }
 
-                ViewData["Error"] = response.Message;
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
                 return View(actividadesEsenciales);
 
             }
@@ -202,25 +181,17 @@ namespace bd.webappth.web.Controllers.MVC
                     if (response.IsSuccess)
                     {
 
-                        LogEntryTranfer logEntryTranfer = new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            ExceptionTrace = null,
-                            Message = "Se ha actualizado una actividad esencial",
-                            UserName = "Usuario 1",
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            EntityID = "Actividades Esenciales",
-                            ObjectPrevious = JsonConvert.SerializeObject(objetoAnterior.Resultado),
-                            ObjectNext = JsonConvert.SerializeObject(response.Resultado),
-                        };
-
-                        var responseLog = await GuardarLogService.SaveLogEntry(logEntryTranfer);
-
-                        
-                        return RedirectToAction("Index");
+                        return this.Redireccionar(
+                                "ActividadesEsenciales",
+                                "Index",
+                                $"{Mensaje.Success}|{response.Message}"
+                             );
                     }
-                    ViewData["Error"] = response.Message;
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+
+
                     return View(actividadesEsenciales);
 
                 }
@@ -276,30 +247,17 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/ActividadesEsenciales");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de actividad esencial eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+
+                    return this.RedireccionarMensajeTime(
+                            "ActividadesEsenciales",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                         );
                 }
                 return BadRequest();
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Actividad Esencial",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
 
                 return BadRequest();
             }
