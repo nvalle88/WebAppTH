@@ -49,7 +49,7 @@
 
                                     <div class="row">
                                         <section class="col col-4">
-                                            <label>R&eacute;gimen Laboral</label>
+                                            <label>R&eacute;gimen laboral</label>
                                             <label class="input">
                                                 <select id="IdRegimenLaboral" class="form-control" asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true' asp-for="IndiceOcupacionalModalidadPartida.TipoNombramiento.RelacionLaboral.IdRegimenLaboral">
                                                     <option value="0" selected="" disabled="">Seleccione</option>
@@ -57,7 +57,7 @@
                                             </label>
                                         </section>
                                         <section class="col col-4">
-                                            <label>Relaci&oacute;n Laboral</label>
+                                            <label>Relaci&oacute;n laboral</label>
                                             <label class="input">
                                                 <select id="IdRelacionLaboral" class="form-control" asp-items="ViewBag.IdRelacionLaboral" data-msg-required='El campo es requerido' data-rule-required='true' asp-for="IndiceOcupacionalModalidadPartida.TipoNombramiento.IdRelacionLaboral">
                                                     <option value="0" selected="" disabled=""></option>
@@ -65,9 +65,9 @@
                                             </label>
                                         </section>
                                         <section class="col col-4">
-                                            <label>Tipo de Nombramiento</label>
+                                            <label>Tipo de nombramiento / contrato</label>
                                             <label class="input">
-                                                <select id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control" asp-items="ViewBag.IdTipoNombramiento"></select>
+                                                <select id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control" asp-items="ViewBag.IdTipoNombramiento" data-msg-required='El campo es requerido' data-rule-required='true'></select>
                                                 <span asp-validation-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="text-danger"></span>
                                             </label>
                                         </section>
@@ -84,7 +84,7 @@
                                         <section class="col col-4">
                                             <label>Sucursal</label>
                                             <label class="input">
-                                                <select id="sucursal" asp-for="Dependencia.Sucursal.IdSucursal" asp-items="ViewBag.IdSucursal" class="form-control"></select>
+                                                <select id="sucursal" asp-for="Dependencia.Sucursal.IdSucursal" asp-items="ViewBag.IdSucursal" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true'></select>
                                                 <span asp-validation-for="Dependencia.Sucursal.IdSucursal" class="text-danger"></span>
                                             </label>
                                         </section>
@@ -103,7 +103,7 @@
                                     <div class="row">
                                         <section class="col col-4">
                                             <label>Perfil del puesto</label>
-                                            <select id="manualpuesto" asp-for="IndiceOcupacional.IdManualPuesto" class="form-control" asp-items="ViewBag.IdManualPuesto"></select>
+                                            <select id="manualpuesto" asp-for="IndiceOcupacional.IdManualPuesto" class="form-control" asp-items="ViewBag.IdManualPuesto" data-msg-required='El campo es requerido' data-rule-required='true'></select>
                                             <span asp-validation-for="IndiceOcupacional.IdManualPuesto" class="text-danger"></span>
                                         </section>
                                         <section class="col col-4">
@@ -181,7 +181,7 @@
 
                                         <section class="col col-4">
                                             <label>Fecha de primer ingreso</label>
-                                            <input asp-for="FechaPrimerIngreso" type="text" class="form-control" data-dateformat='dd/mm/yy' data-rule-required='true' readonly>
+                                            <input asp-for="FechaPrimerIngreso" type="text" class="form-control" data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true' readonly>
 
                                         </section>
 
