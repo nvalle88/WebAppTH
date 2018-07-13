@@ -11,6 +11,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -57,36 +58,20 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un Institucion Financiera",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Institucion Financiera:", InstitucionFinanciera.IdInstitucionFinanciera),
-                    });
-
-                    return RedirectToAction("Index");
+                    return this.RedireccionarMensajeTime(
+                    "InstitucionesFinancieras",
+                    "Index",
+                    $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
                 }
 
-                ViewData["Error"] = response.Message;
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
                 return View(InstitucionFinanciera);
 
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Institucion Financiera",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
-
+               
                 return BadRequest();
             }
         }
@@ -132,19 +117,15 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un registro sistema",
-                            UserName = "Usuario 1"
-                        });
-
-                        return RedirectToAction("Index");
+                        return this.RedireccionarMensajeTime(
+                    "InstitucionesFinancieras",
+                    "Index",
+                    $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
                     }
-                    ViewData["Error"] = response.Message;
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
                     return View(InstitucionFinanciera);
 
                 }
@@ -152,15 +133,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un Institucion Financiera",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
 
                 return BadRequest();
             }
@@ -179,15 +151,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando InstitucionFinancieraes",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
         }
@@ -201,32 +164,21 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/InstitucionesFinancieras");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    // return RedirectToAction("Index");
-                    return RedirectToAction("Index", new { mensaje = response.Message });
+                    return this.RedireccionarMensajeTime(
+                    "InstitucionesFinancieras",
+                    "Index",
+                    $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
+               
                 }
-                return BadRequest();
+                return this.RedireccionarMensajeTime(
+                    "InstitucionesFinancieras",
+                    "Index",
+                    $"{Mensaje.Error}|{response.Message}|{"7000"}"
+                    );
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Institucion Financieras",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
                 return BadRequest();
             }
         }

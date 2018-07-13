@@ -63,23 +63,23 @@ namespace bd.webappth.entidades.ViewModels
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaNacimiento { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        //[Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Lugar de trabajo ")]
-        [StringLength(500, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        //[StringLength(500, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string LugarTrabajo { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Teléfono privado ")]
-        [StringLength(20, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        //[Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Celular ")]
+        //[StringLength(20, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string TelefonoPrivado { get; set; }
 
         [Display(Name = "Teléfono de casa ")]
         [StringLength(20, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string TelefonoCasa { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        //[Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Ocupación ")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        //[StringLength(50, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Ocupacion { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

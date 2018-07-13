@@ -122,7 +122,7 @@
                                         <section class="col col-3">
                                             <label>Fecha de nacimiento</label>
                                             <label class="input">
-                                                <input asp-for="FechaNacimiento" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy' />
+                                                <input asp-for="FechaNacimiento" type="text" class="datepicker" data-dateformat='dd/mm/yy' />
                                                 <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
                                             </label>
                                         </section>
@@ -241,7 +241,7 @@
                                                     <span asp-validation-for="Numero" class="text-danger"></span>
                                                 </section>
                                                 <section class="col col-4">
-                                                    <label>Tel&eacute;fono de Privado </label>
+                                                    <label>Tel&eacute;fono Privado </label>
                                                     <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text" />
                                                     <span asp-validation-for="TelefonoPrivado" class="text-danger"></span>
                                                 </section>
@@ -259,7 +259,7 @@
                                                 <section class="col col-3">
                                                     <label>Ingreso al sector p&uacute;blico</label>
                                                     <label class="input">
-                                                        <input asp-for="FechaIngresoSectorPublico" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy' />
+                                                        <input asp-for="FechaIngresoSectorPublico" type="text" class="datepicker" data-dateformat='dd/mm/yy' />
                                                         <span asp-validation-for="FechaIngresoSectorPublico" class="text-danger"></span>
                                                     </label>
                                                 </section>
@@ -316,28 +316,26 @@
                                             <br />
                                             <div class="row">
                                                 <section class="col col-4">
-                                                    <label>&nbsp;&nbsp;</label>
-                                                    <label class="checkbox-inline">
-                                                        <label>&iquest; trabaj&oacute; en la superintendencia de bancos ?</label>
+                                                    <label class="col-lg-12">&iquest; Trabaj&oacute; en la superintendencia de bancos ?</label>
+                                                    <label class="col col-2 checkbox-inline">
+                                                        
                                                         <input type="checkbox" asp-for="TrabajoSuperintendenciaBanco" class="form-control" />
                                                     </label>
                                                 </section>
 
                                                 <section class="col col-2">
-                                                    <label>&nbsp;&nbsp;</label>
-                                                    <label class="checkbox-inline">
-                                                        <label>&iquest; Nepotismo ?</label>
+                                                    <label class="col-lg-12">Nepotismo:</label>
+
+                                                    <label class="col col-2 checkbox-inline">
                                                         <input type="checkbox" asp-for="Nepotismo" class="form-control" />
                                                     </label>
+
                                                 </section>
 
                                                 <section class="col col-6">
                                                     <label>Tipo de relaci&oacute;n</label>
-                                                    <select asp-for="TipoRelacion" class="form-control input">
-                                                        <option value="Contrato">Contrato</option>
-                                                        <option value="Codigo de trabajo">C&oacute;digo de trabajo</option>
-                                                    </select>
-                                                    <span asp-validation-for="TipoRelacion" class="text-danger"></span>
+                                                    <input asp-for="RelacionSuperintendencia" class="form-control input " type="text" />
+                                                    <span asp-validation-for="RelacionSuperintendencia" class="text-danger"></span>
                                                 </section>
                                             </div>
 
@@ -348,34 +346,60 @@
                                                     <input asp-for="AnoDesvinculacion" value="@Model.AnoDesvinculacion" class="form-control input " type="text" data-mask="9999" data-mask-placeholder="X" />
                                                     <span asp-validation-for="AnoDesvinculacion" class="text-danger"></span>
                                                 </section>
+
                                                 <section class="col col-2">
-                                                    <label>&nbsp;&nbsp;</label>
-                                                    <label class="checkbox-inline">
-                                                        <label>&iquest; Declaraci&oacute; jurada ?</label>
+                                                    &nbsp;
+                                                </section>
+
+                                                <section class="col col-6">
+                                                    <label class="col-lg-6">
+                                                    Presentaci&oacute;n de constancia de otorgamiento de la declaraci&oacute;n patrimonial jurada electr&oacute;nica
+                                                    </label>
+
+                                                    <label class="col col-2 checkbox-inline">
+                                                        
                                                         <input type="checkbox" asp-for="DeclaracionJurada" class="form-control" />
                                                     </label>
+
                                                 </section>
-                                                <section class="col col-2">
-                                                    <label>&nbsp;&nbsp;</label>
-                                                    <label class="checkbox-inline">
-                                                        <label>&iquest; Otros ingresos ?</label>
+
+
+
+                                            </div>
+
+                                            <br />
+                                            <br />
+
+                                            <div class="row">
+                                                <section class="col col-lg-8">
+                                                    <label class="col-lg-12">&iquest; Otros ingresos provenientes de otras actividades fuera de las del Banco de Desarrollo del Ecuador BP
+                                                    </label>
+
+                                                    <label class="col col-1 checkbox-inline">
                                                         <input type="checkbox" asp-for="OtrosIngresos" class="form-control" />
                                                     </label>
                                                 </section>
-                                                <section id="IdIngresoOtraActividad" class="col col-6">
+
+                                                @*<section id="IdIngresoOtraActividad" class="col col-6">
                                                     <label>Detalle de ingresos</label>
                                                     <input asp-for="IngresosOtraActividad" class="form-control input " type="text" />
                                                     <span asp-validation-for="IngresosOtraActividad" class="text-danger"></span>
+                                                </section>*@
+                                            </div>
+                                            
+                                            <br />
+                                            <br />
+
+                                            <div class="row">
+                                                <section class="col col-lg-12">
+                                                    <label class="label">Detalle</label>
+                                                    <label class="textarea">
+                                                        <textarea maxlength="2000" asp-for="Detalle" rows="10"></textarea>
+                                                        <span asp-validation-for="Detalle" class="text-danger"></span>
+                                                    </label>
                                                 </section>
                                             </div>
 
-                                            <section>
-                                                <label class="label">Detalle</label>
-                                                <label class="textarea">
-                                                    <textarea maxlength="2000" asp-for="Detalle" rows="10"></textarea>
-                                                    <span asp-validation-for="Detalle" class="text-danger"></span>
-                                                </label>
-                                            </section>
 
 
                                         </article>
