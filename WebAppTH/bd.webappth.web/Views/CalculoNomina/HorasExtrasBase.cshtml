@@ -111,6 +111,9 @@
                                                                 &iquest; Horas extraordinarias ?
                                                             </th>
                                                             <th data-class="expand">
+                                                                &iquest; Tipo ?
+                                                            </th>
+                                                            <th data-class="expand">
                                                                 Opciones
                                                             </th>
                                                         </tr>
@@ -118,32 +121,48 @@
                                                     <tbody>
                                                         @foreach (var item in Model)
                                                         {
-                                                            <tr>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Nombres) @Html.DisplayFor(modelItem => item.Apellidos)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.CantidadHoras)
-                                                                </td>
-                                                                <td>
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Nombres) @Html.DisplayFor(modelItem => item.Apellidos)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.CantidadHoras)
+                                                            </td>
+                                                            <td>
 
-                                                                    <span class="onoffswitch">
-                                                                        <input type="checkbox" disabled="disabled" checked="@item.EsExtraordinaria" name="start_interval" class="onoffswitch-checkbox" id="st11(@item.IdHorasExtrasNomina)">
-                                                                        <label class="onoffswitch-label" for="st11(@item.IdHorasExtrasNomina)">
-                                                                            <span class="onoffswitch-inner" data-swchon-text="SI" data-swchoff-text="NO"></span>
-                                                                            <span class="onoffswitch-switch">
-                                                                            </span>
-                                                                        </label>
-                                                                    </span>
+                                                                <span class="onoffswitch">
+                                                                    <input type="checkbox" disabled="disabled" checked="@item.EsExtraordinaria" name="start_interval" class="onoffswitch-checkbox" id="st11(@item.IdHorasExtrasNomina)">
+                                                                    <label class="onoffswitch-label" for="st11(@item.IdHorasExtrasNomina)">
+                                                                        <span class="onoffswitch-inner" data-swchon-text="SI" data-swchoff-text="NO"></span>
+                                                                        <span class="onoffswitch-switch">
+                                                                        </span>
+                                                                    </label>
+                                                                </span>
 
-                                                                </td>
-                                                                <td>
-                                                                    @Html.ActionLink("Eliminar", "EliminarHoraExtra", new { id = item.IdHorasExtrasNomina }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
-                                                                </td>
-                                                            </tr>
+                                                            </td>
+                                                            <td>
+                                                                @if (item.EsExtraordinaria)
+                                                                {
+                                                                <span class="onoffswitch">
+                                                                    <input type="checkbox" disabled="disabled" checked="@item.EsCienPorciento" name="start_interval" class="onoffswitch-checkbox" id="st11(@item.EsCienPorciento)">
+                                                                    <label class="onoffswitch-label" for="st11(@item.EsCienPorciento)">
+                                                                        <span class="onoffswitch-inner" data-swchon-text="100%" data-swchoff-text="60%"></span>
+                                                                        <span class="onoffswitch-switch">
+                                                                        </span>
+                                                                    </label>
+                                                                </span> /**/
+                                                                }
+                                                               
+
+
+                                                            </td>
+                                                            <td>
+                                                                @Html.ActionLink("Eliminar", "EliminarHoraExtra", new { id = item.IdHorasExtrasNomina }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
+                                                            </td>
+                                                        </tr>
                                                         }
                                                     </tbody>
                                                 </table>

@@ -52,83 +52,43 @@
         </section>
     </div>
     <div class="row">
-        <section class="col col-3">
-            <label class="label"> <b> Tipo de concepto</b></label>
+        <section class="col col-6">
+            <label class="label"> <b> Tipo de rubro</b></label>
             <hr />
             <label class="label"></label>
             <label class="radio">
-                Percepci&oacute;n <input name="TipoConcepto" type="radio" value="percepcion" asp-for="TipoConcepto" />
+                PERCEPCI&Oacute;N <input name="TipoConcepto" type="radio" value="percepcion" asp-for="TipoConcepto" />
                 <i></i>
             </label>
             <label class="radio">
-                Deducci&oacute;n <input name="TipoConcepto" type="radio" value="deduccion" asp-for="TipoConcepto" />
+               DEDUCCI&Oacute;N <input name="TipoConcepto" type="radio" value="deduccion" asp-for="TipoConcepto" />
                 <i></i>
             </label>
             <label class="radio">
-                Provis&oacute;n <input name="TipoConcepto" type="radio" value="provision" asp-for="TipoConcepto" />
+                PROVISI&Oacute;N <input name="TipoConcepto" type="radio" value="provision" asp-for="TipoConcepto" />
                 <i></i>
             </label>
-            <label class="radio">
-                Trabajo<input name="TipoConcepto" type="radio" value="trabajo" asp-for="TipoConcepto" />
-                <i></i>
-            </label>
+           
         </section>
 
-        <section class="col col-3">
-            <label class="label"> <b>Tipo de c&aacute;lculo </b></label>
+        <section class="col col-6">
+            <label class="label"> <b>RELACI&Oacute;N LABORAL </b></label>
             <hr />
             <label class="label"></label>
             <label class="radio">
-                Autom&aacute;tico <input name="TipoCalculo" type="radio" value="automatico" asp-for="TipoCalculo" />
+                NOMBRAMIENTO <input name="RelacionLaboral" type="radio" value="NOMBRAMIENTO" asp-for="RelacionLaboral" />
                 <i></i>
             </label>
             <label class="radio">
-                Reportado <input name="TipoCalculo" type="radio" value="reportado" asp-for="TipoCalculo" />
+                CONTRATO <input name="RelacionLaboral" type="radio" value="CONTRATO" asp-for="RelacionLaboral" />
                 <i></i>
             </label>
             <label class="radio">
-                Dependiente <input name="TipoCalculo" type="radio" value="dependiente" asp-for="TipoCalculo" />
+                AMBOS <input name="RelacionLaboral" type="radio" value="AMBOS" asp-for="RelacionLaboral" />
                 <i></i>
             </label>
             <br />
         </section>
-
-        <section class="col col-3">
-            <label class="label"> <b>Nivel de acumulaci&oacute;n </b></label>
-            <hr />
-            <label class="label"></label>
-            <label class="radio">
-                Periodo<input name="NivelAcumulacion" type="radio" value="periodo" asp-for="NivelAcumulacion" />
-                <i></i>
-            </label>
-            <label class="radio">
-                Mensual<input name="NivelAcumulacion" type="radio" value="mensual" asp-for="NivelAcumulacion" />
-                <i></i>
-            </label>
-            <label class="radio">
-                Anual<input name="NivelAcumulacion" type="radio" value="anual" asp-for="NivelAcumulacion" />
-                <i></i>
-            </label>
-            <label class="radio">
-                No Acumulable<input name="NivelAcumulacion" type="radio" value="noacumulable" asp-for="NivelAcumulacion" />
-                <i></i>
-            </label>
-        </section>
-
-        <section class="col col-3">
-            <label class="label"> <b> Registro en </b></label>
-            <hr />
-            <label class="label"></label>
-            <label class="radio">
-                D&iacute;as<input name="RegistroEn" type="radio" value="dias" asp-for="RegistroEn" />
-                <i></i>
-            </label>
-            <label class="radio">
-                Horas<input name="RegistroEn" type="radio" value="horas" asp-for="RegistroEn" />
-                <i></i>
-            </label>
-        </section>
-        
 
     </div>
     @*<div class="row">
