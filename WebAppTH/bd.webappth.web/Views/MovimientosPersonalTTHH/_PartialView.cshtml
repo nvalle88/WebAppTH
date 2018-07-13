@@ -97,13 +97,13 @@
 
         <section class="col col-lg-4">
             <div class="input col-lg-12">
-                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, false,new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbFalse", @disabled = "disabled" })&nbsp;No
+                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, false, new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbFalse", @disabled = "disabled" })&nbsp;No
             </div>
         </section>
 
         <section class="col col-lg-4">
             <div class="input col-lg-12">
-                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, true, new { onClick = "ValidarChkMovPersonal(this)" , @id = "rdbTrue" , @disabled = "disabled" })&nbsp;Si
+                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, true, new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbTrue", @disabled = "disabled" })&nbsp;Si
             </div>
             <input id="txtGenerarMovimiento" asp-for="GeneraMovimientoPersonal" type="text" hidden/>
         </section>
@@ -128,7 +128,7 @@
 
         </section>
 
-        <section class="col col-lg-4 divSituacionActual">
+        <section class="col col-lg-6 divSituacionActual">
 
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.NombreDependencia).ToString().TrimEnd(MyChar)</label>
             <label class="input col-lg-12">
@@ -148,7 +148,7 @@
 
         </section>
 
-        <section class="col col-lg-4 divSituacionActual">
+        <section class="col col-lg-6 divSituacionActual">
 
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.SituacionActualEmpleadoViewModel.Remuneracion).ToString().TrimEnd(MyChar)</label>
             <label class="input col-lg-12">
@@ -222,19 +222,24 @@
                         <tr>
 
                             <th data-class="expand">
-                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().IndiceOcupacionalViewModel.PartidaIndividual)
+                                @{
+                                    var codigo = Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().NumeroPartidaIndividual
+                                    + Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().CodigoContrato;
+                                }
+
+                                @codigo
                             </th>
 
                             <th data-class="expand">
-                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().IndiceOcupacionalViewModel.Sucursal)
+                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().IndiceOcupacionalViewModel.NombreSucursal)
                             </th>
 
                             <th data-class="expand">
-                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().IndiceOcupacionalViewModel.Dependencia)
+                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().IndiceOcupacionalViewModel.NombreDependencia)
                             </th>
 
                             <th data-class="expand">
-                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().IndiceOcupacionalViewModel.EscalaGrado)
+                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().IndiceOcupacionalViewModel.NombreEscalaGrados)
                             </th>
 
                             <th data-class="expand">
@@ -246,11 +251,11 @@
                             </th>
 
                             <th data-class="expand">
-                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().SalarioReal)
+                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().SalarioActual)
                             </th>
 
                             <th data-class="expand">
-                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().IndiceOcupacionalViewModel.ModalidadPartida)
+                                @Html.DisplayNameFor(model => Model.ListaIndicesOcupacionalesModalidadPartida.FirstOrDefault().NombreModalidadPartida)
                             </th>
 
                             <th data-class="expand">
@@ -268,19 +273,19 @@
 
 
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.IndiceOcupacionalViewModel.PartidaIndividual)
+                                    @Html.DisplayFor(modelItem => item.NumeroPartidaIndividual)
                                 </td>
 
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.IndiceOcupacionalViewModel.Sucursal)
+                                    @Html.DisplayFor(modelItem => item.IndiceOcupacionalViewModel.NombreSucursal)
                                 </td>
 
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.IndiceOcupacionalViewModel.Dependencia)
+                                    @Html.DisplayFor(modelItem => item.IndiceOcupacionalViewModel.NombreDependencia)
                                 </td>
 
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.IndiceOcupacionalViewModel.EscalaGrado)
+                                    @Html.DisplayFor(modelItem => item.IndiceOcupacionalViewModel.NombreEscalaGrados)
                                 </td>
 
                                 <td>
@@ -292,11 +297,11 @@
                                 </td>
 
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.SalarioReal)
+                                    @Html.DisplayFor(modelItem => item.SalarioActual)
                                 </td>
 
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.IndiceOcupacionalViewModel.ModalidadPartida)
+                                    @Html.DisplayFor(modelItem => item.NombreModalidadPartida)
                                 </td>
 
                                 <td>

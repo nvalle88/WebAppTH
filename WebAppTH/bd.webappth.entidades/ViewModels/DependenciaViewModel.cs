@@ -34,7 +34,7 @@ namespace bd.webappth.entidades.ViewModels
         [StringLength(100, MinimumLength = 2, ErrorMessage = "La {0} no puede tener más de {1} y menos de {2}")]
         public string NombreDependencia { get; set; }
 
-        [Display(Name = "Sucursal")]
+        [Display(Name = "Área geográfica")]
         public string NombreSucursal { get; set; }
         [Display(Name = "Área padre ")]
         public string NombreDependenciaPadre { get; set; }

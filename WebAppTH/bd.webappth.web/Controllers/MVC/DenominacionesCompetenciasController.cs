@@ -11,6 +11,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -64,21 +65,15 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado una denominación competencia",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Denominación Competencia:", denominacionCompetencia.IdDenominacionCompetencia),
-                    });
-
-                    return RedirectToAction("Index");
+                    return this.RedireccionarMensajeTime(
+                            "DenominacionesCompetencias",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                         );
+                    
                 }
 
-                ViewData["Error"] = response.Message;
+                this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{response.Message}|{"10000"}";
                 return View(denominacionCompetencia);
 
             }
@@ -139,19 +134,16 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Denominación Competencia", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un denominación competencia",
-                            UserName = "Usuario 1"
-                        });
+                        return this.RedireccionarMensajeTime(
+                            "DenominacionesCompetencias",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                         );
 
-                        return RedirectToAction("Index");
                     }
-                    ViewData["Error"] = response.Message;
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{response.Message}|{"10000"}";
+                    
                     return View(denominacionCompetencia);
 
                 }
@@ -159,15 +151,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un denominación competencia",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
 
                 return BadRequest();
             }
@@ -186,15 +169,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando denominaciones competencias",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
         }
@@ -208,32 +182,19 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/DenominacionesCompetencias");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Denominación Competencia", id),
-                        Message = "Registro de denominación competencia eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+
+                    return this.RedireccionarMensajeTime(
+                            "DenominacionesCompetencias",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                         );
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
+                return this.RedireccionarMensajeTime("DenominacionesCompetencias","Index", new { mensaje = response.Message });
                 //return BadRequest();
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Denominación Competencia",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
+                
                 return BadRequest();
             }
         }

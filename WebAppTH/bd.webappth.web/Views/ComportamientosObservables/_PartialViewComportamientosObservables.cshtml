@@ -24,7 +24,7 @@
     <section>
         <label class="label">@Html.DisplayNameFor(model => model.Descripcion)</label>
         <label class="textarea">
-            <textarea maxlength="252" asp-for="Descripcion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Descripcion)"></textarea>
+            <textarea maxlength="1000" asp-for="Descripcion" rows="4"></textarea>
             <span asp-validation-for="Descripcion" class="text-danger"></span>
         </label>
     </section>

@@ -5,7 +5,7 @@
         <section class="col col-8">
             <label class="label">@Html.DisplayNameFor(model => model.Nombre)</label>
             <label class="input">
-                <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
+                <input maxlength="250" asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </label>
         </section>
@@ -22,7 +22,7 @@
     <section>
         <label class="label">@Html.DisplayNameFor(model => model.Definicion)</label>
         <label class="textarea">
-            <textarea maxlength="1000" asp-for="Definicion" rows="5" placeholder="@Html.DisplayNameFor(model=>model.Definicion)"></textarea>
+            <textarea maxlength="1000" asp-for="Definicion" rows="5"></textarea>
             <span asp-validation-for="Definicion" class="text-danger"></span>
         </label>
     </section>
