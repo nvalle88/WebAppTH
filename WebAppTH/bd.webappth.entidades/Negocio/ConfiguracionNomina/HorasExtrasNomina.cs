@@ -21,6 +21,10 @@ namespace bd.webappth.entidades.Negocio
         public bool EsExtraordinaria { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "¿ Horas al 100 % ?")]
+        public bool EsCienPorciento { get; set; }
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Empleado")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdEmpleado { get; set; }

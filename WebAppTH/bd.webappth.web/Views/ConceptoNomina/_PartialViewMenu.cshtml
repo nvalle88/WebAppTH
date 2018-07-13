@@ -19,18 +19,6 @@
     }
 
 
-    @if (Model.OpcionMenu == 1)
-    {
-        <a asp-action="IndexConceptoConjunto" asp-controller="ConceptoNomina" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Relaci&oacute;n de conjuntos</a>
-
-    }
-    else
-    {
-        <a asp-action="IndexConceptoConjunto" asp-controller="ConceptoNomina" onclick="cargando()" class="btn btn-default">Relaci&oacute;n de conjuntos</a>
-
-
-    }
-
     @if (Model.OpcionMenu == 2)
     {
         <a asp-action="Formula" asp-controller="ConceptoNomina" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">F&oacute;rmula de c&aacute;lculo</a>

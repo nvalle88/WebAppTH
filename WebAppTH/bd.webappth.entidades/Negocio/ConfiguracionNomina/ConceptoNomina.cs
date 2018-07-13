@@ -28,14 +28,9 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Tipo de concepto")]
         public string TipoConcepto { get; set; }
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Tipo de cálculo")]
-        public string TipoCalculo { get; set; }
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Nivel de acumulación")]
-        public string NivelAcumulacion { get; set; }
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Registro en")]
-        public string RegistroEn { get; set; }
+        [Display(Name = "Relación laboral")]
+        public string RelacionLaboral { get; set; }
+
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Estatus")]
         public string Estatus { get; set; }
