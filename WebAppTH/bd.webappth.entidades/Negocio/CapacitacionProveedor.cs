@@ -18,6 +18,7 @@ namespace bd.webappth.entidades.Negocio
         public string Nombre { get; set; }
         public int IdPais { get; set; }
         public string Direccion { get; set; }
+        public string Especialidad { get; set; }
 
         public virtual ICollection<CapacitacionTemarioProveedor> CapacitacionTemarioProveedor { get; set; }
         public virtual Pais Pais { get; set; }

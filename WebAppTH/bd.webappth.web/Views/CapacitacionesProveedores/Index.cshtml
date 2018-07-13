@@ -87,6 +87,9 @@
                                         <th data-class="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
                                         </th>
+                                        <th data-class="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Especialidad)
+                                        </th>
                                         <th data-hide="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Direccion)
                                         </th>
@@ -99,24 +102,27 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Pais.Nombre)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Direccion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Telefono)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdCapacitacionProveedor }) |
-                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCapacitacionProveedor }, new { onclick = "return confirm('Desea eliminar la Capacitación de Proveedor... ?');" })
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Pais.Nombre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nombre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Especialidad)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Direccion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Telefono)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdCapacitacionProveedor }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdCapacitacionProveedor }, new { onclick = "return confirm('Desea eliminar la Capacitación de Proveedor... ?');" })
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
