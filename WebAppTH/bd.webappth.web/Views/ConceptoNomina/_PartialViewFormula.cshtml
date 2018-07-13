@@ -11,7 +11,6 @@
     {
         Listaconstantes = await ConstanteNomina.Listar("api/ConstanteNomina/ListarConstanteNomina");
         ListaFunciones = await FuncionNomina.Listar("api/FuncionNomina/ListarFuncionNomina");
-        ListaConjuntos = await ConjuntoNomina.Listar("api/ConjuntoNomina/ListarConjuntoNomina");
     }
     catch (Exception)
     {
@@ -23,39 +22,6 @@
 <fieldset>
     <div class="row">
         <section class="col col-lg-12">
-
-            <div class="panel-group smart-accordion-default" id="accordion-0">
-                <div class="panel panel-default">
-                    <div class="panel-heading bg-color-lighten">
-                        <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion-0" href="#collapseOne-0" aria-expanded="false" class="collapsed"> <i class="fa fa-fw fa-plus-circle txt-color-green"></i> <i class="fa fa-fw fa-minus-circle txt-color-red"></i> Conjuntos </a></h4>
-                    </div>
-                    <div id="collapseOne-0" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                        <div class="panel-body">
-                            <br />
-                            <div class="row col col-lg-12">
-                                @{ int c = 0;}
-                                @foreach (var item in ListaConjuntos)
-                                {
-                                    c = c + 1;
-                                    <div class="ui-menu-item col col-lg-4" style="border-width:2px;">
-                                        <a href="javascript:void(0);" onclick="anadirElememto('@item.AliasConcepto')">&bull; @item.AliasConcepto: @item.Descripcion &nbsp; C&oacute;digo: @item.Codigo </a>
-
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <br />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-    <div class="row">
-
-
-        <section class="col col-lg-12">
-
             <div class="panel-group smart-accordion-default" id="accordion-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">

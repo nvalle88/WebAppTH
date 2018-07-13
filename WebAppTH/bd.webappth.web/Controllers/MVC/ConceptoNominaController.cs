@@ -234,7 +234,7 @@ namespace bd.webappth.web.Controllers.MVC
 
              
             await CargarCombox();
-            var vista = new ConceptoNomina { TipoConcepto = "percepcion", Estatus = "Activo", TipoCalculo = "automatico", NivelAcumulacion = "periodo", RegistroEn = "dias" };
+            var vista = new ConceptoNomina { TipoConcepto = "percepcion", Estatus = "Activo", RelacionLaboral = "AMBOS"};
             return View(vista);
         }
 

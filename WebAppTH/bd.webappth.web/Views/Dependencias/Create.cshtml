@@ -41,7 +41,7 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>&Aacute;reas Usuarias</h2>
+                        <h2>Estructura org&aacute;nica</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -95,6 +95,33 @@
                         $("#sucursal").append('<option value="0" selected="" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
                             $("#sucursal").append('<option value="'
+                                + data.idSucursal + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+            })
+
+            $("#ciudad1").change(function () {
+            mostrarLoadingPanel("content", "Cargando...")
+            $("#sucursal1").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ListarSucursalesPorCiudad", "CeseFunciones")',
+                    dataType: 'json',
+                    data: { idciudad: $("#ciudad1").val() },
+                    success: function (data) {
+                        $("#sucursal1").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#sucursal1").append('<option value="'
                                 + data.idSucursal + '">'
                                 + data.nombre + '</option>');
 

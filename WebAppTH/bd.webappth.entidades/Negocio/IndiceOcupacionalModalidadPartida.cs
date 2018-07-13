@@ -37,7 +37,7 @@ namespace bd.webappth.entidades.Negocio
         public int? IdFondoFinanciamiento { get; set; }
         public virtual FondoFinanciamiento FondoFinanciamiento { get; set; }
 
-        [Display(Name = "Tipo de nombramiento")]
+        [Display(Name = "Tipo de nombramiento / contrato")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int? IdTipoNombramiento { get; set; }
         public virtual TipoNombramiento TipoNombramiento { get; set; }

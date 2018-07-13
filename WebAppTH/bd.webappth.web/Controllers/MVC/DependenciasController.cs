@@ -183,17 +183,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                                  "api/Dependencias/InsertarDependencia");
                     if (response.IsSuccess)
                     {
-
-                        var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            ExceptionTrace = null,
-                            Message = "Se ha creado un indice ocupacional",
-                            UserName = "Usuario 1",
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            EntityID = string.Format("{0} {1}", "Dependencia:", dependenciaViewModel.IdDependencia),
-                        });
+                        
 
                         return RedirectToAction("Index");
                     }

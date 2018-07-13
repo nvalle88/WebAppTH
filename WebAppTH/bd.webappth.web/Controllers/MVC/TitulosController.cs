@@ -11,6 +11,7 @@ using bd.log.guardar.ObjectTranfer;
 using bd.webappseguridad.entidades.Enumeradores;
 using Newtonsoft.Json;
 using bd.log.guardar.Enumeradores;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -73,22 +74,16 @@ namespace bd.webappth.web.Controllers.MVC
                                                              "api/Titulos/InsertarTitulo");
                 if (response.IsSuccess)
                 {
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un título",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Titulos:", titulo.IdTitulo),
-                    });
-
-                    return RedirectToAction("Index");
+                    
+                    return this.Redireccionar(
+                             "Titulos",
+                             "Index",
+                             $"{Mensaje.Success}|{response.Message}"
+                          );
                 }
 
-                ViewData["Error"] = response.Message;
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
                 ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
                 ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
                 return View(titulo);
@@ -96,15 +91,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Area de Conocimiento",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
 
                 return BadRequest();
             }
@@ -153,19 +139,16 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un título",
-                            UserName = "Usuario 1"
-                        });
-
-                        return RedirectToAction("Index");
+                        return this.Redireccionar(
+                             "Titulos",
+                             "Index",
+                             $"{Mensaje.Success}|{response.Message}"
+                          );
                     }
-                    ViewData["Error"] = response.Message;
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+
                     ViewData["IdEstudio"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
                     ViewData["IdAreaConocimiento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<AreaConocimiento>(new Uri(WebApp.BaseAddress), "api/AreasConocimientos/ListarAreasConocimientos"), "IdAreaConocimiento", "Descripcion");
                     return View(titulo);
@@ -203,15 +186,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando áreas de conocimientos",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+               
                 return BadRequest();
             }
         }
@@ -226,31 +201,24 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/Titulos");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Area de Conocimiento", id),
-                        Message = "Registro de título eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+
+                    return this.Redireccionar(
+                             "Titulos",
+                             "Index",
+                             $"{Mensaje.Success}|{response.Message}"
+                          );
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
+                
+                return this.RedireccionarMensajeTime(
+                             "Titulos",
+                             "Index",
+                             $"{Mensaje.Error}|{response.Message}|{"10000"}"
+                          );
+
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Area de Conocimiento",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
+                
                 return BadRequest();
             }
         }

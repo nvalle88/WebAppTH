@@ -1396,21 +1396,41 @@ namespace bd.webappth.web.Controllers.MVC
                 };
 
 
+                if (empleadoViewModel.IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento < 1)
+                {
+
+                    return this.RedireccionarMensajeTime(
+                            "Empleados",
+                            "AgregarDistributivo",
+                            empleadoViewModel,
+                            $"{Mensaje.Success}|{Mensaje.RequeridoFondoFinanciamiento}|{"7000"}"
+                         );
+                }
+
+
                 response = await apiServicio.InsertarAsync(indiceOcupacionalModalidadPartida,
                                                              new Uri(WebApp.BaseAddress),
                                                              "api/IndicesOcupacionalesModalidadPartida/InsertarIndiceOcupacionalModalidadPartida");
                 if (response.IsSuccess)
                 {
-                    
+
                     return this.Redireccionar(
                             "Empleados",
                             "Index",
                             $"{Mensaje.Success}|{response.Message}"
                          );
                 }
-
+                /*
                 this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{response.Message}|{"10000"}";
                 return BadRequest(response.Message);
+                */
+
+                return this.RedireccionarMensajeTime(
+                            "Empleados",
+                            "AgregarDistributivo",
+                            new{ IdEmpleado = empleadoViewModel.Empleado.IdEmpleado},
+                            $"{Mensaje.Error}|{response.Message}"
+                         );
 
             }
             catch (Exception ex)

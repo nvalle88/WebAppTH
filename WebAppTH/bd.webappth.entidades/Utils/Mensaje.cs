@@ -72,10 +72,13 @@ namespace bd.webappth.entidades.Utils
 
         public static object NoProcesarSolicitud { get { return "No se ha podido porcesar la solicitud realizada "; } }
 
-        public static object AgregandoEmpleadoDistrivutibo { get { return "El empleado se ha insertado satisfactoriamente, complete el Formulario y presione Guardar para agregar el empleado al distrivutibo, en caso contrario Cancelar."; } }
+        public static object AgregandoEmpleadoDistrivutibo { get { return "El empleado se ha insertado satisfactoriamente, complete el Formulario y presione Guardar para agregar el empleado al distributivo, en caso contrario Cancelar."; } }
+        
 
         public static object HorasExtrasNoCumpleFormato { get { return "Verifique el formato del archivo seleccionado,Nota: Debe seleccionar un archivo Excel(.xlsx).El cual debe contener el orden de las columnas de la siguiente distribución...1:Identificación del empleado, 2:Cantidad de horas, 3:1 si son horas extraordinarias ,0 si no son horas extraordinarias"; } }
 
         public static object HorasExtrasConErrores { get { return "Verifique la información de las horas extras cargadas ya que existen errores en su información, la información con errores no fue guardada..."; } }
+
+        public static object RequeridoFondoFinanciamiento { get { return "No ha seleccionado un fondo de financiamiento"; } }
     }
 }

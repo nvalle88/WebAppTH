@@ -2,21 +2,11 @@
 
 <fieldset>
     <div class="row">
-        <section class="col col-6">
-            <label class="label">Orden</label>
-            <label class="input">
-                <input maxlength="50" type="number" asp-for="Codigo" class="form-control" />
-                <span asp-validation-for="Codigo" class="text-danger"></span>
-            </label>
-        </section>
-        <section class="col col-6">
-            <label class="label">Unidad Administrativa</label>
-            <label class="input">
-                <input maxlength="250" asp-for="NombreDependencia" class="form-control" placeholder="Nombre" />
-                <span asp-validation-for="NombreDependencia" class="text-danger"></span>
-            </label>
+        <section class="col col-lg-12">
+            <legend>&Aacute;rea padre</legend>
         </section>
     </div>
+
     <div class="row">
         <section class="col col-4">
             <label class="label">@Html.DisplayNameFor(model => model.IdCiudad)</label>
@@ -30,7 +20,7 @@
         <section class="col col-4">
             <label class="label">@Html.DisplayNameFor(model => model.NombreSucursal)</label>
             <label class="input">
-                <select asp-for="IdSucursal" id="sucursal" asp- class="form-control" asp-items="ViewBag.IdSucursal">
+                <select id="sucursal" asp- class="form-control" asp-items="ViewBag.IdSucursal">
                     <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdSucursal)</option>
                 </select>
                 <span asp-validation-for="IdSucursal" class="text-danger"></span>
@@ -46,6 +36,49 @@
             </label>
         </section>
     </div>
+
+    <div class="row">
+        <section class="col col-lg-12">
+            <legend>Informaci&oacute;n dependencia</legend>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-6">
+            <label class="label">Orden</label>
+            <label class="input">
+                <input maxlength="7" pattern="[^.][0-9]+{1,7}" asp-for="Codigo" class="form-control" required />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-6">
+            <label class="label">Unidad Administrativa</label>
+            <label class="input">
+                <input maxlength="250" asp-for="NombreDependencia" class="form-control" placeholder="Nombre" />
+                <span asp-validation-for="NombreDependencia" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-4">
+            <label class="label">@Html.DisplayNameFor(model => model.IdCiudad)</label>
+            <label class="input">
+                <select asp-for="IdCiudad" class="form-control" id="ciudad1" asp-items="ViewBag.IdCiudad">
+                    <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdCiudad)</option>
+                </select>
+                <span asp-validation-for="IdCiudad" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label class="label">@Html.DisplayNameFor(model => model.NombreSucursal)</label>
+            <label class="input">
+                <select id="sucursal1" asp-for="IdSucursal" class="form-control" asp-items="ViewBag.IdSucursal">
+                    <option value="0" selected="" disabled="">@Html.DisplayNameFor(model => model.IdSucursal)</option>
+                </select>
+                <span asp-validation-for="IdSucursal" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
     <div class="row">
         <section class="col col-6">
             <label class="label">@Html.DisplayNameFor(model => model.NombreProceso)</label>
