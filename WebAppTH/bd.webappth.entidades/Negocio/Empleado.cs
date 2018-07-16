@@ -10,7 +10,7 @@ namespace bd.webappth.entidades.Negocio
         [Key]
         public int IdEmpleado { get; set; }
 
-        public DateTime FechaIngreso { get; set; }
+        public DateTime? FechaIngreso { get; set; }
 
         public DateTime? FechaIngresoSectorPublico { get; set; }
 

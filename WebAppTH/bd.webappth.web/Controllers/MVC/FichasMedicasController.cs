@@ -453,7 +453,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             }else{
 
-                mensaje = "Habitos Index mnes,ficha nodata";
+                mensaje = "Habitos Index,ficha nodata";
             }
 
             

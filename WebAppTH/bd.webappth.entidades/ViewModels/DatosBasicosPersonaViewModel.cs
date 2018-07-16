@@ -82,6 +82,6 @@ namespace bd.webappth.entidades.ViewModels
         public string SangreTipo { get; set; }
 
         [Display(Name = "fecha de ingreso a la institución")]
-        public DateTime FechaIngreso { get; set; }
+        public DateTime? FechaIngreso { get; set; }
     }
 }
