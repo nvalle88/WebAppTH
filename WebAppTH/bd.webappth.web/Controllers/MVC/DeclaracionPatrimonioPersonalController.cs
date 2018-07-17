@@ -13,6 +13,7 @@ using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
 using System.Security.Claims;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -26,44 +27,57 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
         }
 
-        public IActionResult Create(string mensaje)
+
+
+        public async Task<IActionResult> Create(int idEmpleado)
         {
-            if (!string.IsNullOrEmpty(mensaje))
-            {
-                ViewData["Error"] =mensaje;
+            var modelo = new ViewModelDeclaracionPatrimonioPersonal();
+            modelo.IdEmpleado = idEmpleado;
+
+            var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                modelo,
+                new Uri(WebApp.BaseAddress),
+                "api/DeclaracionPatrimonioPersonal/ObtenerDeclaracionPatrimonial");
+
+            if (respuesta.IsSuccess == true) {
+
+                modelo = JsonConvert.DeserializeObject<ViewModelDeclaracionPatrimonioPersonal>(respuesta.Resultado.ToString());
+                
             }
-            return View();
+
+            
+
+            return View(modelo);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ViewModelDeclaracionPatrimonioPersonal viewModelDeclaracionPatrimonioPersonal)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    ModelState.AddModelError(viewModelDeclaracionPatrimonioPersonal.DeclaracionPatrimonioPersonal.FechaDeclaracion.ToString(), "Debe introducir la fecha");
-            //    return View(viewModelDeclaracionPatrimonioPersonal);
-            //}
+            
 
             Response response = new Response();
             try
             {
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
-                var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-                var empleadoJson = ObtenerEmpleadoLogueado(NombreUsuario);
-                viewModelDeclaracionPatrimonioPersonal.DeclaracionPatrimonioPersonal.IdEmpleado = empleadoJson.Result.IdEmpleado;
-                //viewModelDeclaracionPatrimonioPersonal.
 
-                response = await apiServicio.InsertarAsync(viewModelDeclaracionPatrimonioPersonal,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/DeclaracionPatrimonioPersonal/InsertarDeclaracionPatrimonioPersonal");
+                response = await apiServicio.InsertarAsync(
+                    viewModelDeclaracionPatrimonioPersonal,
+                    new Uri(WebApp.BaseAddress),
+                    "api/DeclaracionPatrimonioPersonal/InsertarDeclaracionPatrimonioPersonal");
+
+
+
                 if (response.IsSuccess)
                 {
 
-                    return RedirectToAction("Create",new {mensaje=Mensaje.GuardadoSatisfactorio });
+                    return this.RedireccionarMensajeTime(
+                            "DeclaracionPatrimonioPersonal",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                         );
                 }
 
-                ViewData["Error"] = response.Message;
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"12000"}";
                 return View(viewModelDeclaracionPatrimonioPersonal);
 
             }
@@ -168,15 +182,29 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<DeclaracionPatrimonioPersonal>();
+            var lista = new List<ListaEmpleadoViewModel>();
             try
             {
-                lista = await apiServicio.Listar<DeclaracionPatrimonioPersonal>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/DeclaracionPatrimonioPersonal/ListarDeclaracionPatrimonioPersonal");
-                return View(lista);
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+
+                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+                    lista = await apiServicio.Listar<ListaEmpleadoViewModel>(
+                            new Uri(WebApp.BaseAddress)
+                            , "api/Empleados/ListarEmpleadosActivos");
+                    
+                    return View(lista);
+                }
+
+                return RedirectToAction("Login", "Login");
             }
             catch (Exception ex)
             {
+
                 return BadRequest();
             }
         }

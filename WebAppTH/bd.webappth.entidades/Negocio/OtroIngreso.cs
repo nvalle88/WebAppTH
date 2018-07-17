@@ -39,7 +39,7 @@ namespace bd.webappth.entidades.Negocio
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Total de otros ingresos :")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        //[DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal? Total { get; set; }
 
         public virtual DeclaracionPatrimonioPersonal IdDeclaracionPatrimonioPersonalNavigation { get; set; }
