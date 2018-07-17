@@ -127,7 +127,7 @@ namespace bd.webappth.web.Controllers.MVC
                         var Duracion = worksheet.Cells[row, 19].Value == null ? "0" : worksheet.Cells[row, 19].Value.ToString();
                         var Presupuesto = worksheet.Cells[row, 20].Value == null ? "0" : worksheet.Cells[row, 20].Value.ToString();
                         Fecha = Convert.ToDateTime(worksheet.Cells[row, 21].Value == null ? null : worksheet.Cells[row, 21].Value).Date;
-                        var TipoPlanificacion = worksheet.Cells[row, 22].Value == null ? "" : worksheet.Cells[row, 22].Value.ToString();
+                        //var TipoPlanificacion = worksheet.Cells[row, 22].Value == null ? "" : worksheet.Cells[row, 22].Value.ToString();
 
                         //var cantidadStr = worksheet.Cells[row, 4].Value == null ? Convert.ToString(0.0) : worksheet.Cells[row, 4].Value.ToString() ;
                         //var importeStr =worksheet.Cells[row, 5].Value == null ? Convert.ToString(0.0) :worksheet.Cells[row, 5].Value.ToString();
@@ -161,7 +161,7 @@ namespace bd.webappth.web.Controllers.MVC
                             Duracion = DuracionCapacitacion,
                             PresupuestoIndividual = ValorPresupuesto,
                             FechaCapacitacionPlanificada = Fecha,
-                            TipoCapacitacion = TipoPlanificacion,
+                            //TipoCapacitacion = TipoPlanificacion,
                             Estado = 1
                         });
 
@@ -464,7 +464,7 @@ namespace bd.webappth.web.Controllers.MVC
                 var envia = new GestionPlanCapacitacion { IdGestionPlanCapacitacion = Convert.ToInt32(id) };
 
                 var response = await apiServicio.EliminarAsync(envia, new Uri(WebApp.BaseAddress)
-                                                               , "api/GestionCapacitaciones/EliminarCalculoNomina");
+                                                               , "api/GestionCapacitaciones/EliminarGestionCapacitacion");
                 if (response.IsSuccess)
                 {
                     return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
@@ -510,7 +510,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
 
                 response = await apiServicio.EditarAsync<Response>(gestionPlanCapacitacion, new Uri(WebApp.BaseAddress),
-                                                             "api/GestionCapacitaciones/EditarCalculoNomina");
+                                                             "api/GestionCapacitaciones/EditarGestionCapacitaciones");
 
                 if (response.IsSuccess)
                 {
@@ -556,6 +556,12 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["IdCiudad"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
             ViewData["IdPresupuesto"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ViewModelPresupuesto>(new Uri(WebApp.BaseAddress), "api/Presupuesto/ListarPresupuestoCapacitaciones"), "IdPresupuesto", "NumeroPartidaPresupuestaria");
             ViewData["IdEmpleado"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosActivos"), "IdEmpleado", "NombreApellido");
+            ViewData["TipoCapacitacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GeneralCapacitacion>(new Uri(WebApp.BaseAddress), "api/GeneralCapacitacion/ListarGeneralCapacitacionTipoCapacitacion"), "IdGeneralCapacitacion", "Nombre");
+            ViewData["EstadoEvento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GeneralCapacitacion>(new Uri(WebApp.BaseAddress), "api/GeneralCapacitacion/ListarGeneralCapacitacionEstadoEvento"), "IdGeneralCapacitacion", "Nombre");
+            ViewData["AmbitoCapacitacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GeneralCapacitacion>(new Uri(WebApp.BaseAddress), "api/GeneralCapacitacion/ListarGeneralCapacitacionAmbitoCapacitacion"), "IdGeneralCapacitacion", "Nombre");
+            ViewData["NombreEvento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GeneralCapacitacion>(new Uri(WebApp.BaseAddress), "api/GeneralCapacitacion/ListarGeneralCapacitacionNombreEvento"), "IdGeneralCapacitacion", "Nombre");
+            ViewData["TipoEvento"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GeneralCapacitacion>(new Uri(WebApp.BaseAddress), "api/GeneralCapacitacion/ListarGeneralCapacitacionTipoEvento"), "IdGeneralCapacitacion", "Nombre");
+            ViewData["TipoEvaluacion"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<GeneralCapacitacion>(new Uri(WebApp.BaseAddress), "api/GeneralCapacitacion/ListarGeneralCapacitacionTipoEvaluacion"), "IdGeneralCapacitacion", "Nombre");
         }
     }
 }

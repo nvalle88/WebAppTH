@@ -60,19 +60,19 @@
         public DateTime? FechaCapacitacionPlanificada { get; set; }
         [Required]
         [Display(Name = "Tipo capacitación")]
-        public string TipoCapacitacion { get; set; }
+        public int? TipoCapacitacion { get; set; }
         [Required]
         [Display(Name = "Estado evento")]
-        public string EstadoEvento { get; set; }
+        public int? EstadoEvento { get; set; }
         [Required]
         [Display(Name = "Ambito capacitación")]
-        public string AmbitoCapacitacion { get; set; }
+        public int? AmbitoCapacitacion { get; set; }
         [Required]
         [Display(Name = "Nombre evento")]
-        public string NombreEvento { get; set; }
+        public int? NombreEvento { get; set; }
         [Required]
         [Display(Name = "Tipo evento")]
-        public string TipoEvento { get; set; }
+        public int? TipoEvento { get; set; }
         [Required]
         public int? IdProveedorCapacitaciones { get; set; }
         [Required]
@@ -91,7 +91,7 @@
         public decimal? ValorReal { get; set; }
         public int? IdCiudad { get; set; }
         [Display(Name = "Tipo evaluación")]
-        public string TipoEvaluacion { get; set; }
+        public int? TipoEvaluacion { get; set; }
         [Required]
         [Display(Name = "Ubicación")]
         public string Ubicacion { get; set; }
