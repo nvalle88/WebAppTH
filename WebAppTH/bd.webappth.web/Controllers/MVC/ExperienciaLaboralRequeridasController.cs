@@ -95,12 +95,6 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ExperienciaLaboralRequerida ExperienciaLaboralRequerida)
         {
-            if (!ModelState.IsValid)
-            {
-                InicializarMensaje(null);
-                return View(ExperienciaLaboralRequerida);
-
-            }
             Response response = new Response();
             try
             {

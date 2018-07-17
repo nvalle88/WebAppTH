@@ -193,44 +193,55 @@
     <div class="row">
         <section class="col col-6">
             <label>Tipo capacitacion</label>
-            <label class="input">
-                <input maxlength="250" asp-for="TipoCapacitacion" class="form-control" />
+            <div class="input">
+                <select asp-for="TipoCapacitacion" asp- class="form-control" asp-items="ViewBag.TipoCapacitacion">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                </select>
                 <span asp-validation-for="TipoCapacitacion" class="text-danger"></span>
-            </label>
+            </div>            
         </section>
 
         <section class="col col-6">
             <label>Estado evento</label>
-            <label class="input">
-                <input maxlength="250" asp-for="EstadoEvento" class="form-control" />
+            <div class="input">
+                <select asp-for="EstadoEvento" asp- class="form-control" asp-items="ViewBag.EstadoEvento">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                </select>
                 <span asp-validation-for="EstadoEvento" class="text-danger"></span>
-            </label>
+            </div>            
         </section>
     </div>
     <div class="row">
         <section class="col col-6">
             <label>Ambito de la capacitacion</label>
-            <label class="input">
-                <input maxlength="250" asp-for="AmbitoCapacitacion" class="form-control" />
+            <div class="input">
+                <select asp-for="AmbitoCapacitacion" asp- class="form-control" asp-items="ViewBag.AmbitoCapacitacion">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                </select>
                 <span asp-validation-for="AmbitoCapacitacion" class="text-danger"></span>
-            </label>
+            </div>
         </section>
 
         <section class="col col-6">
             <label>Nombre del evento</label>
-            <label class="input">
-                <input maxlength="250" asp-for="NombreEvento" class="form-control" />
+            <div class="input">
+                <select asp-for="NombreEvento" asp- class="form-control" asp-items="ViewBag.NombreEvento">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                </select>
                 <span asp-validation-for="NombreEvento" class="text-danger"></span>
-            </label>
+            </div>            
         </section>
     </div>
     <div class="row">
         <section class="col col-6">
             <label>Tipo evento</label>
-            <label class="input">
-                <input maxlength="250" asp-for="TipoEvento" class="form-control" />
+            <div class="input">
+                <select asp-for="TipoEvento" asp- class="form-control" asp-items="ViewBag.TipoEvento">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                </select>
                 <span asp-validation-for="TipoEvento" class="text-danger"></span>
-            </label>
+            </div>
+           
         </section>
 
         <section class="col col-6">
@@ -288,11 +299,12 @@
         </section>
         <section class="col col-6">
             <label>Tipo evaluaci&oacute;n</label>
-            <label class="input">
-                <input maxlength="250" asp-for="TipoEvaluacion" type="text" class="form-control" />
+            <div class="input">
+                <select asp-for="TipoEvaluacion" asp- class="form-control" asp-items="ViewBag.TipoEvaluacion">
+                    <option value="0" selected="selected" disabled="">Seleccione</option>
+                </select>
                 <span asp-validation-for="TipoEvaluacion" class="text-danger"></span>
-
-            </label>
+            </div>          
         </section>
     </div>
     <div class="row">
