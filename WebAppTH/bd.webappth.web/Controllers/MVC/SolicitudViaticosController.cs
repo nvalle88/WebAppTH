@@ -315,9 +315,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<ListaEmpleadoViewModel> ObtenerEmpleado(string nombreUsuario)
         {
-
-
-
             try
             {
                 if (!string.IsNullOrEmpty(nombreUsuario))
