@@ -10,7 +10,7 @@ namespace bd.webappth.entidades.Negocio
         [Key]
         public int IdEmpleado { get; set; }
 
-        public DateTime FechaIngreso { get; set; }
+        public DateTime? FechaIngreso { get; set; }
 
         public DateTime? FechaIngresoSectorPublico { get; set; }
 
@@ -65,8 +65,7 @@ namespace bd.webappth.entidades.Negocio
         public int? IdDependencia { get; set; }
         public virtual Dependencia Dependencia { get; set; }
 
-
-
+        public string RelacionSuperintendencia { get; set; }
 
         public virtual ICollection<RolPagos> RolPagos { get; set; }
 

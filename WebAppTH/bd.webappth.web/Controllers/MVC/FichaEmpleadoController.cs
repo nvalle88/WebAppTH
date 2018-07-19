@@ -70,13 +70,28 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-      
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreatePersonaEstudio(ViewModelPersonaEstudio viewModelPersonaEstudio)
         {
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
+
             var personaEstudio = new PersonaEstudio()
             {
                 FechaGraduado = viewModelPersonaEstudio.FechaGraduado,
@@ -96,36 +111,16 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado una persona estudio",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Persona Estudio:", personaEstudio.IdPersonaEstudio),
-                    });
-
                     return this.Redireccionar("FichaEmpleado", "IndexPersonaEstudio", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
                 ViewData["IdEstudio"] = new SelectList(await apiServicio.Listar<Estudio>(new Uri(WebApp.BaseAddress), "api/Estudios/ListarEstudios"), "IdEstudio", "Nombre");
-                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 return View(viewModelPersonaEstudio);
 
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando una Persona Estudio",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
 
                 return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
@@ -182,6 +177,21 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var empleado = ObtenerEmpleado();
+
+                if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+                {
+                    return this.RedireccionarMensajeTime(
+                        "Empleados",
+                        "Index",
+                        $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                        );
+                }
+
+
+
                 var personaEstudio = new PersonaEstudio()
                 {
                     IdPersonaEstudio = viewModelPersonaEstudio.IdPersonaEstudio,
@@ -212,7 +222,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                         return this.Redireccionar("FichaEmpleado", "IndexPersonaEstudio", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     return View(viewModelPersonaEstudio);
 
                 }
@@ -237,6 +247,20 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> IndexPersonaEstudio()
         {
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             var lista = new List<PersonaEstudio>();
             try
             {
@@ -318,6 +342,20 @@ namespace bd.webappth.web.Controllers.MVC
 
                 var empleado = ObtenerEmpleado();
 
+
+                if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+                {
+                    return this.RedireccionarMensajeTime(
+                        "Empleados",
+                        "Index",
+                        $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                        );
+                }
+
+
                 var trayectoriaLaboral = new TrayectoriaLaboral
                 {
                     FechaInicio = viewModelTrayectoriaLaboral.FechaInicio,
@@ -325,10 +363,11 @@ namespace bd.webappth.web.Controllers.MVC
                     Empresa = viewModelTrayectoriaLaboral.Empresa,
                     PuestoTrabajo = viewModelTrayectoriaLaboral.PuestoTrabajo,
                     DescripcionFunciones = viewModelTrayectoriaLaboral.DescripcionFunciones,
-                    AreaAsignada=viewModelTrayectoriaLaboral.AreaAsignada,
-                    FormaIngreso=viewModelTrayectoriaLaboral.FormaIngreso,
-                    MotivoSalida=viewModelTrayectoriaLaboral.MotivoSalida,
-                    TipoInstitucion=viewModelTrayectoriaLaboral.TipoInstitucion,
+                    AreaAsignada = viewModelTrayectoriaLaboral.AreaAsignada,
+                    FormaIngreso = viewModelTrayectoriaLaboral.FormaIngreso,
+                    MotivoSalida = viewModelTrayectoriaLaboral.MotivoSalida,
+                    TipoInstitucion = viewModelTrayectoriaLaboral.TipoInstitucion,
+
                 };
 
                 trayectoriaLaboral.IdPersona = empleado.IdPersona;
@@ -339,34 +378,15 @@ namespace bd.webappth.web.Controllers.MVC
                 if (response.IsSuccess)
                 {
 
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado una trayectoria laboral",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Trayectoria Laboral:", trayectoriaLaboral.IdTrayectoriaLaboral),
-                    });
                     return this.Redireccionar("FichaEmpleado", "IndexTrayectoriaLaboral", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
 
-                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 return View(viewModelTrayectoriaLaboral);
 
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Trayectoria Laboral",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
 
                 return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
@@ -429,6 +449,20 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 var empleado = ObtenerEmpleado();
+
+                if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+                {
+                    return this.RedireccionarMensajeTime(
+                        "Empleados",
+                        "Index",
+                        $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                        );
+                }
+
+
                 var trayectoriaLaboral = new TrayectoriaLaboral()
                 {
                     IdTrayectoriaLaboral = viewModelTrayectoriaLaboral.IdTrayectoriaLaboral,
@@ -463,7 +497,7 @@ namespace bd.webappth.web.Controllers.MVC
                         });
                         return this.Redireccionar("FichaEmpleado", "IndexTrayectoriaLaboral", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     return View(viewModelTrayectoriaLaboral);
 
                 }
@@ -489,6 +523,19 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
             var lista = new List<TrayectoriaLaboral>();
             try
             {
@@ -656,7 +703,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             await CargarCombos();
             return View();
-        } 
+        }
 
 
         [HttpPost]
@@ -665,6 +712,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             if (!ModelState.IsValid)
             {
                 await CargarCombos(empleadoFamiliarViewModel);
@@ -698,7 +759,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                  
+
 
                     var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
                                                                   "api/EmpleadoFamiliares");
@@ -724,7 +785,7 @@ namespace bd.webappth.web.Controllers.MVC
                             IdEmpleado = empleadoFamiliar.IdEmpleado,
                             IdEmpleadoFamiliar = empleadoFamiliar.IdEmpleadoFamiliar,
                             IdPersona = empleadoFamiliar.IdPersona,
-                            TelefonoCasa=empleadoFamiliar.Persona.TelefonoCasa,
+                            TelefonoCasa = empleadoFamiliar.Persona.TelefonoCasa,
 
                         };
                         await CargarCombosEdit();
@@ -748,7 +809,7 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
-               
+
 
                 if (!string.IsNullOrEmpty(id))
                 {
@@ -775,7 +836,7 @@ namespace bd.webappth.web.Controllers.MVC
                         });
                         return this.Redireccionar("FichaEmpleado", "IndexEmpleadoFamiliar", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     await CargarCombos(empleadoFamiliarViewModel);
                     return View(empleadoFamiliarViewModel);
 
@@ -802,6 +863,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             var lista = new List<EmpleadoFamiliar>();
             try
             {
@@ -844,7 +919,7 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario APP webappth"
                     });
                     return this.Redireccionar("FichaEmpleado", "IndexEmpleadoFamiliar", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
-                    
+
                 }
                 return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
@@ -877,13 +952,27 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             personaDiscapacidad.IdPersona = empleado.IdPersona;
             if (!ModelState.IsValid)
             {
                 ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                 return View(personaDiscapacidad);
             }
-            
+
 
             try
             {
@@ -987,6 +1076,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             var lista = new List<PersonaDiscapacidad>();
             try
             {
@@ -1029,7 +1132,7 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario APP webappth"
                     });
                     return this.Redireccionar("FichaEmpleado", "IndexPersonaDiscapacidad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
-                    
+
                 }
                 return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
@@ -1090,7 +1193,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     return this.Redireccionar("FichaEmpleado", "IndexDiscapacidadSustituto", new { id = discapacidadSustitutoRequest.IdPersonaSustituto }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                 return View(discapacidadSustitutoRequest);
             }
@@ -1105,12 +1208,12 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> CreateEnfermedadSustituto(int? id)
         {
-            if (id==null)
+            if (id == null)
             {
                 return this.Redireccionar("FichaEmpleado", "IndexEnfermedadSustituto", $"{Mensaje.Error}|{Mensaje.Error}");
             }
             ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
-            var enfermedadSustituto = new EnfermedadSustitutoRequest { IdPersonaSustituto =Convert.ToInt32(id)};
+            var enfermedadSustituto = new EnfermedadSustitutoRequest { IdPersonaSustituto = Convert.ToInt32(id) };
             return View(enfermedadSustituto);
         }
 
@@ -1132,7 +1235,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     return this.Redireccionar("FichaEmpleado", "IndexEnfermedadSustituto", new { id = enfermedadSustitutoRequest.IdPersonaSustituto }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
                 return View(enfermedadSustitutoRequest);
             }
@@ -1150,6 +1253,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             if (!ModelState.IsValid)
             {
                 ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
@@ -1165,7 +1282,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     return this.Redireccionar("FichaEmpleado", "IndexPersonaEnfermedad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
                 return View(personaEnfermedad);
             }
@@ -1177,7 +1294,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> EditEnfermedadSustituto(string idPersona,string idEnfermedad)
+        public async Task<IActionResult> EditEnfermedadSustituto(string idPersona, string idEnfermedad)
         {
             try
             {
@@ -1208,27 +1325,27 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditEnfermedadSustituto( EnfermedadSustitutoRequest enfermedadSustitutoRequest)
+        public async Task<IActionResult> EditEnfermedadSustituto(EnfermedadSustitutoRequest enfermedadSustitutoRequest)
         {
             Response response = new Response();
             try
             {
-                    if (!ModelState.IsValid)
-                    {
-                        ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
-                        return View(enfermedadSustitutoRequest);
-                    }
-
-                    response = await apiServicio.EditarAsync<Response>(enfermedadSustitutoRequest, new Uri(WebApp.BaseAddress),
-                                                                 "api/PersonaSustituto/EditarEnfermedadeSustituto");
-
-                    if (response.IsSuccess)
-                    {
-                    return this.Redireccionar("FichaEmpleado", "IndexEnfermedadSustituto", new { id = enfermedadSustitutoRequest.IdPersonaSustituto }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
-                    }
-                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                if (!ModelState.IsValid)
+                {
                     ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
                     return View(enfermedadSustitutoRequest);
+                }
+
+                response = await apiServicio.EditarAsync<Response>(enfermedadSustitutoRequest, new Uri(WebApp.BaseAddress),
+                                                             "api/PersonaSustituto/EditarEnfermedadeSustituto");
+
+                if (response.IsSuccess)
+                {
+                    return this.Redireccionar("FichaEmpleado", "IndexEnfermedadSustituto", new { id = enfermedadSustitutoRequest.IdPersonaSustituto }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                }
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
+                return View(enfermedadSustitutoRequest);
             }
             catch (Exception ex)
             {
@@ -1285,7 +1402,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     return this.Redireccionar("FichaEmpleado", "IndexDiscapacidadSustituto", new { id = discapacidadSustitutoRequest.IdPersonaSustituto }, $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
                 return View(discapacidadSustitutoRequest);
             }
@@ -1347,19 +1464,13 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una enfermedad del empleado",
-                            UserName = "Usuario 1"
-                        });
-                        return this.Redireccionar("FichaEmpleado", "IndexPersonaEnfermedad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+
+                        return this.Redireccionar("FichaEmpleado", "IndexPersonaEnfermedad", $"{Mensaje.Informacion}|{response.Message}");
                     }
-                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+
                     ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
+
                     return View(personaEnfermedad);
 
                 }
@@ -1367,15 +1478,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando una enfermedad de la persona",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
 
                 return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
@@ -1385,6 +1487,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             var lista = new List<PersonaEnfermedad>();
             try
             {
@@ -1460,6 +1576,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             if (!ModelState.IsValid)
             {
                 ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera", "Nombre");
@@ -1476,7 +1606,7 @@ namespace bd.webappth.web.Controllers.MVC
                     return this.Redireccionar("FichaEmpleado", "IndexDatoBancario", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
 
                 }
-                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera", "Nombre");
                 return View(datosBancarios);
             }
@@ -1531,8 +1661,8 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     if (!ModelState.IsValid)
                     {
-                      ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera", "Nombre");
-                        return View(datosBancarios);  
+                        ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera", "Nombre");
+                        return View(datosBancarios);
                     }
 
                     response = await apiServicio.EditarAsync(id, datosBancarios, new Uri(WebApp.BaseAddress),
@@ -1551,7 +1681,7 @@ namespace bd.webappth.web.Controllers.MVC
                         });
                         return this.Redireccionar("FichaEmpleado", "IndexDatoBancario", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
-                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                     ViewData["IdInstitucionFinanciera"] = new SelectList(await apiServicio.Listar<InstitucionFinanciera>(new Uri(WebApp.BaseAddress), "api/InstitucionesFinancieras/ListarInstitucionesFinancieras"), "IdInstitucionFinanciera", "Nombre");
                     return View(datosBancarios);
 
@@ -1578,6 +1708,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             var datobancario = new DatosBancarios();
             Response respuesta = new Response();
             try
@@ -1598,7 +1742,7 @@ namespace bd.webappth.web.Controllers.MVC
                     DatosBancarios datoBancarioVacio = new DatosBancarios();
                     return View(datoBancarioVacio);
                 }
-              
+
             }
             catch (Exception ex)
             {
@@ -1634,7 +1778,7 @@ namespace bd.webappth.web.Controllers.MVC
                         UserName = "Usuario APP webappth"
                     });
                     return this.Redireccionar("FichaEmpleado", "IndexDatoBancario", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
-                    
+
                 }
                 return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
@@ -1666,13 +1810,27 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> CreateEmpleadoContactoEmergencia(ContactoEmergenciaViewModel contactoEmergenciaViewModel)
         {
 
-            
+
             if (!ModelState.IsValid)
             {
                 ViewData["IdParentesco"] = new SelectList(await apiServicio.Listar<Parentesco>(new Uri(WebApp.BaseAddress), "api/Parentescos/ListarParentescos"), "IdParentesco", "Nombre");
                 return View(contactoEmergenciaViewModel);
             }
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             contactoEmergenciaViewModel.IdEmpleado = empleado.IdEmpleado;
 
             try
@@ -1683,7 +1841,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     return this.Redireccionar("FichaEmpleado", "IndexEmpleadoContactoEmergencia", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
-                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
+                this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdParentesco"] = new SelectList(await apiServicio.Listar<Parentesco>(new Uri(WebApp.BaseAddress), "api/Parentescos/ListarParentescos"), "IdParentesco", "Nombre");
                 return View(contactoEmergenciaViewModel);
             }
@@ -1712,7 +1870,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
 
                         var empleadoContactoEmergencia = JsonConvert.DeserializeObject<ContactoEmergenciaViewModel>(respuesta.Resultado.ToString());
-                       
+
                         ViewData["IdParentesco"] = new SelectList(await apiServicio.Listar<Parentesco>(new Uri(WebApp.BaseAddress), "api/Parentescos/ListarParentescos"), "IdParentesco", "Nombre");
                         return View(empleadoContactoEmergencia);
                     }
@@ -1761,7 +1919,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-               
+
 
                 return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
@@ -1771,6 +1929,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             var empleadoContactoEmergencia = new EmpleadoContactoEmergencia();
             try
             {
@@ -1808,9 +1980,17 @@ namespace bd.webappth.web.Controllers.MVC
             // Cargar brigada sso
             ViewData["IdBrigadaSSO"] = new SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
 
+            int idBrigada = 0;
+
+            if (datosBasicosEmpleado.IdBrigadaSSORol != null) {
+
+                idBrigada = (int)datosBasicosEmpleado.IdBrigadaSSORol;
+            }
             //Cargar Brigada SSO Rol
-            var listaBrigadaSSORol = await apiServicio.Listar<BrigadaSSORol>(new BrigadaSSO { IdBrigadaSSO = datosBasicosEmpleado.IdBrigadaSSO }, new Uri(WebApp.BaseAddress), "api/BrigadasSSORoles/ListarBrigadasSSORolesPorBrigadaSSO");
-            ViewData["IdBrigadaSSORol"] = new SelectList (listaBrigadaSSORol , "IdBrigadaSSORol", "Nombre",datosBasicosEmpleado.IdBrigadaSSORol);
+            var listaBrigadaSSORol = await apiServicio.Listar<BrigadaSSORol>(new BrigadaSSO { IdBrigadaSSO = idBrigada }, new Uri(WebApp.BaseAddress), "api/BrigadasSSORoles/ListarBrigadasSSORolesPorBrigadaSSO");
+
+            ViewData["IdBrigadaSSORol"] = new SelectList(listaBrigadaSSORol, "IdBrigadaSSORol", "Nombre", datosBasicosEmpleado.IdBrigadaSSORol);
+
 
             //Nacionalidades indígenas
             var Etnia = new Etnia { IdEtnia = datosBasicosEmpleado.IdEtnia };
@@ -1903,6 +2083,20 @@ namespace bd.webappth.web.Controllers.MVC
 
             var empleado = ObtenerEmpleado();
 
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
+
             Response response = new Response();
            
                 var empleadoActual = new DatosBasicosEmpleadoViewModel { IdEmpleado = empleado.IdEmpleado };
@@ -1966,6 +2160,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             if (!ModelState.IsValid)
             {
                 await CargarCombosPersonaSustituto();
@@ -2118,6 +2326,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             try
             {
                 var empleadoActual = new ViewModelEmpleadoSustituto { IdEmpleado = empleado.IdEmpleado };
@@ -2259,6 +2481,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             if (!ModelState.IsValid)
             {
                 ViewData["IdTipoDiscapacidad"] = new SelectList(await apiServicio.Listar<TipoDiscapacidad>(new Uri(WebApp.BaseAddress), "api/TiposDiscapacidades/ListarTiposDiscapacidades"), "IdTipoDiscapacidad", "Nombre");
@@ -2370,6 +2606,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             var empleado = ObtenerEmpleado();
+
+            if (
+                empleado.IdPersona == 0
+                && empleado.IdEmpleado == 0
+                )
+            {
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"16000"}"
+                    );
+            }
+
+
             var lista = new List<PersonaDiscapacidad>();
             try
             {
@@ -2438,6 +2688,9 @@ namespace bd.webappth.web.Controllers.MVC
                 IdPersona = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idPersonaSession)),
                 IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idEmpleadoSession)),
             };
+
+            
+
             return empleado;
         }
     }

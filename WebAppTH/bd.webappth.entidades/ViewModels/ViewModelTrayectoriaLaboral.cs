@@ -31,12 +31,12 @@ namespace bd.webappth.entidades.ViewModels
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Puesto de Trabajo:")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        [StringLength(205, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string PuestoTrabajo { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        //[Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Tipo de Institución:")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        //[StringLength(100, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string TipoInstitucion { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]

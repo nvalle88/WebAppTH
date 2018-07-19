@@ -63,21 +63,23 @@
                                 <input type="hidden" asp-for="IdCapacitacionProveedor"/>
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-4">
+                                        <section class="col col-6">
                                             <label class="label">@Html.DisplayNameFor(model => model.Nombre)</label>
                                             <label class="input">
                                                 <input maxlength="32" asp-for="Nombre" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Nombre)" />
                                                 <span asp-validation-for="Nombre" class="text-danger"></span>
                                             </label>
                                         </section>
-                                        <section class="col col-4">
+                                        <section class="col col-6">
                                             <label class="label">@Html.DisplayNameFor(model => model.Telefono)</label>
                                             <label class="input">
                                                 <input maxlength="32" asp-for="Telefono" class="form-control" placeholder="@Html.DisplayNameFor(model=>model.Telefono)" />
                                                 <span asp-validation-for="Telefono" class="text-danger"></span>
                                             </label>
                                         </section>
-                                        <section class="col col-4">
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
                                             <label class="label">@Html.DisplayNameFor(model => model.Pais.Nombre)</label>
                                             <label class="input">
                                                 <select asp-for="IdPais" class="form-control" asp-items="ViewBag.IdPais">
@@ -86,15 +88,23 @@
                                                 <span asp-validation-for="IdPais" class="text-danger"></span>
                                             </label>
                                         </section>
+                                        <section class="col col-4">
+                                            <label class="label">@Html.DisplayNameFor(model => model.Especialidad)</label>
+                                            <label class="textarea">
+                                                <textarea asp-for="Especialidad" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Especialidad)"></textarea>
+                                                <span asp-validation-for="Especialidad" class="text-danger"></span>
+                                            </label>
+                                        </section>
                                     </div>
-
-                                    <section>
-                                        <label class="label">@Html.DisplayNameFor(model => model.Direccion)</label>
-                                        <label class="textarea">
-                                            <textarea maxlength="50" asp-for="Direccion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Direccion)"></textarea>
-                                            <span asp-validation-for="Direccion" class="text-danger"></span>
-                                        </label>
-                                    </section>
+                                    <div class="row">
+                                        <section class="col col-12">
+                                            <label class="label">@Html.DisplayNameFor(model => model.Direccion)</label>
+                                            <label class="textarea">
+                                                <textarea maxlength="250" asp-for="Direccion" rows="2" placeholder="@Html.DisplayNameFor(model=>model.Direccion)"></textarea>
+                                                <span asp-validation-for="Direccion" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
 
                                 </fieldset>
                                 <footer>

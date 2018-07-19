@@ -8,13 +8,13 @@ namespace bd.webappth.entidades.ViewModels
     public class FichaEmpleadoViewModel:DatosBasicosEmpleadoViewModel
     {
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Ingreso sector público:")]
+        [Display(Name = "Ingreso sector público")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaIngresoSectorPublico { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Extención telefónica:")]
+        [Display(Name = "Extención telefónica")]
         public int? ExtencionTelefonica { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
@@ -22,11 +22,11 @@ namespace bd.webappth.entidades.ViewModels
         
         public string Telefono { get; set; }
 
-        [Display(Name = "Meses de imposiciones al IESS:")]
+        [Display(Name = "Meses de imposiciones al IESS")]
         [Range(0, 1000, ErrorMessage = "Los {0} no pueden ser mayor a {2} ")]
         public int MesesImposiciones { get; set; }
 
-        [Display(Name = " Días de imposiciones al IESS:")]
+        [Display(Name = " Días de imposiciones al IESS")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "{0} no es un valor numérico")]
         [Range(0, 31, ErrorMessage = "Los {0} no pueden ser mayor a {2} ")]
         public int DiasImposiciones { get; set; }
@@ -34,15 +34,15 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "Fondo de reserva")]
         public bool FondosReservas { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        //[Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Cargo en la brigada")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdBrigadaSSORol { get; set; }
+        //[Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        public int? IdBrigadaSSORol { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        //[Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Brigada")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdBrigadaSSO { get; set; }
+        //[Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        public int? IdBrigadaSSO { get; set; }
 
         [Display(Name = "¿Trabajó en la Super de bancos?")]
         public bool TrabajoSuperintendenciaBanco { get; set; }
@@ -74,8 +74,10 @@ namespace bd.webappth.entidades.ViewModels
         [DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = true)]
         public int? AnoDesvinculacion { get; set; }
 
-        [Display(Name = "Tipo relación")]
+        
         public string TipoRelacion { get; set; }
+
+        
 
     }
 }

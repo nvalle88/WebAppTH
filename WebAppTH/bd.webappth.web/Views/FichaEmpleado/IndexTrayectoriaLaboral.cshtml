@@ -44,6 +44,13 @@
                                         <th data-class="expand">
                                             Fecha fin
                                         </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().NumeroDias)
+                                        </th>
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().TiempoTexto)
+                                        </th>
                                         <th data-hide="phone">
                                             Empresa
                                         </th>
@@ -63,29 +70,37 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FechaInicio)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FechaFin)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Empresa)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.PuestoTrabajo)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DescripcionFunciones)
-                                            </td>
-                                            <td>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FechaInicio)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FechaFin)
+                                        </td>
 
-                                                @Html.ActionLink("Editar", "EditTrayectoriaLaboral", new { id = item.IdTrayectoriaLaboral }, new { onclick = "cargando()" }) |
-                                                @Html.ActionLink("Eliminar", "DeleteTrayectoriaLaboral", new { id = item.IdTrayectoriaLaboral }, new { onclick = "return confirm('Desea eliminar la Trayectoria Laboral... ?');" })
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NumeroDias)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TiempoTexto)
+                                        </td>
 
-                                            </td>
-                                        </tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Empresa)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PuestoTrabajo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DescripcionFunciones)
+                                        </td>
+                                        <td>
+
+                                            @Html.ActionLink("Editar", "EditTrayectoriaLaboral", new { id = item.IdTrayectoriaLaboral }, new { onclick = "cargando()" }) |
+                                            @Html.ActionLink("Eliminar", "DeleteTrayectoriaLaboral", new { id = item.IdTrayectoriaLaboral }, new { onclick = "return confirm('Desea eliminar la Trayectoria Laboral... ?');" })
+
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

@@ -133,263 +133,221 @@
 
 
                                     <article class="col col-lg-12">
-                                        <legend>
-                                            <div class="contenedor-cabecera">
-                                                <div class="titulo">Antecedentes personales</div>
 
+                                        <section class="col-lg-12">
+                                            <legend>
+                                                <div class="contenedor-cabecera">
+                                                    <div class="titulo">Antecedentes personales</div>
+
+                                                </div>
+                                            </legend>
+
+                                        </section>
+
+                                        <section class="col-lg-12">
+
+                                            <div class="col col-lg-6">
+                                                <label class="input">
+                                                    <p>@Html.DisplayNameFor(model => model.AntecedenteMedico)</p>
+                                                    <textarea maxlength="500" asp-for="AntecedenteMedico" class="form-control" rows="4" style="resize:none;"></textarea>
+                                                    <span asp-validation-for="AntecedenteMedico" class="text-danger"></span>
+                                                </label>
                                             </div>
-                                        </legend>
-
-                                        <section class="fondo-seccion" id="AntecedentePersonalSeccion">
-
-                                            <section>
-
-                                                <br />
-
-                                                <div class="contenedor-seccion">
-
-                                                    <label class="input">
-                                                        <p>@Html.DisplayNameFor(model => model.AntecedenteMedico)</p>
-                                                        <textarea maxlength="500" asp-for="AntecedenteMedico" class="form-control" rows="4" style="resize:none;"></textarea>
-                                                        <span asp-validation-for="AntecedenteMedico" class="text-danger"></span>
-                                                    </label>
-                                                </div>
-
-                                                <div class="espacio-seccion"></div>
-
-                                                <div class="contenedor-seccion">
-
-                                                    <label class="input">
-                                                        <p>@Html.DisplayNameFor(model => model.AntecedenteQuirurgico)</p>
-                                                        <textarea maxlength="500" asp-for="AntecedenteQuirurgico" class="form-control"  rows="4" style="resize:none;"></textarea>
-                                                        <span asp-validation-for="AntecedenteQuirurgico" class="text-danger"></span>
-                                                    </label>
-
-                                                    <br />
-
-                                                </div>
 
 
+                                            <div class="col col-lg-6">
+                                                <label class="input">
+                                                    <p>@Html.DisplayNameFor(model => model.AntecedenteQuirurgico)</p>
+                                                    <textarea maxlength="500" asp-for="AntecedenteQuirurgico" class="form-control" rows="4" style="resize:none;"></textarea>
+                                                    <span asp-validation-for="AntecedenteQuirurgico" class="text-danger"></span>
+                                                </label>
+                                            </div>
 
-                                            </section>
+                                        </section>
 
-                                            <div class="contenedor-seccion">
+                                        <section class="col-lg-12">
 
-
+                                            <div class="col col-lg-4">
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Alergias)</p>
-                                                    <input maxlength="110" asp-for="Alergias" class="form-control"  />
+                                                    <input maxlength="110" asp-for="Alergias" class="form-control" />
                                                     <span asp-validation-for="Alergias" class="text-danger"></span>
                                                 </label>
-
                                             </div>
 
-                                            <div class="espacio-seccion"></div>
+                                            <div class="col col-lg-4">
+                                                <label class="input">
+                                                    <p>@Html.DisplayNameFor(model => model.UsoMedicinaDiaria)</p>
+                                                    <input maxlength="110" asp-for="UsoMedicinaDiaria" class="form-control" />
+                                                    <span asp-validation-for="UsoMedicinaDiaria" class="text-danger"></span>
+                                                </label>
+                                            </div>
 
-                                            <div class="contenedor-seccion">
+                                            <div class="col col-lg-4">
+                                                <label class="input">
+                                                    <p>@Html.DisplayNameFor(model => model.TipoSangre)</p>
+                                                    <input maxlength="110" asp-for="TipoSangre" class="form-control" readonly/>
+                                                    <span asp-validation-for="TipoSangre" class="text-danger"></span>
+                                                </label>
+                                            </div>
 
+                                        </section>
+
+                                        <section class="col-lg-12">
+
+                                            <div class="col col-lg-4">
                                                 <label class="input">
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.Vacunas)
                                                     </p>
-                                                    <input maxlength="110" asp-for="Vacunas" class="form-control"  />
+                                                    <input maxlength="110" asp-for="Vacunas" class="form-control" />
                                                     <span asp-validation-for="Vacunas" class="text-danger"></span>
                                                 </label>
-
-                                                <br />
-
                                             </div>
 
-                                            <div class="contenedor-seccion">
 
-
-                                                <label class="input">
-                                                    <p>@Html.DisplayNameFor(model => model.UsoMedicinaDiaria)</p>
-                                                    <input maxlength="110" asp-for="UsoMedicinaDiaria" class="form-control"  />
-                                                    <span asp-validation-for="UsoMedicinaDiaria" class="text-danger"></span>
-                                                </label>
-
-                                            </div>
-
-                                            <div class="espacio-seccion"></div>
-
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-4">
                                                 <label class="input">
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.FechaUltimaDosis)
                                                     </p>
-                                                    <input type="date" style="width:260px;" asp-for="FechaUltimaDosis" class="form-control"  />
+                                                    <input type="date" style="width:260px;" asp-for="FechaUltimaDosis" class="form-control" />
                                                     <span asp-validation-for="FechaUltimaDosis" class="text-danger"></span>
                                                 </label>
-
-                                                <br />
-
                                             </div>
 
-
-
                                         </section>
+
+                                       
 
                                     </article>
 
 
-                                    <article class="col col-lg-12">
-                                        <legend>
-                                            <div class="contenedor-cabecera">
-                                                <div class="titulo">Antecedentes gineco-obstétricos</div>
+                                    <article class="col col-lg-12" id="article_mujer">
 
+                                        <section class="col-lg-12">
+                                            <legend>
+                                                <div class="contenedor-cabecera">
+                                                    <div class="titulo">Antecedentes gineco-obstétricos</div>
+
+                                                </div>
+                                            </legend>
+                                        </section>
+                                        
+
+                                        <section class="col-lg-12">
+
+                                            <div class="col col-lg-4">
+                                                <label class="input">
+                                                    <p>@Html.DisplayNameFor(model => model.PrimeraMenstruacion)</p>
+
+                                                    <input type="date" maxlength="50" asp-for="PrimeraMenstruacion" class="form-control" />
+                                                    <span asp-validation-for="PrimeraMenstruacion" class="text-danger"></span>
+                                                </label>
                                             </div>
-                                        </legend>
 
+                                            <div class="col col-lg-4">
+                                                <label class="input">
+                                                    <p>@Html.DisplayNameFor(model => model.UltimaMenstruacion)</p>
 
-                                        <section class="fondo-seccion" id="AntecedenteGinecoObstericoSeccion">
+                                                    <input type="date" maxlength="50" asp-for="UltimaMenstruacion" class="form-control" />
+                                                    <span asp-validation-for="UltimaMenstruacion" class="text-danger"></span>
+                                                </label>
+                                            </div>
 
-                                            <section>
-
-                                                <br />
-
-                                                <div class="contenedor-seccion">
-
-                                                    <label class="input">
-                                                        <p>@Html.DisplayNameFor(model => model.PrimeraMenstruacion)</p>
-
-                                                        <input type="date" maxlength="50" asp-for="PrimeraMenstruacion" class="form-control"  />
-                                                        <span asp-validation-for="PrimeraMenstruacion" class="text-danger"></span>
-                                                    </label>
-
-                                                </div>
-
-                                                <div class="espacio-seccion"></div>
-
-                                                <div class="contenedor-seccion">
-
-                                                    <label class="input">
-                                                        <p>@Html.DisplayNameFor(model => model.UltimaMenstruacion)</p>
-
-                                                        <input type="date" maxlength="50" asp-for="UltimaMenstruacion" class="form-control"  />
-                                                        <span asp-validation-for="UltimaMenstruacion" class="text-danger"></span>
-                                                    </label>
-
-                                                    <br />
-                                                </div>
-
-                                            </section>
-
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-4">
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.CicloMenstrual)</p>
 
-                                                    <input maxlength="50" asp-for="CicloMenstrual" class="form-control"  />
+                                                    <input maxlength="50" asp-for="CicloMenstrual" class="form-control" />
                                                     <span asp-validation-for="CicloMenstrual" class="text-danger"></span>
                                                 </label>
-
                                             </div>
 
-                                            <div class="espacio-seccion"></div>
+                                        </section>
 
-                                            <div class="contenedor-seccion">
+                                        <section class="col-lg-12">
 
+                                            <div class="col col-lg-2">
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Gestas)</p>
 
-                                                    <input maxlength="50" asp-for="Gestas" class="form-control"  />
+                                                    <input type="number" asp-for="Gestas" class="form-control" />
                                                     <span asp-validation-for="Gestas" class="text-danger"></span>
                                                 </label>
-                                                <br />
-
                                             </div>
 
-                                            <div class="contenedor-seccion">
+                                            <div class="col col-lg-2">
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Partos)</p>
 
-                                                    <input maxlength="50" asp-for="Partos" class="form-control"  />
+                                                    <input maxlength="50" type="number" asp-for="Partos" class="form-control" />
                                                     <span asp-validation-for="Partos" class="text-danger"></span>
                                                 </label>
-
                                             </div>
 
-                                            <div class="espacio-seccion"></div>
-
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-2">
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.Cesarias)</p>
 
-                                                    <input maxlength="50" asp-for="Cesarias" class="form-control"  />
+                                                    <input maxlength="50" asp-for="Cesarias" class="form-control" />
                                                     <span asp-validation-for="Cesarias" class="text-danger"></span>
                                                 </label>
-                                                <br />
-
                                             </div>
 
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-2">
                                                 <label class="input">
-                                                    <p>
-                                                        @Html.DisplayNameFor(model => model.Abortos)
-                                                    </p>
-                                                    <input maxlength="50" asp-for="Abortos" class="form-control"  />
+                                                    <p>@Html.DisplayNameFor(model => model.Abortos)</p>
+
+                                                    <input maxlength="50" asp-for="Abortos" class="form-control" />
                                                     <span asp-validation-for="Abortos" class="text-danger"></span>
                                                 </label>
                                             </div>
 
-                                            <div class="espacio-seccion"></div>
-
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-2">
                                                 <label class="input">
-                                                    <p>
-                                                        @Html.DisplayNameFor(model => model.HijosVivos)
-                                                    </p>
-                                                    <input maxlength="50" asp-for="HijosVivos" class="form-control"  />
+                                                    <p>@Html.DisplayNameFor(model => model.HijosVivos)</p>
+
+                                                    <input maxlength="50" asp-for="HijosVivos" class="form-control" />
                                                     <span asp-validation-for="HijosVivos" class="text-danger"></span>
                                                 </label>
-                                                <br />
-
                                             </div>
 
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-2">
                                                 <label class="input">
-                                                    <p>
-                                                        @Html.DisplayNameFor(model => model.UltimoPapTest)
-                                                    </p>
-                                                    <input type="date" asp-for="UltimoPapTest" class="form-control"  />
+                                                    <p>@Html.DisplayNameFor(model => model.UltimoPapTest)</p>
+
+                                                    <input maxlength="50" asp-for="UltimoPapTest" class="form-control" />
                                                     <span asp-validation-for="UltimoPapTest" class="text-danger"></span>
                                                 </label>
-
                                             </div>
 
-                                            <div class="espacio-seccion"></div>
+                                        </section>
 
-                                            <div class="contenedor-seccion">
+                                        <section class="col-lg-12">
 
+                                            <div class="col col-lg-4">
                                                 <label class="input">
                                                     <p>@Html.DisplayNameFor(model => model.UltimaMamografia)</p>
 
-                                                    <input type="date" asp-for="UltimaMamografia" class="form-control"  />
+                                                    <input type="date" asp-for="UltimaMamografia" class="form-control" />
                                                     <span asp-validation-for="UltimaMamografia" class="text-danger"></span>
                                                 </label>
-                                                <br />
-
                                             </div>
 
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-4">
                                                 <label class="input">
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.Anticoncepcion)
                                                     </p>
-                                                    <input maxlength="50" asp-for="Anticoncepcion" class="form-control"  />
+                                                    <input maxlength="50" asp-for="Anticoncepcion" class="form-control" />
                                                     <span asp-validation-for="Anticoncepcion" class="text-danger"></span>
                                                 </label>
                                             </div>
 
                                         </section>
 
+
                                     </article>
 
 
@@ -397,239 +355,177 @@
 
 
                                     <article class="col col-lg-12">
-                                        <legend>
-                                            <div class="contenedor-cabecera">
-                                                <div class="titulo">Hábitos</div>
 
+                                        <section class="col-lg-12">
+                                            <legend>
+                                                <div class="contenedor-cabecera">
+                                                    <div class="titulo">Hábitos</div>
+                                                </div>
+                                            </legend>
+                                        </section>
+
+                                        <section class="col-lg-12">
+
+                                            <div class="col col-lg-3">
+                                                <p>@Html.DisplayNameFor(model => model.Cigarrillo)</p>
+
+                                                Si &nbsp;<label onclick="mostrarCigarrilloSeccion()" />@Html.RadioButtonFor(x => x.Cigarrillo, true)</label> &emsp;
+                                                No &nbsp;<label onclick="ocultarCigarrilloSeccion()" />@Html.RadioButtonFor(x => x.Cigarrillo, false, htmlAttributes: new { @checked = true })</label>
                                             </div>
-                                        </legend>
 
-                                        <br />
+                                            <div class="col col-lg-3">
+                                                <label class="input">
+                                                    <p>
+                                                        @Html.DisplayNameFor(model => model.FrecuenciaCigarrillo)
+                                                    </p>
+                                                    <input maxlength="100" asp-for="FrecuenciaCigarrillo" class="form-control" />
+                                                    <span asp-validation-for="FrecuenciaCigarrillo" class="text-danger"></span>
+                                                </label>
+                                            </div>
 
-                                        <section>
+                                            <div class="col col-lg-3">
+                                                <label class="input">
+                                                    <p>
+                                                        @Html.DisplayNameFor(model => model.CigarrilloDesde)
+                                                    </p>
+                                                    <input type="number" asp-for="CigarrilloDesde" class="form-control" />
+                                                    <span asp-validation-for="CigarrilloDesde" class="text-danger"></span>
+                                                </label>
+                                            </div>
 
-                                            <section class="fondo-seccion">
+                                            <div class="col col-lg-3">
+                                                <label class="input">
 
-                                                <div class="contenedor-seccion">
-
-                                                    <p>@Html.DisplayNameFor(model => model.Cigarrillo)</p>
-
-                                                    Si &nbsp;<label onclick="mostrarCigarrilloSeccion()" />@Html.RadioButtonFor(x => x.Cigarrillo, true)</label> &emsp;
-                                                    No &nbsp;<label onclick="ocultarCigarrilloSeccion()" />@Html.RadioButtonFor(x => x.Cigarrillo, false, htmlAttributes: new { @checked = true })</label>
-                                                </div>
-
-                                                <div class="espacio-seccion"></div>
-
-                                                <div class="contenedor-seccion">
-
-
-                                                    <label class="input">
-                                                        <p>
-                                                            @Html.DisplayNameFor(model => model.FrecuenciaCigarrillo)
-                                                        </p>
-                                                        <input maxlength="100" asp-for="FrecuenciaCigarrillo" class="form-control"  />
-                                                        <span asp-validation-for="FrecuenciaCigarrillo" class="text-danger"></span>
-                                                    </label>
-
-                                                </div>
-
-                                                <div class="contenedor-seccion">
-
-                                                    <label class="input">
-                                                        <p>
-                                                            @Html.DisplayNameFor(model => model.CigarrilloDesde)
-                                                        </p>
-                                                        <input type="number" asp-for="CigarrilloDesde" class="form-control"  />
-                                                        <span asp-validation-for="CigarrilloDesde" class="text-danger"></span>
-                                                    </label>
-
-                                                </div>
-
-                                                <div class="espacio-seccion"></div>
-
-                                                <div class="contenedor-seccion">
-
-                                                    <label class="input">
-
-                                                        <p>
-                                                            @Html.DisplayNameFor(model => model.CigarrilloHasta)
-                                                        </p>
-                                                        <input type="number" asp-for="CigarrilloHasta"  data-dateformat='dd/mm/yy' />
-                                                        <span asp-validation-for="CigarrilloHasta" class="text-danger"></span>
-                                                    </label>
-
-                                                    <br />
-
-                                                </div>
-
-                                            </section>
+                                                    <p>
+                                                        @Html.DisplayNameFor(model => model.CigarrilloHasta)
+                                                    </p>
+                                                    <input type="number" asp-for="CigarrilloHasta" data-dateformat='dd/mm/yy' />
+                                                    <span asp-validation-for="CigarrilloHasta" class="text-danger"></span>
+                                                </label>
+                                            </div>
 
                                         </section>
 
-                                        <section class="fondo-seccion">
+                                        <section class="col-lg-12">
 
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-3">
                                                 <p>@Html.DisplayNameFor(model => model.Licor)</p>
 
                                                 Si &nbsp;<label onclick="mostrarLicorSeccion()" />@Html.RadioButtonFor(x => x.Licor, true)</label> &emsp;
                                                 No &nbsp;<label onclick="ocultarLicorSeccion()" />@Html.RadioButtonFor(x => x.Licor, false, htmlAttributes: new { @checked = true })</label>
                                             </div>
 
-                                            <div class="espacio-seccion"></div>
-
-                                            <div class="contenedor-seccion">
-
-
+                                            <div class="col col-lg-3">
                                                 <label class="input">
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.LicorFrecuencia)
                                                     </p>
-                                                    <input maxlength="100" asp-for="LicorFrecuencia" class="form-control"  />
+                                                    <input maxlength="100" asp-for="LicorFrecuencia" class="form-control" />
                                                     <span asp-validation-for="LicorFrecuencia" class="text-danger"></span>
                                                 </label>
                                             </div>
 
-                                            <div class="contenedor-seccion">
+                                            <div class="col col-lg-3">
                                                 <label class="input">
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.LicorDesde)
                                                     </p>
-                                                    <input type="number" asp-for="LicorDesde" class="form-control"  />
+                                                    <input type="number" asp-for="LicorDesde" class="form-control" />
                                                     <span asp-validation-for="LicorDesde" class="text-danger"></span>
                                                 </label>
                                             </div>
 
-                                            <div class="espacio-seccion"></div>
-
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-3">
                                                 <label class="input">
 
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.LicorHasta)
                                                     </p>
-                                                    <input type="number" asp-for="LicorHasta"  data-dateformat='dd/mm/yy' />
+                                                    <input type="number" asp-for="LicorHasta" data-dateformat='dd/mm/yy' />
                                                     <span asp-validation-for="LicorHasta" class="text-danger"></span>
                                                 </label>
-
-                                                <br />
                                             </div>
 
                                         </section>
 
+                                        <section class="col-lg-12">
 
-                                        <section class="fondo-seccion">
-
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-3">
                                                 <p>@Html.DisplayNameFor(model => model.Drogas)</p>
 
                                                 Si &nbsp;<label onclick="mostrarDrogasSeccion()" />@Html.RadioButtonFor(x => x.Drogas, true)</label> &emsp;
                                                 No &nbsp;<label onclick="ocultarDrogasSeccion()" />@Html.RadioButtonFor(x => x.Drogas, false, htmlAttributes: new { @checked = true })</label>
-
                                             </div>
 
-                                            <div class="espacio-seccion"></div>
-
-                                            <div class="contenedor-seccion">
-
-
+                                            <div class="col col-lg-3">
                                                 <label class="input">
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.FrecuenciaDrogas)
                                                     </p>
-                                                    <input maxlength="100" asp-for="FrecuenciaDrogas" class="form-control"  />
+                                                    <input maxlength="100" asp-for="FrecuenciaDrogas" class="form-control" />
                                                     <span asp-validation-for="FrecuenciaDrogas" class="text-danger"></span>
                                                 </label>
-
                                             </div>
 
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-3">
                                                 <label class="input">
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.DrogasDesde)
                                                     </p>
-                                                    <input type="number" asp-for="DrogasDesde" class="form-control"  />
+                                                    <input type="number" asp-for="DrogasDesde" class="form-control" />
                                                     <span asp-validation-for="DrogasDesde" class="text-danger"></span>
                                                 </label>
-
                                             </div>
 
-                                            <div class="espacio-seccion"></div>
-
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-3">
                                                 <label class="input">
 
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.DrogasHasta)
                                                     </p>
-                                                    <input type="number" asp-for="DrogasHasta"  data-dateformat='dd/mm/yy' />
+                                                    <input type="number" asp-for="DrogasHasta" data-dateformat='dd/mm/yy' />
                                                     <span asp-validation-for="DrogasHasta" class="text-danger"></span>
                                                 </label>
-
-                                                <br />
-
                                             </div>
 
                                         </section>
 
-                                        <section class="fondo-seccion">
 
-                                            <div class="contenedor-seccion">
+                                        <section class="col-lg-12">
+                                            <div class="col col-lg-12">
+                                                <p>@Html.DisplayNameFor(model => model.HabitosObservaciones)</p>
+                                                <textarea maxlength="255" asp-for="HabitosObservaciones" class="form-control" rows="2" style="resize:none;"></textarea>
+                                                <span asp-validation-for="HabitosObservaciones" class="text-danger"></span>
+                                            </div>
+                                        </section>
 
+                                        <section class="col-lg-12">
+
+                                            <div class="col col-lg-3">
                                                 <p>@Html.DisplayNameFor(model => model.Ejercicios)</p>
 
                                                 Si &nbsp;<label onclick="mostrarEjerciciosSeccion()" />@Html.RadioButtonFor(x => x.Ejercicios, true)</label> &emsp;
                                                 No &nbsp;<label onclick="ocultarEjerciciosSeccion()" />@Html.RadioButtonFor(x => x.Ejercicios, false, htmlAttributes: new { @checked = true })</label>
-
                                             </div>
 
-                                            <div class="espacio-seccion"></div>
-
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-3">
                                                 <label class="input">
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.EjerciciosFrecuencia)
                                                     </p>
-                                                    <input maxlength="100" asp-for="EjerciciosFrecuencia" class="form-control"  />
+                                                    <input maxlength="100" asp-for="EjerciciosFrecuencia" class="form-control" />
                                                     <span asp-validation-for="EjerciciosFrecuencia" class="text-danger"></span>
                                                 </label>
                                             </div>
 
-                                            <div class="contenedor-seccion">
-
+                                            <div class="col col-lg-6">
                                                 <label class="input">
                                                     <p>
                                                         @Html.DisplayNameFor(model => model.EjerciciosTipo)
                                                     </p>
-                                                    <input maxlength="100" asp-for="EjerciciosTipo" class="form-control"  />
+                                                    <input maxlength="100" asp-for="EjerciciosTipo" class="form-control" />
                                                     <span asp-validation-for="EjerciciosTipo" class="text-danger"></span>
                                                 </label>
-
-                                            </div>
-
-                                            <div class="espacio-seccion" style="width:70%;">
-                                                <br /> <br /> <br /> <br />
-                                            </div>
-
-
-
-                                        </section>
-
-                                        <section class="fondo-seccion">
-
-
-                                            <div class="contenedor-seccion">
-
-                                                <p>@Html.DisplayNameFor(model => model.HabitosObservaciones)</p>
-                                                <textarea maxlength="50" asp-for="HabitosObservaciones" class="form-control"  rows="4" style="resize:none;"></textarea>
-                                                <span asp-validation-for="HabitosObservaciones" class="text-danger"></span>
-
-
                                             </div>
 
                                         </section>
@@ -682,6 +578,22 @@
 
             $("#btn_4").css("background-color", "#3276b1");
             $("#btn_4").css("color", "white");
+        }
+
+        @{
+
+            if (Model.Sexo == "HOMBRE") {
+                <text>
+                    document.getElementById("article_mujer").style.visibility = "hidden";
+                    document.getElementById("article_mujer").style.height = "0px";
+                </text>
+
+            } else if (Model.Sexo == "MUJER") {
+                <text>
+                    document.getElementById("article_mujer").style.visibility = "visible";
+                    document.getElementById("article_mujer").style.height = "auto";
+                </text>
+            }
         }
 
     </script>

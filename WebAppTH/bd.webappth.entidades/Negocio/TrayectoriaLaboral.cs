@@ -3,8 +3,7 @@ namespace bd.webappth.entidades.Negocio
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-     
-     
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class TrayectoriaLaboral
     {
@@ -37,5 +36,13 @@ namespace bd.webappth.entidades.Negocio
         public string DescripcionFunciones { get; set; }
 
         public virtual Persona Persona { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Número de días")]
+        public int NumeroDias { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Años, meses y días")]
+        public string TiempoTexto { get; set; }
     }
 }

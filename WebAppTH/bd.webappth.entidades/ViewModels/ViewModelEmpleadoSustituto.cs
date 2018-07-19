@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace bd.webappth.entidades.ViewModels
@@ -23,14 +24,14 @@ namespace bd.webappth.entidades.ViewModels
 
         public string NombreParentesco { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        //[Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Teléfono privado:")]
-        [StringLength(11, ErrorMessage = "El {0} no puede tener más de {1} caracteres")]
+        //[StringLength(11, ErrorMessage = "El {0} no puede tener más de {1} caracteres")]
         public string TelefonoPrivado { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        //[Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Teléfono de casa:")]
-        [StringLength(10, ErrorMessage = "El {0} no puede tener más de {1} caracteres")]
+        //[StringLength(10, ErrorMessage = "El {0} no puede tener más de {1} caracteres")]
         public string TelefonoCasa { get; set; }
 
 
@@ -60,7 +61,11 @@ namespace bd.webappth.entidades.ViewModels
         public int IdPersonaSustitutoDiscapacidad { get; set; }
 
 
+        [NotMapped]
+        public string Enfermedades { get; set; }
 
+        [NotMapped]
+        public string Discapacidades { get; set; }
 
     }
 }

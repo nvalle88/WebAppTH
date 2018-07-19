@@ -13,7 +13,7 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "Fecha de ingreso a la institución")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime FechaIngreso { get; set; }
+        public DateTime? FechaIngreso { get; set; }
 
         [Display(Name = "Estado")]
         public string EstadoInduccion { get; set; }
