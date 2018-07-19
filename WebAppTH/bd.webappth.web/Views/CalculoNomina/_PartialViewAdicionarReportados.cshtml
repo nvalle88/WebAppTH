@@ -1,0 +1,37 @@
+@model bd.webappth.entidades.ViewModels.AdicionarReportadoNominaViewModel
+<fieldset>
+    <div class="row">
+        <section class="col col-lg-5">
+            <label>Empleados</label>
+            <label class="input">
+                <select asp-for="IdEmpleado" class="form-control" asp-items="ViewBag.Empleados">
+                    <option value="0" selected="selected">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdEmpleado" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-lg-5">
+            <label>Rubros</label>
+            <label class="input">
+                <select asp-for="IdConcepto" class="form-control" asp-items="ViewBag.Conceptos">
+                    <option value="0" selected="selected">Seleccione</option>
+                </select>
+                <span asp-validation-for="IdConcepto" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-lg-2">
+            <label>Valor</label>
+            <label class="input">
+                <input type="number" asp-for="Valor" class="form-control" />
+                <span asp-validation-for="Valor" class="text-danger"></span>
+            </label>
+        </section>
+      
+    </div>
+    <br />
+    <div class="row">
+       
+    </div>
+</fieldset>
+<br />

@@ -251,6 +251,56 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Empleados"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>( new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosActivos"), "IdEmpleado", "NombreApellido");
         }
 
+        private async Task CargarConceptosActivos()
+        {
+            ViewData["Conceptos"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ConceptoNomina>(true,new Uri(WebApp.BaseAddress), "api/ConceptoNomina/ListarConceptoNomina"), "IdConcepto", "Descripcion");
+        }
+
+
+        public async Task<IActionResult> AdicionarReportados()
+        {
+            try
+            {
+
+                await CargarEmpleadosActivos();
+                await CargarConceptosActivos();
+                return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdicionarReportados(AdicionarReportadoNominaViewModel adicionarReportadoNomina)
+        {
+            try
+            {
+                var a = await ObtenerCalculoNomina();
+                adicionarReportadoNomina.IdCalculoNomina = a.IdCalculoNomina;
+                var reportadoRequest = await apiServicio.InsertarAsync<Response>(adicionarReportadoNomina, new Uri(WebApp.BaseAddress),
+                               "api/ConceptoNomina/InsertarReportadoNominaIndividual");
+
+                if (!reportadoRequest.IsSuccess)
+                {
+                    await CargarEmpleadosActivos();
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}|{"45000"}";
+                    return View();
+                }
+                await CargarEmpleadosActivos();
+                await CargarConceptosActivos();
+                this.TempData["MensajeTimer"] = $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}|{"45000"}";
+                return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         public async Task<IActionResult> AdicionarHorasExtras()
         {
@@ -520,6 +570,34 @@ namespace bd.webappth.web.Controllers.MVC
                     return this.Redireccionar($"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
+            }
+        }
+
+
+
+        public async Task<IActionResult> EliminarReportado(string id)
+        {
+
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    return this.Redireccionar($"{Mensaje.Error}|{Mensaje.RegistroNoExiste}");
+                }
+
+                var reportadoNomina = new ReportadoNomina { IdReportadoNomina = Convert.ToInt32(id) };
+
+                var response = await apiServicio.EliminarAsync(reportadoNomina, new Uri(WebApp.BaseAddress)
+                                                               , "api/ConceptoNomina/EliminarReportado");
+                if (response.IsSuccess)
+                {
+                    return this.Redireccionar("CalculoNomina", "MostrarExcelBase", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                }
+                return this.Redireccionar("CalculoNomina", "MostrarExcelBase", $"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
             }
             catch (Exception)
             {
