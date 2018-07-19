@@ -45,12 +45,12 @@
 
     @if (Model.OpcionMenu == 3)
     {
-        <a href="@Url.Action("IndexEmpleadoFamiliar", "FichaEmpleado")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Familiares</a>
+        <a href="@Url.Action("DiasLaborados", "CalculoNomina")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">D&iacute;as laborados</a>
 
     }
     else
     {
-        <a href="@Url.Action("IndexEmpleadoFamiliar", "FichaEmpleado")" onclick="cargando()" class="btn btn-default">Familiares</a>
+        <a href="@Url.Action("DiasLaborados", "CalculoNomina")" onclick="cargando()" class="btn btn-default">D&iacute;as laborados</a>
     }
 
     @if (Model.OpcionMenu == 4)

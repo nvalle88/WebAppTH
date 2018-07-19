@@ -77,7 +77,10 @@ namespace bd.webappth.entidades.Utils
 
         public static object HorasExtrasNoCumpleFormato { get { return "Verifique el formato del archivo seleccionado,Nota: Debe seleccionar un archivo Excel(.xlsx).El cual debe contener el orden de las columnas de la siguiente distribución...1:Identificación del empleado, 2:Cantidad de horas, 3:1 si son horas extraordinarias ,0 si no son horas extraordinarias"; } }
 
+        public static object DiasLaboradosNoCumpleFormato { get { return "Verifique el formato del archivo seleccionado,Nota: Debe seleccionar un archivo Excel(.xlsx).El cual debe contener el orden de las columnas de la siguiente distribución...1:Identificación del empleado, 2:Cantidad de días laborados"; } }
+
         public static object HorasExtrasConErrores { get { return "Verifique la información de las horas extras cargadas ya que existen errores en su información, la información con errores no fue guardada..."; } }
+        public static object DiasLaboradosConErrores { get { return "Verifique la información de los días laborados cargados ya que existen errores en su información, la información con errores no fue guardada..."; } }
 
         public static object RequeridoFondoFinanciamiento { get { return "No ha seleccionado un fondo de financiamiento"; } }
     }

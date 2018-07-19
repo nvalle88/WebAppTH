@@ -1,0 +1,111 @@
+﻿
+
+@{
+    ViewData["Title"] = "Ficha Odontológica";
+
+    //var ids = Model.IdPersona;
+}
+@section css{
+
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap-fileinput/css/fileinput.min.css">
+}
+@using bd.webappth.entidades.Utils
+@{ var modelo = new MenuFichaCalculoNomina { OpcionMenu = 3 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+
+@{ var subMenu = new MenuFichaCalculoNomina { OpcionMenu = 0 }; }
+@{await Html.RenderPartialAsync("_PartialViewSubMenuDiasLaborados", subMenu);}
+
+<!-- MAIN CONTENT -->
+<div id="content">
+    @{await Html.RenderPartialAsync("_PartialViewInformacion");}
+    <section id="widget-grid" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="alert alert-info">
+
+                    <p>
+                        <i class="fa fa-exclamation"></i>  Nota: Debe seleccionar un archivo <b>Excel</b> (.xlsx).
+
+                        El cual debe contener el orden de las columnas de la siguiente distribuci&oacute;n
+                    </p>
+                    <br />
+                    <p>
+                        <b>Columna 1:Identificaci&oacute;n del empleado</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br />
+                        <b>Columna 2:Cantidad de d&iacute;as laborados (N&uacute;mero entero)</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br />
+                    </p>
+                    <br />
+                    <hr />
+                    <p>
+                        <i class="fa fa-check"></i>  Los datos del archivo cargado que satisfagan las validaciones ser&aacute;n guardados autom&aacute;ticamente.
+                    </p>
+                    <p>
+                        <i class="fa fa-warning"></i>  Los datos del archivo cargado que no satisfagan las validaciones no  ser&aacute;n guardados.
+                    </p>
+                    <br>
+                </div>
+            </article>
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>D&iacute;as laborados</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form asp-action="MostrarDiasLaborados" id="checkout-form" class="smart-form" novalidate="novalidate" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <fieldset>
+                                    <section class="col-10">
+                                        <div class="file-loading col col-lg-10">
+                                            <input id="file" name="files" type="file" multiple>
+                                        </div>
+                                        <div id="kartik-file-errors"></div>
+                                    </section>
+                                    <footer>
+                                        <button type="submit" id="btn-guardar" onclick="cargando()" class="btn btn-primary "><i class="fa fa-upload"></i> Cargar</button>
+                                        <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>
+                                    </footer>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+            </article>
+
+        </div>
+        <!-- END ROW -->
+
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    <script src='~/lib/bootstrap-fileinput/js/fileinput.min.js'></script>
+    <script src='~/lib/bootstrap-fileinput/js/locales/es.js'></script>
+
+    <script>
+        $(document).on('ready', function () {
+            $("#file").fileinput({
+                showUpload: false,
+                dropZoneEnabled: false,
+                maxFileCount: 1,
+
+                language: 'es',
+                elErrorContainer: '#kartik-file-errors',
+                allowedFileExtensions: ["xlsx"]
+            });
+        });
+    </script>
+
+}

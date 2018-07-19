@@ -1,0 +1,190 @@
+@model List<bd.webappth.entidades.Negocio.DiasLaboradosNomina>
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+
+@{
+    var nomina = @Context.Session.GetInt32(Constantes.IdCalculoNominaSession);
+}
+@{
+    ViewData["Title"] = "Index";
+}
+
+@using bd.webappth.entidades.Utils
+@{ var modelo = new MenuFichaCalculoNomina { OpcionMenu = 3 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+
+@{ var subMenu = new MenuFichaCalculoNomina { OpcionMenu = 0 }; }
+@{await Html.RenderPartialAsync("_PartialViewSubMenuDiasLaborados", subMenu);}
+
+<!-- MAIN CONTENT -->
+<div id="content">
+    @{await Html.RenderPartialAsync("_PartialViewInformacion");}
+    <p></p>
+    <a asp-action="Index" onclick="cargando()">
+        <button type="button" asp-action="Index" onclick="cargando()" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-arrow-left"></i>
+            </span>Listado C&aacute;lculo de N&oacute;mina
+        </button>
+    </a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a asp-action="DiasLaborados"  onclick="cargando()">
+        <button type="button" asp-action="DiasLaborados" onclick="cargando()" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-upload"></i>
+            </span>Cargar archivo
+        </button>
+    </a>
+    <p> </p>
+    <div class="jarviswidget jarviswidget-sortable" id="wid-id-11" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-custombutton="false" role="widget">
+
+        <header role="heading" class="ui-sortable-handle">
+
+
+            <ul id="widget-tab-1" class="nav nav-tabs pull-right">
+
+                <li class="active">
+
+                    <a data-toggle="tab" href="#hr1" aria-expanded="true"> <i class="fa fa-lg fa-thumbs-o-up"></i><span class="hidden-mobile hidden-tablet"> Datos reportados sin errores </span> <span class="badge bg-color-blue txt-color-white">@Model.Where(x => x.Valido == true).Count()</span></a>
+
+                </li>
+
+                <li class="">
+                    <a data-toggle="tab" href="#hr2" aria-expanded="false"> <i class="fa fa-lg fa-thumbs-o-down"></i> <span class="hidden-mobile hidden-tablet"> Datos reportados con errores </span> <span class="badge bg-color-redLight txt-color-white">@Model.Where(x => x.Valido == false).Count()</span></a>
+                </li>
+
+            </ul>
+
+            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+        </header>
+
+        <!-- widget div-->
+        <div role="content">
+
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+                <!-- This area used as dropdown edit box -->
+
+            </div>
+            <!-- end widget edit box -->
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+
+                <!-- widget body text-->
+
+                <div class="tab-content padding-10">
+                    <div class="tab-pane fade active in" id="hr1">
+                        <section id="" class="">
+                            <div class="row">
+                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+                                        <header id="table">
+                                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                            <h2>Datos reportados</h2>
+                                        </header>
+                                        <div>
+                                            <div class="jarviswidget-editbox">
+                                            </div>
+                                            <div class="widget-body no-padding">
+                                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().IdentificacionEmpleado)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CantidadDias)
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.Where(x => x.Valido == true))
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
+                                                                </td>
+
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.CantidadDias)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </section>
+
+                    </div>
+                    <div class="tab-pane fade" id="hr2">
+                        <section id="" class="">
+                            <div class="row">
+                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                                        <header id="table">
+                                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                            <h2>Datos reportados</h2>
+                                        </header>
+                                        <div>
+                                            <div class="jarviswidget-editbox">
+                                            </div>
+                                            <div class="widget-body no-padding">
+                                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().IdentificacionEmpleado)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().CantidadDias)
+                                                            </th>
+                                                           
+                                                            <th data-class="expand">
+                                                               Errores
+                                                            </th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.Where(x => x.Valido == false))
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.CantidadDias)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.MensajeError)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </section>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+}
+

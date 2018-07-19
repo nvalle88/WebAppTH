@@ -94,6 +94,64 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        public async Task<IActionResult> DiasLaborados()
+        {
+            try
+            {
+                return View();
+
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MostrarDiasLaborados( List<IFormFile> files)
+        {
+            try
+            {
+                if (files.Count <= 0)
+                {
+                    return this.Redireccionar("CalculoNomina", "DiasLaborados", new { id = Convert.ToString(ObtenerCalculoNomina().Result.IdCalculoNomina) }, $"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
+                }
+                var file = await SubirFichero(files, "DocumentoNomina/DiasLaborados");
+                var lista = await LeerExcelDiasLaborados(file);
+                if (lista.Count == 0)
+                {
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.DiasLaboradosNoCumpleFormato}|{"45000"}";
+                    return View(lista);
+                }
+                var listaSalvar = lista.Where(x => x.Valido == true).ToList();
+                var reportadoRequest = new Response();
+                if (listaSalvar.Count > 0)
+                {
+                    reportadoRequest = await apiServicio.InsertarAsync<Response>(listaSalvar, new Uri(WebApp.BaseAddress),
+                               "api/ConceptoNomina/InsertarDiasLaboradosNomina");
+                }
+
+                var listaErrores = lista.Where(x => x.Valido == false).ToList();
+                if (listaErrores.Count > 0)
+                {
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{Mensaje.DiasLaboradosConErrores}|{"12000"}";
+                }
+                else
+                {
+                    this.TempData["Mensaje"] = $"{Mensaje.Success}|{Mensaje.Satisfactorio}";
+                }
+
+                return View(lista);
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.SeleccionarFichero}");
+            }
+
+        }
+
         private async Task<FileInfo> SubirFichero(List<IFormFile> files,string folder)
         {
             byte[] data;
@@ -105,6 +163,50 @@ namespace bd.webappth.web.Controllers.MVC
 
             FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, string.Format("{0}/{1}.{2}", folder, ObtenerCalculoNomina().Result.IdCalculoNomina, "xlsx")));
             return file;
+        }
+
+
+        private async Task<List<DiasLaboradosNomina>> LeerExcelDiasLaborados(FileInfo file)
+        {
+            try
+            {
+                var lista = new List<DiasLaboradosNomina>();
+                var listaSalida = new List<DiasLaboradosNomina>();
+                using (ExcelPackage package = new ExcelPackage(file))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                    int rowCount = worksheet.Dimension.Rows;
+                    var idCalculoNomina = ObtenerCalculoNomina().Result.IdCalculoNomina;
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        var identificacionEmpleado = worksheet.Cells[row, 1].Value == null ? "" : worksheet.Cells[row, 1].Value.ToString();
+                        var cantidadStr = worksheet.Cells[row, 2].Value == null ? Convert.ToString(0.0) : worksheet.Cells[row, 2].Value.ToString();
+
+                        cantidadStr = cantidadStr.Replace(",", ",");
+                        var cantidad = Convert.ToInt32(cantidadStr);
+
+
+                        lista.Add(new DiasLaboradosNomina
+                        {
+                           IdCalculoNomina=idCalculoNomina,
+                           CantidadDias=cantidad,
+                           IdentificacionEmpleado=identificacionEmpleado,
+
+                        });
+                    }
+
+                    listaSalida = await apiServicio.Listar<DiasLaboradosNomina>(lista, new Uri(WebApp.BaseAddress),
+                                                   "api/ConceptoNomina/VerificarExcelDiasLaborados");
+
+                }
+                return listaSalida;
+
+            }
+            catch (Exception ex)
+            {
+                return new List<DiasLaboradosNomina>();
+            }
         }
 
         private async Task<List<HorasExtrasNomina>> LeerExcelHorasExtras(FileInfo file)
@@ -337,6 +439,25 @@ namespace bd.webappth.web.Controllers.MVC
                 await CargarEmpleadosActivos();
                 this.TempData["MensajeTimer"] = $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}|{"45000"}";
                 return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IActionResult> DiasLaboradosBase()
+        {
+            try
+            {
+                var lista = await apiServicio.Listar<DiasLaboradosNomina>(await ObtenerCalculoNomina(), new Uri(WebApp.BaseAddress)
+                                                                          , "api/CalculoNomina/ListarDiasLaborados");
+                if (lista.Count == 0)
+                {
+                    return this.Redireccionar("DiasLaborados", "HorasExtras", $"{Mensaje.Aviso}|{Mensaje.NoExistenRegistros}");
+                }
+                return View(lista);
             }
             catch (Exception)
             {
@@ -605,6 +726,32 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+
+        public async Task<IActionResult> EliminarDiasLaborados(string id)
+        {
+
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    return this.Redireccionar($"{Mensaje.Error}|{Mensaje.RegistroNoExiste}");
+                }
+
+                var horaExtra = new DiasLaboradosNomina { IdDiasLaboradosNomina = Convert.ToInt32(id) };
+
+                var response = await apiServicio.EliminarAsync(horaExtra, new Uri(WebApp.BaseAddress)
+                                                               , "api/ConceptoNomina/EliminarDiasLaborados");
+                if (response.IsSuccess)
+                {
+                    return this.Redireccionar("CalculoNomina", "DiasLaboradosBase", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                }
+                return this.Redireccionar("CalculoNomina", "DiasLaboradosBase", $"{Mensaje.Error}|{Mensaje.BorradoNoSatisfactorio}");
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
+            }
+        }
 
         public async Task<IActionResult> EliminarHoraExtra(string id)
         {

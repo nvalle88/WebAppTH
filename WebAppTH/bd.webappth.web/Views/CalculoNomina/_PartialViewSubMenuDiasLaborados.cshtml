@@ -1,0 +1,44 @@
+
+@model bd.webappth.entidades.Utils.MenuFichaCalculoNomina
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+   
+   @{
+       var a = @Context.Session.GetInt32(Constantes.IdCalculoNominaSession);
+    }
+<div class="btn-group btn-group-justified">
+    @if (Model.OpcionMenu == 0)
+    {
+    <a asp-action="DiasLaborados" asp-controller="CalculoNomina" asp-route-id="@a" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Subir fichero</a>
+    }
+    else
+    {
+    <a asp-action="DiasLaborados" asp-controller="CalculoNomina" asp-route-id="@a" onclick="cargando()" class="btn btn-default"> Subir fichero</a>
+    }
+
+
+    @if (Model.OpcionMenu == 1)
+    {
+        <a href="@Url.Action("DiasLaboradosBase", "CalculoNomina")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">D&iacute;as laborados</a>
+
+    }
+    else
+    {
+        <a href="@Url.Action("DiasLaboradosBase", "CalculoNomina")" onclick="cargando()" class="btn btn-default">D&iacute;as laborados</a>
+    }
+
+    @if (Model.OpcionMenu == 2)
+    {
+        <a href="@Url.Action("AdicionarHorasExtras", "CalculoNomina")" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default">Adicionar horas extras</a>
+
+
+    }
+    else
+    {
+        <a href="@Url.Action("AdicionarHorasExtras", "CalculoNomina")" onclick="cargando()" class="btn btn-default">Adicionar horas extras</a>
+
+    }
+
+</div>

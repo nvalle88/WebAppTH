@@ -86,7 +86,7 @@ namespace bd.webappth.entidades.Negocio
         public virtual ICollection<DatosBancarios> DatosBancarios { get; set; }
 
         public virtual ICollection<DeclaracionPatrimonioPersonal> DeclaracionPatrimonioPersonal { get; set; }
-
+        public virtual ICollection<DiasLaboradosNomina> DiasLaboradosNomina { get; set; }
 
 
         public virtual ICollection<DocumentosParentescodos> DocumentosParentescodos { get; set; }
