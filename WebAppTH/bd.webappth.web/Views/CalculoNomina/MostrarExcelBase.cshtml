@@ -80,8 +80,9 @@
                                                             <th data-class="expand">
                                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
                                                             </th>
+                                                           
                                                             <th data-class="expand">
-                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Importe)
+                                                               Opciones
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -98,11 +99,12 @@
                                                                 <td>
                                                                     @Html.DisplayFor(modelItem => item.NombreEmpleado)
                                                                 </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Cantidad)
-                                                                </td>
+                                                              
                                                                 <td>
                                                                     @Html.DisplayFor(modelItem => item.Importe)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.ActionLink("Eliminar", "EliminarReportado", new { id = item.IdReportadoNomina }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
                                                                 </td>
                                                             </tr>
                                                         }
