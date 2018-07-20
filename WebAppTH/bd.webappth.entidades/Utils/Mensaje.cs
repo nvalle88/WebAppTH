@@ -80,5 +80,10 @@ namespace bd.webappth.entidades.Utils
         public static object HorasExtrasConErrores { get { return "Verifique la información de las horas extras cargadas ya que existen errores en su información, la información con errores no fue guardada..."; } }
 
         public static object RequeridoFondoFinanciamiento { get { return "No ha seleccionado un fondo de financiamiento"; } }
+
+        public static object UsuarioNoRegistrado { get { return "Usuario no Registrado"; } }
+
+        public static object TipoViatico { get { return "Seleccionar tipo de viatico"; } }
+        public static object ConfiguracionViaticos { get { return "Rol de puesto no configuado para viaticos"; } }
     }
 }
