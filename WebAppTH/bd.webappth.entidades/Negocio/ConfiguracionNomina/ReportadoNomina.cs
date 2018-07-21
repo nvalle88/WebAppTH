@@ -23,6 +23,9 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Descripción del error")]
         public string MensajeError { get; set; }
 
+        [Display(Name = "Descripción del concepto")]
+        public string DescripcionConcepto { get; set; }
+
         public int IdCalculoNomina { get; set; }
         public virtual CalculoNomina CalculoNomina { get; set; }
 

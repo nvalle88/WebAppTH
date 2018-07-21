@@ -28,8 +28,8 @@
             @{await Html.RenderPartialAsync("_PartialViewIndex");}
         </div>
         <div class="col-xs-6 col-sm-1 col-md-1 col-1">
-            <a asp-action="LimpiarHorasExtras" asp-route-id="@nomina" onclick="cargando()">
-                <button type="button" asp-action="LimpiarHorasExtras" onclick="cargando()" class="btn btn-labeled btn-default">
+            <a asp-action="LimpiarDiasLaborados" onclick="cargando()">
+                <button type="button" asp-action="LimpiarDiasLaborados" onclick="cargando()" class="btn btn-labeled btn-default">
                     <span class="btn-label">
                         <i class="fa fa-trash-o"></i>
                     </span>Borrar todo
@@ -98,7 +98,7 @@
                                                                 Nombre y apellido
                                                             </th>
                                                             <th data-class="expand">
-                                                                Cantidad de di&iacute;as
+                                                                Cantidad de d&iacute;as
                                                             </th>
                                                           
                                                             <th data-class="expand">
@@ -121,8 +121,9 @@
                                                             </td>
                                                             
                                                             <td>
-                                                                @Html.ActionLink("Eliminar", "EliminarDiasLaborados", new { id = item.IdDiasLaboradosNomina }, new { onclick = "return confirm('Desea eliminar el registro... ?');" }) |
-                                                                @Html.ActionLink("Editar", "EliminarHoraExtra", new { id = item.IdDiasLaboradosNomina })
+                                                                @Html.ActionLink("Editar", "EditarDiasLaborados", new { id = item.IdDiasLaboradosNomina }) |
+                                                                @Html.ActionLink("Eliminar", "EliminarDiasLaborados", new { id = item.IdDiasLaboradosNomina }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
+
                                                             </td>
                                                         </tr>
                                                         }

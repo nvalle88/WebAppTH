@@ -72,6 +72,9 @@
                                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoConcepto)
                                                             </th>
                                                             <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().DescripcionConcepto)
+                                                            </th>
+                                                            <th data-class="expand">
                                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().IdentificacionEmpleado)
                                                             </th>
                                                             <th data-class="expand">
@@ -80,33 +83,36 @@
                                                             <th data-class="expand">
                                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
                                                             </th>
-                                                           
+
                                                             <th data-class="expand">
-                                                               Opciones
+                                                                Opciones
                                                             </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach (var item in Model)
                                                         {
-                                                            <tr>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.CodigoConcepto)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.NombreEmpleado)
-                                                                </td>
-                                                              
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Importe)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.ActionLink("Eliminar", "EliminarReportado", new { id = item.IdReportadoNomina }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
-                                                                </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.CodigoConcepto)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.DescripcionConcepto)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.IdentificacionEmpleado)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.NombreEmpleado)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Importe)
+                                                            </td>
+                                                            <td>
+                                                                @Html.ActionLink("Eliminar", "EliminarReportado", new { id = item.IdReportadoNomina }, new { onclick = "return confirm('Desea eliminar el registro... ?');" })
+                                                            </td>
+                                                        </tr>
                                                         }
                                                     </tbody>
                                                 </table>

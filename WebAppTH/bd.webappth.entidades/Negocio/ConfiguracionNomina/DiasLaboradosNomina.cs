@@ -10,6 +10,10 @@ namespace bd.webappth.entidades.Negocio
         [Key]
         public int IdDiasLaboradosNomina { get; set; }
         public string IdentificacionEmpleado { get; set; }
+
+        [Required(ErrorMessage = "Debe introducir {0}")]
+        [Display(Name = "Días laborados")]
+        [Range(0,31)]
         public int CantidadDias { get; set; }
 
         public string Nombres { get; set; }

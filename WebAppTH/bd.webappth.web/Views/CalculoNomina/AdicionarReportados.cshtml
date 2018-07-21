@@ -56,11 +56,12 @@
     <script src='~/lib/select2/dist/js/select2.min.js'></script>
     <script src='~/lib/select2/dist/js/i18n/es.js'></script>
     <script src='~/js/site.js'></script>
+
     <script type="text/javascript">
 
         $("#st11").change(function () {
             if (!$(this).prop('checked')) {
-                $("#st12").prop('checked',false);
+                $("#st12").prop('checked', false);
                 $('#horasCienPorciento').hide();
             } else {
                 $('#horasCienPorciento').show();
@@ -74,6 +75,37 @@
             $("#st11").prop('checked', false);
             $('#horasCienPorciento').hide();
             Init_Select2();
+
+
+            $("#IdEmpleado").change(function () {
+                mostrarLoadingPanel("content", "Cargando...")
+                $("#IdConcepto").empty();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CargarConceptosActivos", "CalculoNomina")',
+                    dataType: 'json',
+                    data: { idEmpleado: $("#IdEmpleado").val() },
+                    success: function (data) {
+                        $("#IdConcepto").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdConcepto").append('<option value="'
+                                + data.idConcepto + '">'
+                                + data.descripcion + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+            });
+
+
         });
     </script>
 

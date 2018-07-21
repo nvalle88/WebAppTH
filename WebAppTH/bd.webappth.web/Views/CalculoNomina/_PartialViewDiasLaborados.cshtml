@@ -1,0 +1,29 @@
+@model bd.webappth.entidades.Negocio.DiasLaboradosNomina
+<fieldset>
+
+    <div class="row">
+        <section class="col col-lg-4">
+            <label>Identificaci&oacute;n</label>
+            <label class="input">
+                <input maxlength="250" asp-for="IdentificacionEmpleado" disabled class="form-control" />
+            </label>
+        </section>
+        @{ var nombreApellido = Model.Nombres + Model.Apellidos;}
+        <section class="col col-lg-6">
+            <label>Nombre</label>
+            <label class="input">
+                <input maxlength="250" value="@nombreApellido" disabled class="form-control" />
+            </label>
+        </section>
+
+        <section class="col col-lg-2">
+            <label>D&iacute;as laborados</label>
+            <label class="input">
+                <input type="number" asp-for="CantidadDias" class="form-control" />
+                <span asp-validation-for="CantidadDias" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+</fieldset>
+<br />

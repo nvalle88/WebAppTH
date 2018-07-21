@@ -1,0 +1,49 @@
+@model bd.webappth.entidades.Negocio.DiasLaboradosNomina
+
+@{
+    ViewData["Title"] = "CalculoNomina";
+}
+
+@using bd.webappth.entidades.Utils
+@{ var modelo = new MenuFichaCalculoNomina { OpcionMenu = 3 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+
+@{ var subMenu = new MenuFichaCalculoNomina { OpcionMenu = 1 }; }
+@{await Html.RenderPartialAsync("_PartialViewSubMenuDiasLaborados", subMenu);}
+
+<link rel="stylesheet" href="~/lib/select2/dist/css/select2.min.css" />
+<div id="content">
+    <section id="" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Editar d&iacute;as laborados</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form asp-action="EditarDiasLaborados" id="checkout-form" class="smart-form" novalidate="novalidate">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="IdDiasLaboradosNomina" />
+                                @{await Html.RenderPartialAsync("_PartialViewDiasLaborados", Model);}
+                                <footer>
+                                    <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
+                                    <a asp-action="DiasLaboradosBase" asp-controller="CalculoNomina" onclick="cargando()" class="btn btn-default">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

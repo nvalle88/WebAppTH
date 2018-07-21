@@ -309,6 +309,25 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        public async Task<IActionResult> LimpiarDiasLaborados()
+        {
+            try
+            {
+                var response = await apiServicio.ObtenerElementoAsync1<Response>(await ObtenerCalculoNomina(), new Uri(WebApp.BaseAddress)
+                                                                          , "api/CalculoNomina/LimpiarDiasLaborados");
+                if (response.IsSuccess)
+                {
+                    return this.Redireccionar("CalculoNomina", "DiasLaborados", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                }
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
+
+            }
+            catch (Exception)
+            {
+                return this.Redireccionar($"{Mensaje.Error}|{Mensaje.Excepcion}");
+            }
+        }
+
         public async Task<IActionResult> LimpiarReportados()
         {
             try
@@ -353,9 +372,11 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Empleados"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>( new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosActivos"), "IdEmpleado", "NombreApellido");
         }
 
-        private async Task CargarConceptosActivos()
+        private async Task<JsonResult> CargarConceptosActivos(string idEmpleado)
         {
-            ViewData["Conceptos"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ConceptoNomina>(true,new Uri(WebApp.BaseAddress), "api/ConceptoNomina/ListarConceptoNomina"), "IdConcepto", "Descripcion");
+            var emleado = new Empleado { IdEmpleado = Convert.ToInt32(idEmpleado) };
+           var conceptos= await apiServicio.Listar<ConceptoNomina>(emleado, new Uri(WebApp.BaseAddress), "api/ConceptoNomina/ListarConceptoNominaPorTipoRelacionDelEmpleado");
+            return Json(conceptos);
         }
 
 
@@ -365,7 +386,6 @@ namespace bd.webappth.web.Controllers.MVC
             {
 
                 await CargarEmpleadosActivos();
-                await CargarConceptosActivos();
                 return View();
             }
             catch (Exception)
@@ -393,7 +413,6 @@ namespace bd.webappth.web.Controllers.MVC
                     return View();
                 }
                 await CargarEmpleadosActivos();
-                await CargarConceptosActivos();
                 this.TempData["MensajeTimer"] = $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}|{"45000"}";
                 return View();
             }
@@ -455,7 +474,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                                           , "api/CalculoNomina/ListarDiasLaborados");
                 if (lista.Count == 0)
                 {
-                    return this.Redireccionar("DiasLaborados", "HorasExtras", $"{Mensaje.Aviso}|{Mensaje.NoExistenRegistros}");
+                    return this.Redireccionar("CalculoNomina", "DiasLaborados", $"{Mensaje.Aviso}|{Mensaje.NoExistenRegistros}");
                 }
                 return View(lista);
             }
@@ -778,6 +797,43 @@ namespace bd.webappth.web.Controllers.MVC
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorEliminar}");
             }
         }
+
+
+
+        public async Task<IActionResult> EditarDiasLaborados(int? id)
+        {
+            if (id==null)
+            {
+                return this.Redireccionar("CalculoNomina", "DiasLaboradosBase", $"{Mensaje.Aviso}|{"Debe seleccionar un registro"}");
+            }
+            var diasLaboradosDB = new DiasLaboradosNomina { IdDiasLaboradosNomina = Convert.ToInt32(id) };
+            var response =await apiServicio.ObtenerElementoAsync1<Response>(diasLaboradosDB, new Uri(WebApp.BaseAddress),
+                                                                 "api/CalculoNomina/ObtenerDiasLaborados");
+
+            var diasLaborados = JsonConvert.DeserializeObject<DiasLaboradosNomina>(response.Resultado.ToString());
+
+            return View(diasLaborados);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarDiasLaborados(DiasLaboradosNomina diasLaboradosNomina)
+        {
+            if (diasLaboradosNomina==null)
+            {
+                return this.Redireccionar("CalculoNomina", "DiasLaboradosBase", $"{Mensaje.Aviso}|{"No se ha podido editar..."}");
+            }
+           
+            var response = await apiServicio.EditarAsync<Response>(diasLaboradosNomina, new Uri(WebApp.BaseAddress),
+                                                                 "api/CalculoNomina/EditarDiasLaborados");
+
+            if (response.IsSuccess)
+            {
+                return this.Redireccionar("CalculoNomina", "DiasLaboradosBase", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+            }
+            return this.Redireccionar("CalculoNomina", "DiasLaboradosBase", $"{Mensaje.Error}|{Mensaje.ErrorEditar}");
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
