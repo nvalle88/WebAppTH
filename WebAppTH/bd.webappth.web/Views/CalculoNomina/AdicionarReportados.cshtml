@@ -82,8 +82,8 @@
                 $("#IdConcepto").empty();
 
                 $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("CargarConceptosActivos", "CalculoNomina")',
+                    type: 'GET',
+                    url: '@Url.Action("CargarConceptosActivos")',
                     dataType: 'json',
                     data: { idEmpleado: $("#IdEmpleado").val() },
                     success: function (data) {

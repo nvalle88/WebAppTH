@@ -372,7 +372,7 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Empleados"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ListaEmpleadoViewModel>( new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosActivos"), "IdEmpleado", "NombreApellido");
         }
 
-        private async Task<JsonResult> CargarConceptosActivos(string idEmpleado)
+        public async Task<JsonResult> CargarConceptosActivos(int idEmpleado)
         {
             var emleado = new Empleado { IdEmpleado = Convert.ToInt32(idEmpleado) };
            var conceptos= await apiServicio.Listar<ConceptoNomina>(emleado, new Uri(WebApp.BaseAddress), "api/ConceptoNomina/ListarConceptoNominaPorTipoRelacionDelEmpleado");
