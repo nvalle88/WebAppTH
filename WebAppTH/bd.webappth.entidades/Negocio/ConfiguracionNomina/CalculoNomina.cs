@@ -47,5 +47,6 @@ namespace bd.webappth.entidades.Negocio
 
         public virtual ICollection<ReportadoNomina> ReportadoNomina { get; set; }
         public virtual ICollection<CabeceraNomina> CabeceraNomina { get; set; }
+        public virtual ICollection<DiasLaboradosNomina> DiasLaboradosNomina { get; set; }
     }
 }

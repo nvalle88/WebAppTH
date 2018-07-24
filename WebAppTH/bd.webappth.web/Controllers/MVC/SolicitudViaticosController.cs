@@ -121,7 +121,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     var respuestaSolicitudViatico = await apiServicio.ObtenerElementoAsync1<ViewModelsSolicitudViaticos>(sol, new Uri(WebApp.BaseAddress),
                                                                  "api/SolicitudViaticos/ObtenerSolicitudesViaticosporId");
-                    
+
                     return View(respuestaSolicitudViatico);
 
                 }
@@ -136,7 +136,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Detalle(int id)
         {
-            
+
             var sol = new ViewModelsSolicitudViaticos
             {
                 IdSolicitudViatico = id
@@ -149,7 +149,7 @@ namespace bd.webappth.web.Controllers.MVC
                     var respuestaSolicitudViatico = await apiServicio.ObtenerElementoAsync1<ViewModelsSolicitudViaticos>(sol, new Uri(WebApp.BaseAddress),
                                                                  "api/SolicitudViaticos/ObtenerSolicitudesViaticosporId");
 
-                   
+
                     return View(respuestaSolicitudViatico);
 
                 }
@@ -227,9 +227,13 @@ namespace bd.webappth.web.Controllers.MVC
                     var empleado = await ObtenerEmpleado(NombreUsuario);
 
                     viewModelsSolicitudViaticos.IdEmpleado = empleado.IdEmpleado;
+                    //if(viewModelsSolicitudViaticos.IdConfiguracionViatico == 0 )
+                    //{
+                    //    return this.Redireccionar("SolicitudViaticos", "Create", $"{Mensaje.Error}|{Mensaje.TipoViatico}");
+
+                    //}
                     viewModelsSolicitudViaticos.IdConfiguracionViatico = empleado.IdConfiguracionViatico;
                     viewModelsSolicitudViaticos.FechaSolicitud = DateTime.Now.Date;
-
                     response = await apiServicio.InsertarAsync(viewModelsSolicitudViaticos,
                                                                  new Uri(WebApp.BaseAddress),
                                                                  "api/SolicitudViaticos/InsertarSolicitudViatico");
@@ -315,9 +319,6 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<ListaEmpleadoViewModel> ObtenerEmpleado(string nombreUsuario)
         {
-
-
-
             try
             {
                 if (!string.IsNullOrEmpty(nombreUsuario))
@@ -326,15 +327,15 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         NombreUsuario = nombreUsuario
                     };
-                    var empleado = await apiServicio.ObtenerElementoAsync1<ListaEmpleadoViewModel>(emp, new Uri(WebApp.BaseAddress),
+                    var empleado = await apiServicio.ObtenerElementoAsync1<Response>(emp, new Uri(WebApp.BaseAddress),
                                                                   "api/Empleados/ObtenerDatosCompletosEmpleado");
-
-
-                    //respuesta.Resultado = JsonConvert.DeserializeObject<SolicitudViatico>(respuesta.Resultado.ToString());
-                    //if (respuesta.IsSuccess)
-                    //{
-                    return empleado;
-                    //}
+                    if (empleado.IsSuccess)
+                    {
+                        var resultado = JsonConvert.DeserializeObject<ListaEmpleadoViewModel>(empleado.Resultado.ToString());
+                        //if (respuesta.IsSuccess)
+                        //{
+                        return resultado;
+                    }
 
                 }
 
@@ -469,6 +470,10 @@ namespace bd.webappth.web.Controllers.MVC
             var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
             var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             var empleadoJson = ObtenerEmpleado(NombreUsuario);
+            if (empleadoJson.Result == null)
+            {
+                return this.Redireccionar("Homes","Index",$"{Mensaje.Error}|{Mensaje.UsuarioNoRegistrado}");
+            }
             var idEmpleado = empleadoJson.Result.IdEmpleado;
 
             var empleado = new Empleado()
@@ -486,15 +491,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando estados civiles",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
         }
