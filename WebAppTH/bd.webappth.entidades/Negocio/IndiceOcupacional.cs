@@ -77,6 +77,7 @@ namespace bd.webappth.entidades.Negocio
 
         public virtual ICollection<IndiceOcupacionalComportamientoObservable> IndiceOcupacionalComportamientoObservable { get; set; }
 
+        public virtual ICollection<EmpleadoMovimiento> EmpleadoMovimiento { get; set; }
 
     }
 }

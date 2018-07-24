@@ -106,51 +106,20 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                var datosBasicosEmpleado = new DatosBasicosEmpleadoSinRequiredViewModel { IdEmpleado = id };
 
-                var respuesta = await apiServicio.ObtenerElementoAsync <DatosBasicosEmpleadoSinRequiredViewModel>(
-                    datosBasicosEmpleado,
+                var respuesta = await apiServicio.ObtenerElementoAsync1 <Response>(
+                    id,
                     new Uri(WebApp.BaseAddress),
-                    "api/Empleados/ObtenerDatosBasicosEmpleado");
+                    "api/AccionesPersonal/ObtenerNuevaAccionPersonalViewModel");
 
                 if (respuesta.IsSuccess)
                 {
-                    datosBasicosEmpleado = JsonConvert.DeserializeObject<DatosBasicosEmpleadoSinRequiredViewModel>(respuesta.Resultado.ToString());
-
-
-                    var situacionActualViewModel = new SituacionActualEmpleadoViewModel { IdEmpleado = datosBasicosEmpleado.IdEmpleado };
-
-                    var situacionActualEmpleadoViewModelResponse = await apiServicio.ObtenerElementoAsync<SituacionActualEmpleadoViewModel>(situacionActualViewModel, new Uri(WebApp.BaseAddress),
-                    "api/Empleados/ObtenerSituacionActualEmpleadoViewModel");
-
-                    if (respuesta.IsSuccess)
-                    {
-                        situacionActualViewModel = JsonConvert.DeserializeObject<SituacionActualEmpleadoViewModel>(situacionActualEmpleadoViewModelResponse.Resultado.ToString());
-                    }
-
+                    var modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
                     
-                    var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
-                    new Uri(WebApp.BaseAddress),
-                    "api/IndicesOcupacionalesModalidadPartida/ListarIOMPVMCodigosDiferentes");
-
-                    var model = new AccionPersonalViewModel
-                    {
-                        DatosBasicosEmpleadoViewModel = datosBasicosEmpleado,
-                        Numero = "0",
-                        Fecha = DateTime.Now,
-                        FechaRige = DateTime.Now,
-                        FechaRigeHasta = DateTime.Now,
-                        SituacionActualEmpleadoViewModel = situacionActualViewModel,
-                        GeneraMovimientoPersonal = false,
-                        ListaIndicesOcupacionalesModalidadPartida = listaIOMP,
-                        IdIndiceOcupacionalModalidadPartidaPropuesta = situacionActualViewModel.IdIndiceOcupacionalModalidadPartida
-                    };
-
-
                     await InicializarCombos();
                     
 
-                    return View(model);
+                    return View(modelo);
 
                 }
 
@@ -164,77 +133,132 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AccionPersonalViewModel accionPersonalViewModel)
         {
-            try {
+            try
+            {
 
-                if (!ModelState.IsValid)
+                var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                    accionPersonalViewModel,
+                    new Uri(WebApp.BaseAddress),
+                    "api/AccionesPersonal/InsertarAccionPersonal");
+
+                if (respuesta.IsSuccess)
                 {
-                    await InicializarCombos();
 
-                    this.TempData["Mensaje"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}";
-
-                    var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
-                    new Uri(WebApp.BaseAddress),
-                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
-
-                    accionPersonalViewModel.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
-
-                    return View(accionPersonalViewModel);
-                }
-
-                if (accionPersonalViewModel.GeneraMovimientoPersonal == true) {
-
-                    if (accionPersonalViewModel.IdIndiceOcupacionalModalidadPartidaPropuesta < 1) {
-
-                        this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.SeleccioneIndice}|{"10000"}";
-
-                        await InicializarCombos();
-                        
-                        var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
-                    new Uri(WebApp.BaseAddress),
-                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
-
-                        accionPersonalViewModel.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
-
-                        return View(accionPersonalViewModel);
-                    }
-                    
-
-                }
-
-                var respuesta = await apiServicio.InsertarAsync<AccionesPersonalPorEmpleadoViewModel>(
-                            accionPersonalViewModel,
-                            new Uri(WebApp.BaseAddress),
-                            "api/AccionesPersonal/InsertarAccionPersonal");
-                
-
-                if (respuesta.IsSuccess) {
 
                     return this.RedireccionarMensajeTime(
                             "MovimientosPersonalTTHH",
                             "ListaMovimientos",
                              new { identificacion = respuesta.Resultado },
                             $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
-                         );
+                    );
+                    
+
                 }
 
                 return this.RedireccionarMensajeTime(
                             "MovimientosPersonalTTHH",
                             "ListaMovimientos",
                              new { identificacion = respuesta.Resultado },
-                            $"{Mensaje.Error}|{respuesta.Message}|{"10000"}"
-                         );
+                            $"{Mensaje.Error}|{respuesta.Message}|{"7000"}"
+                    );
 
-            } catch (Exception){
+            }
+            catch (Exception ex)
+            {
                 return BadRequest();
             }
         }
 
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+
+                var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                    id,
+                    new Uri(WebApp.BaseAddress),
+                    "api/AccionesPersonal/ObtenerAccionPersonalViewModelParaEditar");
+
+                if (respuesta.IsSuccess)
+                {
+                    var modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
+
+                    await InicializarCombos();
+
+                    await CargarRelacionLaboralPorRegimen(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.RelacionLaboral.IdRegimenLaboral);
+                    
+                    await CargarTipoNombramientoPorRelacion                        (modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.IdRelacionLaboral);
+                    
+                    await CargarSucursalesPorCiudad(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.Sucursal.IdCiudad);
+                    
+                    await CargarPerfilPuestoPorDependencia(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.IdDependencia,
+                        modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.IdManualPuesto
+                          );
+                    
+
+                    return View(modelo);
+
+                }
+
+                return BadRequest();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(AccionPersonalViewModel accionPersonalViewModel)
+        {
+            try
+            {
+
+                var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                    accionPersonalViewModel,
+                    new Uri(WebApp.BaseAddress),
+                    "api/AccionesPersonal/EditarAccionPersonal");
+
+                if (respuesta.IsSuccess)
+                {
+
+
+                    return this.RedireccionarMensajeTime(
+                            "MovimientosPersonalTTHH",
+                            "ListaMovimientos",
+                             new { identificacion = respuesta.Resultado },
+                            $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
+                    );
+
+
+                }
+
+                return this.RedireccionarMensajeTime(
+                            "MovimientosPersonalTTHH",
+                            "ListaMovimientos",
+                             new { identificacion = respuesta.Resultado },
+                            $"{Mensaje.Error}|{respuesta.Message}|{"7000"}"
+                    );
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        /*
         public async Task<IActionResult> Edit(int id)
         {
             try{
@@ -414,76 +438,8 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        */
 
-        public async Task<ActionResult> CargarDependencias(int idSucursal)
-        {
-            try
-            {
-                var sucursal = new Sucursal()
-                {
-                    IdSucursal = idSucursal
-                };
-                var dependenciasporsucursal = await apiServicio.ObtenerElementoAsync1<List<Dependencia>>(sucursal, new Uri(WebApp.BaseAddress)
-                                                                      , "/api/Dependencias/ListarDependenciaporSucursal");
-
-                //InicializarMensaje(mensaje);
-                return Json(dependenciasporsucursal);
-
-            } catch (Exception ex) {
-                return Json(new List<Dependencia>());
-            }
-        }
-        
-        public async Task<ActionResult> CargarRoles(int idDependencia)
-        {
-            try
-            {
-                var dependencia = new Dependencia()
-                {
-                    IdDependencia = idDependencia
-                };
-                var listaManualPuesto = await apiServicio.ObtenerElementoAsync1<List<ManualPuesto>>(
-                         dependencia, new Uri(WebApp.BaseAddress), "api/ManualPuestos/ListarManualPuestoPorDependencia");
-                
-
-                //InicializarMensaje(mensaje);
-                return Json(listaManualPuesto);
-
-            }
-            catch (Exception ex)
-            {
-                return Json(new List<Dependencia>());
-            }
-        }
-        
-        public async Task<ActionResult> CargarRMU(int idCargo, int idDependencia)
-        {
-            try
-            {
-                var filtro = new IdFiltrosViewModel()
-                {
-                    IdManualPuesto = idCargo,
-                    IdDependencia = idDependencia
-                };
-                var lista = await apiServicio.ObtenerElementoAsync1<List<EscalaGrados>>(filtro, new Uri(WebApp.BaseAddress), "/api/EscalasGrados/ListarEscalaPorManualPuesto");
-
-                var firstRMU = new List<EscalaGrados>();
-
-                if (lista.Count > 0)
-                {
-                    firstRMU.Add(lista.FirstOrDefault());
-                }
-                
-
-                //InicializarMensaje(mensaje);
-                return Json(firstRMU);
-
-            }
-            catch (Exception ex)
-            {
-                return Json(new List<Dependencia>());
-            }
-        }
 
         public async Task<ActionResult> VerTipoAccion(int idAccion)
         {
@@ -518,32 +474,204 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
 
 
+
             //** Estados de aprobación
             var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacionTTHH");
 
             ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+
+
+
             
+            ViewData["IdRegimenLaboral"] = new SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
+
+
+            ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
+
+            
+            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
+
+
+            ViewData["IdModalidadPartida"] = new SelectList(await apiServicio.Listar<ModalidadPartida>(new Uri(WebApp.BaseAddress), "api/ModalidadesPartida/ListarModalidadesPartida"), "IdModalidadPartida", "Nombre");
+
         }
 
 
-        public async Task<IActionResult> ListarModalidadPartida(string mensaje)
+        public async Task<JsonResult> ListarRelacionesLaboralesPorRegimen(int regimen)
         {
-            this.TempData["Mensaje"] = $"{Mensaje.Aviso}|{"Seleccione para generar la propuesta"}";
-            try {
-
-                var lista= await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
-                    new Uri(WebApp.BaseAddress),
-                    "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
-
-                return View(lista);
-
-            } catch (Exception ex)
+            try
             {
-                return BadRequest();
+                var regimenLaboral = new RegimenLaboral
+                {
+                    IdRegimenLaboral = regimen,
+                };
+                var listarelacionesLaborales = await apiServicio.Listar<RelacionLaboral>(regimenLaboral, new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaboralesPorRegimen");
+                return Json(listarelacionesLaborales);
             }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
         }
-        
+
+        public async Task<JsonResult> ListarTipoNombramientoRelacion(int relacion)
+        {
+            try
+            {
+                var relacionLaboral = new RelacionLaboral
+                {
+                    IdRelacionLaboral = relacion,
+                };
+                var listarelacionesLaborales = await apiServicio.Listar<TipoNombramiento>(relacionLaboral, new Uri(WebApp.BaseAddress), "api/TiposDeNombramiento/ListarTiposDeNombramientoPorRelacion");
+                return Json(listarelacionesLaborales);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+
+        public async Task<JsonResult> ListarManualPuestoporDependencia(int iddependencia, int idRelacionLaboral)
+        {
+            try
+            {
+
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdDependencia = iddependencia,
+                    IdRelacionLaboral = idRelacionLaboral
+                };
+                var listarmanualespuestos = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarManualPuestoporDependenciaYRelacionLaboral");
+                return Json(listarmanualespuestos);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+
+        public async Task<JsonResult> ListarRolPuestoporManualPuesto(int idmanualpuesto, int iddependencia, int idrelacionLaboral)
+        {
+            try
+            {
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdManualPuesto = idmanualpuesto,
+                    IdDependencia = iddependencia,
+                    IdRelacionLaboral = idrelacionLaboral
+                };
+
+                var listarrolespuestos = await apiServicio.ObtenerElementoAsync1<IndicesOcupacionalesModalidadPartidaViewModel>(
+                    indiceOcupacional,
+                    new Uri(WebApp.BaseAddress),
+                    "api/Empleados/ListarRolPuestoporManualPuestoYRelacionLaboral"
+                );
+
+                return Json(listarrolespuestos);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
 
 
+        public async Task<ActionResult> CargarDependencias(int idsucursal)
+        {
+            var sucursal = new Sucursal()
+            {
+                IdSucursal = idsucursal
+            };
+            var dependenciasporsucursal = await apiServicio.ObtenerElementoAsync1<Dependencia>(sucursal, new Uri(WebApp.BaseAddress)
+                                                                  , "api/Dependencias/ListarDependenciaporSucursalPadreHijo");
+
+
+            //InicializarMensaje(mensaje);
+            return PartialView(dependenciasporsucursal);
+
+        }
+
+
+
+        // para la edicion carga de combos
+        public async Task CargarRelacionLaboralPorRegimen(int IdRegimenLaboral)
+        {
+            try
+            {
+                var regimenLaboral = new RegimenLaboral
+                {
+                    IdRegimenLaboral = IdRegimenLaboral,
+                };
+
+                var listarelacionesLaborales = await apiServicio.Listar<RelacionLaboral>(regimenLaboral, new Uri(WebApp.BaseAddress), "api/RelacionesLaborales/ListarRelacionesLaboralesPorRegimen");
+
+                ViewData["IdRelacionLaboral"] = new SelectList(listarelacionesLaborales, "IdRelacionLaboral", "Nombre");
+
+            }
+            catch (Exception ex) { }
+        }
+
+        public async Task CargarTipoNombramientoPorRelacion(int IdRelacionLaboral)
+        {
+            try
+            {
+                var relacionLaboral = new RelacionLaboral
+                {
+                    IdRelacionLaboral = IdRelacionLaboral,
+                };
+                var listarTipoNombramientos = await apiServicio.Listar<TipoNombramiento>(relacionLaboral, new Uri(WebApp.BaseAddress), "api/TiposDeNombramiento/ListarTiposDeNombramientoPorRelacion");
+
+                ViewData["IdTipoNombramiento"] = new SelectList(listarTipoNombramientos, "IdTipoNombramiento", "Nombre");
+
+            }
+            catch (Exception ex) { }
+        }
+
+        public async Task CargarSucursalesPorCiudad(int IdCiudad)
+        {
+            try
+            {
+                var ciudad = new Ciudad
+                {
+                    IdCiudad = IdCiudad,
+                };
+                var listarsucursales = await apiServicio.Listar<Sucursal>(ciudad, new Uri(WebApp.BaseAddress), "api/Sucursal/ListarSucursalporCiudad");
+
+                ViewData["IdSucursal"] = new SelectList(listarsucursales, "IdSucursal", "Nombre");
+
+            }
+            catch (Exception ex) { }
+        }
+
+        public async Task CargarPerfilPuestoPorDependencia(int IdDependencia, int IdManualPuesto)
+        {
+            try
+            {
+                var indiceOcupacional = new IndiceOcupacional
+                {
+                    IdDependencia = IdDependencia,
+                };
+                var listarmanualespuestos = await apiServicio.Listar<IndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarManualPuestoporDependenciaTodosEstados");
+
+                var mostrarLista = new List<ManualPuesto>();
+
+                foreach (var item in listarmanualespuestos)
+                {
+                    if (item.IdManualPuesto == IdManualPuesto)
+                    {
+                        mostrarLista.Add(new ManualPuesto { IdManualPuesto = item.ManualPuesto.IdManualPuesto, Nombre = item.ManualPuesto.Nombre });
+                        break;
+                    }
+                }
+
+                ViewData["IdManualPuesto"] = new SelectList(mostrarLista, "IdManualPuesto", "Nombre");
+
+            }
+            catch (Exception ex) { }
+        }
     }
 }

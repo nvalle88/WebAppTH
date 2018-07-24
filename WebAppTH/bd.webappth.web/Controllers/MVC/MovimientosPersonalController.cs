@@ -70,73 +70,73 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task<IActionResult> Edit(int id)
-        {
-            try
-            {
-                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+        //public async Task<IActionResult> Edit(int id)
+        //{
+        //    try
+        //    {
+        //        var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
 
-                if (claim.IsAuthenticated == true)
-                {
+        //        if (claim.IsAuthenticated == true)
+        //        {
 
-                    var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+        //            var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                    var modelo = new AccionPersonalViewModel { IdAccionPersonal = id, NombreUsuarioAprobador = NombreUsuario };
+        //            var modelo = new AccionPersonalViewModel { IdAccionPersonal = id, NombreUsuarioAprobador = NombreUsuario };
 
-                    var respuesta = await apiServicio.ObtenerElementoAsync<AccionPersonalViewModel>(
-                        modelo,
-                        new Uri(WebApp.BaseAddress),
-                        "api/AccionesPersonal/ObtenerAccionPersonalViewModel");
+        //            var respuesta = await apiServicio.ObtenerElementoAsync<AccionPersonalViewModel>(
+        //                modelo,
+        //                new Uri(WebApp.BaseAddress),
+        //                "api/AccionesPersonal/ObtenerAccionPersonalViewModel");
 
-                    if (respuesta.IsSuccess)
-                    {
-                        modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
+        //            if (respuesta.IsSuccess)
+        //            {
+        //                modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
 
-                        await InicializarCombos();
-
-
-                        var situacionActualViewModel = new SituacionActualEmpleadoViewModel { IdEmpleado = modelo.DatosBasicosEmpleadoViewModel.IdEmpleado };
-
-                        var situacionActualEmpleadoViewModelResponse = await apiServicio.ObtenerElementoAsync<SituacionActualEmpleadoViewModel>(situacionActualViewModel, new Uri(WebApp.BaseAddress),
-                        "api/Empleados/ObtenerSituacionActualEmpleadoViewModel");
-
-                        if (respuesta.IsSuccess)
-                        {
-                            situacionActualViewModel = JsonConvert.DeserializeObject<SituacionActualEmpleadoViewModel>(situacionActualEmpleadoViewModelResponse.Resultado.ToString());
-                        }
-
-                        modelo.SituacionActualEmpleadoViewModel = situacionActualViewModel;
+        //                await InicializarCombos();
 
 
-                        var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
-                        new Uri(WebApp.BaseAddress),
-                        "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
+        //                var situacionActualViewModel = new SituacionActualEmpleadoViewModel { IdEmpleado = modelo.DatosBasicosEmpleadoViewModel.IdEmpleado };
 
-                        modelo.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
+        //                var situacionActualEmpleadoViewModelResponse = await apiServicio.ObtenerElementoAsync<SituacionActualEmpleadoViewModel>(situacionActualViewModel, new Uri(WebApp.BaseAddress),
+        //                "api/Empleados/ObtenerSituacionActualEmpleadoViewModel");
+
+        //                if (respuesta.IsSuccess)
+        //                {
+        //                    situacionActualViewModel = JsonConvert.DeserializeObject<SituacionActualEmpleadoViewModel>(situacionActualEmpleadoViewModelResponse.Resultado.ToString());
+        //                }
+
+        //                modelo.SituacionActualEmpleadoViewModel = situacionActualViewModel;
 
 
-                        return View(modelo);
+        //                var listaIOMP = await apiServicio.Listar<IndicesOcupacionalesModalidadPartidaViewModel>(
+        //                new Uri(WebApp.BaseAddress),
+        //                "api/IndicesOcupacionalesModalidadPartida/ListarIndicesOcupacionalesModalidadPartidaViewModel");
 
-                    }
+        //                modelo.ListaIndicesOcupacionalesModalidadPartida = listaIOMP;
 
-                    return BadRequest();
-                }
-                else {
-                    return RedirectToAction("Login", "Login");
 
-                }
+        //                return View(modelo);
+
+        //            }
+
+        //            return BadRequest();
+        //        }
+        //        else {
+        //            return RedirectToAction("Login", "Login");
+
+        //        }
                 
 
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-                throw;
-            }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BadRequest();
+        //        throw;
+        //    }
 
-        }
+        //}
 
-
+        /*
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AccionPersonalViewModel accionPersonalViewModel)
@@ -193,7 +193,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-
+        */
 
         public async Task InicializarCombos()
         {

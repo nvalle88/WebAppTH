@@ -1520,7 +1520,6 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         public async Task<ActionResult> CargarDependencias(int idsucursal)
-
         {
             var sucursal = new Sucursal()
             {
