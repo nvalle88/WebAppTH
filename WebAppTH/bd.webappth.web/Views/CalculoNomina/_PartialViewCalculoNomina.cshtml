@@ -32,37 +32,58 @@
             </label>
         </section>
     </div>
-    <label>Operaciones</label>
-    <hr />
-    <br />
-    <div class="row">
-        <section class="col col-6">
-            <label>Autom&aacute;tico</label>
-            <label class="checkbox">
-                <input type="checkbox" asp-for="Automatico" />
-                <input type="hidden" name="Automatico" value="false" checked="checked" />
+
+    <div class="row col col-lg-12">
+        <label class="label"><b> D&eacute;cimo tercer sueldo</b></label>
+        <hr />
+        <br />
+        <section class="col col-lg-12">
+            <label>&#191 incluir en el pago de la n&oacute;mina ?</label>
+            <br />
+            <span class="onoffswitch">
+                <input type="checkbox" asp-for="DecimoTercerSueldo" name="start_interval1" class="onoffswitch-checkbox" id="st12">
+                <label class="onoffswitch-label" for="st12">
+                    <span class="onoffswitch-inner" data-swchon-text="Si" data-swchoff-text="No"></span>
+                    <span class="onoffswitch-switch">
+                    </span>
+                </label>
+            </span>
+        </section>
+    </div>
+
+    <div class="row col col-lg-12">
+        <label class="label"> <b>D&eacute;cimo cuarto sueldo </b></label>
+        <hr />
+        <section class="col col-lg-6">
+            <label class="label"></label>
+            <label class="radio">
+                NINGUNO <input name="DecimoCuartoSueldo" type="radio" value="NINGUNO" asp-for="DecimoCuartoSueldo" />
+                <i></i>
+            </label>
+            <label class="radio">
+                SIERRA <input name="DecimoCuartoSueldo" type="radio" value="SIERRA" asp-for="DecimoCuartoSueldo" />
                 <i></i>
             </label>
         </section>
-
-        <section class="col col-6">
-            <label>Reportado</label>
-            <label class="checkbox">
-                <input type="checkbox" asp-for="Reportado" />
-                <input type="hidden" name="Reportado" value="false" checked="checked" />
+        <section class="col col-lg-6">
+            <label class="label"></label>
+            <label class="radio">
+                COSTA <input name="DecimoCuartoSueldo" type="radio" value="COSTA" asp-for="DecimoCuartoSueldo" />
+                <i></i>
+            </label>
+            <label class="radio">
+                AMBOS <input name="DecimoCuartoSueldo" type="radio" value="AMBOS" asp-for="DecimoCuartoSueldo" />
                 <i></i>
             </label>
         </section>
 
     </div>
 
+    <div class="row col col-lg-12">
+        <label class="label"><b>Empleados</b></label>
+        <hr />
+        <section class="col col-lg-6">
 
-    <br />
-    <label>Empleados</label>
-    <hr />
-    <br />
-    <div class="row">
-        <section class="col col-6">
             <label>Activos</label>
             <label class="checkbox">
                 <input type="checkbox" asp-for="EmpleadoActivo" />
@@ -70,16 +91,6 @@
                 <i></i>
             </label>
         </section>
-
-        <section class="col col-6">
-            <label>Pasivos</label>
-            <label class="checkbox">
-                <input type="checkbox" asp-for="EmpleadoPasivo" />
-                <input type="hidden" name="EmpleadoPasivo" value="false" checked="checked" />
-                <i></i>
-            </label>
-        </section>
-
     </div>
 
 </fieldset>

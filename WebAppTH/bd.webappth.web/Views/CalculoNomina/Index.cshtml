@@ -39,17 +39,15 @@
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().IdProceso)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Automatico)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().DecimoTercerSueldo)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Reportado)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().DecimoCuartoSueldo)
                                         </th>
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().EmpleadoActivo)
                                         </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().EmpleadoPasivo)
-                                        </th>
+                                       
                                         <th>
                                             Opciones
                                         </th>
@@ -69,17 +67,22 @@
                                                 @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Automatico)
+                                                <span class="onoffswitch">
+                                                    <input type="checkbox" disabled="disabled" checked="@item.DecimoTercerSueldo" name="start_interval" class="onoffswitch-checkbox" id="st11(@item.DecimoTercerSueldo)">
+                                                    <label class="onoffswitch-label" for="st11(@item.DecimoTercerSueldo)">
+                                                        <span class="onoffswitch-inner" data-swchon-text="Si" data-swchoff-text="No"></span>
+                                                        <span class="onoffswitch-switch">
+                                                        </span>
+                                                    </label>
+                                                </span>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Reportado)
+                                                @Html.DisplayFor(modelItem => item.DecimoCuartoSueldo)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.EmpleadoActivo)
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EmpleadoPasivo)
-                                            </td>
+                                          
                                             <td>
                                                 @Html.ActionLink(" Calcular nómina", "CalcularDetalleNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
                                                 <a href='@Url.Action("ReporteNomina", "Report", new { id = item.IdCalculoNomina})' target="_blank">

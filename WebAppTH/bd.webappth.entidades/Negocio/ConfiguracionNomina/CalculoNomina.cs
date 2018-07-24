@@ -13,9 +13,6 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Activo")]
         public bool EmpleadoActivo { get; set; }
 
-        [Display(Name = "Pasivo")]
-        public bool EmpleadoPasivo { get; set; }
-
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Descripción")]
         [StringLength(250, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
@@ -27,11 +24,9 @@ namespace bd.webappth.entidades.Negocio
         [StringLength(250, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Url { get; set; }
 
-        [Display(Name = "Automático")]
-        public bool Automatico { get; set; }
+        public bool DecimoTercerSueldo { get; set; }
 
-        [Display(Name = "Reportado")]
-        public bool Reportado { get; set; }
+        public string DecimoCuartoSueldo { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Periodo")]

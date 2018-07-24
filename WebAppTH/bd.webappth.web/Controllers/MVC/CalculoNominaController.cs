@@ -617,7 +617,7 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Create(string mensaje)
         {
             await CargarComboxProcesoPeriodo();
-            var vista = new CalculoNomina { Automatico = false, Reportado = false,EmpleadoActivo=true,EmpleadoPasivo=false };
+            var vista = new CalculoNomina { DecimoCuartoSueldo ="NINGUNO", DecimoTercerSueldo = false,EmpleadoActivo=true};
             return View(vista);
         }
 
