@@ -241,6 +241,24 @@
         $(document).ready(function () {
 
 
+            @if (Model.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta !=  null
+               && Model.GeneraMovimientoPersonal == true
+               && Model.ConfigurarPuesto == false
+           )
+            {
+                <text>
+                    var listaRadios = document.getElementsByName("EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta");
+            
+                    for (var i = 0; i < listaRadios.length;i++) { 
+
+                        if (listaRadios[i].value == @Model.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta) {
+                            listaRadios[i].checked = true;
+                        }
+                    }
+                </text>
+            }
+
+
             $("#SelectAccion").change(function () {
 
 
@@ -291,6 +309,18 @@
                         }
 
                         maxDias = data.nDiasMaximo;
+
+                        var diasMes = 0;
+                        var diasYear = 0;
+
+                        if (data.mesesMaximo > 0) {
+                            diasMes = data.mesesMaximo * 30;
+                        }
+                        if (data.mesesMaximo > 0) {
+                            diasYear = data.yearsMaximo * 365;
+                        }
+
+
                         minDias = data.nDiasMinimo;
                         
 
@@ -305,8 +335,12 @@
 
                         } else {
 
+                            maxDias = maxDias + diasMes + diasYear;
+
                             textoMensajeAlerta = "El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias;
+
                             mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 10000);
+
 
                             if (minDias > 0) {
                                 textoMensajeAlerta = "El m\u00EDnimo de d\u00EDas para este requerimiento son: " + minDias;
@@ -605,7 +639,9 @@
             var idIO = document.getElementById("txt_ioHasta").value;
             var fondoFinanciamiento = document.getElementsByName("EmpleadoMovimiento.IdFondoFinanciamiento")[0].value;
             var numeroPartidaCampo = document.getElementById("txt_partida").value;
-
+            var fechaRigeHasta = document.getElementById("date_Fecha2").style.visibility.toString();
+            var fechaRigeHastaValor = document.getElementById("date_Fecha2").value;
+           
             for (var i = 0; i < listaConfiguracionPuesto.length;i++) { 
 
                 if (listaConfiguracionPuesto[i].checked) {
@@ -645,12 +681,12 @@
                         enviar = false;
                     }
 
-                    else if (fondoFinanciamiento < 1) { 
+                    else if (fondoFinanciamiento < 1) {
                         textoMensajeAlerta = "Debe seleccionar un fondo de financiamiento";
                         enviar = false;
                     }
 
-                    else if (rolPuesto.trim().length < 1 || idIO < 1) { 
+                    else if (rolPuesto.trim().length < 1 || idIO < 1) {
                         textoMensajeAlerta = "Debe seleccionar un perfil de puesto";
                         enviar = false;
                     }
@@ -663,18 +699,23 @@
                 }
 
                 else if (configuracionPuesto == "False") {
-                    
-                    if (iompHasta < 1) { 
+
+                    if (iompHasta < 1) {
                         textoMensajeAlerta = "Debe seleccionar un puesto";
                         enviar = false;
                     }
 
                 }
-
-
-
+                
+                
             }
 
+            if (fechaRigeHasta == "visible" && (fechaRigeHastaValor == null || fechaRigeHastaValor == "" )) {
+                
+                textoMensajeAlerta = "Ingrese una fecha hasta";
+                enviar = false;
+
+            }
 
             if (enviar == false) {
 

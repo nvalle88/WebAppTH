@@ -191,16 +191,24 @@ namespace bd.webappth.web.Controllers.MVC
 
                     await InicializarCombos();
 
-                    await CargarRelacionLaboralPorRegimen(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.RelacionLaboral.IdRegimenLaboral);
-                    
-                    await CargarTipoNombramientoPorRelacion                        (modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.IdRelacionLaboral);
-                    
-                    await CargarSucursalesPorCiudad(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.Sucursal.IdCiudad);
-                    
-                    await CargarPerfilPuestoPorDependencia(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.IdDependencia,
-                        modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.IdManualPuesto
-                          );
-                    
+
+                    if (modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta != null) {
+
+                        await CargarRelacionLaboralPorRegimen(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.RelacionLaboral.IdRegimenLaboral);
+
+                        await CargarTipoNombramientoPorRelacion(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.IdRelacionLaboral);
+
+                        await CargarSucursalesPorCiudad(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.Sucursal.IdCiudad);
+
+                        await CargarPerfilPuestoPorDependencia(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta
+                            .IndiceOcupacional.Dependencia.IdDependencia,
+                            modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta
+                            .IndiceOcupacional.IdManualPuesto
+                              );
+
+
+                    }
+
 
                     return View(modelo);
 

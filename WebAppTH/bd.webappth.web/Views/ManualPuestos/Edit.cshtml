@@ -7,32 +7,7 @@
 
 <!-- MAIN CONTENT -->
 <div id="content">
-    <div class="col col-10">
-
-        @if (@ViewData["Error"].ToString() != "")
-
-        {
-
-            <div class="col-lg-12">
-
-                <div class="alert alert-block alert-dismissable">
-
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-
-                    <p>
-
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        }
-    </div>
+    
     <!-- widget grid -->
     <section id="" class="">
 
@@ -62,10 +37,15 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="ManualPuesto.IdManualPuesto" />
                                 @{await Html.RenderPartialAsync("_PartialViewManualPuestos");}
-                                <footer>
-                                    <input type="submit" value="Guardar" class="btn btn-default" />
-                                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
-                                </footer>
+
+
+                                <div style="float:right; padding:1%;">
+                                    <footer style="background-color:transparent;border:none;">
+                                        <input type="submit" value="Guardar" class="btn btn-default" onclick="espera()" />
+                                        <a asp-action="Index" class="btn btn-default" onclick="espera()">Cancelar</a>
+
+                                    </footer>
+                                </div>
                             </form>
                         </div>
                         <!-- end widget content -->

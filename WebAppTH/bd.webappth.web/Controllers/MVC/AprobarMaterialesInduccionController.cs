@@ -152,7 +152,7 @@ namespace bd.webappth.web.Controllers.MVC
                         foreach (var item in lista)
                         {
                             var ext = Path.GetExtension(item.Url);
-                            if (ext == ".jpeg" || ext == ".bmp" || ext == ".jpe" || ext == ".jpg" || ext == ".gif")
+                            if (ext == ".jpeg" || ext == ".bmp" || ext == ".jpe" || ext == ".jpg" || ext == ".gif" || ext == ".png")
                             {
                                 imagenes.Add(item);
                             }

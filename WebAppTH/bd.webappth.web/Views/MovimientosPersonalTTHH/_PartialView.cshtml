@@ -217,7 +217,7 @@
             <div class="jarviswidget jarviswidget-color-darken" id="wid-id-100" data-widget-editbutton="false" style="padding:0px;margin:0px;">
                 <header id="table">
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>Puestos ocupados</h2>
+                    <h2>Selecci&oacute;n de puestos</h2>
                 </header>
 
                 <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover">
@@ -354,14 +354,18 @@
                                 </td>
 
                                 <td>
-                                    @if (item.IdIndiceOcupacionalModalidadPartida == Model.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta)
+                                    @Html.RadioButtonFor(x => x.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta, item.IdIndiceOcupacionalModalidadPartida, new { @checked = "false" })
+
+                                    @*@if (item.IdIndiceOcupacionalModalidadPartida == Model.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta)
                                     {
+                                        <text>s</text>
                                         @Html.RadioButtonFor(x => x.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta, item.IdIndiceOcupacionalModalidadPartida, new { @checked = "true" })
                                     }
                                     else
                                     {
+                                        <text>a</text>
                                         @Html.RadioButtonFor(x => x.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta, item.IdIndiceOcupacionalModalidadPartida, new { @checked = "false" })
-                                    }
+                                    }*@
                                 </td>
 
                             </tr>
@@ -570,7 +574,7 @@
 
             <label class="input col-lg-12" id="lbl_date_Fecha2">@Html.DisplayNameFor(model => Model.FechaRigeHasta)</label>
             <label class="input col-lg-12">
-                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" />
+                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()"/>
                 <span asp-validation-for="FechaRigeHasta" class="text-danger"></span>
             </label>
 
@@ -663,6 +667,17 @@
         for (var i = 0; i < varItemsNuevoPuesto; i++) {
             document.getElementsByClassName("divNuevoPuesto")[i].style.height = "auto";
             document.getElementsByClassName("divNuevoPuesto")[i].style.visibility = "visible";
+            
+        }
+
+        if (document.getElementById("modalidadpartida").value.length > 0) {
+
+            document.getElementById("s_modalidad").style.visibility = "visible";
+            document.getElementById("txt_partida").readOnly = false;
+        } else { 
+            
+            document.getElementById("s_modalidad").style.visibility = "hidden";
+            document.getElementById("txt_partida").readOnly = false;
         }
 
     }
@@ -741,7 +756,7 @@
             </text>
         }
 
-        @if (Model.EmpleadoMovimiento.IdModalidadPartida != null) {
+        @if (Model.EmpleadoMovimiento.IdModalidadPartida != null && Model.ConfigurarPuesto == true) {
             <text>
                 document.getElementById("s_modalidad").style.visibility = "visible";
             </text>
@@ -765,6 +780,8 @@
                 document.getElementById("lbl_date_Fecha2").style.visibility = "visible";
             </text>
         }
+
+    
     
 
 </script>
