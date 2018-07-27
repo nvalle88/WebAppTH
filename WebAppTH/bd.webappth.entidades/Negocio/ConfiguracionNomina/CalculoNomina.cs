@@ -18,6 +18,29 @@ namespace bd.webappth.entidades.Negocio
         [StringLength(250, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Descripcion { get; set; }
 
+        [Display(Name = "Fecha de inicio:")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime FechaInicioDecimoTercero { get; set; }
+
+
+        [Display(Name = "Fecha final:")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime FechaFinDecimoTercero { get; set; }
+
+
+
+        [Display(Name = "Fecha de inicio:")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime FechaInicioDecimoCuarto { get; set; }
+
+
+        [Display(Name = "Fecha final:")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime FechaFinDecimoCuarto { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Url")]
@@ -33,6 +56,8 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdPeriodo { get; set; }
         public virtual PeriodoNomina PeriodoNomina { get; set; }
+
+
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Proceso")]

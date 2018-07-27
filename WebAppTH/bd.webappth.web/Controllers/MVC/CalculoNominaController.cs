@@ -842,7 +842,6 @@ namespace bd.webappth.web.Controllers.MVC
             Response response = new Response();
             try
             {
-                
                     response = await apiServicio.EditarAsync<Response>(CalculoNomina, new Uri(WebApp.BaseAddress),
                                                                  "api/CalculoNomina/EditarCalculoNomina");
 

@@ -52,22 +52,70 @@
     </script>
 
     <script type="text/javascript">
+        
+        $("#st12").change(function () {
+           
+            if (!$(this).prop('checked')) {
+                $("#st12").prop('checked', false);
+                $('#FechaInicioDecimoTercero').val(null);
+                $('#FechaFinDecimoTercero').val(null);
+                $('#fechasdecimotercero').hide();
+               
+            } else {
+                var hoy = moment(new Date()).format("DD/MM/YYYY");
+                var a = moment().subtract(365, 'days');
+                var as = moment(a).format("DD/MM/YYYY");
+                $('#FechaInicioDecimoTercero').val(as);
+                $('#FechaFinDecimoTercero').val(hoy);
+                $('#fechasdecimotercero').show();
 
-        function OcultarSuma() {
-
-            if ($("#Suma").prop('checked')) {
-                $("#Suma").prop("checked", false);
             }
 
-        }
-        function OcultarResta() {
-
-            if ($("#Resta").prop('checked')) {
-                $("#Resta").prop("checked", false);
-            }
+        })
 
 
-        }
+        $("#r1").change(function () {
+            $('#FechaInicioDecimoCuarto').val(null);
+            $('#FechaFinDecimoCuarto').val(null);
+            $('#fechasdecimocuarto').hide();
+        })
+
+        $("#r2").change(function () {
+
+            var hoy = moment(new Date()).format("DD/MM/YYYY");
+            var a = moment().subtract(365, 'days');
+            var as = moment(a).format("DD/MM/YYYY");
+            $('#FechaInicioDecimoCuarto').val(as);
+            $('#FechaFinDecimoCuarto').val(hoy);
+            $('#fechasdecimocuarto').show();
+        })
+
+        $("#r3").change(function () {
+            var hoy = moment(new Date()).format("DD/MM/YYYY");
+            var a = moment().subtract(365, 'days');
+            var as = moment(a).format("DD/MM/YYYY");
+            $('#FechaInicioDecimoCuarto').val(as);
+            $('#FechaFinDecimoCuarto').val(hoy);
+            $('#fechasdecimocuarto').show();
+        })
+
+        $("#r4").change(function () {
+
+
+            var hoy = moment(new Date()).format("DD/MM/YYYY");
+            var a = moment().subtract(365, 'days');
+            var as = moment(a).format("DD/MM/YYYY");
+            $('#FechaInicioDecimoCuarto').val(as);
+            $('#FechaFinDecimoCuarto').val(hoy);
+            $('#fechasdecimocuarto').show();
+        })
+
+        $(document).ready(function () {
+            $("#st12").prop('checked', false);
+            $('#fechasdecimotercero').hide();
+        });
     </script>
+
+
 
 }

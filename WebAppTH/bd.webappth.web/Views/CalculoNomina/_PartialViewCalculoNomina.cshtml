@@ -48,7 +48,32 @@
                     </span>
                 </label>
             </span>
+            
+
         </section>
+        <div id="fechasdecimotercero" class="row col col-lg-12">
+            <label class="label"><b> Rango de fecha para el c&aacute;lculo de las proviciones</b></label>
+            <hr />
+            <br />
+            <section class="col col-lg-6">
+
+                <label>Fecha de inicio</label>
+                <label class="input">
+                    <input asp-for="FechaInicioDecimoTercero" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
+                    <span asp-validation-for="FechaInicioDecimoTercero" class="text-danger"></span>
+                </label>
+
+            </section>
+            <section class="col col-lg-6">
+
+                <label>Fecha final</label>
+                <label class="input">
+                    <input asp-for="FechaFinDecimoTercero" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
+                    <span asp-validation-for="FechaFinDecimoTercero" class="text-danger"></span>
+                </label>
+            </section>
+        </div>
+        
     </div>
 
     <div class="row col col-lg-12">
@@ -57,25 +82,47 @@
         <section class="col col-lg-6">
             <label class="label"></label>
             <label class="radio">
-                NINGUNO <input name="DecimoCuartoSueldo" type="radio" value="NINGUNO" asp-for="DecimoCuartoSueldo" />
+                NINGUNO <input id="r1" name="DecimoCuartoSueldo" type="radio" value="NINGUNO" asp-for="DecimoCuartoSueldo" />
                 <i></i>
             </label>
             <label class="radio">
-                SIERRA <input name="DecimoCuartoSueldo" type="radio" value="SIERRA" asp-for="DecimoCuartoSueldo" />
+                SIERRA <input id="r2" name="DecimoCuartoSueldo" type="radio" value="SIERRA" asp-for="DecimoCuartoSueldo" />
                 <i></i>
             </label>
         </section>
         <section class="col col-lg-6">
             <label class="label"></label>
             <label class="radio">
-                COSTA <input name="DecimoCuartoSueldo" type="radio" value="COSTA" asp-for="DecimoCuartoSueldo" />
+                COSTA <input id="r3" name="DecimoCuartoSueldo" type="radio" value="COSTA" asp-for="DecimoCuartoSueldo" />
                 <i></i>
             </label>
             <label class="radio">
-                AMBOS <input name="DecimoCuartoSueldo" type="radio" value="AMBOS" asp-for="DecimoCuartoSueldo" />
+                AMBOS <input id="r4" name="DecimoCuartoSueldo" type="radio" value="AMBOS" asp-for="DecimoCuartoSueldo" />
                 <i></i>
             </label>
         </section>
+
+        <div id="fechasdecimocuarto" class="row col col-lg-12">
+            <label class="label"><b> Rango de fecha para el c&aacute;lculo de las proviciones</b></label>
+            <hr />
+            <br />
+            <section class="col col-lg-6">
+
+                <label>Fecha de inicio</label>
+                <label class="input">
+                    <input asp-for="FechaInicioDecimoCuarto" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
+                    <span asp-validation-for="FechaInicioDecimoCuarto" class="text-danger"></span>
+                </label>
+
+            </section>
+            <section class="col col-lg-6">
+                <label>Fecha final</label>
+                <label class="input">
+                    <input asp-for="FechaFinDecimoCuarto" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
+                    <span asp-validation-for="FechaFinDecimoCuarto" class="text-danger"></span>
+                </label>
+            </section>
+        </div>
 
     </div>
 
