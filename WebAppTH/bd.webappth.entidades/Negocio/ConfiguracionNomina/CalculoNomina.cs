@@ -21,26 +21,26 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Fecha de inicio:")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime FechaInicioDecimoTercero { get; set; }
+        public DateTime? FechaInicioDecimoTercero { get; set; }
 
 
         [Display(Name = "Fecha final:")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime FechaFinDecimoTercero { get; set; }
+        public DateTime? FechaFinDecimoTercero { get; set; }
 
 
 
         [Display(Name = "Fecha de inicio:")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime FechaInicioDecimoCuarto { get; set; }
+        public DateTime? FechaInicioDecimoCuarto { get; set; }
 
 
         [Display(Name = "Fecha final:")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime FechaFinDecimoCuarto { get; set; }
+        public DateTime? FechaFinDecimoCuarto { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Url")]

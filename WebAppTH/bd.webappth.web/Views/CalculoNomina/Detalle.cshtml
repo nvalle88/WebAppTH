@@ -10,6 +10,7 @@
 @{ var modelo = new MenuFichaCalculoNomina { OpcionMenu = 0 }; }
 
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+
 <div id="content">
     <section id="" class="">
         <div class="row">
@@ -40,6 +41,10 @@
     </section>
 </div>
 @section Scripts {
+
+
+    
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script src='~/lib/select2/dist/js/select2.min.js'></script>
@@ -52,15 +57,18 @@
     </script>
 
     <script type="text/javascript">
-        
+
+       var modelo = @Html.Raw(Json.Serialize(Model.FechaFinDecimoCuarto.ToString()));
+
+
         $("#st12").change(function () {
-           
+
             if (!$(this).prop('checked')) {
                 $("#st12").prop('checked', false);
                 $('#FechaInicioDecimoTercero').val(null);
                 $('#FechaFinDecimoTercero').val(null);
                 $('#fechasdecimotercero').hide();
-               
+
             } else {
                 var hoy = moment(new Date()).format("DD/MM/YYYY");
                 var a = moment().subtract(365, 'days');
@@ -111,8 +119,18 @@
         })
 
         $(document).ready(function () {
-            $("#st12").prop('checked', false);
-            $('#fechasdecimotercero').hide();
+
+            if (!$("#st12").prop('checked'))
+            { 
+                $('#fechasdecimotercero').hide();
+            }
+
+            if ($("#r1").prop('checked'))
+            {
+                $('#fechasdecimocuarto').hide();
+            }
+
+
         });
     </script>
 
