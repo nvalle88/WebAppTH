@@ -1391,7 +1391,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                     IdDependencia = empleadoViewModel.IndiceOcupacional.IdDependencia,
 
-                    FechaFin = empleadoViewModel.IndiceOcupacionalModalidadPartida.FechaFin
+                    FechaFin = empleadoViewModel.IndiceOcupacionalModalidadPartida.FechaFin,
+
+                    Empleado = new Empleado {
+                        EsJefe = empleadoViewModel.Empleado.EsJefe
+                    }
 
                 };
 

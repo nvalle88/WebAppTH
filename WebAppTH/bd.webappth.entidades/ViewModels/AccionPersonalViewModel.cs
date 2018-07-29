@@ -47,11 +47,16 @@ namespace bd.webappth.entidades.ViewModels
 
         
         [Display(Name = "Total días")]
-        public int NoDias { get; set; }
+        public int? NoDias { get; set; }
+
+        public bool Bloquear { get; set; }
+        public bool Ejecutado { get; set; }
 
         // Campos que no pertenecen a la tabla
         [Display(Name = "Mi aprobación")]
         public string EstadoDirector { get; set; }
+
+        [Display(Name = "Estado TTHH")]
         public string EstadoValidacionTTHH { get; set; }
 
 
