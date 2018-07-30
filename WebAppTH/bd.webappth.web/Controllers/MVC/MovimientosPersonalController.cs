@@ -181,7 +181,59 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        public async Task<IActionResult> Visualizar(int id)
+        {
+            try
+            {
 
+                var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                    id,
+                    new Uri(WebApp.BaseAddress),
+                    "api/AccionesPersonal/ObtenerAccionPersonalViewModelParaVisualizar");
+
+                if (respuesta.IsSuccess)
+                {
+                    var modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
+
+                    await InicializarCombos();
+
+
+                    if (modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta != null)
+                    {
+
+                        await CargarRelacionLaboralPorRegimen(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.RelacionLaboral.IdRegimenLaboral);
+
+                        await CargarTipoNombramientoPorRelacion(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.IdRelacionLaboral);
+
+                        await CargarSucursalesPorCiudad(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.Sucursal.IdCiudad);
+
+                        await CargarPerfilPuestoPorDependencia(modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta
+                            .IndiceOcupacional.Dependencia.IdDependencia,
+                            modelo.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta
+                            .IndiceOcupacional.IdManualPuesto
+                              );
+
+
+                    }
+
+
+                    return View(modelo);
+
+                }
+
+                return this.RedireccionarMensajeTime(
+                            "MovimientosPersonal",
+                            "Index",
+                            $"{Mensaje.Error}|{respuesta.Message}|{"7000"}"
+                    );
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
 
 
         public async Task InicializarCombos()

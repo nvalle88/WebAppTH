@@ -267,70 +267,79 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> AgregarDistributivo(int IdEmpleado)
         {
 
-            await CargarCombosDistributivo();
-            
-
-
-            var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
-                IdEmpleado, 
-                new Uri(WebApp.BaseAddress), 
-                "/api/Empleados/ObtenerEmpleadoDistributivo"
-            );
-
-
-
-            var empleado = new Empleado
+            try
             {
-                IdEmpleado = IdEmpleado
-            };
+                await CargarCombosDistributivo();
 
 
-            var empleadoViewModel = new EmpleadoViewModel()
-            {
-                Empleado = empleado
-            };
+
+                var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                    IdEmpleado,
+                    new Uri(WebApp.BaseAddress),
+                    "/api/Empleados/ObtenerEmpleadoDistributivo"
+                );
 
 
-            if (respuesta.IsSuccess == true)
-            {
 
-                empleadoViewModel = JsonConvert.DeserializeObject<EmpleadoViewModel>(respuesta.Resultado.ToString());
+                var empleado = new Empleado
+                {
+                    IdEmpleado = IdEmpleado
+                };
 
-                if (empleadoViewModel.IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida > 0) {
 
-                    await CargarRelacionLaboralPorRegimen(empleadoViewModel.IndiceOcupacionalModalidadPartida.TipoNombramiento.RelacionLaboral.IdRegimenLaboral);
+                var empleadoViewModel = new EmpleadoViewModel()
+                {
+                    Empleado = empleado
+                };
 
-                    await CargarTipoNombramientoPorRelacion
-                        (empleadoViewModel.IndiceOcupacionalModalidadPartida.TipoNombramiento.IdRelacionLaboral);
 
-                    await CargarSucursalesPorCiudad(empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.Dependencia.Sucursal.IdCiudad);
+                if (respuesta.IsSuccess == true)
+                {
 
-                    await CargarPerfilPuestoPorDependencia(
-                            empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdDependencia,
-                            empleadoViewModel.IndiceOcupacional.IdManualPuesto
-                          );
-                    /*
-                    await CargarRolPuestoPorManualPuesto(
-                            empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdManualPuesto,
-                            empleadoViewModel.IndiceOcupacional.IdDependencia,
-                            empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto
-                          );
+                    empleadoViewModel = JsonConvert.DeserializeObject<EmpleadoViewModel>(respuesta.Resultado.ToString());
 
-                    await CargarEscalaGradosPorRolPuesto(
-                            empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto,
-                            empleadoViewModel.IndiceOcupacional.IdManualPuesto,
-                            empleadoViewModel.IndiceOcupacional.IdDependencia
-                          );
-                          */
-                    await CargarFondoFinanciamento(
-                            (int) (empleadoViewModel.IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento)
-                        );
-                    
+                    if (empleadoViewModel.IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida > 0)
+                    {
+
+                        await CargarRelacionLaboralPorRegimen(empleadoViewModel.IndiceOcupacionalModalidadPartida.TipoNombramiento.RelacionLaboral.IdRegimenLaboral);
+
+                        await CargarTipoNombramientoPorRelacion
+                            (empleadoViewModel.IndiceOcupacionalModalidadPartida.TipoNombramiento.IdRelacionLaboral);
+
+                        await CargarSucursalesPorCiudad(empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.Dependencia.Sucursal.IdCiudad);
+
+                        await CargarPerfilPuestoPorDependencia(
+                                empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdDependencia,
+                                empleadoViewModel.IndiceOcupacional.IdManualPuesto
+                              );
+                        /*
+                        await CargarRolPuestoPorManualPuesto(
+                                empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdManualPuesto,
+                                empleadoViewModel.IndiceOcupacional.IdDependencia,
+                                empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto
+                              );
+
+                        await CargarEscalaGradosPorRolPuesto(
+                                empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto,
+                                empleadoViewModel.IndiceOcupacional.IdManualPuesto,
+                                empleadoViewModel.IndiceOcupacional.IdDependencia
+                              );
+                              */
+                        await CargarFondoFinanciamento(
+                                (int)(empleadoViewModel.IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento)
+                            );
+
+                    }
                 }
+
+
+                return View(empleadoViewModel);
             }
-            
-            
-            return View(empleadoViewModel);
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
         }
 
 

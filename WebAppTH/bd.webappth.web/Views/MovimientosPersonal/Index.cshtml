@@ -139,7 +139,15 @@
                                         </td>
 
                                         <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdAccionPersonal }, new { onclick = "espera()" })
+                                            @if (item.Ejecutado == false)
+                                            {
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdAccionPersonal }, new { onclick = "espera()" })
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("Visualizar", "Visualizar", new { id = item.IdAccionPersonal }, new { onclick = "espera()" })
+                                            }
+
                                         </td>
 
                                     </tr>

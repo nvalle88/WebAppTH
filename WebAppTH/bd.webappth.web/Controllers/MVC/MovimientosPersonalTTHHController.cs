@@ -292,7 +292,7 @@ namespace bd.webappth.web.Controllers.MVC
                 var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
                     id,
                     new Uri(WebApp.BaseAddress),
-                    "api/AccionesPersonal/ObtenerAccionPersonalViewModelParaEditar");
+                    "api/AccionesPersonal/ObtenerAccionPersonalViewModelParaVisualizar");
 
                 if (respuesta.IsSuccess)
                 {
