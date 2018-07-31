@@ -175,13 +175,14 @@ namespace bd.webappth.web.Controllers.MVC
             List<ItinerarioViatico> lista = new List<ItinerarioViatico>();
             try
             {
-
                 if (id.ToString() != null)
                 {
                     var respuestaSolicitudViatico = await apiServicio.SeleccionarAsync<Response>(id.ToString(), new Uri(WebApp.BaseAddress),
                                                                   "api/SolicitudViaticos");
                     if (respuestaSolicitudViatico.IsSuccess)
                     {
+                        var solicitudViaticoViewModel = new SolicitudViaticoViewModel();
+
                         sol = JsonConvert.DeserializeObject<SolicitudViatico>(respuestaSolicitudViatico.Resultado.ToString());
                         var solicitudViatico = new SolicitudViatico
                         {
@@ -209,34 +210,23 @@ namespace bd.webappth.web.Controllers.MVC
                             };
                             lista = await apiServicio.ObtenerElementoAsync1<List<ItinerarioViatico>>(itinerarioViatico, new Uri(WebApp.BaseAddress)
                                                                      , "api/ItinerarioViatico/ListarItinerariosViaticos");
+                            
+                            if (lista.Count != 0)
+                            {
+                                solicitudViaticoViewModel.SolicitudViatico = sol;
+                                solicitudViaticoViewModel.ListaEmpleadoViewModel = empleado;
+                                solicitudViaticoViewModel.ItinerarioViatico = lista;
+                                
+                            }
+                            else
+                            {
+                                //return this.Redireccionar("SolicitudViaticosTH", "ListadoEmpleadosSolicitudViaticos", $"{Mensaje.ErrorItinerario}");
+                                return this.RedireccionarMensajeTime("SolicitudViaticosTH", "DetalleSolicitudViaticos", new { id = sol.IdEmpleado }, $"{Mensaje.ErrorItinerario}|{"25000"}");
+
+                            }
 
                         }
 
-                        var solicitudViaticoViewModel = new SolicitudViaticoViewModel
-                        {
-                            SolicitudViatico = sol,
-                            ListaEmpleadoViewModel = empleado,
-                            ItinerarioViatico = lista
-
-                        };
-
-
-                        //var respuestaPais = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdPais.ToString(), new Uri(WebApp.BaseAddress),
-                        //                                         "api/Pais");
-                        //var pais = JsonConvert.DeserializeObject<Pais>(respuestaPais.Resultado.ToString());
-                        //var respuestaProvincia = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdProvincia.ToString(), new Uri(WebApp.BaseAddress),
-                        //                                         "api/Provincia");
-                        //var provincia = JsonConvert.DeserializeObject<Provincia>(respuestaProvincia.Resultado.ToString());
-                        //var respuestaCiudad = await apiServicio.SeleccionarAsync<Response>(solicitudViaticoViewModel.SolicitudViatico.IdCiudad.ToString(), new Uri(WebApp.BaseAddress),
-                        //                                         "api/Ciudad");
-                        //var ciudad = JsonConvert.DeserializeObject<Ciudad>(respuestaCiudad.Resultado.ToString());
-
-
-
-                        ////ViewData["FechaSolicitud"] = solicitudViaticoViewModel.SolicitudViatico.FechaSolicitud;
-                        //ViewData["Pais"] = pais.Nombre;
-                        //ViewData["Provincia"] = provincia.Nombre;
-                        //ViewData["Ciudad"] = ciudad.Nombre;
 
                         return View(solicitudViaticoViewModel);
                     }
