@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class GestionPlanCapacitacion
     {
@@ -20,5 +21,7 @@
         [Display(Name = "Estado")]
         public int? Estado { get; set; }
         public virtual ICollection<PlanCapacitacion> PlanCapacitacion { get; set; }
+        [NotMapped]
+        public string NombreUsuario { get; set; }
     }
 }

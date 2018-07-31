@@ -1,0 +1,233 @@
+@model List<bd.webappth.entidades.Negocio.PlanCapacitacion>
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+
+@{
+    var nomina = @Context.Session.GetInt32(Constantes.IdCalculoNominaSession);
+}
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div id="content">
+    <p></p>
+    <a asp-action="Index" onclick="cargando()">
+        <button type="button" asp-action="Index" onclick="cargando()" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-arrow-left"></i>
+            </span>Atras
+        </button>
+    </a>
+    @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a asp-action="ReportadoCapacitacion" asp-route-id="@nomina" onclick="cargando()">
+        <button type="button" asp-action="ReportadoCapacitacion" asp-route-id="@nomina" onclick="cargando()" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-upload"></i>
+            </span>Cargar archivo
+        </button>
+    </a>*@
+    <p> </p>
+    <div class="jarviswidget jarviswidget-sortable" id="wid-id-11" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-custombutton="false" role="widget">
+
+        <header role="heading" class="ui-sortable-handle">
+
+
+            <ul id="widget-tab-1" class="nav nav-tabs pull-right">
+
+                <li class="active">
+
+                    <a data-toggle="tab" href="#hr1" aria-expanded="true"> <i class="fa fa-lg fa-thumbs-o-up"></i><span class="hidden-mobile hidden-tablet"> Datos reportados sin errores </span> <span class="badge bg-color-blue txt-color-white">@Model.Where(x => x.Valido == true).Count()</span></a>
+
+                </li>
+
+                <li class="">
+                    <a data-toggle="tab" href="#hr2" aria-expanded="false"> <i class="fa fa-lg fa-thumbs-o-down"></i> <span class="hidden-mobile hidden-tablet"> Datos reportados con errores </span> <span class="badge bg-color-redLight txt-color-white">@Model.Where(x => x.Valido == false).Count()</span></a>
+                </li>
+
+            </ul>
+
+            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+        </header>
+
+        <!-- widget div-->
+        <div role="content">
+
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+                <!-- This area used as dropdown edit box -->
+
+            </div>
+            <!-- end widget edit box -->
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+
+                <!-- widget body text-->
+
+                <div class="tab-content padding-10">
+                    <div class="tab-pane fade active in" id="hr1">
+                        <section id="" class="">
+                            <div class="row">
+                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+                                        <header id="table">
+                                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                            <h2>Datos reportados</h2>
+                                        </header>
+                                        <div>
+                                            <div class="jarviswidget-editbox">
+                                            </div>
+                                            <div class="widget-body no-padding">
+                                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cedula)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().ApellidoNombre)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreCiudad)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().DenominacionPuesto)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().TemaCapacitacion)
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.Where(x => x.Valido == true))
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Cedula)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.ApellidoNombre)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.NombreCiudad)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.DenominacionPuesto)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.TemaCapacitacion)
+                                                                </td>
+                                                               
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </section>
+
+                    </div>
+                    <div class="tab-pane fade" id="hr2">
+                        <section id="" class="">
+                            <div class="row">
+                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                                        <header id="table">
+                                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                            <h2>Datos reportados</h2>
+                                        </header>
+                                        <div>
+                                            <div class="jarviswidget-editbox">
+                                            </div>
+                                            <div class="widget-body no-padding">
+                                                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Cedula)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().ApellidoNombre)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreCiudad)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().DenominacionPuesto)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().TemaCapacitacion)
+                                                            </th>
+                                                            <th data-class="expand">
+                                                                @Html.DisplayNameFor(model => model.FirstOrDefault().MensajeError)
+                                                            </th>
+                                                            @* <th data-class="expand">
+                                                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Cantidad)
+                                                                </th>
+                                                                <th data-class="expand">
+                                                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Importe)
+                                                                </th>
+                                                            *@
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.Where(x => x.Valido == false))
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Cedula)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.ApellidoNombre)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.NombreCiudad)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.DenominacionPuesto)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.TemaCapacitacion)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.MensajeError)
+                                                                </td>
+                                                                @*  <td>
+                                                                        @Html.DisplayFor(modelItem => item.Cantidad)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Importe)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.MensajeError)
+                                                                    </td>*@
+
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </section>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+}
+

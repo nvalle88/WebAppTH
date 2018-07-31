@@ -1,0 +1,119 @@
+﻿@model bd.webappth.entidades.Negocio.PlanCapacitacion
+
+@{
+    ViewData["Title"] = "Ficha Odontológica";
+
+    //var ids = Model.IdPersona;
+}
+@section css{
+
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap-fileinput/css/fileinput.min.css">
+}
+
+<!-- MAIN CONTENT -->
+<div id="content">
+    <section id="widget-grid" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="alert alert-info">
+
+                    <p>
+                        <i class="fa fa-exclamation"></i>  Nota: Debe seleccionar un archivo <b>Excel</b> (.xlsx).
+
+                        El cual debe contener el orden de las columnas de la siguiente distribuci&oacute;n
+                    </p>
+                    <br />
+                    <p>
+                        <b>1:Instituci&oacute;n</b> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>2:Pa&iacute;s</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>3:Provincia</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>4:Ciudad</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>5:Nivel Desconcentrac&oacute;n</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>6:Unidad administrtiva</b> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>7:C&eacute;dula</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>8:Nombre y apellido</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>9:Sexo</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>10:Grupo ocupacional</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>11:Denominaci&iacute;on de puesto</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>12:Regimen laboral</b> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>13:Modalidad laboral</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>14:Tema capacitaci&oacute;n</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>15:Clasificaci&oacute;n</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>16:Producto final</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </p>
+                    <br />
+                    <hr />
+                    <p>
+                        <i class="fa fa-check"></i>  Los datos del archivo cargado que satisfagan las validaciones ser&aacute;n guardados autom&aacute;ticamente.
+                    </p>
+                    <p>
+                        <i class="fa fa-warning"></i>  Los datos del archivo cargado que no satisfagan las validaciones no  ser&aacute;n guardados.
+                    </p>
+                    <br>
+                </div>
+            </article>
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2>Reportar</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <form asp-action="MostrarExcel" id="checkout-form" class="smart-form" novalidate="novalidate" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="IdPlanCapacitacion" />
+                                <fieldset>
+                                    <section class="col-10">
+                                        <div class="file-loading col col-lg-10">
+                                            <input id="file" name="files" type="file" multiple>
+                                        </div>
+                                        <div id="kartik-file-errors"></div>
+                                    </section>
+
+
+                                    <footer>
+                                        <button type="submit" id="btn-guardar" onclick="cargando()" class="btn btn-primary "><i class="fa fa-upload"></i> Cargar</button>
+                                        <a asp-action="Index" onclick="cargando()" class="btn btn-default">Cancelar</a>
+                                    </footer>
+                                </fieldset>
+
+                            </form>
+                        </div>
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+            </article>
+
+        </div>
+        <!-- END ROW -->
+
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    <script src='~/lib/bootstrap-fileinput/js/fileinput.min.js'></script>
+    <script src='~/lib/bootstrap-fileinput/js/locales/es.js'></script>
+
+    <script>
+        $(document).on('ready', function () {
+            $("#file").fileinput({
+                showUpload: false,
+                dropZoneEnabled: false,
+                maxFileCount: 1,
+
+                language: 'es',
+                elErrorContainer: '#kartik-file-errors',
+                allowedFileExtensions: ["xlsx"]
+            });
+        });
+    </script>
+
+}
