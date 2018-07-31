@@ -83,7 +83,7 @@
         <section class="col col-lg-4">
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Estado)</label>
             <label class="input">
-                <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados">Seleccione</select>
+                <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados" disabled>Seleccione</select>
 
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </label>

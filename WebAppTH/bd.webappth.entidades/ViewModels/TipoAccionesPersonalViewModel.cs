@@ -7,8 +7,8 @@ namespace bd.webappth.entidades.ViewModels
 {
     public class TipoAccionesPersonalViewModel
     {
-        [Required(ErrorMessage = "Debe seleccionar el {0} ")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el Tipo de movimiento")]
+        //[Required(ErrorMessage = "Debe seleccionar el {0} ")]
+        //[Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el Tipo de movimiento")]
         public int IdTipoAccionPersonal { get; set; }
 
         public string Nombre { get; set; }

@@ -213,6 +213,16 @@
                                             <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' onKeyPress="return checkIt(event)">
                                             @*</div>*@
                                         </section>
+
+                                        <section class="col col-4">
+                                            <label class="checkbox-inline">
+                                                <label>&iquest; Es jefe de la unidad administrativa?</label>
+                                                <input type="checkbox" asp-for="Empleado.EsJefe" class="form-control" />
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        &nbsp;
                                     </div>
                                 </fieldset>
                                 <br />

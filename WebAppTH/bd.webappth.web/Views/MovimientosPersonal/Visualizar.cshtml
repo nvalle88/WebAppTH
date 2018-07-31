@@ -17,185 +17,187 @@
 <!-- MAIN CONTENT -->
 <div id="content" style="height:2000px;">
 
+    <div id="content" style="height:2000px;">
 
-    <!-- widget grid -->
-    <section id="" class="">
+        <p></p>
+        
+        <!-- widget grid -->
+        <section id="" class="">
 
-        <!-- START ROW -->
-        <div class="row">
-            <!-- NEW COL START -->
-            <article class="col-sm-12 col-md-12 col-lg-12">
-                <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+            <!-- START ROW -->
+            <div class="row">
+                <!-- NEW COL START -->
+                <article class="col-sm-12 col-md-12 col-lg-12">
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
 
-                    <header>
-                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Movimiento personal</h2>
-                    </header>
-                    <!-- widget div-->
-                    <div>
+                        <header>
+                            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                            <h2>Movimiento personal</h2>
+                        </header>
+                        <!-- widget div-->
+                        <div>
 
-                        <!-- widget edit box -->
-                        <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
 
+                            </div>
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+
+                                <form asp-action="" id="checkout-form" class="formularioClass">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    @{await Html.RenderPartialAsync("_PartialViewVisualizar", Model);}
+
+                                    <div style="float:right; padding:1%;">
+                                        <footer style="background-color:transparent;border:none;">
+
+                                            <input type="submit" asp-action="Index" class="btn btn-default btnClass" value="Regresar" onclick="espera()" />
+
+
+                                        </footer>
+                                    </div>
+                                    <div class="row">&nbsp;</div>
+                                    <div class="row">&nbsp;</div>
+                                </form>
+
+                            </div>
+                            <!-- end widget content -->
                         </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
-                        <div class="widget-body no-padding">
-
-                            <form asp-action="Edit" id="checkout-form" class="formularioClass" onsubmit="return validarEnviar();">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                @{await Html.RenderPartialAsync("_PartialView", Model);}
-
-                                <div style="float:right; padding:1%;">
-                                    <footer style="background-color:transparent;border:none;">
-
-                                        <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.EmpleadoMovimiento.Empleado.Persona.Identificacion" class="btn btn-default btnClass" value="Cancelar" onclick="espera()" />
-
-                                        <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-default btnClass" />
-
-                                    </footer>
-                                </div>
-                                <div class="row">&nbsp;</div>
-                                <div class="row">&nbsp;</div>
-                            </form>
-
-                        </div>
-                        <!-- end widget content -->
+                        <!-- end widget div -->
                     </div>
-                    <!-- end widget div -->
-                </div>
-                <!-- end widget -->
+                    <!-- end widget -->
 
-            </article>
-
-        </div>
-        <!-- END ROW -->
-    </section>
-    <!-- end widget grid -->
-    <!-- Modal -->
-
-</div>
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
+                </article>
 
             </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
+            <!-- END ROW -->
+        </section>
+        <!-- end widget grid -->
+        <!-- Modal -->
+
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title"></h2>
+
+                </div>
+                <div class="modal-body"><div class="te">Please wait...</div></div>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- END MAIN CONTENT -->
-@section Scripts {
+    <!-- END MAIN CONTENT -->
+    @section Scripts {
 
-    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
-    <script src='~/js/datatables/init.js'></script>
+        @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+        <script src='~/js/datatables/init.js'></script>
 
-    <script src="~/js/moment.min.js"></script>
-
-
-    <!-- Estilos waitMe -->
-    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
-    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
-
-    <!-- Scripts waitMe -->
-    <script src='~/lib/waitMe/waitMe.min.js'></script>
-    <script src='~/js/site.js'></script>
-
-    <!-- Scripts comboBox -->
-
-    <script src='~/lib/select2/dist/js/select2.min.js'></script>
-    <script src='~/lib/select2/dist/js/i18n/es.js'></script>
+        <script src="~/js/moment.min.js"></script>
 
 
-    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
-    <script src='~/js/vistasmodales/modal.js'></script>
+        <!-- Estilos waitMe -->
+        <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+        <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 
-    @*@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+        <!-- Scripts waitMe -->
+        <script src='~/lib/waitMe/waitMe.min.js'></script>
+        <script src='~/js/site.js'></script>
 
+        <!-- Scripts comboBox -->
 
-    <script>
-
-        var maxDias = 999999999;
-        var minDias = 0;
-        var validarMinimoDias = false;
-
-        var desvinculacion = false;
-
-        function calcularDias() {
+        <script src='~/lib/select2/dist/js/select2.min.js'></script>
+        <script src='~/lib/select2/dist/js/i18n/es.js'></script>
 
 
-            var fecha1 = moment(document.getElementById("date_Fecha1").value);
-            var fecha2 = moment(document.getElementById("date_Fecha2").value);
+        <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+        <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+        <script src='~/js/vistasmodales/modal.js'></script>
 
-            var valNumDiasTxt = fecha2.diff(fecha1, 'days');
+        @*@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
 
-            if (valNumDiasTxt > 0) {
 
-                document.getElementById("txt_dias").value = valNumDiasTxt;
-                document.getElementById("txt_Numero").value = valNumDiasTxt;
+        <script>
 
-                if (valNumDiasTxt > maxDias && maxDias > 0) {
+            var maxDias = 999999999;
+            var minDias = 0;
+            var validarMinimoDias = false;
 
-                    var textoMensajeAlerta = "El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias;
+            var desvinculacion = false;
 
-                    mostrarNotificacionTimer("Aviso", textoMensajeAlerta, 10000);
+            function calcularDias() {
 
-                    document.getElementById("btnGuardar").disabled = true;
 
+                var fecha1 = moment(document.getElementById("date_Fecha1").value);
+                var fecha2 = moment(document.getElementById("date_Fecha2").value);
+
+                var valNumDiasTxt = fecha2.diff(fecha1, 'days');
+
+                if (valNumDiasTxt > 0) {
+
+                    document.getElementById("txt_dias").value = valNumDiasTxt;
+                    document.getElementById("txt_Numero").value = valNumDiasTxt;
+
+                    if (valNumDiasTxt > maxDias && maxDias > 0) {
+
+                        var textoMensajeAlerta = "El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias;
+
+                        mostrarNotificacionTimer("Aviso", textoMensajeAlerta, 10000);
+
+                        document.getElementById("btnGuardar").disabled = true;
+
+                    }
+
+                    else if (valNumDiasTxt < minDias && minDias > 0) {
+
+                        var textoMensajeAlerta = "El m\u00EDnimo de d\u00EDas para este requerimiento son: " + minDias;
+
+                        mostrarNotificacionTimer("Aviso", textoMensajeAlerta, 10000);
+
+                        document.getElementById("btnGuardar").disabled = true;
+                    }
+
+                    else {
+                        document.getElementById("btnGuardar").disabled = false;
+                    }
+
+                } else {
+
+                    if (validarMinimoDias == true && valNumDiasTxt < minDias && minDias > 0) {
+                        var textoMensajeAlerta = "El m\u00EDnimo de d\u00EDas para este requerimiento son: " + minDias;
+
+                        document.getElementById("btnGuardar").disabled = true;
+                    } else {
+                        document.getElementById("btnGuardar").disabled = false;
+                    }
+
+                    document.getElementById("txt_dias").value = 0;
+                    document.getElementById("txt_Numero").value = 0;
                 }
 
-                else if (valNumDiasTxt < minDias && minDias > 0) { 
 
-                    var textoMensajeAlerta = "El m\u00EDnimo de d\u00EDas para este requerimiento son: " + minDias;
-                    
-                    mostrarNotificacionTimer("Aviso", textoMensajeAlerta, 10000);
 
-                    document.getElementById("btnGuardar").disabled = true;
-                }
-
-                else {
-                    document.getElementById("btnGuardar").disabled = false;
-                }
-
-            } else {
-
-                if (validarMinimoDias == true && valNumDiasTxt < minDias && minDias > 0) {
-                    var textoMensajeAlerta = "El m\u00EDnimo de d\u00EDas para este requerimiento son: " + minDias;
-
-                    document.getElementById("btnGuardar").disabled = true;
-                } else { 
-                    document.getElementById("btnGuardar").disabled = false;
-                }
-
-                document.getElementById("txt_dias").value = 0;
-                document.getElementById("txt_Numero").value = 0;
             }
 
 
+        </script>
 
-        }
+        <!-- Script llamada al waitme -->
+        <script type="text/javascript">
+            function espera() {
+                desactivarEstadoPEEFVS();
+                mostrarLoadingPanel("content", "Cargando...");
+            }
 
+        </script>
 
-    </script>
-
-    <!-- Script llamada al waitme -->
-    <script type="text/javascript">
-        function espera() {
-            desactivarEstadoPEEFVS();
-            mostrarLoadingPanel("content", "Cargando...");
-        }
-
-    </script>
-
-    <script>
+        <script>
 
         function cargarManualesPuesto(dependencia) {
             mostrarLoadingPanel("content","Cargando...")
@@ -248,8 +250,8 @@
             {
                 <text>
                     var listaRadios = document.getElementsByName("EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta");
-            
-                    for (var i = 0; i < listaRadios.length;i++) { 
+
+                    for (var i = 0; i < listaRadios.length;i++) {
 
                         if (listaRadios[i].value == @Model.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta) {
                             listaRadios[i].checked = true;
@@ -288,8 +290,8 @@
 
                                     mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 30000);
 
-                                } else if (data.modalidadContratacion == true) { 
-                                   
+                                } else if (data.modalidadContratacion == true) {
+
                                 }
 
 
@@ -298,7 +300,7 @@
                                 desvinculacion = true;
                             }
 
-                            
+
 
                         }
                         else if (data.modificaDistributivo == false) {
@@ -322,7 +324,7 @@
 
 
                         minDias = data.nDiasMinimo;
-                        
+
 
                         if (data.definitivo == true) {
 
@@ -388,7 +390,7 @@
 
                 //$("#txt_escalaGrados").val("");
                 //$("#txt_rolPuesto").val("");
-                
+
 
                 $.ajax({
                     type: 'POST',
@@ -553,7 +555,7 @@
                         idrelacionLaboral: $("#IdRelacionLaboral").val()
                     },
                     success: function (data) {
-                        
+
 
                         var textoEscalaGrados = data.indiceOcupacionalViewModel.nombreEscalaGrados
                             + " ( GRADO "
@@ -606,129 +608,129 @@
 
 
         }); // fin ready
-    </script>
+        </script>
 
-    <script>
-        
-        var estadoPEEFVS = true;
-        
+        <script>
 
-        function desactivarEstadoPEEFVS() {
-            estadoPEEFVS = false;
-        }
+            var estadoPEEFVS = true;
 
-        function validarEnviar() { 
 
-            if (estadoPEEFVS == false) { 
-                return true;
+            function desactivarEstadoPEEFVS() {
+                estadoPEEFVS = false;
             }
 
-            var enviar = true;
-            var textoMensajeAlerta = "";
+            function validarEnviar() {
 
-            var tipoSolicitud = parseInt(document.getElementsByName("TipoAccionPersonalViewModel.IdTipoAccionPersonal")[0].value);
-            var solicitud = document.getElementsByName("Solicitud")[0].value;
-            var explicacion = document.getElementsByName("Explicacion")[0].value;
-            var generarMovimientoPersonal = document.getElementById("txtGenerarMovimiento").value;
-            var listaConfiguracionPuesto = document.getElementsByName("ConfigurarPuesto");
-            var configuracionPuesto = "";
-            var tipoNombramiento = document.getElementsByName("EmpleadoMovimiento.IdTipoNombramiento")[0].value;
-            var rolPuesto = document.getElementById("txt_rolPuesto").value;
-            var listaIOMPhasta = document.getElementsByName("EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta");
-            var iompHasta = 0;
-            var idIO = document.getElementById("txt_ioHasta").value;
-            var fondoFinanciamiento = document.getElementsByName("EmpleadoMovimiento.IdFondoFinanciamiento")[0].value;
-            var numeroPartidaCampo = document.getElementById("txt_partida").value;
-            var fechaRigeHasta = document.getElementById("date_Fecha2").style.visibility.toString();
-            var fechaRigeHastaValor = document.getElementById("date_Fecha2").value;
-           
-            for (var i = 0; i < listaConfiguracionPuesto.length;i++) { 
-
-                if (listaConfiguracionPuesto[i].checked) {
-                    configuracionPuesto = listaConfiguracionPuesto[i].value;
-                }
-            }
-
-            for (var i = 0; i < listaIOMPhasta.length; i++) {
-
-                if (listaIOMPhasta[i].checked) {
-                    iompHasta = listaIOMPhasta[i].value;
-                }
-            }
-            
-
-            if (tipoSolicitud < 1) {
-                textoMensajeAlerta = "Seleccione un tipo de movimiento";
-                enviar = false;
-            }
-            
-            else if (solicitud.trim().length < 1) { 
-                textoMensajeAlerta = "El campo solicitud no puede estar vacio";
-                enviar = false;
-            }
-
-            else if (explicacion.trim().length < 1) {
-                textoMensajeAlerta = "El campo explicaci\u00F3n no puede estar vacio";
-                enviar = false;
-            }
-
-            else if (generarMovimientoPersonal == "true" && desvinculacion == false) {
-                
-                if (configuracionPuesto == "True") {
-
-                    if (tipoNombramiento == "" || tipoNombramiento == null || tipoNombramiento < 1) {
-                        textoMensajeAlerta = "Debe seleccionar un tipo de nombramiento / contrato";
-                        enviar = false;
-                    }
-
-                    else if (fondoFinanciamiento < 1) {
-                        textoMensajeAlerta = "Debe seleccionar un fondo de financiamiento";
-                        enviar = false;
-                    }
-
-                    else if (rolPuesto.trim().length < 1 || idIO < 1) {
-                        textoMensajeAlerta = "Debe seleccionar un perfil de puesto";
-                        enviar = false;
-                    }
-
-                    else if (numeroPartidaCampo.trim().length < 1) {
-                        textoMensajeAlerta = "Debe ingresar un numero de partida o un c\u00F3digo de contrato";
-                        enviar = false;
-                    }
-
+                if (estadoPEEFVS == false) {
+                    return true;
                 }
 
-                else if (configuracionPuesto == "False") {
+                var enviar = true;
+                var textoMensajeAlerta = "";
 
-                    if (iompHasta < 1) {
-                        textoMensajeAlerta = "Debe seleccionar un puesto";
-                        enviar = false;
+                var tipoSolicitud = parseInt(document.getElementsByName("TipoAccionPersonalViewModel.IdTipoAccionPersonal")[0].value);
+                var solicitud = document.getElementsByName("Solicitud")[0].value;
+                var explicacion = document.getElementsByName("Explicacion")[0].value;
+                var generarMovimientoPersonal = document.getElementById("txtGenerarMovimiento").value;
+                var listaConfiguracionPuesto = document.getElementsByName("ConfigurarPuesto");
+                var configuracionPuesto = "";
+                var tipoNombramiento = document.getElementsByName("EmpleadoMovimiento.IdTipoNombramiento")[0].value;
+                var rolPuesto = document.getElementById("txt_rolPuesto").value;
+                var listaIOMPhasta = document.getElementsByName("EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta");
+                var iompHasta = 0;
+                var idIO = document.getElementById("txt_ioHasta").value;
+                var fondoFinanciamiento = document.getElementsByName("EmpleadoMovimiento.IdFondoFinanciamiento")[0].value;
+                var numeroPartidaCampo = document.getElementById("txt_partida").value;
+                var fechaRigeHasta = document.getElementById("date_Fecha2").style.visibility.toString();
+                var fechaRigeHastaValor = document.getElementById("date_Fecha2").value;
+
+                for (var i = 0; i < listaConfiguracionPuesto.length; i++) {
+
+                    if (listaConfiguracionPuesto[i].checked) {
+                        configuracionPuesto = listaConfiguracionPuesto[i].value;
+                    }
+                }
+
+                for (var i = 0; i < listaIOMPhasta.length; i++) {
+
+                    if (listaIOMPhasta[i].checked) {
+                        iompHasta = listaIOMPhasta[i].value;
+                    }
+                }
+
+
+                if (tipoSolicitud < 1) {
+                    textoMensajeAlerta = "Seleccione un tipo de movimiento";
+                    enviar = false;
+                }
+
+                else if (solicitud.trim().length < 1) {
+                    textoMensajeAlerta = "El campo solicitud no puede estar vacio";
+                    enviar = false;
+                }
+
+                else if (explicacion.trim().length < 1) {
+                    textoMensajeAlerta = "El campo explicaci\u00F3n no puede estar vacio";
+                    enviar = false;
+                }
+
+                else if (generarMovimientoPersonal == "true" && desvinculacion == false) {
+
+                    if (configuracionPuesto == "True") {
+
+                        if (tipoNombramiento == "" || tipoNombramiento == null || tipoNombramiento < 1) {
+                            textoMensajeAlerta = "Debe seleccionar un tipo de nombramiento / contrato";
+                            enviar = false;
+                        }
+
+                        else if (fondoFinanciamiento < 1) {
+                            textoMensajeAlerta = "Debe seleccionar un fondo de financiamiento";
+                            enviar = false;
+                        }
+
+                        else if (rolPuesto.trim().length < 1 || idIO < 1) {
+                            textoMensajeAlerta = "Debe seleccionar un perfil de puesto";
+                            enviar = false;
+                        }
+
+                        else if (numeroPartidaCampo.trim().length < 1) {
+                            textoMensajeAlerta = "Debe ingresar un numero de partida o un c\u00F3digo de contrato";
+                            enviar = false;
+                        }
+
                     }
 
+                    else if (configuracionPuesto == "False") {
+
+                        if (iompHasta < 1) {
+                            textoMensajeAlerta = "Debe seleccionar un puesto";
+                            enviar = false;
+                        }
+
+                    }
+
+
                 }
-                
-                
-            }
 
-            if (fechaRigeHasta == "visible" && (fechaRigeHastaValor == null || fechaRigeHastaValor == "" )) {
-                
-                textoMensajeAlerta = "Ingrese una fecha hasta";
-                enviar = false;
+                if (fechaRigeHasta == "visible" && (fechaRigeHastaValor == null || fechaRigeHastaValor == "")) {
 
-            }
+                    textoMensajeAlerta = "Ingrese una fecha hasta";
+                    enviar = false;
 
-            if (enviar == false) {
+                }
 
-                mostrarNotificacionTimer("Aviso", textoMensajeAlerta, 5000);
+                if (enviar == false) {
+
+                    mostrarNotificacionTimer("Aviso", textoMensajeAlerta, 5000);
+                    return false;
+
+                } else {
+                    return true;
+                }
+
                 return false;
-
-            } else{
-                return true;
             }
 
-            return false;
-        }
-        
 
-    </script>
-}
+        </script>
+    }

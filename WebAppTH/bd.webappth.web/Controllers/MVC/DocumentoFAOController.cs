@@ -63,8 +63,10 @@ namespace bd.webappth.web.Controllers.MVC
                     NombreUsuario = NombreUsuario
 
                 };
-                lista = await apiServicio.Listar<DocumentoFAOViewModel>(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ListarEmpleadosSinFAO");
+
+                lista = await apiServicio.Listar<DocumentoFAOViewModel>(
+                    usuario, new Uri(WebApp.BaseAddress), "api/Empleados/ListarEmpleadosSinFAO");
+
                 return View(lista);
             }
             catch (Exception ex)

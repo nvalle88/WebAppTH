@@ -83,7 +83,7 @@
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().EstadoDirector)
+                                            Estado de aprobaci&oacute;n
                                         </th>
 
                                         <th data-class="expand">
@@ -125,12 +125,12 @@
                                         </td>
 
                                         <td>
-                                            
-                                            @if (!string.IsNullOrEmpty(item.EstadoDirector))
+                                            @if (string.IsNullOrEmpty(item.EstadoValidacionTTHH))
                                             {
-                                                @("Completo")
+                                                @("Solicitado")
                                             }
-                                            else { 
+                                            else
+                                            {
                                                 @Html.DisplayFor(modelItem => item.EstadoValidacionTTHH)
                                             }
                                         </td>

@@ -1,0 +1,36 @@
+@model bd.webappth.entidades.Negocio.Dependencia
+<ul>
+
+    @foreach (var item in Model.Dependencia1)
+    {
+       
+        @if (item != null)
+        {
+            
+            @*<li><a href="#" class="usr">@item.Nombre</a>
+                    @if (item.Dependencia1 != null)
+                    {
+                        await Html.RenderPartialAsync("_PartialViewDependenciasHijos", item);
+                    }
+                </li>*@
+            <li style="display:none">
+                
+                <span>
+                    <label class="radio">
+                        <input type="radio" name="thefields" value="@item.Nombre, @item.IdDependencia" id="radio">
+                        <i></i>
+                    </label>
+                    
+                    <label>&nbsp; &nbsp; &nbsp; &nbsp; @item.Nombre</label> 
+                </span>
+                @if (item.Dependencia1 != null)
+                    {
+                        await Html.RenderPartialAsync("_PartialViewDependenciasHijos", item);
+                    }
+            </li>
+        }
+
+    }
+</ul>
+
+
