@@ -68,6 +68,8 @@ namespace bd.webappth.entidades.Utils
 
         public static string EscogerEmpleadoReemplazo { get { return "Seleccione un reemplazo"; } }
 
+        public static string ErrorItinerario { get { return "Empleado no a ingresado su itinerario"; } }
+
         public static object NoAsignadoDistrivutibo { get { return "El empleado seleccionado no está asignado al distributivo, debe asignar el empleado al distributivo para editar su ficha..."; } }
 
         public static object NoProcesarSolicitud { get { return "No se ha podido porcesar la solicitud realizada "; } }
@@ -87,5 +89,6 @@ namespace bd.webappth.entidades.Utils
         public static object ConfiguracionViaticos { get { return "Rol de puesto no configuado para viaticos"; } }
 
         public static object ErrorReingresarIdentificacion { get { return "Ha ocurrido un error, por favor reingrese la identificacion"; } }
+        
     }
 }
