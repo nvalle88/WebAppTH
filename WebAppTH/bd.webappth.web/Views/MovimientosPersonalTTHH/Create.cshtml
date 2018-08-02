@@ -255,6 +255,7 @@
                     data: { idAccion: $("#SelectAccion").val() },
                     success: function (data) {
 
+                        document.getElementById("btnGuardar").disabled = false;
                         var textoMensajeAlerta = "";
 
                         if (data.modificaDistributivo == true) {
@@ -266,12 +267,13 @@
                                 desvinculacion = false;
 
                                 if (data.modalidadContratacion == false) {
-                                    textoMensajeAlerta = "Este movimiento registra el cambio del servidor, mateniendo el fondo de financiamiento y el tipo de nombramiento al SELECCIONAR UN PUESTO. <br /> NOTA: Al configurar un puesto toma los datos configurados en lugar de los actuales";
+                                    textoMensajeAlerta = "Esta acci\u00F3n no afecta al distributivo";
 
-                                    mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 30000);
+                                    mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 7000);
 
                                 } else if (data.modalidadContratacion == true) { 
-                                   
+                                    textoMensajeAlerta = "Esta acci\u00F3n afectar\u00E1 al distributivo";
+                                    mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 7000);
                                 }
 
 

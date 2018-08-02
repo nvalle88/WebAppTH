@@ -197,24 +197,59 @@
 
         <section class="col col-lg-12">
             <label class="col-lg-12">
-                <b>Estado al que cambia</b>
+                <b>Estado al que cambia ( Como afecta al distributivo )</b>
             </label>
         </section>
 
         <section class="col col-lg-4">
+
+            <div class="col-lg-12">
+                <div class="alert alert-info col col-lg-12">
+                    <b>Informaci&oacute;n!</b>
+                    <br>
+                    No se realizar&aacute;n cambios en el distributivo
+                    <br />&nbsp;
+                </div>
+                <p></p>
+            </div>
+
             <div class=" col-lg-12">
-                @Html.RadioButtonFor(model =>model.empleadoCambio, 0)&nbsp;N/A
+                @Html.RadioButtonFor(model => model.empleadoCambio, 0)&nbsp;N/A
 
             </div>
         </section>
 
         <section class="col col-lg-4">
+
+            <div class="col-lg-12">
+                <div class="alert alert-info col col-lg-12">
+                    <b>Informaci&oacute;n!</b>
+                    <br>
+                    Realiza cambios en el distributivo
+                    <br />&nbsp;
+                </div>
+                <p></p>
+            </div>
+
             <div class=" col-lg-12">
                 @Html.RadioButtonFor(model => model.empleadoCambio, 1)&nbsp;Modalidad contrataci&oacute;n
             </div>
+
         </section>
 
         <section class="col col-lg-4">
+
+            <div class="col-lg-12">
+                <div class="alert alert-info col col-lg-12">
+                    <b>Informaci&oacute;n!</b>
+                    <br>
+                    Realiza cambios en el distributivo,&nbsp;
+                    <b>el empleado pasar&aacute; a estado pasivo</b>
+                    
+                </div>
+                <p></p>
+            </div>
+
             <div class=" col-lg-12">
                 @Html.RadioButtonFor(model => model.empleadoCambio, 2)&nbsp;Pasivo
             </div>
@@ -259,7 +294,7 @@
         <section class="col col-lg-12">
             <label class="checkbox">
                 <input type="checkbox" asp-for="TipoAccionPersonal.ModificaDistributivo" class="form-control">
-                <i></i>Modifica Distributivo / genera movimiento de personal 
+                <i></i>Genera movimiento de personal
                 <span asp-validation-for="TipoAccionPersonal.ModificaDistributivo" class="text-danger"></span>
             </label>
         </section>
