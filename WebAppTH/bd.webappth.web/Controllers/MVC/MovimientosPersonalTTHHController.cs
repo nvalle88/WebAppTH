@@ -57,12 +57,12 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-
+                
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
 
                 if (claim.IsAuthenticated == true)
                 {
-
+                    
                     var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
                     var modeloEnviar = new AccionesPersonalPorEmpleadoViewModel
