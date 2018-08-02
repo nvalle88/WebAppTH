@@ -188,9 +188,10 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
+                int IdEmpleado = id;
 
                 var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
-                    id,
+                    IdEmpleado,
                     new Uri(WebApp.BaseAddress),
                     "api/AccionesPersonal/ObtenerAccionPersonalViewModelParaEditar");
 

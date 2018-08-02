@@ -298,7 +298,10 @@ namespace bd.webappth.web.Controllers.MVC
 
                     empleadoViewModel = JsonConvert.DeserializeObject<EmpleadoViewModel>(respuesta.Resultado.ToString());
 
-                    if (empleadoViewModel.IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida > 0)
+                    if (
+                        empleadoViewModel.IndiceOcupacionalModalidadPartida != null
+                        && empleadoViewModel.IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida > 0
+                        )
                     {
 
                         await CargarRelacionLaboralPorRegimen(empleadoViewModel.IndiceOcupacionalModalidadPartida.TipoNombramiento.RelacionLaboral.IdRegimenLaboral);
