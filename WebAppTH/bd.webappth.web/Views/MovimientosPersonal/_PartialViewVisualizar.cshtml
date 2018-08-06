@@ -1,0 +1,786 @@
+﻿@model bd.webappth.entidades.ViewModels.AccionPersonalViewModel
+
+<input type="hidden" asp-for="IdAccionPersonal" />
+<input type="hidden" asp-for="EmpleadoMovimiento.Empleado.IdEmpleado" />
+<input type="hidden" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.IdIndiceOcupacionalModalidadPartida" />
+<input type="hidden" id="txt_ioHasta" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IdIndiceOcupacional" />
+
+<fieldset>
+
+    @{
+        char[] MyChar = { ':' };
+
+        decimal? remuneracion = 0;
+        var relacionLaboral = Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.TipoNombramiento.RelacionLaboral.Nombre + "  - " + Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.TipoNombramiento.Nombre;
+
+        if (
+            Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.SalarioReal != null
+            && Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.SalarioReal > 0
+            )
+        {
+            remuneracion = Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.SalarioReal;
+        }
+        else
+        {
+
+            remuneracion = Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.IndiceOcupacional.EscalaGrados.Remuneracion;
+        }
+
+
+    }
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+
+        <section class="col col-lg-4">
+
+            <label class="input col-lg-12">Nombre del funcionario</label>
+            <label class="input col-lg-12">
+                <input type="text" value="@(Model.EmpleadoMovimiento.Empleado.Persona.Nombres) @(Model.EmpleadoMovimiento.Empleado.Persona.Apellidos)" class="form-control" readonly />
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.EmpleadoMovimiento.Empleado.Persona.Identificacion).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="EmpleadoMovimiento.Empleado.Persona.Identificacion" class="form-control" readonly />
+                <span asp-validation-for="EmpleadoMovimiento.Empleado.Persona.Identificacion" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col-lg-4">
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.TipoAccionPersonalViewModel)</label>
+            <label class="input" style="padding-right:15px;">
+                <select id="SelectAccion" asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones" disabled>
+                    <option value="0" selected>Seleccione</option>
+                </select>
+
+                <span asp-validation-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+
+
+        <section class="col col-lg-8">
+
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Solicitud)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="Solicitud" class="form-control" readonly/>
+                <span asp-validation-for="Solicitud" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Estado)</label>
+            <label class="input">
+                <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados" disabled>Seleccione</select>
+
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </label>
+        </section>
+
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+
+        <section class="col col-lg-8">
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Explicacion)</label>
+            <label class="input col-lg-12">
+                <textarea maxlength="1000" asp-for="Explicacion" class="form-control" rows="5" style="resize:none;" disabled></textarea>
+                <span asp-validation-for="Explicacion" class="text-danger"></span>
+            </label>
+        </section>
+
+
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+        <section class="col col-lg-12">
+            <legend class="input col-lg-12">Generar movimiento de personal?</legend>
+        </section>
+
+        <section class="col col-lg-4">
+            <div class="input col-lg-12">
+                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, false, new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbFalse", @disabled = "disabled" })&nbsp;No
+            </div>
+        </section>
+
+        <section class="col col-lg-4">
+            <div class="input col-lg-12">
+                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, true, new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbTrue", @disabled = "disabled" })&nbsp;Si
+            </div>
+            <input id="txtGenerarMovimiento" asp-for="GeneraMovimientoPersonal" type="text" hidden />
+        </section>
+
+    </div>
+
+    <div class="row divSituacionActual">&nbsp;</div>
+
+    <div class="row divSituacionActual">
+
+        <section class="col col-lg-10 divSituacionActual">
+            <legend class="input col-lg-12">Situaci&oacute;n actual</legend>
+        </section>
+
+        <section class="col col-lg-6 divSituacionActual">
+
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.EmpleadoMovimiento.Empleado.Dependencia.Sucursal.Nombre).ToString().TrimEnd(MyChar)</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="EmpleadoMovimiento.Empleado.Dependencia.Sucursal.Nombre" class="form-control" readonly />
+                <span asp-validation-for="EmpleadoMovimiento.Empleado.Dependencia.Sucursal.Nombre" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-6 divSituacionActual">
+
+            <label class="input col-lg-12">Unidad administrativa</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="EmpleadoMovimiento.Empleado.Dependencia.Nombre" class="form-control" readonly />
+                <span asp-validation-for="EmpleadoMovimiento.Empleado.Dependencia.Nombre" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-6 divSituacionActual">
+
+            <label class="input col-lg-12">Nombre del puesto</label>
+            <label class="input col-lg-12">
+                <input type="text" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.IndiceOcupacional.ManualPuesto.Nombre" class="form-control" readonly />
+                <span asp-validation-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.IndiceOcupacional.ManualPuesto.Nombre" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col-lg-6 divSituacionActual">
+
+            <label class="input col-lg-12">Relaci&oacute;n laboral</label>
+            <label class="input col-lg-12">
+                <input type="text" value="@relacionLaboral" class="form-control" readonly />
+
+            </label>
+
+        </section>
+
+        <section class="col-lg-2 divSituacionActual">
+
+            <label class="input col-lg-12">Remuneraci&oacute;n</label>
+            <label class="input col-lg-12">
+                <input type="text" value="$@remuneracion" class="form-control" readonly />
+
+            </label>
+
+        </section>
+
+    </div>
+
+    <div class="row divSituacionActual">&nbsp;</div>
+
+
+    <div class="row divSituacionPropuesta">
+        <section class="col col-lg-12 divSituacionPropuesta">
+            <legend class="input col-lg-12">Situaci&oacute;n propuesta</legend>
+        </section>
+    </div>
+
+    <div class="row divSituacionPropuesta">
+
+        <section class="col col-lg-12 divSituacionPropuesta">
+            <div class="input col-lg-12">
+                @Html.RadioButtonFor(x => x.ConfigurarPuesto, true, new { onClick = "ValidarNuevoPuesto(this)", @disabled = "disabled" })&nbsp;Configuraci&oacute;n del puesto
+                &nbsp;/&nbsp;
+                @Html.RadioButtonFor(x => x.ConfigurarPuesto, false, new { onClick = "ValidarNuevoPuesto(this)", @disabled = "disabled" })&nbsp;Selecci&oacute;n de puesto
+            </div>
+        </section>
+
+        <section class="col col-lg-12 divSituacionPropuesta">&nbsp;</section>
+
+    </div>
+
+    <div class="row divSituacionPropuesta divPuestosOcupados">
+
+        <section class="col col-lg-12 divSituacionPropuesta divPuestosOcupados" style="padding-left:2%;padding-right:2%;">
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-100" data-widget-editbutton="false" style="padding:0px;margin:0px;">
+                <header id="table">
+                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                    <h2>Selecci&oacute;n de puestos</h2>
+                </header>
+
+                <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover">
+
+                    <thead>
+                        <tr>
+                            <th class="hasinput">
+                                <input type="text" class="form-control" />
+                            </th>
+
+                            <th class="hasinput">
+                                <input type="text" class="form-control" />
+                            </th>
+
+                            <th class="hasinput">
+                                <input type="text" class="form-control" />
+                            </th>
+
+                            <th class="hasinput">
+                                <input type="text" class="form-control" />
+                            </th>
+
+                            <th class="hasinput">
+                                <input type="text" class="form-control" />
+                            </th>
+
+                            <th class="hasinput">
+                                <input type="text" class="form-control" />
+                            </th>
+
+                            <th class="hasinput">
+                                <input type="text" class="form-control" />
+                            </th>
+
+                            <th>
+
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th data-class="expand">
+                                @Html.DisplayNameFor(model => Model.ListaPuestosOcupados.FirstOrDefault().NumeroPartidaIndividual)
+                            </th>
+
+                            <th data-class="expand">
+                                @Html.DisplayNameFor(model => Model.ListaPuestosOcupados.FirstOrDefault().CodigoContrato)
+                            </th>
+
+                            <th data-class="expand">
+                                Servidor
+                            </th>
+
+                            <th data-class="expand">
+                                &Aacute;rea geogr&aacute;fica
+                            </th>
+
+                            <th data-class="expand">
+                                Unidad administrativa
+                            </th>
+
+                            <th data-class="expand">
+                                Grado
+                            </th>
+
+                            <th data-class="expand">
+                                Fondo de financiamiento
+                            </th>
+
+                            <th data-class="expand">
+                                Seleccionar
+                            </th>
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.ListaPuestosOcupados)
+                        {
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumeroPartidaIndividual)
+                                    &nbsp;
+                                    @Html.DisplayFor(modelItem => item.ModalidadPartida.Nombre)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CodigoContrato)
+                                </td>
+
+                                <td>
+                                    @{
+                                        var datosPersonales = "";
+
+                                        if (item.Empleado != null)
+                                        {
+                                            datosPersonales = item.Empleado.Persona.Nombres + " " + item.Empleado.Persona.Apellidos + " " + item.Empleado.Persona.Identificacion;
+                                        }
+
+                                    }
+
+                                    @(datosPersonales)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IndiceOcupacional.Dependencia.Sucursal.Nombre)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IndiceOcupacional.Dependencia.Nombre)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IndiceOcupacional.EscalaGrados.Nombre)&nbsp;
+
+                                    @{
+
+
+                                        if (item.SalarioReal != null && item.SalarioReal > 0)
+                                        {
+                                            <text>$@(item.SalarioReal)</text>
+                                        }
+                                        else
+                                        {
+                                            <text>$@(item.IndiceOcupacional.EscalaGrados.Remuneracion)</text>
+                                        }
+                                    }
+
+                                </td>
+
+                                <td>
+                                    @item.FondoFinanciamiento.Nombre
+                                </td>
+
+                                <td>
+                                    @Html.RadioButtonFor(x => x.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta, item.IdIndiceOcupacionalModalidadPartida, new { @checked = "false", @disabled = "disabled" })
+
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="row divSituacionPropuesta divNuevoPuesto">
+        <section class="col col-lg-10 divSituacionPropuesta divNuevoPuesto">
+            <legend class="input col-lg-12" style="font-size:15px;font-weight:500;">Nuevo puesto</legend>
+        </section>
+    </div>
+
+
+    <div class="row divSituacionPropuesta">
+
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+                <label>R&eacute;gimen laboral</label>
+                <select id="IdRegimenLaboral" class="form-control" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.RelacionLaboral.IdRegimenLaboral" asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true' disabled>
+                    <option value="0" selected="" disabled="">Seleccione</option>
+                </select>
+            </section>
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+                <label>Relaci&oacute;n laboral</label>
+                <select id="IdRelacionLaboral" class="form-control"  asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.IdRelacionLaboral" asp-items="ViewBag.IdRelacionLaboral" data-msg-required='El campo es requerido' data-rule-required='true' disabled>
+                    <option value="0" selected="" disabled=""></option>
+                </select>
+            </section>
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+                <label>Tipo de nombramiento / contrato</label>
+                <select id="IdTipoNombramiento" asp-for="EmpleadoMovimiento.IdTipoNombramiento" class="form-control" asp-items="ViewBag.IdTipoNombramiento" data-msg-required='El campo es requerido' data-rule-required='true' disabled >Seleccione</select>
+                <span asp-validation-for="EmpleadoMovimiento.IdTipoNombramiento" class="text-danger"></span>
+            </section>
+
+        </section>
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
+    </div>
+
+    <div class="row divSituacionPropuesta divNuevoPuesto">
+
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+
+                <label>Ciudad</label>
+                <select id="ciudad" class="form-control" asp-items="ViewBag.IdCiudad" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.Sucursal.IdCiudad" disabled>
+                    <option value="0" selected="" disabled="">Seleccione</option>
+                </select>
+
+            </section>
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+
+                <label>Sucursal</label>
+                <select id="sucursal" asp-items="ViewBag.IdSucursal"  asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.IdSucursal" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' disabled>Seleccione</select>
+
+
+            </section>
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+                <label>Dependencia</label>
+                <input class="form-control" type="text" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.Nombre" id="dependencia" readonly="readonly">
+
+
+            </section>
+
+            <input class="form-control" type="hidden" id="iddependencia" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IdDependencia" disabled>
+
+        </section>
+
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
+    </div>
+
+    <div class="row divSituacionPropuesta divNuevoPuesto">
+
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+
+                <label>Perfil del puesto</label>
+                <select id="manualpuesto" class="form-control" asp-items="ViewBag.IdManualPuesto" data-msg-required='El campo es requerido' data-rule-required='true' disabled>Seleccione</select>
+
+            </section>
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+
+                <label>Rol del puesto</label>
+                <input class="form-control input" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.RolPuesto.Nombre" id="txt_rolPuesto" readonly required>
+
+            </section>
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+
+                <label>Fondo de Financimiento</label>
+                <select asp-for="EmpleadoMovimiento.IdFondoFinanciamiento" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdFondoFinanciamiento" disabled>
+                    <option value="0" selected="" disabled="">Seleccione</option>
+                </select>
+
+            </section>
+
+
+
+        </section>
+
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
+    </div>
+
+    <div class="row divSituacionPropuesta divNuevoPuesto">
+
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+
+                <label>Partida individual / c&oacute;digo</label>
+                <input asp-for="EmpleadoMovimiento.NumeroPartidaIndividual" class="form-control input" id="txt_partida" readonly>
+
+            </section>
+
+            <section class="col-lg-8 divSituacionPropuesta divNuevoPuesto">
+
+                <label>Grupo ocupacional</label>
+                <input class="form-control input" id="txt_escalaGrados" 
+                    value="@if (Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta != null)
+                            {
+                                var texto = Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta
+                                    .IndiceOcupacional.EscalaGrados.Nombre
+                                    + " ( GRADO "
+                                    + Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta
+                                    .IndiceOcupacional.EscalaGrados.Grado
+                                    + " ) QUE PERCIBE $"
+                                    + Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta
+                                    .IndiceOcupacional.EscalaGrados.Remuneracion;
+                                    
+                                    <text>
+                                        @texto
+                                    </text>
+                             } else { <text></text>}"
+                       readonly required>
+
+            </section>
+
+        </section>
+
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
+    </div>
+
+    <div class="row divSituacionPropuesta divNuevoPuesto">
+
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto" id="s_modalidad">
+
+                <label>Modalidad Partida</label>
+                <select id="modalidadpartida" asp-for="EmpleadoMovimiento.IdModalidadPartida" asp-items="ViewBag.IdModalidadPartida" class="form-control" disabled>Seleccione</select>
+
+            </section>
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+
+                <label>Salario sobrevalorado</label>
+                <input asp-for="EmpleadoMovimiento.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' onKeyPress="return checkIt(event)" disabled>
+
+            </section>
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+                <label class="checkbox-inline">
+                    <label>&iquest; Es jefe de la unidad administrativa?</label>
+                    <input type="checkbox" asp-for="EmpleadoMovimiento.EsJefe" class="form-control" disabled />
+                </label>
+            </section>
+
+        </section>
+
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
+    </div>
+
+
+    <div class="row">
+
+        <section class="col col-lg-12">
+            <legend>&nbsp;</legend>
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Fecha)</label>
+            <label class="input col-lg-12">
+                <input asp-for="Fecha" type="text" class="datepicker" data-dateformat='yy-mm-dd' disabled/>
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.FechaRige)</label>
+            <label class="input col-lg-12">
+                <input id="date_Fecha1" asp-for="FechaRige" type="datetime" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" disabled/>
+                <span asp-validation-for="FechaRige" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label class="input col-lg-12" id="lbl_date_Fecha2">@Html.DisplayNameFor(model => Model.FechaRigeHasta)</label>
+            <label class="input col-lg-12">
+                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" disabled/>
+                <span asp-validation-for="FechaRigeHasta" class="text-danger"></span>
+            </label>
+
+        </section>
+
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row" id="txt_ver_dias">
+
+        <section class="col col-lg-4">
+
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.NoDias)</label>
+            <label class="input col-lg-12">
+                <input id="txt_dias" min="0" readonly type="number" asp-for="NoDias" class="form-control" />
+                <span asp-validation-for="NoDias" class="text-danger"></span>
+            </label>
+
+        </section>
+
+        <section class="col col-lg-4">
+
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Numero)</label>
+            <label class="input col-lg-12">
+                <input id="txt_Numero" min="0" readonly type="number" asp-for="Numero" class="form-control" />
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </label>
+
+        </section>
+
+    </div>
+
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+
+</fieldset>
+
+<script>
+
+    function MostrarMovimientoPersonal() {
+        var varItemsActual = document.getElementsByClassName("divSituacionActual").length;
+        var varItemsPropuesta = document.getElementsByClassName("divSituacionPropuesta").length;
+
+        for (var i = 0; i < varItemsActual; i++) {
+            document.getElementsByClassName("divSituacionActual")[i].style.height = "auto";
+            document.getElementsByClassName("divSituacionActual")[i].style.visibility = "visible";
+        }
+
+        for (var j = 0; j < varItemsPropuesta; j++) {
+            document.getElementsByClassName("divSituacionPropuesta")[j].style.height = "auto";
+            document.getElementsByClassName("divSituacionPropuesta")[j].style.visibility = "visible";
+        }
+
+        @if (Model.ConfigurarPuesto == true) {
+            <text>
+                MostrarNuevoPuesto();
+                OcultarPuestosOcupados();
+            </text>
+        } else if(Model.ConfigurarPuesto == false) {
+            <text>
+                OcultarNuevoPuesto();
+                MostrarPuestosOcupados();
+            </text>
+        }
+
+    }
+
+    function OcultarMovimientoPersonal() {
+
+        var varItemsActual = document.getElementsByClassName("divSituacionActual").length;
+        var varItemsPropuesta = document.getElementsByClassName("divSituacionPropuesta").length;
+
+        for (var i = 0; i < varItemsActual; i++) {
+            document.getElementsByClassName("divSituacionActual")[i].style.height = "0px";
+            document.getElementsByClassName("divSituacionActual")[i].style.visibility = "hidden";
+        }
+
+        for (var j = 0; j < varItemsPropuesta; j++) {
+            document.getElementsByClassName("divSituacionPropuesta")[j].style.height = "0px";
+            document.getElementsByClassName("divSituacionPropuesta")[j].style.visibility = "hidden";
+        }
+
+    }
+
+    function MostrarNuevoPuesto() {
+
+        var varItemsNuevoPuesto = document.getElementsByClassName("divNuevoPuesto").length;
+
+        for (var i = 0; i < varItemsNuevoPuesto; i++) {
+            document.getElementsByClassName("divNuevoPuesto")[i].style.height = "auto";
+            document.getElementsByClassName("divNuevoPuesto")[i].style.visibility = "visible";
+            
+        }
+
+        if (document.getElementById("modalidadpartida").value.length > 0) {
+
+            document.getElementById("s_modalidad").style.visibility = "visible";
+            document.getElementById("txt_partida").readOnly = true;
+        } else { 
+            
+            document.getElementById("s_modalidad").style.visibility = "hidden";
+            document.getElementById("txt_partida").readOnly = true;
+        }
+
+    }
+
+    function OcultarNuevoPuesto() {
+
+        var varItemsNuevoPuesto = document.getElementsByClassName("divNuevoPuesto").length;
+
+        for (var i = 0; i < varItemsNuevoPuesto; i++) {
+            document.getElementsByClassName("divNuevoPuesto")[i].style.height = "0px";
+            document.getElementsByClassName("divNuevoPuesto")[i].style.visibility = "hidden";
+        }
+
+    }
+
+    function MostrarPuestosOcupados() {
+
+        var varItemsPuestosOcupados = document.getElementsByClassName("divPuestosOcupados").length;
+
+        for (var i = 0; i < varItemsPuestosOcupados; i++) {
+            document.getElementsByClassName("divPuestosOcupados")[i].style.height = "auto";
+            document.getElementsByClassName("divPuestosOcupados")[i].style.visibility = "visible";
+        }
+    }
+
+    function OcultarPuestosOcupados() {
+
+        var varItemsPuestosOcupados = document.getElementsByClassName("divPuestosOcupados").length;
+
+        for (var i = 0; i < varItemsPuestosOcupados; i++) {
+            document.getElementsByClassName("divPuestosOcupados")[i].style.height = "0px";
+            document.getElementsByClassName("divPuestosOcupados")[i].style.visibility = "hidden";
+        }
+    }
+
+
+    function ValidarChkMovPersonal(element) {
+
+
+        if (element.value == "True") {
+            MostrarMovimientoPersonal();
+        }
+
+        else if (element.value == "False") {
+            OcultarMovimientoPersonal();
+        }
+
+    }
+
+
+    function ValidarNuevoPuesto(element) {
+
+        if (element.value == "True") {
+            MostrarNuevoPuesto();
+            OcultarPuestosOcupados();
+        }
+
+        else if (element.value == "False") {
+            OcultarNuevoPuesto();
+            MostrarPuestosOcupados();
+        }
+
+    }
+
+
+
+        @if (Model.GeneraMovimientoPersonal == true) {
+
+            <text>
+                MostrarMovimientoPersonal();
+            </text>
+
+        } else if(Model.GeneraMovimientoPersonal == false) {
+            <text>
+                OcultarMovimientoPersonal();
+            </text>
+        }
+
+        @if (Model.EmpleadoMovimiento.IdModalidadPartida != null && Model.ConfigurarPuesto == true) {
+            <text>
+                document.getElementById("s_modalidad").style.visibility = "visible";
+            </text>
+        }else {
+            <text>
+                document.getElementById("s_modalidad").style.visibility = "hidden";
+            </text>
+        }
+
+
+        @if (Model.FechaRigeHasta == null)
+        {
+            <text>
+                document.getElementById("date_Fecha2").style.visibility = "hidden";
+                document.getElementById("lbl_date_Fecha2").style.visibility = "hidden";
+            </text>
+        }
+        else {
+            <text>
+                document.getElementById("date_Fecha2").style.visibility = "visible";
+                document.getElementById("lbl_date_Fecha2").style.visibility = "visible";
+            </text>
+        }
+
+    
+    
+
+</script>
+
+

@@ -53,9 +53,9 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.ListaPlanCapacitacion.FirstOrDefault().ApellidoNombre)
                                         </th>
-                                        <th data-class="expand">
+                                        @*<th data-class="expand">
                                             @Html.DisplayNameFor(model => model.ListaPlanCapacitacion.FirstOrDefault().NombreEvento)
-                                        </th>
+                                        </th>*@
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
@@ -69,9 +69,9 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ApellidoNombre)
                                             </td>
-                                            <td>
+                                            @*<td>
                                                 @Html.DisplayFor(modelItem => item.NombreEvento)
-                                            </td>
+                                            </td>*@
 
                                             <td>
                                                 @if (item.Estado == 2)

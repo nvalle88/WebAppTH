@@ -138,6 +138,10 @@
                                             </th>
 
                                             <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().SucursalNombre)
+                                            </th>
+
+                                            <th data-class="expand">
                                                 @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
                                             </th>
 
@@ -159,6 +163,10 @@
 
                                                 @Html.TextBoxFor(model => Model[i].Nombre, new { @readonly = "readonly", @class = "input-invisible" })
                                                 @Html.TextBoxFor(model => Model[i].IdDependencia, new { @hidden = "true" })
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(model => Model[i].SucursalNombre)
                                             </td>
                                             
                                             <td style="padding-left:2%;">

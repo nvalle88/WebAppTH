@@ -18,11 +18,13 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Sucursal")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar la {0} ")]
         public int IdSucursal { get; set; }
-
-        [Required(ErrorMessage = "Debe seleccionar {0}")]
+        
         [Display(Name = "Puesto responsable de aprobación")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdManualPuesto { get; set; }
+        public int? IdManualPuesto { get; set; }
+
+        [Display(Name = "Aprueba jefe")]
+        public bool ApruebaJefe { get; set; }
+        
 
         public virtual ManualPuesto ManualPuesto { get; set; }
         public virtual Sucursal Sucursal { get; set; }

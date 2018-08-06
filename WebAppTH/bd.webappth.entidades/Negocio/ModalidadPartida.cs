@@ -16,6 +16,6 @@ namespace bd.webappth.entidades.Negocio
         public string Nombre { get; set; }
 
         public virtual ICollection<IndiceOcupacionalModalidadPartida> IndiceOcupacionalModalidadPartida { get; set; }
-
+        public virtual ICollection<EmpleadoMovimiento> EmpleadoMovimiento { get; set; }
     }
 }

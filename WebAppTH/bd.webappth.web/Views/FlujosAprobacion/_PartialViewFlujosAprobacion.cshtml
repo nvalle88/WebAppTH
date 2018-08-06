@@ -23,8 +23,8 @@
             </label>
         </section>
 
-        <section class="col col-lg-4">
-            <label class="label">@Html.DisplayNameFor(model => model.IdManualPuesto)</label>
+        <section class="col col-lg-4" id="seccion_Puesto">
+            <label class="label">Cargo</label>
             <label class="input">
                 <select id="cb_ManualPuesto" asp-for="IdManualPuesto" class="form-control" asp-items="ViewBag.ManualPuesto">
                     <option value="0">Seleccione</option>
@@ -33,6 +33,27 @@
             </label>
         </section>
 
+        <section class="col col-lg-4">
+            <label class="label">@Html.DisplayNameFor(model => model.ApruebaJefe)</label>
+            <div class="col-lg-1">
+                <input id="chk_jefe" type="checkbox" class="form-control" asp-for="ApruebaJefe" onclick="validarApruebaJefe()" />
+            </div>
+        </section>
+
     </div>
 
 </fieldset>
+
+<script>
+    function validarApruebaJefe(){ 
+        var element = document.getElementById("chk_jefe");
+        
+        if (element.checked == true) {
+            document.getElementById("seccion_Puesto").style.visibility = "hidden";
+        } else { 
+            document.getElementById("seccion_Puesto").style.visibility = "visible";
+        }
+    }
+
+    validarApruebaJefe();
+</script>

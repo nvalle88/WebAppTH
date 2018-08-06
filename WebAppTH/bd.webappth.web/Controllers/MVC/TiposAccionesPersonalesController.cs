@@ -12,6 +12,7 @@ using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -27,30 +28,20 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        private void InicializarMensaje(string mensaje)
+        
+
+
+        public async Task<IActionResult> Create()
         {
-
-            if (mensaje == null)
-            {
-                mensaje = "";
-            }
-
-            ViewData["Error"] = mensaje;
-        }
-
-
-        public async Task<IActionResult> Create(string mensaje)
-        {
-            InicializarMensaje(mensaje);
 
             var tipoAccionPersonalViewmodel = new TipoAccionPersonalViewModel
             {
 
                 MatrizLista = new List<Matriz>
                             {
-                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
-                                new Matriz {Id ="Regional", Nombre = "Regional"},
-                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
+                                new Matriz {Id = "MATRIZ", Nombre = "MATRIZ"},
+                                new Matriz {Id ="REGIONAL", Nombre = "REGIONAL"},
+                                new Matriz {Id = "MATRIZ Y REGIONAL", Nombre = "MATRIZ Y REGIONAL"}
                             },
                 TipoAccionPersonal = new TipoAccionPersonal {
                     NDiasMaximo = 0,
@@ -79,9 +70,9 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 var MatrizLista = new List<Matriz>
                             {
-                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
-                                new Matriz {Id ="Regional", Nombre = "Regional"},
-                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
+                                new Matriz {Id = "MATRIZ", Nombre = "MATRIZ"},
+                                new Matriz {Id ="REGIONAL", Nombre = "REGIONAL"},
+                                new Matriz {Id = "MATRIZ Y REGIONAL", Nombre = "MATRIZ Y REGIONAL"}
                             };
 
                 // Obtener el valor de empleadoCambio y setear la variable del modelo a la que equivale 
@@ -122,7 +113,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                     ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(MatrizLista, "Id", "Nombre");
                     
-                    InicializarMensaje(Mensaje.ModeloInvalido);
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}|{"10000"}";
 
                     return View(tipoAccionPersonalViewModel);
                 }
@@ -140,14 +131,18 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index", new { mensaje = response.Message});
+                    return this.Redireccionar(
+                            "TiposAccionesPersonales",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
                 }
                 
                
                 ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewModel.MatrizLista, "Id", "Nombre");
 
                 this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
-                InicializarMensaje("");
+                
 
                 return View(tipoAccionPersonalViewModel);
 
@@ -159,9 +154,8 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Edit(string id,string mensaje)
+        public async Task<IActionResult> Edit(string id)
         {
-            InicializarMensaje(mensaje);
 
             try
             {
@@ -178,9 +172,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                         MatrizLista = new List<Matriz>
                             {
-                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
-                                new Matriz {Id ="Regional", Nombre = "Regional"},
-                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
+                                new Matriz {Id = "MATRIZ", Nombre = "MATRIZ"},
+                                new Matriz {Id ="REGIONAL", Nombre = "REGIONAL"},
+                                new Matriz {Id = "MATRIZ Y REGIONAL", Nombre = "MATRIZ Y REGIONAL"}
                             },
 
 
@@ -245,9 +239,9 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     var MatrizLista = new List<Matriz>
                             {
-                                new Matriz {Id = "Matriz", Nombre = "Matriz"},
-                                new Matriz {Id ="Regional", Nombre = "Regional"},
-                                new Matriz {Id = "Matriz y Regional", Nombre = "Matriz y Regional"}
+                                new Matriz {Id = "MATRIZ", Nombre = "MATRIZ"},
+                                new Matriz {Id ="REGIONAL", Nombre = "REGIONAL"},
+                                new Matriz {Id = "MATRIZ Y REGIONAL", Nombre = "MATRIZ Y REGIONAL"}
                             };
 
 
@@ -291,12 +285,16 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-
-                        return RedirectToAction("Index", new { mensaje = response.Message});
+                        
+                        return this.Redireccionar(
+                            "TiposAccionesPersonales",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}"
+                         );
                     }
 
-                    
-                    ViewData["Error"] = response.Message;
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
 
 
                     ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(MatrizLista, "Id", "Nombre");
@@ -316,9 +314,8 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Index(string mensaje)
+        public async Task<IActionResult> Index()
         {
-            InicializarMensaje(mensaje);
 
             var lista = new List<TipoAccionPersonal>();
             try
@@ -342,9 +339,18 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/TiposAccionesPersonales");
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index", new { mensaje = response.Message});
+                    return this.RedireccionarMensajeTime(
+                            "TiposAccionesPersonales",
+                            "Index",
+                            $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                         );
                 }
-                return BadRequest();
+
+                return this.RedireccionarMensajeTime(
+                           "TiposAccionesPersonales",
+                           "Index",
+                           $"{Mensaje.Error}|{response.Message}|{"10000"}"
+                        );
             }
             catch (Exception ex)
             {

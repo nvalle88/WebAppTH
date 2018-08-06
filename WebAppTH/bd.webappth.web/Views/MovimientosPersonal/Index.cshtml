@@ -95,10 +95,16 @@
                                 <tbody>
 
                                     @foreach (var item in Model)
-                                {
+                                    {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.DatosBasicosEmpleadoViewModel.Nombres)
+                                            @{
+
+                                                var nombre = item.EmpleadoMovimiento.Empleado.Persona.Nombres
+                                                    +" " +item.EmpleadoMovimiento.Empleado.Persona.Apellidos;
+                                            }
+                                            @nombre
+                                            
                                         </td>
 
                                         <td>
@@ -124,7 +130,7 @@
                                         <td>
                                             @if (string.IsNullOrEmpty(item.EstadoValidacionTTHH))
                                             {
-                                                @("Completo")
+                                                @("Solicitado")
                                             }
                                             else { 
                                                  @Html.DisplayFor(modelItem => item.EstadoValidacionTTHH)
@@ -133,7 +139,15 @@
                                         </td>
 
                                         <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdAccionPersonal }, new { onclick = "espera()" })
+                                            @if (item.Ejecutado == false)
+                                            {
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.IdAccionPersonal }, new { onclick = "espera()" })
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("Visualizar", "Visualizar", new { id = item.IdAccionPersonal }, new { onclick = "espera()" })
+                                            }
+
                                         </td>
 
                                     </tr>

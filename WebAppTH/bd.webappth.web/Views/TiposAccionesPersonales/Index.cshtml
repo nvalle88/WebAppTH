@@ -9,34 +9,7 @@
 <!-- MAIN CONTENT -->
 <div id="content">
 
-    <div class="col col-10">
 
-        @if (@ViewData["Error"].ToString() != "")
-
-        {
-
-            <div class="col-lg-12">
-
-                <div class="alert alert-block alert-dismissable">
-
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-
-                    <p>
-
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        }
-    </div>
-
-    <p></p>
     <a asp-action="Create" onclick="espera()">
         <button type="button" asp-action="Create" class="btn btn-labeled btn-default">
             <span class="btn-label">

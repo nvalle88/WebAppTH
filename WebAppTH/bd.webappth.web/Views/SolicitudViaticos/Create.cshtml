@@ -37,25 +37,27 @@
                             <form asp-action="Create" asp-controller="SolicitudViaticos" class="smart-form" novalidate="novalidate">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="FechaSolicitud" />
+                                @*<input id="IdTipoVitico" type="hidden" asp-for="IdTipoViatico" />*@
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-lg-12">
                                             <legend>Tipo Vi&aacute;tico</legend>
+
                                             <div class="row">
                                                 <br />
                                                 @foreach (var item in Model.ListaTipoViatico)
                                                 {
                                                     @*<div class="col-md-6">
-                                                        <div class="checkbox-inline">*@
+                            <div class="checkbox-inline">*@
                                                     <section class="col col-lg-6">
                                                         <label>
-                                                            <input type="checkbox"
-                                                                   name="ViaticosSeleccionados"
+                                                            <input  type="checkbox"
+                                                                   name="ViaticosSeleccionados" 
                                                                    value="@item.IdTipoViatico" /> @item.Descripcion
                                                             </label>
                                                             @*</div>
 
-                                                                </div>*@
+                                    </div>*@
                                                         </section>
 
 
@@ -103,6 +105,7 @@
             Init_Select2();
         });
     </script>
+
     <script type="text/javascript">
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -183,8 +186,6 @@
         });
 
 
-
-
     </script>
 
     <script type="text/javascript">
@@ -226,6 +227,11 @@
         }
 
     </script>
-
+    @*<script>
+        function valor(id) {
+            document.getElementById("IdTipoViatico").value = id;
+        }
+    </script>*@
+    
 
 }

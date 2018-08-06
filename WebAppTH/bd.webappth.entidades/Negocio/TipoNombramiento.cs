@@ -25,6 +25,7 @@ namespace bd.webappth.entidades.Negocio
         public virtual RelacionLaboral RelacionLaboral { get; set; }
 
         public virtual ICollection<IndiceOcupacionalModalidadPartida> IndiceOcupacionalModalidadPartida { get; set; }
+        public virtual ICollection<EmpleadoMovimiento> EmpleadoMovimiento { get; set; }
 
     }
 }

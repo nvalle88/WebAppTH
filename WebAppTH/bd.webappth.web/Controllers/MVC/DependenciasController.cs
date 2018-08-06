@@ -12,6 +12,7 @@ using bd.log.guardar.Enumeradores;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using bd.webappth.entidades.ViewModels;
 using Newtonsoft.Json;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -32,20 +33,11 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 lista = await apiServicio.Listar<DependenciaViewModel>(new Uri(WebApp.BaseAddress)
                                                                     , "api/Dependencias/ListarDependencias");
-                InicializarMensaje(null);
+                
                 return View(lista);
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando dependencias",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
                 return BadRequest();
             }
         }
@@ -79,7 +71,8 @@ namespace bd.webappth.web.Controllers.MVC
                            IdProceso = dependencia.IdProceso,
                            Codigo = dependencia.Codigo
                         };
-                        InicializarMensaje(null);
+
+                        
                         await CargarListaComboEdit(ciudad.IdCiudad, dependencia.IdSucursal);
                         return View(dependenciaViewModel);
                     }
@@ -113,20 +106,16 @@ namespace bd.webappth.web.Controllers.MVC
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado una dependencia",
-                            UserName = "Usuario 1"
-                        });
 
-
-                        return RedirectToAction("Index");
+                        return this.RedireccionarMensajeTime(
+                           "Dependencias",
+                           "Index",
+                           $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                        );
                     }
-                    ViewData["Error"] = response.Message;
+                    
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
                     await CargarListaCombox();
                     return View(dependenciaViewModel);
 
@@ -163,11 +152,13 @@ namespace bd.webappth.web.Controllers.MVC
         {
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}|{"7000"}";
                 await CargarListaCombox();
                 return View(dependenciaViewModel);
             }
+
             Response response = new Response();
+
             try
             {
                 if (dependenciaViewModel.IdDependenciaPadre == null)
@@ -183,28 +174,26 @@ namespace bd.webappth.web.Controllers.MVC
                                                                  "api/Dependencias/InsertarDependencia");
                     if (response.IsSuccess)
                     {
-                        
 
-                        return RedirectToAction("Index");
+
+                        return this.RedireccionarMensajeTime(
+                           "Dependencias",
+                           "Index",
+                           $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                        );
                     }
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+                
                 }
+
                 await CargarListaCombox();
-                InicializarMensaje(response.Message);
                 return View(dependenciaViewModel);
 
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando un Indice ocupacional ",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP Seguridad"
-                });
-
+                
                 return BadRequest();
             }
         }
@@ -306,31 +295,22 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/Dependencias");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de dependencia eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+                    return this.RedireccionarMensajeTime(
+                           "Dependencias",
+                           "Index",
+                           $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                        );
                 }
-                //return BadRequest();
-                return RedirectToAction("Index", new { mensaje = response.Message });
+
+                return this.RedireccionarMensajeTime(
+                           "Dependencias",
+                           "Index",
+                           $"{Mensaje.Error}|{response.Message}|{"7000"}"
+                        );
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Dependencia",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+                
 
                 return BadRequest();
             }

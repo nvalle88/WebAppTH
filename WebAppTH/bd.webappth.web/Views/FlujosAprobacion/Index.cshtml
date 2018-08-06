@@ -41,7 +41,7 @@
                     -->
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Flujo de  Aprobacid&oacuten</h2>
+                        <h2>Flujo de  Aprobaci&oacute;n</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -64,7 +64,7 @@
                                         </th>
 
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().ManualPuesto.Nombre)
+                                            Cargo
                                         </th>
 
                                         <th>Opciones</th>
@@ -83,7 +83,15 @@
                                         </td>
 
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ManualPuesto.Nombre)
+                                            @if (item.ApruebaJefe == true)
+                                            {
+                                                @("JEFE")
+                                            }
+                                            else
+                                            {
+                                                @( item.ManualPuesto.Nombre )
+                                            }
+
                                         </td>
 
                                         <td>

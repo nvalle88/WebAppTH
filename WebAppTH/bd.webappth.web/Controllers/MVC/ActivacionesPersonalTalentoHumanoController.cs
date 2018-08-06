@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using bd.log.guardar.Enumeradores;
 using bd.webappth.entidades.ViewModels;
 using System.Security.Claims;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -108,11 +109,23 @@ namespace bd.webappth.web.Controllers.MVC
                         mensajeResultado = response.Message;
                     }
 
-                    return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = mensajeResultado });
+                    //return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = mensajeResultado });
+
+                    return this.RedireccionarMensajeTime(
+                            "ActivacionesPersonalTalentoHumano",
+                            "Index",
+                            $"{Mensaje.Informacion}|{mensajeResultado}|{"7000"}"
+                    );
 
                 }
 
-                return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = response.Message });
+                //return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = response.Message });
+
+                return this.RedireccionarMensajeTime(
+                            "ActivacionesPersonalTalentoHumano",
+                            "Index",
+                            $"{Mensaje.Error}|{response.Message}|{"7000"}"
+                    );
 
             }
             catch (Exception ex)

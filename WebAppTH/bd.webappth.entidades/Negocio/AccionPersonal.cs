@@ -42,7 +42,7 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Hasta:")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime FechaRigeHasta { get; set; }
+        public DateTime? FechaRigeHasta { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Cantidad de días")]
