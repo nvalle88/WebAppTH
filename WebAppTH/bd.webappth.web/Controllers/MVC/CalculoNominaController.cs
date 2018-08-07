@@ -616,15 +616,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Create(string mensaje)
         {
-            await CargarComboxProcesoPeriodo();
-            var vista = new CalculoNomina { DecimoCuartoSueldo ="NINGUNO", DecimoTercerSueldo = false,EmpleadoActivo=true};
+            await CargarComboxProcesos();
+            var vista = new CalculoNomina { DecimoCuartoSueldo ="NINGUNO", DecimoTercerSueldo = false,EmpleadoActivo=true,Estado=0,FechaNomina=DateTime.Today};
             return View(vista);
         }
 
-        public async Task CargarComboxProcesoPeriodo()
+        public async Task CargarComboxProcesos()
         {
             ViewData["Procesos"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<ProcesoNomina>(new Uri(WebApp.BaseAddress), "api/ProcesoNomina/ListarProcesoNomina"), "IdProceso", "Descripcion");
-            ViewData["Periodos"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(await apiServicio.Listar<PeriodoNomina>(new Uri(WebApp.BaseAddress), "api/PeriodoNomina/ListarPeriodoNomina"), "IdPeriodo", "Descripcion");
         }
 
         [HttpPost]
@@ -643,7 +642,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
-                await CargarComboxProcesoPeriodo();
+                await CargarComboxProcesos();
                 return View(CalculoNomina);
 
             }
@@ -679,7 +678,7 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                          
                         var vista = JsonConvert.DeserializeObject<CalculoNomina>(respuesta.Resultado.ToString());
-                        await CargarComboxProcesoPeriodo();
+                        await CargarComboxProcesos();
                         return View(vista);
                     }
 
@@ -851,13 +850,24 @@ namespace bd.webappth.web.Controllers.MVC
                         return this.Redireccionar("CalculoNomina","Detalle",new { id=ObtenerCalculoNomina().Result.IdCalculoNomina},$"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                     }
                     this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
-                    await CargarComboxProcesoPeriodo();
+                    await CargarComboxProcesos();
                     return View(CalculoNomina);
             }
             catch (Exception)
             {
                 return this.Redireccionar($"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}");
             }
+        }
+
+        public IActionResult ReportesNomina(DateTime fechaNomina,int estado, string id,string descripcion,string decimocuarto, bool decimotercersueldo,DateTime FechaInicioDecimoTercero,DateTime FechaFinDecimoTercero,DateTime FechaInicioDecimoCuarto,DateTime FechaFinDecimoCuarto,string perocesoNomina)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return this.Redireccionar("CalculoNomina", "Index", $"{Mensaje.Aviso}|{"No se ha podido cargar la ventana de reportes por favor intente nuevamente, gracias..."}");
+            }
+
+            var cn = new CalculoNomina { FechaNomina=fechaNomina,Estado=estado,IdCalculoNomina = Convert.ToInt32(id),Descripcion=descripcion,DecimoCuartoSueldo=decimocuarto, DecimoTercerSueldo = decimotercersueldo ,FechaInicioDecimoTercero=FechaInicioDecimoTercero,FechaFinDecimoTercero=FechaFinDecimoTercero,FechaInicioDecimoCuarto=FechaInicioDecimoCuarto,FechaFinDecimoCuarto=FechaFinDecimoCuarto,ProcesoNomina=new ProcesoNomina{Descripcion= perocesoNomina } };
+            return View(cn);
         }
 
         public async Task<IActionResult> Index(string mensaje)

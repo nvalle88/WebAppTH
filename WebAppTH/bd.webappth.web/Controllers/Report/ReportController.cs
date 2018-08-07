@@ -31,6 +31,13 @@ namespace bd.webappth.web.Controllers.MVC
             return Redirect(url);
         }
 
+        public ActionResult RepPagoNominaEmpleado(int id)
+        {
+
+            string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepPagoNominaEmpleado&IdCalculoNomina=", Convert.ToString(id));
+            return Redirect(url);
+        }
+
         public ActionResult ReporteSolicitudPagoReliquidacion(int idReliquidacionViatico)
         {
             string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepSolicitudPagoReliquidacion&IdReliquidacionViatico=", Convert.ToString(idReliquidacionViatico));

@@ -33,7 +33,7 @@
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
                                         </th>
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdPeriodo)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estado)
                                         </th>
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().IdProceso)
@@ -56,45 +56,61 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                        </td>
+                                        @if (item.Estado == 0)
+                                        {
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                                Abierto
                                             </td>
+                                                                
+                                         }
+
+                                        @if (item.Estado == 1)
+                                        {
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.PeriodoNomina.Descripcion)
+                                                Cerrado
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
-                                            </td>
-                                            <td>
-                                                <span class="onoffswitch">
-                                                    <input type="checkbox" disabled="disabled" checked="@item.DecimoTercerSueldo" name="start_interval" class="onoffswitch-checkbox" id="st11(@item.DecimoTercerSueldo)">
-                                                    <label class="onoffswitch-label" for="st11(@item.DecimoTercerSueldo)">
-                                                        <span class="onoffswitch-inner" data-swchon-text="Si" data-swchoff-text="No"></span>
-                                                        <span class="onoffswitch-switch">
-                                                        </span>
-                                                    </label>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DecimoCuartoSueldo)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EmpleadoActivo)
-                                            </td>
-                                          
-                                            <td>
-                                                @Html.ActionLink(" Calcular nómina", "CalcularDetalleNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
-                                                <a href='@Url.Action("ReporteNomina", "Report", new { id = item.IdCalculoNomina})' target="_blank">
-                                                    Ver reporte
-                                                </a>
-                                                @Html.ActionLink(" Descargar archivo", "Download", new { id = item.IdCalculoNomina })|
-                                                @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
-                                                @Html.ActionLink(" Cargar reportados", "ReportadoNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
-                                                @Html.ActionLink(" Editar", "Detalle", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" }) |
-                                                @Html.ActionLink(" Eliminar", "Delete", new { id = item.IdCalculoNomina }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
-                                            </td>
-                                        </tr>
+                                                        
+                                        }
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Estado)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
+                                        </td>
+                                        <td>
+                                            <span class="onoffswitch">
+                                                <input type="checkbox" disabled="disabled" checked="@item.DecimoTercerSueldo" name="start_interval" class="onoffswitch-checkbox" id="st11(@item.DecimoTercerSueldo)">
+                                                <label class="onoffswitch-label" for="st11(@item.DecimoTercerSueldo)">
+                                                    <span class="onoffswitch-inner" data-swchon-text="Si" data-swchoff-text="No"></span>
+                                                    <span class="onoffswitch-switch">
+                                                    </span>
+                                                </label>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DecimoCuartoSueldo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EmpleadoActivo)
+                                        </td>
+
+                                        <td>
+                                            @Html.ActionLink(" Calcular nómina", "CalcularDetalleNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
+                                            <a href='@Url.Action("ReportesNomina", "CalculoNomina", new {fechaNomina=item.FechaNomina,estado=item.Estado, id = item.IdCalculoNomina,descripcion=item.Descripcion,decimocuarto=item.DecimoCuartoSueldo,decimotercersueldo=item.DecimoTercerSueldo,FechaInicioDecimoTercero=item.FechaInicioDecimoTercero,FechaFinDecimoTercero=item.FechaFinDecimoTercero,FechaInicioDecimoCuarto=item.FechaInicioDecimoCuarto,FechaFinDecimoCuarto=item.FechaFinDecimoCuarto,perocesoNomina=item.ProcesoNomina.Descripcion})'>
+                                                Ver reportes
+                                            </a>
+                                            @Html.ActionLink(" Descargar archivo", "Download", new { id = item.IdCalculoNomina })|
+                                            @Html.ActionLink(" Ver reportados ", "MostrarExcelBase", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
+                                            @Html.ActionLink(" Cargar reportados", "ReportadoNomina", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" })|
+                                            @Html.ActionLink(" Editar", "Detalle", new { id = item.IdCalculoNomina }, new { onclick = "cargando();" }) |
+                                            @Html.ActionLink(" Eliminar", "Delete", new { id = item.IdCalculoNomina }, new { onclick = "return confirm('Desea eliminar eliminar el registro... ?');" })
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

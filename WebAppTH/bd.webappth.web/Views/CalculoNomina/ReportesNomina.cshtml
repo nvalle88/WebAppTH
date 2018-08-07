@@ -1,0 +1,179 @@
+@model bd.webappth.entidades.Negocio.CalculoNomina
+
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <!-- col -->
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-2">
+            <h1 class="page-title txt-color-blueDark">
+                <!-- PAGE HEADER -->
+                <a class="btn btn-primary"  asp-action="Index"><i class="fa fa-arrow-left"></i> &nbsp; Regresar </a>
+            </h1>
+        </div>
+        <!-- end col -->
+        <!-- right side of the page with the sparkline graphs -->
+        <!-- col -->
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-10">
+
+            <div class="alert alert-block alert-info col col-lg-9">
+                <a class="close" data-dismiss="alert" href="#">X</a>
+                <h4 class="alert-heading"><i class="fa fa-check-square-o"></i> RECUERDE !</h4>
+                <p>
+                    Para visualizar corectamente los reportes  es necesario que usted haya realizado la configuraci&oacute;n total de la n&oacute;mina!
+                </p>
+            </div>
+            <ul id="sparks">
+                <li class="sparks-info">
+
+                </li>
+                <li class="sparks-info">
+                    <h5>Fecha actual: <span class="txt-color-blue"> @DateTime.Today.ToString("dd/MM/yyyy")</span></h5>
+                </li>
+                <li class="sparks-info">
+
+                </li>
+            </ul>
+
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="well padding-12">
+
+                <div class="row">
+                    <div class="col col-md-3 padding-left-0">
+
+                    </div>
+                    <div class="col col-md-6 padding-left-0">
+                        <h3 class="margin-top-0" style="text-align:center"><a href="javascript:void(0);"> Reportes correspondientes a la n&oacute;mina </a><br><small class="font-xs"></small></h3>
+                            <p style="text-align:center">
+                                <h4 style="text-align:center">  <b> @Model.Descripcion</b></h4>
+                            </p>
+                    </div>
+                    <div class="col col-md-3 padding-left-0">
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div style="text-align:center" class="col col-md-3 padding-left-0">
+                        <h5 class="margin-top-0" style="text-align:center"><a href="javascript:void(0);"> D&eacute;cimo tercer sueldo </a><br><small class="font-xs"></small></h5>
+                        <span class="onoffswitch">
+                            <input type="checkbox" disabled="disabled" checked="@Model.DecimoTercerSueldo" name="start_interval" class="onoffswitch-checkbox" id="st11(@Model.DecimoTercerSueldo)">
+                            <label class="onoffswitch-label" for="st11(@Model.DecimoTercerSueldo)">
+                                <span class="onoffswitch-inner" data-swchon-text="Si" data-swchoff-text="No"></span>
+                                <span class="onoffswitch-switch">
+                                </span>
+                            </label>
+                        </span>
+
+                        @if (Model.DecimoTercerSueldo)
+                        {
+                            <p style="text-align:center">
+                                <b> Inicio:@Model.FechaInicioDecimoTercero.Value.Date.ToString("dd/MM/yyyy")</b><br />
+                                <b> Fin:@Model.FechaFinDecimoTercero.Value.Date.ToString("dd/MM/yyyy")</b>
+                            </p>
+                        }
+                    </div>
+                    <div class="col col-md-3 padding-left-0">
+                        <h5 class="margin-top-0" style="text-align:center"><a href="javascript:void(0);">  D&eacute;cimo cuarto sueldo</a><br><small class="font-xs"></small></h5>
+                        <p style="text-align:center">
+                            <b> @Model.DecimoCuartoSueldo</b>
+                        </p>
+                        @if (@Model.DecimoCuartoSueldo != "NINGUNO")
+                        {
+                            <p style="text-align:center">
+                                <b> Inicio:@Model.FechaInicioDecimoCuarto.Value.Date.ToString("dd/MM/yyyy")</b><br />
+                                <b> Fin:@Model.FechaFinDecimoCuarto.Value.Date.ToString("dd/MM/yyyy")</b>
+                            </p>
+                        }
+                    </div>
+                    <div class="col col-md-3 padding-left-0">
+                        <h5 class="margin-top-0" style="text-align:center"><a href="javascript:void(0);">  Proceso</a><br><small class="font-xs"></small></h5>
+                        <p style="text-align:center">
+                            <b> @Model.ProcesoNomina.Descripcion</b>
+                        </p>
+                 
+                    </div>
+
+                    <div class="col col-md-3 padding-left-0">
+                        <h5 class="margin-top-0" style="text-align:center"><a href="javascript:void(0);">  N&oacute;mina</a><br><small class="font-xs"></small></h5>
+                       
+                        <p style="text-align:center">
+                            <b>Fecha: @Model.FechaNomina.Value.Date.ToString("dd/MM/yyyy")</b>
+                        </p>
+                        @if (Model.Estado == 0)
+                        {
+                            <p style="text-align:center">
+                                <b>Estado: Abierto</b>
+                            </p>
+                        }
+                        @if (Model.Estado == 1)
+                        {
+                            <p style="text-align:center">
+                                <b>Estado: Cerrado</b>
+                            </p>
+                        }
+                    </div>
+
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12 padding-left-0">
+                        <h3 class="margin-top-0"><a href='@Url.Action("RepPagoNominaEmpleado", "Report", new { id = Model.IdCalculoNomina})' target="_blank"> Rol de pagos por empleado </a><br><small class="font-xs"><i>Fecha de c&aacute;lculo de la n&oacute;mina: <a href="javascript:void(0);">@Model.FechaNomina.Value.ToString("dd/MM/yyyy")</a></i></small></h3>
+                        <p>
+                            Podr&aacute; visualizar el reporte correspondiente al mes actual del pago de la n&oacute;mina.
+                            <br><br>
+                        </p>
+                        <a class="btn btn-primary" href='@Url.Action("RepPagoNominaEmpleado", "Report", new { id = Model.IdCalculoNomina})' target="_blank"><i class="fa fa-file-o"></i> &nbsp; Ver </a>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12 padding-left-0">
+                        <h3 class="margin-top-0"><a href="javascript:void(0);"> Mums favorite shopping malls in USA </a><br><small class="font-xs"><i>Published by <a href="javascript:void(0);">John Doe</a></i></small></h3>
+                        <p>
+                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+
+                            <br><br>Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.
+                            <br><br>
+                        </p>
+                        <a class="btn btn-primary" href="javascript:void(0);"> Read more </a>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12 padding-left-0">
+                        <h3 class="margin-top-0"><a href="javascript:void(0);"> Best (and Basic) Practices of Mobile Web Design </a><br><small class="font-xs"><i>Published by <a href="javascript:void(0);">John Doe</a></i></small></h3>
+                        <p>
+                            With the plethora of smartphones, mobile phones, and tablets available on the market today, research suggests that mobile devices will soon overtake PCs and laptops in a year. More and more,different platforms are made available for all types of consumers to access the web, even including TVs and gaming consoles.
+
+                            <br><br>
+                            And all this in rapid-fire turnover—new models and technologies quickly coming and going like fashion trends. So much so that any website that is not mobile friendly cannot claim to be user-friendly anymore. Increasingly, web developers and designers utilize fluid layouts allowing users to browse across different platforms.
+
+                            <br><br>
+                        </p>
+                        <a class="btn btn-primary" href="javascript:void(0);"> Read more </a>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+
+                    <div class="col-md-12 padding-left-0">
+                        <h3 class="margin-top-0"><a href="javascript:void(0);"> Responsive Design: Best Practices for Designing a Website </a><br><small class="font-xs"><i>Published by <a href="javascript:void(0);">John Doe</a></i></small></h3>
+                        <p>
+                            The term Responsive design means developing a website in a way that adapts all the computer screen resolutions. Particularly this concept allows a 4 column layout that is 1292px wide, on 1025px wide screen that is divided into 2 columns automatically. It is adaptable for android phones and tablet screens. This designing method is known as “responsive web design”
+
+                            <br><br>
+                            Responsive designing is a different concept from traditional web designing, so the question arises how you should build a good responsive website. Here is a general practices that can help you to build a responsive website design.
+
+                            <br><br>
+                        </p>
+                        <a class="btn btn-primary" href="javascript:void(0);"> Read more </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

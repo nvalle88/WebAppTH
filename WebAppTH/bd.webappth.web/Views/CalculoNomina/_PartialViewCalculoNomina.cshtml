@@ -12,12 +12,10 @@
         </section>
 
         <section class="col col-6">
-            <label>Periodos</label>
+            <label>Fecha:</label>
             <label class="input">
-                <select asp-for="IdPeriodo" class="form-control" asp-items="ViewBag.Periodos">
-                    <option value="0" selected="selected">Seleccione</option>
-                </select>
-                <span asp-validation-for="IdPeriodo" class="text-danger"></span>
+                <input asp-for="FechaNomina" type="text" readonly="readonly" class="datepicker" data-dateformat='dd/mm/yy'>
+                <span asp-validation-for="FechaNomina" class="text-danger"></span>
             </label>
         </section>
 
