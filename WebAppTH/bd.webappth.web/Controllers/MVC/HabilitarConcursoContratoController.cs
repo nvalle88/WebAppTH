@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using bd.webappth.entidades.Negocio;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using bd.webappth.entidades.ViewModels;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -26,14 +27,8 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-        private void InicializarMensaje(string mensaje)
-        {
-            if (mensaje == null)
-            {
-                mensaje = "";
-            }
-            ViewData["Error"] = mensaje;
-        }
+        
+
         public async Task<IActionResult> Create(int id, int vacante)
         {
             var usario = new ViewModelPartidaFase
@@ -43,7 +38,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             };
             await Cargarcombos();
-            InicializarMensaje(null);
+            
             return View(usario);
         }
 
@@ -53,9 +48,10 @@ namespace bd.webappth.web.Controllers.MVC
             var lista = new List<ViewModelPartidaFase>();
             try
             {
-                lista = await apiServicio.Listar<ViewModelPartidaFase>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/HabilitarConcurso/ListarConcursosVacantesContrato");
-                InicializarMensaje(null);
+                lista = await apiServicio.Listar<ViewModelPartidaFase>(
+                    new Uri(WebApp.BaseAddress)
+                    , "api/HabilitarConcurso/ListarConcursosVacantesContrato");
+                
                 return View(lista);
             }
             catch (Exception ex)
@@ -67,31 +63,46 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ViewModelPartidaFase partidasFase)
+        public async Task<IActionResult> Create(ViewModelPartidaFase partidasFaseViewModel)
         {
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
                 await Cargarcombos();
 
-                return View(partidasFase);
+                return View(partidasFaseViewModel);
             }
+
             Response response = new Response();
+
             try
             {
-                if (partidasFase.VacantesCredo <= partidasFase.Vacantes)
+                var partidasFase = new PartidasFase
                 {
-                    response = await apiServicio.InsertarAsync(partidasFase,
-                                                                         new Uri(WebApp.BaseAddress),
-                                                                         "api/HabilitarConcurso/InsertarHabilitarConsurso");
-                    if (response.IsSuccess)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    await Cargarcombos();
+                    IdTipoConcurso = partidasFaseViewModel.IdTipoConcurso,
+                    Contrato = partidasFaseViewModel.Contrato,
+                    IdIndiceOcupacional = partidasFaseViewModel.Idindiceocupacional,
+                    Vacantes = partidasFaseViewModel.VacantesCreadas
+                };
+
+                response = await apiServicio.InsertarAsync(
+                    partidasFase,
+                    new Uri(WebApp.BaseAddress),
+                    "api/HabilitarConcurso/InsertarHabilitarConcurso"
+                );
+
+
+                if (response.IsSuccess)
+                {
+                    return this.RedireccionarMensajeTime(
+                       "HabilitarConcursoContrato",
+                       "Index",
+                       $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
                 }
+
                 await Cargarcombos();
-                ViewData["Error"] = "Numero de Vancante superior";
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Resultado}|{"7000"}";
+
                 return View(partidasFase);
 
             }
@@ -118,7 +129,7 @@ namespace bd.webappth.web.Controllers.MVC
                     if (respuesta.IsSuccess)
                     {
                         await Cargarcombos();
-                        InicializarMensaje(null);
+                        
                         return View(respuesta.Resultado);
                     }
 
@@ -133,19 +144,35 @@ namespace bd.webappth.web.Controllers.MVC
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ViewModelPartidaFase viewModelPartidaFase)
+        public async Task<IActionResult> Edit(ViewModelPartidaFase partidasFaseViewModel)
         {
             try
             {
-                var respuesta = await apiServicio.EditarAsync<Response>(viewModelPartidaFase, new Uri(WebApp.BaseAddress),
-                                                              "api/HabilitarConcurso/Editar");
-                if (respuesta.IsSuccess)
+
+                var partidasFase = new PartidasFase
                 {
-                    InicializarMensaje(null);
-                    return RedirectToAction("Index");
+                    IdPartidasFase = partidasFaseViewModel.IdPartidaFase,
+                    Vacantes = partidasFaseViewModel.VacantesCreadas
+                };
+
+                var response = await apiServicio.EditarAsync<Response>(
+                    partidasFase, 
+                    new Uri(WebApp.BaseAddress),
+                    "api/HabilitarConcurso/Editar"
+                );
+
+                if (response.IsSuccess)
+                {
+                    return this.RedireccionarMensajeTime(
+                       "HabilitarConcursoContrato",
+                       "Index",
+                       $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
                 }
 
-                return BadRequest();
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Resultado}|{"7000"}";
+
+                return View(partidasFaseViewModel);
             }
             catch (Exception ex)
             {

@@ -1,0 +1,827 @@
+@model bd.webappth.entidades.ViewModels.EmpleadoViewModel
+
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<script src='~/js/site.js'></script>
+<script src='~/lib/waitMe/waitMe.min.js'></script>
+@*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
+
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2> Distributivo</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="AgregarADistributivo" asp-controller="Empleados" class="smart-form">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Empleado.IdEmpleado" />
+                                <input type="hidden" asp-for="IndiceOcupacional.IdIndiceOcupacional" id="txt_idIO" />
+
+                                <fieldset>
+
+                                    <div class="row" hidden>
+                                        <input type="text" asp-for="IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida" />
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label>R&eacute;gimen laboral</label>
+                                            <label class="input">
+                                                <select id="IdRegimenLaboral" class="form-control" asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true' asp-for="IndiceOcupacionalModalidadPartida.TipoNombramiento.RelacionLaboral.IdRegimenLaboral" disabled>
+                                                    <option value="0" selected="" disabled="">Seleccione</option>
+                                                </select>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Relaci&oacute;n laboral</label>
+                                            <label class="input">
+                                                <select id="IdRelacionLaboral" class="form-control" asp-items="ViewBag.IdRelacionLaboral" data-msg-required='El campo es requerido' data-rule-required='true' asp-for="IndiceOcupacionalModalidadPartida.TipoNombramiento.IdRelacionLaboral" disabled>
+                                                    <option value="0" selected="" disabled=""></option>
+                                                </select>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Tipo de nombramiento / contrato</label>
+                                            <label class="input">
+                                                <select id="IdTipoNombramiento" asp-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="form-control" asp-items="ViewBag.IdTipoNombramiento" data-msg-required='El campo es requerido' data-rule-required='true' disabled></select>
+                                                <span asp-validation-for="IndiceOcupacionalModalidadPartida.IdTipoNombramiento" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label>Ciudad</label>
+                                            <label class="input">
+                                                <select id="ciudad" class="form-control" asp-items="ViewBag.IdCiudad" asp-for="IndiceOcupacionalModalidadPartida.IndiceOcupacional.Dependencia.Sucursal.IdCiudad" disabled>
+                                                    <option value="0" selected="" disabled="">Seleccione</option>
+                                                </select>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Sucursal</label>
+                                            <label class="input">
+                                                <select id="sucursal" asp-for="Dependencia.Sucursal.IdSucursal" asp-items="ViewBag.IdSucursal" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' disabled></select>
+                                                <span asp-validation-for="Dependencia.Sucursal.IdSucursal" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label>Dependencia</label>
+                                            <label class="input">
+                                                <input class="form-control" type="text" id="dependencia" @if (Model.Dependencia != null) { <text> value="@Model.Dependencia.Nombre" </Text> } disabled />
+
+                                            </label>
+
+                                        </section>
+
+                                        <input class="form-control" type="hidden" id="iddependencia" asp-for="IndiceOcupacional.IdDependencia" disabled />
+                                        <span asp-validation-for="IndiceOcupacional.IdDependencia" class="text-danger"></span>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label>Perfil del puesto</label>
+                                            <select id="manualpuesto" asp-for="IndiceOcupacional.IdManualPuesto" class="form-control" asp-items="ViewBag.IdManualPuesto" data-msg-required='El campo es requerido' data-rule-required='true' disabled></select>
+                                            <span asp-validation-for="IndiceOcupacional.IdManualPuesto" class="text-danger"></span>
+                                        </section>
+                                        <section class="col col-4">
+
+                                            @*<label>Rol Puesto</label>
+                                                <select id="rolpuesto" asp-for="IndiceOcupacional.IdRolPuesto" asp-items="ViewBag.IdRolPuesto" class="form-control"></select>
+                                                <span asp-validation-for="IndiceOcupacional.IdRolPuesto" class="text-danger"></span>*@
+
+                                            <label>Rol del puesto</label>
+                                            <input class="form-control input" id="txt_rolPuesto" value="@if (Model.IndiceOcupacional != null) { <text>@Model.IndiceOcupacional.RolPuesto.Nombre </text>} else { <text></text>}" readonly disabled />
+
+
+                                        </section>
+
+                                        <section class="col col-4">
+                                            <label>Fondo de Financimiento</label>
+                                            <select asp-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdFondoFinanciamiento" disabled>
+                                                <option value="0" selected="" disabled="">Seleccione</option>
+                                            </select>
+                                            <span asp-validation-for="IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento" class="text-danger"></span>
+                                        </section>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <section class="col col-4">
+
+                                            <label>Partida individual / c&oacute;digo</label>
+                                            <input asp-for="IndiceOcupacionalModalidadPartida.NumeroPartidaIndividual" class="form-control input" id="txt_partida" disabled>
+                                        </section>
+
+                                        <section class="col col-8">
+
+                                            @*<label>Escala Grados</label>
+                                                <select id="escalagrados" asp-for="IndiceOcupacional.IdEscalaGrados" asp-items="ViewBag.IdEscala" class="form-control"></select>
+                                                <span asp-validation-for="IndiceOcupacional.IdEscalaGrados" class="text-danger"></span>*@
+
+
+                                            <label>Grupo ocupacional</label>
+                                            <input class="form-control input" id="txt_escalaGrados"
+                                                   value="@if (Model.IndiceOcupacional != null)
+                                                   {
+                                                       var texto = Model.IndiceOcupacional.EscalaGrados.Nombre
+                                                                  + " ( GRADO "
+                                                                  + Model.IndiceOcupacional.EscalaGrados.Grado
+                                                                  + " ) QUE PERCIBE $"
+                                                                  + Model.IndiceOcupacional.EscalaGrados.Remuneracion;
+                                                <text>
+                                                   @texto
+                                                </text>
+                                            } else { <text></text>}"
+                                                   readonly required>
+
+
+                                        </section>
+
+
+
+                                    </div>
+
+                                    <div class="row">
+
+
+                                        <section class="col col-4" id="s_modalidad">
+                                            <label>Modalidad Partida</label>
+                                            <select id="modalidadpartida" asp-for="IndiceOcupacional.IdModalidadPartida" asp-items="ViewBag.IdModalidadPartida" class="form-control" disabled></select>
+                                            <span asp-validation-for="IndiceOcupacional.IdModalidadPartida" class="text-danger"></span>
+                                        </section>
+
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <section class="col col-4">
+                                            <label>Fecha de primer ingreso</label>
+                                            <input asp-for="FechaPrimerIngreso" type="text" class="form-control" data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true' disabled>
+
+                                        </section>
+
+                                        <section class="col col-4">
+                                            <label>Fecha de ingreso</label>
+                                            <input asp-for="IndiceOcupacionalModalidadPartida.Fecha" type="text" class="form-control datepicker " data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true' disabled>
+                                            <span asp-validation-for="IndiceOcupacionalModalidadPartida.Fecha" class="text-danger"></span>
+                                        </section>
+
+                                        <section class="col col-4">
+                                            <label>Fecha fin</label>
+                                            <input asp-for="IndiceOcupacionalModalidadPartida.FechaFin" type="text" class="form-control datepicker " data-dateformat='dd/mm/yy' disabled>
+                                            <span asp-validation-for="IndiceOcupacionalModalidadPartida.FechaFin" class="text-danger"></span>
+                                        </section>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label class="checkbox-inline">
+                                                <label>&iquest; Sobrevalorado ?</label>
+                                                <input type="checkbox" asp-for="SalarioReal" class="form-control" disabled/>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4" id="IdsalarioReal">
+                                            @*<div class="col-sm-2" id="IdsalarioReal">*@
+                                            <label>Salario sobrevalorado</label>
+                                            <input asp-for="IndiceOcupacionalModalidadPartida.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' onKeyPress="return checkIt(event)" disabled>
+                                            @*</div>*@
+                                        </section>
+
+                                        <section class="col col-4">
+                                            <label class="checkbox-inline">
+                                                <label>&iquest; Es jefe de la unidad administrativa?</label>
+                                                <input type="checkbox" asp-for="Empleado.EsJefe" class="form-control" disabled/>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        &nbsp;
+                                    </div>
+                                </fieldset>
+                                <br />
+                                <footer>
+                                    
+                                    <a asp-action="Index" class="btn btn-default">Regresar</a>
+                                </footer>
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+</div>
+<!-- END MAIN CONTENT -->
+@*@{await Html.RenderPartialAsync("Modal");}*@
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+    <script src='~/js/vistasmodales/modal.js'></script>
+
+
+    <script type="text/javascript">
+
+        @{
+            if (Model.IndiceOcupacional != null ) {
+
+                if (Model.IndiceOcupacional.IdModalidadPartida > 0)
+                {
+
+                    <text>
+                        document.getElementById("s_modalidad").style.visibility = "visible";
+                    </text>
+
+                }
+                else {
+                    <text>
+                        document.getElementById("s_modalidad").style.visibility = "hidden";
+                    </text>
+                }
+            }
+        };
+
+        if (!$("#SalarioReal").prop('checked')) {
+            $('#IdsalarioReal').hide();
+
+        }
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $("#SalarioReal").change(function () {
+            if (!$(this).prop('checked')) {
+                $('#IdsalarioReal').hide();
+            } else {
+                $('#IdsalarioReal').show();
+            }
+
+        })
+        $(document).ready(function () {
+
+            //Bootstrap Wizard Validations
+
+            $("#getSucursal").click(function (e) {
+                idsucursal = $("#sucursal").val()
+                });
+
+
+
+            $('.tree > ul').attr('role', 'tree').find('ul').attr('role', 'group');
+            $('.tree').find('li:has(ul)').addClass('parent_li').attr('role', 'treeitem').find(' > span').attr('title', 'Collapse this branch').on('click', function (e) {
+                var children = $(this).parent('li.parent_li').find(' > ul > li');
+                if (children.is(':visible')) {
+                    children.hide('fast');
+                    $(this).attr('title', 'Expand this branch').find(' > i').removeClass().addClass('fa fa-lg fa-plus-circle');
+                } else {
+                    children.show('fast');
+                    $(this).attr('title', 'Collapse this branch').find(' > i').removeClass().addClass('fa fa-lg fa-minus-circle');
+                }
+                e.stopPropagation();
+            });
+
+            var $validator = $("#wizard-1").validate({
+
+                rules: {
+                    IdTipoIdentificacion: {
+                        required: true
+                    },
+                    Identificacion: {
+                        required: true
+                    },
+                    Nombres: {
+                        required: true
+                    },
+                    Apellidos: {
+                        required: true
+                    },
+                    FechaNacimiento: {
+                        required: true
+                    },
+                    Parentesco: {
+                        required: true
+                    },
+                    IdRelacionLaboral: {
+                        required: true
+                    },
+                    paisLugarNacimiento: {
+                        required: true
+                    },
+                    paisLugarSufragio: {
+                        required: true
+                    },
+                    paisLugarPersona: {
+                        required: true
+                    },
+                    provinciaLugarPersona: {
+                        required: true
+                    },
+                    idciudadLugarPersona: {
+                          required: true
+                      }
+                },
+
+                messages: {
+                    IdTipoIdentificacion: "El campo es requerido",
+                    Identificacion: "El campo es requerido",
+                    Nombres: "El campo es requerido",
+                    Apellidos: "El campo es requerido",
+                    Nombres: "El campo es requerido",
+                    FechaNacimiento: "El campo es requerido",
+                    Parentesco: "El campo es requerido",
+                    IdRelacionLaboral: "El campo es requerido",
+                    paisLugarNacimiento: "El campo es requerido",
+                    paisLugarSufragio: "El campo es requerido",
+                    paisLugarPersona: "El campo es requerido",
+                    provinciaLugarPersona: "El campo es requerido",
+                    idciudadLugarPersona: "El campo es requerido",
+                    email: {
+                        required: "We need your email address to contact you",
+                        email: "Your email address must be in the format of name@domain.com"
+                    }
+                },
+
+                submitHandler: function (form) {
+
+                    $.ajax({
+                         url: '@Url.Action("Create")',
+                         type: "POST",
+                         data: $(form).serialize(),
+                         //data: JSON.stringify({ model }),
+                         dataType: 'json',
+                         //contentType: 'application/json',
+                         success: function (data) {
+                                // Inserting html into the result div on success
+                                $('#results').html(data);
+                            },
+                            error: function (jqXHR, text, error) {
+                                // Displaying if there are any errors
+                                $('#result').html(error);
+                            }
+                        });
+                        return false;
+            },
+
+
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function (error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+
+
+            $('#bootstrap-wizard-1').bootstrapWizard({
+                'tabClass': 'form-wizard',
+                'onNext': function (tab, navigation, index) {
+                    var $valid = $("#wizard-1").valid();
+                    if (!$valid) {
+                        $validator.focusInvalid();
+                        return false;
+                    } else {
+                        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+                            'complete');
+                        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+                            .html('<i class="fa fa-check"></i>');
+                    }
+                }
+            });
+
+
+            // fuelux wizard
+            var wizard = $('.wizard').wizard();
+
+            wizard.on('finished', function (e, data) {
+                //$("#fuelux-wizard").submit();
+                //console.log("submitted!");
+                $.smallBox({
+                    title: "Congratulations! Your form was submitted",
+                    content: "<i class='fa fa-clock-o'></i> <i>1 seconds ago...</i>",
+                    color: "#5F895F",
+                    iconSmall: "fa fa-check bounce animated",
+                    timeout: 4000
+                });
+
+            });
+
+
+
+        })
+
+    </script>
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    @*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/themes/default/style.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.5/jstree.min.js"></script>*@
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+           $("#ciudad").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#sucursal").empty();
+            $("#dependencia").val("");
+            $("#manualpuesto").empty();
+            //$("#rolpuesto").empty();
+            //$("#escalagrados").empty();
+
+           $("#txt_escalaGrados").val("");
+           $("#txt_rolPuesto").val("");
+           $("#txt_idIO").val("0");
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarSucursalesPorCiudad", "CeseFunciones")',
+                    dataType: 'json',
+                    data: { idciudad: $("#ciudad").val() },
+                    success: function (data) {
+                        $("#sucursal").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#sucursal").append('<option value="'
+                                + data.idSucursal + '">'
+                                + data.nombre + '</option>');
+
+                        });
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                })
+
+            $("#sucursal").change(function (e) {
+               mostrarLoadingPanel("content", "Cargando...")
+               $("#dependencia").val("");
+               $("#manualpuesto").empty();
+               //$("#rolpuesto").empty();
+               //$("#escalagrados").empty();
+
+                $("#txt_escalaGrados").val("");
+                $("#txt_rolPuesto").val("");
+                $("#txt_idIO").val("0");
+
+               e.preventDefault();
+               var $link = $(this);
+               var title = $link.text();
+               $('#myModal.modal-title').html(title);
+               var url = '@Url.Action("CargarDependencias")?idsucursal='+ $('#sucursal').val() ;
+               if (url.indexOf('#') == 0) {
+                   $('#myModal').modal('show');
+                   $("#myModal").waitMe("hide");
+               }
+               else {
+                   $.get(url, function (data) {
+                       $('#myModal .te').html(data);
+                       $('#myModal').modal();
+                       $('#selectC').select2();
+                       $("#content").waitMe("hide");
+                   }).success(function () { $('input:text:visible:first').focus(); });
+
+               }
+                $("#content").waitMe("hide");
+                return false;
+           })
+
+
+
+
+           $("#manualpuesto").change(function () {
+                 mostrarLoadingPanel("content","Cargando...")
+                //$("#rolpuesto").empty();
+                //$("#escalagrados").empty();
+
+               $("#txt_escalaGrados").val("");
+               $("#txt_rolPuesto").val("");
+               $("#txt_idIO").val("0");
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarRolPuestoporManualPuesto")',
+                    dataType: 'json',
+                    data: {
+                        idmanualpuesto: $("#manualpuesto").val(),
+                        iddependencia: $("#iddependencia").val(),
+                        idrelacionLaboral: $("#IdRelacionLaboral").val()
+                        },
+                    success: function (data) {
+                        
+
+
+                        var textoEscalaGrados = data.indiceOcupacionalViewModel.nombreEscalaGrados
+                            + " ( GRADO "
+                            + data.indiceOcupacionalViewModel.grado
+                            + " ) QUE PERCIBE $"
+                            + data.indiceOcupacionalViewModel.remuneracion;
+
+
+                        $("#txt_escalaGrados").val(textoEscalaGrados);
+                        $("#txt_rolPuesto").val(data.indiceOcupacionalViewModel.nombreRolPuesto);
+                        $("#txt_idIO").val(data.indiceOcupacionalViewModel.idIndiceOcupacional);
+
+
+                        if (document.getElementById("s_modalidad").style.visibility.toString() == "hidden") {
+                            // si contrato entonces :
+
+                            document.getElementById("txt_partida").value = "";
+                            document.getElementById("txt_partida").readOnly = false;
+                        } else {
+                            // si es  no es contrato (nombramiento) entonces:
+
+                            if (data.numeroPartidaIndividual != null && data.numeroPartidaIndividual.length > 0) {
+
+                                document.getElementById("txt_partida").value = data.numeroPartidaIndividual;
+                                document.getElementById("txt_partida").readOnly = true;
+                                document.getElementById("modalidadpartida").selectedIndex = data.idModalidadPartida;
+
+                            } else {
+                                mostrarNotificacionTimer("Aviso", "No existen puestos vacantes, si a\u00FAn desea ingresar el registro, deber\u00E1 ingresar un N\u00FAmero de partida", 30000);
+                                document.getElementById("txt_partida").value = "";
+                                document.getElementById("txt_partida").readOnly = false;
+                            }
+
+
+
+                        }
+
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                        })
+
+
+                         
+
+        $("#IdRegimenLaboral").change(function () {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#IdRelacionLaboral").empty();
+            $("#IdModalidadPartida").empty();
+            $("#IdTipoNombramiento").empty();
+            //$("#rolpuesto").empty();
+            //$("#escalagrados").empty();
+            $("#manualpuesto").empty();
+
+            $("#txt_escalaGrados").val("");
+            $("#txt_rolPuesto").val("");
+            $("#txt_idIO").val("0");
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarRelacionesLaboralesPorRegimen")',
+                    dataType: 'json',
+                    data: { regimen: $("#IdRegimenLaboral").val() },
+                    success: function (data) {
+                        $("#IdRelacionLaboral").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+
+                            $("#IdRelacionLaboral").append('<option value="'
+                                + data.idRelacionLaboral + '">'
+                                + data.nombre + '</option>');
+
+                        });
+
+                        var stt = data[0].nombre + "";
+
+                        if (stt.toUpperCase() == "CONTRATO") {
+
+                            document.getElementById("s_modalidad").style.visibility = "hidden";
+                            document.getElementById("txt_partida").value = "";
+                            document.getElementById("txt_partida").readOnly = false;
+
+                        } else {
+
+                            document.getElementById("s_modalidad").style.visibility = "visible";
+
+                            document.getElementById("txt_partida").value = "";
+                            document.getElementById("txt_partida").readOnly = true;
+                            document.getElementById("modalidadpartida").selectedIndex = data.idModalidadPartida;
+                        }
+
+
+
+                        $("#txt_escalaGrados").val("");
+                        $("#txt_rolPuesto").val("");
+                        $("#txt_idIO").val("0");
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
+
+
+        $("#IdRelacionLaboral").change(function () {
+            mostrarLoadingPanel("content","Cargando tipos de nombramiento...")
+            $("#IdTipoNombramiento").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarTipoNombramientoRelacion")',
+                    dataType: 'json',
+                    data: { relacion: $("#IdRelacionLaboral").val() },
+                    success: function (data) {
+                        $("#IdTipoNombramiento").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#IdTipoNombramiento").append('<option value="'
+                                + data.idTipoNombramiento + '">'
+                                + data.nombre + '</option>');
+
+                        });
+
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+        })
+
+        });
+
+        function isEmpty(obj, propName) {
+            return Object.keys(obj[propName]).length == 0;
+        }
+
+       // Evento que envía una petición Ajax al servidor
+        $('#GuardarForm').click(function(e) {
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("NuevoEmpleado")',
+        content: "application/json; charset=utf-8",
+        dataType: "json",
+        // De la siguiente manera indicamos que del div tome los input.
+        data: $('#wizard-1').serialize(),
+        success: function(d) {
+            if (d.result == 'Redireccionar')
+                window.location = d.url;
+            else {
+                alert(d);
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+              alert('Error!!');
+        }
+    });
+});
+
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        function checkIt(evt) {
+            evt = (evt) ? evt : window.event
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                status = "This field accepts numbers only."
+                return false
+            }
+            status = ""
+            return true
+        }
+        function NumCheck(e, field) {
+            key = e.keyCode ? e.keyCode : e.which
+            // backspace
+            if (key == 8) return true
+            // 0-9
+            if (key > 47 && key < 58) {
+                if (field.value == "") return true
+                regexp = /.[0-9]{10}$/
+                return !(regexp.test(field.value))
+            }
+            // .
+            if (key == 44) {
+                if (field.value == "") return false
+                regexp = /^[0-9]+$/
+                return regexp.test(field.values)
+            }
+            // other key
+            return false
+
+        }
+
+        function handleChange(input) {
+            if (input.value < 0) input.value = 0;
+            if (input.value > 100) input.value = 100;
+        }
+
+
+        function cargarManualesPuesto(dependencia) {
+            mostrarLoadingPanel("content","Cargando...")
+            $("#manualpuesto").empty();
+            //$("#rolpuesto").empty();
+            //$("#escalagrados").empty();
+
+            $("#txt_escalaGrados").val("");
+            $("#txt_rolPuesto").val("");
+            $("#txt_idIO").val("0");
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListarManualPuestoporDependencia")',
+                    dataType: 'json',
+                    data: {
+                        iddependencia: dependencia,
+                        idRelacionLaboral: $("#IdRelacionLaboral").val()
+                    },
+                    success: function (data) {
+
+                        $("#manualpuesto").append('<option value="0" selected="" disabled="">Seleccione</option>');
+                        $.each(data, function (i, data) {
+                            $("#manualpuesto").append('<option value="'
+                                + data.indiceOcupacionalViewModel.idManualPuesto
+ + '">'
+                                + data.indiceOcupacionalViewModel.nombreManualPuesto + '</option>');
+
+                        });
+
+
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+                }
+    </script>
+
+
+
+
+
+
+
+
+
+}
+
