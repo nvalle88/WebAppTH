@@ -20,7 +20,9 @@
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
+
                             <form asp-action="Create" id="checkout-form" class="smart-form" novalidate="novalidate">
+
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <fieldset>
                                     <legend>Datos Personales</legend>
@@ -158,7 +160,8 @@
                                             <label class="input col col-lg-12">Fecha de Nacimiento</label>
                                             <label class="input col col-lg-12">
                                                 <label class="input">
-                                                    <input asp-for="FechaNacimiento" asp- class="form-control">
+                                                    <input asp-for="FechaNacimiento" type="date" class="form-control" data-dateformat='dd/mm/yy' />
+                                                    <!--type="datetime" class="datepicker hasDatepicker" data-dateformat="yy-mm-dd"-->
                                                 </label>
                                                 <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
                                             </label>

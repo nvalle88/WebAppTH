@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using bd.webappth.entidades.Negocio;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using bd.webappth.entidades.ViewModels;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -67,31 +68,53 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ViewModelPartidaFase partidasFase)
+        public async Task<IActionResult> Create(ViewModelPartidaFase partidasFaseViewModel)
         {
             if (!ModelState.IsValid)
             {
-                InicializarMensaje(null);
                 await Cargarcombos();
 
-                return View(partidasFase);
+                return View(partidasFaseViewModel);
             }
+
             Response response = new Response();
+
             try
             {
-                //if (partidasFase.VacantesCredo <= partidasFase.Vacantes)
-                //{
-                response = await apiServicio.InsertarAsync(partidasFase,
-                                                                     new Uri(WebApp.BaseAddress),
-                                                                     "api/HabilitarConcurso/InsertarHabilitarConsurso");
+                if (partidasFaseViewModel.VacantesCreadas > partidasFaseViewModel.Vacantes) {
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ErrorIngresoVacantes}|{"7000"}";
+                    return View(partidasFaseViewModel);
+                }
+
+
+                var partidasFase = new PartidasFase
+                {
+                    IdTipoConcurso = partidasFaseViewModel.IdTipoConcurso,
+                    Contrato = partidasFaseViewModel.Contrato,
+                    IdIndiceOcupacional = partidasFaseViewModel.Idindiceocupacional,
+                    Vacantes = partidasFaseViewModel.VacantesCreadas
+                };
+
+                response = await apiServicio.InsertarAsync(
+                    partidasFase,
+                    new Uri(WebApp.BaseAddress),
+                    "api/HabilitarConcurso/InsertarHabilitarConcurso"
+                );
+
+
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index");
+                    return this.RedireccionarMensajeTime(
+                       "HabilitarConcurso",
+                       "Index",
+                       $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
                 }
+
                 await Cargarcombos();
-                //}
-                await Cargarcombos();
-                //ViewData["Error"] = "Numero de Vancante superior";
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Resultado}|{"7000"}";
+
                 return View(partidasFase);
 
             }
@@ -101,18 +124,20 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Edit(string id)
+
+        public async Task<IActionResult> Edit(string id, int vacantesDisponibles)
         {
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    var usario = new ViewModelPartidaFase
+                    var modelo = new ViewModelPartidaFase
                     {
                         IdPartidaFase = Convert.ToInt32(id),
+                        Vacantes = vacantesDisponibles
 
                     };
-                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(usario, new Uri(WebApp.BaseAddress),
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(modelo, new Uri(WebApp.BaseAddress),
                                                                   "api/HabilitarConcurso/Edit");
                     respuesta.Resultado = JsonConvert.DeserializeObject<ViewModelPartidaFase>(respuesta.Resultado.ToString());
                     if (respuesta.IsSuccess)
@@ -131,21 +156,46 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ViewModelPartidaFase viewModelPartidaFase)
+        public async Task<IActionResult> Edit(ViewModelPartidaFase partidasFaseViewModel)
         {
             try
             {
-                var respuesta = await apiServicio.EditarAsync<Response>(viewModelPartidaFase, new Uri(WebApp.BaseAddress),
-                                                              "api/HabilitarConcurso/Editar");
-                if (respuesta.IsSuccess)
+                if (partidasFaseViewModel.VacantesCreadas > partidasFaseViewModel.Vacantes)
                 {
-                    InicializarMensaje(null);
-                    return RedirectToAction("Index");
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ErrorIngresoVacantes}|{"7000"}";
+                    return View(partidasFaseViewModel);
                 }
 
-                return BadRequest();
+
+                var partidasFase = new PartidasFase
+                {
+                    IdPartidasFase = partidasFaseViewModel.IdPartidaFase,
+                    Vacantes = partidasFaseViewModel.VacantesCreadas
+                };
+
+                var response = await apiServicio.EditarAsync<Response>(
+                    partidasFase,
+                    new Uri(WebApp.BaseAddress),
+                    "api/HabilitarConcurso/Editar"
+                );
+
+                if (response.IsSuccess)
+                {
+                    return this.RedireccionarMensajeTime(
+                       "HabilitarConcurso",
+                       "Index",
+                       $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
+                }
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Resultado}|{"7000"}";
+
+                return View(partidasFaseViewModel);
             }
             catch (Exception ex)
             {

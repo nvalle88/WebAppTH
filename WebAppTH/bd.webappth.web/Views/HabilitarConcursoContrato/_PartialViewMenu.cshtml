@@ -7,20 +7,20 @@
 <div class="btn-group btn-group-justified">
     @if (Model.OpcionMenu == 0)
     {
-        <a asp-action="Index" asp-controller="HabilitarConcurso" style="background-color:#3276b1;color:white;" class="btn btn-default">Nombramiento</a>
+        <a asp-action="Index" asp-controller="HabilitarConcurso" style="background-color:#3276b1;color:white;" class="btn btn-default">&nbsp;<br />Nombramiento<br />&nbsp;</a>
     }
     else
     {
-        <a asp-action="Index" asp-controller="HabilitarConcurso" class="btn btn-default"> Nombramiento </a>
+        <a asp-action="Index" asp-controller="HabilitarConcurso" class="btn btn-default"> &nbsp;<br />Nombramiento<br />&nbsp; </a>
     }
     @if (Model.OpcionMenu == 1)
     {
-        <a asp-action="Index" asp-controller="HabilitarConcursoContrato" style="background-color:#3276b1;color:white;" class="btn btn-default">Contrato </a>
+        <a asp-action="Index" asp-controller="HabilitarConcursoContrato" style="background-color:#3276b1;color:white;" class="btn btn-default">&nbsp;<br />Contrato<br />&nbsp; </a>
 
     }
     else
     {
-        <a asp-action="Index" asp-controller="HabilitarConcursoContrato" class="btn btn-default">Contrato </a>
+        <a asp-action="Index" asp-controller="HabilitarConcursoContrato" class="btn btn-default">&nbsp;<br />Contrato<br />&nbsp; </a>
     }
 
 

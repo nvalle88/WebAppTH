@@ -9,18 +9,20 @@ namespace bd.webappth.entidades.ViewModels
     public class ViewModelPartidaFase
     {
         public int? idescalagrados { get; set; }
-        [Display(Name = "Puesto institucional:")]
+        [Display(Name = "Puesto institucional")]
         public string PuestoInstitucional { get; set; }
-        [Display(Name = "Grupo ocupacional:")]
+        [Display(Name = "Grupo ocupacional")]
         public string grupoOcupacional { get; set; }
         public int Idindiceocupacional { get; set; }
+
+        [Display(Name = "Tipo relación")]
         public int IdTipoConcurso { get; set; }
         public int IdPartidaFase { get; set; }
-        [Display(Name = "Estado:")]
+        [Display(Name = "Estado")]
         public int estado { get; set; }
         public int Vacantes { get; set; }
-        [Display(Name = "Vacantes creadas:")]
-        public int VacantesCredo { get; set; }
+        [Display(Name = "Vacantes creadas")]
+        public int VacantesCreadas { get; set; }
         public bool Contrato { get; set; }
         public int OpcionMenu { get; set; }
     }
