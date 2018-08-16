@@ -39,10 +39,6 @@ namespace bd.webappth.web
         // This method gets called by the runtime. Use this method to add services to the container.
         public async void ConfigureServices(IServiceCollection services)
         {
-
-            
-
-
             var appSettings = Configuration.GetSection("AppSettings");
             //services.AddApplicationInsightsTelemetry(Configuration);
 
@@ -82,11 +78,13 @@ namespace bd.webappth.web
             services.AddSingleton<IConstantesNomina, ConstanteNominaServicio>();
             services.AddSingleton<IFuncionesNomina, FuncionesNominaServicio>();
             services.AddSingleton<IConjuntoNomina, ConjuntoNominaServicio>();
+            services.AddSingleton<IReporteServicio, ReporteServicio>();
 
             services.AddSingleton<IAuthorizationHandler, RolesHandler>();
+            services.AddSingleton<IEncriptarServicio, EncriptarServicio>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUploadFileService, UploadFileService>();
-
+            
 
 
             //services.AddMvc().Services.AddAuthorization(options =>
@@ -122,6 +120,8 @@ namespace bd.webappth.web
             }
             ReportConfig.ReportServerUrl = Configuration.GetSection("ReportServerUrl").Value;
             ReportConfig.ReportFolderPath = Configuration.GetSection("ReportFolderPath").Value;
+            ReportConfig.ProjectReportUrl = Configuration.GetSection("ProjectReportUrl").Value;
+
             ReportConfig.CompletePath = string.Format("{0}{1}", ReportConfig.ReportServerUrl, ReportConfig.ReportFolderPath);
 
             ///--------------------------------------
