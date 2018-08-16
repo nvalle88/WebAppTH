@@ -35,6 +35,12 @@ namespace bd.webappth.entidades.ViewModels
         [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdSexo { get; set; }
 
+        [Display(Name = "Fondo de reserva")]
+        public bool FondosReservas { get; set; }
+
+        [Display(Name = "Décimos")]
+        public bool AcumulaDecimos { get; set; }
+
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Género")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]

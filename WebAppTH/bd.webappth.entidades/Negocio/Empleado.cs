@@ -18,6 +18,8 @@ namespace bd.webappth.entidades.Negocio
 
         public bool FondosReservas { get; set; }
 
+        public bool AcumulaDecimos { get; set; }
+
         public bool DeclaracionJurada { get; set; }
 
         public string IngresosOtraActividad { get; set; }
