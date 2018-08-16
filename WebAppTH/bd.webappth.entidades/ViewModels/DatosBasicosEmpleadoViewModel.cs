@@ -177,45 +177,16 @@ namespace bd.webappth.entidades.ViewModels
             if (IdTipoIdentificacion == 1)
             {
                 var cad = Identificacion.ToString();
-                var total = 0;
                 var longitud = cad.Length;
                 var longcheck = longitud - 1;
 
-                if (cad != "" && longitud == 10)
-                {
-                    for (int i = 0; i < longcheck; i++)
-                    {
-                        if (i % 2 == 0)
-                        {
-                            var aux = int.Parse(cad.Substring(i, 1)) * 2;
-                            if (aux > 9) { 
-                                aux -= 9;
-                            }
-                            total += aux;
-                            
-                        }
-                        else
-                        {
-                            total += int.Parse(cad.Substring(i, 1)); // parseInt o concatenará en lugar de sumar
-                        }
-                    }
-
-                    total = total % 10;
-                    total = 10 - total;
-
-                    if (int.Parse(cad.Substring(longitud-1, 1)) != total)
-                    {
-                        yield return
-                      new ValidationResult(errorMessage: "La cédula no es válida",
-                                           memberNames: new[] { "Identificacion" });
-                    }
-                }
-                else
+                if (cad != "" && longitud != 10)
                 {
                     yield return
-                     new ValidationResult(errorMessage: "La cédula no es válida",
-                                          memberNames: new[] { "Identificacion" });
+                       new ValidationResult(errorMessage: "La cédula no es válida",
+                                            memberNames: new[] { "Identificacion" });
                 }
+               
             }
 
         }
