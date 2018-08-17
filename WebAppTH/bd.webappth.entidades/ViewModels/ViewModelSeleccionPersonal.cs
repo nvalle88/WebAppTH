@@ -31,7 +31,7 @@ namespace bd.webappth.entidades.ViewModels
         [Display(Name = "Remuneración")]
         public decimal? Remuneracion { get; set; }
         public int OpcionMenu { get; set; }
-
+        public int IdCandidatoConcurso { get; set; }
 
 
 
@@ -52,7 +52,8 @@ namespace bd.webappth.entidades.ViewModels
         public int IdAreaConocimiento { get; set; }
         public string areaconocimiento { get; set; }
         public int IdTitulo { get; set; }
-        [Display(Name = "Instituación:")]
+
+        [Display(Name = "Institución:")]
         public string Instituacion { get; set; }
         [Display(Name = "Cargo:")]
         public string Cargo { get; set; }

@@ -117,8 +117,8 @@
                                         </td>
 
                                         <td>
-                                            @Html.ActionLink("Seleccionar", "Create", "DeclaracionPatrimonioPersonal", new { idEmpleado = item.IdEmpleado}, new { onclick = "cargando()" })
-                                            
+                                            @*@Html.ActionLink("Seleccionar", "Create", "DeclaracionPatrimonioPersonal", new { idEmpleado = item.IdEmpleado }, new { onclick = "cargando()" })*@
+                                            @Html.ActionLink("Historial", "Historial", "DeclaracionPatrimonioPersonal", new { idEmpleado = item.IdEmpleado }, new { onclick = "cargando()" })
 
 
                                         </td>

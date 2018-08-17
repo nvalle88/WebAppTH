@@ -94,5 +94,7 @@ namespace bd.webappth.entidades.Utils
         public static object ErrorReingresarIdentificacion { get { return "Ha ocurrido un error, por favor reingrese la identificacion"; } }
 
         public static object ErrorIngresoVacantes { get { return "El número de vacantes solicitado es mayor que el disponible"; } }
+
+        public static object ErrorCandidatoNoSeleccionado { get { return "Primero debe ingresar un candidato"; } }
     }
 }

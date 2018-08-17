@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.ViewModels.ListaEmpleadoViewModel>
+@model bd.webappth.entidades.ViewModels.DeclaracionPatrimonioPersonalHistoricoViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -8,34 +8,61 @@
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <!-- MAIN CONTENT -->
 <div id="content">
-    <div class="col col-10">
 
-        @if (@ViewData["Error"].ToString() != "")
+    <div class="row">
 
-        {
+        <article class="col-lg-12">
 
-            <div class="col-lg-12">
+            <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
 
-                <div class="alert alert-block alert-dismissable">
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                    <h2>Informaci&oacute;n</h2>
+                </header>
 
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                <div>
 
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                    <div class="widget-body no-padding">
 
-                    <p>
+                        <section class="col col-lg-12">&nbsp;</section>
 
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                        <section class="col col-lg-12">
 
-                    </p>
+                            <div class="col-lg-8">
+                                <input type="text" value="NOMBRES:@("  ") @Model.NombrePersona @Model.ApellidoPersona" class="form-control" disabled />
+                            </div>
 
+
+                        </section>
+
+                    </div>
                 </div>
-
             </div>
-
-        }
+        </article>
     </div>
 
+
     <p></p>
+
+    <a asp-action="Index" onclick="cargando()">
+        <button type="button" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-arrow-left"></i>
+            </span>Regresar
+
+        </button>
+    </a>
+
+    <a asp-action="Add" asp-route-idEmpleado="@Model.IdEmpleado" onclick="cargando()">
+        <button type="button" class="btn btn-labeled btn-default">
+            <span class="btn-label">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>Nuevo
+
+        </button>
+    </a>
+
+    <p> </p>
 
     <!-- widget grid -->
     <section id="" class="">
@@ -74,74 +101,77 @@
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
+                                        <th data-hide="phone">
+                                            Declaraciones
+                                        </th>
+
+
+                                        @*<th data-class="expand">
+            @Html.DisplayNameFor(model => model.ListaDeclaracionPatrimonioPersonal.FirstOrDefault().TotalEfectivo)
+        </th>
+
+        <th data-class="expand">
+            @Html.DisplayNameFor(model => model.ListaDeclaracionPatrimonioPersonal.FirstOrDefault().TotalPasivo)
+        </th>
+
+        <th data-hide="phone">
+            @Html.DisplayNameFor(model => model.ListaDeclaracionPatrimonioPersonal.FirstOrDefault().TotalPatrimonio)
+        </th>*@
+
+                                        <th data-hide="phone">
+                                            Comparativo
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.ListaDeclaracionPatrimonioPersonal.FirstOrDefault().FechaDeclaracion)
+                                        </th>
+
                                         <th data-class="expand">
-                                            Identificaci&oacute;n
-                                        </th>
-
-                                        <th data-class="expand">
-                                            Nombres y Apellidos
-                                        </th>
-
-                                        <th data-hide="phone">
-                                            Relaci&oacute;n laboral
-                                        </th>
-
-                                        <th data-hide="phone">
-                                            &Aacute;rea administrativa
-                                        </th>
-
-                                        <th data-hide="phone">
-                                            Sucursal
-                                        </th>
-
-                                        <th data-hide="phone">
-                                            Cargo
-                                        </th>
-
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model=>model.FirstOrDefault().CodigoEmpleado)
-                                        </th>
-
-                                        <th>
                                             <i class="fa fa-cog "></i>
                                             Opciones
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.ListaDeclaracionPatrimonioPersonal)
                                     {
                                         <tr>
+
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
+                                                @(item.FechaDeclaracion.Year) - @(item.FechaDeclaracion.Year - 1)
+                                            </td>
+
+                                            @*<td>
+                                                @Html.DisplayFor(modelItem => item.TotalEfectivo)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreApellido)
-                                            </td>
-                                            
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.NombreRelacionLaboral)
+                                                @Html.DisplayFor(modelItem => item.TotalPasivo)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Dependencia)
+                                                @Html.DisplayFor(modelItem => item.TotalPatrimonio)
+                                            </td>*@
+
+                                            <td>
+                                                $@Html.DisplayFor(modelItem => item.Comparativo)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreSucursal)
+                                                @Html.DisplayFor(modelItem => item.FechaDeclaracion)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ManualPuesto)
-                                            </td>
+                                                @Html.ActionLink("Editar", "Edit", "DeclaracionPatrimonioPersonal",
+                                                    new { idDeclaracionPatrimonio = item.IdDeclaracionPatrimonioPersonal, idEmpleado = item.IdEmpleado },
+                                                    new { onclick = "cargando()" }
+                                                ) |
 
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CodigoEmpleado)
-                                            </td>
+                                                @Html.ActionLink("Eliminar", "Delete", "DeclaracionPatrimonioPersonal",
+                                                    new { id = item.IdDeclaracionPatrimonioPersonal, idEmpleado = item.IdEmpleado },
+                                                    new { onclick = "return confirm('Desea eliminar el registro ?');" }
+                                                )
 
-                                            <td>
-                                                @Html.ActionLink("Detalle", "CheckListDocumentosEmpleado", new { identificacion = item.Identificacion},new { onclick = "cargando()" } )
                                             </td>
                                         </tr>
                                     }

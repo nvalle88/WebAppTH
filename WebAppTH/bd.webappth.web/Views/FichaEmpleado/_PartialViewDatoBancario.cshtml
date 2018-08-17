@@ -20,11 +20,14 @@
             </label>
         </section>
         <section class="col-col-4">
-            <label>&nbsp;&nbsp;</label>
-            <label class="checkbox-inline">
-                <label>&iquest; Es cuenta de ahorros ?</label>
-                <input type="checkbox" asp-for="Ahorros" class="form-control" />
-            </label>
+                
+                <label>Tipo de cuenta</label><br />
+                <!--<input type="checkbox" asp-for="Ahorros" class="form-control" />-->
+                <label>
+                    Cuenta de ahorros @Html.RadioButtonFor(model => model.Ahorros, "true")
+                    &nbsp;&nbsp;
+                    Cuenta corriente @Html.RadioButtonFor(model => model.Ahorros, "false")
+                </label>
         </section>
         @*<div class="col-sm-4">
             <div class="form-group">

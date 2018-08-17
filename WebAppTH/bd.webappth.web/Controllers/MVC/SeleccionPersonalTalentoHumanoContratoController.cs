@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using bd.webappth.entidades.Constantes;
 using Microsoft.AspNetCore.Http;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -30,6 +31,250 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
+
+
+        public async Task<IActionResult> Index(string mensaje)
+        {
+            var lista = new List<ViewModelSeleccionPersonal>();
+            try
+            {
+                lista = await apiServicio.Listar<ViewModelSeleccionPersonal>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/SeleccionPersonalTalentoHumanoContrato/ListarPuestoVacantesSeleccionPersonal"
+                );
+
+                SetCabecera(0,0,0,0);
+
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                mensaje = Mensaje.Excepcion;
+                return View(lista);
+            }
+        }
+
+
+        public async Task<IActionResult> Create(int id, int partida)
+        {
+            var cabecera = getCabecera();
+
+            if (cabecera.IdPartidaFase == 0 || cabecera.iddependecia == 0) {
+                SetCabecera(partida,0,0,id);
+
+                cabecera = getCabecera();
+            }
+            
+            try
+            {
+                var modelo = new ViewModelSeleccionPersonal
+                {
+                    IdPartidaFase = cabecera.IdPartidaFase,
+                    IdCandidato = cabecera.IdCandidato,
+                    IdCandidatoConcurso = cabecera.IdCandidatoConcurso,
+                    iddependecia = id
+
+                };
+
+                var modeloRespuesta = await apiServicio.ObtenerElementoAsync1<ViewModelSeleccionPersonal>(
+                    modelo, 
+                    new Uri(WebApp.BaseAddress),
+                    "api/SeleccionPersonalTalentoHumanoContrato/ObtenerViewModelSeleccionPersonal"
+                );
+                
+
+                return View(modeloRespuesta);
+              
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> CreateDatosPersonales(int partida)
+        {
+            try
+            {
+                var cabecera = getCabecera();
+
+                var usuario = new ViewModelSeleccionPersonal
+                {
+                    IdPartidaFase = cabecera.IdPartidaFase,
+                    IdCandidato = cabecera.IdCandidato,
+                    IdCandidatoConcurso = cabecera.IdCandidatoConcurso,
+                };
+
+                return View(usuario);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateDatosPersonales(ViewModelSeleccionPersonal viewModelSeleccionPersona)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(viewModelSeleccionPersona);
+                }
+
+
+                var cabecera = getCabecera();
+
+                var response = await apiServicio.InsertarAsync(
+                        viewModelSeleccionPersona, new Uri(WebApp.BaseAddress),
+                        "api/SeleccionPersonalTalentoHumanoContrato/InsertarCandidato");
+
+
+                if (response.IsSuccess)
+                {
+                    var modeloRespuesta = JsonConvert.DeserializeObject<ViewModelSeleccionPersonal>(response.Resultado.ToString());
+                    
+
+                    SetCabecera(viewModelSeleccionPersona.IdPartidaFase,modeloRespuesta.IdCandidato, modeloRespuesta.IdCandidatoConcurso, (int) cabecera.iddependecia);
+
+                    
+                    //return RedirectToAction("IndexInstruccionFormal", idCandidato);
+
+                    return this.RedireccionarMensajeTime(
+                           "SeleccionPersonalTalentoHumanoContrato",
+                           "IndexInstruccionFormal",
+                           new { idCandidato = modeloRespuesta.IdCandidato },
+                           $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                        );
+
+                }
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ExisteEmpleado}|{"10000"}";
+                
+                return View(viewModelSeleccionPersona);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
+        public async Task<IActionResult> IndexInstruccionFormal(int idCandidato)
+        {
+            try
+            {
+                var cabecera = getCabecera();
+
+                if (cabecera.IdCandidato == 0) {
+
+                    return this.RedireccionarMensajeTime(
+                           "SeleccionPersonalTalentoHumanoContrato",
+                           "CreateDatosPersonales",
+                           new { partida = cabecera.IdPartidaFase},
+                           $"{Mensaje.Aviso}|{Mensaje.ErrorCandidatoNoSeleccionado}|{"7000"}"
+                        );
+                }
+
+                /*
+                var usuario = new ViewModelSeleccionPersonal
+                {
+                    iddependecia = candidato.iddependecia,
+                    IdPartidaFase = candidato.IdPartidaFase,
+                    IdCandidato = candidato.IdCandidato
+
+                };
+                var lista = new List<CandidatoEstudio>();
+                lista = await apiServicio.ObtenerElementoAsync1<List<CandidatoEstudio>>(usuario, new Uri(WebApp.BaseAddress)
+                                                                    , "api/Candidatos/ListarEstudiosporCandidato");
+                */
+                var lista = new List<CandidatoEstudio>();
+
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> IndexExperiencia(int partida, int idCandidato)
+        {
+            /*
+            var usuario = new ViewModelSeleccionPersonal
+            {
+                iddependecia = candidato.iddependecia,
+                IdPartidaFase = candidato.IdPartidaFase,
+                IdCandidato = candidato.IdCandidato
+
+            };
+            var lista = new List<CandidatoTrayectoriaLaboral>();
+            lista = await apiServicio.ObtenerElementoAsync1<List<CandidatoTrayectoriaLaboral>>(usuario, new Uri(WebApp.BaseAddress)
+                                                                , "api/Candidatos/ListarTrayectoriasLaborales");
+            return View(lista);
+            */
+
+            try
+            {
+                var cabecera = getCabecera();
+
+                if (cabecera.IdCandidato == 0) {
+
+                    return this.RedireccionarMensajeTime(
+                           "SeleccionPersonalTalentoHumanoContrato",
+                           "CreateDatosPersonales",
+                           new { partida = cabecera.IdPartidaFase },
+                           $"{Mensaje.Aviso}|{Mensaje.ErrorCandidatoNoSeleccionado}|{"7000"}"
+                        );
+
+                }
+
+
+                var lista = new List<CandidatoTrayectoriaLaboral>();
+                return View(lista);
+            }
+            catch (Exception){
+
+                return BadRequest();
+            }
+        }
+
+
+        public async Task<IActionResult> IndexCandidatosPostulados(int partida)
+        {
+            try
+            {
+
+                var usuario = new ViewModelSeleccionPersonal
+                {
+                    IdPartidaFase = partida
+
+                };
+                var response = await apiServicio.ObtenerElementoAsync1<ViewModelSeleccionPersonal>(
+                    usuario,
+                    new Uri(WebApp.BaseAddress)
+                    , "api/SeleccionPersonalTalentoHumanoContrato/ListaCanditadoPostulados");
+
+                return View(response);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+
+
+
+        /*
         private void InicializarMensaje(string mensaje)
         {
             if (mensaje == null)
@@ -38,6 +283,8 @@ namespace bd.webappth.web.Controllers.MVC
             }
             ViewData["Error"] = mensaje;
         }
+
+        
         [HttpPost]
         public async Task<JsonResult> BusquedaCandidatos(string identificacion)
         {
@@ -53,84 +300,14 @@ namespace bd.webappth.web.Controllers.MVC
             }
             return Json(listaAreasConocimientos);
         }
-        public async Task<IActionResult> IndexCandidatosPostulados(int partida)
-        {
-            try
-            {
-                InicializarMensaje(null);
 
-                var usuario = new ViewModelSeleccionPersonal
-                {
-                    IdPartidaFase = partida
 
-                };
-                var response = await apiServicio.ObtenerElementoAsync1<ViewModelSeleccionPersonal>(usuario, new Uri(WebApp.BaseAddress)
-                                                                         , "api/SeleccionPersonalTalentoHumanoContrato/ListaCanditadoPostulados");
+        
 
-                return View(response);
+        
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
 
-        public async Task<IActionResult> Index(string mensaje)
-        {
-            InicializarMensaje(mensaje);
-            var lista = new List<ViewModelSeleccionPersonal>();
-            try
-            {
-                lista = await apiServicio.Listar<ViewModelSeleccionPersonal>(new Uri(WebApp.BaseAddress),
-                                                                    "api/SeleccionPersonalTalentoHumanoContrato/ListarPuestoVacantesSeleccionPersonal");
-
-                InicializarMensaje(null);
-                HttpContext.Session.SetInt32(Constantes.idParidaFaseConcursoSession, 0);
-                HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, 0);
-                HttpContext.Session.SetInt32(Constantes.idDependeciaConcursoSession, 0);
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                mensaje = Mensaje.Excepcion;
-                return View(lista);
-            }
-        }
-        public async Task<IActionResult> Create(int id, int partida)
-        {
-            if (HttpContext.Session.GetInt32(Constantes.idDependeciaConcursoSession) != id && HttpContext.Session.GetInt32(Constantes.idParidaFaseConcursoSession) != partida)
-            {
-                HttpContext.Session.SetInt32(Constantes.idParidaFaseConcursoSession, partida);
-                HttpContext.Session.SetInt32(Constantes.idDependeciaConcursoSession, id);
-                HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, 0);
-            }
-
-            var candidato = ObtenerCandidato();
-            try
-            {
-                var usuario = new ViewModelSeleccionPersonal
-                {
-                    IdPartidaFase = candidato.IdPartidaFase,
-                    iddependecia = candidato.iddependecia
-
-                };
-                var postular = await obtenercabecera(candidato);
-                if (postular != null)
-                {
-                    InicializarMensaje(null);
-                    return View(postular);
-                }
-
-                ViewData["Error"] = candidato.ToString();
-                return RedirectToAction("Index");
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
+        
 
         public async Task<IActionResult> CreateCandidatoConcurso()
         {
@@ -147,7 +324,7 @@ namespace bd.webappth.web.Controllers.MVC
                 var response = await apiServicio.InsertarAsync(usuario, new Uri(WebApp.BaseAddress), "api/SeleccionPersonalTalentoHumanoContrato/InsertarCandidatoConcurso");
                 if (response.IsSuccess)
                 {
-                    HttpContext.Session.SetInt32(Constantes.idParidaFaseConcursoSession, 0);
+                    HttpContext.Session.SetInt32(Constantes.idPartidaFaseConcursoSession, 0);
                     HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, 0);
                     HttpContext.Session.SetInt32(Constantes.idDependeciaConcursoSession, 0);
                     return RedirectToAction("Index");
@@ -160,86 +337,14 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        public async Task<IActionResult> CreateDatosPersonales(int partida)
-        {
-            try
-            {
-                var candidato = ObtenerCandidato();
-                InicializarMensaje(null);
-                var usuario = new ViewModelSeleccionPersonal
-                {
-                    iddependecia = candidato.iddependecia,
-                    IdPartidaFase = candidato.IdPartidaFase
-                };
-                return View(usuario);
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateDatosPersonales(ViewModelSeleccionPersonal viewModelSeleccionPersona)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    InicializarMensaje(null);
-                    var postular = await obtenercabecera(viewModelSeleccionPersona);
-                    return View(postular);
-                }
-                else
-                {
-                    var response = await apiServicio.InsertarAsync(viewModelSeleccionPersona, new Uri(WebApp.BaseAddress), "api/SeleccionPersonalTalentoHumanoContrato/InsertarCandidato");
-                    if (response.IsSuccess)
-                    {
-                        var candidato = JsonConvert.DeserializeObject<ViewModelSeleccionPersonal>(response.Resultado.ToString());
-                        int idCandidato = candidato.IdCandidato;
-                        HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, idCandidato);
-                        return RedirectToAction("IndexInstruccionFormal", idCandidato);
-                    }
-                    ViewData["Error"] = Mensaje.ExisteEmpleado;
-                    return View(viewModelSeleccionPersona);
-                }
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
-        }
+        
 
-        public async Task<IActionResult> IndexInstruccionFormal(int idCandidato)
-        {
-            try
-            {
-                //if (HttpContext.Session.GetInt32(Constantes.idCandidatoConcursoSession) != idCandidato)
-                //{
-                //    HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, idCandidato);
-                //   // HttpContext.Session.SetInt32(Constantes.idParidaFaseConcursoSession, partida);
-                //}
-                InicializarMensaje(null);
-                var candidato = ObtenerCandidato();
-                var usuario = new ViewModelSeleccionPersonal
-                {
-                    iddependecia = candidato.iddependecia,
-                    IdPartidaFase = candidato.IdPartidaFase,
-                    IdCandidato = candidato.IdCandidato
 
-                };
-                var lista = new List<CandidatoEstudio>();
-                lista = await apiServicio.ObtenerElementoAsync1<List<CandidatoEstudio>>(usuario, new Uri(WebApp.BaseAddress)
-                                                                    , "api/Candidatos/ListarEstudiosporCandidato");
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
+        
+
+        
         public async Task<IActionResult> CreateInstrucionFormal(int id)
         {
             try
@@ -295,22 +400,7 @@ namespace bd.webappth.web.Controllers.MVC
                 throw;
             }
         }
-        public async Task<IActionResult> IndexExperiencia(int partida, int idCandidato)
-        {
-            InicializarMensaje(null);
-            var candidato = ObtenerCandidato();
-            var usuario = new ViewModelSeleccionPersonal
-            {
-                iddependecia = candidato.iddependecia,
-                IdPartidaFase = candidato.IdPartidaFase,
-                IdCandidato = candidato.IdCandidato
-
-            };
-            var lista = new List<CandidatoTrayectoriaLaboral>();
-            lista = await apiServicio.ObtenerElementoAsync1<List<CandidatoTrayectoriaLaboral>>(usuario, new Uri(WebApp.BaseAddress)
-                                                                , "api/Candidatos/ListarTrayectoriasLaborales");
-            return View(lista);
-        }
+        
         public async Task<IActionResult> CreateExperiencia(int partida)
         {
             try
@@ -434,28 +524,60 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+        */
 
+        /*
         public async Task<ViewModelSeleccionPersonal> obtenercabecera(ViewModelSeleccionPersonal viewModelSeleccionPersonal)
         {
             var response = await apiServicio.ObtenerElementoAsync1<ViewModelSeleccionPersonal>(viewModelSeleccionPersonal, new Uri(WebApp.BaseAddress)
                                                                    , "api/SeleccionPersonalTalentoHumanoContrato/ObtenerEncabezadopostulante");
-            //if (response!= null)
-            //{
-            //    var idependecia =response.iddependecia;
-
-            //}
+            
             return response;
             
         }
-        public ViewModelSeleccionPersonal ObtenerCandidato()
+        */
+
+        public ViewModelSeleccionPersonal getCabecera()
         {
-            var candidato = new ViewModelSeleccionPersonal
+            var modelo = new ViewModelSeleccionPersonal
             {
-                iddependecia = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idDependeciaConcursoSession)),
-                IdPartidaFase = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idParidaFaseConcursoSession)),
-                IdCandidato = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idCandidatoConcursoSession)),
+                IdPartidaFase = 0,
+                IdCandidato = 0,
+                IdCandidatoConcurso = 0,
+                iddependecia = 0
             };
-            return candidato;
+
+            try {
+                
+                modelo = new ViewModelSeleccionPersonal
+                {
+                    IdPartidaFase = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idPartidaFaseConcursoSession)),
+                    IdCandidato = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idCandidatoSession)),
+                    IdCandidatoConcurso = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idCandidatoConcursoSession)),
+                    iddependecia = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idDependeciaConcursoSession))
+                };
+
+            } catch (Exception ex)
+            {
+
+                
+            }
+
+            
+            return modelo;
         }
+
+
+        public void SetCabecera(int IdPartidaFase, int IdCandidato, int IdCandidatoConcurso,int IdDependencia)
+        {
+
+            HttpContext.Session.SetInt32(Constantes.idPartidaFaseConcursoSession, IdPartidaFase);
+            HttpContext.Session.SetInt32(Constantes.idCandidatoSession, IdCandidato);
+            HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, IdCandidatoConcurso);
+            HttpContext.Session.SetInt32(Constantes.idDependeciaConcursoSession, IdDependencia);
+
+        }
+
+
     }
 }

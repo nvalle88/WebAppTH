@@ -14,10 +14,10 @@ namespace bd.webappth.entidades.Negocio
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaGraduado { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        //[Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Observaciones:")]
         [DataType(DataType.MultilineText)]
-        [StringLength(500, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
+        //[StringLength(500, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string Observaciones { get; set; }
 
         public string NoSenescyt { get; set; }
@@ -34,5 +34,7 @@ namespace bd.webappth.entidades.Negocio
         public int IdPersona { get; set; }
         public virtual Persona Persona { get; set; }
 
+        [Display(Name = "Institución:")]
+        public string Institucion { get; set; }
     }
 }
