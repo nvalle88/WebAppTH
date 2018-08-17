@@ -34,7 +34,22 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> Index()
         {
-            return View();
+
+            var lista = new List<ListaEmpleadoViewModel>();
+            try
+            {
+                lista = await apiServicio.Listar<ListaEmpleadoViewModel>(
+                    new Uri(WebApp.BaseAddress)
+                    , "api/Empleados/ListarEmpleados");
+
+                
+                return View(lista);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
         }
 
         public async Task<IActionResult> ListaMovimientos(string identificacion,int Empty)
