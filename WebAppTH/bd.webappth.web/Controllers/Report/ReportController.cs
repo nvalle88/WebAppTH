@@ -17,18 +17,27 @@ namespace bd.webappth.web.Controllers.MVC
     {
 
         private readonly IApiServicio apiServicio;
+        private readonly IReporteServicio reporteServicio;
 
-        public ReportController(IApiServicio apiServicio)
+        public ReportController(IApiServicio apiServicio,  IReporteServicio reporteServicio)
         {
             this.apiServicio = apiServicio;
+            this.reporteServicio = reporteServicio;
         }
-
 
         public ActionResult ReporteNomina(int id)
         {
             
             string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath,"RepNomina&IdCalculoNomina=", Convert.ToString(id));
             return Redirect(url);
+        }
+
+        public ActionResult RepPagoNominaEmpleado(int id)
+        {
+            var parametersToAdd = reporteServicio.GetDefaultParameters("/ReporteGTH/RepPagoNominaEmpleado");
+            parametersToAdd = reporteServicio.AddParameters("IdCalculoNomina", Convert.ToString(id),parametersToAdd);
+            var newUri = reporteServicio.GenerateUri(parametersToAdd);
+            return Redirect(newUri);
         }
 
         public ActionResult ReporteSolicitudPagoReliquidacion(int idReliquidacionViatico)

@@ -42,6 +42,6 @@ namespace bd.webappth.entidades.Negocio
         [Range(2018, 2050, ErrorMessage = "Debe seleccionar el {0} ")]
         public int Ano { get; set; }
 
-        public virtual ICollection<CalculoNomina> CalculoNomina { get; set; }
+        
     }
 }

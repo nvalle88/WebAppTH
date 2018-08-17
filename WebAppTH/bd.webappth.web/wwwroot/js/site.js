@@ -39,6 +39,7 @@ function mostrarNotificacion(titulo, texto) {
     var color = "";
     var icon = "";
     switch (titulo) {
+        case "Satisfactorio": color = "#3276B1"; icon = "exclamation-circle"; break;
         case "Información": color = "#3276B1"; icon = "exclamation-circle"; break;
         case "Error": color = "#C46A69"; icon = "times-circle"; break;
         case "Aviso": color = "#c79121"; icon = "exclamation-triangle"; break;
@@ -57,6 +58,7 @@ function mostrarNotificacionTimer(titulo, texto, timer) {
     var color = "";
     var icon = "";
     switch (titulo) {
+        case "Satisfactorio": color = "#3276B1"; icon = "exclamation-circle"; break;
         case "Información": color = "#3276B1"; icon = "exclamation-circle"; break;
         case "Error": color = "#C46A69"; icon = "times-circle"; break;
         case "Aviso": color = "#c79121"; icon = "exclamation-triangle"; break; 

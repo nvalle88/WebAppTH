@@ -25,6 +25,8 @@ namespace bd.webappth.web.Controllers.MVC
     public class EmpleadosController : Controller
     {
 
+        private readonly IApiServicio apiServicio;
+
         public class ObtenerInstancia
         {
             private static EmpleadoViewModel instance;
@@ -62,13 +64,38 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        private readonly IApiServicio apiServicio;
-
-
         public EmpleadosController(IApiServicio apiServicio)
         {
             this.apiServicio = apiServicio;
         }
+
+        public async Task<JsonResult> CambiarEstadoAcumulaDecimos(int idEmpleado, bool estado)
+        {
+            var respuesta = await apiServicio.EditarAsync<Response>(new Empleado { IdEmpleado = idEmpleado, AcumulaDecimos = estado }
+            , new Uri(WebApp.BaseAddress)
+             , "api/Empleados/CambiarEstadoAcumulaDecimos");
+
+            if (respuesta.IsSuccess)
+            {
+                return Json(true);
+            }
+           
+            return Json(false);
+        }
+
+        public async Task<JsonResult> CambiarEstadoFondosReservas(int idEmpleado, bool estado)
+        {
+            var respuesta = await apiServicio.EditarAsync<Response>(new Empleado { IdEmpleado = idEmpleado, FondosReservas = estado }
+            , new Uri(WebApp.BaseAddress)
+             , "api/Empleados/CambiarEstadoFondosReservas");
+
+            if (respuesta.IsSuccess)
+            {
+                return Json(true);
+            }
+            return Json(false);
+        }
+
         private void InicializarMensaje(string mensaje)
         {
             if (mensaje == null)
@@ -78,10 +105,27 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Error"] = mensaje;
         }
 
+        public async Task<IActionResult> AcumulacionProvisiones()
+        {
+            var lista = await apiServicio.ObtenerElementoAsync1<List<DatosBasicosEmpleadoViewModel>>(new Empleado { Activo = true }
+             , new Uri(WebApp.BaseAddress)
+              , "api/Empleados/ListaEmpleadosPorEstado");
+
+            return View(lista);
+
+        }
+
+        public async Task<IActionResult> EmpleadosBrigadasSSO()
+        {
+            var lista = await apiServicio.ObtenerElementoAsync1<List<DatosBasicosEmpleadoViewModel>>(new Empleado { Activo = true }
+             , new Uri(WebApp.BaseAddress)
+              , "api/Empleados/ListaEmpleadosPorEstado");
+            return View(lista);
+
+        }
 
         public async Task<IActionResult> Index()
         {
-            
             var lista = new List<ListaEmpleadoViewModel>();
             try
             {
@@ -106,7 +150,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                
+
                 return BadRequest();
             }
         }
@@ -130,9 +174,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public  void SendMail()
+        public void SendMail()
         {
-           
+
         }
 
 
@@ -154,7 +198,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             //Cargar Paises
             var listaPaises = await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais");
-            ViewData["IdPaisLugarNacimiento"] = new SelectList(listaPaises, "IdPais", "Nombre",datosBasicosEmpleado.IdPaisLugarNacimiento);
+            ViewData["IdPaisLugarNacimiento"] = new SelectList(listaPaises, "IdPais", "Nombre", datosBasicosEmpleado.IdPaisLugarNacimiento);
             ViewData["IdPaisLugarSufragio"] = new SelectList(listaPaises, "IdPais", "Nombre", datosBasicosEmpleado.IdPaisLugarSufragio);
             ViewData["IdPaisDireccion"] = new SelectList(listaPaises, "IdPais", "Nombre", datosBasicosEmpleado.IdPaisLugarPersona);
 
@@ -192,7 +236,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         private async Task CargarCombosDistributivo()
         {
-          
+
             ViewData["IdRegimenLaboral"] = new SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
             ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
             ViewData["IdDependencia"] = new SelectList(await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "api/Dependencias/ListarDependencias"), "IdDependencia", "Nombre");
@@ -256,7 +300,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return Json(new { result = "Redireccionar", url = Url.Action("Index", "Empleados") });
 
         }
-       
+
         public async Task<IActionResult> Create(string mensaje)
         {
             InicializarMensaje(mensaje);
@@ -427,7 +471,7 @@ namespace bd.webappth.web.Controllers.MVC
             return Json(listaTitulos);
         }
 
-        public async Task<JsonResult> ListarManualPuestoporDependencia(int iddependencia,int idRelacionLaboral)
+        public async Task<JsonResult> ListarManualPuestoporDependencia(int iddependencia, int idRelacionLaboral)
         {
             try
             {
@@ -459,8 +503,8 @@ namespace bd.webappth.web.Controllers.MVC
                 };
 
                 var listarrolespuestos = await apiServicio.ObtenerElementoAsync1<IndicesOcupacionalesModalidadPartidaViewModel>(
-                    indiceOcupacional, 
-                    new Uri(WebApp.BaseAddress), 
+                    indiceOcupacional,
+                    new Uri(WebApp.BaseAddress),
                     "api/Empleados/ListarRolPuestoporManualPuestoYRelacionLaboral"
                 );
 
@@ -482,7 +526,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdManualPuesto = idmanualpuesto,
                     IdDependencia = iddependencia,
                     IdRolPuesto = idrolpuesto
-                    
+
                 };
                 var listarrolespuestos = await apiServicio.Listar<IndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarEscalaGradosPorRolPuesto");
                 return Json(listarrolespuestos);
@@ -503,7 +547,7 @@ namespace bd.webappth.web.Controllers.MVC
                     IdManualPuesto = idmanualpuesto,
                     IdDependencia = iddependencia,
                     IdRolPuesto = idrolpuesto,
-                    IdEscalaGrados= idescalagrados
+                    IdEscalaGrados = idescalagrados
 
                 };
                 var listarrolespuestos = await apiServicio.Listar<IndiceOcupacional>(indiceOcupacional, new Uri(WebApp.BaseAddress), "api/Empleados/ListarModalidadesPartidaPorEscalaGrados");
@@ -963,7 +1007,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
-        
+
 
         public async Task<JsonResult> ListarRelacionesLaboralesPorRegimen(int regimen)
         {
@@ -1017,7 +1061,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             string mensaje = "Error al añadir en la lista";
-           List<PersonaEstudioViewModel> personaEstudioViewModel=new List<PersonaEstudioViewModel>();
+            List<PersonaEstudioViewModel> personaEstudioViewModel = new List<PersonaEstudioViewModel>();
 
             try
             {
@@ -1218,7 +1262,9 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
-        
+
+
+
 
         public async Task<IActionResult> ListarEmpleados()
         {
@@ -1282,9 +1328,9 @@ namespace bd.webappth.web.Controllers.MVC
 
                     ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
 
-                    ViewData["IdPaisLugarNacimiento"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre",empleadoViewModel.Empleado.CiudadNacimiento.IdPais);
+                    ViewData["IdPaisLugarNacimiento"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre", empleadoViewModel.Empleado.CiudadNacimiento.IdPais);
                     ViewData["IdCiudadLugarNacimiento"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudadPorPais"), "IdCiudad", "Nombre", empleadoViewModel.Empleado.IdCiudadLugarNacimiento);
-                    
+
                     ViewData["IdPaisLugarSufragio"] = new SelectList(await apiServicio.Listar<Pais>(new Uri(WebApp.BaseAddress), "api/Pais/ListarPais"), "IdPais", "Nombre", empleadoViewModel.Empleado.ProvinciaSufragio.IdPais);
                     ViewData["IdProvinciaLugarSufragio"] = new SelectList(await apiServicio.Listar<Provincia>(new Uri(WebApp.BaseAddress), "api/Provincia/ListarProvinciaPorPais"), "IdProvincia", "Nombre", empleadoViewModel.Empleado.IdProvinciaLugarSufragio);
 
@@ -1292,7 +1338,7 @@ namespace bd.webappth.web.Controllers.MVC
                     ViewData["IdModalidadPartida"] = new SelectList(await apiServicio.Listar<ModalidadPartida>(new Uri(WebApp.BaseAddress), "api/ModalidadesPartida/ListarModalidadesPartidaPorRelacionLaboral"), "IdModalidadPartida", "Nombre", empleadoViewModel.IndiceOcupacionalModalidadPartida.TipoNombramiento.IdRelacionLaboral);
 
 
-                    if (empleadoViewModel!=null)
+                    if (empleadoViewModel != null)
                     {
                         InicializarMensaje(null);
                         return View(empleadoViewModel);
@@ -1317,7 +1363,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    
+
                     response = await apiServicio.EditarAsync(id, empleadoViewModel, new Uri(WebApp.BaseAddress),
                                                                  "api/Empleados");
 
@@ -1368,12 +1414,12 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-               
+
                 return BadRequest();
             }
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AgregarADistributivo(EmpleadoViewModel empleadoViewModel)
@@ -1405,7 +1451,8 @@ namespace bd.webappth.web.Controllers.MVC
 
                     FechaFin = empleadoViewModel.IndiceOcupacionalModalidadPartida.FechaFin,
 
-                    Empleado = new Empleado {
+                    Empleado = new Empleado
+                    {
                         EsJefe = empleadoViewModel.Empleado.EsJefe
                     }
 
@@ -1444,7 +1491,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return this.RedireccionarMensajeTime(
                             "Empleados",
                             "AgregarDistributivo",
-                            new{ IdEmpleado = empleadoViewModel.Empleado.IdEmpleado},
+                            new { IdEmpleado = empleadoViewModel.Empleado.IdEmpleado },
                             $"{Mensaje.Error}|{response.Message}"
                          );
 
@@ -1454,7 +1501,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
-        
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1510,22 +1557,22 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 var indiceOcupacional = new IndiceOcupacional
                 {
-                    IdDependencia =dependencia,
+                    IdDependencia = dependencia,
                     IdManualPuesto = manualpuesto,
                     IdRolPuesto = rolpuesto,
                     IdEscalaGrados = escalagrados
                 };
-                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(indiceOcupacional, new Uri(WebApp.BaseAddress),
-                                                                  "api/IndicesOcupacionales/ObtenerIndiceOcupacional");
+                var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(indiceOcupacional, new Uri(WebApp.BaseAddress),
+                                                              "api/IndicesOcupacionales/ObtenerIndiceOcupacional");
 
 
-                    var indice = JsonConvert.DeserializeObject<IndiceOcupacional>(respuesta.Resultado.ToString());
-                    if (respuesta.IsSuccess)
-                    {
-                        return indice;
-                    }
+                var indice = JsonConvert.DeserializeObject<IndiceOcupacional>(respuesta.Resultado.ToString());
+                if (respuesta.IsSuccess)
+                {
+                    return indice;
+                }
 
-                
+
 
                 return new IndiceOcupacional();
             }
@@ -1555,8 +1602,8 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                
-                return Json(new { result = "Redireccionar", url = Url.Action("CargarDependencias", "Empleados", new { idsucursal = idsucursal,  @class = "dialog-window" } ) });
+
+                return Json(new { result = "Redireccionar", url = Url.Action("CargarDependencias", "Empleados", new { idsucursal = idsucursal, @class = "dialog-window" }) });
             }
             catch (Exception)
             {
@@ -1564,7 +1611,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
-        
+
 
         public void EnviarMail()
         {
@@ -1593,8 +1640,10 @@ namespace bd.webappth.web.Controllers.MVC
             var a = Emails.SendEmailAsync(mail);
         }
 
-        public async Task CargarRelacionLaboralPorRegimen(int IdRegimenLaboral) {
-            try {
+        public async Task CargarRelacionLaboralPorRegimen(int IdRegimenLaboral)
+        {
+            try
+            {
                 var regimenLaboral = new RegimenLaboral
                 {
                     IdRegimenLaboral = IdRegimenLaboral,
@@ -1604,7 +1653,8 @@ namespace bd.webappth.web.Controllers.MVC
 
                 ViewData["IdRelacionLaboral"] = new SelectList(listarelacionesLaborales, "IdRelacionLaboral", "Nombre");
 
-            } catch (Exception ex) { }
+            }
+            catch (Exception ex) { }
         }
 
 
@@ -1641,7 +1691,7 @@ namespace bd.webappth.web.Controllers.MVC
             catch (Exception ex) { }
         }
 
-        public async Task CargarPerfilPuestoPorDependencia(int IdDependencia,int IdManualPuesto)
+        public async Task CargarPerfilPuestoPorDependencia(int IdDependencia, int IdManualPuesto)
         {
             try
             {
@@ -1653,8 +1703,10 @@ namespace bd.webappth.web.Controllers.MVC
 
                 var mostrarLista = new List<ManualPuesto>();
 
-                foreach (var item in listarmanualespuestos) {
-                    if (item.IdManualPuesto == IdManualPuesto) {
+                foreach (var item in listarmanualespuestos)
+                {
+                    if (item.IdManualPuesto == IdManualPuesto)
+                    {
                         mostrarLista.Add(new ManualPuesto { IdManualPuesto = item.ManualPuesto.IdManualPuesto, Nombre = item.ManualPuesto.Nombre });
                         break;
                     }
@@ -1696,7 +1748,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
-        public async Task CargarEscalaGradosPorRolPuesto(int IdRolPuesto,int IdManualPuesto,int IdDependencia)
+        public async Task CargarEscalaGradosPorRolPuesto(int IdRolPuesto, int IdManualPuesto, int IdDependencia)
         {
             try
             {
@@ -1733,10 +1785,10 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                
+
                 var lista = await apiServicio.Listar<FondoFinanciamiento>(
                     new Uri(WebApp.BaseAddressRM), "api/FondoFinanciamiento/ListarFondoFinanciamiento");
-                
+
                 ViewData["IdFondoFinanciamiento"] = new SelectList(lista, "IdFondoFinanciamiento", "Nombre");
 
             }
@@ -1749,7 +1801,8 @@ namespace bd.webappth.web.Controllers.MVC
         {
             try
             {
-                var filtro = new IdFiltrosViewModel {
+                var filtro = new IdFiltrosViewModel
+                {
                     IdManualPuesto = idManualPuesto,
                     IdRolPuesto = idRolpuesto,
                     IdTipoRelacion = idRelacionLaboral,
