@@ -1,0 +1,176 @@
+@model List<bd.webappth.entidades.ViewModels.DatosBasicosEmpleadoViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <!-- widget grid -->
+    <section id="" class="">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Empleados</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" data-page-length="50" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Identificacion)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombres)  @Html.DisplayNameFor(model => model.FirstOrDefault().Apellidos)
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            &#191 Acumula fondos de reservas ?
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            &#191 Acumula d&eacute;cimos ?
+                                        </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="FondosReservasAcumulacionDecimos" id="@item.IdEmpleado">
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Identificacion)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nombres)  @Html.DisplayFor(modelItem => item.Apellidos)
+                                            </td>
+                                            <td>
+                                                <label>
+                                                    <input id="fr_@item.IdEmpleado" type="checkbox" class="checkbox style-0" checked="@item.FondosReservas" data-convalidacion="@item.IdEmpleado" onclick="CambiarEstadoFondosReservas(@item.IdEmpleado)">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+
+                                            <td>
+                                                <label>
+                                                    <input id="ad_@item.IdEmpleado" type="checkbox" class="checkbox style-0" checked="@item.AcumulaDecimos" data-convalidacion="@item.IdEmpleado" onclick="CambiarEstadoAcumulaDecimos(@item.IdEmpleado)">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+
+
+@section Scripts {
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+
+        function CambiarEstadoAcumulaDecimos(idEmpleado)
+        {
+            mostrarLoadingPanel("content", "Actualizando registro...")
+            var elemeto = $('#fr_' + idEmpleado).val();
+            var estado = false;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CambiarEstadoAcumulaDecimos", "Empleados")',
+                    dataType: 'json',
+                    data: { idEmpleado: idEmpleado, estado:$('#ad_' + idEmpleado).prop('checked') },
+                    success: function (data) {
+                    }, complete: function (data) {
+                        if (data = true) {
+                            mostrarNotificacion("Satisfactorio", "El registro se ha actualizado satisfactoriamente")
+                        }
+                        else {
+                            mostrarNotificacion("Error", "Ha ocurrido un error al actualizar el registro")
+                        }
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        mostrarNotificacion("Error", "Ha ocurrido un error al al conectarse con el servicio...");
+                    }
+                });
+        }
+
+
+        function CambiarEstadoFondosReservas(idEmpleado)
+        {
+            mostrarLoadingPanel("content", "Actualizando registro...")
+            var elemeto = $('#fr_' + idEmpleado).val();
+            var estado = false;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CambiarEstadoFondosReservas", "Empleados")',
+                    dataType: 'json',
+                    data: { idEmpleado: idEmpleado, estado:$('#fr_' + idEmpleado).prop('checked') },
+                    success: function (data) {
+                       
+                    }, complete: function (data) {
+                        if (data = true) {
+                            mostrarNotificacion("Satisfactorio", "El registro se ha actualizado satisfactoriamente")
+                        }
+                        else {
+                            mostrarNotificacion("Error", "Ha ocurrido un error al actualizar el registro")
+                        }
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        mostrarNotificacion("Error", "Ha ocurrido un error al al conectarse con el servicio...");
+                    }
+                });
+        }
+    </script>
+
+    <script src='~/js/datatables/init.js'></script>
+}
+

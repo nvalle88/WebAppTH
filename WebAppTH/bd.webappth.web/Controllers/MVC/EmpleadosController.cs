@@ -117,6 +117,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
+        public async Task<IActionResult> EmpleadosBrigadasSSO()
+        {
+            var lista = await apiServicio.ObtenerElementoAsync1<List<DatosBasicosEmpleadoViewModel>>(new Empleado { Activo = true }
+             , new Uri(WebApp.BaseAddress)
+              , "api/Empleados/ListaEmpleadosPorEstado");
+            return View(lista);
+
+        }
+
 
 
 
@@ -1260,6 +1269,8 @@ namespace bd.webappth.web.Controllers.MVC
             }
 
         }
+
+
 
 
         public async Task<IActionResult> ListarEmpleados()
