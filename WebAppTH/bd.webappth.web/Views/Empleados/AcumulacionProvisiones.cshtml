@@ -49,7 +49,7 @@
                                         </th>
 
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombres)  @Html.DisplayNameFor(model => model.FirstOrDefault().Apellidos)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombres) y @Html.DisplayNameFor(model => model.FirstOrDefault().Apellidos)
                                         </th>
 
                                         <th data-hide="phone">
@@ -114,7 +114,7 @@
 
         function CambiarEstadoAcumulaDecimos(idEmpleado)
         {
-            mostrarLoadingPanel("content", "Actualizando registro...")
+            mostrarLoadingPanel("content", "")
             var elemeto = $('#fr_' + idEmpleado).val();
             var estado = false;
 
@@ -143,7 +143,7 @@
 
         function CambiarEstadoFondosReservas(idEmpleado)
         {
-            mostrarLoadingPanel("content", "Actualizando registro...")
+            mostrarLoadingPanel("content", "")
             var elemeto = $('#fr_' + idEmpleado).val();
             var estado = false;
 

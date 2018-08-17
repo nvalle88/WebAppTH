@@ -25,6 +25,8 @@ namespace bd.webappth.web.Controllers.MVC
     public class EmpleadosController : Controller
     {
 
+        private readonly IApiServicio apiServicio;
+
         public class ObtenerInstancia
         {
             private static EmpleadoViewModel instance;
@@ -62,8 +64,10 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        private readonly IApiServicio apiServicio;
-
+        public EmpleadosController(IApiServicio apiServicio)
+        {
+            this.apiServicio = apiServicio;
+        }
 
         public async Task<JsonResult> CambiarEstadoAcumulaDecimos(int idEmpleado, bool estado)
         {
@@ -92,12 +96,6 @@ namespace bd.webappth.web.Controllers.MVC
             return Json(false);
         }
 
-
-
-        public EmpleadosController(IApiServicio apiServicio)
-        {
-            this.apiServicio = apiServicio;
-        }
         private void InicializarMensaje(string mensaje)
         {
             if (mensaje == null)
@@ -125,11 +123,6 @@ namespace bd.webappth.web.Controllers.MVC
             return View(lista);
 
         }
-
-
-
-
-
 
         public async Task<IActionResult> Index()
         {
