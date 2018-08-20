@@ -1824,5 +1824,38 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
 
+        public async Task<IActionResult> EliminarEmpleado(int IdEmpleado)
+        {
+            try
+            {
+                var response = await apiServicio.EliminarAsync(IdEmpleado,
+                    new Uri(WebApp.BaseAddressRM),
+                    "api/Empleados/EliminarEmpleadoSinDistributivo");
+                
+
+                if (response.IsSuccess) {
+
+                    return this.RedireccionarMensajeTime(
+                        "Empleados",
+                        "Index",
+                        $"{Mensaje.Success}|{response.Message}|{"6000"}"
+                    );
+                }
+
+                return this.RedireccionarMensajeTime(
+                    "Empleados",
+                    "Index",
+                    $"{Mensaje.Error}|{response.Message}|{"6000"}"
+                );
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
     }
+    
 }
