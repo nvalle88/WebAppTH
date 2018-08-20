@@ -53,11 +53,11 @@
                                         </th>
 
                                         <th data-hide="phone">
-                                            &#191 Acumula fondos de reservas ?
+                                            Fondos de reserva
                                         </th>
 
                                         <th data-hide="phone">
-                                            &#191 Acumula d&eacute;cimos ?
+                                           D&eacute;cimos
                                         </th>
 
 
@@ -66,7 +66,7 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr class="FondosReservasAcumulacionDecimos" id="@item.IdEmpleado">
+                                        <tr class="FondosReservasAcumulacionDecimos" id="@item.IdEmpleado" >
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Identificacion)
                                             </td>
@@ -74,18 +74,119 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombres)  @Html.DisplayFor(modelItem => item.Apellidos)
                                             </td>
-                                            <td>
-                                                <label>
-                                                    <input id="fr_@item.IdEmpleado" type="checkbox" class="checkbox style-0" checked="@item.FondosReservas" data-convalidacion="@item.IdEmpleado" onclick="CambiarEstadoFondosReservas(@item.IdEmpleado)">
-                                                    <span></span>
-                                                </label>
+                                            <td >
+                                                @if (item.DerechoFondoReserva == true)
+                                                {
+                                                    <legend class="text-center h6"><b>Tiene derecho</b></legend>
+                                                    <label class="text-center  ">
+                                                        <label class="radio radio-inline  ">
+                                                            <input id="der_fr_@item.IdEmpleado" type="radio" class="radiobox  " checked="checked" value="true" onclick="ActivarDerechoFondoReserva(@item.IdEmpleado)" name="der_@item.IdEmpleado">
+                                                            <span class=" " >SI</span>
+                                                        </label>
+                                                        <label class="radio radio-inline  ">
+                                                            <input id="der_fr_@item.IdEmpleado" type="radio" onclick="DesactivarDerechoFondoReserva(@item.IdEmpleado)" class="radiobox  " name="der_@item.IdEmpleado">
+                                                            <span class=" ">NO</span>
+                                                        </label>
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <legend class="text-center h6 "><b>Tiene derecho</b></legend>
+                                                    <label class="text-align-center  ">
+                                                        <label class="radio radio-inline  ">
+                                                            <input id="der_fr_@item.IdEmpleado" type="radio" class="radiobox  " onclick="ActivarDerechoFondoReserva(@item.IdEmpleado)" name="der_@item.IdEmpleado">
+                                                            <span class=" ">SI</span>
+                                                        </label>
+                                                        <label class="radio radio-inline  ">
+                                                            <input id="der_fr_@item.IdEmpleado" type="radio" onclick="DesactivarDerechoFondoReserva(@item.IdEmpleado)" checked="checked" class="radiobox  " name="der_@item.IdEmpleado">
+                                                            <span class=" ">NO</span>
+                                                        </label>
+                                                    </label>
+
+                                                }
+
+                                                <legend class="text-center h6 "><b>Modalidad</b></legend>
+                                                @if (item.FondosReservas == true)
+                                                {
+                                                    <label class="radio radio-inline  ">
+                                                        <input id="mod_cta_@item.IdEmpleado" checked="checked" type="radio" class="radiobox" onclick="ModalidadCuentaFondosReservas(@item.IdEmpleado)" name="mod_@item.IdEmpleado">
+                                                        <span>CUENTA</span>
+                                                    </label>
+                                                    <label class="radio radio-inline  ">
+                                                        <input id="mod_cta_iess_@item.IdEmpleado" onclick="ModalidadIESSFondosReservas(@item.IdEmpleado)" type="radio" class="radiobox" name="mod_@item.IdEmpleado">
+                                                        <span>IESS</span>
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="radio radio-inline  ">
+                                                        <input id="mod_cta_@item.IdEmpleado" type="radio" class="radiobox" onclick="ModalidadCuentaFondosReservas(@item.IdEmpleado)" name="mod_@item.IdEmpleado">
+                                                        <span>CUENTA</span>
+                                                    </label>
+                                                    <label class="radio radio-inline  ">
+                                                        <input id="mod_cta_iess_@item.IdEmpleado" checked="checked" onclick="ModalidadIESSFondosReservas(@item.IdEmpleado)" type="radio" class="radiobox" name="mod_@item.IdEmpleado">
+                                                        <span>IESS</span>
+                                                    </label>
+                                                }
+
+                                                <p></p>
                                             </td>
 
                                             <td>
-                                                <label>
-                                                    <input id="ad_@item.IdEmpleado" type="checkbox" class="checkbox style-0" checked="@item.AcumulaDecimos" data-convalidacion="@item.IdEmpleado" onclick="CambiarEstadoAcumulaDecimos(@item.IdEmpleado)">
-                                                    <span></span>
+                                                @if (item.AcumulaDecimoTercero == true)
+                                                {
+                                                    <legend class="text-center h6"><b>D&eacute;cimo tercero</b></legend>
+                                                    <label class="text-align-center">
+                                                        <label class="radio radio-inline">
+                                                            <input id="acumula_decimotercero_@item.IdEmpleado" type="radio" class="radiobox" checked="checked" value="true" onclick="ActivarDecimoTercero(@item.IdEmpleado)" name="acumula_decimotercero_@item.IdEmpleado">
+                                                            <span>SI</span>
+                                                        </label>
+                                                        <label class="radio radio-inline">
+                                                            <input id="acumula_decimotercero_@item.IdEmpleado" type="radio" onclick="DesactivarDecimoTercero(@item.IdEmpleado)" class="radiobox" name="acumula_decimotercero_@item.IdEmpleado">
+                                                            <span>NO</span>
+                                                        </label>
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <legend class="text-center h6"><b>D&eacute;cimo tercero</b></legend>
+                                                    <label class="text-align-center">
+                                                        <label class="radio radio-inline">
+                                                            <input id="acumula_decimotercero_@item.IdEmpleado" type="radio" class="radiobox"  onclick="ActivarDecimoTercero(@item.IdEmpleado)" name="acumula_decimotercero_@item.IdEmpleado">
+                                                            <span>SI</span>
+                                                        </label>
+                                                        <label class="radio radio-inline">
+                                                            <input id="acumula_decimotercero_@item.IdEmpleado" checked="checked" type="radio" onclick="DesactivarDecimoTercero(@item.IdEmpleado)" class="radiobox" name="acumula_decimotercero_@item.IdEmpleado">
+                                                            <span>NO</span>
+                                                        </label>
+                                                    </label>
+                                                }
+
+                                                <legend class="text-center h6"><b>D&eacute;cimo cuarto</b></legend>
+                                                @if (item.AcumulaDecimoCuarto == true)
+                                                {
+                                                <label class="radio radio-inline">
+                                                    <input id="acumula_decimo_cuarto_@item.IdEmpleado" checked="checked" type="radio" class="radiobox" onclick="ActivarDecimoCuarto(@item.IdEmpleado)" name="acumula_decimo_cuarto_@item.IdEmpleado">
+                                                    <span>SI</span>
                                                 </label>
+                                                    <label class="radio radio-inline">
+                                                        <input id="acumula_decimo_cuarto_@item.IdEmpleado" onclick="DesactivarDecimoCuarto(@item.IdEmpleado)" type="radio" class="radiobox" name="acumula_decimo_cuarto_@item.IdEmpleado">
+                                                        <span>NO</span>
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="radio radio-inline">
+                                                        <input id="acumula_decimo_cuarto_@item.IdEmpleado"  type="radio" class="radiobox" onclick="ActivarDecimoCuarto(@item.IdEmpleado)" name="acumula_decimo_cuarto_@item.IdEmpleado">
+                                                        <span>SI</span>
+                                                    </label>
+                                                    <label class="radio radio-inline">
+                                                        <input id="acumula_decimo_cuarto_@item.IdEmpleado" checked="checked" onclick="DesactivarDecimoCuarto(@item.IdEmpleado)" type="radio" class="radiobox" name="acumula_decimo_cuarto_@item.IdEmpleado">
+                                                        <span>NO</span>
+                                                    </label>
+                                                }
+
+                                                <p></p>
                                             </td>
                                         </tr>
                                     }
@@ -112,17 +213,77 @@
     <script src='~/js/site.js'></script>
     <script type="text/javascript">
 
-        function CambiarEstadoAcumulaDecimos(idEmpleado)
+        
+
+        function ActivarDerechoFondoReserva(idEmpleado)
         {
             mostrarLoadingPanel("content", "")
-            var elemeto = $('#fr_' + idEmpleado).val();
+            var estado = true;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CambiarEstadoDerechoFondosReservas", "Empleados")',
+                    dataType: 'json',
+                    data: { idEmpleado: idEmpleado, estado: estado },
+                    success: function (data) {
+
+                    }, complete: function (data) {
+                        if (data = true) {
+                            mostrarNotificacion("Satisfactorio", "El registro se ha actualizado satisfactoriamente")
+                        }
+                        else {
+                            mostrarNotificacion("Error", "Ha ocurrido un error al actualizar el registro")
+                        }
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        mostrarNotificacion("Error", "Ha ocurrido un error al al conectarse con el servicio...");
+                    }
+                });
+        }
+
+        function DesactivarDerechoFondoReserva(idEmpleado)
+        {
+            mostrarLoadingPanel("content", "")
             var estado = false;
 
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("CambiarEstadoAcumulaDecimos", "Empleados")',
+                    url: '@Url.Action("CambiarEstadoDerechoFondosReservas", "Empleados")',
                     dataType: 'json',
-                    data: { idEmpleado: idEmpleado, estado:$('#ad_' + idEmpleado).prop('checked') },
+                    data: { idEmpleado: idEmpleado, estado: estado },
+                    success: function (data) {
+
+                    }, complete: function (data) {
+                        if (data = true) {
+                            mostrarNotificacion("Satisfactorio", "El registro se ha actualizado satisfactoriamente")
+                        }
+                        else {
+                            mostrarNotificacion("Error", "Ha ocurrido un error al actualizar el registro")
+                        }
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        mostrarNotificacion("Error", "Ha ocurrido un error al al conectarse con el servicio...");
+                    }
+                });
+        }
+
+
+
+
+        function DesactivarDecimoCuarto(idEmpleado)
+        {
+            mostrarLoadingPanel("content", "")
+            var estado = false;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CambiarEstadoDecimoCuarto", "Empleados")',
+                    dataType: 'json',
+                    data: { idEmpleado: idEmpleado, estado: estado },
                     success: function (data) {
                     }, complete: function (data) {
                         if (data = true) {
@@ -141,19 +302,131 @@
         }
 
 
-        function CambiarEstadoFondosReservas(idEmpleado)
+        function ActivarDecimoCuarto(idEmpleado)
         {
             mostrarLoadingPanel("content", "")
-            var elemeto = $('#fr_' + idEmpleado).val();
+            var estado = true;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CambiarEstadoDecimoCuarto", "Empleados")',
+                    dataType: 'json',
+                    data: { idEmpleado: idEmpleado, estado: estado },
+                    success: function (data) {
+                    }, complete: function (data) {
+                        if (data = true) {
+                            mostrarNotificacion("Satisfactorio", "El registro se ha actualizado satisfactoriamente")
+                        }
+                        else {
+                            mostrarNotificacion("Error", "Ha ocurrido un error al actualizar el registro")
+                        }
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        mostrarNotificacion("Error", "Ha ocurrido un error al al conectarse con el servicio...");
+                    }
+                });
+        }
+        
+        function DesactivarDecimoTercero(idEmpleado)
+        {
+            mostrarLoadingPanel("content", "")
+            var estado = false;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CambiarEstadoDecimoTercero", "Empleados")',
+                    dataType: 'json',
+                    data: { idEmpleado: idEmpleado, estado: estado },
+                    success: function (data) {
+                    }, complete: function (data) {
+                        if (data = true) {
+                            mostrarNotificacion("Satisfactorio", "El registro se ha actualizado satisfactoriamente")
+                        }
+                        else {
+                            mostrarNotificacion("Error", "Ha ocurrido un error al actualizar el registro")
+                        }
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        mostrarNotificacion("Error", "Ha ocurrido un error al al conectarse con el servicio...");
+                    }
+                });
+        }
+
+        function ActivarDecimoTercero(idEmpleado)
+        {
+            mostrarLoadingPanel("content", "")
+            var estado = true;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CambiarEstadoDecimoTercero", "Empleados")',
+                    dataType: 'json',
+                    data: { idEmpleado: idEmpleado, estado: estado },
+                    success: function (data) {
+                    }, complete: function (data) {
+                        if (data = true) {
+                            mostrarNotificacion("Satisfactorio", "El registro se ha actualizado satisfactoriamente")
+                        }
+                        else {
+                            mostrarNotificacion("Error", "Ha ocurrido un error al actualizar el registro")
+                        }
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        mostrarNotificacion("Error", "Ha ocurrido un error al al conectarse con el servicio...");
+                    }
+                });
+        }
+
+
+
+        function ModalidadIESSFondosReservas(idEmpleado)
+        {
+            mostrarLoadingPanel("content", "")
             var estado = false;
 
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("CambiarEstadoFondosReservas", "Empleados")',
                     dataType: 'json',
-                    data: { idEmpleado: idEmpleado, estado:$('#fr_' + idEmpleado).prop('checked') },
+                    data: { idEmpleado: idEmpleado, estado: estado },
                     success: function (data) {
-                       
+
+                    }, complete: function (data) {
+                        if (data = true) {
+                            mostrarNotificacion("Satisfactorio", "El registro se ha actualizado satisfactoriamente")
+                        }
+                        else {
+                            mostrarNotificacion("Error", "Ha ocurrido un error al actualizar el registro")
+                        }
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        mostrarNotificacion("Error", "Ha ocurrido un error al al conectarse con el servicio...");
+                    }
+                });
+        }
+
+
+
+        function ModalidadCuentaFondosReservas(idEmpleado)
+        {
+            mostrarLoadingPanel("content", "")
+            var estado = true;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CambiarEstadoFondosReservas", "Empleados")',
+                    dataType: 'json',
+                    data: { idEmpleado: idEmpleado, estado: estado },
+                    success: function (data) {
+
                     }, complete: function (data) {
                         if (data = true) {
                             mostrarNotificacion("Satisfactorio", "El registro se ha actualizado satisfactoriamente")

@@ -69,11 +69,11 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
         }
 
-        public async Task<JsonResult> CambiarEstadoAcumulaDecimos(int idEmpleado, bool estado)
+        public async Task<JsonResult> CambiarEstadoDecimoTercero(int idEmpleado, bool estado)
         {
-            var respuesta = await apiServicio.EditarAsync<Response>(new Empleado { IdEmpleado = idEmpleado, AcumulaDecimos = estado }
+            var respuesta = await apiServicio.EditarAsync<Response>(new Empleado { IdEmpleado = idEmpleado, AcumulaDecimoTercero = estado }
             , new Uri(WebApp.BaseAddress)
-             , "api/Empleados/CambiarEstadoAcumulaDecimos");
+             , "api/Empleados/CambiarEstadoDecimoTercero");
 
             if (respuesta.IsSuccess)
             {
@@ -83,11 +83,41 @@ namespace bd.webappth.web.Controllers.MVC
             return Json(false);
         }
 
+        public async Task<JsonResult> CambiarEstadoDecimoCuarto(int idEmpleado, bool estado)
+        {
+            var respuesta = await apiServicio.EditarAsync<Response>(new Empleado { IdEmpleado = idEmpleado, AcumulaDecimoCuarto = estado }
+            , new Uri(WebApp.BaseAddress)
+             , "api/Empleados/CambiarEstadoDecimoCuarto");
+
+            if (respuesta.IsSuccess)
+            {
+                return Json(true);
+            }
+
+            return Json(false);
+        }
+
+
+        public async Task<JsonResult> ActualizarBridadaSSORol(string brigadarol, int idEmpleado)
+        {
+            var empleado = new Empleado { IdEmpleado = idEmpleado, IdBrigadaSSORol = Convert.ToInt32(brigadarol) };
+            var respuesta = await apiServicio.EditarAsync<Response>(new { IdEmpleado = idEmpleado, IdBrigadaSSORol = Convert.ToInt32(brigadarol) }
+           , new Uri(WebApp.BaseAddress)
+            , "api/Empleados/ActualizarBridadaSSORol");
+
+            if (respuesta.IsSuccess)
+            {
+                return Json(true);
+            }
+
+            return Json(false);
+        }
+
         public async Task<JsonResult> CambiarEstadoFondosReservas(int idEmpleado, bool estado)
         {
             var respuesta = await apiServicio.EditarAsync<Response>(new Empleado { IdEmpleado = idEmpleado, FondosReservas = estado }
             , new Uri(WebApp.BaseAddress)
-             , "api/Empleados/CambiarEstadoFondosReservas");
+             , "api/Empleados/CambiarEstadoDerechoFondosReservas");
 
             if (respuesta.IsSuccess)
             {
@@ -95,6 +125,28 @@ namespace bd.webappth.web.Controllers.MVC
             }
             return Json(false);
         }
+
+        /// <summary>
+        /// CambiarEstadoDerechoFondosReservas
+        /// </summary>
+        /// <param name="idEmpleado"></param>
+        /// <param name="estado"></param>
+        /// <returns></returns>
+        public async Task<JsonResult> CambiarEstadoDerechoFondosReservas(int idEmpleado, bool estado)
+        {
+            var respuesta = await apiServicio.EditarAsync<Response>(new Empleado { IdEmpleado = idEmpleado, DerechoFondoReserva = estado }
+            , new Uri(WebApp.BaseAddress)
+             , "api/Empleados/CambiarEstadoDerechoFondosReservas");
+
+            if (respuesta.IsSuccess)
+            {
+                return Json(true);
+            }
+            return Json(false);
+        }
+
+
+        
 
         private void InicializarMensaje(string mensaje)
         {
@@ -117,9 +169,13 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> EmpleadosBrigadasSSO()
         {
+
+            ViewData["IdBrigadaSSO"] = new SelectList(await apiServicio.Listar<BrigadaSSO>(new Uri(WebApp.BaseAddress), "api/BrigadasSSO/ListarBrigadasSSO"), "IdBrigadaSSO", "Nombre");
+          
             var lista = await apiServicio.ObtenerElementoAsync1<List<DatosBasicosEmpleadoViewModel>>(new Empleado { Activo = true }
              , new Uri(WebApp.BaseAddress)
               , "api/Empleados/ListaEmpleadosPorEstado");
+            lista.FirstOrDefault().BrigadaSSORol = await apiServicio.Listar<BrigadaSSORol>(new Uri(WebApp.BaseAddress), "api/BrigadasSSORoles/ListarBrigadasSSORoles");
             return View(lista);
 
         }
@@ -409,6 +465,10 @@ namespace bd.webappth.web.Controllers.MVC
             var listaCiudades = await apiServicio.Listar<Ciudad>(Pais, new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudadPorPais");
             return Json(listaCiudades);
         }
+
+
+
+       
 
         public async Task<JsonResult> ListarBrigadaSSORolPorBrigadaSSO(string brigada)
         {
