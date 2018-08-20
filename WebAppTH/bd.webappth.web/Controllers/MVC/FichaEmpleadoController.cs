@@ -97,7 +97,8 @@ namespace bd.webappth.web.Controllers.MVC
                 FechaGraduado = viewModelPersonaEstudio.FechaGraduado,
                 Observaciones = viewModelPersonaEstudio.Observaciones,
                 IdTitulo = viewModelPersonaEstudio.IdTitulo,
-                NoSenescyt = viewModelPersonaEstudio.NoSenescyt
+                NoSenescyt = viewModelPersonaEstudio.NoSenescyt,
+                Institucion = viewModelPersonaEstudio.Institucion
             };
 
             personaEstudio.IdPersona = empleado.IdPersona;
@@ -153,8 +154,8 @@ namespace bd.webappth.web.Controllers.MVC
                             FechaGraduado = personaestudio.FechaGraduado,
                             Observaciones = personaestudio.Observaciones,
                             NoSenescyt = personaestudio.NoSenescyt,
-                            IdPersona = personaestudio.IdPersona
-
+                            IdPersona = personaestudio.IdPersona,
+                            Institucion = personaestudio.Institucion
                         };
                         return View(viewmodelPersonaEstudio);
                     }
@@ -198,7 +199,8 @@ namespace bd.webappth.web.Controllers.MVC
                     FechaGraduado = viewModelPersonaEstudio.FechaGraduado,
                     Observaciones = viewModelPersonaEstudio.Observaciones,
                     IdTitulo = viewModelPersonaEstudio.IdTitulo,
-                    NoSenescyt = viewModelPersonaEstudio.NoSenescyt
+                    NoSenescyt = viewModelPersonaEstudio.NoSenescyt,
+                    Institucion = viewModelPersonaEstudio.Institucion
                 };
 
                 personaEstudio.IdPersona = empleado.IdPersona;
@@ -2630,15 +2632,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando discapacidades de empleado",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+               
                 return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }
@@ -2652,31 +2646,13 @@ namespace bd.webappth.web.Controllers.MVC
                                                                , "api/PersonasDiscapacidades");
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de discapacidad de empleado eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
                     return this.Redireccionar("FichaEmpleado", "IndexPersonaDiscapacidad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
                 }
                 return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Discapacidad de Empleado",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
+               
                 return this.Redireccionar("Empleados", "Index", $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}");
             }
         }

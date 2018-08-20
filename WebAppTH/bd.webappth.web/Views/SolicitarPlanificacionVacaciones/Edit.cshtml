@@ -87,6 +87,8 @@
 
             if (totalDias >= 0) {
 
+                totalDias = totalDias + 1;
+
                 if (totalDias > maxDias) {
                     texto = "Usted est\u00E1 solicitando m\u00E1s d\u00EDas de los que tiene acumulados";
                     mostrarNotificacionTimer("Informaci\u00F3n", texto, 10000);

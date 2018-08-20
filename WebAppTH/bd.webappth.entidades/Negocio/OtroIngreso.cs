@@ -42,6 +42,10 @@ namespace bd.webappth.entidades.Negocio
         //[DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal? Total { get; set; }
 
+        
+        public string Observaciones { get; set; }
+
+
         public virtual DeclaracionPatrimonioPersonal IdDeclaracionPatrimonioPersonalNavigation { get; set; }
     }
 }

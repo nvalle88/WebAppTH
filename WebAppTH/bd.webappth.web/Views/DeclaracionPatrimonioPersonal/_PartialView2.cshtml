@@ -1,0 +1,225 @@
+@model bd.webappth.entidades.ViewModels.ViewModelDeclaracionPatrimonioPersonal
+
+<fieldset>
+
+
+    <div class="row">
+        <section class="col col-lg-12">
+            <legend>Declaraci&oacute;n de patrimonio personal</legend>
+        </section>
+        <input type="hidden" asp-for="IdEmpleado" />
+        <input type="hidden" asp-for="DeclaracionPatrimonioPersonalPasado.IdDeclaracionPatrimonioPersonal" />
+        <input type="hidden" asp-for="DeclaracionPatrimonioPersonalActual.IdDeclaracionPatrimonioPersonal" />
+        <input type="hidden" asp-for="OtroIngresoActual.IdOtroIngreso" />
+    </div>
+
+    <div class="row">
+        <section class="col col-lg-12">
+            <legend>A&ntilde;o anterior</legend>
+        </section>
+    </div>
+
+    <div class="row">
+
+        <input type="hidden" asp-for="DeclaracionPatrimonioPersonalPasado.IdEmpleado" />
+
+        <section class="col col-4">
+            <label>Fecha de declaraci&oacute;n</label>
+            <label class="input">
+                <input asp-for="DeclaracionPatrimonioPersonalPasado.FechaDeclaracion" type="text" class="datepicker" data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                <span asp-validation-for="DeclaracionPatrimonioPersonalPasado.FechaDeclaracion" class="text-danger"></span>
+
+            </label>
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-4">
+            <label>Total Activos</label>
+            <label class="input">
+                <input asp-for="DeclaracionPatrimonioPersonalPasado.TotalEfectivo" id="Txt_PasadoActivos" onchange="sumarPasado()" type="text" pattern="[0-9]+" data-msg-required='El campo es requerido' data-rule-required='true'>
+                <span asp-validation-for="DeclaracionPatrimonioPersonalPasado.TotalEfectivo" class="text-danger"></span>
+
+            </label>
+        </section>
+
+        <section class="col col-4">
+            <label>Total pasivos</label>
+            <label class="input">
+                <input asp-for="DeclaracionPatrimonioPersonalPasado.TotalPasivo" id="Txt_PasadoPasivos" onchange="sumarPasado()" type="text" pattern="[0-9]+" data-msg-required='El campo es requerido' data-rule-required='true'>
+                <span asp-validation-for="DeclaracionPatrimonioPersonalPasado.TotalPasivo" class="text-danger"></span>
+
+            </label>
+        </section>
+
+        <section class="col col-4">
+            <label>Total de patrimonio</label>
+            <label class="input">
+                <input asp-for="DeclaracionPatrimonioPersonalPasado.TotalPatrimonio" id="Txt_PasadoPatrimonio" type="text" readonly>
+                <span asp-validation-for="DeclaracionPatrimonioPersonalPasado.TotalPatrimonio" class="text-danger"></span>
+
+            </label>
+        </section>
+
+    </div>
+
+
+    <div class="row">
+        <section class="col col-lg-12">
+            <legend>A&ntilde;o actual</legend>
+        </section>
+    </div>
+
+    <div class="row">
+
+        <input type="hidden" asp-for="DeclaracionPatrimonioPersonalActual.IdEmpleado" />
+
+        <section class="col col-4">
+            <label>Fecha de declaraci&oacute;n</label>
+            <label class="input">
+                <input asp-for="DeclaracionPatrimonioPersonalActual.FechaDeclaracion" type="text" class="datepicker" data-dateformat='dd/mm/yy' data-msg-required='El campo es requerido' data-rule-required='true'>
+                <span asp-validation-for="DeclaracionPatrimonioPersonalActual.FechaDeclaracion" class="text-danger"></span>
+
+            </label>
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-4">
+            <label>Total Activos</label>
+            <label class="input">
+                <input asp-for="DeclaracionPatrimonioPersonalActual.TotalEfectivo" id="Txt_ActualActivos" onchange="sumarActual()" type="text" pattern="[0-9]+" data-msg-required='El campo es requerido' data-rule-required='true'>
+                <span asp-validation-for="DeclaracionPatrimonioPersonalActual.TotalEfectivo" class="text-danger"></span>
+
+            </label>
+        </section>
+
+
+        <section class="col col-4">
+            <label>Total pasivos</label>
+            <label class="input">
+                <input asp-for="DeclaracionPatrimonioPersonalActual.TotalPasivo" id="Txt_ActualPasivos" onchange="sumarActual()" type="text" pattern="[0-9]+" data-msg-required='El campo es requerido' data-rule-required='true'>
+                <span asp-validation-for="DeclaracionPatrimonioPersonalActual.TotalPasivo" class="text-danger"></span>
+
+            </label>
+        </section>
+
+        <section class="col col-4">
+            <label>Total de patrimonio</label>
+            <label class="input">
+                <input asp-for="DeclaracionPatrimonioPersonalActual.TotalPatrimonio" id="Txt_ActualPatrimonio" type="text" readonly />
+                <span asp-validation-for="DeclaracionPatrimonioPersonalActual.TotalPatrimonio" class="text-danger"></span>
+
+            </label>
+        </section>
+
+
+    </div>
+
+
+    <div class="row">
+        <section class="col col-lg-12">
+            <legend>Comparativo</legend>
+        </section>
+    </div>
+
+    <div class="row">
+        <section class="col col-4">&nbsp;</section>
+        <section class="col col-4">&nbsp;</section>
+
+        <section class="col col-4">
+            <label>Total de patrimonio</label>
+            <label class="input">
+                <input id="Txt_Comparativo" type="text" readonly/>
+                
+            </label>
+        </section>
+    </div>
+
+
+
+    <div class="row">
+        <section class="col col-lg-12">
+            <legend>Ingresos adicionales</legend>
+        </section>
+    </div>
+
+    <div class="row">
+
+        <section class="col col-4">
+            <label>Ingresos del C&oacute;nyuge</label>
+            <label class="input">
+                <input maxlength="32" id="Txt_Ingreso0" asp-for="OtroIngresoActual.IngresoConyuge" class="form-control" onchange="sumarOtrosIngresos()" />
+                <span asp-validation-for="OtroIngresoActual.IngresoConyuge" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-4">
+            <label>Ingresos de arriendos</label>
+            <label class="input">
+                <input maxlength="32" id="Txt_Ingreso1" asp-for="OtroIngresoActual.IngresoArriendos" class="form-control montoOtrosIngresos" onchange="sumarOtrosIngresos()" />
+                <span asp-validation-for="OtroIngresoActual.IngresoArriendos" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-4">
+            <label>Ingresos de negocio particular:</label>
+            <label class="input">
+                <input maxlength="32" id="Txt_Ingreso2" asp-for="OtroIngresoActual.IngresoNegocioParticular" class="form-control montoOtrosIngresos" onchange="sumarOtrosIngresos()" />
+                <span asp-validation-for="OtroIngresoActual.IngresoNegocioParticular" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-4">
+            <label>Ingresos de rentas financieras</label>
+            <label class="input">
+                <input maxlength="32" id="Txt_Ingreso3" asp-for="OtroIngresoActual.IngresoRentasFinancieras" class="form-control montoOtrosIngresos" onchange="sumarOtrosIngresos()" />
+                <span asp-validation-for="OtroIngresoActual.IngresoRentasFinancieras" class="text-danger"></span>
+            </label>
+        </section>
+        <section class="col col-4">
+            <label>Otros ingresos</label>
+            <label class="input">
+                <input maxlength="32" id="Txt_Ingreso4" asp-for="OtroIngresoActual.OtrosIngresos" class="form-control montoOtrosIngresos" onchange="sumarOtrosIngresos()" />
+                <span asp-validation-for="OtroIngresoActual.OtrosIngresos" class="text-danger"></span>
+            </label>
+        </section>
+
+        <section class="col col-4">
+            <label>Total de otros ingresos</label>
+            <label class="input">
+                <input maxlength="32" id="Txt_TotalIngreso" asp-for="OtroIngresoActual.Total" class="form-control" ReadOnly="readonly" />
+                <span asp-validation-for="OtroIngresoActual.Total" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+
+    <div class="row">
+        <section class="col col-lg-12">
+            <label class="label"></label>
+            <label>Descripci&oacute;n de otros ingresos:</label>
+            <label class="textarea">
+                <textarea maxlength="900" asp-for="OtroIngresoActual.DescripcionOtros" rows="5"></textarea>
+                <span asp-validation-for="OtroIngresoActual.DescripcionOtros" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+    <div class="row">
+        <section class="col col-lg-12">
+            <label class="label"></label>
+            <label>Observaciones:</label>
+            <label class="textarea">
+                <textarea maxlength="900" asp-for="OtroIngresoActual.Observaciones" rows="5"></textarea>
+                <span asp-validation-for="OtroIngresoActual.Observaciones" class="text-danger"></span>
+            </label>
+        </section>
+    </div>
+
+</fieldset>

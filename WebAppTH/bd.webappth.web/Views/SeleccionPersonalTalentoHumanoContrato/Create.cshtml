@@ -6,29 +6,13 @@
 @{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
 <!-- MAIN CONTENT -->
 <div id="content">
-    <div class="col col-10">
-        @if (@ViewData["Error"].ToString() != "")
-
-        {
-
-            <div class="col-lg-7">
-                <div class="alert alert-block alert-dismissable">
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-                    <p>
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-                    </p>
-                </div>
-            </div>
-
-        }
-    </div>
+    
     <p></p>
     <a asp-action="Index">
         <button type="button" asp-action="Index" asp-controller="SeleccionPersonalTalentoHumano" class="btn btn-labeled btn-default">
             <span class="btn-label">
                 <i class="glyphicon glyphicon-arrow-left"></i>
-            </span>Atras
+            </span>Atr&aacute;s
 
         </button>
     </a>
@@ -46,7 +30,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Informacion Basica</h2>
+                        <h2>Informaci&oacute;n Basica</h2>
                     </header>
                     <!-- widget div-->
                     <div>

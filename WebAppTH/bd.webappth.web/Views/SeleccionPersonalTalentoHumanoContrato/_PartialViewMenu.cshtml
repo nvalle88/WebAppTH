@@ -6,53 +6,53 @@
 
 @{
     var a = @Context.Session.GetInt32(Constantes.idDependeciaConcursoSession);
-    var b = @Context.Session.GetInt32(Constantes.idParidaFaseConcursoSession);
+    var b = @Context.Session.GetInt32(Constantes.idPartidaFaseConcursoSession);
     var c = @Context.Session.GetInt32(Constantes.idCandidatoConcursoSession);
 
 }
 <div class="btn-group btn-group-justified">
     @if (Model.OpcionMenu == 0)
     {
-        <a asp-action="create" asp-route-id="@a" asp-route-partida="@b" asp-controller="SeleccionPersonalTalentoHumano" style="background-color:#3276b1;color:white;" class="btn btn-default">Informaci&oacute;n <br />general</a>
+        <a asp-action="create" asp-route-id="@a" asp-route-partida="@b" asp-controller="SeleccionPersonalTalentoHumanoContrato" style="background-color:#3276b1;color:white;" class="btn btn-default">Informaci&oacute;n <br />general</a>
     }
     else
     {
-        <a asp-action="create" asp-route-id="@a" asp-route-partida="@b" asp-controller="SeleccionPersonalTalentoHumano" class="btn btn-default"> Informaci&oacute;n <br />general </a>
+        <a asp-action="create" asp-route-id="@a" asp-route-partida="@b" asp-controller="SeleccionPersonalTalentoHumanoContrato" class="btn btn-default"> Informaci&oacute;n <br />general </a>
     }
 
 
     @if (Model.OpcionMenu == 1)
     {
-        <a asp-action="CreateDatosPersonales" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumano" style="background-color:#3276b1;color:white;" class="btn btn-default">Datos <br /> Personales </a>
+        <a asp-action="CreateDatosPersonales" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumanoContrato" style="background-color:#3276b1;color:white;" class="btn btn-default">Datos <br /> Personales </a>
 
     }
     else
     {
-        <a asp-action="CreateDatosPersonales" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumano" class="btn btn-default">Datos <br /> Personales  </a>
+        <a asp-action="CreateDatosPersonales" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumanoContrato" class="btn btn-default">Datos <br /> Personales  </a>
 
 
     }
 
     @if (Model.OpcionMenu == 2)
     {
-        <a asp-action="IndexInstruccionFormal" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumano" style="background-color:#3276b1;color:white;" class="btn btn-default">Instrucci&oacute;n <br />formal</a>
+        <a asp-action="IndexInstruccionFormal" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumanoContrato" style="background-color:#3276b1;color:white;" class="btn btn-default">Instrucci&oacute;n <br />formal</a>
 
 
     }
     else
     {
-        <a asp-action="IndexInstruccionFormal" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumano" class="btn btn-default">Instrucci&oacute;n <br />formal</a>
+        <a asp-action="IndexInstruccionFormal" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumanoContrato" class="btn btn-default">Instrucci&oacute;n <br />formal</a>
 
     }
 
     @if (Model.OpcionMenu == 3)
     {
-        <a asp-action="IndexExperiencia" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumano" style="background-color:#3276b1;color:white;" class="btn btn-default">Experiencia</a>
+        <a asp-action="IndexExperiencia" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumanoContrato" style="background-color:#3276b1;color:white;" class="btn btn-default">Experiencia</a>
 
     }
     else
     {
-        <a asp-action="IndexExperiencia" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumano" class="btn btn-default">Experiencia</a>
+        <a asp-action="IndexExperiencia" asp-route-partida="@b" asp-route-idCandidato="@c" asp-controller="SeleccionPersonalTalentoHumanoContrato" class="btn btn-default">Experiencia</a>
     }
 
 </div>

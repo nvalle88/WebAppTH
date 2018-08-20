@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
 using System.Security.Claims;
 using bd.webappth.servicios.Extensores;
+using bd.webappth.entidades.ViewModels;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -105,25 +106,35 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> Edit(string id)
+
+
+        public async Task<IActionResult> Edit(int idDeclaracionPatrimonio, int idEmpleado)
         {
             try
             {
-                if (!string.IsNullOrEmpty(id))
+
+                var response = await apiServicio.ObtenerElementoAsync1<Response>(
+                    idDeclaracionPatrimonio,
+                    new Uri(WebApp.BaseAddress),
+                    "api/DeclaracionPatrimonioPersonal/ObtenerDeclaracionPatrimonioPersonal");
+
+
+                if (response.IsSuccess)
                 {
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/DeclaracionPatrimonioPersonal");
 
+                    var modelo = JsonConvert.DeserializeObject<ViewModelDeclaracionPatrimonioPersonal>(response.Resultado.ToString());
 
-                    respuesta.Resultado = JsonConvert.DeserializeObject<DeclaracionPatrimonioPersonal>(respuesta.Resultado.ToString());
-                    if (respuesta.IsSuccess)
-                    {
-                        return View(respuesta.Resultado);
-                    }
+                    return View(modelo);
 
                 }
 
-                return BadRequest();
+                return this.RedireccionarMensajeTime(
+                    "DeclaracionPatrimonioPersonal",
+                    "Historial",
+                    idEmpleado,
+                    $"{Mensaje.Error}|{response.Message}|{"7000"}"
+                );
+
             }
             catch (Exception)
             {
@@ -133,51 +144,34 @@ namespace bd.webappth.web.Controllers.MVC
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, DeclaracionPatrimonioPersonal declaracionPatrimonioPersonal)
+        public async Task<IActionResult> Edit(ViewModelDeclaracionPatrimonioPersonal viewModelDeclaracionPatrimonioPersonal)
         {
             Response response = new Response();
             try
             {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    response = await apiServicio.EditarAsync(id, declaracionPatrimonioPersonal, new Uri(WebApp.BaseAddress),
-                                                                 "api/DeclaracionPatrimonioPersonal");
+                    response = await apiServicio.EditarAsync<Response>(viewModelDeclaracionPatrimonioPersonal, new Uri(WebApp.BaseAddress), "api/DeclaracionPatrimonioPersonal/EditarDeclaracionPatrimonioPersonal");
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un declaración personal",
-                            UserName = "Usuario 1"
-                        });
 
-                        return RedirectToAction("Index");
+                        return this.RedireccionarMensajeTime(
+                            "DeclaracionPatrimonioPersonal",
+                            "Historial",
+                            new { idEmpleado = viewModelDeclaracionPatrimonioPersonal.IdEmpleado },
+                            $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                         );
                     }
-                    ViewData["Error"] = response.Message;
-                    return View(declaracionPatrimonioPersonal);
-
-                }
-                return BadRequest();
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"12000"}";
+                    return View(viewModelDeclaracionPatrimonioPersonal);
+                
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un declaración personal",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
+               
                 return BadRequest();
             }
         }
+
 
         public async Task<IActionResult> Index()
         {
@@ -209,42 +203,169 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> Delete(string id)
+
+        public async Task<IActionResult> Delete(int id, int idEmpleado)
         {
 
             try
             {
-                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "api/DeclaracionPatrimonioPersonal");
+                var response = await apiServicio.EliminarAsync(
+                    id+"", 
+                    new Uri(WebApp.BaseAddress),
+                    "api/DeclaracionPatrimonioPersonal");
+
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de declaración personal eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+                    return this.RedireccionarMensajeTime(
+                        "DeclaracionPatrimonioPersonal",
+                        "Historial",
+                        new { idEmpleado },
+                        $"{Mensaje.Success}|{response.Message}|{"6000"}"
+                    );
                 }
-                return BadRequest();
+
+                return this.RedireccionarMensajeTime(
+                    "DeclaracionPatrimonioPersonal",
+                    "Historial",
+                    new { idEmpleado },
+                    $"{Mensaje.Aviso}|{response.Message}|{"7000"}"
+                );
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Declaración Personal",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
+               
                 return BadRequest();
             }
         }
+
+
+        public async Task<IActionResult> Historial(int idEmpleado)
+        {
+
+            try
+            {
+                if (idEmpleado<1) {
+
+                    return this.RedireccionarMensajeTime(
+                            "DeclaracionPatrimonioPersonal",
+                            "Index",
+                            $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"7000"}"
+                    );
+                }
+
+
+                var modelo = await apiServicio.ObtenerElementoAsync1<DeclaracionPatrimonioPersonalHistoricoViewModel>(
+                            idEmpleado,
+                            new Uri(WebApp.BaseAddress)
+                            , "api/DeclaracionPatrimonioPersonal/ObtenerHistoricoDeclaracionPatrimonioPersonalPorIdEmpleado");
+                
+
+                return View(modelo);
+
+            }
+            catch (Exception ex)
+            {
+
+                return this.RedireccionarMensajeTime(
+                            "DeclaracionPatrimonioPersonal",
+                            "Index",
+                            $"{Mensaje.Error}|{Mensaje.ErrorCargarDatos}|{"7000"}"
+                    );
+
+            }
+
+        }
+
+
+        public async Task<IActionResult> Add(int idEmpleado)
+        {
+
+            var fechaActual = DateTime.Now;
+
+            var modelo = new ViewModelDeclaracionPatrimonioPersonal {
+                IdEmpleado = idEmpleado,
+                
+
+                DeclaracionPatrimonioPersonalPasado = new DeclaracionPatrimonioPersonal
+                {
+                    IdEmpleado = idEmpleado,
+                    FechaDeclaracion = new DateTime(fechaActual.Year-1,fechaActual.Month,1),
+                    TotalEfectivo = 0,
+                    TotalPasivo = 0,
+                    TotalPatrimonio = 0
+                },
+
+                DeclaracionPatrimonioPersonalActual = new DeclaracionPatrimonioPersonal {
+                    FechaDeclaracion = DateTime.Now,
+                    TotalEfectivo = 0,
+                    TotalPasivo = 0,
+                    TotalPatrimonio = 0,
+                    IdEmpleado = idEmpleado,
+                },
+
+                OtroIngresoActual = new OtroIngreso {
+                    IngresoConyuge = 0,
+                    IngresoArriendos = 0,
+                    IngresoNegocioParticular = 0,
+                    IngresoRentasFinancieras = 0,
+                    OtrosIngresos = 0,
+                    Total = 0,
+                }
+
+
+            };
+           
+            
+            return View(modelo);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(ViewModelDeclaracionPatrimonioPersonal viewModelDeclaracionPatrimonioPersonal)
+        {
+
+
+            Response response = new Response();
+            try
+            {
+                if (!ModelState.IsValid) {
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}|{"12000"}";
+                    return View(viewModelDeclaracionPatrimonioPersonal);
+
+                }
+
+
+                response = await apiServicio.InsertarAsync(
+                    viewModelDeclaracionPatrimonioPersonal,
+                    new Uri(WebApp.BaseAddress),
+                    "api/DeclaracionPatrimonioPersonal/AddDeclaracionPatrimonioPersonal");
+
+
+
+                if (response.IsSuccess)
+                {
+
+                    return this.RedireccionarMensajeTime(
+                            "DeclaracionPatrimonioPersonal",
+                            "Historial",
+                            new { idEmpleado = viewModelDeclaracionPatrimonioPersonal.IdEmpleado },
+                            $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                         );
+                }
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"12000"}";
+                return View(viewModelDeclaracionPatrimonioPersonal);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+
     }
 }

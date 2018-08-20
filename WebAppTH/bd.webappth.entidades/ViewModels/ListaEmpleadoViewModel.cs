@@ -40,5 +40,11 @@ namespace bd.webappth.entidades.ViewModels
 
         [Display(Name = "Partida individual / Código")]
         public string PartidaIndividual { get; set; }
+
+        [Display(Name = "Sucursal")]
+        public string NombreSucursal { get; set; }
+
+        [Display(Name = "Código de contrato / Número de partida")]
+        public string CodigoEmpleado { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 @model bd.webappth.entidades.ViewModels.ViewModelTrayectoriaLaboral
 <fieldset>
+
     <div class="row">
         <section class="col col-2">
             <label>Fecha inicio</label>
@@ -65,7 +66,7 @@
                 <span asp-validation-for="MotivoSalida" class="text-danger"></span>
             </label>
         </section>
-        <section>
+        <section hidden>
             <label>Funciones</label>
             <label class="textarea">
                 <textarea maxlength="240" asp-for="DescripcionFunciones" rows="5"></textarea>

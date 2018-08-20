@@ -1,0 +1,179 @@
+@model bd.webappth.entidades.ViewModels.ViewModelDeclaracionPatrimonioPersonal
+
+@{
+    ViewData["Title"] = "ViewModelDeclaracionPatrimonioPersonalActual";
+}
+<div id="content">
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+
+        <div class="col col-lg-12">
+
+            <article class="col col-lg-12">
+
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <div class="widget-body no-padding">
+
+                        <form asp-action="Edit" asp-controller="DeclaracionPatrimonioPersonal" id="checkout-form" class="smart-form" novalidate="novalidate">
+                            @{await Html.RenderPartialAsync("_PartialView2", Model);}
+                            <footer>
+                                <input type="submit" value="Guardar" class="btn btn-primary" onclick="espera()"/>
+                                <a asp-action="Historial" asp-route-idEmpleado="@Model.IdEmpleado" class="btn btn-default" onclick="espera()">Cancelar</a>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+
+            </article>
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script>
+
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+    </script>
+
+    <script type="text/javascript">
+
+
+        function sumarActual() {
+
+
+
+            var valor0 = parseFloat(document.getElementById("Txt_ActualActivos").value.replace(",", "."));
+            var valor1 = parseFloat(document.getElementById("Txt_ActualPasivos").value.replace(",", "."));
+
+            if (valor0 < 0) {
+                valor0 = 0;
+            }
+
+            if (valor1 < 0) {
+                valor1 = 0;
+            }
+
+            document.getElementById("Txt_ActualActivos").value = valor0;
+            document.getElementById("Txt_ActualPasivos").value = valor1;
+
+            var total = valor0 - valor1;
+
+            document.getElementById("Txt_ActualPatrimonio").value = total.toFixed(2);
+
+            calcularComparativo();
+        }
+
+
+        function sumarPasado() {
+
+
+
+            var valor0 = parseFloat(document.getElementById("Txt_PasadoActivos").value.replace(",", "."));
+            var valor1 = parseFloat(document.getElementById("Txt_PasadoPasivos").value.replace(",", "."));
+
+            if (valor0 < 0) {
+                valor0 = 0;
+            }
+
+            if (valor1 < 0) {
+                valor1 = 0;
+            }
+
+
+            document.getElementById("Txt_PasadoActivos").value = valor0;
+            document.getElementById("Txt_PasadoPasivos").value = valor1;
+
+            var total = valor0 - valor1;
+
+            document.getElementById("Txt_PasadoPatrimonio").value = total.toFixed(2);
+
+            calcularComparativo();
+        }
+
+
+        function sumarOtrosIngresos() {
+
+
+            var valor0 = parseFloat(document.getElementById("Txt_Ingreso0").value.replace(",", "."));
+            var valor1 = parseFloat(document.getElementById("Txt_Ingreso1").value.replace(",", "."));
+            var valor2 = parseFloat(document.getElementById("Txt_Ingreso2").value.replace(",", "."));
+            var valor3 = parseFloat(document.getElementById("Txt_Ingreso3").value.replace(",", "."));
+            var valor4 = parseFloat(document.getElementById("Txt_Ingreso4").value.replace(",", "."));
+
+            if (valor0 < 0) {
+                valor0 = 0;
+            }
+
+            if (valor1 < 0) {
+                valor1 = 0;
+            }
+
+            if (valor2 < 0) {
+                valor2 = 0;
+            }
+
+            if (valor3 < 0) {
+                valor3 = 0;
+            }
+
+            if (valor4 < 0) {
+                valor4 = 0;
+            }
+
+
+            document.getElementById("Txt_Ingreso0").value = valor0;
+            document.getElementById("Txt_Ingreso1").value = valor1;
+            document.getElementById("Txt_Ingreso2").value = valor2;
+            document.getElementById("Txt_Ingreso3").value = valor3;
+            document.getElementById("Txt_Ingreso4").value = valor4;
+
+            var total = valor0 + valor1 + valor2 + valor3 + valor4;
+
+            document.getElementById("Txt_TotalIngreso").value = total.toFixed(2);
+
+        }
+
+
+
+        function calcularComparativo() {
+            var valor0 = parseFloat(document.getElementById("Txt_ActualPatrimonio").value.replace(",", "."));
+            var valor1 = parseFloat(document.getElementById("Txt_PasadoPatrimonio").value.replace(",", "."));
+            var total = 0;
+
+            total = valor0 - valor1;
+
+            document.getElementById("Txt_Comparativo").value = total.toFixed(2);
+
+        }
+
+
+
+        sumarActual();
+        sumarPasado();
+        sumarOtrosIngresos();
+
+    </script>
+}

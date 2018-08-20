@@ -86,7 +86,7 @@ namespace bd.webappth.web.Controllers.MVC
                                                                     "api/SeleccionPersonalTalentoHumano/ListarPuestoVacantesSeleccionPersonal");
 
                 InicializarMensaje(null);
-                HttpContext.Session.SetInt32(Constantes.idParidaFaseConcursoSession, 0);
+                HttpContext.Session.SetInt32(Constantes.idPartidaFaseConcursoSession, 0);
                 HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, 0);
                 HttpContext.Session.SetInt32(Constantes.idDependeciaConcursoSession, 0);
                 return View(lista);
@@ -99,9 +99,9 @@ namespace bd.webappth.web.Controllers.MVC
         }
         public async Task<IActionResult> Create(int id, int partida)
         {
-            if (HttpContext.Session.GetInt32(Constantes.idDependeciaConcursoSession) != id && HttpContext.Session.GetInt32(Constantes.idParidaFaseConcursoSession) != partida)
+            if (HttpContext.Session.GetInt32(Constantes.idDependeciaConcursoSession) != id && HttpContext.Session.GetInt32(Constantes.idPartidaFaseConcursoSession) != partida)
             {
-                HttpContext.Session.SetInt32(Constantes.idParidaFaseConcursoSession, partida);
+                HttpContext.Session.SetInt32(Constantes.idPartidaFaseConcursoSession, partida);
                 HttpContext.Session.SetInt32(Constantes.idDependeciaConcursoSession, id);
                 HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, 0);
             }
@@ -147,7 +147,7 @@ namespace bd.webappth.web.Controllers.MVC
                 var response = await apiServicio.InsertarAsync(usuario, new Uri(WebApp.BaseAddress), "api/SeleccionPersonalTalentoHumano/InsertarCandidatoConcurso");
                 if (response.IsSuccess)
                 {
-                    HttpContext.Session.SetInt32(Constantes.idParidaFaseConcursoSession, 0);
+                    HttpContext.Session.SetInt32(Constantes.idPartidaFaseConcursoSession, 0);
                     HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, 0);
                     HttpContext.Session.SetInt32(Constantes.idDependeciaConcursoSession, 0);
                     return RedirectToAction("Index");
@@ -219,7 +219,7 @@ namespace bd.webappth.web.Controllers.MVC
                 //if (HttpContext.Session.GetInt32(Constantes.idCandidatoConcursoSession) != idCandidato)
                 //{
                 //    HttpContext.Session.SetInt32(Constantes.idCandidatoConcursoSession, idCandidato);
-                //   // HttpContext.Session.SetInt32(Constantes.idParidaFaseConcursoSession, partida);
+                //   // HttpContext.Session.SetInt32(Constantes.idPartidaFaseConcursoSession, partida);
                 //}
                 InicializarMensaje(null);
                 var candidato = ObtenerCandidato();
@@ -452,7 +452,7 @@ namespace bd.webappth.web.Controllers.MVC
             var candidato = new ViewModelSeleccionPersonal
             {
                 iddependecia = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idDependeciaConcursoSession)),
-                IdPartidaFase = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idParidaFaseConcursoSession)),
+                IdPartidaFase = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idPartidaFaseConcursoSession)),
                 IdCandidato = Convert.ToInt32(HttpContext.Session.GetInt32(Constantes.idCandidatoConcursoSession)),
             };
             return candidato;

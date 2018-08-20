@@ -5,6 +5,7 @@ using bd.webappseguridad.entidades.Enumeradores;
 using bd.webappth.entidades.Negocio;
 using bd.webappth.entidades.Utils;
 using bd.webappth.entidades.ViewModels;
+using bd.webappth.servicios.Extensores;
 using bd.webappth.servicios.Interfaces;
 using EnviarCorreo;
 using Microsoft.AspNetCore.Mvc;
@@ -99,6 +100,15 @@ namespace bd.webappth.web.Controllers.MVC
         {
             InicializarMensaje(mensaje);
 
+            if (String.IsNullOrEmpty(identificacion))
+            {
+                return this.RedireccionarMensajeTime(
+                    "DocumentosEmpleadosTTHH",
+                    "Index",
+                    $"{Mensaje.Aviso}|{Mensaje.SessionCaducada}|{"7000"}"
+                );
+            }
+
             var listaDocumentos = new List<DocumentosIngreso>();
             var listaDocumentosEntregados = new List<DocumentosIngresoEmpleado>();
 
@@ -115,33 +125,56 @@ namespace bd.webappth.web.Controllers.MVC
                         Identificacion = identificacion
                     }
                 };
-                var emp = await apiServicio.ObtenerElementoAsync1<ListaEmpleadoViewModel>(empleado, new Uri(WebApp.BaseAddress),
-                                                              "api/Empleados/ObtenerDatosCompletosEmpleado");
+
+                var datosCompletosEmpleado = new ListaEmpleadoViewModel();
+
+                Response reponseDatosEmpleado = await apiServicio.ObtenerElementoAsync1<Response>(
+                    empleado, 
+                    new Uri(WebApp.BaseAddress), 
+                    "api/Empleados/ObtenerDatosCompletosEmpleado");
+
+
+                
+                if (!reponseDatosEmpleado.IsSuccess) {
+
+                    return this.RedireccionarMensajeTime(
+                            "DocumentosEmpleadosTTHH",
+                            "Index",
+                            $"{Mensaje.Error}|{reponseDatosEmpleado.Message}|{"7000"}"
+                    );
+                }
+
+                datosCompletosEmpleado = JsonConvert.DeserializeObject<ListaEmpleadoViewModel>(
+                        reponseDatosEmpleado.Resultado.ToString()
+                    );
 
                 var empleadoConsulta = new Empleado
                 {
-                    IdEmpleado = emp.IdEmpleado
+                    IdEmpleado = datosCompletosEmpleado.IdEmpleado
                 };
-                //var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(empleadoConsulta, new Uri(WebApp.BaseAddress), "api/DocumentosIngreso/GetDocumentoIngresoEmpleado");
-                //if (!respuesta.IsSuccess)
-                //{
-                listaDocumentos = await apiServicio.Listar<DocumentosIngreso>(new Uri(WebApp.BaseAddress)
-                                     , "api/DocumentosIngreso/ListarDocumentosIngreso");
 
-                listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleadoConsulta, new Uri(WebApp.BaseAddress), "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
+
+                listaDocumentos = await apiServicio.Listar<DocumentosIngreso>(
+                    new Uri(WebApp.BaseAddress), 
+                    "api/DocumentosIngreso/ListarDocumentosIngreso");
+
+
+                listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(
+                    empleadoConsulta, 
+                    new Uri(WebApp.BaseAddress), 
+                    "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
+
 
                 documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado
                 {
-                    empleadoViewModel = emp,
+                    empleadoViewModel = datosCompletosEmpleado,
                     listadocumentosingreso = listaDocumentos.OrderBy(o=>o.IdDocumentosIngreso).ToList(),
                     listadocumentosingresoentregado = listaDocumentosEntregados.OrderBy(o => o.IdDocumentosIngreso).ToList()
 
                 };
 
-
-
                 return View(documentoingresoViewModel);
-                //}
+                
 
             }
             catch (Exception)
@@ -218,8 +251,7 @@ namespace bd.webappth.web.Controllers.MVC
                     }
                 };
 
-                emp = await apiServicio.ObtenerElementoAsync1<ListaEmpleadoViewModel>(empleado, new Uri(WebApp.BaseAddress),
-                                                              "api/Empleados/ObtenerDatosCompletosEmpleado");
+                emp = await apiServicio.ObtenerElementoAsync1<ListaEmpleadoViewModel>(empleado, new Uri(WebApp.BaseAddress),"api/Empleados/ObtenerDatosCompletosEmpleado");
 
 
 
@@ -228,6 +260,8 @@ namespace bd.webappth.web.Controllers.MVC
                 Response response = await apiServicio.InsertarAsync(model,
                                                          new Uri(WebApp.BaseAddress),
                                                          "api/LavadoActivoEmpleados/ExisteLavadoActivosPorIdEmpleado");
+
+                emp.Identificacion = identificacion;
 
                 if (response.IsSuccess) {
 

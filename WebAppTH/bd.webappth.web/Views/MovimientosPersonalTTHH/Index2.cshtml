@@ -1,0 +1,70 @@
+﻿
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<!-- MAIN CONTENT -->
+<div id="content">
+
+
+
+    <div class="alert alert-info">
+        <b>Aviso</b>
+        
+        <br>
+        Para asignar al funcionario un movimiento interno, por favor ingrese la <b>identificaci&oacute;n del funcionario: </b>el n&uacute;mero de c&eacute;dula o pasaporte
+    </div>
+    <p></p>
+
+    <!-- widget grid -->
+    <section id="" class="">
+        <!-- row -->
+
+        <form asp-action="ListaMovimientos" id="checkout-form" class="smart-form" novalidate="novalidate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row">
+
+                <label class="col col-lg-2">
+                    <input type="submit" value="Ingresar identificaci&oacute;n" class=" form-control btn btn-default">
+                </label>
+
+                <label class="col col-lg-2">
+                    <input type="text" class="form-control" style="padding-left:5px;" name="identificacion" />
+                </label>
+            </div>
+
+
+        </form>
+
+
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.min.css" />
+    <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+
+    <script type="text/javascript">
+        function espera() {
+
+            mostrarLoadingPanel("content", "Cargando...");
+        }
+
+        $("#btn_0").css("background-color", "#3276b1");
+        $("#btn_0").css("color", "white");
+
+    </script>
+}
+
