@@ -16,7 +16,13 @@ namespace bd.webappth.entidades.Negocio
 
         public bool TrabajoSuperintendenciaBanco { get; set; }
 
+
+        public bool AcumulaDecimoTercero { get; set; }
+
+        public bool AcumulaDecimoCuarto { get; set; }
+
         public bool FondosReservas { get; set; }
+        public bool DerechoFondoReserva { get; set; }
 
         public bool AcumulaDecimos { get; set; }
 

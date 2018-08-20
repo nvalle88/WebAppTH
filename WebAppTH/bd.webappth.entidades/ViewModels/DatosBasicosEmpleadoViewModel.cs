@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bd.webappth.entidades.Negocio;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -35,11 +36,17 @@ namespace bd.webappth.entidades.ViewModels
         [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int IdSexo { get; set; }
 
-        [Display(Name = "Fondo de reserva")]
+        [Display(Name = "Acumula fondo de reserva")]
         public bool FondosReservas { get; set; }
 
-        [Display(Name = "Décimos")]
-        public bool AcumulaDecimos { get; set; }
+        [Display(Name = "Derecho fondo de reserva")]
+        public bool DerechoFondoReserva { get; set; }
+
+        [Display(Name = "Décimo tercero")]
+        public bool AcumulaDecimoTercero { get; set; }
+
+        [Display(Name = "Décimo cuarto")]
+        public bool AcumulaDecimoCuarto { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Género")]
@@ -67,6 +74,9 @@ namespace bd.webappth.entidades.ViewModels
         public int IdEtnia { get; set; }
 
         public int? IdNacionalidadIndigena { get; set; }
+
+        public int? IdBrigadaSSoRol { get; set; }
+        public int? IdBrigadaSSO { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Correo privado")]
@@ -163,6 +173,8 @@ namespace bd.webappth.entidades.ViewModels
 
         [Display(Name = "Tipo relación")]
         public string RelacionSuperintendencia { get; set; }
+
+        public List<BrigadaSSORol> BrigadaSSORol { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
