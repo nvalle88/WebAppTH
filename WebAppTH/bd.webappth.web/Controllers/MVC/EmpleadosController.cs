@@ -1889,7 +1889,7 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var response = await apiServicio.EliminarAsync(IdEmpleado,
-                    new Uri(WebApp.BaseAddressRM),
+                    new Uri(WebApp.BaseAddress),
                     "api/Empleados/EliminarEmpleadoSinDistributivo");
                 
 
