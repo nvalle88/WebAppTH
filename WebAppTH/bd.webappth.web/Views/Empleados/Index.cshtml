@@ -117,8 +117,17 @@
                                         </td>
 
                                         <td>
+
                                             @Html.ActionLink("Ficha del empleado", "Detalle", "FichaEmpleado", new { idEmpleado = item.IdEmpleado, idPersona = item.IdPersona }, new { onclick = "cargando()" })<br /> |
                                             @Html.ActionLink("Agregar a Distributivo", "AgregarDistributivo", new { IdEmpleado = item.IdEmpleado })<br />
+
+                                            @if (item.IdRelacionLaboral <= 0)
+                                            {
+                                                <text>
+                                                    |@Html.ActionLink("Eliminar", "EliminarEmpleado", new { IdEmpleado = item.IdEmpleado })<br />
+                                                </text>
+                                            }
+
 
 
                                         </td>
