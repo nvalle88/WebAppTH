@@ -57,7 +57,7 @@
                                         </th>
 
                                         <th data-hide="phone">
-                                           D&eacute;cimos
+                                            D&eacute;cimos
                                         </th>
 
 
@@ -66,127 +66,105 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr class="FondosReservasAcumulacionDecimos" id="@item.IdEmpleado" >
+                                        <tr>
                                             <td>
+                                                @item.IdEmpleado
                                                 @Html.DisplayFor(modelItem => item.Identificacion)
                                             </td>
 
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Nombres)  @Html.DisplayFor(modelItem => item.Apellidos)
                                             </td>
-                                            <td >
-                                                @if (item.DerechoFondoReserva == true)
-                                                {
-                                                    <legend class="text-center h6"><b>Tiene derecho</b></legend>
-                                                    <label class="text-center  ">
-                                                        <label class="radio radio-inline  ">
-                                                            <input id="der_fr_@item.IdEmpleado" type="radio" class="radiobox  " checked="checked" value="true" onclick="ActivarDerechoFondoReserva(@item.IdEmpleado)" name="der_@item.IdEmpleado">
-                                                            <span class=" " >SI</span>
-                                                        </label>
-                                                        <label class="radio radio-inline  ">
-                                                            <input id="der_fr_@item.IdEmpleado" type="radio" onclick="DesactivarDerechoFondoReserva(@item.IdEmpleado)" class="radiobox  " name="der_@item.IdEmpleado">
-                                                            <span class=" ">NO</span>
-                                                        </label>
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <legend class="text-center h6 "><b>Tiene derecho</b></legend>
-                                                    <label class="text-align-center  ">
-                                                        <label class="radio radio-inline  ">
-                                                            <input id="der_fr_@item.IdEmpleado" type="radio" class="radiobox  " onclick="ActivarDerechoFondoReserva(@item.IdEmpleado)" name="der_@item.IdEmpleado">
-                                                            <span class=" ">SI</span>
-                                                        </label>
-                                                        <label class="radio radio-inline  ">
-                                                            <input id="der_fr_@item.IdEmpleado" type="radio" onclick="DesactivarDerechoFondoReserva(@item.IdEmpleado)" checked="checked" class="radiobox  " name="der_@item.IdEmpleado">
-                                                            <span class=" ">NO</span>
-                                                        </label>
-                                                    </label>
-
-                                                }
-
-                                                <legend class="text-center h6 "><b>Modalidad</b></legend>
-                                                @if (item.FondosReservas == true)
-                                                {
-                                                    <label class="radio radio-inline  ">
-                                                        <input id="mod_cta_@item.IdEmpleado" checked="checked" type="radio" class="radiobox" onclick="ModalidadCuentaFondosReservas(@item.IdEmpleado)" name="mod_@item.IdEmpleado">
-                                                        <span>CUENTA</span>
-                                                    </label>
-                                                    <label class="radio radio-inline  ">
-                                                        <input id="mod_cta_iess_@item.IdEmpleado" onclick="ModalidadIESSFondosReservas(@item.IdEmpleado)" type="radio" class="radiobox" name="mod_@item.IdEmpleado">
-                                                        <span>IESS</span>
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <label class="radio radio-inline  ">
-                                                        <input id="mod_cta_@item.IdEmpleado" type="radio" class="radiobox" onclick="ModalidadCuentaFondosReservas(@item.IdEmpleado)" name="mod_@item.IdEmpleado">
-                                                        <span>CUENTA</span>
-                                                    </label>
-                                                    <label class="radio radio-inline  ">
-                                                        <input id="mod_cta_iess_@item.IdEmpleado" checked="checked" onclick="ModalidadIESSFondosReservas(@item.IdEmpleado)" type="radio" class="radiobox" name="mod_@item.IdEmpleado">
-                                                        <span>IESS</span>
-                                                    </label>
-                                                }
-
-                                                <p></p>
-                                            </td>
-
                                             <td>
-                                                @if (item.AcumulaDecimoTercero == true)
-                                                {
-                                                    <legend class="text-center h6"><b>D&eacute;cimo tercero</b></legend>
-                                                    <label class="text-align-center">
-                                                        <label class="radio radio-inline">
-                                                            <input id="acumula_decimotercero_@item.IdEmpleado" type="radio" class="radiobox" checked="checked" value="true" onclick="ActivarDecimoTercero(@item.IdEmpleado)" name="acumula_decimotercero_@item.IdEmpleado">
-                                                            <span>SI</span>
-                                                        </label>
-                                                        <label class="radio radio-inline">
-                                                            <input id="acumula_decimotercero_@item.IdEmpleado" type="radio" onclick="DesactivarDecimoTercero(@item.IdEmpleado)" class="radiobox" name="acumula_decimotercero_@item.IdEmpleado">
-                                                            <span>NO</span>
-                                                        </label>
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <legend class="text-center h6"><b>D&eacute;cimo tercero</b></legend>
-                                                    <label class="text-align-center">
-                                                        <label class="radio radio-inline">
-                                                            <input id="acumula_decimotercero_@item.IdEmpleado" type="radio" class="radiobox"  onclick="ActivarDecimoTercero(@item.IdEmpleado)" name="acumula_decimotercero_@item.IdEmpleado">
-                                                            <span>SI</span>
-                                                        </label>
-                                                        <label class="radio radio-inline">
-                                                            <input id="acumula_decimotercero_@item.IdEmpleado" checked="checked" type="radio" onclick="DesactivarDecimoTercero(@item.IdEmpleado)" class="radiobox" name="acumula_decimotercero_@item.IdEmpleado">
-                                                            <span>NO</span>
-                                                        </label>
-                                                    </label>
-                                                }
+                                                <table  class="table-striped table-bordered table-hover ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th data-hide="phone" class="text-align-center">
+                                                                Tiene derecho
+                                                            </th>
 
-                                                <legend class="text-center h6"><b>D&eacute;cimo cuarto</b></legend>
-                                                @if (item.AcumulaDecimoCuarto == true)
-                                                {
-                                                <label class="radio radio-inline">
-                                                    <input id="acumula_decimo_cuarto_@item.IdEmpleado" checked="checked" type="radio" class="radiobox" onclick="ActivarDecimoCuarto(@item.IdEmpleado)" name="acumula_decimo_cuarto_@item.IdEmpleado">
-                                                    <span>SI</span>
-                                                </label>
-                                                    <label class="radio radio-inline">
-                                                        <input id="acumula_decimo_cuarto_@item.IdEmpleado" onclick="DesactivarDecimoCuarto(@item.IdEmpleado)" type="radio" class="radiobox" name="acumula_decimo_cuarto_@item.IdEmpleado">
-                                                        <span>NO</span>
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <label class="radio radio-inline">
-                                                        <input id="acumula_decimo_cuarto_@item.IdEmpleado"  type="radio" class="radiobox" onclick="ActivarDecimoCuarto(@item.IdEmpleado)" name="acumula_decimo_cuarto_@item.IdEmpleado">
-                                                        <span>SI</span>
-                                                    </label>
-                                                    <label class="radio radio-inline">
-                                                        <input id="acumula_decimo_cuarto_@item.IdEmpleado" checked="checked" onclick="DesactivarDecimoCuarto(@item.IdEmpleado)" type="radio" class="radiobox" name="acumula_decimo_cuarto_@item.IdEmpleado">
-                                                        <span>NO</span>
-                                                    </label>
-                                                }
+                                                            <th data-hide="phone" class="text-align-center">
+                                                                Modalidad
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="text-center">
+                                                                    <label class="radio radio-inline">
+                                                                        <input type="radio" class="radiobox" @if (item.DerechoFondoReserva == true) { <text> checked="checked" </text> } value="true" onclick="ActivarDerechoFondoReserva(@item.IdEmpleado)" name="der_@(item.IdEmpleado)">
+                                                                        <span>SI</span>
+                                                                    </label>
 
-                                                <p></p>
+                                                                    <label class="radio radio-inline">
+                                                                        <input type="radio" class="radiobox" @if (item.DerechoFondoReserva == false) { <text> checked="checked" </text> } value="false" onclick="DesactivarDerechoFondoReserva(@item.IdEmpleado)" name="der_@(item.IdEmpleado)">
+                                                                        <span>NO</span>
+                                                                    </label>
+                                                                </label>
+                                                            </td>
+
+                                                            <td>
+                                                                <label class="text-center">
+                                                                    <label class="radio radio-inline">
+                                                                        <input type="radio" class="radiobox" @if (item.FondosReservas == true) { <text> checked="checked" </text> } value="true" onclick="ModalidadCuentaFondosReservas(@item.IdEmpleado)" name="fondoreserva_@(item.IdEmpleado)">
+                                                                        <span>CUENTA</span>
+                                                                    </label>
+
+                                                                    <label class="radio radio-inline">
+                                                                        <input type="radio" class="radiobox" @if (item.FondosReservas == false) { <text> checked="checked" </text> } value="false" onclick="ModalidadIESSFondosReservas(@item.IdEmpleado)" name="fondoreserva_@(item.IdEmpleado)">
+                                                                        <span>IESS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                                    </label>
+                                                                 </label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td>
+                                                <table class="table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th data-hide="phone" class="text-align-center">
+                                                                D&eacute;cimo tercero
+                                                            </th>
+
+                                                            <th data-hide="phone" class="text-align-center">
+                                                                D&eacute;cimo cuarto
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="text-center">
+                                                                    <label class="radio radio-inline">
+                                                                        <input type="radio" class="radiobox" @if (item.AcumulaDecimoTercero == true) { <text> checked="checked" </text> } value="true" onclick="ActivarDecimoTercero(@item.IdEmpleado)" name="acumuladecimotercero_@(item.IdEmpleado)">
+                                                                        <span>SI</span>
+                                                                    </label>
+
+                                                                    <label class="radio radio-inline">
+                                                                        <input type="radio" class="radiobox" @if (item.AcumulaDecimoTercero == false) { <text> checked="checked" </text> } value="false" onclick="DesactivarDecimoTercero(@item.IdEmpleado)" name="acumuladecimotercero_@(item.IdEmpleado)">
+                                                                        <span>NO</span>
+                                                                    </label>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <label class="text-center">
+                                                                    <label class="radio radio-inline">
+                                                                        <input type="radio" class="radiobox" @if (item.AcumulaDecimoCuarto == true) { <text> checked="checked" </text> } value="true" onclick="ActivarDecimoCuarto(@item.IdEmpleado)" name="acumuladecimocuarto_@(item.IdEmpleado)">
+                                                                        <span>SI</span>
+                                                                    </label>
+
+                                                                    <label class="radio radio-inline">
+                                                                        <input type="radio" class="radiobox" @if (item.AcumulaDecimoCuarto == false) { <text> checked="checked" </text> } value="false" onclick="DesactivarDecimoCuarto(@item.IdEmpleado)" name="acumuladecimocuarto_@(item.IdEmpleado)">
+                                                                        <span>NO</span>
+                                                                    </label>
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </td>
                                         </tr>
                                     }
@@ -213,7 +191,7 @@
     <script src='~/js/site.js'></script>
     <script type="text/javascript">
 
-        
+
 
         function ActivarDerechoFondoReserva(idEmpleado)
         {
@@ -328,7 +306,7 @@
                     }
                 });
         }
-        
+
         function DesactivarDecimoTercero(idEmpleado)
         {
             mostrarLoadingPanel("content", "")

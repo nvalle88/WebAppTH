@@ -117,7 +117,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             var respuesta = await apiServicio.EditarAsync<Response>(new Empleado { IdEmpleado = idEmpleado, FondosReservas = estado }
             , new Uri(WebApp.BaseAddress)
-             , "api/Empleados/CambiarEstadoDerechoFondosReservas");
+             , "api/Empleados/CambiarEstadoFondosReservas");
 
             if (respuesta.IsSuccess)
             {
