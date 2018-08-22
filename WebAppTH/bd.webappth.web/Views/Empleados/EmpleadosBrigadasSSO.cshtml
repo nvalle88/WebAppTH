@@ -70,7 +70,7 @@
                                                 <section class="">
                                                     <div class="form-group col-lg-12">
                                                         <div class="input">
-                                                            <select id="cb_brigada_@item.IdEmpleado" asp-for="@item.IdBrigadaSSO" onclick="CargarBrigadaSSORol(@item.IdEmpleado)" class="col col-lg-12" asp-class="form-control" asp-items="ViewBag.IdBrigadaSSO">
+                                                            <select  id="cb_brigada_@item.IdEmpleado" asp-for="@item.IdBrigadaSSO" onclick="CargarBrigadaSSORol(@item.IdEmpleado)" class="col col-lg-12" asp-class="form-control" asp-items="ViewBag.IdBrigadaSSO">
                                                                 <option value="0" selected="selected">SIN BRIDADA</option>
                                                             </select>
 
@@ -79,10 +79,10 @@
                                                 </section>
                                             </td>
                                             <td class="col-lg-4">
-                                                <section class="">
+                                                <section class="" >
                                                     <div class="form-group col-lg-12">
                                                         <div class="input">
-                                                            <select id="cb_brigada_rol_@item.IdEmpleado" asp-for="@item.IdBrigadaSSoRol" onclick="SalvarBrigadaSSORol(@item.IdEmpleado)" class="col col-lg-12" asp-class="form-control" asp-items="@(new SelectList(Model.FirstOrDefault().BrigadaSSORol.Where(x=>x.IdBrigadaSSO==item.IdBrigadaSSO),"IdBrigadaSSORol","Nombre"))"></select>
+                                                            <select  id="cb_brigada_rol_@item.IdEmpleado" asp-for="@item.IdBrigadaSSoRol" onclick="SalvarBrigadaSSORol(@item.IdEmpleado)" class="col col-lg-12" asp-class="form-control" asp-items="@(new SelectList(Model.FirstOrDefault().BrigadaSSORol.Where(x=>x.IdBrigadaSSO==item.IdBrigadaSSO),"IdBrigadaSSORol","Nombre"))"></select>
                                                         </div>
                                                     </div>
                                                 </section>
@@ -157,6 +157,8 @@
                 dataType: 'json',
                 data: { brigada: $("#cb_brigada_" + idEmpleado).val() },
                 success: function (data) {
+                    $("#cb_brigada_rol_" + idEmpleado).append('<option value="0" ><b>SELECCIONE</b> </hr></option>');
+                   
                     $.each(data, function (i, data) {
                         $("#cb_brigada_rol_" + idEmpleado).append('<option value="'
                                 + data.idBrigadaSSORol + '">'
@@ -164,8 +166,10 @@
 
                         });
                 }, complete: function (data) {
-                    
-                        $("#content").waitMe("hide");
+                    Init_Select2();
+                    $("#content").waitMe("hide");
+
+                   
                     },
 
                     error: function (ex) {
