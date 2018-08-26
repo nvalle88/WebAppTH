@@ -1,0 +1,65 @@
+
+@model bd.webappth.entidades.Negocio.GeneralCapacitacion
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+   
+  
+<div class="btn-group btn-group-justified">
+    @if (Model.OpcionMenu == 0)
+    {
+        <a asp-action="IndexTipoCapacitacion" asp-controller="GeneralCapacitacion" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Tipo<br />Capacitaciones</a>
+    }
+    else
+    {
+        <a asp-action="IndexTipoCapacitacion" asp-controller="GeneralCapacitacion" onclick="cargando()" class="btn btn-default"> Tipo<br />Capacitaciones</a>
+    }
+
+
+    @if (Model.OpcionMenu == 1)
+    {
+        <a asp-action="IndexEstadoEvento" asp-controller="GeneralCapacitacion" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Estado<br />Evento</a>
+    }
+    else
+    {
+        <a asp-action="IndexEstadoEvento" asp-controller="GeneralCapacitacion" onclick="cargando()" class="btn btn-default"> Estado<br />Evento</a>
+    }
+    @if (Model.OpcionMenu == 2)
+    {
+        <a asp-action="IndexNombreEvento" asp-controller="GeneralCapacitacion" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Nombre<br />Evento</a>
+    }
+    else
+    {
+        <a asp-action="IndexNombreEvento" asp-controller="GeneralCapacitacion" onclick="cargando()" class="btn btn-default"> Nombre<br />Evento</a>
+    }
+    @if (Model.OpcionMenu == 3)
+    {
+        <a asp-action="IndexTipoEvento" asp-controller="GeneralCapacitacion" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Tipo<br />Evento</a>
+    }
+    else
+    {
+        <a asp-action="IndexTipoEvento" asp-controller="GeneralCapacitacion" onclick="cargando()" class="btn btn-default"> Tipo<br />Evento</a>
+    }
+    @if (Model.OpcionMenu == 4)
+    {
+        <a asp-action="IndexEvaluacionEvento" asp-controller="GeneralCapacitacion" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Tipo<br />Evaluaci&oacute;n</a>
+    }
+    else
+    {
+        <a asp-action="IndexEvaluacionEvento" asp-controller="GeneralCapacitacion" onclick="cargando()" class="btn btn-default"> Tipo<br />Evaluaci&oacute;n</a>
+    }
+    @if (Model.OpcionMenu == 5)
+    {
+        <a asp-action="IndexAmbitoCapacitacion" asp-controller="GeneralCapacitacion" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> &Aacute;mbito<br />Capacitac&iacute;n</a>
+    }
+    else
+    {
+        <a asp-action="IndexAmbitoCapacitacion" asp-controller="GeneralCapacitacion" onclick="cargando()" class="btn btn-default"> &Aacute;mbito<br />Capacitac&iacute;n</a>
+    }
+
+
+
+
+
+</div>
