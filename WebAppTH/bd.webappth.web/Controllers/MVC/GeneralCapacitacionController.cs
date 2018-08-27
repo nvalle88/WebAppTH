@@ -20,10 +20,6 @@ namespace bd.webappth.web.Controllers.MVC
             this.apiServicio = apiServicio;
 
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
         public async Task<IActionResult> IndexTipoCapacitacion()
         {
             var lista = new List<GeneralCapacitacion>();
