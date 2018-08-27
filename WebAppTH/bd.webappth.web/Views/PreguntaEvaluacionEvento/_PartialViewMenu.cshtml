@@ -1,0 +1,38 @@
+
+@model bd.webappth.entidades.Negocio.PreguntaEvaluacionEvento
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using bd.webappth.entidades.Constantes;
+   
+  
+<div class="btn-group btn-group-justified">
+    @if (Model.OpcionMenu == 0)
+    {
+        <a asp-action="IndexFacilitador" asp-controller="PreguntaEvaluacionEvento" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Preguntas<br />Facilitador</a>
+    }
+    else
+    {
+        <a asp-action="IndexFacilitador" asp-controller="PreguntaEvaluacionEvento" onclick="cargando()" class="btn btn-default"> Preguntas<br />Facilitador</a>
+    }
+
+
+    @if (Model.OpcionMenu == 1)
+    {
+        <a asp-action="IndexOrganizador" asp-controller="PreguntaEvaluacionEvento" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Preguntas<br />Organizador</a>
+    }
+    else
+    {
+        <a asp-action="IndexOrganizador" asp-controller="PreguntaEvaluacionEvento" onclick="cargando()" class="btn btn-default"> Preguntas<br />Organizador</a>
+    }
+    @if (Model.OpcionMenu == 2)
+    {
+        <a asp-action="IndexConocimiento" asp-controller="PreguntaEvaluacionEvento" onclick="cargando()" style="background-color:#3276b1;color:white;" class="btn btn-default"> Preguntas<br />Conocimiento</a>
+    }
+    else
+    {
+        <a asp-action="IndexConocimiento" asp-controller="PreguntaEvaluacionEvento" onclick="cargando()" class="btn btn-default"> Preguntas<br />Conocimiento</a>
+    }
+   
+
+</div>
