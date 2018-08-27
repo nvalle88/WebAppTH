@@ -117,7 +117,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
             var respuesta = await apiServicio.EditarAsync<Response>(new Empleado { IdEmpleado = idEmpleado, FondosReservas = estado }
             , new Uri(WebApp.BaseAddress)
-             , "api/Empleados/CambiarEstadoDerechoFondosReservas");
+             , "api/Empleados/CambiarEstadoFondosReservas");
 
             if (respuesta.IsSuccess)
             {
@@ -157,12 +157,24 @@ namespace bd.webappth.web.Controllers.MVC
             ViewData["Error"] = mensaje;
         }
 
-        public async Task<IActionResult> AcumulacionProvisiones()
+        public async Task<IActionResult> AcumulacionProvisionesFondoReserva()
         {
             var lista = await apiServicio.ObtenerElementoAsync1<List<DatosBasicosEmpleadoViewModel>>(new Empleado { Activo = true }
              , new Uri(WebApp.BaseAddress)
               , "api/Empleados/ListaEmpleadosPorEstado");
+         
+            lista.Insert(0, new DatosBasicosEmpleadoViewModel {IdEmpleado=0 });
+           
+            return View(lista);
 
+        }
+
+        public async Task<IActionResult> AcumulacionProvisionesDecimos()
+        {
+            var lista = await apiServicio.ObtenerElementoAsync1<List<DatosBasicosEmpleadoViewModel>>(new Empleado { Activo = true }
+             , new Uri(WebApp.BaseAddress)
+              , "api/Empleados/ListaEmpleadosPorEstado");
+            lista.Insert(0, new DatosBasicosEmpleadoViewModel { IdEmpleado = 0 });
             return View(lista);
 
         }

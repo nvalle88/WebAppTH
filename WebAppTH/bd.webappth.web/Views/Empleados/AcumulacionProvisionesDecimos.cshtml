@@ -1,0 +1,129 @@
+@model List<bd.webappth.entidades.ViewModels.DatosBasicosEmpleadoViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{var noacumulandecimotercero = Model.Where(x => x.AcumulaDecimoTercero == false).Count();
+    noacumulandecimotercero = noacumulandecimotercero - 1;
+}
+@{var noacumulandecimocuarto = Model.Where(x => x.AcumulaDecimoCuarto == false).Count();
+    noacumulandecimocuarto = noacumulandecimocuarto - 1;
+}
+
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-12">
+            <ul id="sparks" class="">
+                <li class="sparks-info">
+                    <h5> Acumulan d&eacute;cimo tercero <span class="txt-color-blue"><i class="fa fa-arrow-circle-up"></i>  @Model.Where(x => x.AcumulaDecimoTercero == true).Count()</span></h5>
+                </li>
+                <li class="sparks-info">
+                    <h5>No Acumulan d&eacute;cimo tercero <span class="txt-color-red"><i class="fa fa-arrow-circle-down"></i>   @noacumulandecimotercero</span></h5>
+                </li>
+                <li class="sparks-info">
+                    <h5> Acumulan d&eacute;cimo cuarto <span class="txt-color-blue"><i class="fa fa-arrow-circle-up"></i>   @Model.Where(x => x.AcumulaDecimoCuarto == true).Count()</span></h5>
+                </li>
+                <li class="sparks-info">
+                    <h5> NO Acumulan d&eacute;cimo cuarto <span class="txt-color-red"><i class="fa fa-arrow-circle-down"></i>   @noacumulandecimocuarto</span></h5>
+                </li>
+            </ul>
+            <br />
+        </div>
+    </div>
+
+    <section id="" class="">
+        <div class="row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Empleados</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_fixed_column" data-page-length="50" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <th colspan="2" class="text-align-center" scope="colgroup">D&eacute;cimos</th>
+                                    </tr>
+                                    <tr>
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Identificacion)
+                                        </th>
+
+                                        <th data-class="expand">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombres) y @Html.DisplayNameFor(model => model.FirstOrDefault().Apellidos)
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            Tercero
+                                        </th>
+                                        <th data-hide="phone">
+                                            Cuarto
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr @if (item.IdEmpleado == 0) { <text> hidden="hidden" </text> }>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Identificacion)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nombres)  @Html.DisplayFor(modelItem => item.Apellidos)
+                                            </td>
+                                            <td>
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" class="radiobox" @if (item.AcumulaDecimoTercero == true) { <text> checked="checked" </text> } value="true" onclick="ActivarDecimoTercero(@item.IdEmpleado)" name="acumuladecimotercero_@(item.IdEmpleado)">
+                                                    <span>SI</span>
+                                                </label>
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" class="radiobox" @if (item.AcumulaDecimoTercero == false) { <text> checked="checked" </text> } value="false" onclick="DesactivarDecimoTercero(@item.IdEmpleado)" name="acumuladecimotercero_@(item.IdEmpleado)">
+                                                    <span>NO</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" class="radiobox" @if (item.AcumulaDecimoCuarto == true) { <text> checked="checked" </text> } value="true" onclick="ActivarDecimoCuarto(@item.IdEmpleado)" name="acumuladecimocuarto_@(item.IdEmpleado)">
+                                                    <span>SI</span>
+                                                </label>
+                                                <label class="radio radio-inline">
+                                                    <input type="radio" class="radiobox" @if (item.AcumulaDecimoCuarto == false) { <text> checked="checked" </text> } value="false" onclick="DesactivarDecimoCuarto(@item.IdEmpleado)" name="acumuladecimocuarto_@(item.IdEmpleado)">
+                                                    <span>NO</span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+
+
+@section Scripts {
+
+    <script src="~/js/AcumularProvisiones/Provisiones.js"></script>
+    <script src='~/js/site.js'></script>
+    <script src='~/js/datatables/init.js'></script>
+}
+
