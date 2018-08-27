@@ -56,7 +56,19 @@
                                         </th>
 
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.FechaSolicitud)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.FechaDesde)
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.FechaHasta)
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.HoraDesde)
+                                        </th>
+
+                                        <th data-hide="phone">
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().SolicitudPermiso.HoraHasta)
                                         </th>
 
                                         <th data-hide="phone">
@@ -82,10 +94,26 @@
 
                                             <td>
 
-                                                @(item.SolicitudPermiso.FechaSolicitud.Year + " -" +
-                                                                item.SolicitudPermiso.FechaSolicitud.Month + " -" +
-                                                                item.SolicitudPermiso.FechaSolicitud.Day)
+                                                @(item.SolicitudPermiso.FechaDesde.Year + " -" +
+                                                                item.SolicitudPermiso.FechaDesde.Month + " -" +
+                                                                item.SolicitudPermiso.FechaDesde.Day)
 
+                                            </td>
+
+                                            <td>
+
+                                                @(item.SolicitudPermiso.FechaHasta.Year + " -" +
+                                                                item.SolicitudPermiso.FechaHasta.Month + " -" +
+                                                                item.SolicitudPermiso.FechaHasta.Day)
+
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SolicitudPermiso.HoraDesde)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SolicitudPermiso.HoraHasta)
                                             </td>
 
                                             <td>

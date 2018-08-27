@@ -176,7 +176,8 @@
 
                                             <label class="input col-lg-12">Motivo</label>
                                             <div class="input col-lg-6">
-                                                <input asp-for="SolicitudPermiso.Motivo" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' disabled />
+                                                <textarea asp-for="SolicitudPermiso.Motivo" class="form-control" rows="5" maxlength="900">
+                                                </textarea>
                                                 <span asp-validation-for="SolicitudPermiso.Motivo" class="text-danger"></span>
                                             </div>
 
@@ -190,6 +191,25 @@
 
                                         </section>
 
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-lg-6">
+                                            <label class="col-lg-12">Cargo a vacaciones</label>
+                                            <div class="col-lg-6">
+                                                <label class="radio">
+                                                    <input type="radio" class="radio" value="false" checked asp-for="SolicitudPermiso.CargoVacaciones" disabled /><i></i>NO
+                                                </label>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <label class="radio">
+                                                    <input type="radio" class="radio" value="true" asp-for="SolicitudPermiso.CargoVacaciones" disabled /><i></i>SI
+                                                </label>
+
+                                            </div>
+
+                                        </section>
                                     </div>
 
                                 </fieldset>

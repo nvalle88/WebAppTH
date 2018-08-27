@@ -35,6 +35,6 @@ namespace bd.webappth.entidades.ViewModels
         public string Observaciones { get; set; }
 
         [Display(Name = "Vacaciones acumuladas")]
-        public int VacacionesAcumuladas { get; set; }
+        public decimal VacacionesAcumuladas { get; set; }
     }
 }

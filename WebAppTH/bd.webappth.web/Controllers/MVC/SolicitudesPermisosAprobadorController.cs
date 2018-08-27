@@ -123,6 +123,8 @@ namespace bd.webappth.web.Controllers.MVC
                     HoraDesde = solicitudPermisoViewModel.SolicitudPermiso.HoraDesde,
                     HoraHasta = solicitudPermisoViewModel.SolicitudPermiso.HoraHasta,
 
+                    CargoVacaciones = solicitudPermisoViewModel.SolicitudPermiso.CargoVacaciones
+
                 };
 
                 var response = await apiServicio.InsertarAsync(solicitudPermiso, new Uri(WebApp.BaseAddress), "api/SolicitudesPermisos/InsertarSolicitudPermiso");
@@ -377,6 +379,36 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> BorrarMiPermiso(int id) {
+
+            try
+            {
+                var respuesta = await apiServicio.EliminarAsync(
+                    id,
+                    new Uri(WebApp.BaseAddress),
+                    "api/SolicitudesPermisos/BorrarSolicitudPorId");
+
+                if (respuesta.IsSuccess)
+                {
+                    return this.RedireccionarMensajeTime(
+                            "SolicitudesPermisosAprobador",
+                            "IndexEmpleado",
+                            $"{Mensaje.Success}|{respuesta.Message}|{"6000"}"
+                         );
+                }
+
+                return this.RedireccionarMensajeTime(
+                            "SolicitudesPermisosAprobador",
+                            "IndexEmpleado",
+                            $"{Mensaje.Error}|{respuesta.Message}|{"10000"}"
+                         );
+
+            }
+            catch (Exception ex) {
                 return BadRequest();
             }
         }

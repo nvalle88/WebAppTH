@@ -37,6 +37,11 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == false) {
+                    return RedirectToAction("Login", "Login");
+                }
+
                 var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
                 var listadoEmpleados = await ListarEmpleadosPertenecientesaDependenciaconVacaciones(NombreUsuario);

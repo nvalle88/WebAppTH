@@ -42,7 +42,7 @@ namespace bd.webappth.entidades.ViewModels
         public string RazonNoPlanificado { get; set; }
         public bool RequiereReemplazo { get; set; }
 
-        public int VacacionesAcumuladas { get; set; }
+        public decimal VacacionesAcumuladas { get; set; }
 
         public List<SolicitudPlanificacionVacaciones> ListaPLanificacionVacaciones { get; set; }
 

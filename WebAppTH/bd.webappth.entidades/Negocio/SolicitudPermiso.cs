@@ -17,7 +17,7 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Hora desde")]
         public TimeSpan HoraDesde { get; set; }
 
-        [Display(Name = "Fecha hasta")]
+        [Display(Name = "Hora hasta")]
         public TimeSpan HoraHasta { get; set; }
 
         [Display(Name = "Fecha desde")]
@@ -26,7 +26,7 @@ namespace bd.webappth.entidades.Negocio
         [Display(Name = "Fecha hasta")]
         public DateTime FechaHasta { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
+        
         [Display(Name = "Motivo")]
         public string Motivo { get; set; }
 
@@ -43,7 +43,9 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Fecha de aprobación")]
         public DateTime? FechaAprobado { get; set; }
-        
+
+        public bool CargoVacaciones { get; set; }
+
         public virtual Empleado Empleado { get; set; }
 
         public virtual TipoPermiso TipoPermiso { get; set; }

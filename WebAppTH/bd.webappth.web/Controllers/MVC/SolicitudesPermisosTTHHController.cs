@@ -125,6 +125,12 @@ namespace bd.webappth.web.Controllers.MVC
             {
 
                 var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == false) {
+
+                    return RedirectToAction("Login", "Login");
+                }
+
                 var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
                 Empleado empleado = await apiServicio.ObtenerElementoAsync1<Empleado>(NombreUsuario, new Uri(WebApp.BaseAddress), "api/Empleados/EmpleadoSegunNombreUsuario");
@@ -188,7 +194,7 @@ namespace bd.webappth.web.Controllers.MVC
         {
 
             //** Estados de aprobación AprobacionMovimientoInternoViewModel
-            var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacion");
+            var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacionAprobador");
 
             ViewData["IdListaEstado"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
 

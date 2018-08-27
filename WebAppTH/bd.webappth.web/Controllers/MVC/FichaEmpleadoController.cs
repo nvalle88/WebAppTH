@@ -1159,8 +1159,13 @@ namespace bd.webappth.web.Controllers.MVC
 
         public async Task<IActionResult> CreatePersonaEnfermedad()
         {
+            var modelo = new PersonaEnfermedad {
+                PresentaCertificado = false,
+                InstitucionEmite = "N/A"
+            };
+
             ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
-            return View();
+            return View(modelo);
         }
 
 
@@ -1278,11 +1283,18 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                var response = await apiServicio.InsertarAsync(personaEnfermedad, new Uri(WebApp.BaseAddress), "api/PersonaEnfermedades/InsertarPersonaEnfermedad");
+                var response = await apiServicio.InsertarAsync(
+                    personaEnfermedad, 
+                    new Uri(WebApp.BaseAddress), 
+                    "api/PersonaEnfermedades/InsertarPersonaEnfermedad");
 
                 if (response.IsSuccess)
                 {
-                    return this.Redireccionar("FichaEmpleado", "IndexPersonaEnfermedad", $"{Mensaje.Informacion}|{Mensaje.Satisfactorio}");
+                    return this.Redireccionar(
+                        "FichaEmpleado", 
+                        "IndexPersonaEnfermedad", 
+                        $"{Mensaje.Success}|{response.Message}"
+                    );
                 }
                 this.TempData["Mensaje"] = $"{Mensaje.Error}|{response.Message}";
                 ViewData["IdTipoEnfermedad"] = new SelectList(await apiServicio.Listar<TipoEnfermedad>(new Uri(WebApp.BaseAddress), "api/TiposEnfermedades/ListarTiposEnfermedades"), "IdTipoEnfermedad", "Nombre");
