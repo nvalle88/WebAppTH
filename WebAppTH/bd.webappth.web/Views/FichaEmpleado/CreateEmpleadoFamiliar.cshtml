@@ -201,6 +201,27 @@
         });
     </script>
 
+    <script>
+        function setDefaultEstadoCivil(opcion) { 
 
+            var combo = document.getElementById("sel_EstadoCivil");
+            var cantidad = combo.length;
+
+            for (i = 1; i < cantidad; i++) {
+                
+                if (combo[i].innerHTML.toUpperCase() == opcion.toUpperCase()) {
+
+                    combo[i].selected = true;
+                    //alert(combo[i].innerHTML.toUpperCase());
+                }
+                
+                
+            }
+            
+
+        }
+
+        setDefaultEstadoCivil("soltero");
+    </script>
 
 }

@@ -45,17 +45,18 @@
                                             Fecha fin
                                         </th>
 
-                                        <th data-class="expand">
+                                        @*<th data-class="expand">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().NumeroDias)
                                         </th>
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model => model.FirstOrDefault().TiempoTexto)
                                         </th>
+                                        *@
                                         <th data-hide="phone">
                                             Empresa
                                         </th>
                                         <th data-hide="phone">
-                                            Puesto de trabajo
+                                            Denominaci&oacute;n del cargo
                                         </th>
                                         <th>
                                             <i class="fa fa-cog "></i>
@@ -74,14 +75,14 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.FechaFin)
                                         </td>
-
+                                        @*
                                         <td>
                                             @Html.DisplayFor(modelItem => item.NumeroDias)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.TiempoTexto)
                                         </td>
-
+                                        *@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Empresa)
                                         </td>

@@ -74,16 +74,17 @@
                             <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
+
+                                        <th data-hide="phone">
+                                            Sucursal
+                                        </th>
+
                                         <th data-class="expand">
                                             Identificaci&oacute;n
                                         </th>
 
                                         <th data-class="expand">
-                                            Nombres y Apellidos
-                                        </th>
-
-                                        <th data-hide="phone">
-                                            Relaci&oacute;n laboral
+                                            Apellidos y nombres
                                         </th>
 
                                         <th data-hide="phone">
@@ -91,17 +92,21 @@
                                         </th>
 
                                         <th data-hide="phone">
-                                            Sucursal
+                                            Denominaci&oacute;n del cargo
                                         </th>
 
                                         <th data-hide="phone">
-                                            Cargo
+                                            RMU
+                                        </th>
+                                        @*
+                                        <th data-hide="phone">
+                                            Relaci&oacute;n laboral
                                         </th>
 
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model=>model.FirstOrDefault().CodigoEmpleado)
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().CodigoEmpleado)
                                         </th>
-
+                                        *@
                                         <th>
                                             <i class="fa fa-cog "></i>
                                             Opciones
@@ -113,15 +118,15 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
+                                                @Html.DisplayFor(modelItem => item.NombreSucursal)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreApellido)
+                                                @Html.DisplayFor(modelItem => item.Identificacion)
                                             </td>
                                             
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreRelacionLaboral)
+                                                @Html.DisplayFor(modelItem => item.NombreApellido)
                                             </td>
 
                                             <td>
@@ -129,11 +134,11 @@
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreSucursal)
+                                                @Html.DisplayFor(modelItem => item.ManualPuesto)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ManualPuesto)
+                                                @Html.DisplayFor(modelItem => item.RMU)
                                             </td>
 
                                             <td>

@@ -11,7 +11,7 @@ namespace bd.webappth.entidades.ViewModels
         public int IdPersonaEstudio { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Fecha de graduado:")]
+        [Display(Name = "Fecha de graduación:")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FechaGraduado { get; set; }

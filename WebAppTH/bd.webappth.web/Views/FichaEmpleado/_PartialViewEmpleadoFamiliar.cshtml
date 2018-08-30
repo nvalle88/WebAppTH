@@ -69,7 +69,7 @@
             <label>Estado Civil </label>
             <div class="form-group">
                 <div class="input">
-                    <select asp-for="IdEstadoCivil" asp- class="form-control input " asp-items="ViewBag.IdEstadoCivil">
+                    <select asp-for="IdEstadoCivil" asp- class="form-control input " asp-items="ViewBag.IdEstadoCivil" id="sel_EstadoCivil">
                         <option value="0" selected="selected" disabled="">Seleccione</option>
                     </select>
                     <span asp-validation-for="IdEstadoCivil" class="text-danger"></span>
@@ -87,7 +87,7 @@
         </section>
 
         <section class="col col-3">
-            <label>Celular</label>
+            <label>Celular (Opcional)</label>
             <div class="form-group">
                 <div class="">
                     <input asp-for="TelefonoPrivado" class="form-control input " data-mask="99-99999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text">
@@ -97,7 +97,7 @@
         </section>
 
         <section class="col col-3">
-            <label>Tel&eacute;fono de casa</label>
+            <label>Tel&eacute;fono de casa (Opcional)</label>
             <div class="form-group">
                 <div class="">
                     <input asp-for="TelefonoCasa" class="form-control input " data-mask="99-9999999" data-mask-placeholder="X" placeholder="09-9999-9999" type="text">
@@ -124,7 +124,7 @@
 
         <section class="col col-6">
             <div class="form-group">
-                <label>Lugar de Trabajo </label>
+                <label>Lugar de Trabajo (Opcional)</label>
                 <div class="">
                     <input asp-for="LugarTrabajo" class="form-control input " type="text">
                 </div>
@@ -132,7 +132,7 @@
             </div>
         </section>
         <section class="col col-6">
-            <label>Profesi&oacute;n / Ocupaci&oacute;n</label>
+            <label>Profesi&oacute;n / Ocupaci&oacute;n (Opcional)</label>
             <div class="form-group">
                 <div class="">
                     <input asp-for="Ocupacion" class="form-control input "  type="text">

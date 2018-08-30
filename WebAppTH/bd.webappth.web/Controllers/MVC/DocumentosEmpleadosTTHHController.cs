@@ -76,6 +76,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             ViewData["Error"] = mensaje;
         }
+
         public async Task<IActionResult> Index()
         {
             
