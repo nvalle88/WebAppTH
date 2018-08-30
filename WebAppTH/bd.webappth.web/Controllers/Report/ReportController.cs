@@ -135,9 +135,14 @@ namespace bd.webappth.web.Controllers.MVC
 
         public ActionResult ReporteCertificadoInduccion(int IdEmpleado)
         {
-            string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepCertificadoInduccion&IdEmpleado=", Convert.ToString(IdEmpleado));
+            //string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepCertificadoInduccion&IdEmpleado=", Convert.ToString(IdEmpleado));
 
-            return Redirect(url);
+            //return Redirect(url);
+
+            var parametersToAdd = reporteServicio.GetDefaultParameters("/ReporteGTH/RepCertificadoInduccion");
+            parametersToAdd = reporteServicio.AddParameters("IdEmpleado", Convert.ToString(IdEmpleado), parametersToAdd);
+            var newUri = reporteServicio.GenerateUri(parametersToAdd);
+            return Redirect(newUri);
 
         }
 

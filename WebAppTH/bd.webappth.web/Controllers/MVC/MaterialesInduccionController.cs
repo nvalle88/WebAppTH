@@ -76,7 +76,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (respuesta.IsSuccess)
                 {
-                    await uploadFileService.UploadFile(documenttransfer.Fichero, "MaterialInduccion", Convert.ToString(materialInduccion.IdMaterialInduccion), ext);
+                    //await uploadFileService.UploadFile(documenttransfer.Fichero, "MaterialInduccion", Convert.ToString(materialInduccion.IdMaterialInduccion), ext);
 
                     materialInduccion.Url = string.Format("{0}/{1}{2}", "MaterialInduccion", Convert.ToString(materialInduccion.IdMaterialInduccion), ext);
 
@@ -236,21 +236,11 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, documentoInformacionInstitucional, new Uri(WebApp.BaseAddress),
-                                                                 "api/MaterialesInduccion");
+                    response = await apiServicio.EditarAsync(id, documentoInformacionInstitucional, new Uri(WebApp.BaseAddress),"api/MaterialesInduccion");
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "materia de inducción", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un materia de inducción",
-                            UserName = "Usuario 1"
-                        });
-
+                        
                         return RedirectToAction("Index");
                     }
                     ViewData["Error"] = response.Message;
@@ -261,16 +251,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un materia de inducción",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
+               
                 return BadRequest();
             }
         }
@@ -301,13 +282,21 @@ namespace bd.webappth.web.Controllers.MVC
                 foreach (var item in lista)
                 {
                     var ext = Path.GetExtension(item.Url);
+
+                   
                     if (ext == ".jpeg" || ext == ".bmp" || ext == ".jpe" || ext == ".jpg" || ext == ".gif" || ext == ".png")
                     {
                         imagenes.Add(item);
+
+                        var itemUrl = string.IsNullOrEmpty(item.Url) != true ? WebApp.BaseAddress + "/" + item.Url : "";
+                        item.Url = itemUrl;
                     }
                     else if (ext == ".pdf" || ext == ".xlsx" || ext == ".xls" || ext == ".docx" || ext == ".doc" || ext == ".pptx" || ext == ".ppt" || ext == "ppsx" || ext == "pps")
                     {
                         documentos.Add(item);
+
+                        var itemUrl = string.IsNullOrEmpty(item.Url) != true ? WebApp.BaseAddress + "/" + item.Url : "";
+                        item.Url = itemUrl;
                     }
                     else
                     {
