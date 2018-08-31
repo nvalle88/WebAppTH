@@ -8,46 +8,37 @@ namespace bd.webappth.entidades.Negocio
     {
         public ConceptoNomina()
         {
-            ConceptoConjuntoNomina = new HashSet<ConceptoConjuntoNomina>();
-            TeconceptoNomina = new HashSet<TeconceptoNomina>();
+            ConceptoProcesoNomina = new HashSet<ConceptoProcesoNomina>();
+            FormulaNomina = new HashSet<FormulaNomina>();
         }
 
         public int IdConcepto { get; set; }
-
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Proceso")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
-        public int IdProceso { get; set; }
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Código")]
+        [Display(Name ="Código")]
+        [Required(ErrorMessage ="Debe igresar {0}")]
+        [StringLength(10)]
         public string Codigo { get; set; }
-        [Required(ErrorMessage = "Debe introducir {0}")]
+
         [Display(Name = "Descripción")]
+        [Required(ErrorMessage = "Debe igresar {0}")]
+        [StringLength(100)]
         public string Descripcion { get; set; }
-        [Required(ErrorMessage = "Debe introducir {0}")]
+
         [Display(Name = "Tipo de concepto")]
-        public string TipoConcepto { get; set; }
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Relación laboral")]
-        public string RelacionLaboral { get; set; }
+        [Range(minimum:1,maximum:double.MaxValue, ErrorMessage = "Debe seleccionar {0}")]
+        public int IdTipoConcepto { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Estatus")]
+        [Display(Name = "Estado")]
         public string Estatus { get; set; }
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Abreviatura")]
-        public string Abreviatura { get; set; }
 
-        [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Prioridad")]
-        [Range(1,int.MaxValue,ErrorMessage ="La {0} no puede ser menor que {1} ni mayor que {2}")]
-        public int Prioridad { get; set; }
+        [Display(Name = "Procesos")]
+        [Required(ErrorMessage = "Debe seleccionar {0}")]
+        public int[] ProcesosSeleccionados { get; set; }
 
-        public string FormulaCalculo { get; set; }
 
-        public virtual ICollection<ConceptoConjuntoNomina> ConceptoConjuntoNomina { get; set; }
-        public virtual ICollection<TeconceptoNomina> TeconceptoNomina { get; set; }
-        public virtual ProcesoNomina ProcesoNomina { get; set; }
+        public List<ProcesoNomina> ListaTodosProcesos { get; set; }
 
+        public virtual ICollection<ConceptoProcesoNomina> ConceptoProcesoNomina { get; set; }
+        public virtual ICollection<FormulaNomina> FormulaNomina { get; set; }
+        public virtual TipoConceptoNomina TipoConceptoNomina { get; set; }
     }
 }

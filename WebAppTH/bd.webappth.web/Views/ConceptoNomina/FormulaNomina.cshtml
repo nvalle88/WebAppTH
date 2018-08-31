@@ -1,0 +1,178 @@
+@model bd.webappth.entidades.Negocio.ConceptoNomina
+
+@{
+    ViewData["Title"] = "BrigadasSSO";
+}
+<div id="content">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="well padding-10">
+                <legend class="text-align-center"><h2><b> Descripci&oacute;n del rubro</b></h2></legend>
+                <div class="row">
+                    <div class="col-md-4 padding-left-4">
+                        <h3 class="margin-top-0"><a href="javascript:void(0);"> @Model.Descripcion </a><br><small class="font-xs"><i>C&oacute;digo: <a href="javascript:void(0);">@Model.Codigo</a></i></small></h3>
+                        @if (Model.Estatus == "ACTIVO")
+                        {
+                            <a class="btn btn-success" href="javascript:void(0);"><i class="fa fa-check">&nbsp;&nbsp;ACTIVO </i>  </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-danger" href="javascript:void(0);"><i class="fa fa-check">&nbsp;&nbsp;INACTIVO </i> </a>
+                        }
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="margin-top-0"><a href="javascript:void(0);">Procesos </a></h3>
+                        <div class="bootstrap-tagsinput align-content-lg-center">
+                            @foreach (var proceso in Model.ConceptoProcesoNomina)
+                            {
+                                <span class="tag label label-info text-align-center">
+                                    <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp; @proceso.ProcesoNomina.Descripcion
+                                </span>
+                            }
+                        </div>
+                        <br />
+                        <h3 class="margin-top-0"> <a href="javascript:void(0);">@Model.TipoConceptoNomina.Descripcion</a></h3>
+
+                    </div>
+                </div>
+                <hr>
+                <fieldset>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <legend class="text-align-center"><b>F&oacute;rmula</b></legend>
+                            <section class="col-lg-12">
+                                @{await Html.RenderPartialAsync("_PartialViewFormula");}
+                            </section>
+
+                            <section class="col-lg-12">
+                                <label class="input col-lg-12">
+                                    <br />
+                                        <label>Regimen laboral</label>
+                                        <select id="cb_RegimenLaboral" asp-items="ViewBag.IdRegimeLaboral" class="select2" >
+                                        </select>
+                                </label>
+                            </section>
+
+                            <section class="col-lg-12">
+                                <br />
+                                <button onclick="SalvarFormula()" class="btn btn-primary col-lg-12 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;&nbsp; Guardar</button>
+                            </section>
+                        </div>
+                        <div id="inbox-table" class="col-lg-7 padding-left-0">
+                            <legend class="text-align-center"><b>Listado de f&oacute;rmula</b></legend>
+                            @foreach (var item in Model.FormulaNomina)
+                            {
+                                <div id="formula_todos_@(item.IdConceptoNomina)_@(item.IdRegimenLaboral)" class="row col-lg-12">
+                                    <div class="col-lg-7">
+                                        <h3 id="formula_@(item.IdConceptoNomina)_@(item.IdConceptoNomina)" class="margin-top-0"><a href="javascript:void(0);"> F&oacute;rmula </a><br><small class="font-xs"><i><a href="javascript:void(0);">@item.Formula</a></i></small></h3>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h3 id="regimen_@(item.IdConceptoNomina)_@(item.IdConceptoNomina)" class="margin-top-0"><a href="javascript:void(0);"> F&oacute;rmula </a><br><small class="font-xs"><i><a href="javascript:void(0);">@item.RegimenLaboral.Nombre</a></i></small></h3>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <a id="eliminar_@(item.IdConceptoNomina)_@(item.IdConceptoNomina)"  href="javascript:void(0);" class="txt-color-redLight"><i class="fa fa-minus-square fa-lg"></i></a>
+                                    </div>
+                                    
+                                    <div class="col-lg-12"> <legend></legend></div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </fieldset>
+                <hr>
+            </div>
+        </div>
+
+    </div>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+        <script type="text/javascript">
+
+
+            $('#FormulaCalculo').click(function () {
+                $(this).css('border-color', '#A9A9A8');
+            });
+
+            function anadirElememto(valor)
+            {
+                var tipo = document.getElementById("FormulaCalculo");
+                tipo.value += " " + valor ;
+            }
+
+            function SalvarFormula()
+            {
+                if ($("#FormulaCalculo").val() == "")
+                {
+                    mostrarNotificacion("Error", "Debe completar la f&oacute;rmula");
+                    $("#FormulaCalculo").css('border-color', '#FF0000');
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ExisteFormula")',
+                    dataType: 'json',
+                    data: { idRegimenLaboral: $("#cb_RegimenLaboral").val(),idConcepto:@Model.IdConcepto },
+                    success: function (data) {
+                        if (data == true) {
+                            mostrarNotificacion("Error", "Existe ")
+                        } else {
+
+
+                            mostrarNotificacion("Satisfactorio", "El registro se ha insertado satisfactoriamente")
+                        }
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+
+
+                alert(valorCombo + "         " + FormulaCalculo + "  " + ddd);
+
+
+
+            }
+
+
+        function validarformula() {
+            mostrarLoadingPanel("content", "Validando la f"+'&oacute;'+"rmula...")
+            var tipo = document.getElementById("FormulaCalculo");
+                           $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ValidarFormula")',
+                    dataType: 'json',
+                    data: { formula: $("#FormulaCalculo").val() },
+                    success: function (data) {
+                        if (data == false) {
+                            $("#mensajeSatisfactorio").hide();
+                            $("#resultadoformula").hide();
+                            $("#mensajeError").show();
+                            $("#content").waitMe("hide");
+
+                        } else {
+                            $("#mensajeError").hide();
+                            $("#mensajeSatisfactorio").show();
+                            $("#resultadovalor").html(data);
+                            $("#resultadoformula").show();
+                            $("#content").waitMe("hide");
+                        }
+                    }, complete: function (data) {
+                        $("#content").waitMe("hide");
+                    },
+
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+        }
+
+        </script>
+    }

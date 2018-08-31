@@ -1,90 +1,225 @@
 @model List<bd.webappth.entidades.Negocio.ConceptoNomina>
 
-@{
+    @{
     ViewData["Title"] = "Index";
-}
-<link href="~/css/tabla/table.css" rel="stylesheet" />
-<div id="content">
-    <p></p>
-    <a asp-action="CreateConceptoNomina" onclick="cargando()">
-        <button type="button" asp-action="CreateConceptoNomina" onclick="cargando()" class="btn btn-labeled btn-default">
-            <span class="btn-label">
-                <i class="glyphicon glyphicon-plus"></i>
-            </span>Nuevo
-        </button>
-    </a>
-    <p> </p>
+    }
+    <link href="~/css/tabla/table.css" rel="stylesheet" />
+    <div id="content">
+        <p></p>
+        <a asp-action="CreateConceptoNomina" onclick="cargando()">
+            <button type="button" asp-action="CreateConceptoNomina" onclick="cargando()" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nuevo
+            </button>
+        </a>
+        <p> </p>
 
-    <section id="" class="">
-        <div class="row">
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                    <header id="table">
-                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>Conceptos</h2>
-                    </header>
-                    <div>
-                        <div class="jarviswidget-editbox">
-                        </div>
-                        <div class="widget-body no-padding">
-                            <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().IdProceso)
-                                        </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Codigo)
-                                        </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
-                                        </th>
-                                        <th data-class="expand">
-                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Estatus)
-                                        </th>
-                                        <th>
-                                            Opciones
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
+        <section id="" class="">
+            <div class="row">
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                        <header id="table">
+                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                            <h2>Conceptos</h2>
+                        </header>
+                        <div>
+                            <div class="jarviswidget-editbox">
+                            </div>
+                            <div class="widget-body no-padding">
+                                <table id="datatable_fixed_column" data-page-length="50" class="table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ProcesoNomina.Descripcion)
-                                            </td>
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Codigo)
+                                            </th>
+                                            <th>Tipo de concepto</th>
+                                            <th data-class="expand">
+                                                @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
+                                            </th>
+                                            <th>
+                                                Estado
+                                            </th>
+                                            <th>
+                                                Opciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                        <tr>
+
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Codigo)
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            <td class="text-align-center">
+                                                <h4>
+                                                    <small>
+                                                        <a href="#ajax/profile.html">@item.TipoConceptoNomina.Descripcion</a>
+                                                    </small>
+                                                </h4>
+                                                <hr class="simple" />
+                                                <i @if (item.TipoConceptoNomina.Signo>= 0) { <text> class="glyphicon glyphicon-plus-sign fa-2x text-success" </text>  } else { <text> class="glyphicon  glyphicon-minus-sign fa-2x text-danger" </text> }></i>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Estatus)
+                                                @* Inicio mostrar fórmulas *@
+                                                <div class="panel-group smart-accordion-default" id="accordionformula-@(item.IdConcepto)">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title bg-color-lighten"><a data-toggle="collapse" data-parent="#accordionformula-@(item.IdConcepto)" href="#collapseOneformula-@(item.IdConcepto)" aria-expanded="false" class="collapsed"> <i class="fa fa-fw fa-plus-circle txt-color-green"></i> <i class="fa fa-fw fa-minus-circle txt-color-red"></i> <b>@item.Descripcion</b> </a></h4>
+                                                        </div>
+                                                        <div id="collapseOneformula-@(item.IdConcepto)" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+
+                                                            <div class="panel-body">
+                                                                <div class="row col col-lg-12">
+
+                                                                    @{ var cantFormula = item.FormulaNomina.Count();}
+
+                                                                    @if (cantFormula > 0)
+                                                                    {
+                                                                    <div class="widget-body">
+                                                                        <p>
+                                                                            <b>F&oacute;rmulas</b>
+                                                                        </p>
+                                                                        <hr class="simple">
+                                                                        <ul id="myTabFormula-@(item.IdConcepto)" class="nav nav-tabs tabs-pull-right bordered">
+                                                                            @{ var contadorFormulaCabecera = 0; }
+                                                                            @foreach (var formula in item.FormulaNomina.ToList())
+                                                                            {
+                                                                            <li @if (contadorFormulaCabecera==0) { <text> class="pull-left active" </Text>  } else { <text> class="pull-left" </Text> }>
+                                                                                        <a href="#l1-@(formula.IdRegimenLaboral)-@(formula.IdConceptoNomina)" data-toggle="tab" @if (contadorFormulaCabecera == 0) { <text> aria-expanded="true" </Text>  } else { <text> aria-expanded="false" </Text> }>@formula.RegimenLaboral.Nombre</a>
+                                                                                    </li>
+                                                                            contadorFormulaCabecera = contadorFormulaCabecera + 1;
+                                                                            }
+                                                                        </ul>
+                                                                        @{var contadorFormulaCuerpo = 0; }
+                                                                        <div id="myTabContentFormula-@(item.IdConcepto)" class="tab-content padding-10">
+                                                                            @foreach (var formula in item.FormulaNomina.ToList())
+                                                                            {
+                                                                            <div @if (contadorFormulaCuerpo==0) { <text> class="tab-pane fade active in" </text>  } else { <text> class="tab-pane" </text> } id="l1-@(formula.IdRegimenLaboral)-@(formula.IdConceptoNomina)">
+                                                                                        <p>@formula.Formula</p>
+                                                                                    </div>
+                                                                            contadorFormulaCuerpo = contadorFormulaCuerpo + 1;
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                    }
+                                                                    @*}*@
+                                                                </div>
+
+                                                            </div>
+                                                            <br />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @* Fin mostrar fórmulas *@
+                                                @{var cantidadProceso = item.ConceptoProcesoNomina.Count();}
+                                                @if (cantidadProceso > 0)
+                                                {
+                                                <div class="bootstrap-tagsinput align-content-lg-center">
+                                                    @*<p class="text-align-center"><b> Procesos</b></p>
+                                                    <hr class="simple" />*@
+                                                    @foreach (var proceso in item.ConceptoProcesoNomina)
+                                                    {
+                                                    <span class="tag label label-info text-align-center">
+                                                        <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp; @proceso.ProcesoNomina.Descripcion
+                                                    </span>
+                                                    }
+
+                                                </div>
+
+                                                }
+                                                @* Inicio mostrar procesos *@
+
+
+
+                                                @* fin mostrar procesos *@
+                                            </td>
+                                            <td class="col-lg-3">
+                                                <section class="">
+                                                    <div class="form-group col-lg-12">
+                                                        <div class="input">
+
+                                                            <select id="estadoconcepto_@(item.IdConcepto)" onclick="SalvarEstado(@item.IdConcepto)" style="width:100%" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                                                <optgroup label="Estado">
+                                                                    @if (item.Estatus == "ACTIVO")
+                                                                    {
+                                                                    <option value="ACTIVO" selected="selected">ACTIVO</option>
+                                                                    <option value="INACTIVO">INACTIVO</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                    <option value="ACTIVO">ACTIVO</option>
+                                                                    <option value="INACTIVO" selected="selected">INACTIVO</option>
+                                                                    }
+                                                                </optgroup>
+                                                            </select>
+                                                            <span id="mensajeestado_@(item.IdConcepto)" @if (item.Estatus=="ACTIVO" ) { <text> class="label label-success col col-lg-12" </text>  } else { <text> class="label label-danger col col-lg-12" </text> }>@(item.Estatus)</span>
+                                                        </div>
+
+                                                    </div>
+                                                </section>
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Detalle", "DetalleConceptoNomina", new { id = item.IdConcepto },new {onclick="cargando()" })
+                                                @Html.ActionLink("Detalle", "DetalleConceptoNomina", new { id = item.IdConcepto }, new { onclick = "cargando()" })
                                             </td>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </article>
-        </div>
-    </section>
-</div>
-@section Scripts {
+                </article>
+            </div>
+        </section>
+    </div>
+    @section Scripts {
     <script src='~/js/datatables/init.js'></script>
     <script type="text/javascript">
 
+        // Init_Select2();
         function cargando() {
             mostrarLoadingPanel("content", "")
         }
 
+        function salvarFormula(IdRegimenLaboral, IdConceptoNomina) {
+            alert($("#text-formula-" + IdRegimenLaboral + "-" + IdConceptoNomina).val());
+        }
+
+
+        function SalvarEstado(idConcepto) {
+            mostrarLoadingPanel("content", "");
+            var valorCombo = $("#estadoconcepto_" + idConcepto).val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ActualizarEstado","ConceptoNomina")',
+                dataType: 'json',
+                data: { valorCombo: $("#estadoconcepto_" + idConcepto).val(), idconcepto: idConcepto },
+                success: function (data) {
+                }, complete: function (data) {
+                    if (data = true) {
+                        mostrarNotificacion("Satisfactorio", "El registro se ha actualizado satisfactoriamente")
+                        if (valorCombo == "ACTIVO") {
+                            $("#mensajeestado_" + idConcepto).removeClass("label label-danger col col-lg-12").addClass("label label-success col col-lg-12").text("ACTIVO")
+                        }
+                        else {
+                            $("#mensajeestado_" + idConcepto).removeClass("label label-success col col-lg-12").addClass("label label-danger col col-lg-12").text("INACTIVO")
+                        }
+
+                    }
+                    else {
+                        mostrarNotificacion("Error", "Ha ocurrido un error al actualizar el registro")
+                    }
+                    $("#content").waitMe("hide");
+                },
+                error: function (ex) {
+                    mostrarNotificacion("Error", "Ha ocurrido un error al al conectarse con el servicio...");
+                }
+            });
+
+        };
     </script>
-}
+    }
 

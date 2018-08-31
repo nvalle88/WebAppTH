@@ -12,7 +12,7 @@
                 <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
                     <header id="table">
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Crear concepto</h2>
+                        <h2>Crear rubro</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -40,6 +40,16 @@
     <script src='~/lib/select2/dist/js/i18n/es.js'></script>
     <script src='~/js/site.js'></script>
     <script type="text/javascript">
+        function cambiarColor()
+        {
+            if ($("#estadoCombo").val() == "ACTIVO") {
+                $("#mensajeestado").removeClass("label label-danger col col-lg-12").addClass("label label-success col col-lg-12");
+            }
+            else {
+                $("#mensajeestado").removeClass("label label-success col col-lg-12").addClass("label label-danger col col-lg-12");
+            }
+        };
+
         $(document).ready(function () {
             Init_Select2();
         });

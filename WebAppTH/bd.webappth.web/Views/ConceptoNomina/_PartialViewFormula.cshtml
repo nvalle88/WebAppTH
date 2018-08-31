@@ -1,4 +1,4 @@
-@model bd.webappth.entidades.Negocio.ConceptoNomina
+
 
 @using bd.webappth.entidades.Negocio
 @inject bd.webappth.servicios.Interfaces.IConstantesNomina ConstanteNomina;
@@ -21,7 +21,7 @@
 
 <fieldset>
     <div class="row">
-        <section class="col col-lg-12">
+        <section class="col-lg-12">
             <div class="panel-group smart-accordion-default" id="accordion-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -31,17 +31,19 @@
 
                         <div class="panel-body">
                             <br />
-                            <div class="row col col-lg-12">
-                                @{ int a = 0;}
-                                @foreach (var item in Listaconstantes)
-                                {
-                                    a = a + 1;
-                                    <div class="ui-menu-item col col-lg-4" style="border-width:2px;">
-                                        <a href="javascript:void(0);" onclick="anadirElememto('@item.Constante')">&bull; @item.Constante :  @item.Descripcion (Valor: @item.Valor)</a>
+                            <div class="row col-lg-12">
+                                <div class="ui-menu-item col-lg-12" style="border-width:2px;">
+                                    @{ int a = 0;}
+                                    @foreach (var item in Listaconstantes)
+                                    {
+                                        a = a + 1;
 
-                                    </div>
-                                }
-                            </div>
+                                        <a href="javascript:void(0);" onclick="anadirElememto('@item.Constante')">&bull; @item.Constante :  @item.Descripcion (Valor: @item.Valor)</a>
+                                        <hr class="simple" />
+
+                                    }
+                                </div>
+                                </div>
                         </div>
                         <br />
                     </div>
@@ -50,9 +52,7 @@
         </section>
         </div>
     <div class="row">
-
-        <section class="col col-lg-12">
-
+        <section class="col-lg-12">
             <div class="panel-group smart-accordion-default" id="accordion-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -61,17 +61,19 @@
                     <div id="collapseOne-1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                         <div class="panel-body">
                             <br />
-                            <div class="row col col-lg-12">
-                                @{ int b = 0;}
-                                @foreach (var item in ListaFunciones)
-                                {
-                                    b = b + 1;
-                                    <div class="ui-menu-item col col-lg-4" style="border-width:2px;">
-                                        <a href="javascript:void(0);" onclick="anadirElememto('@item.Variable')">&bull; @item.Variable: @item.Descripcion </a>
+                            <div class="row col-lg-12">
+                                <div class="ui-menu-item col col-lg-12" style="border-width:2px;">
+                                    @{ int b = 0;}
+                                    @foreach (var item in ListaFunciones)
+                                    {
+                                        b = b + 1;
 
-                                    </div>
-                                }
-                            </div>
+                                        <a href="javascript:void(0);" onclick="anadirElememto('@item.Variable')">&bull; @item.Variable: @item.Descripcion </a>
+                                        <hr class="simple" />
+
+                                    }
+                                </div>
+                                </div>
                         </div>
                         <br />
                     </div>
@@ -80,44 +82,14 @@
         </section>
 
     </div>
-
-
-    
-
-
     <div class="row">
-        <section class="col col-lg-12"></section>
-        <section id="FormulaVista" class="col col-lg-12">
-            <label class="label">F&oacute;rmula de c&aacute;lculo</label>
-            <label class="textarea">
-                <textarea maxlength="500" asp-for="FormulaCalculo" rows="10"></textarea>
-                <span asp-validation-for="FormulaCalculo" class="text-danger"></span>
+        
+        <section id="FormulaVista" class="col-lg-12">
+            <br />
+            <label class="col-lg-12">F&oacute;rmula de c&aacute;lculo</label>
+            <label class="textarea col-lg-12">
+                <textarea class="col-lg-12" maxlength="500" id="FormulaCalculo" rows="10"></textarea>
             </label>
         </section>
-
-        @*onclick="validarformula()"*@
-        <section class="col col-lg-2">
-            <a href="javascript:void(0);" class="btn btn-primary btn-default btn-sm"><i class="glyphicon glyphicon-ok"></i>&nbsp;  Validar f&oacute;rmula</a>
-        </section>
-        <section class="col col-lg-10">
-            <div id="resultadoformula" class="alert alert-info fade in">
-                <i class="glyphicon glyphicon-ok"></i>
-                <strong>Resultado:</strong><label id="resultadovalor"></label>
-            </div>
-        </section>
-
-
     </div>
-
-
-    <div id="mensajeSatisfactorio" class="alert alert-info fade in">
-        <i class="fa-fw fa fa-info"></i>
-        <strong>Informaci&oacute;n!</strong> La f&oacute;rmula es v&aacute;lida.
-    </div>
-
-    <div id="mensajeError" class="alert alert-danger fade in">
-        <i class="fa-fw fa fa-times"></i>
-        <strong>Error!</strong>   La f&oacute;rmula tiene alg&uacute;n error. Por favor verifique nuevamente  .
-    </div>
-
 </fieldset>
