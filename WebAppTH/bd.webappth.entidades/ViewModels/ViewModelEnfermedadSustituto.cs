@@ -22,8 +22,10 @@ namespace bd.webappth.entidades.ViewModels
 
         [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Institución que emite")]
-        [StringLength(100, ErrorMessage = "El {0} no puede tener más de {1} caracteres")]
         public string InstitucionEmite { get; set; }
+
+        [Display(Name = "Presenta certificado:")]
+        public bool PresentaCertificado { get; set; }
 
         public List<ViewModelEnfermedadSustituto> ListaEnfermedadesSustitutos { get; set; }
     }

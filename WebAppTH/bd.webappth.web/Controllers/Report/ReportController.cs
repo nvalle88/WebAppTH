@@ -93,28 +93,56 @@ namespace bd.webappth.web.Controllers.MVC
         public ActionResult ReporteConPiePagina(GenerarFirmasViewModel modelo)
         {
             var UrlReporte = modelo.UrlReporte;
-
             var maxFirmasReporte = 5;
             var idFirmas = "";
 
 
+            var parametersToAdd = reporteServicio.GetDefaultParameters("/ReporteGTH/"+ UrlReporte);
 
-            for (int i = 0;i<modelo.ListaIdEmpleados.Count && i<maxFirmasReporte ;i++)
+            for (int i = 0; i < modelo.ListaIdEmpleados.Count && i < maxFirmasReporte; i++)
             {
-                idFirmas = idFirmas + "&IdEF"+ (i+1) +"="+ modelo.ListaIdEmpleados.Where(w=>w.Prioridad == (i+1) ).FirstOrDefault().IdEmpleado;
-                
+                //idFirmas = idFirmas + "&IdEF" + (i + 1) + "=" + modelo.ListaIdEmpleados.Where(w => w.Prioridad == (i + 1)).FirstOrDefault().IdEmpleado;
+
+                parametersToAdd = reporteServicio.AddParameters(
+                    "IdEF" + (i + 1),
+                    Convert.ToString(
+                        modelo.ListaIdEmpleados.Where(w => w.Prioridad == (i + 1)).FirstOrDefault().IdEmpleado
+                    ),
+                    parametersToAdd
+                );
+
             }
             
-            string url = string.Format("{0}{1}", ReportConfig.CompletePath, UrlReporte + idFirmas);
-            return Redirect(url);
+            var newUri = reporteServicio.GenerateUri(parametersToAdd);
+            return Redirect(newUri);
+            
+
+
+            
+
+            
+
+           
+
+
+
+            
+            
+            //string url = string.Format("{0}{1}", ReportConfig.CompletePath, UrlReporte + idFirmas);
+            //return Redirect(url);
             
         }
 
         public ActionResult ReporteCertificadoInduccion(int IdEmpleado)
         {
-            string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepCertificadoInduccion&IdEmpleado=", Convert.ToString(IdEmpleado));
+            //string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepCertificadoInduccion&IdEmpleado=", Convert.ToString(IdEmpleado));
 
-            return Redirect(url);
+            //return Redirect(url);
+
+            var parametersToAdd = reporteServicio.GetDefaultParameters("/ReporteGTH/RepCertificadoInduccion");
+            parametersToAdd = reporteServicio.AddParameters("IdEmpleado", Convert.ToString(IdEmpleado), parametersToAdd);
+            var newUri = reporteServicio.GenerateUri(parametersToAdd);
+            return Redirect(newUri);
 
         }
 

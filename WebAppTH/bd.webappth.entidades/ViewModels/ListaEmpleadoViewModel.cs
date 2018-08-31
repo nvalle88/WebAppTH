@@ -46,5 +46,8 @@ namespace bd.webappth.entidades.ViewModels
 
         [Display(Name = "Código de contrato / Número de partida")]
         public string CodigoEmpleado { get; set; }
+
+        [Display(Name = "RMU")]
+        public decimal? RMU { get; set; }
     }
 }

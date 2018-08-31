@@ -33,6 +33,7 @@
                     && Model.TipoAccionPersonal.NDiasMaximo < 1
                     && Model.TipoAccionPersonal.MesesMaximo < 1
                     && Model.TipoAccionPersonal.YearsMaximo < 1
+                    && Model.TipoAccionPersonal.Definitivo == true
                 ) {
                 <text> checked</text>
                 } />&nbsp;Definitivo
@@ -40,11 +41,22 @@
         </section>
 
         <section class="col col-2">
-            <input type="radio" name="grp_tiempo_minimo" value="horas" onclick="getRdbtnMinSelected()" @if (Model.TipoAccionPersonal.NHorasMaximo > 0) { <text> checked</text>} />&nbsp;Horas
+            <input type="radio" name="grp_tiempo_minimo" value="horas" onclick="getRdbtnMinSelected()" @if (
+                Model.TipoAccionPersonal.Definitivo == false
+                && Model.TipoAccionPersonal.NDiasMinimo < 1
+                && Model.TipoAccionPersonal.NDiasMaximo < 1
+                && Model.TipoAccionPersonal.MesesMaximo < 1
+                && Model.TipoAccionPersonal.YearsMaximo < 1
+
+                ) { <text> checked</text>} />&nbsp;Horas
         </section>
 
         <section class="col col-2">
-            <input type="radio" name="grp_tiempo_minimo" value="dias" onclick="getRdbtnMinSelected()" @if (Model.TipoAccionPersonal.NDiasMaximo > 0) { <text> checked</text>} />&nbsp;D&iacute;as meses y a&ntilde;os
+            <input type="radio" name="grp_tiempo_minimo" value="dias" onclick="getRdbtnMinSelected()" @if (
+                Model.TipoAccionPersonal.Definitivo == false
+                && Model.TipoAccionPersonal.NHorasMinimo < 1
+                && Model.TipoAccionPersonal.NHorasMaximo < 1
+                ) { <text> checked</text>} />&nbsp;D&iacute;as meses y a&ntilde;os
         </section>
 
     </div>
@@ -232,7 +244,7 @@
             </div>
 
             <div class=" col-lg-12">
-                @Html.RadioButtonFor(model => model.empleadoCambio, 1)&nbsp;Modalidad contrataci&oacute;n
+                @Html.RadioButtonFor(model => model.empleadoCambio, 1,new { @onClick= "ActivarGenerarMovimientoPersonal()"})&nbsp;Modalidad contrataci&oacute;n
             </div>
 
         </section>
@@ -293,7 +305,7 @@
     <div class="row">
         <section class="col col-lg-12">
             <label class="checkbox">
-                <input type="checkbox" asp-for="TipoAccionPersonal.ModificaDistributivo" class="form-control">
+                <input type="checkbox" asp-for="TipoAccionPersonal.ModificaDistributivo" class="form-control" id="chk_movimientoPersonal" onclick="verificarModificarDistributivo()">
                 <i></i>Genera movimiento de personal
                 <span asp-validation-for="TipoAccionPersonal.ModificaDistributivo" class="text-danger"></span>
             </label>
@@ -513,6 +525,38 @@
         if (document.getElementById('txt_max_horas').value < 0) {
             document.getElementById('txt_max_horas').value = 0;
         }
+    }
+
+    function ActivarGenerarMovimientoPersonal() {
+        document.getElementById("chk_movimientoPersonal").checked = true;
+    }
+
+    function verificarModificarDistributivo() {
+        var valorModificarDistributivo = -1;
+        var cantidad = document.getElementsByName("empleadoCambio").length;
+        var elemento = document.getElementsByName("empleadoCambio");
+
+        for (var i=0; i < cantidad;i++) { 
+            
+
+            if (elemento[i].checked == true) {
+                valorModificarDistributivo = elemento[i].value;
+                i = cantidad + 1;
+            }
+
+        }
+
+        
+
+        if (valorModificarDistributivo == 1) { 
+            
+            document.getElementById("chk_movimientoPersonal").checked = true;
+
+            var textoMensajeAlerta = "Mientras modalidad contrataci\u00F3n permanezca seleccionado, no se puede desmarcar este campo";
+            
+            mostrarNotificacionTimer("Aviso", textoMensajeAlerta, 10000);
+        }
+
     }
 
     getRdbtnMinSelected();

@@ -1,0 +1,110 @@
+@model List<bd.webappth.entidades.Negocio.PreguntaEvaluacionEvento>
+@using bd.webappth.entidades.Negocio
+@{ var modelo = new PreguntaEvaluacionEvento { OpcionMenu = 0 }; }
+
+@{await Html.RenderPartialAsync("_PartialViewMenu", modelo);}
+<link href="~/css/tabla/table.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
+<!-- MAIN CONTENT -->
+<div id="content">
+   
+        <p></p>
+        <a asp-action="CreateFacilitador">
+            <button type="button" asp-action="CreateFacilitador" onclick="cargando()" asp-controller="PreguntaEvaluacionEvento" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </span>Nuevo
+
+            </button>
+        </a>
+        <p> </p>
+   
+    <!-- widget grid -->
+    <section id="" class="">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Preguntas facilitador</h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)
+                                        </th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            </td>
+                                            <td>
+
+                                                @Html.ActionLink("Editar", "EditFacilitador", new { id = item.IdPreguntaEvaluacionEvento }, new { onclick = "cargando()" }) |
+                                                @Html.ActionLink("Eliminar", "DeleteFacilitador", new { id = item.IdPreguntaEvaluacionEvento }, new { onclick = "return confirm('Desea eliminar el Dato Bancario... ?');" })
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+
+@section Scripts {
+    <script src='~/lib/waitMe/waitMe.min.js'></script>
+    <script src='~/js/site.js'></script>
+    <script type="text/javascript">
+        function cargando() {
+            mostrarLoadingPanel("content", "")
+        }
+    </script>
+
+    <script src='~/js/datatables/init.js'></script>
+}
+
+

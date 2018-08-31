@@ -13,14 +13,14 @@
             </label>
         </section>
         <section class="col col-4">
-            <label>N&uacute;mero de carnet:</label>
+            <label>@Html.DisplayNameFor(d=>d.NumeroCarnet)</label>
             <label class="input">
                 <input maxlength="32" asp-for="NumeroCarnet" class="form-control"  />
                 <span asp-validation-for="NumeroCarnet" class="text-danger"></span>
             </label>
         </section>
         <section class="col col-4">
-            <label>Porciento de discapacidad:</label>
+            <label>@Html.DisplayNameFor(d => d.Porciento)</label>
             <label class="input">
                 <input maxlength="32" asp-for="Porciento" class="form-control"  onKeyPress="return checkIt(event)" onchange="handleChange(this);" onKeyPress="return checkIt(event)" onchange="handleChange(this);" />
                 <span asp-validation-for="Porciento" class="text-danger"></span>

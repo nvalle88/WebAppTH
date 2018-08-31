@@ -25,5 +25,8 @@ namespace bd.webappth.entidades.Negocio
         public int? IdPersona { get; set; }
         public virtual Persona Persona { get; set; }
 
+        [Display(Name = "Presenta certificado:")]
+        public bool PresentaCertificado { get; set; }
+
     }
 }

@@ -9,7 +9,7 @@ namespace bd.webappth.entidades.Negocio
         public int IdVacacionRelacionLaboral { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Relación laboral")]
+        [Display(Name = "Régimen laboral")]
         [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar {0} ")]
         public int IdRegimenLaboral { get; set; }
 
@@ -24,7 +24,10 @@ namespace bd.webappth.entidades.Negocio
 
         [Display(Name = "Incrementar a partir del año")]
         public int IncrementoApartirPeriodoFiscal { get; set; }
-        
+
+        [Display(Name = "Límite dias de acumulación")]
+        public int? LimiteAcumulacion { get; set; }
+
         public virtual RegimenLaboral RegimenLaboral { get; set; }
     }
 }

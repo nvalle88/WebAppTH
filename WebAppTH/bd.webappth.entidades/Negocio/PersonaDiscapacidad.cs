@@ -12,12 +12,12 @@ namespace bd.webappth.entidades.Negocio
         public int IdPersonaDiscapacidad { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Numero de carnet:")]
+        [Display(Name = "Numero carnet CONADIS:")]
         [StringLength(20, MinimumLength = 2, ErrorMessage = "El {0} no puede tener más de {1} y menos de {2}")]
         public string NumeroCarnet { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Porciento de discapacidad:")]
+        [Display(Name = "Porcentaje de discapacidad:")]
         [Range(1,100, ErrorMessage = "El {0} no tiene que estar entre {1} y {2}")]
         public int? Porciento { get; set; }
 

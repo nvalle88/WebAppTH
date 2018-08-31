@@ -91,7 +91,7 @@ namespace bd.webappth.entidades.Utils
         public static object TipoViatico { get { return "Seleccionar tipo de viatico"; } }
         public static object ConfiguracionViaticos { get { return "Rol de puesto no configuado para viaticos"; } }
 
-        public static object ErrorReingresarIdentificacion { get { return "Ha ocurrido un error, por favor reingrese la identificacion"; } }
+        public static object ErrorReingresarIdentificacion { get { return "Ha ocurrido un error y se ha perdido sessión, vuelva a seleccionar el empleado"; } }
 
         public static object ErrorIngresoVacantes { get { return "El número de vacantes solicitado es mayor que el disponible"; } }
 

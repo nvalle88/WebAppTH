@@ -3,7 +3,7 @@
 <fieldset>
     <div class="row">
 
-        <section class="col col-6">
+        <section class="col col-lg-6">
             <label>Tipo de enfermedad:</label>
             <label class="input">
                 <select asp-for="IdTipoEnfermedad" class="form-control" asp-items="ViewBag.IdTipoEnfermedad">
@@ -12,6 +12,34 @@
                 <span asp-validation-for="IdTipoEnfermedad" class="text-danger"></span>
             </label>
         </section>
+
+        <section class="col col-lg-3">
+            <label class="col col-lg-12">@Html.DisplayNameFor(Model => Model.PresentaCertificado)</label>
+
+            <div class="col-lg-6">
+                <label class="radio">
+                    <input class="radio" type="radio" asp-for="PresentaCertificado" value="true" />
+                    <i></i>SI
+
+                </label>
+            </div>
+
+            <div class="col-lg-6">
+                <label class="radio">
+                    <input class="radio" type="radio" asp-for="PresentaCertificado" value="false" />
+                    <i></i>NO
+
+                </label>
+            </div>
+
+        </section>
+
+    </div>
+
+    <div class="row">
+
+        <section class="col col-lg-6">&nbsp;</section>
+
         <section class="col col-6">
             <label>Instituci&oacute;n que emite:</label>
             <label class="input">
@@ -19,6 +47,7 @@
                 <span asp-validation-for="InstitucionEmite" class="text-danger"></span>
             </label>
         </section>
+
     </div>
-    <span class="text-danger">@ViewData["Error"]</span>
+    
 </fieldset>

@@ -25,12 +25,12 @@ namespace bd.webappth.entidades.ViewModels
         public string NombreParentesco { get; set; }
 
         //[Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Teléfono privado:")]
+        [Display(Name = "Número celular:")]
         //[StringLength(11, ErrorMessage = "El {0} no puede tener más de {1} caracteres")]
         public string TelefonoPrivado { get; set; }
 
         //[Required(ErrorMessage = "Debe introducir {0}")]
-        [Display(Name = "Teléfono de casa:")]
+        [Display(Name = "Teléfono convencional:")]
         //[StringLength(10, ErrorMessage = "El {0} no puede tener más de {1} caracteres")]
         public string TelefonoCasa { get; set; }
 

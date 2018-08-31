@@ -155,10 +155,16 @@ namespace bd.webappth.web.Controllers.MVC
                             if (ext == ".jpeg" || ext == ".bmp" || ext == ".jpe" || ext == ".jpg" || ext == ".gif" || ext == ".png")
                             {
                                 imagenes.Add(item);
+
+                                var itemUrl = string.IsNullOrEmpty(item.Url) != true ? WebApp.BaseAddress + "/" + item.Url : "";
+                                item.Url = itemUrl;
                             }
                             else if (ext == ".pdf" || ext == ".xlsx" || ext == ".xls" || ext == ".docx" || ext == ".doc" || ext == ".pptx" || ext == ".ppt" || ext == "ppsx" || ext == "pps")
                             {
                                 documentos.Add(item);
+
+                                var itemUrl = string.IsNullOrEmpty(item.Url) != true ? WebApp.BaseAddress + "/" + item.Url : "";
+                                item.Url = itemUrl;
                             }
                             else
                             {

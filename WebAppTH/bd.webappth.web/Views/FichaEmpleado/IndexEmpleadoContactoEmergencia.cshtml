@@ -35,16 +35,16 @@
                                 <thead>
                                     <tr>
                                         <th data-class="expand">
-                                            Nombre
+                                            Apellidos y nombres:
                                         </th>
                                         <th data-class="expand">
-                                            Tel&eacute;fono privado
+                                            @Html.DisplayNameFor(d => d.FirstOrDefault().TelefonoPrivado)
                                         </th>
                                         <th data-hide="phone">
-                                            Tel&eacute;fono de casa
+                                            @Html.DisplayNameFor(d=>d.FirstOrDefault().TelefonoCasa)
                                         </th>
                                         <th data-hide="phone">
-                                            Parentesco
+                                            Parentesco:
                                         </th>
                                         <th>
                                             <i class="fa fa-cog "></i>
@@ -58,7 +58,7 @@
 
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Nombre) @Html.DisplayFor(modelItem => item.Apellido)
+                                                @Html.DisplayFor(modelItem => item.Apellido) @Html.DisplayFor(modelItem => item.Nombre)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.TelefonoPrivado)
