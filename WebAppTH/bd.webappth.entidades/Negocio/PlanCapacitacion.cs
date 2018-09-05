@@ -101,6 +101,9 @@
         [NotMapped]
         public string Correo { get; set; }
         public int? Estado { get; set; }
+        
+        [NotMapped]
+        public string NombreEstado { get; set; }
 
         public virtual Ciudad Ciudad { get; set; }
         public virtual GestionPlanCapacitacion GestionPlanCapacitacion { get; set; }
