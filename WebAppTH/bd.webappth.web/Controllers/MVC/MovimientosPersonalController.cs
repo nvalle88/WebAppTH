@@ -29,7 +29,7 @@ namespace bd.webappth.web.Controllers.MVC
         }
 
         
-
+        /*
 
         public async Task<IActionResult> Index()
         {

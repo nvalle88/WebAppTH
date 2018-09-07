@@ -1,9 +1,33 @@
 ﻿@model bd.webappth.entidades.ViewModels.AccionPersonalViewModel
 
+<input type="hidden" asp-for="IdAccionPersonal" />
+<input type="hidden" asp-for="EmpleadoMovimiento.Empleado.IdEmpleado" />
+<input type="hidden" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.IdIndiceOcupacionalModalidadPartida" />
+<input type="hidden" id="txt_ioHasta" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IdIndiceOcupacional" />
 
 <fieldset>
 
-    
+    @{
+        char[] MyChar = { ':' };
+
+        decimal? remuneracion = 0;
+        var relacionLaboral = Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.TipoNombramiento.RelacionLaboral.Nombre + "  - " + Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.TipoNombramiento.Nombre;
+
+        if (
+            Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.SalarioReal != null
+            && Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.SalarioReal > 0
+            )
+        {
+            remuneracion = Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.SalarioReal;
+        }
+        else
+        {
+
+            remuneracion = Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.IndiceOcupacional.EscalaGrados.Remuneracion;
+        }
+
+
+    }
 
     <div class="row">&nbsp;</div>
 
@@ -13,16 +37,17 @@
 
             <label class="input col-lg-12">Nombre del funcionario</label>
             <label class="input col-lg-12">
-                <input type="text" value="@(Model.DistributivoSituacionActual.Empleado.Persona.Nombres) @(Model.DistributivoSituacionActual.Empleado.Persona.Apellidos)" class="form-control" readonly />
+                <input type="text" value="@(Model.EmpleadoMovimiento.Empleado.Persona.Nombres) @(Model.EmpleadoMovimiento.Empleado.Persona.Apellidos)" class="form-control" readonly />
             </label>
 
         </section>
 
         <section class="col col-lg-4">
 
-            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.DistributivoSituacionActual.Empleado.Persona.Identificacion)</label>
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.EmpleadoMovimiento.Empleado.Persona.Identificacion).ToString().TrimEnd(MyChar)</label>
             <label class="input col-lg-12">
-                <input type="text" asp-for="DistributivoSituacionActual.Empleado.Persona.Identificacion" class="form-control" readonly />
+                <input type="text" asp-for="EmpleadoMovimiento.Empleado.Persona.Identificacion" class="form-control" readonly />
+                <span asp-validation-for="EmpleadoMovimiento.Empleado.Persona.Identificacion" class="text-danger"></span>
             </label>
 
         </section>
@@ -90,14 +115,15 @@
 
         <section class="col col-lg-4">
             <div class="input col-lg-12">
-                @Html.RadioButtonFor(x => x.TipoAccionPersonalViewModel.GenerarMovimientoPersonal, false, new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbFalse", @disabled = "disabled" })&nbsp;No
+                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, false, new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbFalse", @disabled = "disabled" })&nbsp;No
             </div>
         </section>
 
         <section class="col col-lg-4">
             <div class="input col-lg-12">
-                @Html.RadioButtonFor(x => x.TipoAccionPersonalViewModel.GenerarMovimientoPersonal, true, new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbTrue", @disabled = "disabled" })&nbsp;Si
+                @Html.RadioButtonFor(x => x.GeneraMovimientoPersonal, true, new { onClick = "ValidarChkMovPersonal(this)", @id = "rdbTrue", @disabled = "disabled" })&nbsp;Si
             </div>
+            <input id="txtGenerarMovimiento" asp-for="GeneraMovimientoPersonal" type="text" hidden />
         </section>
 
     </div>
@@ -112,9 +138,10 @@
 
         <section class="col col-lg-6 divSituacionActual">
 
-            <label class="input col-lg-12">@Html.DisplayNameFor(model =>model.DistributivoSituacionActual.IndiceOcupacionalModalidadPartida.Dependencia.Sucursal.Nombre)</label>
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.EmpleadoMovimiento.Empleado.Dependencia.Sucursal.Nombre).ToString().TrimEnd(MyChar)</label>
             <label class="input col-lg-12">
-                <input type="text" asp-for="DistributivoSituacionActual.IndiceOcupacionalModalidadPartida.Dependencia.Sucursal.Nombre" class="form-control" readonly />
+                <input type="text" asp-for="EmpleadoMovimiento.Empleado.Dependencia.Sucursal.Nombre" class="form-control" readonly />
+                <span asp-validation-for="EmpleadoMovimiento.Empleado.Dependencia.Sucursal.Nombre" class="text-danger"></span>
             </label>
 
         </section>
@@ -123,8 +150,8 @@
 
             <label class="input col-lg-12">Unidad administrativa</label>
             <label class="input col-lg-12">
-                <input type="text" asp-for="DistributivoSituacionActual.IndiceOcupacionalModalidadPartida.Dependencia.Nombre" class="form-control" readonly />
-                <span asp-validation-for="DistributivoSituacionActual.IndiceOcupacionalModalidadPartida.Dependencia.Nombre" class="text-danger"></span>
+                <input type="text" asp-for="EmpleadoMovimiento.Empleado.Dependencia.Nombre" class="form-control" readonly />
+                <span asp-validation-for="EmpleadoMovimiento.Empleado.Dependencia.Nombre" class="text-danger"></span>
             </label>
 
         </section>
@@ -133,7 +160,8 @@
 
             <label class="input col-lg-12">Nombre del puesto</label>
             <label class="input col-lg-12">
-                <input type="text" asp-for="DistributivoSituacionActual.IndiceOcupacionalModalidadPartida.IndiceOcupacional.DenominacionPuesto" class="form-control" readonly />
+                <input type="text" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.IndiceOcupacional.ManualPuesto.Nombre" class="form-control" readonly />
+                <span asp-validation-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaDesde.IndiceOcupacional.ManualPuesto.Nombre" class="text-danger"></span>
             </label>
 
         </section>
@@ -142,7 +170,7 @@
 
             <label class="input col-lg-12">Relaci&oacute;n laboral</label>
             <label class="input col-lg-12">
-                <input type="text" value="@Model.DistributivoSituacionActual.TipoNombramiento.RelacionLaboral.Nombre" class="form-control" readonly />
+                <input type="text" value="@relacionLaboral" class="form-control" readonly />
 
             </label>
 
@@ -152,7 +180,7 @@
 
             <label class="input col-lg-12">Remuneraci&oacute;n</label>
             <label class="input col-lg-12">
-                <input type="text" value="$@Model.DistributivoSituacionActual.IndiceOcupacionalModalidadPartida.IndiceOcupacional.EscalaGrados.Remuneracion" class="form-control" readonly />
+                <input type="text" value="$@remuneracion" class="form-control" readonly />
 
             </label>
 
@@ -161,7 +189,7 @@
     </div>
 
     <div class="row divSituacionActual">&nbsp;</div>
-    @*
+
 
     <div class="row divSituacionPropuesta">
         <section class="col col-lg-12 divSituacionPropuesta">
@@ -328,7 +356,7 @@
                                 <td>
                                     @Html.RadioButtonFor(x => x.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta, item.IdIndiceOcupacionalModalidadPartida, new { @checked = "false" })
 
-                                     @if (item.IdIndiceOcupacionalModalidadPartida == Model.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta)
+                                    @*@if (item.IdIndiceOcupacionalModalidadPartida == Model.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta)
                                     {
                                         <text>s</text>
                                         @Html.RadioButtonFor(x => x.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta, item.IdIndiceOcupacionalModalidadPartida, new { @checked = "true" })
@@ -337,7 +365,7 @@
                                     {
                                         <text>a</text>
                                         @Html.RadioButtonFor(x => x.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta, item.IdIndiceOcupacionalModalidadPartida, new { @checked = "false" })
-                                    }* @
+                                    }*@
                                 </td>
 
                             </tr>
@@ -522,7 +550,7 @@
         <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
     </div>
 
-    *@
+
     <div class="row">
 
         <section class="col col-lg-12">
@@ -531,10 +559,10 @@
 
         <section class="col col-lg-4">
 
-            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.FechaSolicitud)</label>
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Fecha)</label>
             <label class="input col-lg-12">
-                <input asp-for="FechaSolicitud" type="text" class="form-control datepicker" data-dateformat='yy-mm-dd' />
-                <span asp-validation-for="FechaSolicitud" class="text-danger"></span>
+                <input asp-for="Fecha" type="text" class="datepicker" data-dateformat='yy-mm-dd' />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
             </label>
 
         </section>
@@ -543,7 +571,7 @@
 
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.FechaRige)</label>
             <label class="input col-lg-12">
-                <input id="date_Fecha1" asp-for="FechaRige" type="text" class="form-control datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" />
+                <input id="date_Fecha1" asp-for="FechaRige" type="datetime" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" />
                 <span asp-validation-for="FechaRige" class="text-danger"></span>
             </label>
 
@@ -553,7 +581,7 @@
 
             <label class="input col-lg-12" id="lbl_date_Fecha2">@Html.DisplayNameFor(model => Model.FechaRigeHasta)</label>
             <label class="input col-lg-12">
-                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="form-control datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()"/>
+                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()"/>
                 <span asp-validation-for="FechaRigeHasta" class="text-danger"></span>
             </label>
 
@@ -567,20 +595,20 @@
 
         <section class="col col-lg-4">
 
-            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.TotalDias)</label>
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.NoDias)</label>
             <label class="input col-lg-12">
-                <input id="txt_dias" min="0" readonly type="number" asp-for="TotalDias" class="form-control" />
-                <span asp-validation-for="TotalDias" class="text-danger"></span>
+                <input id="txt_dias" min="0" readonly type="number" asp-for="NoDias" class="form-control" />
+                <span asp-validation-for="NoDias" class="text-danger"></span>
             </label>
 
         </section>
 
         <section class="col col-lg-4">
 
-            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.DiasRestantes)</label>
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Numero)</label>
             <label class="input col-lg-12">
-                <input id="txt_Numero" min="0" readonly type="number" asp-for="DiasRestantes" class="form-control" />
-                <span asp-validation-for="DiasRestantes" class="text-danger"></span>
+                <input id="txt_Numero" min="0" readonly type="number" asp-for="Numero" class="form-control" />
+                <span asp-validation-for="Numero" class="text-danger"></span>
             </label>
 
         </section>
@@ -608,8 +636,6 @@
             document.getElementsByClassName("divSituacionPropuesta")[j].style.visibility = "visible";
         }
 
-        @*
-
         @if (Model.ConfigurarPuesto == true) {
             <text>
                 MostrarNuevoPuesto();
@@ -622,7 +648,6 @@
             </text>
         }
 
-        *@
     }
 
     function OcultarMovimientoPersonal() {
@@ -724,7 +749,6 @@
 
     }
 
-    @*
 
 
         @if (Model.GeneraMovimientoPersonal == true) {
@@ -749,7 +773,6 @@
             </text>
         }
 
-        *@
 
         @if (Model.FechaRigeHasta == null)
         {

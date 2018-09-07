@@ -35,12 +35,12 @@ namespace bd.webappth.web.Controllers.MVC
         public async Task<IActionResult> Index()
         {
 
-            var lista = new List<ListaEmpleadoViewModel>();
+            var lista = new List<DistributivoSituacionActual>();
             try
             {
-                lista = await apiServicio.Listar<ListaEmpleadoViewModel>(
+                lista = await apiServicio.Listar<DistributivoSituacionActual>(
                     new Uri(WebApp.BaseAddress)
-                    , "api/Empleados/ListarEmpleados");
+                    , "api/Distributivos/ObtenerDistributivoReal");
 
                 
                 return View(lista);
@@ -52,22 +52,17 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> ListaMovimientos(string identificacion,int Empty)
-        {
-            if ( string.IsNullOrEmpty(identificacion) ) {
 
-                return this.RedireccionarMensajeTime(
-                            "MovimientosPersonalTTHH",
-                            "Index",
-                            $"{Mensaje.Error}|{Mensaje.ErrorReingresarIdentificacion}|{"7000"}"
-                    );
-            }
-            return await ListaMovimientos(identificacion + " ");
+        public async Task<IActionResult> ListaMovimientos(int IdEmpleado,int Empty)
+        {
+            
+            return await ListaMovimientos(IdEmpleado);
         }
 
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ListaMovimientos(string identificacion)
+        public async Task<IActionResult> ListaMovimientos(int IdEmpleado)
         {
 
             try
@@ -80,12 +75,13 @@ namespace bd.webappth.web.Controllers.MVC
                     
                     var NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
+
                     var modeloEnviar = new AccionesPersonalPorEmpleadoViewModel
                     {
 
                         DatosBasicosEmpleadoViewModel = new DatosBasicosEmpleadoViewModel
                         {
-                            Identificacion = identificacion
+                            IdEmpleado = IdEmpleado
                         },
 
                         NombreUsuarioActual = NombreUsuario
@@ -124,7 +120,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-
+        
 
         public async Task<IActionResult> Create(int id)
         {
@@ -157,7 +153,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        
+        /*
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AccionPersonalViewModel accionPersonalViewModel)
@@ -384,37 +380,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task InicializarCombos()
-        {
-            // Carga de listas para combos
-
-            // ** Tipos de acciones
-            var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
-
-            ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
-
-
-
-            //** Estados de aprobación
-            var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacionTTHH");
-
-            ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
-
-
-
-            
-            ViewData["IdRegimenLaboral"] = new SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
-
-
-            ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
-
-            
-            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
-
-
-            ViewData["IdModalidadPartida"] = new SelectList(await apiServicio.Listar<ModalidadPartida>(new Uri(WebApp.BaseAddress), "api/ModalidadesPartida/ListarModalidadesPartida"), "IdModalidadPartida", "Nombre");
-
-        }
+        
 
         public async Task InicializarCombosVisualizar()
         {
@@ -624,5 +590,41 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex) { }
         }
+
+        */
+
+        public async Task InicializarCombos()
+        {
+            // Carga de listas para combos
+
+            // ** Tipos de acciones
+            var listaTipoAccionespersonales = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+
+            ViewData["TipoAcciones"] = new SelectList(listaTipoAccionespersonales, "IdTipoAccionPersonal", "Nombre");
+
+
+
+            //** Estados de aprobación
+            var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacionTTHH");
+
+            ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
+
+
+            /*
+
+            ViewData["IdRegimenLaboral"] = new SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
+
+
+            ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
+
+
+            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
+
+
+            ViewData["IdModalidadPartida"] = new SelectList(await apiServicio.Listar<ModalidadPartida>(new Uri(WebApp.BaseAddress), "api/ModalidadesPartida/ListarModalidadesPartida"), "IdModalidadPartida", "Nombre");
+            */
+
+        }
+
     }
 }

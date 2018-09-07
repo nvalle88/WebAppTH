@@ -33,6 +33,8 @@ namespace bd.webappth.web.Controllers.MVC
 
             private ObtenerInstancia() { }
 
+            /*
+
             public static EmpleadoViewModel Instance
             {
                 get
@@ -427,19 +429,19 @@ namespace bd.webappth.web.Controllers.MVC
                                 empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdDependencia,
                                 empleadoViewModel.IndiceOcupacional.IdManualPuesto
                               );
-                        /*
-                        await CargarRolPuestoPorManualPuesto(
-                                empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdManualPuesto,
-                                empleadoViewModel.IndiceOcupacional.IdDependencia,
-                                empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto
-                              );
+                        
+                        //await CargarRolPuestoPorManualPuesto(
+                        //        empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdManualPuesto,
+                        //        empleadoViewModel.IndiceOcupacional.IdDependencia,
+                        //        empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto
+                        //      );
 
-                        await CargarEscalaGradosPorRolPuesto(
-                                empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto,
-                                empleadoViewModel.IndiceOcupacional.IdManualPuesto,
-                                empleadoViewModel.IndiceOcupacional.IdDependencia
-                              );
-                              */
+                        //await CargarEscalaGradosPorRolPuesto(
+                        //        empleadoViewModel.IndiceOcupacionalModalidadPartida.IndiceOcupacional.IdRolPuesto,
+                        //        empleadoViewModel.IndiceOcupacional.IdManualPuesto,
+                        //        empleadoViewModel.IndiceOcupacional.IdDependencia
+                        //      );
+                              
                         await CargarFondoFinanciamento(
                                 (int)(empleadoViewModel.IndiceOcupacionalModalidadPartida.IdFondoFinanciamiento)
                             );
@@ -1555,10 +1557,10 @@ namespace bd.webappth.web.Controllers.MVC
                             $"{Mensaje.Success}|{response.Message}"
                          );
                 }
-                /*
-                this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{response.Message}|{"10000"}";
-                return BadRequest(response.Message);
-                */
+                
+                //this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{response.Message}|{"10000"}";
+                //return BadRequest(response.Message);
+                
 
                 return this.RedireccionarMensajeTime(
                             "Empleados",
@@ -1926,8 +1928,13 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 return BadRequest();
             }
+
+
+        */
+
         }
 
+    
     }
     
 }

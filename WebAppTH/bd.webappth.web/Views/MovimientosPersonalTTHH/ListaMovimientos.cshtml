@@ -86,9 +86,9 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().FechaRigeHasta)
                                         </th>
-
+                                        @*
                                         <th data-class="expand">
-                                            @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().NoDias)
+                                            @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().TotalDias)
                                         </th>
 
                                         <th data-class="expand">
@@ -98,7 +98,7 @@
                                         <th data-class="expand">
                                             @Html.DisplayNameFor(model => Model.ListaAccionPersonal.FirstOrDefault().EstadoValidacionTTHH)
                                         </th>
-
+                                        *@
                                         <th data-class="expand">
                                             @Html.DisplayName("Opción")
                                         </th>
@@ -126,9 +126,9 @@
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NoDias)
+                                                @Html.DisplayFor(modelItem => item.TotalDias)
                                             </td>
-
+                                            @*
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.EstadoDirector)
                                             </td>
@@ -157,6 +157,7 @@
 
                                             </td>
 
+                                            *@
                                         </tr>
                                     }
                                 </tbody>

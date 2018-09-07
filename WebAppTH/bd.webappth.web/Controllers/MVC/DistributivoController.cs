@@ -62,6 +62,8 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+        /*
+
         private readonly IApiServicio apiServicio;
 
 
@@ -281,5 +283,8 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex) { }
         }
+
+    */
+
     }
 }

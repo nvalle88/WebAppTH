@@ -28,11 +28,8 @@
 
         <section class="col col-2">
             <input id="rdbtnIndefinido" type="radio" name="grp_tiempo_minimo" value="definitivo" onclick="getRdbtnMinSelected()" @if (
-                    Model.TipoAccionPersonal.NHorasMaximo < 1 
-                    && Model.TipoAccionPersonal.NHorasMinimo < 1
-                    && Model.TipoAccionPersonal.NDiasMaximo < 1
-                    && Model.TipoAccionPersonal.MesesMaximo < 1
-                    && Model.TipoAccionPersonal.YearsMaximo < 1
+                    Model.TipoAccionPersonal.Definitivo == true 
+                    
                 ) {
                 <text> checked</text>
                 } />&nbsp;Definitivo
@@ -40,11 +37,11 @@
         </section>
 
         <section class="col col-2">
-            <input type="radio" name="grp_tiempo_minimo" value="horas" onclick="getRdbtnMinSelected()" @if (Model.TipoAccionPersonal.NHorasMaximo > 0) { <text> checked</text>} />&nbsp;Horas
+            <input type="radio" name="grp_tiempo_minimo" value="horas" onclick="getRdbtnMinSelected()" @if (Model.TipoAccionPersonal.Horas == true) { <text> checked</text>} />&nbsp;Horas
         </section>
 
         <section class="col col-2">
-            <input type="radio" name="grp_tiempo_minimo" value="dias" onclick="getRdbtnMinSelected()" @if (Model.TipoAccionPersonal.NDiasMaximo > 0) { <text> checked</text>} />&nbsp;D&iacute;as meses y a&ntilde;os
+            <input type="radio" name="grp_tiempo_minimo" value="dias" onclick="getRdbtnMinSelected()" @if (Model.TipoAccionPersonal.Dias == true) { <text> checked</text>} />&nbsp;D&iacute;as meses y a&ntilde;os
         </section>
 
     </div>
@@ -53,10 +50,10 @@
 
         <div id="rowHorasMin" style="visibility: hidden">
             <section class="col col-2">
-                <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.NHorasMinimo)</label>
+                <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.NhorasMinimo)</label>
                 <label class="input">
-                    <input type="number" id="txt_min_horas" onchange="validarHoras()" maxlength="20" asp-for="TipoAccionPersonal.NHorasMinimo" class="form-control" />
-                    <span asp-validation-for="TipoAccionPersonal.NHorasMinimo" class="text-danger"></span>
+                    <input type="number" id="txt_min_horas" onchange="validarHoras()" maxlength="20" asp-for="TipoAccionPersonal.NhorasMinimo" class="form-control" />
+                    <span asp-validation-for="TipoAccionPersonal.NhorasMinimo" class="text-danger"></span>
                 </label>
             </section>
         </div>
@@ -65,7 +62,7 @@
             <section class="col col-2">
                 <label>D&iacute;as</label>
                 <label class="input">
-                    <input type="number" min="0" max="364" maxlength="20" id="txt_min_dias"  class="form-control" asp-for="TipoAccionPersonal.NDiasMinimo" onchange="resetHoras()" />
+                    <input type="number" min="0" max="364" maxlength="20" id="txt_min_dias"  class="form-control" asp-for="TipoAccionPersonal.NdiasMinimo" onchange="resetHoras()" />
                 </label>
             </section>
 
@@ -87,10 +84,10 @@
 
             <section class="col col-2">
 
-                <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.NHorasMaximo)</label>
+                <label>@Html.DisplayNameFor(model => model.TipoAccionPersonal.NhorasMaximo)</label>
                 <label class="input">
-                    <input type="number" id="txt_max_horas" onchange="validarHoras()" maxlength="20" asp-for="TipoAccionPersonal.NHorasMaximo" class="form-control" />
-                    <span asp-validation-for="TipoAccionPersonal.NHorasMaximo" class="text-danger"></span>
+                    <input type="number" id="txt_max_horas" onchange="validarHoras()" maxlength="20" asp-for="TipoAccionPersonal.NhorasMaximo" class="form-control" />
+                    <span asp-validation-for="TipoAccionPersonal.NhorasMaximo" class="text-danger"></span>
                 </label>
             </section>
 
@@ -101,7 +98,7 @@
             <section class="col col-2">
                 <label>D&iacute;as</label>
                 <label class="input">
-                    <input type="number" min="0" max="364" maxlength="20" id="txt_max_dias"  class="form-control"  asp-for="TipoAccionPersonal.NDiasMaximo" onchange="resetHoras()" />
+                    <input type="number" min="0" max="364" maxlength="20" id="txt_max_dias"  class="form-control"  asp-for="TipoAccionPersonal.NdiasMaximo" onchange="resetHoras()" />
                 </label>
             </section>
 
@@ -173,9 +170,9 @@
 
         <section class="col col-4">
             <label class="checkbox">
-                <input type="checkbox" asp-for="TipoAccionPersonal.EsResponsableTH" class="form-control">
+                <input type="checkbox" asp-for="TipoAccionPersonal.EsResponsableTh" class="form-control">
                 <i></i>Es responsable de Talento Humano 
-                <span asp-validation-for="TipoAccionPersonal.EsResponsableTH" class="text-danger"></span>
+                <span asp-validation-for="TipoAccionPersonal.EsResponsableTh" class="text-danger"></span>
             </label>
         </section>
 
@@ -293,9 +290,9 @@
     <div class="row">
         <section class="col col-lg-12">
             <label class="checkbox">
-                <input type="checkbox" asp-for="TipoAccionPersonal.ModificaDistributivo" class="form-control">
+                <input type="checkbox" asp-for="TipoAccionPersonal.GenerarMovimientoPersonal" class="form-control">
                 <i></i>Genera movimiento de personal
-                <span asp-validation-for="TipoAccionPersonal.ModificaDistributivo" class="text-danger"></span>
+                <span asp-validation-for="TipoAccionPersonal.GenerarMovimientoPersonal" class="text-danger"></span>
             </label>
         </section>
 

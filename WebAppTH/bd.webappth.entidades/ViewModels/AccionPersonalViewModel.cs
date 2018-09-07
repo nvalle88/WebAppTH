@@ -9,6 +9,45 @@ namespace bd.webappth.entidades.ViewModels
 {
     public class AccionPersonalViewModel
     {
+
+        // Campos tabla accionPersonal
+        public int IdAccionPersonal { get; set; }
+        public int IdEmpleadoAfectado { get; set; }
+        public int IdEmpleadoResponsableIngreso { get; set; }
+        public int IdTipoAccionPersonal { get; set; }
+
+        [Display(Name = "Fecha de solicitud")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime FechaSolicitud { get; set; }
+
+        public string Solicitud { get; set; }
+
+        public string Explicacion { get; set; }
+
+        [Display(Name = "Fecha desde")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime FechaRige { get; set; }
+
+        [Display(Name = "Fecha hasta")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime? FechaRigeHasta { get; set; }
+
+        public int TotalDias { get; set; }
+        public int? DiasRestantes { get; set; }
+        public int Estado { get; set; }
+        public bool Bloquear { get; set; }
+        public bool Ejecutado { get; set; }
+
+
+        public TipoAccionesPersonalViewModel TipoAccionPersonalViewModel { get; set; }
+
+        public DistributivoSituacionActual DistributivoSituacionActual { get; set; }
+
+        /*
+
         // campos de tabla Acción Personal
         public int IdAccionPersonal { get; set; }
 
@@ -84,6 +123,6 @@ namespace bd.webappth.entidades.ViewModels
         public bool ConfigurarPuesto { get; set; }
         
 
-       
+       */
     }
 }

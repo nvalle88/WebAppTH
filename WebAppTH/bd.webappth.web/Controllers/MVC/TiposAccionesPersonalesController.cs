@@ -27,7 +27,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-
+        
         
 
 
@@ -44,10 +44,10 @@ namespace bd.webappth.web.Controllers.MVC
                                 new Matriz {Id = "MATRIZ Y REGIONAL", Nombre = "MATRIZ Y REGIONAL"}
                             },
                 TipoAccionPersonal = new TipoAccionPersonal {
-                    NDiasMaximo = 0,
-                    NDiasMinimo = 0,
-                    NHorasMaximo = 0,
-                    NHorasMinimo = 0
+                    NdiasMaximo = 0,
+                    NdiasMinimo = 0,
+                    NhorasMaximo = 0,
+                    NhorasMinimo = 0
               
                 }
             };
@@ -57,6 +57,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             return View(tipoAccionPersonalViewmodel);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -81,17 +82,17 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     case 0:
                         tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = false;
-                        tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = false;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.ModificarDistributivo = false;
                         break;
 
                     case 1:
                         tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = false;
-                        tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = true;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.ModificarDistributivo = true;
                         break;
 
                     case 2:
                         tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = true;
-                        tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = false;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.ModificarDistributivo = true;
                         break;
 
                     default:
@@ -102,9 +103,22 @@ namespace bd.webappth.web.Controllers.MVC
                 if (tipoAccionPersonalViewModel.grp_tiempo_minimo == "definitivo")
                 {
                     tipoAccionPersonalViewModel.TipoAccionPersonal.Definitivo = true;
+                    tipoAccionPersonalViewModel.TipoAccionPersonal.Dias = false;
+                    tipoAccionPersonalViewModel.TipoAccionPersonal.Horas = false;
                 }
-                else {
+
+                else if (tipoAccionPersonalViewModel.grp_tiempo_minimo == "horas")
+                {
                     tipoAccionPersonalViewModel.TipoAccionPersonal.Definitivo = false;
+                    tipoAccionPersonalViewModel.TipoAccionPersonal.Dias = false;
+                    tipoAccionPersonalViewModel.TipoAccionPersonal.Horas = true;
+                }
+
+                else if (tipoAccionPersonalViewModel.grp_tiempo_minimo == "dias")
+                {
+                    tipoAccionPersonalViewModel.TipoAccionPersonal.Definitivo = false;
+                    tipoAccionPersonalViewModel.TipoAccionPersonal.Dias = true;
+                    tipoAccionPersonalViewModel.TipoAccionPersonal.Horas = false;
                 }
 
 
@@ -193,14 +207,14 @@ namespace bd.webappth.web.Controllers.MVC
                         
                         if (    
                             tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado == false
-                            && tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion == false
+                            && tipoAccionPersonalViewModel.TipoAccionPersonal.ModificarDistributivo == false
                         ) {
                             tipoAccionPersonalViewModel.empleadoCambio = 0;
                         }
 
                         else if (
                             tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado == false
-                            && tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion == true
+                            && tipoAccionPersonalViewModel.TipoAccionPersonal.ModificarDistributivo == true
                         )
                         {
                             tipoAccionPersonalViewModel.empleadoCambio = 1;
@@ -208,7 +222,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                         else if (
                             tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado == true
-                            && tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion == false
+                            && tipoAccionPersonalViewModel.TipoAccionPersonal.ModificarDistributivo == true
                         )
                         {
                             tipoAccionPersonalViewModel.empleadoCambio = 2;
@@ -251,17 +265,17 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         case 0:
                             tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = false;
-                            tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = false;
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.ModificarDistributivo = false;
                             break;
 
                         case 1:
                             tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = false;
-                            tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = true;
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.ModificarDistributivo = true;
                             break;
 
                         case 2:
                             tipoAccionPersonalViewModel.TipoAccionPersonal.DesactivarEmpleado = true;
-                            tipoAccionPersonalViewModel.TipoAccionPersonal.ModalidadContratacion = false;
+                            tipoAccionPersonalViewModel.TipoAccionPersonal.ModificarDistributivo = true;
                             break;
 
                         default:
@@ -272,10 +286,22 @@ namespace bd.webappth.web.Controllers.MVC
                     if (tipoAccionPersonalViewModel.grp_tiempo_minimo == "definitivo")
                     {
                         tipoAccionPersonalViewModel.TipoAccionPersonal.Definitivo = true;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.Dias = false;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.Horas = false;
                     }
-                    else
+
+                    else if (tipoAccionPersonalViewModel.grp_tiempo_minimo == "horas")
                     {
                         tipoAccionPersonalViewModel.TipoAccionPersonal.Definitivo = false;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.Dias = false;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.Horas = true;
+                    }
+
+                    else if (tipoAccionPersonalViewModel.grp_tiempo_minimo == "dias")
+                    {
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.Definitivo = false;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.Dias = true;
+                        tipoAccionPersonalViewModel.TipoAccionPersonal.Horas = false;
                     }
 
 
@@ -314,14 +340,17 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
+
+
         public async Task<IActionResult> Index()
         {
 
             var lista = new List<TipoAccionPersonal>();
             try
             {
-                lista = await apiServicio.Listar<TipoAccionPersonal>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+                lista = await apiServicio.Listar<TipoAccionPersonal>(
+                    new Uri(WebApp.BaseAddress), "api/TiposAccionesPersonales/ListarTiposAccionesPersonales");
+
                 return View(lista);
             }
             catch (Exception ex)
@@ -358,5 +387,8 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+    
+
     }
 }
