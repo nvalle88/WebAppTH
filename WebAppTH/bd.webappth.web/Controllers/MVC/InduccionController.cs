@@ -21,21 +21,10 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        private void InicializarMensaje(string mensaje)
+        
 
+        public async Task<IActionResult> Index()
         {
-
-            if (mensaje == null)
-            {
-                mensaje = "";
-            }
-
-            ViewData["Error"] = mensaje;
-        }
-
-        public async Task<IActionResult> Index(string mensaje)
-        {
-            InicializarMensaje(mensaje);
 
             var lista = new List<InduccionViewModel>();
             

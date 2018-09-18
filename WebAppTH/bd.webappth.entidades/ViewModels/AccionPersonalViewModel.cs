@@ -16,13 +16,14 @@ namespace bd.webappth.entidades.ViewModels
         public int IdEmpleadoResponsableIngreso { get; set; }
         public int IdTipoAccionPersonal { get; set; }
 
-        [Display(Name = "Fecha de solicitud")]
+        [Display(Name = "Fecha de registro")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime FechaSolicitud { get; set; }
 
         public string Solicitud { get; set; }
 
+        [Display(Name = "Explicación")]
         public string Explicacion { get; set; }
 
         [Display(Name = "Fecha desde")]
@@ -35,6 +36,7 @@ namespace bd.webappth.entidades.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? FechaRigeHasta { get; set; }
 
+        [Display(Name = "FTotal de días")]
         public int TotalDias { get; set; }
         public int? DiasRestantes { get; set; }
         public int Estado { get; set; }
@@ -45,6 +47,27 @@ namespace bd.webappth.entidades.ViewModels
         public TipoAccionesPersonalViewModel TipoAccionPersonalViewModel { get; set; }
 
         public DistributivoSituacionActual DistributivoSituacionActual { get; set; }
+
+        public List<DistributivoSituacionActual> ListaDistributivoSeleccion { get; set; }
+
+        public int IdSeleccionado { get; set; }
+
+        public int? IdTipoNombramientoHasta { get; set; }
+        public int? IdFondoFinanciamientoHasta { get; set; }
+
+        public int? IdModalidadPartidaHasta { get; set; }
+
+
+        // DATOS SOLO PARA CARGAR CUANDO SE EDITA
+        public int? IdPartidaVacante { get; set; }
+        public int? IdRelacionLaboralHasta { get; set; }
+        public int? IdRegimenLaboralHasta { get; set; }
+
+
+        // Otros
+        public string NombreUsuario { get; set; }
+
+        public string NombreEstado { get; set; }
 
         /*
 

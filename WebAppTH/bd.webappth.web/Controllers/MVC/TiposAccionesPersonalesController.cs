@@ -47,10 +47,15 @@ namespace bd.webappth.web.Controllers.MVC
                     NdiasMaximo = 0,
                     NdiasMinimo = 0,
                     NhorasMaximo = 0,
-                    NhorasMinimo = 0
+                    NhorasMinimo = 0,
+
+                    Definitivo = true,
+                    Dias = false,
+                    Horas = false,
               
                 }
             };
+            
             
             ViewData["IdMatriz"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tipoAccionPersonalViewmodel.MatrizLista, "Id", "Nombre");
 

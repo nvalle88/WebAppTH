@@ -23,7 +23,7 @@ namespace bd.webappth.web.Controllers.MVC
 
     public class DocumentosEmpleadosTTHHController : Controller
     {
-
+        /*
         public class ObtenerInstancia
         {
             private static EmpleadoViewModel instance;
@@ -60,6 +60,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
             }
         }
+        */
 
         private readonly IApiServicio apiServicio;
 
@@ -68,25 +69,23 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
-        private void InicializarMensaje(string mensaje)
-        {
-            if (mensaje == null)
-            {
-                mensaje = "";
-            }
-            ViewData["Error"] = mensaje;
-        }
+
+
+        #region Mantenimiento de los documentos entregados por el empleado
+
         public async Task<IActionResult> Index()
         {
-            
 
-            var lista = new List<ListaEmpleadoViewModel>();
+
+            var lista = new List<DistributivoHistorico>();
             try
             {
-                lista = await apiServicio.Listar<ListaEmpleadoViewModel>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/Empleados/ListarEmpleados");
+                lista = await apiServicio.Listar<DistributivoHistorico>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/Distributivos/ObtenerDistributivoFormal"
+                );
 
-                InicializarMensaje(null);
+
                 return View(lista);
             }
             catch (Exception ex)
@@ -95,12 +94,11 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-
-        public async Task<IActionResult> CheckListDocumentosEmpleado(string identificacion, string mensaje)
+        
+        public async Task<IActionResult> CheckListDocumentosEmpleado(string id)
         {
-            InicializarMensaje(mensaje);
 
-            if (String.IsNullOrEmpty(identificacion))
+            if (String.IsNullOrEmpty(id))
             {
                 return this.RedireccionarMensajeTime(
                     "DocumentosEmpleadosTTHH",
@@ -113,46 +111,36 @@ namespace bd.webappth.web.Controllers.MVC
             var listaDocumentosEntregados = new List<DocumentosIngresoEmpleado>();
 
             var documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado();
-            documentoingresoViewModel.listadocumentosingreso = new List<DocumentosIngreso>();
-            documentoingresoViewModel.listadocumentosingresoentregado = new List<DocumentosIngresoEmpleado>();
+            documentoingresoViewModel.ListaDocumentosIngreso = new List<DocumentosIngreso>();
+            documentoingresoViewModel.ListaDocumentosIngresoEntregado = new List<DocumentosIngresoEmpleado>();
 
             try
             {
-                var empleado = new Empleado
-                {
-                    Persona = new Persona
-                    {
-                        Identificacion = identificacion
-                    }
-                };
+                int idEmpleado = Convert.ToInt32(id);
 
-                var datosCompletosEmpleado = new ListaEmpleadoViewModel();
+                var distributivo = new DistributivoHistorico();
 
-                Response reponseDatosEmpleado = await apiServicio.ObtenerElementoAsync1<Response>(
-                    empleado, 
-                    new Uri(WebApp.BaseAddress), 
-                    "api/Empleados/ObtenerDatosCompletosEmpleado");
+                Response responseDistributivo = await apiServicio.ObtenerElementoAsync1<Response>(
+                    new Empleado { IdEmpleado = idEmpleado }, 
+                    new Uri(WebApp.BaseAddress),
+                    "api/Distributivos/ObtenerDistributivoFormalPorIdEmpleado");
 
 
                 
-                if (!reponseDatosEmpleado.IsSuccess) {
+                if (!responseDistributivo.IsSuccess) {
 
                     return this.RedireccionarMensajeTime(
                             "DocumentosEmpleadosTTHH",
                             "Index",
-                            $"{Mensaje.Error}|{reponseDatosEmpleado.Message}|{"7000"}"
+                            $"{Mensaje.Error}|{responseDistributivo.Message}|{"7000"}"
                     );
                 }
 
-                datosCompletosEmpleado = JsonConvert.DeserializeObject<ListaEmpleadoViewModel>(
-                        reponseDatosEmpleado.Resultado.ToString()
-                    );
 
-                var empleadoConsulta = new Empleado
-                {
-                    IdEmpleado = datosCompletosEmpleado.IdEmpleado
-                };
-
+                distributivo = JsonConvert.DeserializeObject<DistributivoHistorico>(
+                        responseDistributivo.Resultado.ToString()
+                );
+                
 
                 listaDocumentos = await apiServicio.Listar<DocumentosIngreso>(
                     new Uri(WebApp.BaseAddress), 
@@ -160,16 +148,16 @@ namespace bd.webappth.web.Controllers.MVC
 
 
                 listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(
-                    empleadoConsulta, 
+                    new Empleado { IdEmpleado = idEmpleado}, 
                     new Uri(WebApp.BaseAddress), 
                     "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
 
 
                 documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado
                 {
-                    empleadoViewModel = datosCompletosEmpleado,
-                    listadocumentosingreso = listaDocumentos.OrderBy(o=>o.IdDocumentosIngreso).ToList(),
-                    listadocumentosingresoentregado = listaDocumentosEntregados.OrderBy(o => o.IdDocumentosIngreso).ToList()
+                    Distributivo = distributivo,
+                    ListaDocumentosIngreso = listaDocumentos.OrderBy(o=>o.IdDocumentosIngreso).ToList(),
+                    ListaDocumentosIngresoEntregado = listaDocumentosEntregados.OrderBy(o => o.IdDocumentosIngreso).ToList()
 
                 };
 
@@ -183,96 +171,86 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DocumentoEntregado(ViewModelDocumentoIngresoEmpleado viewModelDocumentoIngresoEmpleado)
         {
-            Response response = new Response();
-            var listaDocumentosEntregados = new List<DocumentosIngresoEmpleado>();
-            try
-            {
-                var empleado = new Empleado
-                {
-                    IdEmpleado = viewModelDocumentoIngresoEmpleado.empleadoViewModel.IdEmpleado
-                };
 
-                listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleado, new Uri(WebApp.BaseAddress)
-                                                                  , "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
+            try {
 
-                if (listaDocumentosEntregados.Count == 0)
-                {
-                    response = await apiServicio.InsertarAsync(viewModelDocumentoIngresoEmpleado,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/DocumentosIngreso/InsertarDocumentosIngresoEmpleado");
+                
+                var response = await apiServicio.EditarAsync<Response>(
+                    viewModelDocumentoIngresoEmpleado, 
+                    new Uri(WebApp.BaseAddress),
+                    "api/DocumentosIngreso/ActualizarDocumentosEntregados"
+                );
+
+                if (response.IsSuccess) {
+
+                    return this.RedireccionarMensajeTime(
+                        "DocumentosEmpleadosTTHH",
+                        "CheckListDocumentosEmpleado",
+                        new { id = viewModelDocumentoIngresoEmpleado.Distributivo.IdEmpleado },
+                        $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
                 }
-                else
-                {
-                    response = await apiServicio.ObtenerElementoAsync1<Response>(viewModelDocumentoIngresoEmpleado, new Uri(WebApp.BaseAddress),
-                                                                                     "api/DocumentosIngreso/EditarCheckListDocumentos");
-                }
+                
 
-                if (response.IsSuccess)
-                {
-
-                    return RedirectToAction("CheckListDocumentosEmpleado", new { identificacion = viewModelDocumentoIngresoEmpleado.empleadoViewModel.Identificacion, mensaje = response.Message });
-                }
-
-                ViewData["Error"] = response.Message;
-                return RedirectToAction("CheckListDocumentosEmpleado", new { identificacion = viewModelDocumentoIngresoEmpleado.empleadoViewModel.Identificacion });
+                return this.RedireccionarMensajeTime(
+                    "DocumentosEmpleadosTTHH",
+                    "CheckListDocumentosEmpleado",
+                    new { id = viewModelDocumentoIngresoEmpleado.Distributivo.IdEmpleado },
+                    $"{Mensaje.Error}|{response.Message}|{"7000"}"
+                );
 
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
 
                 return BadRequest();
             }
+            
         }
 
+        #endregion
 
-        public async Task<IActionResult> LavadoActivos(string identificacion, string mensaje)
+
+
+        // aquí hay que agregar un reporte
+        public async Task<IActionResult> LavadoActivos(string id)
         {
-            InicializarMensaje("");
 
             var model = new LavadoActivoEmpleadoViewModel();
             model.DatosBasicosEmpleadoViewModel = new DatosBasicosEmpleadoViewModel();
 
-            var emp = new ListaEmpleadoViewModel();
-            
+
+            var dis = new DistributivoHistorico ();
 
             try
             {
+                var idEmpleado = Convert.ToInt32(id);
 
-                var empleado = new Empleado
-                {
-                    Persona = new Persona
-                    {
-                        Identificacion = identificacion
-                    }
-                };
-
-                emp = await apiServicio.ObtenerElementoAsync1<ListaEmpleadoViewModel>(empleado, new Uri(WebApp.BaseAddress),"api/Empleados/ObtenerDatosCompletosEmpleado");
-
-
-
-                model.DatosBasicosEmpleadoViewModel.IdEmpleado = emp.IdEmpleado;
+                dis.IdEmpleado = idEmpleado;
                 
-                Response response = await apiServicio.InsertarAsync(model,
-                                                         new Uri(WebApp.BaseAddress),
-                                                         "api/LavadoActivoEmpleados/ExisteLavadoActivosPorIdEmpleado");
+                Response response = await apiServicio.ObtenerElementoAsync1<Response>(
+                    new DatosBasicosEmpleadoViewModel{ IdEmpleado = idEmpleado},
+                    new Uri(WebApp.BaseAddress),
+                    "api/LavadoActivoEmpleados/ExisteLavadoActivosPorIdEmpleado"
+                );
 
-                emp.Identificacion = identificacion;
+                
 
                 if (response.IsSuccess) {
 
-                    InicializarMensaje("Aqui va el reporte");
-                    return View(emp);
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{"Aquí va el reporte"}|{"7000"}";
+
+                    return View(dis);
                 }
 
-
                 
-                InicializarMensaje("El empleado aún no ha completado este documento");
-                return View(emp);
+                this.TempData["MensajeTimer"] = $"{Mensaje.Aviso}|{"El empleado aún no ha completado este documento"}|{"7000"}";
+
+                return View(dis);
 
             }
             catch (Exception ex)
@@ -282,6 +260,7 @@ namespace bd.webappth.web.Controllers.MVC
 
             
         }
+        
 
     }
 }

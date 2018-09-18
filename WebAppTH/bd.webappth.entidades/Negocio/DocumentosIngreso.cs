@@ -6,8 +6,6 @@ namespace bd.webappth.entidades.Negocio
 {
     public partial class DocumentosIngreso
     {
-      
-
         public int IdDocumentosIngreso { get; set; }
 
         [Required(ErrorMessage = "Debe introducir {0}")]

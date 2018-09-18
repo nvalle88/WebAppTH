@@ -2,8 +2,9 @@
 
 
 <fieldset>
-
-    
+    <input asp-for="IdAccionPersonal" type="text" />
+    <input asp-for="IdSeleccionado" type="text" />
+    <input asp-for="IdEmpleadoAfectado" type="text" />
 
     <div class="row">&nbsp;</div>
 
@@ -28,7 +29,7 @@
         </section>
 
         <section class="col-lg-4">
-            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.TipoAccionPersonalViewModel)</label>
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.TipoAccionPersonalViewModel.IdTipoAccionPersonal)</label>
             <label class="input" style="padding-right:15px;">
                 <select id="SelectAccion" asp-for="TipoAccionPersonalViewModel.IdTipoAccionPersonal" class="form-control" asp-items="ViewBag.TipoAcciones">
                     <option value="0" selected>Seleccione</option>
@@ -49,7 +50,7 @@
 
             <label class="input col-lg-12">@Html.DisplayNameFor(model => Model.Solicitud)</label>
             <label class="input col-lg-12">
-                <input type="text" asp-for="Solicitud" class="form-control" />
+                <textarea asp-for="Solicitud" class="form-control" rows="5"></textarea>
                 <span asp-validation-for="Solicitud" class="text-danger"></span>
             </label>
 
@@ -112,7 +113,7 @@
 
         <section class="col col-lg-6 divSituacionActual">
 
-            <label class="input col-lg-12">@Html.DisplayNameFor(model =>model.DistributivoSituacionActual.IndiceOcupacionalModalidadPartida.Dependencia.Sucursal.Nombre)</label>
+            <label class="input col-lg-12">@Html.DisplayNameFor(model => model.DistributivoSituacionActual.IndiceOcupacionalModalidadPartida.Dependencia.Sucursal.Nombre)</label>
             <label class="input col-lg-12">
                 <input type="text" asp-for="DistributivoSituacionActual.IndiceOcupacionalModalidadPartida.Dependencia.Sucursal.Nombre" class="form-control" readonly />
             </label>
@@ -161,26 +162,12 @@
     </div>
 
     <div class="row divSituacionActual">&nbsp;</div>
-    @*
+
 
     <div class="row divSituacionPropuesta">
         <section class="col col-lg-12 divSituacionPropuesta">
             <legend class="input col-lg-12">Situaci&oacute;n propuesta</legend>
         </section>
-    </div>
-
-    <div class="row divSituacionPropuesta">
-
-        <section class="col col-lg-12 divSituacionPropuesta">
-            <div class="input col-lg-12">
-                @Html.RadioButtonFor(x => x.ConfigurarPuesto, true, new { onClick = "ValidarNuevoPuesto(this)" })&nbsp;Configuraci&oacute;n del puesto
-                &nbsp;/&nbsp;
-                @Html.RadioButtonFor(x => x.ConfigurarPuesto, false, new { onClick = "ValidarNuevoPuesto(this)" })&nbsp;Selecci&oacute;n de puesto
-            </div>
-        </section>
-
-        <section class="col col-lg-12 divSituacionPropuesta">&nbsp;</section>
-
     </div>
 
     <div class="row divSituacionPropuesta divPuestosOcupados">
@@ -189,7 +176,7 @@
             <div class="jarviswidget jarviswidget-color-darken" id="wid-id-100" data-widget-editbutton="false" style="padding:0px;margin:0px;">
                 <header id="table">
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>Selecci&oacute;n de puestos</h2>
+                    <h2>Selecci&oacute;n de puestos ocupados</h2>
                 </header>
 
                 <table id="datatable_fixed_column" class="table table-striped table-bordered table-hover">
@@ -231,11 +218,11 @@
 
                         <tr>
                             <th data-class="expand">
-                                @Html.DisplayNameFor(model => Model.ListaPuestosOcupados.FirstOrDefault().NumeroPartidaIndividual)
+                                N&uacute;meroPartida
                             </th>
 
                             <th data-class="expand">
-                                @Html.DisplayNameFor(model => Model.ListaPuestosOcupados.FirstOrDefault().CodigoContrato)
+                                C&oacute;digo contrato
                             </th>
 
                             <th data-class="expand">
@@ -251,7 +238,7 @@
                             </th>
 
                             <th data-class="expand">
-                                Grado
+                                Grupo ocupacional y remuneraci&oacute;n
                             </th>
 
                             <th data-class="expand">
@@ -265,23 +252,32 @@
                         </tr>
 
                     </thead>
+
+                    @{ var lista = new List<bd.webappth.entidades.Negocio.DistributivoSituacionActual>();}
+
                     <tbody>
 
-                        @foreach (var item in Model.ListaPuestosOcupados)
+                        @foreach (var item in Model.ListaDistributivoSeleccion)
                         {
-                            <tr>
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NumeroPartidaIndividual)
-                                    &nbsp;
-                                    @Html.DisplayFor(modelItem => item.ModalidadPartida.Nombre)
+
+                            <tr name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+
+                                <td name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                    <div name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                        @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.NumeroPartidaIndividual)
+                                        &nbsp;
+                                        @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.ModalidadPartida.Nombre)
+                                    </div>
                                 </td>
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CodigoContrato)
+                                <td name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                    <div name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                        @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.CodigoContrato)
+                                    </div>
                                 </td>
 
-                                <td>
+                                <td name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
                                     @{
                                         var datosPersonales = "";
 
@@ -291,53 +287,45 @@
                                         }
 
                                     }
-
-                                    @(datosPersonales)
+                                    <div name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                        @(datosPersonales)
+                                    </div>
                                 </td>
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.IndiceOcupacional.Dependencia.Sucursal.Nombre)
+                                <td name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+
+                                    <div name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                        @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.Dependencia.Sucursal.Nombre)
+                                    </div>
                                 </td>
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.IndiceOcupacional.Dependencia.Nombre)
+                                <td name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                    <div name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                        @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.Dependencia.Nombre)
+                                    </div>
                                 </td>
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.IndiceOcupacional.EscalaGrados.Nombre)&nbsp;
+                                <td name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                    <div name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                        @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.IndiceOcupacional.EscalaGrados.Nombre)&nbsp;
 
-                                    @{
-
-
-                                        if (item.SalarioReal != null && item.SalarioReal > 0)
-                                        {
-                                            <text>$@(item.SalarioReal)</text>
-                                        }
-                                        else
-                                        {
-                                            <text>$@(item.IndiceOcupacional.EscalaGrados.Remuneracion)</text>
-                                        }
-                                    }
-
+                                        @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.IndiceOcupacional.EscalaGrados.Remuneracion)
+                                    </div>
                                 </td>
 
-                                <td>
-                                    @item.FondoFinanciamiento.Nombre
+                                <td name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                    <div name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                        @Html.DisplayFor(modelItem => item.FondoFinanciamiento.Nombre)
+                                    </div>
                                 </td>
 
-                                <td>
-                                    @Html.RadioButtonFor(x => x.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta, item.IdIndiceOcupacionalModalidadPartida, new { @checked = "false" })
+                                <td name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
 
-                                     @if (item.IdIndiceOcupacionalModalidadPartida == Model.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta)
-                                    {
-                                        <text>s</text>
-                                        @Html.RadioButtonFor(x => x.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta, item.IdIndiceOcupacionalModalidadPartida, new { @checked = "true" })
-                                    }
-                                    else
-                                    {
-                                        <text>a</text>
-                                        @Html.RadioButtonFor(x => x.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta, item.IdIndiceOcupacionalModalidadPartida, new { @checked = "false" })
-                                    }* @
+                                    <div name="tr@(item.IndiceOcupacionalModalidadPartida.Ocupado)">
+                                        <input type="radio" value="@item.IndiceOcupacionalModalidadPartida.IdIndiceOcupacionalModalidadPartida" name="rdb_seleccionPuesto" onclick="seleccionIOMP(this)"/>
+                                    </div>
+
+
                                 </td>
 
                             </tr>
@@ -351,7 +339,7 @@
 
     <div class="row divSituacionPropuesta divNuevoPuesto">
         <section class="col col-lg-10 divSituacionPropuesta divNuevoPuesto">
-            <legend class="input col-lg-12" style="font-size:15px;font-weight:500;">Nuevo puesto</legend>
+            <legend class="input col-lg-12" style="font-size:15px;font-weight:500;">Puestos vacantes</legend>
         </section>
     </div>
 
@@ -361,168 +349,124 @@
         <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
 
             <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
-                <label>R&eacute;gimen laboral</label>
-                <select id="IdRegimenLaboral" class="form-control" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.RelacionLaboral.IdRegimenLaboral" asp-items="ViewBag.IdRegimenLaboral" data-msg-required='El campo es requerido' data-rule-required='true'>
+                <label>N&uacute;mero de partida / c&oacute;digo de contrato</label>
+                <select id="sel_numeroPartida" class="form-control" asp-for="IdPartidaVacante" asp-items="ViewBag.PartidasVacantes" data-msg-required='El campo es requerido' data-rule-required='true'>
                     <option value="0" selected="" disabled="">Seleccione</option>
                 </select>
             </section>
 
+
             <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
-                <label>Relaci&oacute;n laboral</label>
-                <select id="IdRelacionLaboral" class="form-control"  asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.TipoNombramiento.IdRelacionLaboral" asp-items="ViewBag.IdRelacionLaboral" data-msg-required='El campo es requerido' data-rule-required='true'>
-                    <option value="0" selected="" disabled=""></option>
-                </select>
+
+                <label>R&eacute;gimen laboral</label>
+                <input type="text" class="form-control input" id="txt_RegimenLaboral" readonly required>
+                <input type="text" class="form-control input" asp-for="IdRegimenLaboralHasta" id="txt_IdRegimenLaboral" readonly required>
             </section>
 
             <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
-                <label>Tipo de nombramiento / contrato</label>
-                <select id="IdTipoNombramiento" asp-for="EmpleadoMovimiento.IdTipoNombramiento" class="form-control" asp-items="ViewBag.IdTipoNombramiento" data-msg-required='El campo es requerido' data-rule-required='true'>Seleccione</select>
-                <span asp-validation-for="EmpleadoMovimiento.IdTipoNombramiento" class="text-danger"></span>
+
+                <label>Relaci&oacute;n laboral</label>
+                <input type="text" class="form-control input" id="txt_ReLacionLaboral" readonly required>
+                <input type="text" class="form-control input" asp-for="IdRelacionLaboralHasta" id="txt_IdReLacionLaboral" readonly required>
             </section>
 
         </section>
-        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
-    </div>
 
-    <div class="row divSituacionPropuesta divNuevoPuesto">
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
 
         <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
+
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+                <label>Tipo de nombramiento / contrato</label>
+                <select id="IdTipoNombramiento" asp-for="IdTipoNombramientoHasta" class="form-control" asp-items="ViewBag.IdTipoNombramiento" data-msg-required='El campo es requerido' data-rule-required='true'>Seleccione</select>
+                <span asp-validation-for="IdTipoNombramientoHasta" class="text-danger"></span>
+            </section>
 
             <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
 
                 <label>Ciudad</label>
-                <select id="ciudad" class="form-control" asp-items="ViewBag.IdCiudad" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.Sucursal.IdCiudad" >
-                    <option value="0" selected="" disabled="">Seleccione</option>
-                </select>
-
+                <input type="text" class="form-control input" id="txt_Ciudad" readonly required>
+                <input type="text" class="form-control input" id="txt_IdCiudad" readonly required>
             </section>
 
             <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
 
                 <label>Sucursal</label>
-                <select id="sucursal" asp-items="ViewBag.IdSucursal"  asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.IdSucursal" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true'>Seleccione</select>
-
-
+                <input type="text" class="form-control input" id="txt_Sucursal" readonly required>
+                <input type="text" class="form-control input" id="txt_IdSucursal" readonly required>
             </section>
-
-            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
-                <label>Dependencia</label>
-                <input class="form-control" type="text" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.Dependencia.Nombre" id="dependencia" readonly="readonly">
-
-
-            </section>
-
-            <input class="form-control" type="hidden" id="iddependencia" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IdDependencia">
 
         </section>
 
         <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
-    </div>
-
-    <div class="row divSituacionPropuesta divNuevoPuesto">
 
         <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
+
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+                <label>Unidad administrativa</label>
+                <input type="text" class="form-control input" id="txt_Dependencia" readonly required>
+                <input type="text" class="form-control input" id="txt_IdDependencia" readonly required>
+            </section>
 
             <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
 
                 <label>Perfil del puesto</label>
-                <select id="manualpuesto" class="form-control" asp-items="ViewBag.IdManualPuesto" data-msg-required='El campo es requerido' data-rule-required='true'>Seleccione</select>
-
+                <input type="text" class="form-control input" id="txt_Puesto" readonly required>
+                <input type="text" class="form-control input" id="txt_IdPuesto" readonly required>
             </section>
 
             <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
 
                 <label>Rol del puesto</label>
-                <input class="form-control input" asp-for="EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta.IndiceOcupacional.RolPuesto.Nombre" id="txt_rolPuesto" readonly required>
-
+                <input type="text" class="form-control input" id="txt_Rol" readonly required>
+                <input type="text" class="form-control input" id="txt_IdRol" readonly required>
             </section>
-
-            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
-
-                <label>Fondo de Financimiento</label>
-                <select asp-for="EmpleadoMovimiento.IdFondoFinanciamiento" class="form-control" data-msg-required='El campo es requerido' data-rule-required='true' asp-items="ViewBag.IdFondoFinanciamiento">
-                    <option value="0" selected="" disabled="">Seleccione</option>
-                </select>
-
-            </section>
-
-
 
         </section>
 
         <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
-    </div>
-
-    <div class="row divSituacionPropuesta divNuevoPuesto">
 
         <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
 
-            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
-
-                <label>Partida individual / c&oacute;digo</label>
-                <input asp-for="EmpleadoMovimiento.NumeroPartidaIndividual" class="form-control input" id="txt_partida" readonly>
-
-            </section>
 
             <section class="col-lg-8 divSituacionPropuesta divNuevoPuesto">
-
                 <label>Grupo ocupacional</label>
-                <input class="form-control input" id="txt_escalaGrados" 
-                    value="@if (Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta != null)
-                            {
-                                var texto = Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta
-                                    .IndiceOcupacional.EscalaGrados.Nombre
-                                    + " ( GRADO "
-                                    + Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta
-                                    .IndiceOcupacional.EscalaGrados.Grado
-                                    + " ) QUE PERCIBE $"
-                                    + Model.EmpleadoMovimiento.IndiceOcupacionalModalidadPartidaHasta
-                                    .IndiceOcupacional.EscalaGrados.Remuneracion;
-                                    
-                                    <text>
-                                        @texto
-                                    </text>
-                             } else { <text></text>}"
-                       readonly required>
-
+                <input type="text" class="form-control input" id="txt_GrupoOcupacional" readonly required>
+                <input type="text" class="form-control input" id="txt_IdGrupoOcupacional" readonly required>
             </section>
-
-        </section>
-
-        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
-    </div>
-
-    <div class="row divSituacionPropuesta divNuevoPuesto">
-
-        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
 
             <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto" id="s_modalidad">
 
                 <label>Modalidad Partida</label>
-                <select id="modalidadpartida" asp-for="EmpleadoMovimiento.IdModalidadPartida" asp-items="ViewBag.IdModalidadPartida" class="form-control">Seleccione</select>
+                <select id="modalidadpartida" asp-for="IdModalidadPartidaHasta" asp-items="ViewBag.IdModalidadPartida" class="form-control">Seleccione</select>
 
             </section>
 
-            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
 
-                <label>Salario sobrevalorado</label>
-                <input asp-for="EmpleadoMovimiento.SalarioReal" class="form-control input " data-msg-required='El campo es requerido' data-rule-required='true' onKeyPress="return checkIt(event)">
-
-            </section>
-
-            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
-                <label class="checkbox-inline">
-                    <label>&iquest; Es jefe de la unidad administrativa?</label>
-                    <input type="checkbox" asp-for="EmpleadoMovimiento.EsJefe" class="form-control" />
-                </label>
-            </section>
 
         </section>
 
         <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">&nbsp;</section>
+
+        <section class="col col-lg-12 divSituacionPropuesta divNuevoPuesto">
+
+
+            <section class="col-lg-4 divSituacionPropuesta divNuevoPuesto">
+
+                <label>Fondo de financiamiento</label>
+                <select id="idFondoFinanciamiento" asp-for="IdFondoFinanciamientoHasta" asp-items="ViewBag.IdFondoFinanciamiento" class="form-control">Seleccione</select>
+
+            </section>
+
+
+
+        </section>
+
     </div>
 
-    *@
+
     <div class="row">
 
         <section class="col col-lg-12">
@@ -553,7 +497,7 @@
 
             <label class="input col-lg-12" id="lbl_date_Fecha2">@Html.DisplayNameFor(model => Model.FechaRigeHasta)</label>
             <label class="input col-lg-12">
-                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="form-control datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()"/>
+                <input id="date_Fecha2" asp-for="FechaRigeHasta" type="text" class="form-control datepicker" data-dateformat='yy-mm-dd' onchange="calcularDias()" />
                 <span asp-validation-for="FechaRigeHasta" class="text-danger"></span>
             </label>
 
@@ -607,22 +551,7 @@
             document.getElementsByClassName("divSituacionPropuesta")[j].style.height = "auto";
             document.getElementsByClassName("divSituacionPropuesta")[j].style.visibility = "visible";
         }
-
-        @*
-
-        @if (Model.ConfigurarPuesto == true) {
-            <text>
-                MostrarNuevoPuesto();
-                OcultarPuestosOcupados();
-            </text>
-        } else if(Model.ConfigurarPuesto == false) {
-            <text>
-                OcultarNuevoPuesto();
-                MostrarPuestosOcupados();
-            </text>
-        }
-
-        *@
+        
     }
 
     function OcultarMovimientoPersonal() {
@@ -651,17 +580,7 @@
             document.getElementsByClassName("divNuevoPuesto")[i].style.visibility = "visible";
             
         }
-
-        if (document.getElementById("modalidadpartida").value.length > 0) {
-
-            document.getElementById("s_modalidad").style.visibility = "visible";
-            document.getElementById("txt_partida").readOnly = false;
-        } else { 
-            
-            document.getElementById("s_modalidad").style.visibility = "hidden";
-            document.getElementById("txt_partida").readOnly = false;
-        }
-
+        
     }
 
     function OcultarNuevoPuesto() {
@@ -695,6 +614,8 @@
         }
     }
 
+    
+
 
     function ValidarChkMovPersonal(element) {
 
@@ -724,34 +645,90 @@
 
     }
 
-    @*
+    
+    function seleccionIOMP(element) { 
+
+        document.getElementById("IdSeleccionado").value = element.value;
+        
+        $("#sel_numeroPartida").val("0");
+        $("#IdTipoNombramiento").empty();
+
+        $("#txt_RegimenLaboral").val(null);
+        $("#txt_IdRegimenLaboral").val(null);
+
+        $("#txt_ReLacionLaboral").val(null);
+        $("#txt_IdReLacionLaboral").val(null);
+
+        $("#txt_Ciudad").val(null);
+        $("#txt_IdCiudad").val(null);
+
+        $("#txt_Sucursal").val(null);
+        $("#txt_IdSucursal").val(null);
 
 
-        @if (Model.GeneraMovimientoPersonal == true) {
+        $("#txt_Dependencia").val(null);
+        $("#txt_IdDependencia").val(null);
 
-            <text>
-                MostrarMovimientoPersonal();
-            </text>
+        $("#txt_Puesto").val(null);
+        $("#txt_IdPuesto").val(null);
 
-        } else if(Model.GeneraMovimientoPersonal == false) {
-            <text>
-                OcultarMovimientoPersonal();
-            </text>
+        $("#txt_Rol").val(null);
+        $("#txt_IdRol").val(null);
+
+        var textoEscalaGrados = ""
+
+        $("#txt_GrupoOcupacional").val(textoEscalaGrados);
+        $("#txt_IdGrupoOcupacional").val(null);
+
+        document.getElementById("s_modalidad").style.visibility = "hidden";
+        document.getElementById("s_modalidad").style.height = "0px";
+
+    }
+
+    function setDefaultModalidadPartida(optionDefault) { 
+        
+        var lista = document.getElementById("modalidadpartida").options;
+
+        for (var i = 0; i < lista.length; i++) {
+
+            var varTexto = String(lista[i].text).toUpperCase();
+            var varDefault = String(optionDefault).toUpperCase();
+
+            if (varTexto == varDefault ) {
+                document.getElementById("modalidadpartida").value = lista[i].value;
+                break;
+            }
         }
 
-        @if (Model.EmpleadoMovimiento.IdModalidadPartida != null && Model.ConfigurarPuesto == true) {
-            <text>
-                document.getElementById("s_modalidad").style.visibility = "visible";
-            </text>
-        }else {
-            <text>
-                document.getElementById("s_modalidad").style.visibility = "hidden";
-            </text>
+    }
+
+    function setModalidadPartida(IdModalidadPartida) {
+        document.getElementById("modalidadpartida").value = IdModalidadPartida;
+    }
+
+    function setTipoNombramiento(IdTipoNombramiento) {
+        document.getElementById("IdTipoNombramiento").value = IdTipoNombramiento;
+    }
+
+    function checkRadioSeleccionPartida(valor) { 
+
+        var lista = document.getElementsByName("rdb_seleccionPuesto");
+
+        for (var i = 0; i < lista.length; i++) {
+
+            var varValue = String(lista[i].value);
+
+            if (varValue == valor) {
+                document.getElementsByName("rdb_seleccionPuesto")[i].checked = true;
+                break;
+            } 
         }
+    }
 
-        *@
+    setDefaultModalidadPartida("ocupada");
 
-        @if (Model.FechaRigeHasta == null)
+
+    @if (Model.FechaRigeHasta == null)
         {
             <text>
                 document.getElementById("date_Fecha2").style.visibility = "hidden";
@@ -765,8 +742,18 @@
             </text>
         }
 
-    
-    
+    @{ 
+        if (Model.IdAccionPersonal > 0)
+        {
+            
+        }
+        else { 
+            <text>
+                OcultarMovimientoPersonal();
+            </text>
+        }
+
+    }
 
 </script>
 

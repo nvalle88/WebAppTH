@@ -7,6 +7,7 @@ namespace bd.webappth.entidades.ViewModels
 {
     public class TipoAccionesPersonalViewModel
     {
+        [Display(Name = "Tipo de movimiento / acción de personal")]
         public int IdTipoAccionPersonal { get; set; }
         public string Nombre { get; set; }
         public bool Definitivo { get; set; }
@@ -31,6 +32,11 @@ namespace bd.webappth.entidades.ViewModels
         public bool DesactivarEmpleado { get; set; }
         public bool FinalizaTipoAccionPersonal { get; set; }
         public int? IdTipoAccionPersonalFin { get; set; }
+
+        public bool? BuscarPuestosVacantes { get; set; }
+        public bool? BuscarPuestosOcupados { get; set; }
+        public bool? BuscarNivelOperativo { get; set; }
+        public bool? BuscarJerarquicoSuperior { get; set; }
 
     }
 }

@@ -2,7 +2,7 @@
 <link href="~/css/tabla/table.css" rel="stylesheet" />
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
 <style>
@@ -51,7 +51,7 @@
                                 <div style="float:right; padding:1%;">
                                     <footer style="background-color:transparent;border:none;">
 
-                                        <input type="submit" asp-action="ListaMovimientos" asp-route-identificacion="@Model.EmpleadoMovimiento.Empleado.Persona.Identificacion" class="btn btn-default btnClass" value="Cancelar" onclick="espera()" />
+                                        <input type="submit" asp-action="ListaMovimientos" asp-route-IdEmpleado="@Model.DistributivoSituacionActual.Empleado.IdEmpleado" class="btn btn-default btnClass" value="Cancelar" onclick="espera()" />
 
                                         <input type="submit" id="btnGuardar" value="Guardar" class="btn btn-default btnClass" />
 
@@ -129,6 +129,11 @@
 
         var desvinculacion = false;
 
+        var validarPuestosOcupados = false;
+        var validarPuestosVacantes = false;
+
+        var primeraCarga = true;
+
         function calcularDias() {
 
 
@@ -169,6 +174,7 @@
 
                 if (validarMinimoDias == true && valNumDiasTxt < minDias && minDias > 0) {
                     var textoMensajeAlerta = "El m\u00EDnimo de d\u00EDas para este requerimiento son: " + minDias;
+                    mostrarNotificacionTimer("Aviso", textoMensajeAlerta, 10000);
 
                     document.getElementById("btnGuardar").disabled = true;
                 } else { 
@@ -197,66 +203,8 @@
 
     <script>
 
-        function cargarManualesPuesto(dependencia) {
-            mostrarLoadingPanel("content","Cargando...")
-            $("#manualpuesto").empty();
-            //$("#rolpuesto").empty();
-            //$("#escalagrados").empty();
-
-            $("#txt_escalaGrados").val("");
-            $("#txt_rolPuesto").val("");
-            $("#txt_ioHasta").val("0");
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("ListarManualPuestoporDependencia")',
-                    dataType: 'json',
-                    data: {
-                        iddependencia: dependencia,
-                        idRelacionLaboral: $("#IdRelacionLaboral").val()
-                    },
-                    success: function (data) {
-
-                        $("#manualpuesto").append('<option value="0" selected="" disabled="">Seleccione</option>');
-                        $.each(data, function (i, data) {
-                            $("#manualpuesto").append('<option value="'
-                                + data.indiceOcupacionalViewModel.idManualPuesto
-                                + '">'
-                                + data.indiceOcupacionalViewModel.nombreManualPuesto + '</option>');
-
-                        });
-
-
-                    }, complete: function (data) {
-                        $("#content").waitMe("hide");
-                    },
-
-                    error: function (ex) {
-                        alert('Failed to retrieve data.' + ex);
-                    }
-                });
-                return false;
-                }
 
         $(document).ready(function () {
-
-
-            @if (Model.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta !=  null
-               && Model.GeneraMovimientoPersonal == true
-               && Model.ConfigurarPuesto == false
-           )
-            {
-                <text>
-                    var listaRadios = document.getElementsByName("EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta");
-            
-                    for (var i = 0; i < listaRadios.length;i++) { 
-
-                        if (listaRadios[i].value == @Model.EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta) {
-                            listaRadios[i].checked = true;
-                        }
-                    }
-                </text>
-            }
 
 
             $("#SelectAccion").change(function () {
@@ -264,35 +212,144 @@
 
                 if ($("#SelectAccion").val() > 0) {
 
-                    mostrarLoadingPanel("content", "Cargando...");
+                    cargarDatosPorSeleccionTipoAccionPersonal($("#SelectAccion").val());
                     
+                return false;
+
+                }
+
+            }); // Fin change
+
+
+            ///************* Combos *****
+
+
+            $("#sel_numeroPartida").change(function () {
+                
+                var id = $("#sel_numeroPartida").val();
+
+                cargarDatosPorSeleccionCodigoPartida(id);
+
+                return false;
+            });
+
+
+            function cargarDatosPorSeleccionTipoAccionPersonal(IdTipoAccionPersonal) { 
+
+                mostrarLoadingPanel("content", "Cargando...");
+
                     $.ajax({
                     type: 'POST',
                     url: '@Url.Action("VerTipoAccion", "MovimientosPersonalTTHH")',
                     dataType: 'json',
-                    data: { idAccion: $("#SelectAccion").val() },
+                        data: { idAccion: IdTipoAccionPersonal },
                     success: function (data) {
 
-                        var textoMensajeAlerta = "";
                         document.getElementById("btnGuardar").disabled = false;
+                        var textoMensajeAlerta = "";
 
-                        if (data.modificaDistributivo == true) {
+                        if (data.generarMovimientoPersonal == true) {
                             document.getElementById("rdbTrue").checked = true
-                            document.getElementById("txtGenerarMovimiento").value = true;
+
 
                             if (data.desactivarEmpleado == false) {
                                 MostrarMovimientoPersonal();
                                 desvinculacion = false;
 
-                                if (data.modalidadContratacion == false) {
+                                if (data.modificarDistributivo == false) {
                                     textoMensajeAlerta = "Esta acci\u00F3n no afecta al distributivo";
 
                                     mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 7000);
 
-                                } else if (data.modalidadContratacion == true) { 
+                                } else if (data.modificarDistributivo == true) {
                                     textoMensajeAlerta = "Esta acci\u00F3n afectar\u00E1 al distributivo";
                                     mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 7000);
                                 }
+
+
+                                // Mostrar/ocultar tabla de selección de puestos
+                                if (data.buscarPuestosVacantes == true) {
+                                    MostrarNuevoPuesto();
+                                    validarPuestosVacantes = true;
+                                } else {
+                                    OcultarNuevoPuesto();
+                                    validarPuestosVacantes = false;
+                                }
+
+
+                                // Mostrar/ocultar selección de partidas vacantes
+                                if (data.buscarPuestosOcupados == true) {
+                                    MostrarPuestosOcupados();
+                                    validarPuestosOcupados = true;
+
+                                } else {
+                                    OcultarPuestosOcupados();
+                                    validarPuestosOcupados = false;
+                                }
+
+
+
+                                /*
+                                // Edición de tablaSeleccion
+
+                                var trOcupados = document.getElementsByName("trTrue");
+                                var trVacantes = document.getElementsByName("trFalse");
+
+                                for (var i = 0; i < trVacantes.length; i++) {
+
+                                    if (data.buscarPuestosVacantes == true) {
+
+                                        document.getElementsByName("trFalse")[i].style.visibility = "visible";
+                                        document.getElementsByName("trFalse")[i].style.height = "auto";
+                                        document.getElementsByName("trFalse")[i].style.margin = "1px";
+                                        document.getElementsByName("trFalse")[i].style.padding = "8px";
+                                        document.getElementsByName("trFalse")[i].style.overflow = "hidden";
+
+
+
+                                    } else {
+
+
+                                        document.getElementsByName("trFalse")[i].style.visibility = "hidden";
+                                        document.getElementsByName("trFalse")[i].style.height = "0px";
+                                        document.getElementsByName("trFalse")[i].style.margin = "0px";
+                                        document.getElementsByName("trFalse")[i].style.padding = "0px";
+                                        document.getElementsByName("trFalse")[i].style.overflow = "hidden";
+
+
+
+
+                                    }
+                                }
+
+
+                                for (var i = 0; i < trOcupados.length; i++) {
+
+                                    if (data.buscarPuestosOcupados == true) {
+
+
+                                        document.getElementsByName("trTrue")[i].style.visibility = "visible";
+                                        document.getElementsByName("trTrue")[i].style.height = "auto";
+                                        document.getElementsByName("trTrue")[i].style.margin = "1px";
+                                        document.getElementsByName("trTrue")[i].style.padding = "8px";
+                                        document.getElementsByName("trTrue")[i].style.overflow = "hidden";
+
+
+
+
+                                    } else {
+
+                                        document.getElementsByName("trTrue")[i].style.visibility = "hidden";
+                                        document.getElementsByName("trTrue")[i].style.height = "0px";
+                                        document.getElementsByName("trTrue")[i].style.margin = "0px";
+                                        document.getElementsByName("trTrue")[i].style.padding = "0px";
+                                        document.getElementsByName("trTrue")[i].style.overflow = "hidden";
+
+
+
+                                    }
+                                }
+                                */
 
 
                             } else {
@@ -300,17 +357,16 @@
                                 desvinculacion = true;
                             }
 
-                            
+
 
                         }
-                        else if (data.modificaDistributivo == false) {
+                        else if (data.generarMovimientoPersonal == false) {
                             document.getElementById("rdbFalse").checked = true;
-                            document.getElementById("txtGenerarMovimiento").value = false;
 
                             OcultarMovimientoPersonal();
                         }
 
-                        maxDias = data.nDiasMaximo;
+                        maxDias = data.ndiasMaximo;
 
                         var diasMes = 0;
                         var diasYear = 0;
@@ -323,10 +379,12 @@
                         }
 
 
-                        minDias = data.nDiasMinimo;
-                        
+                        minDias = data.ndiasMinimo;
+
 
                         if (data.definitivo == true) {
+
+                            validarMinimoDias = false;
 
                             textoMensajeAlerta = "Esta acci\u00F3n es de tiempo indefinido";
                             mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 5000);
@@ -335,14 +393,15 @@
                             document.getElementById("lbl_date_Fecha2").style.visibility = "hidden";
                             document.getElementById("txt_ver_dias").style.visibility = "hidden";
 
-                        } else {
+                        }
+
+                        else if (data.dias == true) {
 
                             maxDias = maxDias + diasMes + diasYear;
 
                             textoMensajeAlerta = "El m\u00E1ximo de d\u00EDas para este requerimiento son: " + maxDias;
 
                             mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 10000);
-
 
                             if (minDias > 0) {
                                 textoMensajeAlerta = "El m\u00EDnimo de d\u00EDas para este requerimiento son: " + minDias;
@@ -359,6 +418,27 @@
                             document.getElementById("txt_ver_dias").style.visibility = "visible";
 
                             calcularDias();
+
+                        }
+
+                        else if (data.horas == true) {
+
+                            validarMinimoDias = false;
+
+                            document.getElementById("date_Fecha2").style.visibility = "hidden";
+                            document.getElementById("lbl_date_Fecha2").style.visibility = "hidden";
+                            document.getElementById("txt_ver_dias").style.visibility = "hidden";
+
+                            if (data.nhorasMinimo != null && data.nhorasMinimo > 0) {
+                                textoMensajeAlerta = "El m\u00EDnimo de horas para este requerimiento son: " + data.nhorasMinimo;
+                                mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 10000);
+                            }
+
+                            if (data.nhorasMinimo != null && data.nhorasMaximo > 0) {
+                                textoMensajeAlerta = "El m\u00E1ximo de horas para este requerimiento son: " + data.nhorasMaximo;
+                                mostrarNotificacionTimer("Informaci\u00F3n", textoMensajeAlerta, 10000);
+                            }
+
                         }
 
 
@@ -370,65 +450,87 @@
                         alert('Failed to retrieve data.' + ex);
                     }
                 });
-                return false;
-
-                }
-
-            }); // Fin change
-
-            $("#IdRegimenLaboral").change(function () {
-                mostrarLoadingPanel("content", "Cargando...")
-                $("#IdRelacionLaboral").empty();
-                $("#IdTipoNombramiento").empty();
-                $("#manualpuesto").empty();
-                $("#txt_ioHasta").val("0");
-
-                //$("#IdModalidadPartida").empty();
-                //$("#rolpuesto").empty();
-                //$("#escalagrados").empty();
+            }
 
 
-                //$("#txt_escalaGrados").val("");
-                //$("#txt_rolPuesto").val("");
-                
+            function cargarDatosPorSeleccionCodigoPartida(idPartida) {
+
+                mostrarLoadingPanel("content", "Cargando...");
 
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("ListarRelacionesLaboralesPorRegimen")',
+                    url: '@Url.Action("ObtenerDatosPartida")',
                     dataType: 'json',
-                    data: { regimen: $("#IdRegimenLaboral").val() },
+                    data: { id: idPartida },
                     success: function (data) {
-                        $("#IdRelacionLaboral").append('<option value="0" selected="" disabled="">Seleccione</option>');
-                        $.each(data, function (i, data) {
 
-                            $("#IdRelacionLaboral").append('<option value="'
-                                + data.idRelacionLaboral + '">'
-                                + data.nombre + '</option>');
+                        cargarComboTipoNombramiento(data.idRelacionLaboral);
 
-                        });
+                        $("#IdSeleccionado").val(data.idIndiceOcupacionalModalidadPartida);
 
-                        var stt = data[0].nombre + "";
+                        $("#txt_RegimenLaboral").val(data.relacionLaboral.regimenLaboral.nombre);
+                        $("#txt_IdRegimenLaboral").val(data.relacionLaboral.regimenLaboral.idRegimenLaboral);
 
-                        if (stt.toUpperCase() == "CONTRATO") {
+                        $("#txt_ReLacionLaboral").val(data.relacionLaboral.nombre);
+                        $("#txt_IdReLacionLaboral").val(data.relacionLaboral.idRelacionLaboral);
 
+                        $("#txt_Ciudad").val(data.dependencia.sucursal.ciudad.nombre);
+                        $("#txt_IdCiudad").val(data.dependencia.sucursal.ciudad.idCiudad);
+
+                        $("#txt_Sucursal").val(data.dependencia.sucursal.nombre);
+                        $("#txt_IdSucursal").val(data.dependencia.sucursal.idSucursal);
+
+
+                        $("#txt_Dependencia").val(data.dependencia.nombre);
+                        $("#txt_IdDependencia").val(data.dependencia.idDependencia);
+
+                        $("#txt_Puesto").val(data.indiceOcupacional.denominacionPuesto);
+                        $("#txt_IdPuesto").val(data.indiceOcupacional.idIndiceOcupacional);
+
+                        $("#txt_Rol").val(data.indiceOcupacional.rolPuesto.nombre);
+                        $("#txt_IdRol").val(data.indiceOcupacional.rolPuesto.idRolPuesto);
+
+                        var textoEscalaGrados = data.indiceOcupacional.escalaGrados.nombre
+                            + " ( GRADO "
+                            + data.indiceOcupacional.escalaGrados.grado
+                            + " ) QUE PERCIBE $"
+                            + data.indiceOcupacional.escalaGrados.remuneracion
+
+                        $("#txt_GrupoOcupacional").val(textoEscalaGrados);
+                        $("#txt_IdGrupoOcupacional").val(data.indiceOcupacional.escalaGrados.idEscalaGrados);
+
+
+                        var rdb_seleccion = document.getElementsByName("rdb_seleccionPuesto");
+
+                        for (var i = 0; i < rdb_seleccion.length; i++) {
+
+                            iompHasta = rdb_seleccion[i].checked = false;
+
+                        }
+
+                        
+
+                        if (data.numeroPartidaIndividual != null) {
+                            document.getElementById("s_modalidad").style.visibility = "visible";
+                            document.getElementById("s_modalidad").style.height = "auto";
+
+                        } else {
                             document.getElementById("s_modalidad").style.visibility = "hidden";
-                            document.getElementById("txt_partida").value = "";
-                            document.getElementById("txt_partida").readOnly = false;
+                            document.getElementById("s_modalidad").style.height = "0px";
+                        }
+
+                        // Se setea la partida a partir de la selección del combo,
+                        // por esto en la primera carga se obvia este codigo
+                        if (primeraCarga == false) {
+                            
+                            setModalidadPartida(data.idModalidadPartida);
 
                         } else {
 
-                            document.getElementById("s_modalidad").style.visibility = "visible";
-
-                            document.getElementById("txt_partida").value = "";
-                            document.getElementById("txt_partida").readOnly = true;
-                            document.getElementById("modalidadpartida").selectedIndex = data.idModalidadPartida;
+                            primeraCarga = false;
                         }
 
-
-
-                        $("#txt_escalaGrados").val("");
-                        $("#txt_rolPuesto").val("");
-                        $("#txt_ioHasta").val("0");
+                        
 
                     }, complete: function (data) {
                         $("#content").waitMe("hide");
@@ -438,21 +540,19 @@
                         alert('Failed to retrieve data.' + ex);
                     }
                 });
-                return false;
-            });
 
 
-            $("#IdRelacionLaboral").change(function () {
-                mostrarLoadingPanel("content", "Cargando tipos de nombramiento...")
+            }
 
+
+            function cargarComboTipoNombramiento(idRelacionLaboral) {
                 $("#IdTipoNombramiento").empty();
-                $("#txt_ioHasta").val("0");
 
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ListarTipoNombramientoRelacion")',
                     dataType: 'json',
-                    data: { relacion: $("#IdRelacionLaboral").val() },
+                    data: { relacion: idRelacionLaboral},
                     success: function (data) {
                         $("#IdTipoNombramiento").append('<option value="0" selected="" disabled="">Seleccione</option>');
                         $.each(data, function (i, data) {
@@ -462,138 +562,12 @@
 
                         });
 
+                        var tnVal = "@Model.IdTipoNombramientoHasta";
 
-                    }, complete: function (data) {
-                        $("#content").waitMe("hide");
-                    },
-
-                    error: function (ex) {
-                        alert('Failed to retrieve data.' + ex);
-                    }
-                });
-                return false;
-            });
-
-
-            $("#ciudad").change(function () {
-                mostrarLoadingPanel("content", "Cargando...")
-                $("#sucursal").empty();
-                $("#dependencia").val("");
-                $("#manualpuesto").empty();
-                $("#txt_escalaGrados").val("");
-                $("#txt_rolPuesto").val("");
-                $("#txt_ioHasta").val("0");
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("ListarSucursalesPorCiudad", "CeseFunciones")',
-                    dataType: 'json',
-                    data: { idciudad: $("#ciudad").val() },
-                    success: function (data) {
-                        $("#sucursal").append('<option value="0" selected="" disabled="">Seleccione</option>');
-                        $.each(data, function (i, data) {
-                            $("#sucursal").append('<option value="'
-                                + data.idSucursal + '">'
-                                + data.nombre + '</option>');
-
-                        });
-                    }, complete: function (data) {
-                        $("#content").waitMe("hide");
-                    },
-
-                    error: function (ex) {
-                        alert('Failed to retrieve data.' + ex);
-                    }
-                });
-                return false;
-            });
-
-            $("#sucursal").change(function (e) {
-                mostrarLoadingPanel("content", "Cargando...")
-                $("#dependencia").val("");
-                $("#manualpuesto").empty();
-                $("#txt_escalaGrados").val("");
-                $("#txt_rolPuesto").val("");
-                $("#txt_ioHasta").val("0");
-
-                e.preventDefault();
-                var $link = $(this);
-                var title = $link.text();
-                $('#myModal.modal-title').html(title);
-                var url = '@Url.Action("CargarDependencias")?idsucursal=' + $('#sucursal').val();
-                if (url.indexOf('#') == 0) {
-                    $('#myModal').modal('show');
-                    $("#myModal").waitMe("hide");
-                }
-                else {
-                    $.get(url, function (data) {
-                        $('#myModal .te').html(data);
-                        $('#myModal').modal();
-                        $('#selectC').select2();
-                        $("#content").waitMe("hide");
-                    }).success(function () { $('input:text:visible:first').focus(); });
-
-                }
-                $("#content").waitMe("hide");
-                return false;
-            });
-
-            $("#manualpuesto").change(function () {
-                mostrarLoadingPanel("content", "Cargando...")
-
-                //$("#txt_escalaGrados").val("");
-                //$("#txt_rolPuesto").val("");
-                $("#txt_ioHasta").val("0");
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("ListarRolPuestoporManualPuesto")',
-                    dataType: 'json',
-                    data: {
-                        idmanualpuesto: $("#manualpuesto").val(),
-                        iddependencia: $("#iddependencia").val(),
-                        idrelacionLaboral: $("#IdRelacionLaboral").val()
-                    },
-                    success: function (data) {
-                        
-
-                        var textoEscalaGrados = data.indiceOcupacionalViewModel.nombreEscalaGrados
-                            + " ( GRADO "
-                            + data.indiceOcupacionalViewModel.grado
-                            + " ) QUE PERCIBE $"
-                            + data.indiceOcupacionalViewModel.remuneracion;
-
-
-                        $("#txt_escalaGrados").val(textoEscalaGrados);
-                        $("#txt_rolPuesto").val(data.indiceOcupacionalViewModel.nombreRolPuesto);
-                        $("#txt_ioHasta").val(data.indiceOcupacionalViewModel.idIndiceOcupacional);
-
-
-                        if (document.getElementById("s_modalidad").style.visibility.toString() == "hidden") {
-                            // si contrato entonces :
-
-                            document.getElementById("txt_partida").value = "";
-                            document.getElementById("txt_partida").readOnly = false;
-                        } else {
-                            // si es  no es contrato (nombramiento) entonces:
-
-                            if (data.numeroPartidaIndividual != null && data.numeroPartidaIndividual.length > 0) {
-
-                                document.getElementById("txt_partida").value = data.numeroPartidaIndividual;
-                                document.getElementById("txt_partida").readOnly = true;
-                                document.getElementById("modalidadpartida").selectedIndex = data.idModalidadPartida;
-
-                            } else {
-                                mostrarNotificacionTimer("Aviso", "No existen puestos vacantes, si a\u00FAn desea ingresar el registro, deber\u00E1 ingresar un N\u00FAmero de partida", 30000);
-                                document.getElementById("txt_partida").value = "";
-                                document.getElementById("txt_partida").readOnly = false;
-                            }
-
-
-
+                        if (tnVal > 0) {
+                            setTipoNombramiento(tnVal);
                         }
 
-
                     }, complete: function (data) {
                         $("#content").waitMe("hide");
                     },
@@ -602,16 +576,44 @@
                         alert('Failed to retrieve data.' + ex);
                     }
                 });
-                return false;
-            });
+
+
+            }
+
+
+            //// *************************
+
+            // Lógica para cargar datos
+
+            var pvVar = "@Model.IdPartidaVacante";
+
+            if (pvVar > 0) {
+
+                cargarDatosPorSeleccionTipoAccionPersonal("@Model.IdTipoAccionPersonal");
+
+                cargarDatosPorSeleccionCodigoPartida(@Model.IdSeleccionado);
+
+                setModalidadPartida(@Model.IdModalidadPartidaHasta);
+                
+
+            } else {
+                checkRadioSeleccionPartida(@Model.IdSeleccionado);
+                
+            }
+
 
 
 
         }); // fin ready
+
+
+
+
     </script>
 
     <script>
-        
+
+        //Estado para enviar el formulario via submit
         var estadoPEEFVS = true;
         
 
@@ -627,36 +629,19 @@
 
             var enviar = true;
             var textoMensajeAlerta = "";
+            var timeMessage = 5000;
 
             var tipoSolicitud = parseInt(document.getElementsByName("TipoAccionPersonalViewModel.IdTipoAccionPersonal")[0].value);
             var solicitud = document.getElementsByName("Solicitud")[0].value;
             var explicacion = document.getElementsByName("Explicacion")[0].value;
-            var generarMovimientoPersonal = document.getElementById("txtGenerarMovimiento").value;
-            var listaConfiguracionPuesto = document.getElementsByName("ConfigurarPuesto");
-            var configuracionPuesto = "";
-            var tipoNombramiento = document.getElementsByName("EmpleadoMovimiento.IdTipoNombramiento")[0].value;
-            var rolPuesto = document.getElementById("txt_rolPuesto").value;
-            var listaIOMPhasta = document.getElementsByName("EmpleadoMovimiento.IdIndiceOcupacionalModalidadPartidaHasta");
-            var iompHasta = 0;
-            var idIO = document.getElementById("txt_ioHasta").value;
-            var fondoFinanciamiento = document.getElementsByName("EmpleadoMovimiento.IdFondoFinanciamiento")[0].value;
-            var numeroPartidaCampo = document.getElementById("txt_partida").value;
+            var generarMovimientoPersonal = document.getElementById("rdbTrue").value;
+            var idSeleccionado = document.getElementById("IdSeleccionado").value;
+
+            var varRegimenLaboral = $("#txt_RegimenLaboral").val();
+            var modalidadPartidaEstadoVisible = document.getElementById("s_modalidad").style.visibility.toString();
+           
             var fechaRigeHasta = document.getElementById("date_Fecha2").style.visibility.toString();
             var fechaRigeHastaValor = document.getElementById("date_Fecha2").value;
-           
-            for (var i = 0; i < listaConfiguracionPuesto.length;i++) { 
-
-                if (listaConfiguracionPuesto[i].checked) {
-                    configuracionPuesto = listaConfiguracionPuesto[i].value;
-                }
-            }
-
-            for (var i = 0; i < listaIOMPhasta.length; i++) {
-
-                if (listaIOMPhasta[i].checked) {
-                    iompHasta = listaIOMPhasta[i].value;
-                }
-            }
             
 
             if (tipoSolicitud < 1) {
@@ -674,54 +659,103 @@
                 enviar = false;
             }
 
-            else if (generarMovimientoPersonal == "true" && desvinculacion == false) {
+
+            else if (String(generarMovimientoPersonal).toUpperCase() == "TRUE" && desvinculacion == false) {
                 
-                if (configuracionPuesto == "True") {
 
-                    if (tipoNombramiento == "" || tipoNombramiento == null || tipoNombramiento < 1) {
-                        textoMensajeAlerta = "Debe seleccionar un tipo de nombramiento / contrato";
-                        enviar = false;
-                    }
+                if (validarPuestosOcupados == true && validarPuestosVacantes == false) {
+                    if (idSeleccionado < 1) {
 
-                    else if (fondoFinanciamiento < 1) {
-                        textoMensajeAlerta = "Debe seleccionar un fondo de financiamiento";
-                        enviar = false;
-                    }
-
-                    else if (rolPuesto.trim().length < 1 || idIO < 1) {
-                        textoMensajeAlerta = "Debe seleccionar un perfil de puesto";
-                        enviar = false;
-                    }
-
-                    else if (numeroPartidaCampo.trim().length < 1) {
-                        textoMensajeAlerta = "Debe ingresar un numero de partida o un c\u00F3digo de contrato";
-                        enviar = false;
-                    }
-
-                }
-
-                else if (configuracionPuesto == "False") {
-
-                    if (iompHasta < 1) {
                         textoMensajeAlerta = "Debe seleccionar un puesto";
                         enviar = false;
                     }
+                }
+
+                else if (validarPuestosOcupados == false && validarPuestosVacantes == true) {
+
+                    // aquí se valida si se selecciona la partida/contrato del combo
+                    
+                    if (idSeleccionado < 1 || $("#sel_numeroPartida").val() < 1) {
+
+                        textoMensajeAlerta = "Debe seleccionar un c\u00F3digo contrato o n\u00FAmero de partida";
+                        enviar = false;
+                    }
+
+                    else if ($("#IdTipoNombramiento").val() < 1) {
+                        // Tipo de nombramiento
+                        textoMensajeAlerta = "Debe seleccionar un tipo de nombramiento";
+                        enviar = false;
+                    }
+
+                    else if (modalidadPartidaEstadoVisible == "visible" && $("#sel_numeroPartida").val() > 1) {
+                        // aquí se valida si está visible el combo de modalidad partida que tenga una selección
+
+                        if ($("#modalidadpartida").val() == null || $("#modalidadpartida").val() < 1) { 
+                            textoMensajeAlerta = 'Debe seleccionar una modalida partida';
+                            enviar = false;
+                        }
+
+                        
+                    }
+                    
+
 
                 }
-                
-                
+
+                else if (
+                    validarPuestosOcupados == true && validarPuestosVacantes == true
+                    || validarPuestosOcupados == false && validarPuestosVacantes == false
+                )
+                { 
+                    
+
+                    if ($("#sel_numeroPartida").val() != null && idSeleccionado > 1) {
+
+                        // Es una seleción de código del combo
+
+                        if ($("#IdTipoNombramiento").val() < 1) {
+                            // Tipo de nombramiento
+                            textoMensajeAlerta = "Debe seleccionar un tipo de nombramiento";
+                            enviar = false;
+                        }
+
+                        else if (modalidadPartidaEstadoVisible == "visible" && $("#sel_numeroPartida").val() > 0) {
+                            // aquí se valida si está visible el combo de modalidad partida que tenga una selección
+
+                            if ($("#modalidadpartida").val() == null || $("#modalidadpartida").val() < 1) {
+                                textoMensajeAlerta = 'Debe seleccionar una modalida partida';
+                                enviar = false;
+                            }
+                        }
+
+                    } else {
+                        
+                        if (idSeleccionado < 1) {
+
+                            textoMensajeAlerta = 'Debe seleccionar un puesto ocupado o seleccionar un (c\u00F3digo contrato o n\u00FAmero de partida) de la secci\u00F3n puestos vacantes';
+                            timeMessage = 16000;
+                            enviar = false;
+                        }
+                    }
+                    
+
+
+                }
+
             }
 
-            if (fechaRigeHasta == "visible" && (fechaRigeHastaValor == null || fechaRigeHastaValor == "" )) {
-                
+            
+            if (fechaRigeHasta == "visible" && (fechaRigeHastaValor == null || fechaRigeHastaValor == "")) {
+
                 textoMensajeAlerta = "Ingrese una fecha hasta";
                 enviar = false;
 
             }
+            
 
             if (enviar == false) {
 
-                mostrarNotificacionTimer("Aviso", textoMensajeAlerta, 5000);
+                mostrarNotificacionTimer("Aviso", textoMensajeAlerta, timeMessage);
                 return false;
 
             } else{
@@ -733,4 +767,5 @@
         
 
     </script>
+
 }

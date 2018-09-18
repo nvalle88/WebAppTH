@@ -1,4 +1,4 @@
-@model List<bd.webappth.entidades.ViewModels.ListaEmpleadoViewModel>
+@model List<bd.webappth.entidades.Negocio.DistributivoHistorico>
 
 @{
     ViewData["Title"] = "Index";
@@ -8,34 +8,8 @@
 <link rel="stylesheet" href="~/lib/waitMe/waitMe.css" />
 <!-- MAIN CONTENT -->
 <div id="content">
-    <div class="col col-10">
 
-        @if (@ViewData["Error"].ToString() != "")
 
-        {
-
-            <div class="col-lg-12">
-
-                <div class="alert alert-block alert-dismissable">
-
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-
-                    <p>
-
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        }
-    </div>
-
-    <p></p>
 
     <!-- widget grid -->
     <section id="" class="">
@@ -99,7 +73,7 @@
                                         </th>
 
                                         <th data-hide="phone">
-                                            @Html.DisplayNameFor(model=>model.FirstOrDefault().CodigoEmpleado)
+                                            C&oacute;digo de contrato / N&uacute;mero de partida
                                         </th>
 
                                         <th>
@@ -113,35 +87,38 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Identificacion)
+                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Identificacion)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreApellido)
+                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Nombres)
+                                                &nbsp;
+                                                @Html.DisplayFor(modelItem => item.Empleado.Persona.Apellidos)
                                             </td>
                                             
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreRelacionLaboral)
+                                                @Html.DisplayFor(modelItem => item.TipoNombramiento.RelacionLaboral.Nombre)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Dependencia)
+                                                @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.Dependencia.Nombre)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.NombreSucursal)
+                                                @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.Dependencia.Sucursal.Nombre)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ManualPuesto)
+                                                @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.IndiceOcupacional.DenominacionPuesto)
                                             </td>
 
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.CodigoEmpleado)
+                                                @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.NumeroPartidaIndividual)
+                                                @Html.DisplayFor(modelItem => item.IndiceOcupacionalModalidadPartida.CodigoContrato)
                                             </td>
 
                                             <td>
-                                                @Html.ActionLink("Detalle", "CheckListDocumentosEmpleado", new { identificacion = item.Identificacion},new { onclick = "cargando()" } )
+                                                @Html.ActionLink("Detalle", "CheckListDocumentosEmpleado", new { id = item.IdEmpleado},new { onclick = "cargando()" } )
                                             </td>
                                         </tr>
                                     }

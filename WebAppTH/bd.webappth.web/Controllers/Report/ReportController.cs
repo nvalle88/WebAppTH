@@ -90,6 +90,7 @@ namespace bd.webappth.web.Controllers.MVC
             return Redirect(url);
 
         }
+
         public ActionResult ReporteConPiePagina(GenerarFirmasViewModel modelo)
         {
             var UrlReporte = modelo.UrlReporte;
@@ -112,10 +113,11 @@ namespace bd.webappth.web.Controllers.MVC
 
         public ActionResult ReporteCertificadoInduccion(int IdEmpleado)
         {
-            string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepCertificadoInduccion&IdEmpleado=", Convert.ToString(IdEmpleado));
-
-            return Redirect(url);
-
+            var parametersToAdd = reporteServicio.GetDefaultParameters("/ReporteGTH/RepCertificadoInduccion");
+            parametersToAdd = reporteServicio.AddParameters("IdEmpleado", Convert.ToString(IdEmpleado), parametersToAdd);
+            var newUri = reporteServicio.GenerateUri(parametersToAdd);
+            return Redirect(newUri);
+         
         }
 
         public ActionResult ReporteParticipacionEventosInduccion()

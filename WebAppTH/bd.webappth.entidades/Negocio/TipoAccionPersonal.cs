@@ -97,6 +97,13 @@ namespace bd.webappth.entidades.Negocio
         public bool FinalizaTipoAccionPersonal { get; set; }
         public int? IdTipoAccionPersonalFin { get; set; }
 
+        public bool? BuscarPuestosVacantes { get; set; }
+        public bool? BuscarPuestosOcupados { get; set; }
+        public bool? BuscarNivelOperativo { get; set; }
+        public bool? BuscarJerarquicoSuperior { get; set; }
+
+
+
         public virtual ICollection<AccionPersonal> AccionPersonal { get; set; }
         public virtual ICollection<FlujoAprobacion> FlujoAprobacion { get; set; }
         public virtual ICollection<PieFirma> PieFirma { get; set; }

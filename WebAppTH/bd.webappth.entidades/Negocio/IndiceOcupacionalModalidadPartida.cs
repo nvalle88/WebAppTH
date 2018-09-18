@@ -20,6 +20,7 @@ namespace bd.webappth.entidades.Negocio
         public decimal? Rmusobrevalorado { get; set; }
         public bool Activo { get; set; }
         public bool EsJefe { get; set; }
+        public bool Ocupado { get; set; }
 
 
         public virtual ICollection<DistributivoHistorico> DistributivoHistorico { get; set; }

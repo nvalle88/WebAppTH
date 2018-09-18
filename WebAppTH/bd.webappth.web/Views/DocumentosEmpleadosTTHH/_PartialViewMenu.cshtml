@@ -1,21 +1,21 @@
-﻿@model bd.webappth.entidades.ViewModels.ListaEmpleadoViewModel
+﻿@model bd.webappth.entidades.Negocio.DistributivoHistorico
 
 
 
-<div class="btn-group btn-group-justified" id="menuFichaMedica">
+<div class="btn-group btn-group-justified">
     <!--
     <a style="background-color:#3276b1;color:white;" class="btn btn-default" href="/FichasMedicas/Index">
         <i class="fa fa-institution"> </i>
         <br />Datos Generales
     </a>
     -->
-    <a id="btn_0" asp-action="CheckListDocumentosEmpleado" asp-route-identificacion="@Model.Identificacion" class="btn btn-default" onclick="espera()">
+    <a id="btn_0" asp-action="CheckListDocumentosEmpleado" asp-route-id="@Model.IdEmpleado" class="btn btn-default" onclick="espera()">
         <br />
         Documentos
         <br />&nbsp;
     </a>
 
-    <a id="btn_1" asp-action="LavadoActivos" asp-route-identificacion="@Model.Identificacion" class="btn btn-default" onclick="espera()">
+    <a id="btn_1" asp-action="LavadoActivos" asp-route-id="@Model.IdEmpleado" class="btn btn-default" onclick="espera()">
         <br />
         Lavado de activos
         <br />&nbsp;

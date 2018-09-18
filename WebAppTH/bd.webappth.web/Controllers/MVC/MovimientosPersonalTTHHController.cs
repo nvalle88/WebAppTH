@@ -120,7 +120,8 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        
+
+        #region Métodos para mantenimiento
 
         public async Task<IActionResult> Create(int id)
         {
@@ -153,13 +154,25 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        /*
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AccionPersonalViewModel accionPersonalViewModel)
         {
             try
             {
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    accionPersonalViewModel.NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+                }
+                else {
+                    return RedirectToAction("Login", "Login");
+                }
+                    
+                 
 
                 var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
                     accionPersonalViewModel,
@@ -173,17 +186,17 @@ namespace bd.webappth.web.Controllers.MVC
                     return this.RedireccionarMensajeTime(
                             "MovimientosPersonalTTHH",
                             "ListaMovimientos",
-                             new { identificacion = respuesta.Resultado },
+                             new { IdEmpleado = respuesta.Resultado },
                             $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
                     );
-                    
+
 
                 }
 
                 return this.RedireccionarMensajeTime(
                             "MovimientosPersonalTTHH",
                             "ListaMovimientos",
-                             new { identificacion = respuesta.Resultado },
+                             new { IdEmpleado = respuesta.Resultado },
                             $"{Mensaje.Error}|{respuesta.Message}|{"7000"}"
                     );
 
@@ -193,6 +206,103 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+                var IdAccionPersonal = id;
+
+                var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                    IdAccionPersonal,
+                    new Uri(WebApp.BaseAddress),
+                    "api/AccionesPersonal/ObtenerAccionPersonalViewModelRegistrada");
+
+                if (respuesta.IsSuccess)
+                {
+                    var modelo = JsonConvert.DeserializeObject<AccionPersonalViewModel>(respuesta.Resultado.ToString());
+
+                    await InicializarCombos();
+
+
+                    return View(modelo);
+
+                }
+
+                return BadRequest();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(AccionPersonalViewModel accionPersonalViewModel)
+        {
+            try
+            {
+
+                var claim = HttpContext.User.Identities.Where(x => x.NameClaimType == ClaimTypes.Name).FirstOrDefault();
+
+                if (claim.IsAuthenticated == true)
+                {
+                    accionPersonalViewModel.NombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login");
+                }
+
+
+
+                var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                    accionPersonalViewModel,
+                    new Uri(WebApp.BaseAddress),
+                    "api/AccionesPersonal/EditarAccionPersonal");
+
+                if (respuesta.IsSuccess)
+                {
+
+
+                    return this.RedireccionarMensajeTime(
+                            "MovimientosPersonalTTHH",
+                            "ListaMovimientos",
+                             new { IdEmpleado = respuesta.Resultado },
+                            $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
+                    );
+
+
+                }
+
+                return this.RedireccionarMensajeTime(
+                            "MovimientosPersonalTTHH",
+                            "ListaMovimientos",
+                             new { IdEmpleado = respuesta.Resultado },
+                            $"{Mensaje.Error}|{respuesta.Message}|{"7000"}"
+                    );
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        #endregion
+
+
+
+
+
+
+        /*
+        
 
 
         public async Task<IActionResult> Edit(int id)
@@ -357,28 +467,7 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-        public async Task<ActionResult> VerTipoAccion(int idAccion)
-        {
-            try
-            {
-                var modeloEnviar = new TipoAccionPersonal()
-                {
-                    IdTipoAccionPersonal = idAccion
-                };
-                var modelo = await apiServicio.ObtenerElementoAsync1<TipoAccionPersonal>(
-                    modeloEnviar,
-                    new Uri(WebApp.BaseAddress),
-                    "/api/TiposAccionesPersonales/ObtenerTipoAccionPersonal"
-                    );
-                
-                return Json(modelo);
-
-            }
-            catch (Exception ex)
-            {
-                return Json(new List<Dependencia>());
-            }
-        }
+       
 
         
 
@@ -432,23 +521,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<JsonResult> ListarTipoNombramientoRelacion(int relacion)
-        {
-            try
-            {
-                var relacionLaboral = new RelacionLaboral
-                {
-                    IdRelacionLaboral = relacion,
-                };
-                var listarelacionesLaborales = await apiServicio.Listar<TipoNombramiento>(relacionLaboral, new Uri(WebApp.BaseAddress), "api/TiposDeNombramiento/ListarTiposDeNombramientoPorRelacion");
-                return Json(listarelacionesLaborales);
-            }
-            catch (Exception)
-            {
-                return Json(Mensaje.Error);
-            }
-
-        }
+        
 
         public async Task<JsonResult> ListarManualPuestoporDependencia(int iddependencia, int idRelacionLaboral)
         {
@@ -593,6 +666,9 @@ namespace bd.webappth.web.Controllers.MVC
 
         */
 
+
+        // 
+
         public async Task InicializarCombos()
         {
             // Carga de listas para combos
@@ -605,26 +681,100 @@ namespace bd.webappth.web.Controllers.MVC
 
 
             //** Estados de aprobación
-            var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosAprobacionTTHH");
+            var listaEstadosAprobacion = await apiServicio.Listar<AprobacionMovimientoInternoViewModel>(new Uri(WebApp.BaseAddress), "api/AccionesPersonal/ListarEstadosProcesoAccionPersonal");
 
             ViewData["Estados"] = new SelectList(listaEstadosAprobacion, "ValorEstado", "NombreEstado");
 
 
-            /*
+            //** ListaPartidasVacantes
+            var listaPartidasVacantes = await apiServicio.Listar<IndiceOcupacionalModalidadPartida>(
+                new Uri(WebApp.BaseAddress), "api/IndicesOcupacionalesModalidadPartida/ListaPuestosVacantes");
 
-            ViewData["IdRegimenLaboral"] = new SelectList(await apiServicio.Listar<RegimenLaboral>(new Uri(WebApp.BaseAddress), "api/RegimenesLaborales/ListarRegimenesLaborales"), "IdRegimenLaboral", "Nombre");
+            foreach (var item in listaPartidasVacantes) {
+                item.NumeroPartidaIndividual = item.NumeroPartidaIndividual + item.CodigoContrato;
+            }
 
-
-            ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
-
-
-            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
+            ViewData["PartidasVacantes"] = new SelectList(
+                listaPartidasVacantes, "IdIndiceOcupacionalModalidadPartida", "NumeroPartidaIndividual");
 
 
             ViewData["IdModalidadPartida"] = new SelectList(await apiServicio.Listar<ModalidadPartida>(new Uri(WebApp.BaseAddress), "api/ModalidadesPartida/ListarModalidadesPartida"), "IdModalidadPartida", "Nombre");
-            */
+
+
+            ViewData["IdFondoFinanciamiento"] = new SelectList(await apiServicio.Listar<FondoFinanciamiento>(new Uri(WebApp.BaseAddressRM), "/api/FondoFinanciamiento/ListarFondoFinanciamiento"), "IdFondoFinanciamiento", "Nombre");
+            
+        }
+
+        
+        #region Métodos para ajax combos
+
+        public async Task<JsonResult> VerTipoAccion(int idAccion)
+        {
+            try
+            {
+                var modeloEnviar = new TipoAccionPersonal()
+                {
+                    IdTipoAccionPersonal = idAccion
+                };
+                var modelo = await apiServicio.ObtenerElementoAsync1<TipoAccionPersonal>(
+                    modeloEnviar,
+                    new Uri(WebApp.BaseAddress),
+                    "/api/TiposAccionesPersonales/ObtenerTipoAccionPersonal"
+                    );
+
+                return Json(modelo);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(Mensaje.Error);
+            }
+        }
+
+        public async Task<JsonResult> ObtenerDatosPartida(int id)
+        {
+            try
+            {
+                int Id = id;
+                var modelo = await apiServicio.ObtenerElementoAsync1<IndiceOcupacionalModalidadPartida>(
+                    Id,
+                    new Uri(WebApp.BaseAddress),
+                    "api/IndicesOcupacionalesModalidadPartida/ObtenerPartidaPorId");
+
+                return Json(modelo);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
 
         }
+        
+        public async Task<JsonResult> ListarTipoNombramientoRelacion(int relacion)
+        {
+            try
+            {
+                var relacionLaboral = new RelacionLaboral
+                {
+                    IdRelacionLaboral = relacion,
+                };
+                var listarelacionesLaborales = await apiServicio.Listar<TipoNombramiento>(relacionLaboral, new Uri(WebApp.BaseAddress), "api/TiposDeNombramiento/ListarTiposDeNombramientoPorRelacion");
+                return Json(listarelacionesLaborales);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+
+        #endregion
+
+
+
+
+
+
 
     }
 }

@@ -12,6 +12,7 @@ using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using bd.webappth.entidades.ViewModels;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -24,209 +25,9 @@ namespace bd.webappth.web.Controllers.MVC
         {
             this.apiServicio = apiServicio;
         }
-        private void InicializarMensaje(string mensaje)
-        {
-            if (mensaje == null)
-            {
-                mensaje = "";
-            }
-            ViewData["Error"] = mensaje;
-        }
-        public IActionResult Create(string mensaje)
-        {
-            InicializarMensaje(mensaje);
-            return View();
-        }
+        
 
-        public IActionResult Search()
-        {
-            Empleado empleado = new Empleado();
-            return View(empleado);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(DocumentosIngreso documentosIngreso)
-        {
-            if (!ModelState.IsValid)
-            {
-                InicializarMensaje(null);
-                return View(documentosIngreso);
-
-            }
-            Response response = new Response();
-            try
-            {
-
-                response = await apiServicio.InsertarAsync(documentosIngreso,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/DocumentosIngreso/InsertarDocumentosIngreso");
-                if (response.IsSuccess)
-                {
-                    
-
-                    return RedirectToAction("Index");
-                }
-
-                ViewData["Error"] = response.Message;
-                return View(documentosIngreso);
-
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Documento Ingreso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
-
-                return BadRequest();
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DocumentoEntregado(ViewModelDocumentoIngresoEmpleado viewModelDocumentoIngresoEmpleado)
-        {
-            Response response = new Response();
-            var listaDocumentosEntregados = new List<DocumentosIngresoEmpleado>();
-            try
-            {
-                var empleado = new Empleado
-                {
-                    IdEmpleado= viewModelDocumentoIngresoEmpleado.empleadoViewModel.IdEmpleado
-                };
-
-                listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleado, new Uri(WebApp.BaseAddress)
-                                                                  , "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
-
-                if (listaDocumentosEntregados.Count == 0)
-                {
-                    response = await apiServicio.InsertarAsync(viewModelDocumentoIngresoEmpleado,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/DocumentosIngreso/InsertarDocumentosIngresoEmpleado");
-                }
-                else
-                {
-                    response = await apiServicio.ObtenerElementoAsync1<Response>(viewModelDocumentoIngresoEmpleado, new Uri(WebApp.BaseAddress),
-                                                                                     "api/DocumentosIngreso/EditarCheckListDocumentos");
-                }
-                
-                if (response.IsSuccess)
-                {
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha creado un documento de ingreso empleado",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Documento Ingreso Empleado:", viewModelDocumentoIngresoEmpleado.empleadoViewModel.IdEmpleado),
-                    });
-
-                    return RedirectToAction("Search");
-                }
-
-                ViewData["Error"] = response.Message;
-                return RedirectToAction("Search");
-
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Creando Documento Ingreso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
-
-                return BadRequest();
-            }
-        }
-
-        public async Task<IActionResult> Edit(string id)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/DocumentosIngreso");
-
-
-                    respuesta.Resultado = JsonConvert.DeserializeObject<DocumentosIngreso>(respuesta.Resultado.ToString());
-                    if (respuesta.IsSuccess)
-                    {
-                        InicializarMensaje(null);
-                        return View(respuesta.Resultado);
-                    }
-
-                }
-
-                return BadRequest();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, DocumentosIngreso documentosIngreso)
-        {
-            Response response = new Response();
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    response = await apiServicio.EditarAsync(id, documentosIngreso, new Uri(WebApp.BaseAddress),
-                                                                 "api/DocumentosIngreso");
-
-                    if (response.IsSuccess)
-                    {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "Sistema", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un documento de ingreso",
-                            UserName = "Usuario 1"
-                        });
-
-                        return RedirectToAction("Index");
-                    }
-                    ViewData["Error"] = response.Message;
-                    return View(documentosIngreso);
-
-                }
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un documento de ingreso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
-                return BadRequest();
-            }
-        }
+        #region Métodos para mantenimiento DocumentosIngreso
 
         public async Task<IActionResult> Index()
         {
@@ -234,157 +35,199 @@ namespace bd.webappth.web.Controllers.MVC
             var lista = new List<DocumentosIngreso>();
             try
             {
-                lista = await apiServicio.Listar<DocumentosIngreso>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/DocumentosIngreso/ListarDocumentosIngreso");
-                InicializarMensaje(null);
+                lista = await apiServicio.Listar<DocumentosIngreso>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/DocumentosIngreso/ListarDocumentosIngreso"
+                );
+                
                 return View(lista);
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Listando documentos de ingreso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
+               
                 return BadRequest();
             }
         }
+
+
+        public IActionResult Create(string mensaje)
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(DocumentosIngreso documentosIngreso)
+        {
+            if (!ModelState.IsValid)
+            {
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}|{"7000"}";
+                return View(documentosIngreso);
+
+            }
+            
+            Response response = new Response();
+
+            try
+            {
+
+                response = await apiServicio.InsertarAsync(
+                    documentosIngreso,
+                    new Uri(WebApp.BaseAddress),
+                    "api/DocumentosIngreso/InsertarDocumentosIngreso"
+                );
+
+                if (response.IsSuccess)
+                {
+                    
+                    return this.RedireccionarMensajeTime(
+                        "DocumentosIngreso",
+                        "Index",
+                        $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
+
+                }
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+                return View(documentosIngreso);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+        
+        public async Task<IActionResult> Edit(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+
+                    var idDocumentosIngreso = Convert.ToInt32(id);
+
+                    var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(
+                        new DocumentosIngreso { IdDocumentosIngreso = idDocumentosIngreso}, 
+                        new Uri(WebApp.BaseAddress),
+                        "api/DocumentosIngreso/ObtenerDocumentosIngresoPorId"
+                    );
+
+
+                    respuesta.Resultado = JsonConvert.DeserializeObject<DocumentosIngreso>(respuesta.Resultado.ToString());
+
+                    if (respuesta.IsSuccess)
+                    {
+                        return View(respuesta.Resultado);
+                    }
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{ respuesta.Message}|{"10000"}";
+                }
+
+                return BadRequest();
+                
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(DocumentosIngreso documentosIngreso)
+        {
+            Response response = new Response();
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}|{"7000"}";
+                    return View(documentosIngreso);
+
+                }
+                
+
+                response = await apiServicio.EditarAsync<Response>(
+                    documentosIngreso,
+                    new Uri(WebApp.BaseAddress),
+                    "api/DocumentosIngreso/EditarDocumentosIngreso"
+                );
+
+                if (response.IsSuccess)
+                {
+
+                    return this.RedireccionarMensajeTime(
+                        "DocumentosIngreso",
+                        "Index",
+                        $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
+
+                }
+
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+                return View(documentosIngreso);
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest();
+            }
+        }
+
+
 
         public async Task<IActionResult> Delete(string id)
         {
 
             try
             {
-                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "api/DocumentosIngreso");
+                if (string.IsNullOrEmpty(id))
+                {
+                    return BadRequest();
+                }
+
+                var idDocumentosIngreso = Convert.ToInt32(id);
+
+                var response = await apiServicio.EliminarAsync(
+                    new DocumentosIngreso{IdDocumentosIngreso = idDocumentosIngreso }, 
+                    new Uri(WebApp.BaseAddress),
+                    "api/DocumentosIngreso/EliminarDocumentosIngreso"
+                );
+
+
                 if (response.IsSuccess)
                 {
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "Sistema", id),
-                        Message = "Registro de documento de ingreso eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+                    
+                    return this.RedireccionarMensajeTime(
+                        "DocumentosIngreso",
+                        "Index",
+                        $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
                 }
-                //return BadRequest();
-                return RedirectToAction("Index", new { mensaje = response.Message });
+
+                return this.RedireccionarMensajeTime(
+                    "DocumentosIngreso",
+                    "Index",
+                    $"{Mensaje.Error}|{response.Message}|{"10000"}"
+                );
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Documento Ingreso",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
                 return BadRequest();
             }
         }
 
 
-        public async Task<IActionResult> CheckListDocumentosEmpleado(Empleado empl)
-        {
-            var listaDocumentos = new List<DocumentosIngreso>();
-            var listaDocumentosEntregados = new List<DocumentosIngresoEmpleado>();
+        #endregion
 
-            var documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado();
-            documentoingresoViewModel.listadocumentosingreso = new List<DocumentosIngreso>();
-            documentoingresoViewModel.listadocumentosingresoentregado = new List<DocumentosIngresoEmpleado>();
-
-            try
-            {
-                var empleado = new Empleado
-                {
-                    Persona = new Persona
-                    {
-                        Identificacion = empl.Persona.Identificacion
-                    }
-                };
-                var emp = await apiServicio.ObtenerElementoAsync1<ListaEmpleadoViewModel>(empleado, new Uri(WebApp.BaseAddress),
-                                                              "api/Empleados/ObtenerDatosCompletosEmpleado");
-
-                var empleadoConsulta = new Empleado
-                {
-                    IdEmpleado = emp.IdEmpleado
-                };
-                //var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(empleadoConsulta, new Uri(WebApp.BaseAddress), "api/DocumentosIngreso/GetDocumentoIngresoEmpleado");
-                //if (!respuesta.IsSuccess)
-                //{
-                    listaDocumentos = await apiServicio.Listar<DocumentosIngreso>(new Uri(WebApp.BaseAddress)
-                                                                                      , "api/DocumentosIngreso/ListarDocumentosIngreso");
-                    listaDocumentosEntregados = await apiServicio.ObtenerElementoAsync1<List<DocumentosIngresoEmpleado>>(empleadoConsulta,new Uri(WebApp.BaseAddress)
-                                                                                      , "api/DocumentosIngreso/ListarDocumentosIngresoEmpleado");
-
-                    documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado
-                    {
-                        empleadoViewModel = emp,
-                        listadocumentosingreso = listaDocumentos,
-                        listadocumentosingresoentregado = listaDocumentosEntregados
-
-                    };
-
-                    return View(documentoingresoViewModel);
-                //}
-
-            }
-            catch (Exception)
-            {
-                return View(documentoingresoViewModel);
-            }
-        }
-
-        //public async Task<IActionResult> CheckListDocumentosEmpleados(ListaEmpleadoViewModel empleado)
-        //{
-
-        //    var lista = new List<DocumentosIngreso>();
-         
-        //    try
-        //    {
-        //        var emp = new Empleado
-        //        {
-        //            IdEmpleado = empleado.IdEmpleado
-        //        };
-        //        var respuesta = await apiServicio.ObtenerElementoAsync1<Response>(emp, new Uri(WebApp.BaseAddress), "api/DocumentosIngreso/GetDocumentoIngresoEmpleado");
-        //        if (!respuesta.IsSuccess)
-        //        {
-        //            lista = await apiServicio.Listar<DocumentosIngreso>(new Uri(WebApp.BaseAddress)
-        //                                                                              , "api/DocumentosIngreso/ListarDocumentosIngreso");
-        //            var documentoingresoViewModel = new ViewModelDocumentoIngresoEmpleado
-        //            {
-        //                empleadoViewModel = empleado,
-        //                listadocumentosingreso = lista
-        //            };
-
-        //            return View(documentoingresoViewModel);
-        //        }
-                
-        //        return View (new ViewModelDocumentoIngresoEmpleado());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-        //        {
-        //            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-        //            Message = "Listando documentos de ingreso",
-        //            ExceptionTrace = ex.Message,
-        //            LogCategoryParametre = Convert.ToString(LogCategoryParameter.NetActivity),
-        //            LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-        //            UserName = "Usuario APP webappth"
-        //        });
-        //        return BadRequest();
-        //    }
-        //}
+        
     }
 }

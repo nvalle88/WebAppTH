@@ -18,28 +18,15 @@
     }
 </style>
 
-@{await Html.RenderPartialAsync("_PartialViewMenu", Model.empleadoViewModel);}
+@{await Html.RenderPartialAsync("_PartialViewMenu", Model.Distributivo);}
 
 <!-- MAIN CONTENT -->
 <div id="content">
 
-    <div class="col col-10">
-        @if (@ViewData["Error"].ToString() != "")
+    @{ 
+        var nombresApellidos = Model.Distributivo.Empleado.Persona.Nombres + " " + Model.Distributivo.Empleado.Persona.Apellidos;
 
-        {
-
-            <div class="col-lg-12">
-                <div class="alert alert-block alert-dismissable">
-                    <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
-                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-                    <p>
-                        <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
-                    </p>
-                </div>
-            </div>
-
-        }
-    </div>
+    }
 
     <!-- widget grid -->
     <section id="widget-grid" class="">
@@ -70,8 +57,8 @@
 
 
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="empleadoViewModel.IdEmpleado" />
-                                <input type="hidden" asp-for="empleadoViewModel.Identificacion" />
+                                <input type="hidden" asp-for="Distributivo.IdEmpleado" />
+                                <input type="hidden" asp-for="Distributivo.Empleado.Persona.Identificacion" />
                                 <br>
                                 <div class="row">
                                     <article class="col-lg-12">
@@ -81,7 +68,7 @@
                                             <label class="col-lg-7">
                                                 <label class="input col-lg-4"><input style="background-color:transparent;" readonly type="text" class="form-control et" value="Nombre:" /></label>
                                                 <label class="input col-lg-8">
-                                                    <input asp-for="empleadoViewModel.NombreApellido" type="text" class="form-control" style="background-color:transparent;" readonly />
+                                                    <input value="@nombresApellidos" type="text" class="form-control" style="background-color:transparent;" readonly />
 
                                                 </label>
                                             </label>
@@ -91,7 +78,7 @@
                                             <label class="col-lg-7">
                                                 <label class="input col-lg-4"><input style="background-color:transparent;" readonly type="text" class="form-control et" value="Fecha de ingreso:" /></label>
                                                 <label class="input col-lg-8">
-                                                    <input asp-for="empleadoViewModel.FechaIngreso" class="form-control" type="date" style="background-color:transparent;" readonly>
+                                                    <input asp-for="Distributivo.Empleado.FechaIngreso" class="form-control" type="date" style="background-color:transparent;" readonly>
 
                                                 </label>
                                             </label>
@@ -101,7 +88,7 @@
                                             <label class="col-lg-7">
                                                 <label class="input col-lg-4"><input style="background-color:transparent;" readonly type="text" class="form-control et" value="Cargo:" /></label>
                                                 <label class="input col-lg-8">
-                                                    <input asp-for="empleadoViewModel.RolPuesto" type="text" class="form-control" style="background-color:transparent;" readonly />
+                                                    <input asp-for="Distributivo.IndiceOcupacionalModalidadPartida.IndiceOcupacional.RolPuesto.Nombre" type="text" class="form-control" style="background-color:transparent;" readonly />
 
                                                 </label>
                                             </label>
@@ -111,7 +98,7 @@
                                             <label class="col-lg-7">
                                                 <label class="input col-lg-4"><input style="background-color:transparent;" readonly type="text" class="form-control et" value="Unidad administrativa:" /></label>
                                                 <label class="input col-lg-8">
-                                                    <input asp-for="empleadoViewModel.Dependencia" class="form-control" type="text" style="background-color:transparent;" readonly>
+                                                    <input asp-for="Distributivo.IndiceOcupacionalModalidadPartida.Dependencia.Nombre" class="form-control" type="text" style="background-color:transparent;" readonly>
 
                                                 </label>
                                             </label>
@@ -126,64 +113,58 @@
                                     <article class="col-lg-12">
                                         <legend>Documentos de Ingreso</legend>
 
-                                        <div class="col col-lg-12">&nbsp;</div>
+                                        <section>
+                                            <div class="row">
+                                                <div class="col-12">&nbsp;</div>
+                                            </div>
+                                        </section>
 
-                                        <div class="col col-lg-12">
+                                        <section>
 
-                                            @foreach (var item in Model.listadocumentosingreso)
+                                            @foreach (var item in Model.ListaDocumentosIngreso)
                                             {
                                                 var bandera = false;
-                                                @foreach (var item2 in Model.listadocumentosingresoentregado)
+                                                @foreach (var item2 in Model.ListaDocumentosIngresoEntregado)
                                                 {
 
-                                                    @if (item.IdDocumentosIngreso == item2.IdDocumentosIngreso)
+                                                    @if (item.IdDocumentosIngreso == item2.IdDocumentosIngreso && item2.Entregado == true)
                                                     {
-                                                        <div class="col-lg-11">
-                                                            <div class="checkbox-inline">
-                                                                <label>
+                                                        <div class="col-lg-12">
+                                                                <label class="col-lg-11">
                                                                     @item.Descripcion
-                                                                 </label>
-                                                             </div>
-                                                         </div>
+                                                                </label>
 
-                                                         <div class="col-lg-1">
-                                                            <div class="checkbox-inline">
-                                                                <label>
+                                                                <label class="col-lg-1">
 
                                                                     <input type="checkbox"
                                                                            name="DocumentosSeleccionados"
-                                                                           value="@item.IdDocumentosIngreso" checked="checked" onclick="return false;" />
+                                                                           value="@item.IdDocumentosIngreso" 
+                                                                           checked="checked"
+                                                                    />
 
-                                                                 </label>
-                                                             </div>
-                                                         </div>
+                                                                </label>
+                                                        </div>
 
-                                                         bandera = true;
-                                                        }
+                                                        bandera = true;
+                                                    }
 
                                                 }
                                                 if (!bandera)
                                                 {
-                                                    <div class="col-lg-11">
-                                                        <div class="checkbox-inline">
-                                                            <label>
+                                                    <div class="col-lg-12">
+                                                            <label class="col-lg-11">
                                                                 @item.Descripcion
                                                             </label>
-                                                         </div>
-                                                     </div>
 
-                                                      <div class="col-lg-1">
-                                                        <div class="checkbox-inline">
-                                                            <label>
+                                                            <label class="col-lg-1">
                                                                 <input type="checkbox"
                                                                        name="DocumentosSeleccionados"
-                                                                       value="@item.IdDocumentosIngreso" /> 
-                                                             </label>
-                                                         </div>
-                                                       </div>
-                                                    }
+                                                                       value="@item.IdDocumentosIngreso" />
+                                                            </label>
+                                                    </div>
                                                 }
-                                        </div>
+                                            }
+                                        </section>
                                     </article>
                                 </div>
 

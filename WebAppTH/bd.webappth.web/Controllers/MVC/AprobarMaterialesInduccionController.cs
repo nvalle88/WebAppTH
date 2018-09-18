@@ -70,9 +70,11 @@ namespace bd.webappth.web.Controllers.MVC
                         Fecha = DateTime.Now.Date
                     };
 
-                    response = await apiServicio.InsertarAsync(induccionEmpleado,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/MaterialesInduccion/IngresarInduccionEmpleado");
+                    response = await apiServicio.InsertarAsync(
+                        induccionEmpleado,
+                        new Uri(WebApp.BaseAddress),
+                        "api/MaterialesInduccion/IngresarInduccionEmpleado"
+                    );
 
                     // Aqui debo redirigir a la pagina donde se aloja el certificado
                     return RedirectToAction("ListarMaterialesInduccion");
@@ -98,7 +100,13 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     NombreUsuario = nombreUsuario,
                 };
-                var usuariologueado = await apiServicio.ObtenerElementoAsync1<Empleado>(empleado, new Uri(WebApp.BaseAddress), "api/Empleados/ObtenerEmpleadoLogueado");
+
+                var usuariologueado = await apiServicio.ObtenerElementoAsync1<Empleado>(
+                    empleado, 
+                    new Uri(WebApp.BaseAddress), 
+                    "api/Empleados/ObtenerEmpleadoLogueadoDistributivoFormal"
+                );
+
                 return usuariologueado;
             }
             catch (Exception)
