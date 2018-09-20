@@ -28,6 +28,14 @@ namespace bd.webappth.entidades.ViewModels
                   new ValidationResult(errorMessage: "Se debe agregar una descripción",
                                        memberNames: new[] { "Descripcion" });
             }
+
+            if (!String.IsNullOrEmpty(Descripcion) && Cantidad < 1) {
+
+                yield return
+                  new ValidationResult(errorMessage: "No se ha ingresado cantidad",
+                                       memberNames: new[] { "Cantidad" });
+            }
+
         }
     }
 }

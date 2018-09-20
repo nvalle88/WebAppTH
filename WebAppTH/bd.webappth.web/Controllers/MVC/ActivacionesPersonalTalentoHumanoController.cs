@@ -80,7 +80,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(List<ActivarPersonalTalentoHumanoViewModel> model)
@@ -92,9 +92,12 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                Response response = await apiServicio.InsertarAsync(listaViewModel,
-                                                         new Uri(WebApp.BaseAddress),
-                                                         "api/ActivacionesPersonalTalentoHumano/InsertarActivacionesPersonalTalentoHumano");
+                Response response = await apiServicio.InsertarAsync(
+                    listaViewModel,
+                    new Uri(WebApp.BaseAddress),
+                    "api/ActivacionesPersonalTalentoHumano/InsertarActivacionesPersonalTalentoHumano"
+                );
+
                 if (response.IsSuccess)
                 {
 
@@ -108,23 +111,20 @@ namespace bd.webappth.web.Controllers.MVC
                     {
                         mensajeResultado = response.Message;
                     }
-
-                    //return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = mensajeResultado });
+                    
 
                     return this.RedireccionarMensajeTime(
                             "ActivacionesPersonalTalentoHumano",
                             "Index",
-                            $"{Mensaje.Informacion}|{mensajeResultado}|{"7000"}"
+                            $"{Mensaje.Success}|{mensajeResultado}|{"7000"}"
                     );
 
                 }
-
-                //return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = response.Message });
-
+                
                 return this.RedireccionarMensajeTime(
                             "ActivacionesPersonalTalentoHumano",
                             "Index",
-                            $"{Mensaje.Error}|{response.Message}|{"7000"}"
+                            $"{Mensaje.Aviso}|{response.Message}|{"17000"}"
                     );
 
             }
@@ -133,6 +133,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return RedirectToAction("Index", "ActivacionesPersonalTalentoHumano", new { mensaje = Mensaje.Excepcion });
             }
         }
+
 
 
 

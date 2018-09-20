@@ -34,19 +34,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-
-        private void InicializarMensaje(string mensaje)
-
-        {
-
-            if (mensaje == null)
-            {
-                mensaje = "";
-            }
-
-            ViewData["Error"] = mensaje;
-        }
-
+        #region Métodos usados para el que el usuario relize la inducción,(obtenga materiales, pase la inducción y reporte)
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -240,11 +228,7 @@ namespace bd.webappth.web.Controllers.MVC
 
         }
 
-        public async Task<IActionResult> Certificado()
-        {
-            InicializarMensaje("Aqui va el certificado");
-            return View();
-        }
+        #endregion
 
 
     }

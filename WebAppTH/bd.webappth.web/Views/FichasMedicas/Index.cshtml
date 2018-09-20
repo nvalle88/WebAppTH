@@ -168,11 +168,11 @@
                                         </div>
 
                                         <!--
-                                        <div class="labels">
+    <div class="labels">
 
-                                            <input value="" readonly class="label-data" />
-                                        </div>
-                                            -->
+        <input value="" readonly class="label-data" />
+    </div>
+        -->
 
                                         <div class="labels">
                                             @Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.Genero):
@@ -229,8 +229,16 @@
                                         </div>
 
                                         <div class="labels">
+
+                                            <input value="" readonly class="label-data" />
+                                        </div>
+
+                                        <div class="labels" style="width:100%;">
                                             @Html.DisplayNameFor(model => model.DatosBasicosPersonaViewModel.NombreCargoTrabajo):
-                                            <input asp-for="DatosBasicosPersonaViewModel.NombreCargoTrabajo" readonly class="label-data" />
+                                            <label style="width:2%;"></label>
+                                            <label >
+                                                @(Model.DatosBasicosPersonaViewModel.NombreCargoTrabajo)
+                                            </label>
                                         </div>
 
                                         <div class="labels">

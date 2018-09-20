@@ -19,7 +19,7 @@ namespace bd.webappth.web.Controllers.MVC
         private readonly IApiServicio apiServicio;
         private readonly IReporteServicio reporteServicio;
 
-        public ReportController(IApiServicio apiServicio,  IReporteServicio reporteServicio)
+        public ReportController(IApiServicio apiServicio, IReporteServicio reporteServicio)
         {
             this.apiServicio = apiServicio;
             this.reporteServicio = reporteServicio;
@@ -27,15 +27,15 @@ namespace bd.webappth.web.Controllers.MVC
 
         public ActionResult ReporteNomina(int id)
         {
-            
-            string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath,"RepNomina&IdCalculoNomina=", Convert.ToString(id));
+
+            string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepNomina&IdCalculoNomina=", Convert.ToString(id));
             return Redirect(url);
         }
 
         public ActionResult RepPagoNominaEmpleado(int id)
         {
             var parametersToAdd = reporteServicio.GetDefaultParameters("/ReporteGTH/RepPagoNominaEmpleado");
-            parametersToAdd = reporteServicio.AddParameters("IdCalculoNomina", Convert.ToString(id),parametersToAdd);
+            parametersToAdd = reporteServicio.AddParameters("IdCalculoNomina", Convert.ToString(id), parametersToAdd);
             var newUri = reporteServicio.GenerateUri(parametersToAdd);
             return Redirect(newUri);
         }
@@ -44,15 +44,9 @@ namespace bd.webappth.web.Controllers.MVC
         {
             string url = string.Format("{0}{1}{2}", ReportConfig.CompletePath, "RepSolicitudPagoReliquidacion&IdReliquidacionViatico=", Convert.ToString(idReliquidacionViatico));
             return Redirect(url);
-            
-        }
-
-        public ActionResult RepMatr05PlanificacionTH()
-        {
-            string url = string.Format("{0}{1}", ReportConfig.CompletePath, "RepMatr05PlanificacionTH");
-            return Redirect(url);
 
         }
+
 
         public ActionResult ReportePlanCapacitaciones()
         {
@@ -78,7 +72,7 @@ namespace bd.webappth.web.Controllers.MVC
             return Redirect(url);
 
         }
-        public ActionResult ReporteSolicitudViaticosMDT(int IdEmpleado,string IdSolicitud)
+        public ActionResult ReporteSolicitudViaticosMDT(int IdEmpleado, string IdSolicitud)
         {
             string url = string.Format("{0}{1}{2}{3}{4}", ReportConfig.CompletePath, "RepSolicitudViaticoFormatoMDT&IdEmpleado=", Convert.ToString(IdEmpleado), "&IdSolicitud=", Convert.ToString(IdSolicitud));
             return Redirect(url);
@@ -100,15 +94,15 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-            for (int i = 0;i<modelo.ListaIdEmpleados.Count && i<maxFirmasReporte ;i++)
+            for (int i = 0; i < modelo.ListaIdEmpleados.Count && i < maxFirmasReporte; i++)
             {
-                idFirmas = idFirmas + "&IdEF"+ (i+1) +"="+ modelo.ListaIdEmpleados.Where(w=>w.Prioridad == (i+1) ).FirstOrDefault().IdEmpleado;
-                
+                idFirmas = idFirmas + "&IdEF" + (i + 1) + "=" + modelo.ListaIdEmpleados.Where(w => w.Prioridad == (i + 1)).FirstOrDefault().IdEmpleado;
+
             }
-            
+
             string url = string.Format("{0}{1}", ReportConfig.CompletePath, UrlReporte + idFirmas);
             return Redirect(url);
-            
+
         }
 
         public ActionResult ReporteCertificadoInduccion(int IdEmpleado)
@@ -117,7 +111,7 @@ namespace bd.webappth.web.Controllers.MVC
             parametersToAdd = reporteServicio.AddParameters("IdEmpleado", Convert.ToString(IdEmpleado), parametersToAdd);
             var newUri = reporteServicio.GenerateUri(parametersToAdd);
             return Redirect(newUri);
-         
+
         }
 
         public ActionResult ReporteParticipacionEventosInduccion()
@@ -130,7 +124,7 @@ namespace bd.webappth.web.Controllers.MVC
                 {
                     var nombreUsuario = claim.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-                    var filtros = new IdFiltrosViewModel{ NombreUsuario = nombreUsuario};
+                    var filtros = new IdFiltrosViewModel { NombreUsuario = nombreUsuario };
 
                     var sucursal = apiServicio.ObtenerElementoAsync1<Sucursal>(
                             filtros,
@@ -146,7 +140,7 @@ namespace bd.webappth.web.Controllers.MVC
                 }
 
                 return RedirectToAction("Login", "Login");
-                
+
             } catch (Exception ex) {
 
                 this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.NoProcesarSolicitud}|{"10000"}";
@@ -154,7 +148,7 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
 
             }
-            
+
         }
 
 
@@ -165,7 +159,16 @@ namespace bd.webappth.web.Controllers.MVC
             return Redirect(url);
 
         }
+        
 
+        public ActionResult ReporteMatrizPlanificacion()
+        {
+
+            var parametersToAdd = reporteServicio.GetDefaultParameters("/ReporteGTH/RepMatr05PlanificacionTH");
+            var newUri = reporteServicio.GenerateUri(parametersToAdd);
+            return Redirect(newUri);
+
+        }
 
     }
 }

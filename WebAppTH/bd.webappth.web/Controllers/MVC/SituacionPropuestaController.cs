@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using bd.log.guardar.Enumeradores;
 using bd.webappth.entidades.ViewModels;
 using System.Security.Claims;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -43,9 +44,8 @@ namespace bd.webappth.web.Controllers.MVC
 
 
 
-        public async Task<IActionResult> Index(string mensaje)
+        public async Task<IActionResult> Index()
         {
-            InicializarMensaje(mensaje);
 
             var modelo = new RequerimientoRolPorDependenciaViewModel();
             modelo.RolesNivelJerarquicoSuperior = new RequerimientoRolPorGrupoOcupacionalViewModel();
@@ -92,15 +92,8 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                
 
-                if (String.IsNullOrEmpty(mensaje)==true) {
-                    mensaje = Mensaje.Excepcion;
-                }
-
-                InicializarMensaje(mensaje);
-
-                return View(modelo);
+                return BadRequest();
 
             }
         }
@@ -233,14 +226,20 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!ModelState.IsValid)
                 {
-                    InicializarMensaje(Mensaje.ModeloInvalido);
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}|{"10000"}";
                     return View(requerimientoRolPorDependenciaViewModel);
                 }
                 
                 Response response = await apiServicio.InsertarAsync<RequerimientoRolPorDependenciaViewModel>(requerimientoRolPorDependenciaViewModel, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/InsertarNivelesJerarquicos");
 
                 if (response.IsSuccess) {
-                    return RedirectToAction("Index", "SituacionPropuesta",new { mensaje = response.Message});
+
+                    return this.RedireccionarMensajeTime(
+                        "SituacionPropuesta",
+                        "Index",
+                        $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
+
                 }
                 
 
@@ -268,7 +267,7 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!ModelState.IsValid)
                 {
-                    InicializarMensaje(Mensaje.ModeloInvalido);
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}|{"10000"}";
 
                 }
 
@@ -276,7 +275,11 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if (response.IsSuccess)
                 {
-                    return RedirectToAction("Index", "SituacionPropuesta", new { mensaje = response.Message });
+                    return this.RedireccionarMensajeTime(
+                        "SituacionPropuesta",
+                        "Index",
+                        $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
                 }
 
 
@@ -313,11 +316,20 @@ namespace bd.webappth.web.Controllers.MVC
             try
             {
                 Response response = await apiServicio.EliminarAsync(modelo, new Uri(WebApp.BaseAddress), "api/SituacionPropuesta/EliminarRolPorDependencia");
-
-                return RedirectToAction("Index", "SituacionPropuesta", new { mensaje = response.Message });
+                
+                return this.RedireccionarMensajeTime(
+                    "SituacionPropuesta",
+                    "Index",
+                    $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                );
 
             } catch (Exception ex) {
-                return RedirectToAction("Index", "SituacionPropuesta", new { mensaje = Mensaje.ErrorServicio});
+
+                return this.RedireccionarMensajeTime(
+                    "SituacionPropuesta",
+                    "Index",
+                    $"{Mensaje.Success}|{Mensaje.BorradoNoSatisfactorio}|{"7000"}"
+                );
             }
         }
 
@@ -337,13 +349,18 @@ namespace bd.webappth.web.Controllers.MVC
 
                 if( respuesta.IsSuccess) {
                     return RedirectToAction("AutorizacionError", "SituacionPropuesta", new { mensaje = respuesta.Message });
+                    
                 }
-
-                return RedirectToAction("Index", "SituacionPropuesta", new { mensaje = respuesta.Message });
+                
+                return this.RedireccionarMensajeTime(
+                    "SituacionPropuesta",
+                    "Index",
+                    $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
+                );
 
             }
             catch(Exception ex){
-                return RedirectToAction("Index", "SituacionPropuesta", new { mensaje = Mensaje.Excepcion });
+                return BadRequest();
             }
 
             

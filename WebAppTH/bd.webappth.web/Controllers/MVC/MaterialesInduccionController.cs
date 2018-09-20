@@ -17,6 +17,7 @@ using bd.webappseguridad.entidades.Enumeradores;
 using bd.log.guardar.Enumeradores;
 using Newtonsoft.Json;
 using System.Security.Claims;
+using bd.webappth.servicios.Extensores;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -35,25 +36,72 @@ namespace bd.webappth.web.Controllers.MVC
             this.uploadFileService = uploadFileService;
 
         }
-        private void InicializarMensaje(string mensaje)
+
+
+        #region Métodos para el mantenimiento del proceso de MaterialesInduccion
+
+        public async Task<IActionResult> Index()
         {
-            if (mensaje == null)
+
+            var lista = new List<MaterialInduccion>();
+            var imagenes = new List<MaterialInduccion>();
+            var documentos = new List<MaterialInduccion>();
+            var videos = new List<MaterialInduccion>();
+
+            try
             {
-                mensaje = "";
+
+
+                lista = await apiServicio.Listar<MaterialInduccion>(
+                    new Uri(WebApp.BaseAddress),
+                    "api/MaterialesInduccion/ListarMaterialesInduccionTTHH"
+                );
+
+                foreach (var item in lista)
+                {
+                    var ext = Path.GetExtension(item.Url);
+                    if (ext == ".jpeg" || ext == ".bmp" || ext == ".jpe" || ext == ".jpg" || ext == ".gif" || ext == ".png")
+                    {
+                        imagenes.Add(item);
+                    }
+                    else if (ext == ".pdf" || ext == ".xlsx" || ext == ".xls" || ext == ".docx" || ext == ".doc" || ext == ".pptx" || ext == ".ppt" || ext == "ppsx" || ext == "pps")
+                    {
+                        documentos.Add(item);
+                    }
+                    else
+                    {
+                        item.Url = item.Url.Replace("watch?v=", "embed/");
+                        videos.Add(item);
+                    }
+                }
+
+                var ViewModelInduccion = new ViewModelInduccion
+                {
+                    Imagenes = imagenes,
+                    Archivos = documentos,
+                    Videos = videos
+                };
+
+                return View(ViewModelInduccion);
+
+
             }
-            ViewData["Error"] = mensaje;
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
-        public IActionResult Create( string mensaje)
+
+
+        public IActionResult Create()
         {
-            InicializarMensaje(null);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(MaterialInduccion view, List<IFormFile> files)
+        public async Task<IActionResult> Create(MaterialInduccion view, List<IFormFile> files)
         {
-            InicializarMensaje(null);
             if (files.Count > 0)
             {
                 byte[] data;
@@ -80,11 +128,15 @@ namespace bd.webappth.web.Controllers.MVC
 
                     materialInduccion.Url = string.Format("{0}/{1}{2}", "MaterialInduccion", Convert.ToString(materialInduccion.IdMaterialInduccion), ext);
 
-                    return RedirectToAction("Index");
+                    return this.RedireccionarMensajeTime(
+                        "MaterialesInduccion",
+                        "Index",
+                        $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
+                    );
                 }
                 else
                 {
-                    ViewData["Error"] = respuesta.Message;
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{respuesta.Message}|{"10000"}";
 
                     var documento = new MaterialInduccion
                     {
@@ -111,11 +163,16 @@ namespace bd.webappth.web.Controllers.MVC
                 if (respuesta.IsSuccess)
                 {
 
-                    return RedirectToAction("Index");
+
+                    return this.RedireccionarMensajeTime(
+                        "MaterialesInduccion",
+                        "Index",
+                        $"{Mensaje.Success}|{respuesta.Message}|{"7000"}"
+                    );
                 }
                 else
                 {
-                    ViewData["Error"] = respuesta.Message;
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{respuesta.Message}|{"10000"}";
 
                     var documento = new MaterialInduccion
                     {
@@ -133,27 +190,17 @@ namespace bd.webappth.web.Controllers.MVC
         [ValidateAntiForgeryToken]
         public async Task<Response> CreateFichero(DocumentoInstitucionalTransfer file)
         {
-            InicializarMensaje(null);
             Response response = new Response();
             try
             {
-                response = await apiServicio.InsertarAsync(file,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/MaterialesInduccion/UploadFiles");
+                response = await apiServicio.InsertarAsync(
+                    file,
+                    new Uri(WebApp.BaseAddress),
+                    "api/MaterialesInduccion/UploadFiles"
+                );
+
                 if (response.IsSuccess)
                 {
-
-                    var responseLog = await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        ExceptionTrace = null,
-                        Message = "Se ha subido un archivo",
-                        UserName = "Usuario 1",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        EntityID = string.Format("{0} {1}", "Material de Inducción:", file.Nombre),
-                    });
-
                     return new Response
                     {
                         IsSuccess = true,
@@ -163,7 +210,7 @@ namespace bd.webappth.web.Controllers.MVC
 
                 }
 
-                ViewData["Error"] = response.Message;
+
                 return new Response
                 {
                     IsSuccess = false,
@@ -173,15 +220,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Subiendo archivo",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Create),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP WebAppTh"
-                });
 
                 return new Response
                 {
@@ -191,7 +229,7 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-     
+
 
         public async Task<IActionResult> Edit(string id)
         {
@@ -199,14 +237,17 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    var respuesta = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                                  "api/MaterialesInduccion");
+                    var respuesta = await apiServicio.SeleccionarAsync<Response>(
+                        id,
+                        new Uri(WebApp.BaseAddress),
+                        "api/MaterialesInduccion"
+                    );
 
 
                     respuesta.Resultado = JsonConvert.DeserializeObject<MaterialInduccion>(respuesta.Resultado.ToString());
+
                     if (respuesta.IsSuccess)
                     {
-                        InicializarMensaje(null);
                         return View(respuesta.Resultado);
                     }
 
@@ -220,13 +261,6 @@ namespace bd.webappth.web.Controllers.MVC
             }
         }
 
-        public async Task<IActionResult> GetFile(string id)
-        {
-
-            return BadRequest();
-
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, MaterialInduccion documentoInformacionInstitucional)
@@ -236,24 +270,24 @@ namespace bd.webappth.web.Controllers.MVC
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    response = await apiServicio.EditarAsync(id, documentoInformacionInstitucional, new Uri(WebApp.BaseAddress),
-                                                                 "api/MaterialesInduccion");
+                    response = await apiServicio.EditarAsync(
+                        id, 
+                        documentoInformacionInstitucional, 
+                        new Uri(WebApp.BaseAddress),
+                        "api/MaterialesInduccion"
+                     );
 
                     if (response.IsSuccess)
                     {
-                        await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                        {
-                            ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                            EntityID = string.Format("{0} : {1}", "materia de inducción", id),
-                            LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                            LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                            Message = "Se ha actualizado un materia de inducción",
-                            UserName = "Usuario 1"
-                        });
-
-                        return RedirectToAction("Index");
+                       
+                        return this.RedireccionarMensajeTime(
+                        "MaterialesInduccion",
+                        "Index",
+                        $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
                     }
-                    ViewData["Error"] = response.Message;
+
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"7000"}";
                     return View(documentoInformacionInstitucional);
 
                 }
@@ -261,81 +295,11 @@ namespace bd.webappth.web.Controllers.MVC
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Editando un materia de inducción",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Edit),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
                 return BadRequest();
             }
         }
+        
 
-        public async Task<IActionResult> Index()
-        {
-
-            var lista = new List<MaterialInduccion>();
-            var imagenes = new List<MaterialInduccion>();
-            var documentos = new List<MaterialInduccion>();
-            var videos = new List<MaterialInduccion>();
-
-            try
-            {
-                /*
-                lista = await apiServicio.Listar<MaterialInduccion>(new Uri(WebApp.BaseAddress)
-                                                                    , "api/MaterialesInduccion/ListarMaterialesInduccion");
-                */
-                
-                InicializarMensaje(null);
-
-
-                /**/
-
-                lista = await apiServicio.Listar<MaterialInduccion>(new Uri(WebApp.BaseAddress)
-                        , "api/MaterialesInduccion/ListarMaterialesInduccionTTHH");
-
-                foreach (var item in lista)
-                {
-                    var ext = Path.GetExtension(item.Url);
-                    if (ext == ".jpeg" || ext == ".bmp" || ext == ".jpe" || ext == ".jpg" || ext == ".gif" || ext == ".png")
-                    {
-                        imagenes.Add(item);
-                    }
-                    else if (ext == ".pdf" || ext == ".xlsx" || ext == ".xls" || ext == ".docx" || ext == ".doc" || ext == ".pptx" || ext == ".ppt" || ext == "ppsx" || ext == "pps")
-                    {
-                        documentos.Add(item);
-                    }
-                    else
-                    {
-                        item.Url = item.Url.Replace("watch?v=", "embed/");
-                        videos.Add(item);
-                    }
-                }
-
-                var ViewModelInduccion = new ViewModelInduccion
-                {
-                    Imagenes = imagenes,
-                    Archivos = documentos,
-                    Videos = videos
-                };
-                return View(ViewModelInduccion);
-
-
-
-                return View(lista);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-
-
-     
 
 
         public async Task<IActionResult> Delete(string id)
@@ -343,86 +307,105 @@ namespace bd.webappth.web.Controllers.MVC
 
             try
             {
-                var respuestaMaterial = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                             "api/MaterialesInduccion");
+                var respuestaMaterial = await apiServicio.SeleccionarAsync<Response>(
+                    id, 
+                    new Uri(WebApp.BaseAddress),
+                    "api/MaterialesInduccion"
+                );
 
                 var materialinduccion = JsonConvert.DeserializeObject<MaterialInduccion>(respuestaMaterial.Resultado.ToString());
 
                 var ext = Path.GetExtension(materialinduccion.Url);
 
-                var response = await apiServicio.EliminarAsync(id, new Uri(WebApp.BaseAddress)
-                                                               , "api/MaterialesInduccion");
+                var response = await apiServicio.EliminarAsync(
+                    id, 
+                    new Uri(WebApp.BaseAddress)
+                    , "api/MaterialesInduccion"
+                );
+
                 if (response.IsSuccess)
                 {
                     var respuestaFile = uploadFileService.DeleteFile("MaterialInduccion", Convert.ToString(id), ext);
-
-                    await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                    {
-                        ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                        EntityID = string.Format("{0} : {1}", "material de inducción", id),
-                        Message = "Registro de material de inducción eliminado",
-                        LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                        LogLevelShortName = Convert.ToString(LogLevelParameter.ADV),
-                        UserName = "Usuario APP webappth"
-                    });
-                    return RedirectToAction("Index");
+                    
+                    return this.RedireccionarMensajeTime(
+                        "MaterialesInduccion",
+                        "Index",
+                        $"{Mensaje.Success}|{response.Message}|{"7000"}"
+                    );
                 }
-                return RedirectToAction("Index", new { mensaje = response.Message });
-                //return BadRequest();
+
+                return this.RedireccionarMensajeTime(
+                        "MaterialesInduccion",
+                        "Index",
+                        $"{Mensaje.Error}|{response.Message}|{"10000"}"
+                    );
+
             }
             catch (Exception ex)
             {
-                await GuardarLogService.SaveLogEntry(new LogEntryTranfer
-                {
-                    ApplicationName = Convert.ToString(Aplicacion.WebAppTh),
-                    Message = "Eliminar Documento de Información Institucional",
-                    ExceptionTrace = ex.Message,
-                    LogCategoryParametre = Convert.ToString(LogCategoryParameter.Delete),
-                    LogLevelShortName = Convert.ToString(LogLevelParameter.ERR),
-                    UserName = "Usuario APP webappth"
-                });
-
                 return BadRequest();
             }
         }
+        
 
-
-
-        public async Task<FileResult> Download(string id)
+        public async Task<IActionResult> Download(string id)
         {
+            try {
+                var response = await apiServicio.SeleccionarAsync<Response>(
+                    id, 
+                    new Uri(WebApp.BaseAddress),
+                    "api/MaterialesInduccion"
+                );
+
+                var materialinduccion = JsonConvert.DeserializeObject<MaterialInduccion>(response.Resultado.ToString());
+                var d = new MaterialInduccion
+                {
+                    IdMaterialInduccion = Convert.ToInt32(id),
+                    Url = materialinduccion.Url
+                };
+
+                var ext = Path.GetExtension(materialinduccion.Url);
+
+                if (ext != "")
+                {
+                    var responseGetFile = await apiServicio.ObtenerElementoAsync(
+                        d,
+                        new Uri(WebApp.BaseAddress),
+                        "api/MaterialesInduccion/GetFile"
+                    );
+
+                    var m = JsonConvert.DeserializeObject<DocumentoInstitucionalTransfer>(responseGetFile.Resultado.ToString());
 
 
-            var response = await apiServicio.SeleccionarAsync<Response>(id, new Uri(WebApp.BaseAddress),
-                                                              "api/MaterialesInduccion");
 
-            var materialinduccion = JsonConvert.DeserializeObject<MaterialInduccion>(response.Resultado.ToString());
-            var d = new MaterialInduccion
-            {
-                IdMaterialInduccion = Convert.ToInt32(id),
-                Url = materialinduccion.Url
-            };
-
-            var ext = Path.GetExtension(materialinduccion.Url);
-
-            if (ext != "")
-            {
-                var responseGetFile = await apiServicio.ObtenerElementoAsync(d,
-                                                             new Uri(WebApp.BaseAddress),
-                                                             "api/MaterialesInduccion/GetFile");
-               var m = JsonConvert.DeserializeObject<DocumentoInstitucionalTransfer>(responseGetFile.Resultado.ToString());
-
-            //var fileName = $"{ responseGetFile.Message}.pdf";
-           
-           
-                var fileName = string.Format("{0}{1}", $"{ responseGetFile.Message}", ext);
-                string mime = MimeKit.MimeTypes.GetMimeType(fileName);
-                return File(m.Fichero, mime, fileName);
+                    var fileName = string.Format("{0}{1}", $"{ responseGetFile.Message}", ext);
+                    string mime = MimeKit.MimeTypes.GetMimeType(fileName);
+                    return File(m.Fichero, mime, fileName);
+                }
+                else
+                {
+                    return this.RedireccionarMensajeTime(
+                        "MaterialesInduccion",
+                        "Index",
+                        $"{Mensaje.Aviso}|{Mensaje.SinArchivo}|{"7000"}"
+                    );
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return File("","");
+
+                return this.RedireccionarMensajeTime(
+                        "MaterialesInduccion",
+                        "Index",
+                        $"{Mensaje.Aviso}|{Mensaje.SinArchivo}|{"7000"}"
+                    );
             }
+
+           
           
         }
+
+        #endregion
+
     }
 }
