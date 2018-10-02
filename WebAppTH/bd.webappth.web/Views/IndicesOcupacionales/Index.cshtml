@@ -27,20 +27,16 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                     <tr>
-                                        <th data-hide="phone">
-                                            @Html.DisplayNameFor(model =>
-                                                model.FirstOrDefault().CodigoDependencia
-                                            )
-                                        </th>
+                                        
 
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model =>
-                                                model.FirstOrDefault().NombreDependencia
+                                                model.FirstOrDefault().UnidadAdministrativa
                                             )
                                         </th>
                                         <th data-hide="phone">
                                             @Html.DisplayNameFor(model =>
-                                                model.FirstOrDefault().NombreManualPuesto
+                                                model.FirstOrDefault().DenominacionPuesto
                                             )
                                         </th>
                                         <th data-hide="phone">
@@ -78,13 +74,10 @@
                                     {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.CodigoDependencia)
+                                            @Html.DisplayFor(modelItem => item.UnidadAdministrativa)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.NombreDependencia)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NombreManualPuesto)
+                                            @Html.DisplayFor(modelItem => item.DenominacionPuesto)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.NombreRolPuesto)
@@ -103,7 +96,7 @@
                                         </td>
 
                                         <td>
-                                            @*@Html.ActionLink("Editar", "Edit", new { id = item.IdIndiceOcupacional }) |*@
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.IdIndiceOcupacional })
                                             @Html.ActionLink("Detalle", "Detalle", new { id = item.IdIndiceOcupacional }) |
                                             @Html.ActionLink("Eliminar", "Delete", new { id = item.IdIndiceOcupacional }, new { onclick = "return confirm('Desea eliminar el registro?');" })
                                         </td>

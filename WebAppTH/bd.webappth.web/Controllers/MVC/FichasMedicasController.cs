@@ -2006,9 +2006,11 @@ namespace bd.webappth.web.Controllers.MVC
                     IdPersona = Convert.ToInt32(id),
                 };
 
-                var response = await apiServicio.ObtenerElementoAsync(id2,
-                                                                 new Uri(WebApp.BaseAddress),
-                                                                 "api/ExamenesComplementarios/ObtenerFichaOdontologica");
+                var response = await apiServicio.ObtenerElementoAsync(
+                    id2,
+                    new Uri(WebApp.BaseAddress),
+                    "api/ExamenesComplementarios/ObtenerFichaOdontologica"
+                );
 
 
                 var m = JsonConvert.DeserializeObject<FichaOdontologicaViewModel>(response.Resultado.ToString());

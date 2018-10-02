@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using bd.webappth.entidades.ViewModels;
 using bd.webappth.entidades.Constantes;
 using bd.webappth.servicios.Extensores;
+using Newtonsoft.Json;
 
 namespace bd.webappth.web.Controllers.MVC
 {
@@ -30,7 +31,7 @@ namespace bd.webappth.web.Controllers.MVC
                 if (instance == null)
                 {
                     instance = new IndiceOcupacionalDetalle();
-                    instance.ListaAreaConocimientos = new List<AreaConocimiento>();
+                    //instance.ListaAreaConocimientos = new List<AreaConocimiento>();
                 }
                 return instance;
             }
@@ -709,34 +710,7 @@ namespace bd.webappth.web.Controllers.MVC
         //}
 
 
-        private async Task CargarListaCombox()
-        {
-
-            var ListaDependencia = await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "api/Dependencias/ListarDependencias");
-            ViewData["IdDependencia"] = new SelectList(ListaDependencia, "IdDependencia", "Nombre");
-
-            var listaManualPuesto = await apiServicio.Listar<ManualPuesto>(new Uri(WebApp.BaseAddress), "api/ManualPuestos/ListarManualPuestos");
-            ViewData["IdManualPuesto"] = new SelectList(listaManualPuesto, "IdManualPuesto", "Nombre");
-
-            var listaRoles = await apiServicio.Listar<RolPuesto>(new Uri(WebApp.BaseAddress), "api/RolesPuesto/ListarRolesPuesto");
-            ViewData["IdRolPuesto"] = new SelectList(listaRoles, "IdRolPuesto", "Nombre");
-
-            var listaEscalaGrados = await apiServicio.Listar<EscalaGrados>(new Uri(WebApp.BaseAddress), "api/EscalasGrados/ListarEscalasGrados");
-            ViewData["IdEscalaGrados"] = new SelectList(listaEscalaGrados, "IdEscalaGrados", "Remuneracion");
-
-            var listaPartidasGenerales = await apiServicio.Listar<PartidaGeneral>(new Uri(WebApp.BaseAddress), "/api/PartidasGenerales/ListarPartidasGenerales");
-            ViewData["IdPartidaGeneral"] = new SelectList(listaPartidasGenerales, "IdPartidaGeneral", "NumeroPartida");
-
-            var listaCiudades = await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "/api/Ciudad/ListarCiudad");
-            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
-
-            var listaGruposOcupaciones = await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales");
-            ViewData["IdGrupoOcupacional"] = new SelectList(await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "api/GruposOcupacionales/ListarGruposOcupacionales"), "IdGrupoOcupacional", "TipoEscala");
-
-            var listaAmbitos = await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales");
-            ViewData["IdAmbito"] = new SelectList(await apiServicio.Listar<Ambito>(new Uri(WebApp.BaseAddress), "api/Ambitos/ListarAmbitos"), "IdAmbito", "Nombre");
-
-        }
+        
 
         private void InicializarMensaje(string mensaje)
         {
@@ -761,7 +735,7 @@ namespace bd.webappth.web.Controllers.MVC
         //            Singleton.Instance.ListaAreaConocimientos.Add(areaConocimiento);
 
         //       return  await Create("");
-                
+
 
         //    }
         //    catch (Exception ex)
@@ -771,61 +745,7 @@ namespace bd.webappth.web.Controllers.MVC
         //}
 
 
-
-       
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IndiceOcupacionalModalidadPartida indiceOcupacionalModalidadPartida)
-        {
-            Response response = new Response();
-            try
-            {
-                if (indiceOcupacionalModalidadPartida.IndiceOcupacional.Nivel == "0")
-                {
-                    indiceOcupacionalModalidadPartida.IndiceOcupacional.Nivel = Constantes.NivelProfesional;
-                }
-                else { indiceOcupacionalModalidadPartida.IndiceOcupacional.Nivel = Constantes.NivelNoProfesional; }
-                
-
-                response = await apiServicio.InsertarAsync(
-                        indiceOcupacionalModalidadPartida.IndiceOcupacional,
-                        new Uri(WebApp.BaseAddress),
-                        "api/IndicesOcupacionales/InsertarIndiceOcupacional"
-                );
-
-                if (response.IsSuccess)
-                {
-
-                    return RedirectToAction("Index");
-                }
-
-
-                await CargarListaCombox();
-                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
-
-
-                var indiceDetalle = new IndiceOcupacionalDetalle
-                {
-                    IndiceOcupacionalModalidadPartida = indiceOcupacionalModalidadPartida
-                };
-                
-                return View(indiceDetalle);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
-        }
-
-
-        public async Task<IActionResult> Create(string mensaje)
-        {
-
-           await CargarListaCombox();
-            InicializarMensaje(mensaje);
-            
-            return View("Create",Singleton.Instance);
-        }
+        #region Métodos mantenimiento básico del perfil de puesto
 
 
         public async Task<IActionResult> Index()
@@ -845,6 +765,124 @@ namespace bd.webappth.web.Controllers.MVC
                 return BadRequest();
             }
         }
+
+
+        public async Task<IActionResult> Create()
+        {
+
+            await CargarCombosInicio();
+
+            return View("Create", Singleton.Instance);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(IndiceOcupacionalDetalle IndiceOcupacionalDetalle)
+        {
+            Response response = new Response();
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    
+                    this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{Mensaje.ModeloInvalido}|{"10000"}";
+
+                    await CargarCombosInicio();
+                    return View(IndiceOcupacionalDetalle);
+
+                }
+
+                if (IndiceOcupacionalDetalle.IndiceOcupacional.Nivel == "0")
+                {
+                    IndiceOcupacionalDetalle.IndiceOcupacional.Nivel = Constantes.NivelProfesional;
+                }
+                else {
+                    IndiceOcupacionalDetalle.IndiceOcupacional.Nivel = Constantes.NivelNoProfesional;
+                }
+                
+
+                response = await apiServicio.InsertarAsync(
+                        IndiceOcupacionalDetalle.IndiceOcupacional,
+                        new Uri(WebApp.BaseAddress),
+                        "api/IndicesOcupacionales/InsertarIndiceOcupacional"
+                );
+
+                if (response.IsSuccess)
+                {
+                    return this.Redireccionar(
+                        "IndicesOcupacionales",
+                        "Index",
+                        $"{Mensaje.Success}|{response.Message}"
+                    );
+
+                }
+
+
+                await CargarCombosInicio();
+                this.TempData["MensajeTimer"] = $"{Mensaje.Error}|{response.Message}|{"10000"}";
+
+                /*
+                var indiceDetalle = new IndiceOcupacionalDetalle
+                {
+                    //IndiceOcupacionalModalidadPartida = indiceOcupacionalModalidadPartida
+                };
+                */
+
+                return View(IndiceOcupacionalDetalle);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        
+        public async Task<IActionResult> Edit(int id) {
+
+            try
+            {
+                
+                var IndiceOcupacional = await apiServicio.ObtenerElementoAsync1<IndiceOcupacional>(
+                        new IndiceOcupacional { IdIndiceOcupacional = id },
+                        new Uri(WebApp.BaseAddress),
+                        "api/IndicesOcupacionales/ObtenerIndiceOcupacional"
+                );
+
+                var modelo = new IndiceOcupacionalDetalle {
+                    IndiceOcupacional = IndiceOcupacional
+                };
+
+                
+                if (modelo.IndiceOcupacional.Nivel == Constantes.NivelProfesional)
+                {
+                    modelo.IndiceOcupacional.Nivel = "0";
+                }
+                else
+                {
+                    modelo.IndiceOcupacional.Nivel = "1";
+                }
+                
+
+                await CargarCombosInicio();
+
+                return View(modelo);
+
+            }
+            catch (Exception ex) {
+
+                return BadRequest();
+            }
+
+        }
+
+
+
+        #endregion
+
+
+
 
 
         public async Task<IActionResult> ExperienciaLaboralRequerida(int id)
@@ -962,8 +1000,9 @@ namespace bd.webappth.web.Controllers.MVC
 
             var IndiOcupacionalDetalle = new IndiceOcupacionalDetalle
             {
-                IndiceOcupacionalModalidadPartida = new IndiceOcupacionalModalidadPartida
+                /*IndiceOcupacionalModalidadPartida = new IndiceOcupacionalModalidadPartida
                 { IndiceOcupacional = indiceOcupacional },
+                */
             };
 
             var indiceOcupacionalDetalle = await apiServicio.ObtenerElementoAsync1<IndiceOcupacionalDetalle>(IndiOcupacionalDetalle, new Uri(WebApp.BaseAddress), "api/IndicesOcupacionales/DetalleIndiceOcupacional");
@@ -982,19 +1021,120 @@ namespace bd.webappth.web.Controllers.MVC
             );
 
             if (respuesta.IsSuccess == true) {
+
                 return this.Redireccionar(
-                            "IndicesOcupacionales",
-                            "Index",
-                            $"{Mensaje.Success}|{respuesta.Message}"
-                         );
+                    "IndicesOcupacionales",
+                    "Index",
+                    $"{Mensaje.Success}|{respuesta.Message}"
+                );
             }
 
             return this.Redireccionar(
-                            "IndicesOcupacionales",
-                            "Index",
-                            $"{Mensaje.Aviso}|{respuesta.Message}"
-                         );
+                "IndicesOcupacionales",
+                "Index",
+                $"{Mensaje.Aviso}|{respuesta.Message}"
+            );
+
         }
+
+
+
+        
+
+        
+
+        
+
+
+        #region Combos
+
+        private async Task CargarCombosInicio()
+        {
+
+            var listaRoles = await apiServicio.Listar<RolPuesto>(
+                new Uri(WebApp.BaseAddress), 
+                "api/RolesPuesto/ListarRolesPuesto"
+            );
+
+            ViewData["IdRolPuesto"] = new SelectList(listaRoles, "IdRolPuesto", "Nombre");
+
+
+            var listaGruposOcupaciones = await apiServicio.Listar<GrupoOcupacional>(new Uri(WebApp.BaseAddress), "/api/GruposOcupacionales/ListarGruposOcupacionales");
+
+            ViewData["IdGrupoOcupacional"] = new SelectList( listaGruposOcupaciones, "IdGrupoOcupacional", "TipoEscala");
+
+
+            
+            var listaEscalaGrados = await apiServicio.Listar<EscalaGrados>(
+                new Uri(WebApp.BaseAddress),
+                "api/EscalasGrados/ListarEscalasGrados"
+            );
+
+            ViewData["IdEscalaGrados"] = new SelectList(listaEscalaGrados, "IdEscalaGrados", "Remuneracion");
+
+
+
+            var listaAmbitos = await apiServicio.Listar<Ambito>
+                (new Uri(WebApp.BaseAddress), 
+                "api/Ambitos/ListarAmbitos"
+            );
+
+            ViewData["IdAmbito"] = new SelectList(listaAmbitos, "IdAmbito", "Nombre");
+
+            /*
+            
+            var ListaDependencia = await apiServicio.Listar<Dependencia>(new Uri(WebApp.BaseAddress), "api/Dependencias/ListarDependencias");
+            ViewData["IdDependencia"] = new SelectList(ListaDependencia, "IdDependencia", "Nombre");
+
+            var listaManualPuesto = await apiServicio.Listar<ManualPuesto>(new Uri(WebApp.BaseAddress), "api/ManualPuestos/ListarManualPuestos");
+            ViewData["IdManualPuesto"] = new SelectList(listaManualPuesto, "IdManualPuesto", "Nombre");
+
+            
+
+            
+
+            var listaPartidasGenerales = await apiServicio.Listar<PartidaGeneral>(new Uri(WebApp.BaseAddress), "/api/PartidasGenerales/ListarPartidasGenerales");
+            ViewData["IdPartidaGeneral"] = new SelectList(listaPartidasGenerales, "IdPartidaGeneral", "NumeroPartida");
+
+            var listaCiudades = await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "/api/Ciudad/ListarCiudad");
+            ViewData["IdCiudad"] = new SelectList(await apiServicio.Listar<Ciudad>(new Uri(WebApp.BaseAddress), "api/Ciudad/ListarCiudad"), "IdCiudad", "Nombre");
+
+            
+
+            
+            */
+        }
+
+        #endregion
+
+
+        #region Métodos para ajax combos
+
+
+        public async Task<JsonResult> ObtenerDatosEscalaGradosPorId(int id)
+        {
+            try
+            {
+
+                var response = await apiServicio.ObtenerElementoAsync1<Response>(
+                    new EscalaGrados { IdEscalaGrados = id},
+                    new Uri(WebApp.BaseAddress),
+                    "api/EscalasGrados/ObtenerEscalaGradosPorId");
+
+                var modelo = JsonConvert.DeserializeObject<EscalaGrados>(response.Resultado.ToString());
+
+
+                return Json(modelo);
+            }
+            catch (Exception)
+            {
+                return Json(Mensaje.Error);
+            }
+
+        }
+
+        #endregion
+
 
     }
 }

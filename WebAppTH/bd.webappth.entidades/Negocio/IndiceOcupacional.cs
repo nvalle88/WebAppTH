@@ -9,19 +9,20 @@ namespace bd.webappth.entidades.Negocio
         [Key]
         public int IdIndiceOcupacional { get; set; }
 
+        [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Denominación del puesto")]
         public string DenominacionPuesto { get; set; }
 
+        [Required(ErrorMessage = "Debe introducir {0}")]
         [Display(Name = "Unidad administrativa")]
         public string UnidadAdministrativa { get; set; }
-
-
+        
         [Display(Name = "Rol del puesto")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        [Range(1,double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int? IdRolPuesto { get; set; }
 
         [Display(Name = "Escala de grados")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar una opción ")]
         public int? IdEscalaGrados { get; set; }
 
         public int? IdPartidaGeneral { get; set; }
@@ -30,6 +31,8 @@ namespace bd.webappth.entidades.Negocio
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar el {0} ")]
         public int? IdAmbito { get; set; }
 
+        
+        [Required(ErrorMessage = "Debe seleccionar el {0}")]
         public string Nivel { get; set; }
 
         [Display(Name = "Misión")]
@@ -41,6 +44,7 @@ namespace bd.webappth.entidades.Negocio
         public bool SinClasificar { get; set; }
         public decimal? RmusinClasificar { get; set; }
         public bool Activo { get; set; }
+        
 
         public virtual ICollection<IndiceOcupacionalActividadesEsenciales> IndiceOcupacionalActividadesEsenciales { get; set; }
         public virtual ICollection<IndiceOcupacionalAreaConocimiento> IndiceOcupacionalAreaConocimiento { get; set; }

@@ -5,8 +5,9 @@ using System.Text;
 
 namespace bd.webappth.entidades.ViewModels
 {
-   public class IndiceOcupacionalDetalle
+    public class IndiceOcupacionalDetalle
     {
+        /*
         public IndiceOcupacionalModalidadPartida IndiceOcupacionalModalidadPartida { get; set; }
         public List<RelacionesInternasExternas> ListaRelacionesInternasExternas { get; set; }
         public List<Estudio> ListaEstudios { get; set; }
@@ -16,6 +17,8 @@ namespace bd.webappth.entidades.ViewModels
         public List<ActividadesEsenciales> ListaActividadesEsenciales { get; set; }
         public List<ConocimientosAdicionales> ListaConocimientosAdicionales { get; set; }
         public List<ComportamientoObservable> ListaComportamientoObservables { get; set; }
+        */
 
+        public IndiceOcupacional IndiceOcupacional { get; set; }
     }
 }

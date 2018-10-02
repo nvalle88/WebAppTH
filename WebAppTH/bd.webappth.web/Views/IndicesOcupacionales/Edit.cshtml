@@ -724,6 +724,12 @@
 
             $("#idgrupoocupacional").change(function () {
 
+                ListarEscalasGradosPorGrupoOcupacional($("#idgrupoocupacional").val());
+                return false;
+            });
+
+            function ListarEscalasGradosPorGrupoOcupacional(id) { 
+
                 mostrarLoadingPanel("content", "Cargando...")
                 $("#idescalagrados").empty();
 
@@ -731,7 +737,7 @@
                     type: 'POST',
                     url: '@Url.Action("ListarEscalasGradosPorGrupoOcupacional", "EscalaGrados")',
                     dataType: 'json',
-                    data: { idgrupoocupacional: $("#idgrupoocupacional").val() },
+                    data: { idgrupoocupacional: id },
                     success: function (data) {
                         $("#idescalagrados").append('<option value="0" selected="" disabled="">Seleccione</option>');
 
@@ -748,20 +754,29 @@
                         alert('Failed to retrieve data.' + ex);
                     }
                 });
-                return false;
-            });
+
+            }
 
 
             $("#idescalagrados").change(function () {
 
-                mostrarLoadingPanel("content", "Cargando...")
+                
+                ObtenerDatosEscalaGradosPorId($("#idescalagrados").val());
 
+                
+                return false;
+            });
+
+
+            function ObtenerDatosEscalaGradosPorId( id ) { 
+
+                mostrarLoadingPanel("content", "Cargando...");
 
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ObtenerDatosEscalaGradosPorId", "IndicesOcupacionales")',
                     dataType: 'json',
-                    data: { id: $("#idescalagrados").val() },
+                    data: { id: id },
                     success: function (data) {
 
                         $('#txt_rmu').val("$"+data.remuneracion);
@@ -774,10 +789,17 @@
                         alert('Failed to retrieve data.' + ex);
                     }
                 });
-                return false;
-            });
+
+            }
+
+            
+            ListarEscalasGradosPorGrupoOcupacional(@(Model.IndiceOcupacional.EscalaGrados.IdGrupoOcupacional));
+            $("#idgrupoocupacional").val(@(Model.IndiceOcupacional.EscalaGrados.IdGrupoOcupacional));
 
 
+            ObtenerDatosEscalaGradosPorId(@(Model.IndiceOcupacional.IdEscalaGrados));
+
+            $("#idescalagrados").val(@(Model.IndiceOcupacional.IdEscalaGrados));
         });
 
 
@@ -791,6 +813,7 @@
             Init_Select2();
         });
     </script>
+
 }
 
 
